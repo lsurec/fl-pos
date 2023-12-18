@@ -273,9 +273,9 @@ class PrintViewModel extends ChangeNotifier {
     final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
     List<String> mensajes = [
-      "**Sujeto a pagos trimestrales**",
       //TODO: Mostrar frase
-      // "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+      // "**Sujeto a pagos trimestrales**",
+      "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
     ];
 
     PoweredBy poweredBy = PoweredBy(

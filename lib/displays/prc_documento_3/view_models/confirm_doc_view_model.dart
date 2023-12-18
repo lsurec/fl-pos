@@ -646,27 +646,27 @@ class ConfirmDocViewModel extends ChangeNotifier {
                     ],
                   ),
                 ),
-                pw.SizedBox(height: 10),
-                pw.Center(
-                  child: pw.Text(
-                    "**SUJETO A PAGOS TRIMESTRALES**",
-                    style: pw.TextStyle(
-                      fontSize: 9,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                  ),
-                ),
                 //TODO: Mostrar frase
-                // pw.SizedBox(height: 5),
+                // pw.SizedBox(height: 10),
                 // pw.Center(
                 //   child: pw.Text(
-                //     "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
+                //     "**SUJETO A PAGOS TRIMESTRALES**",
                 //     style: pw.TextStyle(
                 //       fontSize: 9,
                 //       fontWeight: pw.FontWeight.bold,
                 //     ),
                 //   ),
-                // )
+                // ),
+                pw.SizedBox(height: 5),
+                pw.Center(
+                  child: pw.Text(
+                    "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
+                    style: pw.TextStyle(
+                      fontSize: 9,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                )
               ],
             ),
           ];
