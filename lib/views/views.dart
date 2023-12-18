@@ -1,0 +1,9 @@
+export 'package:flutter_post_printer_example/views/update_view.dart';
+export 'package:flutter_post_printer_example/views/error_view.dart';
+export 'package:flutter_post_printer_example/views/print_view.dart';
+export 'package:flutter_post_printer_example/views/api_view.dart';
+export 'package:flutter_post_printer_example/views/home_view.dart';
+export 'package:flutter_post_printer_example/views/login_view.dart';
+export 'package:flutter_post_printer_example/views/not_found_view.dart';
+export 'package:flutter_post_printer_example/views/splash_view.dart';
+export 'package:flutter_post_printer_example/views/settings_view.dart';

@@ -1,0 +1,1 @@
+export 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_mode.dart';
