@@ -274,7 +274,8 @@ class PrintViewModel extends ChangeNotifier {
 
     List<String> mensajes = [
       "**Sujeto a pagos trimestrales**",
-      "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+      //TODO: Mostrar frase
+      // "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
     ];
 
     PoweredBy poweredBy = PoweredBy(

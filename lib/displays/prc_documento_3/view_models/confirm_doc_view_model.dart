@@ -656,16 +656,17 @@ class ConfirmDocViewModel extends ChangeNotifier {
                     ),
                   ),
                 ),
-                pw.SizedBox(height: 5),
-                pw.Center(
-                  child: pw.Text(
-                    "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
-                    style: pw.TextStyle(
-                      fontSize: 9,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                  ),
-                )
+                //TODO: Mostrar frase
+                // pw.SizedBox(height: 5),
+                // pw.Center(
+                //   child: pw.Text(
+                //     "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
+                //     style: pw.TextStyle(
+                //       fontSize: 9,
+                //       fontWeight: pw.FontWeight.bold,
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ];
