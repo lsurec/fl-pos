@@ -298,36 +298,38 @@ class _SettingsFromState extends State<SettingsFrom> {
                           scan();
                         },
                       ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: devices.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(devices[index].name),
-                            subtitle: Text(devices[index].address!),
-                            onTap: () {
-                              setState(() {
-                                printerSelect = devices[index];
-                              });
-                            },
-                            selected: printerSelect == devices[index],
-                            trailing: printerSelect == devices[index]
-                                ? ElevatedButton(
-                                    onPressed: () {
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            SelectSizePaperFrom(
-                                          function: setPrinter,
-                                        ),
-                                      );
-                                    },
-                                    child: const Text("Agregar"))
-                                : null,
-                          );
-                        },
-                      )
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: devices.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(devices[index].name),
+                              subtitle: Text(devices[index].address!),
+                              onTap: () {
+                                setState(() {
+                                  printerSelect = devices[index];
+                                });
+                              },
+                              selected: printerSelect == devices[index],
+                              trailing: printerSelect == devices[index]
+                                  ? ElevatedButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              SelectSizePaperFrom(
+                                            function: setPrinter,
+                                          ),
+                                        );
+                                      },
+                                      child: const Text("Agregar"))
+                                  : null,
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
