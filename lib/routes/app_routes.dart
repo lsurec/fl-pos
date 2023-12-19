@@ -28,6 +28,7 @@ class AppRoutes {
     "recent": (BuildContext context) => const RecentView(),
     "detailsDoc": (BuildContext context) => const DetailsDocView(),
     "addClient": (BuildContext context) => const AddClientView(),
+    "help": (BuildContext context) => const HelpView(),
   };
 
   //en caso de ruta incorrecta
