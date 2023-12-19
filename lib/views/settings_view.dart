@@ -35,6 +35,11 @@ class SettingsView extends StatelessWidget {
                 title: const Text("Origen de datos"),
                 subtitle: Text(Preferences.urlApi),
               ),
+              const ListTile(
+                leading: Icon(Icons.help_outline),
+                title: Text("Ayuda"),
+                trailing: Icon(Icons.arrow_right),
+              ),
               ListTile(
                 leading: const Icon(Icons.cloud_outlined),
                 title: const Text("Versión actual"),
