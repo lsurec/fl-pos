@@ -1285,62 +1285,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
     int certificador = docXMl.certificadorDte;
     //Documento xml sin firma
     String xmlContenido = docXMl.xmlContenido;
-    String xmlContenidoo =
-        '''<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
-  <dte:SAT ClaseDocumento="dte">
-    <dte:DTE ID="DatosCertificados">
-      <dte:DatosEmision ID="DatosEmision">
-        <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2023-11-07T16:18:03-06:00" Tipo="FACT" />
-        <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="talleriboy4@gmail.com" NITEmisor="9300000118K" NombreComercial="CORPORACION DE SERVICIOS Y REPUESTOS" NombreEmisor="CORPORACION DE SERVICIOS Y REPUESTOS, SOCIEDAD ANONIMA">
-          <dte:DireccionEmisor xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0">
-            <dte:Direccion>KILOMETRO 14 5 CARRETERA AL SALVADOR 1-0 ALDEA PUERTA PARADA ZONA 7 SANTA CATARINA PINULA, GUATEMALA</dte:Direccion>
-            <dte:CodigoPostal>010020</dte:CodigoPostal>
-            <dte:Municipio>GUATEMALA</dte:Municipio>
-            <dte:Departamento>GUATEMALA</dte:Departamento>
-            <dte:Pais>GT</dte:Pais>
-          </dte:DireccionEmisor>
-        </dte:Emisor>
-        <dte:Receptor xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" CorreoReceptor="" IDReceptor="83466371" NombreReceptor="AMANDA LUCIA YUMAN PULEX">
-          <dte:DireccionReceptor xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0">
-            <dte:Direccion>CIUDAD</dte:Direccion>
-            <dte:CodigoPostal>01007</dte:CodigoPostal>
-            <dte:Municipio>Guatemala</dte:Municipio>
-            <dte:Departamento>Guatemala</dte:Departamento>
-            <dte:Pais>GT</dte:Pais>
-          </dte:DireccionReceptor>
-        </dte:Receptor>
-        <dte:Frases xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0">
-          <dte:Frase CodigoEscenario="1" TipoFrase="1" />
-        </dte:Frases>
-        <dte:Items>
-          <dte:Item BienOServicio="S" NumeroLinea="1">
-            <dte:Cantidad>1.00</dte:Cantidad>
-            <dte:UnidadMedida>UND</dte:UnidadMedida>
-            <dte:Descripcion>asd|.sda</dte:Descripcion>
-            <dte:PrecioUnitario>1.00</dte:PrecioUnitario>
-            <dte:Precio>1.00</dte:Precio>
-            <dte:Descuento>0.00</dte:Descuento>
-            <dte:Impuestos>
-              <dte:Impuesto>
-                <dte:NombreCorto>IVA</dte:NombreCorto>
-                <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
-                <dte:MontoGravable>0.8929</dte:MontoGravable>
-                <dte:MontoImpuesto>0.1071</dte:MontoImpuesto>
-              </dte:Impuesto>
-            </dte:Impuestos>
-            <dte:Total>1.00</dte:Total>
-          </dte:Item>
-        </dte:Items>
-        <dte:Totales>
-          <dte:TotalImpuestos>
-            <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="0.1071" />
-          </dte:TotalImpuestos>
-          <dte:GranTotal>1.00</dte:GranTotal>
-        </dte:Totales>
-      </dte:DatosEmision>
-    </dte:DTE>
-  </dte:SAT>
-</dte:GTDocumento>''';
 
     //Servicios para obtener las crednecials
     CredencialeService credencialeService = CredencialeService();

@@ -367,32 +367,36 @@ class RecentViewModel extends ChangeNotifier {
     final List<AmountModel> payments = [];
 
     //proveedor de datos externo
-    final paymentVM = Provider.of<PaymentViewModel>(
-      context,
-      listen: false,
+    PagoService pagoService = PagoService();
+
+    ApiResModel resFormas = await pagoService.getFormas(
+      document.docTipoDocumento,
+      document.docSerieDocumento,
+      empresa,
+      token,
     );
 
-    //buscar foremas de pagfo
-    try {
-      for (var element in document.docCargoAbono) {
-        //forma de pago
-        AmountModel amount = AmountModel(
-          checked: false,
-          amount: element.monto,
-          diference: 0,
-          authorization: element.autorizacion,
-          reference: element.referencia,
-          payment: paymentVM.paymentList.firstWhere(
-            (payment) => payment.tipoCargoAbono == element.tipoCargoAbono,
-          ),
-        );
-
-        //agregar forma de pago
-        payments.add(amount);
-      }
-    } catch (e) {
+    if (!resFormas.succes) {
       isLoading = false;
-      //mmostrar alerta en caso de error
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: resFormas.message,
+        url: resFormas.url,
+        storeProcedure: resFormas.storeProcedure,
+      );
+
+      await NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    final List<PaymentModel> formas = resFormas.message;
+
+    if (formas.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => AlertInfoWidget(
@@ -403,6 +407,26 @@ class RecentViewModel extends ChangeNotifier {
         ),
       );
       return;
+    }
+
+    for (var formaDoc in document.docCargoAbono) {
+      for (var i = 0; i < formas.length; i++) {
+        final PaymentModel forma = formas[i];
+        if (formaDoc.tipoCargoAbono == forma.tipoCargoAbono) {
+          AmountModel amount = AmountModel(
+            checked: false,
+            amount: formaDoc.monto,
+            diference: 0,
+            authorization: formaDoc.autorizacion,
+            reference: formaDoc.referencia,
+            payment: forma,
+          );
+
+          //agregar forma de pago
+          payments.add(amount);
+          break;
+        }
+      }
     }
 
     //Objeto detalles del documento
