@@ -243,6 +243,7 @@ class RecentViewModel extends ChangeNotifier {
         ApiResModel resSku = await productService.getSku(
           token,
           item.traProducto,
+          item.traUnidadMedida,
         );
 
         //Si el api  falló
@@ -275,7 +276,7 @@ class RecentViewModel extends ChangeNotifier {
             builder: (context) => AlertInfoWidget(
               title: "Algo salió mal",
               description:
-                  "No fue posible obtener las transacciones del documento.",
+                  "No fue posible obtener las transacciones del documento. (sku)",
               onOk: () => Navigator.pop(context),
             ),
           );
@@ -320,7 +321,7 @@ class RecentViewModel extends ChangeNotifier {
             builder: (context) => AlertInfoWidget(
               title: "Algo salió mal",
               description:
-                  "No fue posible obtener las transacciones del documento.",
+                  "No fue posible obtener las transacciones del documento. (api)",
               onOk: () => Navigator.pop(context),
             ),
           );

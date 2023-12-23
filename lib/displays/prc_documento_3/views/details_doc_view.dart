@@ -29,22 +29,22 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           style: AppTheme.titleStyle,
         ),
         actions: [
-          if (!vm.showBlock)
-            IconButton(
-              onPressed: () => vm.showBlock = true,
-              icon: const Icon(
-                Icons.lock_outline,
-              ),
-              tooltip: "Desbloquear documento",
-            ),
-          if (vm.showBlock)
-            IconButton(
-              onPressed: () => vm.showBlock = false,
-              icon: const Icon(
-                Icons.lock_open_outlined,
-              ),
-              tooltip: "Bloquear documento",
-            ),
+          // if (!vm.showBlock)
+          //   IconButton(
+          //     onPressed: () => vm.showBlock = true,
+          //     icon: const Icon(
+          //       Icons.lock_outline,
+          //     ),
+          //     tooltip: "Desbloquear documento",
+          //   ),
+          // if (vm.showBlock)
+          //   IconButton(
+          //     onPressed: () => vm.showBlock = false,
+          //     icon: const Icon(
+          //       Icons.lock_open_outlined,
+          //     ),
+          //     tooltip: "Bloquear documento",
+          //   ),
         ],
       ),
       body: SingleChildScrollView(
@@ -190,33 +190,33 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     ),
                   ],
                 ),
-              const SizedBox(height: 5),
-              SizedBox(
-                height: 75,
-                child: Expanded(
-                  child: GestureDetector(
-                    onTap: vm.showBlock ? () {} : null,
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                        right: 10,
-                      ),
-                      color:
-                          vm.showBlock ? Colors.red : const Color(0xFFCCCCCC),
-                      child: const Center(
-                        child: Text(
-                          "Anular",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // const SizedBox(height: 5),
+              // SizedBox(
+              //   height: 75,
+              //   child: Expanded(
+              //     child: GestureDetector(
+              //       onTap: vm.showBlock ? () {} : null,
+              //       child: Container(
+              //         margin: const EdgeInsets.only(
+              //           top: 10,
+              //           bottom: 10,
+              //           right: 10,
+              //         ),
+              //         color:
+              //             vm.showBlock ? Colors.red : const Color(0xFFCCCCCC),
+              //         child: const Center(
+              //           child: Text(
+              //             "Anular",
+              //             style: TextStyle(
+              //               color: Colors.white,
+              //               fontSize: 17,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

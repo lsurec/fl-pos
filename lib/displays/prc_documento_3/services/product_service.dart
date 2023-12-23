@@ -11,8 +11,9 @@ class ProductService {
   Future<ApiResModel> getSku(
     String token,
     int product,
+    int um,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/sku/$product");
+    Uri url = Uri.parse("${_baseUrl}Producto/sku/$product/$um");
     try {
       //url completa
 
