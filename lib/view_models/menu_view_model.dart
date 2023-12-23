@@ -207,31 +207,30 @@ class MenuViewModel extends ChangeNotifier {
     );
   }
 
-  //Funcion recursiva para ordenar nodos infinitos, recibe no 1, y nodos si n ordenaar
-  List<MenuModel> ordenarNodos(
-    List<MenuModel> padres,
-    List<MenuModel> hijos,
-  ) {
-    //Recorrer el primer nodo
+  // Función recursiva para ordenar nodos infinitos, recibe nodos principales y nodos a ordenar
+  List<MenuModel> ordenarNodos(List<MenuModel> padres, List<MenuModel> hijos) {
+    // Recorrer los nodos principales
     for (var i = 0; i < padres.length; i++) {
-      //Item padre de la iteracion
+      // Item padre de la iteración
       MenuModel padre = padres[i];
-      //recorrer todos los hijos para buscar cual es hijo del padre actual
-      for (var j = 0; j < hijos.length; j++) {
-        //Item hijo de la iteracion
+
+      // Recorrer todos los hijos en orden inverso para evitar problemas al eliminar
+      for (var j = hijos.length - 1; j >= 0; j--) {
+        // Item hijo de la iteración
         MenuModel hijo = hijos[j];
 
-        //si coinciden (padre>hijo) agregar ese hijo al padre
+        // Si coinciden (padre > hijo), agregar ese hijo al padre
         if (padre.idChild == hijo.idFather) {
-          padre.children.add(hijo); //Agregar padre al hijo
-          //Eliminar al hijo que ya se uso para evitar repetirlo
+          padre.children.add(hijo); // Agregar hijo al padre
+          // Eliminar al hijo que ya se usó para evitar repetirlo
           hijos.removeAt(j);
-          //Llamar a la misma funcion (recursividad) se detiene cuando ya no hay hijos
+          // Llamar a la misma función (recursividad) se detiene cuando ya no hay hijos
           ordenarNodos(padre.children, hijos);
         }
       }
     }
-    //Retornnar nodos ordenados
+
+    // Retornar nodos ordenados
     return padres;
   }
 }

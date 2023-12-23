@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/details_doc_view_model.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -17,7 +16,7 @@ class DetailsDocView extends StatefulWidget {
 class _DetailsDocViewState extends State<DetailsDocView> {
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<DetailsDocViewModel>(context);
+    // final vm = Provider.of<DetailsDocViewModel>(context);
 
     final DetailDocModel document =
         ModalRoute.of(context)?.settings.arguments as DetailDocModel;
