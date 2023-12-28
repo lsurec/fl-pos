@@ -113,33 +113,29 @@ class DocumentView extends StatelessWidget {
                     ),
                     title: "Información del cliente",
                   ),
-                const SizedBox(height: 10),
-                const Divider(),
-                const SizedBox(height: 10),
-                const Text(
-                  "Vendedor",
-                  style: AppTheme.titleStyle,
-                ),
-                if (vm.sellers.isEmpty)
-                  const NotFoundWidget(
-                    text: "No hay elementos",
-                    icon: Icon(
-                      Icons.browser_not_supported_outlined,
-                      size: 50,
-                    ),
-                  ),
                 if (vm.sellers.isNotEmpty)
-                  DropdownButton<SellerModel>(
-                    isExpanded: true,
-                    dropdownColor: AppTheme.backroundColor,
-                    value: vm.vendedorSelect,
-                    onChanged: (value) => vm.changeSeller(value),
-                    items: vm.sellers.map((seller) {
-                      return DropdownMenuItem<SellerModel>(
-                        value: seller,
-                        child: Text(seller.nomCuentaCorrentista),
-                      );
-                    }).toList(),
+                  Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      const Text(
+                        "Vendedor",
+                        style: AppTheme.titleStyle,
+                      ),
+                      DropdownButton<SellerModel>(
+                        isExpanded: true,
+                        dropdownColor: AppTheme.backroundColor,
+                        value: vm.vendedorSelect,
+                        onChanged: (value) => vm.changeSeller(value),
+                        items: vm.sellers.map((seller) {
+                          return DropdownMenuItem<SellerModel>(
+                            value: seller,
+                            child: Text(seller.nomCuentaCorrentista),
+                          );
+                        }).toList(),
+                      ),
+                    ],
                   ),
               ],
             ),

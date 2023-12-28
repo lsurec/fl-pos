@@ -70,10 +70,13 @@ class DocumentoViewModel extends ChangeNotifier {
       return;
     }
 
-    //si hay vendedor seleccionado mostrar mo
-    if (documentVM.vendedorSelect == null) {
-      NotificationService.showSnackbar("No se ha seleccionado un vendedor.");
-      return;
+    //si hay vendedores debe seleconarse uno
+    if (documentVM.sellers.isNotEmpty) {
+      //si hay vendedor seleccionado mostrar mensaje
+      if (documentVM.vendedorSelect == null) {
+        NotificationService.showSnackbar("No se ha seleccionado un vendedor.");
+        return;
+      }
     }
 
     //si no hay transacciones mostrar mensaje
