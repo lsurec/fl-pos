@@ -93,12 +93,12 @@ class DocumentoViewModel extends ChangeNotifier {
         NotificationService.showSnackbar("No se ha agregado ningun pago.");
         return;
       }
-    }
 
-    // si no se ha pagado el total mostrar mensaje
-    if (paymentVM.saldo != 0) {
-      NotificationService.showSnackbar("Tinene un saldo pendiente de pagar.");
-      return;
+      // si no se ha pagado el total mostrar mensaje
+      if (paymentVM.saldo != 0) {
+        NotificationService.showSnackbar("Tinene un saldo pendiente de pagar.");
+        return;
+      }
     }
 
     //si todas las validaciones son correctas navegar a resumen del documento

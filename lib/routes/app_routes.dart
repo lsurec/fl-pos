@@ -19,7 +19,8 @@ class AppRoutes {
     'confirm': (BuildContext context) => const ConfirmDocView(),
     'selectClient': (BuildContext context) => const SelectClientView(),
     //Display documento pos (factura)
-    'prcDocumento_3': (BuildContext context) => const DocumentoView(),
+    'withoutPayment': (BuildContext context) => const Tabs2View(),
+    'withPayment': (BuildContext context) => const Tabs3View(),
     //Display configuracion local
     "shrLocalConfig": (BuildContext context) => const LocalSettingsView(),
     "print": (BuildContext context) => const PrintView(),

@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/widgets/user_widget.dart';
+
 export 'package:flutter_post_printer_example/widgets/not_found_widget.dart';
 export 'package:flutter_post_printer_example/widgets/data_user_widget.dart';
 export 'package:flutter_post_printer_example/widgets/countdown_circle_widget.dart';

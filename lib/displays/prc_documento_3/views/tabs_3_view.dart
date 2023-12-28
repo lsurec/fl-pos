@@ -2,19 +2,18 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
-import 'package:flutter_post_printer_example/widgets/user_widget.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DocumentoView extends StatefulWidget {
-  const DocumentoView({Key? key}) : super(key: key);
+class Tabs3View extends StatefulWidget {
+  const Tabs3View({Key? key}) : super(key: key);
 
   @override
-  State<DocumentoView> createState() => _DocumentoViewState();
+  State<Tabs3View> createState() => _Tabs3ViewState();
 }
 
-class _DocumentoViewState extends State<DocumentoView>
+class _Tabs3ViewState extends State<Tabs3View>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -22,13 +21,6 @@ class _DocumentoViewState extends State<DocumentoView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
-  }
-
-  loadData(BuildContext context) {
-    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
-    vmFactura.loadData(context);
   }
 
   @override

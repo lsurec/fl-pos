@@ -6,6 +6,8 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../displays/prc_documento_3/view_models/view_models.dart';
+
 class MenuViewModel extends ChangeNotifier {
   //Lista que se muestra en pantalla
   final List<MenuModel> menuActive = [];
@@ -20,17 +22,37 @@ class MenuViewModel extends ChangeNotifier {
   String? docuentoName;
 
   //navegar a ruta
-  void navigateDisplay(
+  Future<void> navigateDisplay(
     BuildContext context,
     String route,
     int? tipoDocumento,
     String nameDisplay,
     String? docName,
-  ) {
+  ) async {
     //asiganro valores para la pantalla
     documento = tipoDocumento;
     name = nameDisplay;
     docuentoName = docName;
+
+    if (route.toLowerCase() == "prcdocumento_3") {
+      final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+      final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
+      final vmHome = Provider.of<HomeViewModel>(context, listen: false);
+
+      vmHome.isLoading = true;
+      await vmFactura.loadData(context);
+
+      vmHome.isLoading = false;
+
+      if (vmPayment.paymentList.isEmpty) {
+        Navigator.pushNamed(context, "withoutPayment");
+        return;
+      }
+
+      Navigator.pushNamed(context, "withPayment");
+      return;
+    }
+
     Navigator.pushNamed(context, route);
   }
 
