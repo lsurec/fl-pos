@@ -106,6 +106,28 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getTextCuenta() {
+    String fileName = "Cuenta";
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel param = parametros[i];
+
+      //buscar nombre del campo en el parametro 57
+      if (param.parametro == 57) {
+        fileName = param.paCaracter ?? "Cuenta";
+        break;
+      }
+    }
+
+    fileName = capitalizeFirstLetter(fileName);
+
+    return fileName;
+  }
+
+  String capitalizeFirstLetter(String text) {
+    return text[0].toUpperCase() + text.substring(1).toLowerCase();
+  }
+
   Future<void> loadParametros(BuildContext context) async {
     parametros.clear();
     ParametroService parametroService = ParametroService();

@@ -51,8 +51,8 @@ class DocumentView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Cliente",
+                    Text(
+                      vm.getTextCuenta(),
                       style: AppTheme.titleStyle,
                     ),
                     IconButton(
@@ -63,7 +63,7 @@ class DocumentView extends StatelessWidget {
                       icon: const Icon(
                         Icons.person_add_outlined,
                       ),
-                      tooltip: "Nuevo cliente",
+                      tooltip: "Nueva Cuenta",
                     )
                   ],
                 ),
@@ -77,7 +77,7 @@ class DocumentView extends StatelessWidget {
                         vm.performSearchClient(context),
                     textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
-                      hintText: 'Cliente',
+                      hintText: vm.getTextCuenta(),
                       suffixIcon: IconButton(
                         color: AppTheme.primary,
                         icon: const Icon(Icons.search),
@@ -115,6 +115,7 @@ class DocumentView extends StatelessWidget {
                   ),
                 if (vm.sellers.isNotEmpty)
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 10),
                       const Divider(),
