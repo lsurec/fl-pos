@@ -45,7 +45,7 @@ class _DocumentoViewState extends State<DocumentoView>
   Widget build(BuildContext context) {
     final vm = Provider.of<DocumentoViewModel>(context);
     final vmMenu = Provider.of<MenuViewModel>(context);
-    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+    final vmDoc = Provider.of<DocumentViewModel>(context);
 
     return Stack(
       children: [

@@ -85,10 +85,14 @@ class DocumentoViewModel extends ChangeNotifier {
       return;
     }
 
-    //si no hay pagos agregados mostar mensaje
-    if (paymentVM.amounts.isEmpty) {
-      NotificationService.showSnackbar("No se ha agregado ningun pago.");
-      return;
+    //si hay formas de pago validar quye se agregue alguna
+
+    if (paymentVM.paymentList.isNotEmpty) {
+      //si no hay pagos agregados mostar mensaje
+      if (paymentVM.amounts.isEmpty) {
+        NotificationService.showSnackbar("No se ha agregado ningun pago.");
+        return;
+      }
     }
 
     // si no se ha pagado el total mostrar mensaje

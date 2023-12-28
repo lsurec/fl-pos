@@ -3,7 +3,7 @@ import 'dart:convert';
 class DocEstructuraModel {
   double docTraMonto;
   double docCaMonto;
-  int docCuentaVendedor;
+  int? docCuentaVendedor;
   int docIdCertificador;
   int docIdDocumentoRef;
   int? docFelNumeroDocumento;

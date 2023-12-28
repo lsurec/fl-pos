@@ -187,7 +187,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     );
 
     //vendedor del docummento
-    String vendedor = docVM.vendedorSelect!.nomCuentaCorrentista;
+    String vendedor = docVM.vendedorSelect?.nomCuentaCorrentista ?? "";
 
     //fecha del usuario
     DateTime now = DateTime.now();
@@ -1656,7 +1656,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String tokenUser = loginVM.token;
 
     //valores necesarios para el docuemento
-    int cuentaVendedor = docVM.vendedorSelect!.cuentaCorrentista;
+    int? cuentaVendedor =
+        docVM.sellers.isEmpty ? null : docVM.vendedorSelect!.cuentaCorrentista;
     int cuentaCorrentisata = docVM.clienteSelect!.cuentaCorrentista;
     int tipoDocumento = menuVM.documento!;
     String serieDocumento = docVM.serieSelect!.serieDocumento!;

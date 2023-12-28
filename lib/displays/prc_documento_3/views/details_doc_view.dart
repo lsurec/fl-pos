@@ -101,18 +101,24 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                 "Dirección: ${document.client.facturaDireccion}",
                 style: AppTheme.normalStyle,
               ),
-              const SizedBox(height: 5),
-              const Divider(),
-              const SizedBox(height: 5),
-              const Text(
-                "Vendedor",
-                style: AppTheme.titleStyle,
-              ),
-              const SizedBox(height: 5),
-              Text(
-                document.seller,
-                style: AppTheme.normalStyle,
-              ),
+              if (document.seller != null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    const Text(
+                      "Vendedor",
+                      style: AppTheme.titleStyle,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      document.seller!,
+                      style: AppTheme.normalStyle,
+                    ),
+                  ],
+                ),
               const SizedBox(height: 5),
               const Divider(),
               const SizedBox(height: 5),

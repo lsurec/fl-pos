@@ -2,7 +2,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 
 class DetailDocModel {
   ClientModel client;
-  String seller;
+  String? seller;
   List<TransactionDetail> transactions;
   List<AmountModel> payments;
   double subtotal;

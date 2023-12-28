@@ -151,52 +151,56 @@ class RecentViewModel extends ChangeNotifier {
       }
     }
 
-    //buscar nombre del vendedor del documento
-    ApiResModel resVendedor = await cuentaService.getNombreCuenta(
-      token,
-      document.docCuentaVendedor,
-    );
-
-    //Si el api  falló
-    if (!resVendedor.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resVendedor.message,
-        url: resVendedor.url,
-        storeProcedure: resVendedor.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    //vendedor
-    RespLogin vendedor = resVendedor.message;
-
-    //si el api estuvo bien pero no se encontró el vendedor
-    if (!vendedor.success) {
-      isLoading = false;
-      //mmostrar alerta
-      showDialog(
-        context: context,
-        builder: (context) => AlertInfoWidget(
-          title: "Algo salió mal",
-          description:
-              "No fue posible obtener el vendedor asignado al documento.",
-          onOk: () => Navigator.pop(context),
-        ),
-      );
-      return;
-    }
-
     //vendedor del docuemmtnp
-    String seller = vendedor.data;
+    String? seller;
+
+    if (document.docCuentaVendedor != null) {
+      //buscar nombre del vendedor del documento
+      ApiResModel resVendedor = await cuentaService.getNombreCuenta(
+        token,
+        document.docCuentaVendedor!,
+      );
+
+      //Si el api  falló
+      if (!resVendedor.succes) {
+        isLoading = false;
+
+        ErrorModel error = ErrorModel(
+          date: DateTime.now(),
+          description: resVendedor.message,
+          url: resVendedor.url,
+          storeProcedure: resVendedor.storeProcedure,
+        );
+
+        await NotificationService.showErrorView(
+          context,
+          error,
+        );
+
+        return;
+      }
+
+      //vendedor
+      RespLogin vendedor = resVendedor.message;
+
+      //si el api estuvo bien pero no se encontró el vendedor
+      if (!vendedor.success) {
+        isLoading = false;
+        //mmostrar alerta
+        showDialog(
+          context: context,
+          builder: (context) => AlertInfoWidget(
+            title: "Algo salió mal",
+            description:
+                "No fue posible obtener el vendedor asignado al documento.",
+            onOk: () => Navigator.pop(context),
+          ),
+        );
+        return;
+      }
+
+      seller = vendedor.data;
+    }
 
     //servicio para los productos
     ProductService productService = ProductService();
