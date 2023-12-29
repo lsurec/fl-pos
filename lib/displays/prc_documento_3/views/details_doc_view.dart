@@ -85,7 +85,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
               const Divider(),
               const SizedBox(height: 5),
               const Text(
-                "Cliente",
+                "Receptor",
                 style: AppTheme.titleStyle,
               ),
               const SizedBox(height: 5),

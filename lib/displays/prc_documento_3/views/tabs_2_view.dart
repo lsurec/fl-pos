@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -21,6 +22,13 @@ class _Tabs2ViewState extends State<Tabs2View>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
+  }
+
+  loadData(BuildContext context) {
+    //cargar documento guardado en el dispositivo
+    DocumentService documentService = DocumentService();
+    documentService.loadDocumentSave(context);
   }
 
   @override

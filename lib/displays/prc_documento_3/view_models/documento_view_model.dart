@@ -105,6 +105,7 @@ class DocumentoViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, "confirm");
   }
 
+  //TODO: REVISAR FUNCION RECUPERAR PEDIDO
   //cargar datos necesarios
   Future<void> loadData(BuildContext context) async {
     //view model externo
@@ -135,9 +136,5 @@ class DocumentoViewModel extends ChangeNotifier {
 
     //finalizar proceso
     isLoading = false;
-
-    //cargar documento guardado en el dispositivo
-    DocumentService documentService = DocumentService();
-    documentService.loadDocumentSave(context);
   }
 }

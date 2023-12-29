@@ -45,18 +45,24 @@ class ConfirmDocView extends StatelessWidget {
                       adress: docVM.clienteSelect!.facturaDireccion,
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "Vendedor",
-                    style: AppTheme.titleStyle,
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    docVM.vendedorSelect!.nomCuentaCorrentista,
-                    style: AppTheme.normalStyle,
-                  ),
+                  if (docVM.sellers.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        const Text(
+                          "Vendedor",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.vendedorSelect!.nomCuentaCorrentista,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 5),
                   const Divider(),
                   const SizedBox(height: 5),
