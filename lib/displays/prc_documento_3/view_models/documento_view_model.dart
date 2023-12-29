@@ -105,7 +105,6 @@ class DocumentoViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, "confirm");
   }
 
-  //TODO: REVISAR FUNCION RECUPERAR PEDIDO
   //cargar datos necesarios
   Future<void> loadData(BuildContext context) async {
     //view model externo
