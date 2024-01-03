@@ -14,7 +14,7 @@ class AddClientViewModel extends ChangeNotifier {
   //Key for form
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   //formulario completo
-  final Map<String, String> formValues = {
+  final Map<String, dynamic> formValues = {
     'nombre': '',
     'direccion': '',
     'telefono': '',
@@ -67,6 +67,7 @@ class AddClientViewModel extends ChangeNotifier {
     CuentaService cuentaService = CuentaService();
 
     CuentaCorrentistaModel cuenta = CuentaCorrentistaModel.fromMap(formValues);
+    cuenta.id = 0;
 
     isLoading = true;
     ApiResModel res = await cuentaService.postCuenta(

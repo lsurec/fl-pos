@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class CuentaCorrentistaModel {
+  int id;
   String nombre;
   String direccion;
   String telefono;
@@ -8,6 +9,7 @@ class CuentaCorrentistaModel {
   String nit;
 
   CuentaCorrentistaModel({
+    required this.id,
     required this.nombre,
     required this.direccion,
     required this.telefono,
@@ -22,6 +24,7 @@ class CuentaCorrentistaModel {
 
   factory CuentaCorrentistaModel.fromMap(Map<String, dynamic> json) =>
       CuentaCorrentistaModel(
+        id: json["id"],
         nombre: json["nombre"],
         direccion: json["direccion"],
         telefono: json["telefono"],
@@ -30,6 +33,7 @@ class CuentaCorrentistaModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "id": id,
         "nombre": nombre,
         "direccion": direccion,
         "telefono": telefono,
