@@ -121,46 +121,44 @@ class CargoDescuentoView extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final TraInternaModel operacion =
                       transaction.operaciones[index];
-                  return Expanded(
-                    child: Card(
-                        color: AppTheme.grayAppBar,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                activeColor: AppTheme.primary,
-                                value: operacion.isChecked,
-                                onChanged: (value) => vm.changeCheckedMonto(
-                                  value,
-                                  indexDocument,
-                                  index,
-                                ),
+                  return Card(
+                      color: AppTheme.grayAppBar,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              activeColor: AppTheme.primary,
+                              value: operacion.isChecked,
+                              onChanged: (value) => vm.changeCheckedMonto(
+                                value,
+                                indexDocument,
+                                index,
                               ),
-                              Text(
-                                operacion.cargo == 0 ? "Descuento" : "Cargo",
-                                style: const TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                              ),
-                              const Spacer(),
-                              Text(
-                                operacion.cargo == 0
-                                    ? currencyFormat.format(operacion.descuento)
-                                    : currencyFormat.format(operacion.cargo),
-                                style: TextStyle(
+                            ),
+                            Text(
+                              operacion.cargo == 0 ? "Descuento" : "Cargo",
+                              style: const TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: operacion.cargo == 0
-                                      ? Colors.red
-                                      : Colors.green,
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
-                  );
+                                  color: Colors.grey),
+                            ),
+                            const Spacer(),
+                            Text(
+                              operacion.cargo == 0
+                                  ? currencyFormat.format(operacion.descuento)
+                                  : currencyFormat.format(operacion.cargo),
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: operacion.cargo == 0
+                                    ? Colors.red
+                                    : Colors.green,
+                              ),
+                            )
+                          ],
+                        ),
+                      ));
                 },
               ),
             ],
