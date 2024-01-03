@@ -111,7 +111,7 @@ class DocumentView extends StatelessWidget {
                       nit: vm.clienteSelect!.facturaNit,
                       adress: vm.clienteSelect!.facturaDireccion,
                     ),
-                    title: "Información del cliente",
+                    title: vm.getTextCuenta(),
                   ),
                 if (vm.sellers.isNotEmpty)
                   Column(
