@@ -36,6 +36,9 @@ class ProductViewModel extends ChangeNotifier {
 
   //controlador input cantidad, valor inicial = 0
   final TextEditingController controllerNum = TextEditingController(text: '1');
+  final TextEditingController controllerPrice =
+      TextEditingController(text: '0');
+
   //valor del input en numero
   int valueNum = 0;
 
@@ -73,6 +76,7 @@ class ProductViewModel extends ChangeNotifier {
     controllerNum.text = "1";
     valueNum = 1;
     price = 0;
+    controllerPrice.text = "$price";
 
     //inciiar proceso
     isLoading = true;
@@ -193,6 +197,7 @@ class ProductViewModel extends ChangeNotifier {
         selectedPrice = unitarios.first;
         total = selectedPrice!.precioU;
         price = selectedPrice!.precioU;
+        controllerPrice.text = "$price";
       }
 
       return ApiResModel(
@@ -245,6 +250,7 @@ class ProductViewModel extends ChangeNotifier {
       selectedPrice = unitarios.first;
       total = selectedPrice!.precioU;
       price = selectedPrice!.precioU;
+      controllerPrice.text = "$price";
     }
 
     return ApiResModel(
@@ -317,6 +323,13 @@ class ProductViewModel extends ChangeNotifier {
     calculateTotal(); //calcuar total
   }
 
+  void chanchePrice(String value) {
+    double parsedValue = double.tryParse(value) ?? 0;
+
+    selectedPrice!.precioU = parsedValue;
+    calculateTotal();
+  }
+
   //incrementrar cantidad
   void incrementNum() {
     valueNum++;
@@ -338,6 +351,7 @@ class ProductViewModel extends ChangeNotifier {
   void changePrice(UnitarioModel? value) {
     selectedPrice = value;
     price = selectedPrice!.precioU;
+    controllerPrice.text = "$price";
     calculateTotal(); //calcular total
   }
 
@@ -411,6 +425,13 @@ class ProductViewModel extends ChangeNotifier {
     //si el monto es 0 o menor a 0 mostar menaje
     if ((int.tryParse(controllerNum.text) ?? 0) == 0) {
       NotificationService.showSnackbar("La cantidad debe ser mayor a 0");
+      return;
+    }
+
+    if ((double.tryParse(controllerPrice.text) ?? 0) < price) {
+      NotificationService.showSnackbar(
+        "El precio no puede ser menor al precio autorizado. Comuniquese con el encargo de inventarios.",
+      );
       return;
     }
 
