@@ -525,8 +525,8 @@ class DocumentService {
     counter = -1;
 
     //agregar vendedor del docuemto
-    for (var i = 0; i < docVM.sellers.length; i++) {
-      final vendedor = docVM.sellers[i];
+    for (var i = 0; i < docVM.cuentasCorrentistasRef.length; i++) {
+      final vendedor = docVM.cuentasCorrentistasRef[i];
       if (vendedor.cuentaCorrentista ==
           saveDocument.vendedor?.cuentaCorrentista) {
         counter = i;
@@ -538,7 +538,7 @@ class DocumentService {
 
     //si el venodor no se encuntra no asignar niguno
     if (counter != -1) {
-      docVM.changeSeller(docVM.sellers[counter]);
+      docVM.changeSeller(docVM.cuentasCorrentistasRef[counter]);
     }
 
     docVM.clienteSelect = null;

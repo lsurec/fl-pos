@@ -263,7 +263,10 @@ class PrintViewModel extends ChangeNotifier {
       );
     }
 
-    String vendedor = docVM.vendedorSelect!.nomCuentaCorrentista;
+    String vendedor = "";
+    if (docVM.cuentasCorrentistasRef.isNotEmpty) {
+      vendedor = docVM.vendedorSelect!.nomCuentaCorrentista;
+    }
 
     Certificador certificador = Certificador(
       nombre: encabezado.certificadorDteNombre!,
@@ -654,10 +657,13 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    bytes += generator.text(
-      "Vendedor: ${docPrintModel.vendedor}",
-      styles: center,
-    );
+    //Si la lista de vendedores no está vacia imprimir
+    if (docVM.cuentasCorrentistasRef.isNotEmpty) {
+      bytes += generator.text(
+        "Vendedor: ${docPrintModel.vendedor}",
+        styles: center,
+      );
+    }
 
     bytes += generator.emptyLines(1);
 

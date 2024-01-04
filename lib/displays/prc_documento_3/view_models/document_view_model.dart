@@ -30,8 +30,8 @@ class DocumentViewModel extends ChangeNotifier {
   SerieModel? serieSelect;
 
   //listas globales
-  final List<ClientModel> clients = [];
-  final List<SellerModel> sellers = [];
+  final List<ClientModel> cuentasCorrentistas = []; //cunetas correntisat
+  final List<SellerModel> cuentasCorrentistasRef = []; //cuenta correntisat ref
   final List<SerieModel> series = [];
   final List<TipoTransaccionModel> tiposTransaccion = [];
   final List<ParametroModel> parametros = [];
@@ -284,7 +284,7 @@ class DocumentViewModel extends ChangeNotifier {
     vendedorSelect = null;
 
     //limmpiar lista vendedor
-    sellers.clear();
+    cuentasCorrentistasRef.clear();
 
     //View models externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
@@ -325,11 +325,11 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //agregar vendedores
-    sellers.addAll(res.message);
+    cuentasCorrentistasRef.addAll(res.message);
 
     //si solo hay un vendedor agregarlo por defecto
-    if (sellers.length == 1) {
-      vendedorSelect = sellers.first;
+    if (cuentasCorrentistasRef.length == 1) {
+      vendedorSelect = cuentasCorrentistasRef.first;
     }
 
     notifyListeners();
@@ -387,7 +387,7 @@ class DocumentViewModel extends ChangeNotifier {
     String token = loginVM.token;
 
     //limpiar lista clientes
-    clients.clear();
+    cuentasCorrentistas.clear();
 
     //intancia del servicio
     CuentaService cuentaService = CuentaService();
@@ -424,23 +424,24 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //agregar clientes seleccionados
-    clients.addAll(res.message);
+    cuentasCorrentistas.addAll(res.message);
 
     // si no se encontró nada mostrar mensaje
-    if (clients.isEmpty) {
+    if (cuentasCorrentistas.isEmpty) {
       NotificationService.showSnackbar('No se encontró ningún registro.');
       return;
     }
 
     //Si solo hay un cliente seleccionarlo por defecto
-    if (clients.length == 1) {
-      clienteSelect = clients.first;
+    if (cuentasCorrentistas.length == 1) {
+      clienteSelect = cuentasCorrentistas.first;
       notifyListeners();
       return;
     }
 
     //si son varias coicidencias navegar a pantalla seleccionar cliente
-    Navigator.pushNamed(context, "selectClient", arguments: clients);
+    Navigator.pushNamed(context, "selectClient",
+        arguments: cuentasCorrentistas);
   }
 
   //Seleccionar clinte

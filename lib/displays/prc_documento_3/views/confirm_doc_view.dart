@@ -45,7 +45,7 @@ class ConfirmDocView extends StatelessWidget {
                       adress: docVM.clienteSelect!.facturaDireccion,
                     ),
                   ),
-                  if (docVM.sellers.isNotEmpty)
+                  if (docVM.cuentasCorrentistasRef.isNotEmpty)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

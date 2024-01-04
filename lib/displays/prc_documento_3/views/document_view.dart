@@ -149,7 +149,7 @@ class DocumentView extends StatelessWidget {
                       ),
                     ],
                   ),
-                if (vm.sellers.isNotEmpty)
+                if (vm.cuentasCorrentistasRef.isNotEmpty)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -165,7 +165,7 @@ class DocumentView extends StatelessWidget {
                         dropdownColor: AppTheme.backroundColor,
                         value: vm.vendedorSelect,
                         onChanged: (value) => vm.changeSeller(value),
-                        items: vm.sellers.map((seller) {
+                        items: vm.cuentasCorrentistasRef.map((seller) {
                           return DropdownMenuItem<SellerModel>(
                             value: seller,
                             child: Text(seller.nomCuentaCorrentista),

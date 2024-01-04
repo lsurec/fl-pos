@@ -1628,8 +1628,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String tokenUser = loginVM.token;
 
     //valores necesarios para el docuemento
-    int? cuentaVendedor =
-        docVM.sellers.isEmpty ? null : docVM.vendedorSelect!.cuentaCorrentista;
+    int? cuentaVendedor = docVM.cuentasCorrentistasRef.isEmpty
+        ? null
+        : docVM.vendedorSelect!.cuentaCorrentista;
     int cuentaCorrentisata = docVM.clienteSelect!.cuentaCorrentista;
     String cuentaCta = docVM.clienteSelect!.cuentaCta;
     int tipoDocumento = menuVM.documento!;
@@ -1664,7 +1665,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
                   transaction.precio!.precio ? transaction.precio!.id : null,
               traFactorConversion:
                   !transaction.precio!.precio ? transaction.precio!.id : null,
-              traTipoTransaccion: 20,
+              traTipoTransaccion:
+                  resolveTipoTransaccion(4, scaffoldKey.currentContext!),
               traMonto: operacion.cargo,
             ),
           );
@@ -1684,7 +1686,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
                   transaction.precio!.precio ? transaction.precio!.id : null,
               traFactorConversion:
                   !transaction.precio!.precio ? transaction.precio!.id : null,
-              traTipoTransaccion: 8,
+              traTipoTransaccion:
+                  resolveTipoTransaccion(3, scaffoldKey.currentContext!),
               traMonto: operacion.descuento,
             ),
           );
