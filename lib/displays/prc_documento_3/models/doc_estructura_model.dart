@@ -10,7 +10,9 @@ class DocEstructuraModel {
   String? docFelSerie;
   String? docFelUUID;
   DateTime? docFelFechaCertificacion;
+  String docFechaDocumento;
   int docCuentaCorrentista;
+  String docCuentaCta;
   int docTipoDocumento;
   String docSerieDocumento;
   int docEmpresa;
@@ -32,7 +34,9 @@ class DocEstructuraModel {
     required this.docFelSerie,
     required this.docFelUUID,
     required this.docFelFechaCertificacion,
+    required this.docFechaDocumento,
     required this.docCuentaCorrentista,
+    required this.docCuentaCta,
     required this.docTipoDocumento,
     required this.docSerieDocumento,
     required this.docEmpresa,
@@ -54,14 +58,16 @@ class DocEstructuraModel {
       DocEstructuraModel(
         docTraMonto: json["Doc_Tra_Monto"],
         docCaMonto: json["Doc_CA_Monto"],
-        docCuentaVendedor: json["Doc_Cuenta_Vendedor"],
+        docCuentaVendedor: json["Doc_Cuenta_Correntista_Ref"],
         docIdCertificador: json["Doc_ID_Certificador"],
         docIdDocumentoRef: json["Doc_ID_Documento_Ref"],
         docFelNumeroDocumento: json["Doc_FEL_numeroDocumento"],
         docFelSerie: json["Doc_FEL_Serie"],
         docFelUUID: json["Doc_FEL_UUID"],
         docFelFechaCertificacion: json["Doc_FEL_fechaCertificacion"],
+        docFechaDocumento: json["Doc_Fecha_Documento"],
         docCuentaCorrentista: json["Doc_Cuenta_Correntista"],
+        docCuentaCta: json["Doc_Cuenta_Cta"],
         docTipoDocumento: json["Doc_Tipo_Documento"],
         docSerieDocumento: json["Doc_Serie_Documento"],
         docEmpresa: json["Doc_Empresa"],
@@ -81,13 +87,15 @@ class DocEstructuraModel {
         "Doc_Tra_Monto": docTraMonto,
         "Doc_CA_Monto": docCaMonto,
         "Doc_ID_Certificador": docIdCertificador,
-        "Doc_Cuenta_Vendedor": docCuentaVendedor,
+        "Doc_Cuenta_Correntista_Ref": docCuentaVendedor,
         "Doc_ID_Documento_Ref": docIdDocumentoRef,
         "Doc_FEL_numeroDocumento": docFelNumeroDocumento,
         "Doc_FEL_Serie": docFelSerie,
         "Doc_FEL_UUID": docFelUUID,
         "Doc_FEL_fechaCertificacion": docFelFechaCertificacion,
+        "Doc_Fecha_Documento": docFechaDocumento,
         "Doc_Cuenta_Correntista": docCuentaCorrentista,
+        "Doc_Cuenta_Cta": docCuentaCta,
         "Doc_Tipo_Documento": docTipoDocumento,
         "Doc_Serie_Documento": docSerieDocumento,
         "Doc_Empresa": docEmpresa,

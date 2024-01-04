@@ -947,45 +947,17 @@ class ConfirmDocViewModel extends ChangeNotifier {
     int tipo,
     BuildContext context,
   ) {
-    //1.Producto
-    //2. Servicio
-    //3. Cargo
-    ///4. Descuento
-
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    //Buscar ek tipo de transaciion que corresponde
-    switch (tipo) {
-      case 1: //Venta de produto
-        for (var transaccion in docVM.tiposTransaccion) {
-          if (transaccion.descripcion == "Venta de Producto") {
-            return transaccion.tipoTransaccion;
-          }
-        }
-        break;
-      case 2: //Venta de servicio
-        for (var transaccion in docVM.tiposTransaccion) {
-          if (transaccion.descripcion == "Venta de Servicio") {
-            return transaccion.tipoTransaccion;
-          }
-        }
-        break;
-      case 3: //Cargo
-        for (var transaccion in docVM.tiposTransaccion) {
-          if (transaccion.descripcion == "Cargo Venta") {
-            return transaccion.tipoTransaccion;
-          }
-        }
-        break;
-      case 4: //Descuento
-        for (var transaccion in docVM.tiposTransaccion) {
-          if (transaccion.descripcion == "Descuento Venta") {
-            return transaccion.tipoTransaccion;
-          }
-        }
-        break;
-      default:
+    for (var i = 0; i < docVM.tiposTransaccion.length; i++) {
+      final TipoTransaccionModel tipoTra = docVM.tiposTransaccion[i];
+
+      if (tipo == tipoTra.tipo) {
+        return tipoTra.tipoTransaccion;
+      }
     }
+
+    //si no encunetra el tipo
     return 0;
   }
 
@@ -1659,6 +1631,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     int? cuentaVendedor =
         docVM.sellers.isEmpty ? null : docVM.vendedorSelect!.cuentaCorrentista;
     int cuentaCorrentisata = docVM.clienteSelect!.cuentaCorrentista;
+    String cuentaCta = docVM.clienteSelect!.cuentaCta;
     int tipoDocumento = menuVM.documento!;
     String serieDocumento = docVM.serieSelect!.serieDocumento!;
     int empresa = localVM.selectedEmpresa!.empresa;
@@ -1691,8 +1664,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
                   transaction.precio!.precio ? transaction.precio!.id : null,
               traFactorConversion:
                   !transaction.precio!.precio ? transaction.precio!.id : null,
-              traTipoTransaccion:
-                  resolveTipoTransaccion(3, scaffoldKey.currentContext!),
+              traTipoTransaccion: 20,
               traMonto: operacion.cargo,
             ),
           );
@@ -1712,8 +1684,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
                   transaction.precio!.precio ? transaction.precio!.id : null,
               traFactorConversion:
                   !transaction.precio!.precio ? transaction.precio!.id : null,
-              traTipoTransaccion:
-                  resolveTipoTransaccion(4, scaffoldKey.currentContext!),
+              traTipoTransaccion: 8,
               traMonto: operacion.descuento,
             ),
           );
@@ -1779,6 +1750,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
       totalCA += amount.amount;
     }
 
+    DateTime myDateTime = DateTime.now();
+    String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     final DocEstructuraModel doc = DocEstructuraModel(
       docCaMonto: totalCA,
@@ -1791,6 +1764,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docFelUUID: null,
       docFelFechaCertificacion: null,
       docCuentaCorrentista: cuentaCorrentisata,
+      docCuentaCta: cuentaCta,
+      docFechaDocumento: serializedDateTime,
       docTipoDocumento: tipoDocumento,
       docSerieDocumento: serieDocumento,
       docEmpresa: empresa,

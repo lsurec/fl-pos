@@ -3,10 +3,12 @@ import 'dart:convert';
 class TipoTransaccionModel {
   int tipoTransaccion;
   String descripcion;
+  int tipo;
 
   TipoTransaccionModel({
     required this.tipoTransaccion,
     required this.descripcion,
+    required this.tipo,
   });
 
   factory TipoTransaccionModel.fromJson(String str) =>
@@ -18,10 +20,12 @@ class TipoTransaccionModel {
       TipoTransaccionModel(
         tipoTransaccion: json["tipo_Transaccion"],
         descripcion: json["descripcion"],
+        tipo: json["tipo"],
       );
 
   Map<String, dynamic> toMap() => {
         "tipo_Transaccion": tipoTransaccion,
         "descripcion": descripcion,
+        "tipo": tipo,
       };
 }
