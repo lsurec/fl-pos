@@ -102,20 +102,21 @@ class ProductView extends StatelessWidget {
                   if (vm.prices.isEmpty)
                     const Text("No se encontraron precios"),
                   const SizedBox(height: 5),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Precio Unitario",
-                      labelText: "Precio Unitario",
+                  if (vm.prices.isNotEmpty)
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: "Precio Unitario",
+                        labelText: "Precio Unitario",
+                      ),
+                      controller: vm.controllerPrice,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^(\d+)?\.?\d{0,2}'))
+                      ],
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) => vm.chanchePrice(value),
                     ),
-                    controller: vm.controllerPrice,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(
-                          RegExp(r'^(\d+)?\.?\d{0,2}'))
-                    ],
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) => vm.chanchePrice(value), //TODO:cambiar
-                  ),
-                  Text(currencyFormat.format(vm.price)),
+                  // Text(currencyFormat.format(vm.price)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

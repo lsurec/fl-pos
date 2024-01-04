@@ -165,6 +165,8 @@ class DocCargoAbono {
 }
 
 class DocTransaccion {
+  int traConsecutivoInterno;
+  int? traConsecutivoInternoPadre;
   int traBodega;
   int traProducto;
   int traUnidadMedida;
@@ -177,6 +179,8 @@ class DocTransaccion {
   double traMonto;
 
   DocTransaccion({
+    required this.traConsecutivoInterno,
+    required this.traConsecutivoInternoPadre,
     required this.traBodega,
     required this.traProducto,
     required this.traUnidadMedida,
@@ -195,6 +199,8 @@ class DocTransaccion {
   String toJson() => json.encode(toMap());
 
   factory DocTransaccion.fromMap(Map<String, dynamic> json) => DocTransaccion(
+        traConsecutivoInterno: json["Tra_Consecutivo_Interno"],
+        traConsecutivoInternoPadre: json["Tra_Consecutivo_Interno_Padre"],
         traBodega: json["Tra_Bodega"],
         traProducto: json["Tra_Producto"],
         traUnidadMedida: json["Tra_Unidad_Medida"],
@@ -208,6 +214,8 @@ class DocTransaccion {
       );
 
   Map<String, dynamic> toMap() => {
+        "Tra_Consecutivo_Interno": traConsecutivoInterno,
+        "Tra_Consecutivo_Interno_Padre": traConsecutivoInternoPadre,
         "Tra_Bodega": traBodega,
         "Tra_Producto": traProducto,
         "Tra_Unidad_Medida": traUnidadMedida,

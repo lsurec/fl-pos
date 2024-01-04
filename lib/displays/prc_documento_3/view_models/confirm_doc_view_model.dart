@@ -1645,16 +1645,21 @@ class ConfirmDocViewModel extends ChangeNotifier {
     //transaciciones agregadas
     final List<DocTransaccion> transactions = [];
 
+    int consectivo = 1;
     //Objeto transaccion documento para estructura documento
     for (var transaction in products) {
+      int padre = consectivo;
       final List<DocTransaccion> cargos = [];
       final List<DocTransaccion> descuentos = [];
 
       for (var operacion in transaction.operaciones) {
         //Cargo
         if (operacion.cargo != 0) {
+          consectivo++;
           cargos.add(
             DocTransaccion(
+              traConsecutivoInterno: consectivo,
+              traConsecutivoInternoPadre: padre,
               traBodega: transaction.bodega!.bodega,
               traProducto: transaction.producto.producto,
               traUnidadMedida: transaction.producto.unidadMedida,
@@ -1674,8 +1679,12 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
         //Descuento
         if (operacion.descuento != 0) {
+          consectivo++;
+
           descuentos.add(
             DocTransaccion(
+              traConsecutivoInterno: consectivo,
+              traConsecutivoInternoPadre: padre,
               traBodega: transaction.bodega!.bodega,
               traProducto: transaction.producto.producto,
               traUnidadMedida: transaction.producto.unidadMedida,
@@ -1696,6 +1705,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       transactions.add(
         DocTransaccion(
+          traConsecutivoInterno: padre,
+          traConsecutivoInternoPadre: null,
           traBodega: transaction.bodega!.bodega,
           traProducto: transaction.producto.producto,
           traUnidadMedida: transaction.producto.unidadMedida,
@@ -1719,6 +1730,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
       for (var descuento in descuentos) {
         transactions.add(descuento);
       }
+
+      consectivo++;
     }
 
     //objeto cargo abono para documento cargo abono
