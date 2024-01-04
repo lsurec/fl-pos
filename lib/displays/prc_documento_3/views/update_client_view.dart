@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/client_model.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/models/cuenta_correntista_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -63,7 +62,6 @@ class UpdateClientView extends StatelessWidget {
                       labelText: "Nit",
                     ),
                     InputWidget(
-                      //TODO:agregar telefono
                       initialValue: cuenta.telefono,
                       maxLines: 1,
                       formProperty: "telefono",
