@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final clientModel = clientModelFromMap(jsonString);
-
 import 'dart:convert';
 
 class ClientModel {
@@ -10,9 +6,11 @@ class ClientModel {
   String facturaNombre;
   String facturaNit;
   String facturaDireccion;
-  dynamic cCDireccion;
+  String cCDireccion;
   String desCuentaCta;
-  dynamic direccion1CuentaCta;
+  String direccion1CuentaCta;
+  String eMail;
+  dynamic telefono;
 
   ClientModel({
     required this.cuentaCorrentista,
@@ -20,9 +18,11 @@ class ClientModel {
     required this.facturaNombre,
     required this.facturaNit,
     required this.facturaDireccion,
-    this.cCDireccion,
+    required this.cCDireccion,
     required this.desCuentaCta,
-    this.direccion1CuentaCta,
+    required this.direccion1CuentaCta,
+    required this.eMail,
+    required this.telefono,
   });
 
   factory ClientModel.fromJson(String str) =>
@@ -39,6 +39,8 @@ class ClientModel {
         cCDireccion: json["cC_Direccion"],
         desCuentaCta: json["des_Cuenta_Cta"],
         direccion1CuentaCta: json["direccion_1_Cuenta_Cta"],
+        eMail: json["eMail"],
+        telefono: json["telefono"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -50,5 +52,7 @@ class ClientModel {
         "cC_Direccion": cCDireccion,
         "des_Cuenta_Cta": desCuentaCta,
         "direccion_1_Cuenta_Cta": direccion1CuentaCta,
+        "eMail": eMail,
+        "telefono": telefono,
       };
 }

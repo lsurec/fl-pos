@@ -36,7 +36,7 @@ class AddClientViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createClinet(BuildContext context) async {
+  Future<void> createClinet(BuildContext context, int idCuenta) async {
     //validar formulario
     if (!isValidForm()) return;
 
@@ -66,8 +66,13 @@ class AddClientViewModel extends ChangeNotifier {
 
     CuentaService cuentaService = CuentaService();
 
-    CuentaCorrentistaModel cuenta = CuentaCorrentistaModel.fromMap(formValues);
-    cuenta.id = 0;
+    CuentaCorrentistaModel cuenta = CuentaCorrentistaModel(
+        cuenta: idCuenta,
+        nombre: formValues["nombre"],
+        direccion: formValues["direccion"],
+        telefono: formValues["telefono"],
+        correo: formValues["correo"],
+        nit: formValues["nit"]);
 
     isLoading = true;
     ApiResModel res = await cuentaService.postCuenta(
@@ -128,7 +133,9 @@ class AddClientViewModel extends ChangeNotifier {
 
     if (clients.isEmpty) {
       NotificationService.showSnackbar(
-        "Se creo la cuenta, pero hubo en error al seleccionarla.",
+        idCuenta == 0
+            ? "Se creo la cuenta, pero hubo en error al seleccionarla."
+            : "Se actualizó la cuenta, pero hubo en error al seleccionarla",
       );
       return;
     }
@@ -136,7 +143,9 @@ class AddClientViewModel extends ChangeNotifier {
     if (clients.length == 1) {
       documentVM.selectClient(clients.first, context);
       NotificationService.showSnackbar(
-        "Cuenta creada y seleccionada correctamente.",
+        idCuenta == 0
+            ? "Cuenta creada y seleccionada correctamente."
+            : "Cuenta actualizada y seleccionada correctamente.",
       );
 
       return;
@@ -151,9 +160,13 @@ class AddClientViewModel extends ChangeNotifier {
       }
     }
 
+    documentVM.setText(documentVM.clienteSelect?.facturaNombre ?? "");
+
     //mapear respuesta servicio
     NotificationService.showSnackbar(
-      "Cuenta creada y seleccionada correctamente.",
+      idCuenta == 0
+          ? " Cuenta creada y seleccionada correctamente."
+          : " Cuenta actualizada y seleccionada correctamente.",
     );
   }
 }

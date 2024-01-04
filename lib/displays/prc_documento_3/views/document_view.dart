@@ -104,14 +104,50 @@ class DocumentView extends StatelessWidget {
                   ),
                 ),
                 if (vm.clienteSelect != null)
-                  DataUserWidget(
-                    colorTitle: Colors.grey[500],
-                    data: DataUserModel(
-                      name: vm.clienteSelect!.facturaNombre,
-                      nit: vm.clienteSelect!.facturaNit,
-                      adress: vm.clienteSelect!.facturaDireccion,
-                    ),
-                    title: vm.getTextCuenta(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            vm.getTextCuenta(),
+                            style: TextStyle(
+                              color: Colors.grey[500],
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          if (!vm.cf)
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, "updateClient",
+                                    arguments: vm.clienteSelect);
+                              },
+                              icon: Icon(
+                                Icons.edit_outlined,
+                                color: Colors.grey[500],
+                              ),
+                              tooltip: "Editar cuenta",
+                            )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        vm.clienteSelect!.facturaNit,
+                        style: AppTheme.normalStyle,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        vm.clienteSelect!.facturaNombre,
+                        style: AppTheme.normalStyle,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        vm.clienteSelect!.facturaDireccion,
+                        style: AppTheme.normalStyle,
+                      ),
+                    ],
                   ),
                 if (vm.sellers.isNotEmpty)
                   Column(

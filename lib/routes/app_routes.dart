@@ -30,6 +30,7 @@ class AppRoutes {
     "detailsDoc": (BuildContext context) => const DetailsDocView(),
     "addClient": (BuildContext context) => const AddClientView(),
     "help": (BuildContext context) => const HelpView(),
+    "updateClient": (BuildContext context) => const UpdateClientView(),
   };
 
   //en caso de ruta incorrecta

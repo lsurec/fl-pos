@@ -343,14 +343,17 @@ class DocumentViewModel extends ChangeNotifier {
     if (cf) {
       //seleccionar consumidor final
       clienteSelect = ClientModel(
-          cuentaCorrentista: 1,
-          cuentaCta: "1",
-          facturaNombre: "CONSUMIDOR FINAL",
-          facturaNit: "C/F",
-          facturaDireccion: "CIUDAD",
-          cCDireccion: "Ciudad",
-          desCuentaCta: "C/F",
-          direccion1CuentaCta: "Ciudad");
+        cuentaCorrentista: 1,
+        cuentaCta: "1",
+        facturaNombre: "CONSUMIDOR FINAL",
+        facturaNit: "C/F",
+        facturaDireccion: "CIUDAD",
+        cCDireccion: "Ciudad",
+        desCuentaCta: "C/F",
+        direccion1CuentaCta: "Ciudad",
+        eMail: "",
+        telefono: "",
+      );
       //Mensaje de confirmacion
       NotificationService.showSnackbar("Cliente seleccionado.");
     } else {
@@ -358,6 +361,11 @@ class DocumentViewModel extends ChangeNotifier {
       clienteSelect = null;
     }
 
+    notifyListeners();
+  }
+
+  setText(String value) {
+    client.text = value;
     notifyListeners();
   }
 
