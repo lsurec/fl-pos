@@ -6,10 +6,10 @@ class ClientModel {
   String facturaNombre;
   String facturaNit;
   String facturaDireccion;
-  String cCDireccion;
+  dynamic cCDireccion;
   String desCuentaCta;
-  String direccion1CuentaCta;
-  String eMail;
+  dynamic direccion1CuentaCta;
+  dynamic eMail;
   dynamic telefono;
 
   ClientModel({
