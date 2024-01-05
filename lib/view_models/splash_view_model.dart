@@ -2,6 +2,8 @@
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/models/version_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -12,7 +14,8 @@ import 'package:provider/provider.dart';
 class SplashViewModel extends ChangeNotifier {
   //version actual
   String versionLocal = "";
-  String versionRemota = "1.0.0";
+  String versionRemota = "";
+  String idApp = "app_business";
 
   double verStrToNum(String versionstr) {
     // Separar la cadena de versión en partes usando el carácter '.'
@@ -38,17 +41,44 @@ class SplashViewModel extends ChangeNotifier {
 
     //TODO: Buscar version remota
 
-    double vLocal = verStrToNum(versionLocal);
-    double vRemmota = verStrToNum(versionRemota);
+    //instancia del servicio
 
-    if (vRemmota > vLocal) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const UpdateView(),
-        ), // Cambiar a la pantalla principal después de cargar los datos
-      );
-      return;
-    }
+    // ApiResModel res = await versionService.getVersion(
+    //   idApp,
+    //   versionLocal,
+    // );
+
+    // //valid succes response
+    // if (!res.succes) {
+    //   //si algo salio mal mostrar alerta
+    //   NotificationService.showSnackbar("No se pudo comprobar la version");
+    // } else {
+    //   //asignar la version remota a una variable global
+    //   List<VersionModel> versiones = res.message;
+    //   //agregar precios encontrados
+    //   if (versiones.isEmpty) {
+    //     Navigator.of(context).pushReplacement(
+    //       MaterialPageRoute(
+    //         builder: (context) => UpdateView(
+    //           versionRemote: versiones.first,
+    //         ),
+    //       ),
+    //     );
+    //     return;
+
+    //     // double vLocal = verStrToNum(versionLocal);
+    //     // double vRemmota = verStrToNum(versionRemota);
+
+    //     // if (vRemmota > vLocal) {
+    //     //   Navigator.of(context).pushReplacement(
+    //     //     MaterialPageRoute(
+    //     //       builder: (context) => const UpdateView(),
+    //     //     ), // Cambiar a la pantalla principal después de cargar los datos
+    //     //   );
+    //     //   return;
+    //     // }
+    //   }
+    // }
 
     //Buscar si hay u ntojken en preferencias
     if (Preferences.token.isNotEmpty) {

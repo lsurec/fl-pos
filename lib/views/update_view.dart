@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/models/version_model.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 class UpdateView extends StatelessWidget {
-  const UpdateView({Key? key}) : super(key: key);
+  const UpdateView({Key? key, required this.versionRemote}) : super(key: key);
+
+  final VersionModel versionRemote;
 
   @override
   Widget build(BuildContext context) {

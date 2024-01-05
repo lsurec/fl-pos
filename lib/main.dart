@@ -62,9 +62,6 @@ class MyApp extends StatelessWidget {
     // Preferences.clearToken();
     // Preferences.clearDocument();
 
-    //TODO id app:
-    // final String id_app = "pos_flutter";
-
     //app_business
 
     return MaterialApp(
