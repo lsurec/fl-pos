@@ -62,6 +62,8 @@ class MyApp extends StatelessWidget {
     // Preferences.clearToken();
     // Preferences.clearDocument();
 
+    // final String id_app = "pos_flutter";
+
     return MaterialApp(
       //snackbar global
       scaffoldMessengerKey: NotificationService.messengerKey,

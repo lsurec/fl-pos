@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     // ignore: library_prefixes
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/print_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -238,6 +239,19 @@ class _SettingsFromState extends State<SettingsFrom> {
                     "Impresión",
                     style: AppTheme.titleStyle,
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        NotificationService.showInfoPrint(context);
+                      },
+                      icon: const Icon(
+                        Icons.help_outline,
+                        color: Colors.grey,
+                        size: 20,
+                      ),
+                      tooltip: "Ayuda",
+                    )
+                  ],
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(20),
