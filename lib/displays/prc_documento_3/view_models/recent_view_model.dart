@@ -24,6 +24,66 @@ class RecentViewModel extends ChangeNotifier {
   //Lista de documentos recentes
   final List<GetDocModel> documents = [];
 
+  final List<TipoTransaccionModel> tiposTransacciones = [];
+
+  Future<void> loadTipoTransaccion(
+    BuildContext context,
+    int documento,
+    String serie,
+    int empresa,
+    String token,
+    String user,
+  ) async {
+    //instancia del servicio
+    tiposTransacciones.clear();
+    TipoTransaccionService tipoTransaccionService = TipoTransaccionService();
+
+    //consumo del api
+    ApiResModel res = await tipoTransaccionService.getTipoTransaccion(
+      documento, // documento,
+      serie, // serie,
+      empresa, // empresa,
+      token, // token,
+      user, // user,
+    );
+
+    //valid succes response
+    if (!res.succes) {
+      //si algo salio mal mostrar alerta
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        url: res.url,
+        storeProcedure: res.storeProcedure,
+      );
+
+      await NotificationService.showErrorView(
+        context,
+        error,
+      );
+      return;
+    }
+
+    //Agregar series encontradas
+    tiposTransacciones.addAll(res.message);
+  }
+
+  //devuelve el tipo de transaccion que se va a usar
+  int resolveTipoTransaccion(
+    int tipo,
+  ) {
+    for (var i = 0; i < tiposTransacciones.length; i++) {
+      final TipoTransaccionModel tipoTra = tiposTransacciones[i];
+
+      if (tipo == tipoTra.tipo) {
+        return tipoTra.tipoTransaccion;
+      }
+    }
+
+    //si no encunetra el tipo
+    return 0;
+  }
+
   //Navegar a vista detalles
   Future<void> navigateView(
     BuildContext context,
@@ -43,6 +103,8 @@ class RecentViewModel extends ChangeNotifier {
 
     //empresa del documento
     int empresa = document.docEmpresa;
+    int documento = document.docTipoDocumento;
+    String serie = document.docSerieDocumento;
 
     //servicio para cuentas
     CuentaService cuentaService = CuentaService();
@@ -205,16 +267,19 @@ class RecentViewModel extends ChangeNotifier {
     //servicio para los productos
     ProductService productService = ProductService();
 
-    //Proveedor de datos externo
-    final confirmVm = Provider.of<ConfirmDocViewModel>(
+    await loadTipoTransaccion(
       context,
-      listen: false,
+      documento,
+      serie,
+      empresa,
+      token,
+      user,
     );
 
     //id tipo transaccon cargo
-    int tipoCargo = confirmVm.resolveTipoTransaccion(4, context);
+    int tipoCargo = resolveTipoTransaccion(4);
     //id tipo transaccon descuento
-    int tipoDescuento = confirmVm.resolveTipoTransaccion(3, context);
+    int tipoDescuento = resolveTipoTransaccion(3);
 
     //totales
     double cargo = 0;
@@ -473,16 +538,13 @@ class RecentViewModel extends ChangeNotifier {
 
   //ibtener total del documento
   Map<String, double> getTotalDoc(BuildContext context, String document) {
+    //TODO:Resumen ambiguo
     //porveedor de dtaos externos
-    final confirmVm = Provider.of<ConfirmDocViewModel>(
-      context,
-      listen: false,
-    );
 
     //id tipo transaccion cargo
-    int tipoCargo = confirmVm.resolveTipoTransaccion(4, context);
+    int tipoCargo = resolveTipoTransaccion(4);
     //id tipo transaccion descuento
-    int tipoDescuento = confirmVm.resolveTipoTransaccion(3, context);
+    int tipoDescuento = resolveTipoTransaccion(3);
 
     //Totales
     double cargo = 0;
