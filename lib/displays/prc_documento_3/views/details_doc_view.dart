@@ -237,6 +237,15 @@ class _Pyments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeVM = Provider.of<HomeViewModel>(context);
+
+    // Crear una instancia de NumberFormat para el formato de moneda
+    final currencyFormat = NumberFormat.currency(
+      symbol: homeVM
+          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      decimalDigits: 2, // Número de decimales a mostrar
+    );
+
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
@@ -283,7 +292,15 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.normalStyle,
                   ),
                 Text(
-                  'Monto: ${amount.amount.toStringAsFixed(2)}',
+                  'Monto: ${currencyFormat.format(amount.amount)}',
+                  style: AppTheme.normalStyle,
+                ),
+                Text(
+                  'Diferencia: ${currencyFormat.format(amount.diference)}',
+                  style: AppTheme.normalStyle,
+                ),
+                Text(
+                  'Pago total: ${currencyFormat.format(amount.amount + amount.diference)}',
                   style: AppTheme.normalStyle,
                 ),
                 // Text('Detalles: ${transaction.detalles}'),

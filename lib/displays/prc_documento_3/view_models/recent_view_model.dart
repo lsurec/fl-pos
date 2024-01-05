@@ -421,7 +421,7 @@ class RecentViewModel extends ChangeNotifier {
           AmountModel amount = AmountModel(
             checked: false,
             amount: formaDoc.monto,
-            diference: 0,
+            diference: formaDoc.cambio,
             authorization: formaDoc.autorizacion,
             reference: formaDoc.referencia,
             payment: forma,
