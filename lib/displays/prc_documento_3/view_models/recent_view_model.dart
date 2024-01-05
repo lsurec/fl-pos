@@ -212,9 +212,9 @@ class RecentViewModel extends ChangeNotifier {
     );
 
     //id tipo transaccon cargo
-    int tipoCargo = confirmVm.resolveTipoTransaccion(3, context);
+    int tipoCargo = confirmVm.resolveTipoTransaccion(4, context);
     //id tipo transaccon descuento
-    int tipoDescuento = confirmVm.resolveTipoTransaccion(4, context);
+    int tipoDescuento = confirmVm.resolveTipoTransaccion(3, context);
 
     //totales
     double cargo = 0;
@@ -480,9 +480,9 @@ class RecentViewModel extends ChangeNotifier {
     );
 
     //id tipo transaccion cargo
-    int tipoCargo = confirmVm.resolveTipoTransaccion(3, context);
+    int tipoCargo = confirmVm.resolveTipoTransaccion(4, context);
     //id tipo transaccion descuento
-    int tipoDescuento = confirmVm.resolveTipoTransaccion(4, context);
+    int tipoDescuento = confirmVm.resolveTipoTransaccion(3, context);
 
     //Totales
     double cargo = 0;

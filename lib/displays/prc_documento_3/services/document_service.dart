@@ -178,7 +178,7 @@ class DocumentService {
         url: url.toString(),
         succes: true,
         message: encabezados,
-        storeProcedure: null,
+        storeProcedure: res.storeProcedure,
       );
     } catch (e) {
       //respuesta incorrecta
@@ -449,6 +449,7 @@ class DocumentService {
 
   //Obtener documento guardado en permanencia de datos
   Future<void> loadDocumentSave(BuildContext context) async {
+    //TODO:Validar la serie
     //view models externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);

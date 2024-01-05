@@ -162,11 +162,16 @@ class PrintViewModel extends ChangeNotifier {
 
     //validar que haya datos
 
-    if (encabezadoTemplate.isEmpty ||
-        detallesTemplate.isEmpty ||
-        pagosTemplate.isEmpty) {
-      NotificationService.showSnackbar(
-          "No hay datos para imprimir, intente más trade");
+    if (encabezadoTemplate.isEmpty) {
+      final ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description:
+            "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
+        storeProcedure: resEncabezado.storeProcedure,
+      );
+
+      NotificationService.showErrorView(context, error);
+
       return;
     }
 
