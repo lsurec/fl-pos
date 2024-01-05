@@ -489,7 +489,7 @@ class DocumentService {
       }
     }
 
-    //si no se encontró la serie del documento en las series de la sesion no hcer nada
+    //si no se encontró la serie del documento en las series de la sesion no hacer nada
     if (counter == -1) return;
 
     //si no hay transacciones o pagos agregados no hacer nada

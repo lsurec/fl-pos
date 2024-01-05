@@ -35,7 +35,7 @@ class HelpSection extends StatelessWidget {
       child: Card(
         child: ListTile(
           title: const Text(
-            'Configuré mi impresora pero no imprime',
+            'Configuré mi impresora pero no logro imprimir',
             style: AppTheme.normalBoldStyle,
           ),
           subtitle: const Text(
@@ -63,6 +63,16 @@ class HelpSection extends StatelessWidget {
                           '2. Asegúrate de que la impresora esté en modo ESC/POS.'),
                       Text(
                           '3. Comprueba que la impresora esté vinculada en la lista de dispositivos Bluetooth de tu dispositivo.'),
+                      Text(
+                          '4. Asegúrate de que la impresora tenga papel disponible para imprimir.'),
+                      Text(
+                          '5. Comprueba que no se esté obstruyendo la salida del papel al momento de imprimir.'),
+                      Text(
+                          '6. Verifica que otro dispositvo no esté usando la impresora a la que intentas imprimir.'),
+                      Text(
+                          '7. Asegurate que la impresora que intentas usar es la correcta.'),
+                      Text(
+                          '8. Verifica que el dispositivo vinculado sea la impresora que intentas usar.'),
                       SizedBox(height: 16),
                       Text(
                         'Si el problema persiste, comunícate con nuestro soporte técnico para obtener ayuda adicional.',
