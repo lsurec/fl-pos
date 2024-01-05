@@ -1740,6 +1740,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
         DocCargoAbono(
           tipoCargoAbono: payment.payment.tipoCargoAbono,
           monto: payment.amount,
+          cambio: payment.diference,
           tipoCambio: vmHome.tipoCambio,
           moneda: transactions[0].traMoneda,
           montoMoneda: payment.amount / vmHome.tipoCambio,

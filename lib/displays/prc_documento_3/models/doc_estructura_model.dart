@@ -114,6 +114,7 @@ class DocEstructuraModel {
 class DocCargoAbono {
   int tipoCargoAbono;
   double monto;
+  double cambio;
   double tipoCambio;
   int moneda;
   double montoMoneda;
@@ -125,6 +126,7 @@ class DocCargoAbono {
   DocCargoAbono({
     required this.tipoCargoAbono,
     required this.monto,
+    required this.cambio,
     required this.tipoCambio,
     required this.moneda,
     required this.montoMoneda,
@@ -141,7 +143,8 @@ class DocCargoAbono {
 
   factory DocCargoAbono.fromMap(Map<String, dynamic> json) => DocCargoAbono(
         tipoCargoAbono: json["Tipo_Cargo_Abono"],
-        monto: json["Monto"]?.toDouble(),
+        monto: json["Monto"]?.toDouble() ?? 0,
+        cambio: json["Cambio"]?.toDouble() ?? 0,
         tipoCambio: json["Tipo_Cambio"],
         moneda: json["Moneda"],
         montoMoneda: json["Monto_Moneda"]?.toDouble(),
@@ -154,6 +157,7 @@ class DocCargoAbono {
   Map<String, dynamic> toMap() => {
         "Tipo_Cargo_Abono": tipoCargoAbono,
         "Monto": monto,
+        "Cambio": cambio,
         "Tipo_Cambio": tipoCambio,
         "Moneda": moneda,
         "Monto_Moneda": montoMoneda,
