@@ -457,6 +457,7 @@ class DocumentService {
     final menuVM = Provider.of<MenuViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
+    final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
     //No hacer nada si no hay un documento guardado
     if (Preferences.document.isEmpty) return;
@@ -512,6 +513,11 @@ class DocumentService {
     //si la opcion fie nuevo docummento llimpiar el documento de preferencias
     if (!result) {
       Preferences.clearDocument();
+      //limpiar pantalla documento
+      docVM.clearView();
+      detailsVM.clearView(context);
+      paymentVM.clearView(context);
+      confirmVM.newDoc();
       return;
     }
 

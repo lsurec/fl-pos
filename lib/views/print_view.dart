@@ -243,7 +243,13 @@ class _SettingsFromState extends State<SettingsFrom> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Text(
+                        "Didpositivo conectado",
+                        style: AppTheme.titleStyle,
+                      ),
+                      const SizedBox(height: 10),
                       ListTile(
                         title: Text(printerDefault.name),
                         subtitle: Text(
@@ -285,19 +291,20 @@ class _SettingsFromState extends State<SettingsFrom> {
                         style: AppTheme.titleStyle,
                       ),
                       const SizedBox(height: 10),
-                      SwitchListTile(
-                        activeColor: AppTheme.primary,
-                        title: const Text("Lista de dispositivos encontrados"),
-                        subtitle: Text(
-                            !isPairedSelect ? "Emparejados" : "Encontrados"),
-                        value: isPairedSelect,
-                        onChanged: (value) {
-                          setState(() {
-                            isPairedSelect = value;
-                          });
-                          scan();
-                        },
-                      ),
+
+                      // SwitchListTile(
+                      //   activeColor: AppTheme.primary,
+                      //   title: const Text("Lista de dispositivos encontrados"),
+                      //   subtitle: Text(
+                      //       !isPairedSelect ? "Emparejados" : "Encontrados"),
+                      //   value: isPairedSelect,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       isPairedSelect = value;
+                      //     });
+                      //     scan();
+                      //   },
+                      // ),
                       Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
