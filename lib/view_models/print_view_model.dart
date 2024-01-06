@@ -53,6 +53,20 @@ class PrintViewModel extends ChangeNotifier {
     );
   }
 
+  int findTipoProducto(BuildContext context, tipoTra) {
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+
+    List<TipoTransaccionModel> transacciones = docVM.tiposTransaccion;
+
+    for (var transaccion in transacciones) {
+      if (transaccion.tipoTransaccion == tipoTra) {
+        return transaccion.tipo;
+      }
+    }
+
+    return 0;
+  }
+
   Future printDocument(
     BuildContext context,
     int paperDefault,
@@ -230,40 +244,64 @@ class PrintViewModel extends ChangeNotifier {
       tel: "",
     );
 
+    //totales
+    double cargo = 0;
+    double descuento = 0;
+    double subtotal = 0;
+    double total = 0;
+
     List<Item> items = [];
 
     for (var detail in detallesTemplate) {
+      int tipoTra = findTipoProducto(
+        context,
+        detail.tipoTransaccion,
+      );
+
+      if (tipoTra == 4) {
+        //4 cargo
+        cargo += detail.monto;
+      } else if (tipoTra == 3) {
+        //5 descuento
+        descuento += detail.monto;
+      } else {
+        //cualquier otro
+        subtotal += detail.monto;
+      }
+
       items.add(
         Item(
           descripcion: detail.desProducto,
           cantidad: detail.cantidad,
-          unitario: detail.montoUMTipoMoneda,
-          total: detail.montoTotalTipoMoneda,
+          unitario: tipoTra == 3
+              ? "- ${detail.montoUMTipoMoneda}"
+              : detail.montoUMTipoMoneda,
+          total: tipoTra == 3
+              ? "- ${detail.montoTotalTipoMoneda}"
+              : detail.montoTotalTipoMoneda,
         ),
       );
     }
 
-    final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
+    total += (subtotal + cargo) + descuento;
 
     Montos montos = Montos(
-      subtotal: detailsVM.subtotal,
-      cargos: detailsVM.cargo,
-      descuentos: detailsVM.descuento,
-      total: detailsVM.total,
+      subtotal: subtotal,
+      cargos: cargo,
+      descuentos: descuento,
+      total: total,
       totalLetras: encabezado.montoLetras!.toUpperCase(),
     );
 
     List<Pago> pagos = [];
 
-    final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
-
-    for (var pago in paymentVM.amounts) {
+    for (var pago in pagosTemplate) {
       pagos.add(
         Pago(
-          tipoPago: pago.payment.descripcion,
-          monto: pago.amount,
-          pago: pago.amount + pago.diference,
-          cambio: pago.diference,
+          tipoPago: pago.fDesTipoCargoAbono,
+          monto: pago.monto,
+          pago: pago.monto + pago.cambio,
+          cambio: pago.cambio,
         ),
       );
     }

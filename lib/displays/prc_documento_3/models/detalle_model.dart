@@ -12,6 +12,7 @@ class DetalleModel {
   double monto;
   int moneda;
   String simboloMoneda;
+  int tipoTransaccion;
 
   DetalleModel({
     required this.productoId,
@@ -25,6 +26,7 @@ class DetalleModel {
     required this.monto,
     required this.moneda,
     required this.simboloMoneda,
+    required this.tipoTransaccion,
   });
 
   factory DetalleModel.fromJson(String str) =>
@@ -44,6 +46,7 @@ class DetalleModel {
         monto: json["monto"]?.toDouble(),
         moneda: json["moneda"],
         simboloMoneda: json["simbolo_Moneda"],
+        tipoTransaccion: json["tipo_Transaccion"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -58,5 +61,6 @@ class DetalleModel {
         "monto": monto,
         "moneda": moneda,
         "simbolo_Moneda": simboloMoneda,
+        "tipo_Transaccion": tipoTransaccion,
       };
 }
