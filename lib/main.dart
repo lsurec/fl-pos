@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       //snackbar global
       scaffoldMessengerKey: NotificationService.messengerKey,
-      title: "POS",
+      title: "Business",
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
