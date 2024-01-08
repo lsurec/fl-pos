@@ -11,6 +11,8 @@ class ClientModel {
   dynamic direccion1CuentaCta;
   dynamic eMail;
   dynamic telefono;
+  bool permitirCxC;
+  double limiteCredito;
 
   ClientModel({
     required this.cuentaCorrentista,
@@ -23,6 +25,8 @@ class ClientModel {
     required this.direccion1CuentaCta,
     required this.eMail,
     required this.telefono,
+    required this.permitirCxC,
+    required this.limiteCredito,
   });
 
   factory ClientModel.fromJson(String str) =>
@@ -41,6 +45,8 @@ class ClientModel {
         direccion1CuentaCta: json["direccion_1_Cuenta_Cta"],
         eMail: json["eMail"],
         telefono: json["telefono"],
+        permitirCxC: json["permitir_CxC"],
+        limiteCredito: json["limite_Credito"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -54,5 +60,7 @@ class ClientModel {
         "direccion_1_Cuenta_Cta": direccion1CuentaCta,
         "eMail": eMail,
         "telefono": telefono,
+        "permitir_CxC": permitirCxC,
+        "limite_Credito": limiteCredito,
       };
 }
