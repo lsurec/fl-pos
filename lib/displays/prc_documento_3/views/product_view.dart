@@ -21,7 +21,8 @@ class ProductView extends StatelessWidget {
     final ProductModel product = arguments[0];
     final int back = arguments[1]; //1 regresar 1, 2 regresar 2
 
-    final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final homeVM = Provider.of<HomeViewModel>(context);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -102,7 +103,7 @@ class ProductView extends StatelessWidget {
                   if (vm.prices.isEmpty)
                     const Text("No se encontraron precios"),
                   const SizedBox(height: 5),
-                  if (vm.prices.isNotEmpty)
+                  if (vm.prices.isNotEmpty && docVM.editPrice())
                     TextFormField(
                       decoration: const InputDecoration(
                         hintText: "Precio Unitario",
@@ -116,7 +117,21 @@ class ProductView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       onChanged: (value) => vm.chanchePrice(value),
                     ),
-                  // Text(currencyFormat.format(vm.price)),
+                  if (vm.prices.isNotEmpty && !docVM.editPrice())
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Precio Unitario",
+                          style: TextStyle(
+                            color: AppTheme.primary,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                      ],
+                    ),
+                  if (vm.prices.isNotEmpty && !docVM.editPrice())
+                    Text(currencyFormat.format(vm.price)),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,

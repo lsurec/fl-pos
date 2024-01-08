@@ -238,7 +238,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     PdfColor backCell = PdfColor.fromHex("134895");
 
-    bool isFel = docVM.printFel(context);
+    bool isFel = docVM.printFel();
 
     //Docuemnto pdf nuevo
     final pdf = pw.Document();
@@ -1067,7 +1067,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
   Future<void> sendDoc(BuildContext context) async {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    if (docVM.printFel(context)) {
+    if (docVM.printFel()) {
       processDocument();
     } else {
       isLoading = true;

@@ -207,7 +207,7 @@ class PrintViewModel extends ChangeNotifier {
 
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    bool isFel = docVM.printFel(context);
+    bool isFel = docVM.printFel();
 
     final EncabezadoModel encabezado = encabezadoTemplate.first;
 

@@ -61,7 +61,23 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool printFel(BuildContext context) {
+  bool editPrice() {
+    bool edit = false;
+    //el parametro que indica si se puede esitar el precio o no es 351
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == 351) {
+        edit = true;
+        break;
+      }
+    }
+
+    return edit;
+  }
+
+  bool printFel() {
     bool fel = false;
 
     //el parametro que indica si genera fel o no es 349

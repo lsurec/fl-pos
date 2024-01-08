@@ -390,6 +390,7 @@ class ProductViewModel extends ChangeNotifier {
     prices = precios.message;
 
     if (prices.isEmpty) {
+      calculateTotal();
       NotificationService.showSnackbar("No hay precios para este producto.");
     }
   }
