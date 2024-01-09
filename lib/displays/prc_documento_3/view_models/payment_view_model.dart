@@ -348,13 +348,31 @@ class PaymentViewModel extends ChangeNotifier {
     BuildContext context,
     PaymentModel payment,
   ) async {
-    //limnpuar cuentas
+    //limpiar cuentas
     accounts.clear();
 
     notifyListeners();
 
     //View model externo
     final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
+    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+
+    if (payment.cuentaCorriente && !vmDoc.clienteSelect!.permitirCxC) {
+      NotificationService.showSnackbar(
+          "La cuenta asignada al cliente no tiene permitido ceuntas por cobrar.");
+      return;
+    }
+
+    //si el cliente tiene permmitido CxC y la forma de pago
+    if (vmDoc.clienteSelect!.permitirCxC && payment.cuentaCorriente) {
+      //validar limite de credito
+      if (vmDetails.total > (vmDoc.clienteSelect?.limiteCredito ?? 0)) {
+        //Mostrar alerta
+        NotificationService.showSnackbar(
+            "El total del documento supera el limmite de credito de la cuenta asignada al documento.");
+        return;
+      }
+    }
 
     //validaciones para poder navegar a la pantalla
     if (vmDetails.total == 0) {
