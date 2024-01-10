@@ -19,7 +19,7 @@ class MenuViewModel extends ChangeNotifier {
   //tipo docuento
   int? documento;
   String name = "";
-  String? docuentoName;
+  String? documentoName;
 
   //navegar a ruta
   Future<void> navigateDisplay(
@@ -32,7 +32,7 @@ class MenuViewModel extends ChangeNotifier {
     //asiganro valores para la pantalla
     documento = tipoDocumento;
     name = nameDisplay;
-    docuentoName = docName;
+    documentoName = docName;
 
     if (route.toLowerCase() == "prcdocumento_3") {
       final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);

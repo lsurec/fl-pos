@@ -83,7 +83,7 @@ class _Tabs3ViewState extends State<Tabs3View>
                             style: AppTheme.normalBoldStyle,
                           ),
                           subtitle: Text(
-                            "${vmMenu.docuentoName} (${vmMenu.documento})",
+                            "${vmMenu.documentoName} (${vmMenu.documento})",
                             style: AppTheme.normalStyle,
                           ),
                         ),

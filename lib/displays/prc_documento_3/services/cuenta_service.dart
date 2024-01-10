@@ -8,7 +8,7 @@ class CuentaService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-//Consumo api obtner vendedores
+//Crear nueva cuenta correntista
   Future<ApiResModel> postCuenta(
     String user,
     int empresa,
@@ -94,57 +94,6 @@ class CuentaService {
       }
 
       //respuesta del servicio
-
-      RespLogin respLogin = RespLogin.fromMap(res.data);
-
-      //retornar respuesta correcta del api
-      return ApiResModel(
-        url: url.toString(),
-        succes: true,
-        message: respLogin,
-        storeProcedure: null,
-      );
-    } catch (e) {
-      //en caso de error retornar el error
-      return ApiResModel(
-        url: url.toString(),
-        succes: false,
-        message: e.toString(),
-        storeProcedure: null,
-      );
-    }
-  }
-
-  //Consu
-
-//Consumo api buscar clinete
-  Future<ApiResModel> getIdCuenta(
-    String token,
-    int cuenta,
-  ) async {
-    Uri url = Uri.parse("${_baseUrl}Cuenta/id/$cuenta");
-    try {
-      //url completa
-
-      //Configuraciones del api
-      final response = await http.get(
-        url,
-        headers: {
-          "Authorization": "bearer $token",
-        },
-      );
-
-      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
-
-      //si el api no responde
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        return ApiResModel(
-          url: url.toString(),
-          succes: false,
-          message: res.data,
-          storeProcedure: res.storeProcedure,
-        );
-      }
 
       RespLogin respLogin = RespLogin.fromMap(res.data);
 
