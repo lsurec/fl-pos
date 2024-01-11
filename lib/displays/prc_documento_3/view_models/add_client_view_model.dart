@@ -154,8 +154,7 @@ class AddClientViewModel extends ChangeNotifier {
     for (var i = 0; i < clients.length; i++) {
       final ClientModel client = clients[i];
       if (client.facturaNit == cuenta.nit) {
-        documentVM.selectClient(clients.first, context);
-
+        documentVM.selectClient(client, context);
         break;
       }
     }
