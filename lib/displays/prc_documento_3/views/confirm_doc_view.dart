@@ -676,9 +676,9 @@ class _Transaction extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: detailsVM.document.length,
+      itemCount: detailsVM.traInternas.length,
       itemBuilder: (BuildContext context, int index) {
-        final TraInternaModel transaction = detailsVM.document[index];
+        final TraInternaModel transaction = detailsVM.traInternas[index];
 
         return Card(
           elevation: 0,

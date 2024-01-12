@@ -25,7 +25,7 @@ class CargoDescuentoView extends StatelessWidget {
       decimalDigits: 2, // Número de decimales a mostrar
     );
     //transaccion que se va a usar
-    final TraInternaModel transaction = vm.document[indexDocument];
+    final TraInternaModel transaction = vm.traInternas[indexDocument];
 
     return Scaffold(
       appBar: AppBar(),

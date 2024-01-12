@@ -22,7 +22,7 @@ class DetailsViewModel extends ChangeNotifier {
   double monto = 0;
 
   //Transacciones del docummento
-  final List<TraInternaModel> document = [];
+  final List<TraInternaModel> traInternas = [];
 
   //Contorlador input busqueda
   final TextEditingController searchController = TextEditingController();
@@ -60,7 +60,7 @@ class DetailsViewModel extends ChangeNotifier {
 
   //limpiar los campos de la vista del usuario
   void clearView(BuildContext context) {
-    document.clear(); //limpuar lista
+    traInternas.clear(); //limpuar lista
     calculateTotales(context); //actualizar totales
   }
 
@@ -273,7 +273,7 @@ class DetailsViewModel extends ChangeNotifier {
   ) {
     //asiganr valores
     transaction.isChecked = selectAll;
-    document.add(transaction); //agregar a lista
+    traInternas.add(transaction); //agregar a lista
     searchController.text = "";
     calculateTotales(context); //calcular totales
   }
@@ -283,7 +283,7 @@ class DetailsViewModel extends ChangeNotifier {
     bool? value,
     int index,
   ) {
-    document[index].isChecked = value!;
+    traInternas[index].isChecked = value!;
     notifyListeners();
   }
 
@@ -294,7 +294,7 @@ class DetailsViewModel extends ChangeNotifier {
     int index,
   ) {
     //cambiar valorss
-    document[indexTransaction].operaciones[index].isChecked = value!;
+    traInternas[indexTransaction].operaciones[index].isChecked = value!;
     notifyListeners();
   }
 
@@ -303,7 +303,7 @@ class DetailsViewModel extends ChangeNotifier {
     selectAllMontos = value!;
 
     //marcar todos
-    for (var element in document[index].operaciones) {
+    for (var element in traInternas[index].operaciones) {
       element.isChecked = selectAllMontos;
     }
     notifyListeners();
@@ -314,7 +314,7 @@ class DetailsViewModel extends ChangeNotifier {
     selectAll = value!;
 
     //marcar todos
-    for (var element in document) {
+    for (var element in traInternas) {
       element.isChecked = selectAll;
     }
     notifyListeners();
@@ -336,7 +336,7 @@ class DetailsViewModel extends ChangeNotifier {
     int numSelected = 0;
 
     //bsucar las transacciones que están sleccionadas
-    for (var element in document) {
+    for (var element in traInternas) {
       if (element.isChecked) {
         numSelected += 1;
       }
@@ -366,7 +366,7 @@ class DetailsViewModel extends ChangeNotifier {
     if (!result) return;
 
     //elimminar las transacciones seleccionadas
-    document.removeWhere((document) => document.isChecked == true);
+    traInternas.removeWhere((document) => document.isChecked == true);
     //calcular totoles
     calculateTotales(context);
   }
@@ -378,7 +378,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     //buscar operaciones seleccionadas
     int numSelected = 0;
-    for (var element in document[indexDocument].operaciones) {
+    for (var element in traInternas[indexDocument].operaciones) {
       if (element.isChecked) {
         numSelected += 1;
       }
@@ -413,7 +413,7 @@ class DetailsViewModel extends ChangeNotifier {
     if (!result) return;
 
     //eliminar los elemntos seleccionados
-    document[indexDocument]
+    traInternas[indexDocument]
         .operaciones
         .removeWhere((document) => document.isChecked == true);
 
@@ -445,7 +445,7 @@ class DetailsViewModel extends ChangeNotifier {
     double totalTransactions = 0;
 
     //contar itemes seleccionados
-    for (var element in document) {
+    for (var element in traInternas) {
       if (element.isChecked) {
         numSelected += 1;
       }
@@ -460,7 +460,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Filtrar los elementos seleccionados (isChecked = true) de la lista
     List<TraInternaModel> selectedTransactions =
-        document.where((document) => document.isChecked == true).toList();
+        traInternas.where((document) => document.isChecked == true).toList();
 
     //total de las transacciones seleccionadas
     for (var element in selectedTransactions) {
@@ -479,7 +479,7 @@ class DetailsViewModel extends ChangeNotifier {
     }
 
     //multiplicar valores
-    for (var element in document) {
+    for (var element in traInternas) {
       double cargoDescuento = prorrateo * element.total;
 
       //Elemento que se va a agregar
@@ -520,7 +520,7 @@ class DetailsViewModel extends ChangeNotifier {
     total = 0;
 
     //recorrer todas las transacciones
-    for (var element in document) {
+    for (var element in traInternas) {
       //reiniciar valores
       element.cargo = 0;
       element.descuento = 0;
@@ -533,7 +533,7 @@ class DetailsViewModel extends ChangeNotifier {
     }
 
     //agreagar totales globales
-    for (var element in document) {
+    for (var element in traInternas) {
       subtotal += element.total;
       cargo += element.cargo;
       descuento += element.descuento;
@@ -554,7 +554,7 @@ class DetailsViewModel extends ChangeNotifier {
   //Navegar a pantalla de cargos y descuentos
   void navigatorDetails(BuildContext context, int index) {
     //si hay cargos o descuentos navegar a pantalla
-    if (document[index].operaciones.isNotEmpty) {
+    if (traInternas[index].operaciones.isNotEmpty) {
       Navigator.pushNamed(
         context,
         "cargoDescuento",
@@ -572,7 +572,7 @@ class DetailsViewModel extends ChangeNotifier {
     Timer? timer;
 
     // Copia del elemento eliminado para el deshacer
-    final TraInternaModel deletedItem = document.removeAt(index);
+    final TraInternaModel deletedItem = traInternas.removeAt(index);
 
     //view model externo
     final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
@@ -583,7 +583,7 @@ class DetailsViewModel extends ChangeNotifier {
           "Elimina primero las formas de pago o crea un nuevo documento.");
 
       // Acción de deshacer: Restaurar el elemento eliminado
-      document.insert(index, deletedItem);
+      traInternas.insert(index, deletedItem);
       calculateTotales(context);
       // Cancelar el Timer si el usuario deshace
       return;
@@ -600,7 +600,7 @@ class DetailsViewModel extends ChangeNotifier {
             duration: 5,
             onAnimationEnd: () {
               //eliminar transaxxion
-              document.remove(deletedItem);
+              traInternas.remove(deletedItem);
               //calcular totales
               calculateTotales(context);
             },
@@ -612,7 +612,7 @@ class DetailsViewModel extends ChangeNotifier {
         textColor: Colors.white,
         onPressed: () {
           // Acción de deshacer: Restaurar el elemento eliminado
-          document.insert(index, deletedItem);
+          traInternas.insert(index, deletedItem);
           calculateTotales(context);
           // Cancelar el Timer si el usuario deshace
           timer?.cancel();
@@ -625,7 +625,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Programar la eliminación permanente después de 5 segundos
     timer = Timer(const Duration(seconds: 5), () {
-      document.remove(deletedItem);
+      traInternas.remove(deletedItem);
       calculateTotales(context);
     });
 

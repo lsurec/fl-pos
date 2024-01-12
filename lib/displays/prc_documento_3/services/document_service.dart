@@ -439,7 +439,7 @@ class DocumentService {
       vendedor: docVM.vendedorSelect,
       serie: docVM.serieSelect,
       tipoDocumento: menuVM.documento!,
-      detalles: detailsVM.document,
+      detalles: detailsVM.traInternas,
       pagos: paymentVM.amounts,
     );
 
@@ -553,7 +553,7 @@ class DocumentService {
     //agregar el cliente del documento
     docVM.addClient(saveDocument.cliente);
 
-    detailsVM.document.clear();
+    detailsVM.traInternas.clear();
     //agregar las transacciones del documento
     for (var transaction in saveDocument.detalles) {
       detailsVM.addTransaction(transaction, context);

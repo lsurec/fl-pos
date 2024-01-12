@@ -442,11 +442,11 @@ class ProductViewModel extends ChangeNotifier {
       return;
     }
 
-    if (detailsVM.document.isNotEmpty) {
+    if (detailsVM.traInternas.isNotEmpty) {
       int monedaDoc = 0;
       int monedaTra = 0;
 
-      TraInternaModel fistTra = detailsVM.document.first;
+      TraInternaModel fistTra = detailsVM.traInternas.first;
 
       monedaDoc = fistTra.precio!.moneda;
 

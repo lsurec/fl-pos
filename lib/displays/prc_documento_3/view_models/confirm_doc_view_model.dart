@@ -1638,7 +1638,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     int empresa = localVM.selectedEmpresa!.empresa;
     int estacion = localVM.selectedEstacion!.estacionTrabajo;
     List<AmountModel> amounts = paymentVM.amounts;
-    List<TraInternaModel> products = detailsVM.document;
+    List<TraInternaModel> products = detailsVM.traInternas;
 
     //pagos agregados
     final List<DocCargoAbono> payments = [];

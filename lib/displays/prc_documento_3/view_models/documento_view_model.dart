@@ -79,7 +79,7 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     //si no hay transacciones mostrar mensaje
-    if (detailsVM.document.isEmpty) {
+    if (detailsVM.traInternas.isEmpty) {
       NotificationService.showSnackbar("No se han agregado transacciones.");
       return;
     }

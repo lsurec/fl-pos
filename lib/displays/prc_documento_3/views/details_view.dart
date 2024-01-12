@@ -130,23 +130,23 @@ class DetailsView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (vm.document.isEmpty) const SizedBox(height: 20),
+                  if (vm.traInternas.isEmpty) const SizedBox(height: 20),
                   Row(
                     children: [
-                      if (vm.document.isNotEmpty) const SizedBox(width: 14),
-                      if (vm.document.isNotEmpty)
+                      if (vm.traInternas.isNotEmpty) const SizedBox(width: 14),
+                      if (vm.traInternas.isNotEmpty)
                         Checkbox(
                           activeColor: AppTheme.primary,
                           value: vm.selectAll,
                           onChanged: (value) => vm.selectAllTransactions(value),
                         ),
-                      if (vm.document.isNotEmpty) const SizedBox(width: 20),
+                      if (vm.traInternas.isNotEmpty) const SizedBox(width: 20),
                       Text(
-                        "No. Transacciones: ${vm.document.length}",
+                        "No. Transacciones: ${vm.traInternas.length}",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const Spacer(),
-                      if (vm.document.isNotEmpty)
+                      if (vm.traInternas.isNotEmpty)
                         IconButton(
                           onPressed: () => vm.deleteTransaction(context),
                           icon: const Icon(
@@ -159,7 +159,7 @@ class DetailsView extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: vm.document.length,
+                    itemCount: vm.traInternas.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Dismissible(
                         key: UniqueKey(),
@@ -177,7 +177,7 @@ class DetailsView extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () => vm.navigatorDetails(context, index),
                           child: _TransactionCard(
-                            transaction: vm.document[index],
+                            transaction: vm.traInternas[index],
                             indexTransaction: index,
                           ),
                         ),
