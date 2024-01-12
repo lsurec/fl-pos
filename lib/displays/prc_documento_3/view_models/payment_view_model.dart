@@ -230,6 +230,7 @@ class PaymentViewModel extends ChangeNotifier {
     BuildContext context,
     PaymentModel payment,
   ) {
+    //TODO:Revisar cambio de banco no obtiene cuentas bancaria
     //Maracr todos en falso
     for (var bank in banks) {
       bank.isSelected = false;
@@ -357,9 +358,15 @@ class PaymentViewModel extends ChangeNotifier {
     final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
     final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
 
+    if (vmDoc.clienteSelect == null) {
+      NotificationService.showSnackbar(
+          "Sleccione una cuenta antes de agregar pagos.");
+      return;
+    }
+
     if (payment.cuentaCorriente && !vmDoc.clienteSelect!.permitirCxC) {
       NotificationService.showSnackbar(
-          "La cuenta asignada al cliente no tiene permitido ceuntas por cobrar.");
+          "La cuenta asignada al documento no tiene permitido cuentas por cobrar.");
       return;
     }
 

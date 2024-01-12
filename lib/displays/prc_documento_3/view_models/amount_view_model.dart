@@ -68,8 +68,6 @@ class AmountViewModel extends ChangeNotifier {
     double monto = double.tryParse(formValues["monto"]!) ?? 0;
     double diference = 0;
 
-    if (payment.cuentaCorriente) {}
-
     //Calcualar si hay diferencia (Cambio)
     if (monto > vmPayment.saldo) {
       diference = monto - vmPayment.saldo;
