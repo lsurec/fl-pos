@@ -56,8 +56,8 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
-        docTraMonto: json["Doc_Tra_Monto"],
-        docCaMonto: json["Doc_CA_Monto"],
+        docTraMonto: json["Doc_Tra_Monto"].toDouble(),
+        docCaMonto: json["Doc_CA_Monto"].toDouble(),
         docCuentaVendedor: json["Doc_Cuenta_Correntista_Ref"],
         docIdCertificador: json["Doc_ID_Certificador"],
         docIdDocumentoRef: json["Doc_ID_Documento_Ref"],
@@ -145,7 +145,7 @@ class DocCargoAbono {
         tipoCargoAbono: json["Tipo_Cargo_Abono"],
         monto: json["Monto"]?.toDouble() ?? 0,
         cambio: json["Cambio"]?.toDouble() ?? 0,
-        tipoCambio: json["Tipo_Cambio"],
+        tipoCambio: json["Tipo_Cambio"]?.toDouble(),
         moneda: json["Moneda"],
         montoMoneda: json["Monto_Moneda"]?.toDouble(),
         referencia: json["Referencia"],
@@ -214,7 +214,7 @@ class DocTransaccion {
         traTipoPrecio: json["Tra_Tipo_Precio"],
         traFactorConversion: json["Tra_Factor_Conversion"],
         traTipoTransaccion: json["Tra_Tipo_Transaccion"],
-        traMonto: json["Tra_Monto"],
+        traMonto: json["Tra_Monto"].toDouble(),
       );
 
   Map<String, dynamic> toMap() => {
