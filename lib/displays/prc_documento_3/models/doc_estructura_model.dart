@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 class DocEstructuraModel {
-  num docTraMonto;
-  num docCaMonto;
+  double docTraMonto;
+  double docCaMonto;
   int? docCuentaVendedor;
   int docIdCertificador;
   int docIdDocumentoRef;
@@ -113,11 +113,11 @@ class DocEstructuraModel {
 
 class DocCargoAbono {
   int tipoCargoAbono;
-  num monto;
-  num cambio;
-  num tipoCambio;
+  double monto;
+  double cambio;
+  double tipoCambio;
   int moneda;
-  num montoMoneda;
+  double montoMoneda;
   dynamic referencia;
   dynamic autorizacion;
   dynamic banco;
@@ -143,11 +143,11 @@ class DocCargoAbono {
 
   factory DocCargoAbono.fromMap(Map<String, dynamic> json) => DocCargoAbono(
         tipoCargoAbono: json["Tipo_Cargo_Abono"],
-        monto: json["Monto"]?.tonum() ?? 0,
-        cambio: json["Cambio"]?.tonum() ?? 0,
+        monto: json["Monto"]?.toDouble() ?? 0,
+        cambio: json["Cambio"]?.toDouble() ?? 0,
         tipoCambio: json["Tipo_Cambio"],
         moneda: json["Moneda"],
-        montoMoneda: json["Monto_Moneda"]?.tonum(),
+        montoMoneda: json["Monto_Moneda"]?.toDouble(),
         referencia: json["Referencia"],
         autorizacion: json["Autorizacion"],
         banco: json["Banco"],
@@ -175,12 +175,12 @@ class DocTransaccion {
   int traProducto;
   int traUnidadMedida;
   int traCantidad;
-  num traTipoCambio;
+  double traTipoCambio;
   int traMoneda;
   int? traTipoPrecio;
   int? traFactorConversion;
   int traTipoTransaccion;
-  num traMonto;
+  double traMonto;
 
   DocTransaccion({
     required this.traConsecutivoInterno,
@@ -209,7 +209,7 @@ class DocTransaccion {
         traProducto: json["Tra_Producto"],
         traUnidadMedida: json["Tra_Unidad_Medida"],
         traCantidad: json["Tra_Cantidad"],
-        traTipoCambio: json["Tra_Tipo_Cambio"]?.tonum(),
+        traTipoCambio: json["Tra_Tipo_Cambio"]?.toDouble(),
         traMoneda: json["Tra_Moneda"],
         traTipoPrecio: json["Tra_Tipo_Precio"],
         traFactorConversion: json["Tra_Factor_Conversion"],
