@@ -1771,8 +1771,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     final DocEstructuraModel doc = DocEstructuraModel(
-      docCaMonto: totalCA,
       docTraMonto: detailsVM.total,
+      docCaMonto: totalCA,
       docIdCertificador: 1, //TODO: Agrgar certificador
       docCuentaVendedor: cuentaVendedor,
       docIdDocumentoRef: randomNumber,

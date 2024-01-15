@@ -2,8 +2,6 @@
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
-import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/models/version_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
