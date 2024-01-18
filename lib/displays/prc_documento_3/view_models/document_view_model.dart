@@ -369,8 +369,8 @@ class DocumentViewModel extends ChangeNotifier {
         direccion1CuentaCta: "Ciudad",
         eMail: "",
         telefono: "",
-        limiteCredito: 10000000.00,
-        permitirCxC: true,
+        limiteCredito: 0,
+        permitirCxC: false,
       );
       //Mensaje de confirmacion
       NotificationService.showSnackbar("Cliente seleccionado.");
