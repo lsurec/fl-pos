@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/get_doc_model.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/resume_doc_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -70,12 +71,7 @@ class _RecentViewState extends State<RecentView> {
                       separatorBuilder: (context, index) =>
                           const Divider(), // Agregar el separador
                       itemBuilder: (context, index) {
-                        final GetDocModel doc = vm.documents[index];
-
-                        final Map<String, double> totals = vm.getTotalDoc(
-                          context,
-                          doc.estructura,
-                        );
+                        final ResumeDocModel doc = vm.documents[index];
 
                         return ListTile(
                           contentPadding: const EdgeInsets.symmetric(
@@ -90,11 +86,11 @@ class _RecentViewState extends State<RecentView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${doc.consecutivoInterno}",
+                                    "${doc.item.consecutivoInterno}",
                                     style: AppTheme.normalBoldStyle,
                                   ),
                                   Text(
-                                    vm.strDate(doc.fechaHora),
+                                    vm.strDate(doc.item.fechaHora),
                                     style: AppTheme.normalStyle,
                                   ),
                                 ],
@@ -103,21 +99,19 @@ class _RecentViewState extends State<RecentView> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    currencyFormat.format(totals["subtotal"]),
+                                    currencyFormat.format(doc.total),
                                     style: const TextStyle(
                                       color: AppTheme.primary,
                                     ),
                                   ),
                                   Text(
-                                    "(+) ${currencyFormat.format(
-                                      totals["cargo"],
-                                    )}",
+                                    "(+) ${currencyFormat.format(doc.cargo)}",
                                     style: const TextStyle(
                                       color: Colors.green,
                                     ),
                                   ),
                                   Text(
-                                    "(-) ${currencyFormat.format(totals["descuento"])}",
+                                    "(-) ${currencyFormat.format(doc.descuento)}",
                                     style: const TextStyle(
                                       color: Colors.red,
                                     ),
@@ -128,14 +122,14 @@ class _RecentViewState extends State<RecentView> {
                                     color: Colors.black,
                                   ),
                                   Text(
-                                    currencyFormat.format(totals["total"]),
+                                    currencyFormat.format(doc.total),
                                     style: AppTheme.normalBoldStyle,
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          onTap: () => vm.navigateView(context, doc),
+                          // onTap: () => vm.navigateView(context, doc),
                         );
                       },
                     ),

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/resume_doc_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -21,7 +22,7 @@ class RecentViewModel extends ChangeNotifier {
   }
 
   //Lista de documentos recentes
-  final List<GetDocModel> documents = [];
+  final List<ResumeDocModel> documents = [];
 
   final List<TipoTransaccionModel> tiposTransacciones = [];
 
@@ -535,56 +536,6 @@ class RecentViewModel extends ChangeNotifier {
     return formattedDate;
   }
 
-  //ibtener total del documento
-  Map<String, double> getTotalDoc(BuildContext context, String document) {
-    //TODO:Resumen ambiguo
-    //porveedor de dtaos externos
-
-    //id tipo transaccion cargo
-    int tipoCargo = resolveTipoTransaccion(4);
-    //id tipo transaccion descuento
-    int tipoDescuento = resolveTipoTransaccion(3);
-
-    //Totales
-    double cargo = 0;
-    double descuento = 0;
-    double subtotal = 0;
-    double total = 0;
-
-    //Docummento estructura
-    DocEstructuraModel doc = DocEstructuraModel.fromJson(document);
-
-    //recorrer la transacciones
-    for (var tra in doc.docTransaccion) {
-      //Si no es ni cargo ni desceuntosumar total transaccones
-      if (tra.traTipoTransaccion != tipoCargo &&
-          tra.traTipoTransaccion != tipoDescuento) {
-        subtotal += tra.traMonto;
-      }
-
-      //sii es cargo sumar cargo
-      if (tra.traTipoTransaccion == tipoCargo) {
-        cargo += tra.traMonto;
-      }
-
-      //si es descuento sumar descuento
-      if (tra.traTipoTransaccion == tipoDescuento) {
-        descuento += tra.traMonto;
-      }
-    }
-
-    //calcular total
-    total = (subtotal + cargo) + descuento;
-
-    //retornar totales
-    return <String, double>{
-      'cargo': cargo,
-      'descuento': descuento,
-      'subtotal': subtotal,
-      'total': total,
-    };
-  }
-
   //buscar documentos recientes
   Future<void> loadDocs(BuildContext context) async {
     //Proveedor de datos externos
@@ -594,23 +545,81 @@ class RecentViewModel extends ChangeNotifier {
     String user = loginVM.nameUser;
     String token = loginVM.token;
 
-    //servicio documentos
-    DocumentService documentService = DocumentService();
-
-    //elinar documentos existentes
+    //limpiar documentos
     documents.clear();
 
-    //inciar proceso
+    //iniciar proceso
     isLoading = true;
+
+    //servicio documentos
+    DocumentService documentService = DocumentService();
 
     //consummo api buscar documentos recienets
     final ApiResModel res = await documentService.getDocument(0, user, token);
 
     //finalizar procesp
-    isLoading = false;
 
     //Si el api falló
     if (!res.succes) {
+      isLoading = false;
+      await showError(context, res);
+      return;
+    }
+
+    //documentos enconmtrados
+    final List<GetDocModel> docs = res.message;
+
+    //recorrer los documentos encontrados
+    for (var doc in docs) {
+      //convertir la estructura json string a objeto
+      final DocEstructuraModel estructura =
+          DocEstructuraModel.fromJson(doc.estructura);
+
+      //Servicio del tipo de trnsaccion
+      TipoTransaccionService tipoTransaccionService = TipoTransaccionService();
+
+      double cargo = 0;
+      double descuento = 0;
+      double subtotal = 0;
+      double total = 0;
+
+      for (var tra in estructura.docTransaccion) {
+        if (tra.traCantidad == 0 && tra.traMonto > 0) {
+          cargo += tra.traMonto;
+        } else if (tra.traCantidad == 0 && tra.traMonto < 0) {
+          descuento += tra.traMonto;
+        } else {
+          subtotal += tra.traMonto;
+        }
+      }
+
+      total = (subtotal + cargo) + descuento;
+
+      documents.add(
+        ResumeDocModel(
+          item: doc,
+          documento: estructura,
+          subtotal: subtotal,
+          cargo: cargo,
+          descuento: descuento,
+          total: total,
+        ),
+      );
+    }
+
+    isLoading = false;
+
+    //agregar documentos encontrados
+  }
+
+  showError(
+    BuildContext context,
+    ApiResModel res,
+  ) async {
+    //Si el api falló
+    if (!res.succes) {
+      isLoading = false;
+
       //mostrar dialogo de confirmacion
       ErrorModel error = ErrorModel(
         date: DateTime.now(),
@@ -623,10 +632,6 @@ class RecentViewModel extends ChangeNotifier {
         context,
         error,
       );
-      return;
     }
-
-    //agregar documentos encontrados
-    documents.addAll(res.message);
   }
 }

@@ -28,6 +28,12 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           style: AppTheme.titleStyle,
         ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.print_outlined,
+            ),
+          ),
           // if (!vm.showBlock)
           //   IconButton(
           //     onPressed: () => vm.showBlock = true,
@@ -312,6 +318,8 @@ class _Pyments extends StatelessWidget {
     );
   }
 }
+
+//TODO:Resolver errores al cargar un documento
 
 class _Transaction extends StatelessWidget {
   final List<TransactionDetail> transactions;
