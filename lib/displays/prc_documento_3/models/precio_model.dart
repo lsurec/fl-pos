@@ -8,9 +8,11 @@ class PrecioModel {
   int moneda;
   double precioUnidad;
   dynamic descuentoPor;
-  String desTipoPrecio;
+  dynamic desTipoPrecio;
   String monedaNombre;
   String monedaIsoCode;
+  dynamic precioOrden;
+  dynamic tipoPrecioOrden;
 
   PrecioModel({
     required this.bodega,
@@ -23,6 +25,8 @@ class PrecioModel {
     required this.desTipoPrecio,
     required this.monedaNombre,
     required this.monedaIsoCode,
+    required this.precioOrden,
+    required this.tipoPrecioOrden,
   });
 
   factory PrecioModel.fromJson(String str) =>
@@ -41,6 +45,8 @@ class PrecioModel {
         desTipoPrecio: json["des_Tipo_Precio"],
         monedaNombre: json["moneda_Nombre"],
         monedaIsoCode: json["moneda_ISO_Code"],
+        precioOrden: json["precio_Orden"],
+        tipoPrecioOrden: json["tipo_Precio_Orden"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -54,5 +60,7 @@ class PrecioModel {
         "des_Tipo_Precio": desTipoPrecio,
         "moneda_Nombre": monedaNombre,
         "moneda_ISO_Code": monedaIsoCode,
+        "precio_Orden": precioOrden,
+        "tipo_Precio_Orden": tipoPrecioOrden,
       };
 }

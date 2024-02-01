@@ -22,6 +22,7 @@ class FactorConversionModel {
   String descripcionAltProducto;
   String iDProducto;
   String desUnidadMedida;
+  dynamic tipoPrecioOrden;
 
   FactorConversionModel({
     required this.factorConversion,
@@ -45,6 +46,7 @@ class FactorConversionModel {
     required this.descripcionAltProducto,
     required this.iDProducto,
     required this.desUnidadMedida,
+    required this.tipoPrecioOrden,
   });
 
   factory FactorConversionModel.fromJson(String str) =>
@@ -76,6 +78,7 @@ class FactorConversionModel {
         descripcionAltProducto: json["descripcion_Alt_Producto"],
         iDProducto: json["iD_Producto"],
         desUnidadMedida: json["des_Unidad_Medida"],
+        tipoPrecioOrden: json["tipo_Precio_Orden"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -100,5 +103,6 @@ class FactorConversionModel {
         "descripcion_Alt_Producto": descripcionAltProducto,
         "iD_Producto": iDProducto,
         "des_Unidad_Medida": desUnidadMedida,
+        "tipo_Precio_Orden": tipoPrecioOrden,
       };
 }
