@@ -188,6 +188,7 @@ class ProductViewModel extends ChangeNotifier {
           descripcion: precio.desTipoPrecio,
           precio: true, //true Tipo precio; false Factor conversion
           moneda: precio.moneda,
+          orden: precio.tipoPrecioOrden,
         );
 
         unitarios.add(unitario);
@@ -198,6 +199,18 @@ class ProductViewModel extends ChangeNotifier {
         total = selectedPrice!.precioU;
         price = selectedPrice!.precioU;
         controllerPrice.text = "$price";
+      } else if (unitarios.length > 1) {
+        for (var i = 0; i < unitarios.length; i++) {
+          final UnitarioModel unit = unitarios[i];
+
+          if (unit.orden != null) {
+            selectedPrice = unit;
+            total = unit.precioU;
+            price = unit.precioU;
+            controllerPrice.text = unit.precioU.toString();
+            break;
+          }
+        }
       }
 
       return ApiResModel(
@@ -241,6 +254,7 @@ class ProductViewModel extends ChangeNotifier {
         descripcion: factor.presentacion,
         precio: false, //true Tipo precio; false Factor conversion
         moneda: factor.moneda,
+        orden: factor.tipoPrecioOrden,
       );
 
       unitarios.add(unitario);
@@ -251,6 +265,18 @@ class ProductViewModel extends ChangeNotifier {
       total = selectedPrice!.precioU;
       price = selectedPrice!.precioU;
       controllerPrice.text = "$price";
+    } else if (unitarios.length > 1) {
+      for (var i = 0; i < unitarios.length; i++) {
+        final UnitarioModel unit = unitarios[i];
+
+        if (unit.orden != null) {
+          selectedPrice = unit;
+          total = unit.precioU;
+          price = unit.precioU;
+          controllerPrice.text = unit.precioU.toString();
+          break;
+        }
+      }
     }
 
     return ApiResModel(

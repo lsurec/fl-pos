@@ -6,6 +6,7 @@ class UnitarioModel {
   String descripcion;
   bool precio;
   int moneda;
+  dynamic orden;
 
   UnitarioModel({
     required this.id,
@@ -13,6 +14,7 @@ class UnitarioModel {
     required this.descripcion,
     required this.precio,
     required this.moneda,
+    required this.orden,
   });
 
   factory UnitarioModel.fromJson(String str) =>
@@ -26,6 +28,7 @@ class UnitarioModel {
         descripcion: json["descripcion"],
         precio: json["precio"],
         moneda: json["moneda"],
+        orden: json["orden"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -34,5 +37,6 @@ class UnitarioModel {
         "descripcion": descripcion,
         "precio": precio,
         "moneda": moneda,
+        "orden": orden,
       };
 }
