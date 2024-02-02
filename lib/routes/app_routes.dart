@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/conversion/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
@@ -31,6 +32,7 @@ class AppRoutes {
     "addClient": (BuildContext context) => const AddClientView(),
     "help": (BuildContext context) => const HelpView(),
     "updateClient": (BuildContext context) => const UpdateClientView(),
+    "pendingDocs": (BuildContext context) => const PendingDocsView(),
   };
 
   //en caso de ruta incorrecta
