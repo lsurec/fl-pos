@@ -33,6 +33,7 @@ class AppRoutes {
     "help": (BuildContext context) => const HelpView(),
     "updateClient": (BuildContext context) => const UpdateClientView(),
     "pendingDocs": (BuildContext context) => const PendingDocsView(),
+    "destionationDocs": (BuildContext context) => const DestinationDocView(),
   };
 
   //en caso de ruta incorrecta
