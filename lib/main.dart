@@ -76,8 +76,8 @@ class MyApp extends StatelessWidget {
           const PendingDocsView(), // Muestra el SplashScreen durante el inicio
       //configurar ruta inicial
       // home: const SplashView(), // Muestra el SplashScreen durante el inicio
-      // routes: AppRoutes.routes, //rutas
-      // onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
+      routes: AppRoutes.routes, //rutas
+      onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
     );
   }
 }

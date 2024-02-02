@@ -15,10 +15,11 @@ class PendingDocsView extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     "Registros(${10})",
@@ -26,13 +27,14 @@ class PendingDocsView extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: 10,
                 itemBuilder: (BuildContext context, int index) {
-                  return _CardDoc();
+                  return const _CardDoc();
                 },
               ),
             ],
@@ -50,9 +52,9 @@ class _CardDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 10,
             vertical: 10,
@@ -71,72 +73,77 @@ class _CardDoc extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 5),
-        Card(
-          color: AppTheme.grayAppBar,
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    "Requerimiento de traslado",
+        const SizedBox(height: 5),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "destionationDocs");
+          },
+          child: const Card(
+            color: AppTheme.grayAppBar,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      "Requerimiento de traslado",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                  ),
+                  Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Fecha docuento:",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      Text(
+                        "12/12/2024",
+                        style: AppTheme.normalStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Fecha hora:",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      Text(
+                        "12/12/2024 12:12:12",
+                        style: AppTheme.normalStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Bodega origen:",
                     style: AppTheme.normalBoldStyle,
                   ),
-                ),
-                Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Fecha docuento:",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    Text(
-                      "12/12/2024",
-                      style: AppTheme.normalStyle,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Fecha hora:",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    Text(
-                      "12/12/2024 12:12:12",
-                      style: AppTheme.normalStyle,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                Text(
-                  "Bodega origen:",
-                  style: AppTheme.normalBoldStyle,
-                ),
-                Text(
-                  "Dolore irure eiusmod laboris quis.",
-                  style: AppTheme.normalStyle,
-                ),
-                SizedBox(height: 5),
-                Text(
-                  "Bodega destino:",
-                  style: AppTheme.normalBoldStyle,
-                ),
-                Text(
-                  "Anim cupidatat adipisicing adipisicing.",
-                  style: AppTheme.normalStyle,
-                ),
-              ],
+                  Text(
+                    "Dolore irure eiusmod laboris quis.",
+                    style: AppTheme.normalStyle,
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "Bodega destino:",
+                    style: AppTheme.normalBoldStyle,
+                  ),
+                  Text(
+                    "Anim cupidatat adipisicing adipisicing.",
+                    style: AppTheme.normalStyle,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        SizedBox(height: 10),
-        Divider(),
+        const SizedBox(height: 10),
+        const Divider(),
       ],
     );
   }
