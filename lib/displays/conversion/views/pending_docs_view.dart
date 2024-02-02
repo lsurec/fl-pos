@@ -16,14 +16,26 @@ class PendingDocsView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20),
-          child: ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return _CardDoc();
-            },
+          child: Column(
+            children: [
+              const Row(
+                children: [
+                  Text(
+                    "Registros(${10})",
+                    style: AppTheme.normalBoldStyle,
+                  ),
+                ],
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: 10,
+                itemBuilder: (BuildContext context, int index) {
+                  return _CardDoc();
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -38,7 +50,7 @@ class _CardDoc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
