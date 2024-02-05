@@ -32,7 +32,7 @@ class AppRoutes {
     "addClient": (BuildContext context) => const AddClientView(),
     "help": (BuildContext context) => const HelpView(),
     "updateClient": (BuildContext context) => const UpdateClientView(),
-    "pendingDocs": (BuildContext context) => const PendingDocsView(),
+    "App_Menu_Grid_01": (BuildContext context) => const PendingDocsView(),
     "destionationDocs": (BuildContext context) => const DestinationDocView(),
     "convertDocs": (BuildContext context) => const ConvertDocView(),
   };

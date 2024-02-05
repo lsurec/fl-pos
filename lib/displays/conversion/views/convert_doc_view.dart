@@ -11,7 +11,41 @@ class ConvertDocView extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (BuildContext context) {
+                  return Container(
+                    color: AppTheme.backroundColor,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 10),
+                    child: const SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          _Texts(
+                            title: "Id. del Documento: ",
+                            text: "10",
+                          ),
+                          SizedBox(height: 10),
+                          _Texts(
+                            title: "NIT: ",
+                            text: "10151515",
+                          ),
+                          _Texts(
+                            title: "Nombre: ",
+                            text: "Nombre del cliente",
+                          ),
+                          _Texts(
+                            title: "Direccion: ",
+                            text: "Ciudad",
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
             icon: const Icon(Icons.info_outline),
           )
         ],
@@ -44,28 +78,64 @@ class ConvertDocView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              CardWidget(
-                color: AppTheme.grayAppBar,
-                child: ListTile(
-                  leading: Checkbox(value: false, onChanged: (value) {}),
-                  contentPadding: const EdgeInsets.all(10),
-                  subtitle: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _Texts(title: "Cantidad: ", text: "1000"),
-                      SizedBox(height: 5),
-                      _Texts(title: "Disponible: ", text: "1000"),
-                      SizedBox(height: 5),
-                      _Texts(title: "Clase: ", text: "1000"),
-                      SizedBox(height: 5),
-                      _Texts(title: "Marca: ", text: "1000"),
-                      SizedBox(height: 5),
-                      _Texts(title: "Id: ", text: "1000"),
-                      SizedBox(height: 5),
-                      _Texts(title: "Bodega: ", text: "1000"),
-                      SizedBox(height: 5),
-                      _Texts(title: "Producto: ", text: "1000"),
-                    ],
+              GestureDetector(
+                onTap: () {
+                  String texto = '';
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Cantidad'),
+                        content: TextField(
+                          onChanged: (value) {
+                            texto = value;
+                          },
+                          decoration: InputDecoration(hintText: 'Escriba aquí'),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Cierra el diálogo
+                            },
+                            child: Text('Cancelar'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Realiza alguna acción con el texto ingresado
+                              print('Texto ingresado: $texto');
+                              Navigator.of(context).pop(); // Cierra el diálogo
+                            },
+                            child: Text('Aceptar'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: CardWidget(
+                  color: AppTheme.grayAppBar,
+                  child: ListTile(
+                    leading: Checkbox(value: false, onChanged: (value) {}),
+                    contentPadding: const EdgeInsets.all(10),
+                    subtitle: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _Texts(title: "Cantidad: ", text: "1000"),
+                        SizedBox(height: 5),
+                        _Texts(title: "Disponible: ", text: "1000"),
+                        SizedBox(height: 5),
+                        _Texts(title: "Clase: ", text: "1000"),
+                        SizedBox(height: 5),
+                        _Texts(title: "Marca: ", text: "1000"),
+                        SizedBox(height: 5),
+                        _Texts(title: "Id: ", text: "1000"),
+                        SizedBox(height: 5),
+                        _Texts(title: "Bodega: ", text: "1000"),
+                        SizedBox(height: 5),
+                        _Texts(title: "Producto: ", text: "1000"),
+                      ],
+                    ),
                   ),
                 ),
               ),
