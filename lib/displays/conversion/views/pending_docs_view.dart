@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 
 class PendingDocsView extends StatelessWidget {
   const PendingDocsView({Key? key}) : super(key: key);
@@ -78,10 +79,12 @@ class _CardDoc extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, "destionationDocs");
           },
-          child: const Card(
+          child: const CardWidget(
             color: AppTheme.grayAppBar,
+            width: double.infinity,
+            raidus: 0,
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

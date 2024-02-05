@@ -72,10 +72,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
-      // home:
-      // const PendingDocsView(), // Muestra el SplashScreen durante el inicio
+      home:
+          const PendingDocsView(), // Muestra el SplashScreen durante el inicio
       //configurar ruta inicial
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      // home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
     );
