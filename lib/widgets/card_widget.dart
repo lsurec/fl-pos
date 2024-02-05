@@ -5,7 +5,6 @@ class CardWidget extends StatelessWidget {
   const CardWidget({
     Key? key,
     required this.width,
-    required this.height,
     required this.raidus,
     this.color = AppTheme.backroundColorSecondary,
     required this.child,
@@ -15,7 +14,6 @@ class CardWidget extends StatelessWidget {
   }) : super(key: key);
 
   final double width;
-  final double height;
   final double raidus;
   final Color? color;
   final double? elevation;
@@ -27,7 +25,6 @@ class CardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      height: height,
       width: width,
       child: Card(
         color: color,

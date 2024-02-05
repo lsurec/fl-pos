@@ -82,7 +82,6 @@ class ApiView extends StatelessWidget {
                   const SizedBox(height: 20),
                   CardWidget(
                     width: double.infinity,
-                    height: 200,
                     raidus: 18,
                     child: Padding(
                       padding: const EdgeInsets.all(20),

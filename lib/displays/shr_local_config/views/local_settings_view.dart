@@ -58,7 +58,6 @@ class LocalSettingsView extends StatelessWidget {
                       ),
                       if (vm.empresas.isNotEmpty)
                         CardWidget(
-                          height: 80,
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
@@ -93,7 +92,6 @@ class LocalSettingsView extends StatelessWidget {
                       ),
                       if (vm.estaciones.isNotEmpty)
                         CardWidget(
-                          height: 80,
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
