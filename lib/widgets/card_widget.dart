@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class CardWidget extends StatelessWidget {
   const CardWidget({
     Key? key,
-    required this.width,
-    required this.raidus,
+    this.width = double.infinity,
+    this.raidus = 0,
     this.color = AppTheme.backroundColorSecondary,
     required this.child,
     this.elevation = 2,
@@ -13,8 +13,8 @@ class CardWidget extends StatelessWidget {
     this.borderWidth = 0,
   }) : super(key: key);
 
-  final double width;
-  final double raidus;
+  final double? width;
+  final double? raidus;
   final Color? color;
   final double? elevation;
   final Color? borderColor;
@@ -30,10 +30,10 @@ class CardWidget extends StatelessWidget {
         color: color,
         shape: borderColor == null
             ? RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(raidus),
+                borderRadius: BorderRadius.circular(raidus!),
               )
             : RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(raidus),
+                borderRadius: BorderRadius.circular(raidus!),
                 side: BorderSide(
                   color: borderColor!,
                   width: borderWidth!,

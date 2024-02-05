@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 
 class DestinationDocView extends StatelessWidget {
   const DestinationDocView({Key? key}) : super(key: key);
@@ -17,10 +18,10 @@ class DestinationDocView extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, "convertDocs");
               },
-              child: const Card(
+              child: const CardWidget(
                 color: AppTheme.grayAppBar,
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -81,8 +81,6 @@ class _CardDoc extends StatelessWidget {
           },
           child: const CardWidget(
             color: AppTheme.grayAppBar,
-            width: double.infinity,
-            raidus: 0,
             child: Padding(
               padding: EdgeInsets.all(10),
               child: Column(
