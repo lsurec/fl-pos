@@ -31,6 +31,8 @@ class DestinationDocViewModel extends ChangeNotifier {
 
     final ReceptionService receptionService = ReceptionService();
 
+    documents.clear();
+
     isLoading = true;
 
     final ApiResModel res = await receptionService.getDestinationDocs(
