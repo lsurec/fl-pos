@@ -9,7 +9,7 @@ class ReceptionService {
   //url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-  //obtener estaciones
+  //obtener docummentos pendientes de vonvertir
   Future<ApiResModel> getPendindgDocs(
     String user,
     String token,
@@ -39,7 +39,7 @@ class ReceptionService {
         );
       }
 
-      //estaciones disp0onibles
+      //documentos disp0onibles
       List<PendingDocModel> docs = [];
 
       //recorrer lista api Y  agregar a lista local
@@ -68,7 +68,7 @@ class ReceptionService {
     }
   } //url del servidor
 
-  //obtener estaciones
+  //obtener docunentos destino (para convertir un documento)
   Future<ApiResModel> getDestinationDocs(
     String user,
     String token,
@@ -106,7 +106,7 @@ class ReceptionService {
         );
       }
 
-      //estaciones disp0onibles
+      //documentos disp0onibles
       List<DestinationDocModel> docs = [];
 
       //recorrer lista api Y  agregar a lista local

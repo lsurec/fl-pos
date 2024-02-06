@@ -20,20 +20,25 @@ class PendingDocsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Doucumentos disponibles
   final List<PendingDocModel> documents = [];
 
+  //navgear a pantalla de documentos destino
   Future<void> navigateDestination(
     BuildContext context,
     PendingDocModel doc,
   ) async {
+    //datos externos
     final destVM = Provider.of<DestinationDocViewModel>(context, listen: false);
 
     isLoading = true;
 
+    //Cargar documentos destino disponibles
     await destVM.loadData(context, doc);
 
     isLoading = false;
 
+    //Navgear a vosta de documentos destino
     Navigator.pushNamed(
       context,
       "destionationDocs",
@@ -41,19 +46,24 @@ class PendingDocsViewModel extends ChangeNotifier {
     );
   }
 
+  //Cargar datos
   Future<void> laodData(BuildContext context) async {
+    //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final menuVM = Provider.of<MenuViewModel>(context, listen: false);
     final String token = loginVM.token;
     final String user = loginVM.nameUser;
     final int doc = menuVM.documento!;
 
+    //servicio que se va a usar
     final ReceptionService receptionService = ReceptionService();
 
+    //limpiar docuemntos existentes
     documents.clear();
 
     isLoading = true;
 
+    //consumo del api
     final ApiResModel res = await receptionService.getPendindgDocs(
       user,
       token,
@@ -62,6 +72,7 @@ class PendingDocsViewModel extends ChangeNotifier {
 
     isLoading = false;
 
+    //si el consumo salió mal
     if (!res.succes) {
       ErrorModel error = res.message;
 
@@ -73,6 +84,7 @@ class PendingDocsViewModel extends ChangeNotifier {
       return;
     }
 
+    //asignar documntos disponibles
     documents.addAll(res.message);
   }
 
