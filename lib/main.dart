@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -45,6 +46,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DetailsViewModel()),
         ChangeNotifierProvider(create: (_) => DetailsDocViewModel()),
         ChangeNotifierProvider(create: (_) => AddClientViewModel()),
+        ChangeNotifierProvider(create: (_) => PendingDocsViewModel()),
       ],
       child: const MyApp(),
     );

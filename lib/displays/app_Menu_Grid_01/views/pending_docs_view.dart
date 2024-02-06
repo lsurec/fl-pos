@@ -1,47 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/models/models.dart';
+import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/widgets/card_widget.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class PendingDocsView extends StatelessWidget {
   const PendingDocsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Documento conversion",
-          style: AppTheme.titleStyle,
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Registros(${10})",
-                    style: AppTheme.normalBoldStyle,
+    final vmMenu = Provider.of<MenuViewModel>(context);
+    final vm = Provider.of<PendingDocsViewModel>(context);
+
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              vmMenu.name,
+              style: AppTheme.titleStyle,
+            ),
+          ),
+          body: RefreshIndicator(
+            onRefresh: () => vm.laodData(context),
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Registros(${vm.documents.length})",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm.documents.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _CardDoc(
+                            document: vm.documents[index],
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: 10,
-                itemBuilder: (BuildContext context, int index) {
-                  return const _CardDoc();
-                },
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }
@@ -49,14 +74,19 @@ class PendingDocsView extends StatelessWidget {
 class _CardDoc extends StatelessWidget {
   const _CardDoc({
     super.key,
+    required this.document,
   });
+
+  final PendingDocModel document;
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<PendingDocsViewModel>(context);
+
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(
+        Padding(
+          padding: const EdgeInsets.symmetric(
             horizontal: 10,
             vertical: 10,
           ),
@@ -64,11 +94,11 @@ class _CardDoc extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "1515",
+                "Id documento: ${document.iDDocumento}",
                 style: AppTheme.normalBoldStyle,
               ),
               Text(
-                "Usuario",
+                "Usuario: ${document.usuario}",
                 style: AppTheme.normalBoldStyle,
               ),
             ],
@@ -79,65 +109,74 @@ class _CardDoc extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, "destionationDocs");
           },
-          child: const CardWidget(
+          child: CardWidget(
             color: AppTheme.grayAppBar,
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
                     child: Text(
-                      "Requerimiento de traslado",
+                      document.documentoDecripcion,
                       style: AppTheme.normalBoldStyle,
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Fecha docuento:",
+                      const Text(
+                        "Fecha documento:",
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
-                        "12/12/2024",
+                        document.fechaDocumento,
                         style: AppTheme.normalStyle,
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Fecha hora:",
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
-                        "12/12/2024 12:12:12",
+                        vm.formatDate(document.fechaHora),
                         style: AppTheme.normalStyle,
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    "Bodega origen:",
+                  const SizedBox(height: 5),
+                  const Text(
+                    "Serie documento:",
                     style: AppTheme.normalBoldStyle,
                   ),
                   Text(
-                    "Dolore irure eiusmod laboris quis.",
+                    document.serie,
                     style: AppTheme.normalStyle,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    "Bodega destino:",
-                    style: AppTheme.normalBoldStyle,
-                  ),
-                  Text(
-                    "Anim cupidatat adipisicing adipisicing.",
-                    style: AppTheme.normalStyle,
-                  ),
+                  )
+
+                  // Text(
+                  //   "Bodega origen:",
+                  //   style: AppTheme.normalBoldStyle,
+                  // ),
+                  // Text(
+                  //   "Dolore irure eiusmod laboris quis.",
+                  //   style: AppTheme.normalStyle,
+                  // ),
+                  // SizedBox(height: 5),
+                  // Text(
+                  //   "Bodega destino:",
+                  //   style: AppTheme.normalBoldStyle,
+                  // ),
+                  // Text(
+                  //   "Anim cupidatat adipisicing adipisicing.",
+                  //   style: AppTheme.normalStyle,
+                  // ),
                 ],
               ),
             ),
