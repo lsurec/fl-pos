@@ -106,9 +106,7 @@ class _CardDoc extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, "destionationDocs");
-          },
+          onTap: () => vm.navigateDestination(context, document),
           child: CardWidget(
             color: AppTheme.grayAppBar,
             child: Padding(
@@ -158,7 +156,7 @@ class _CardDoc extends StatelessWidget {
                   Text(
                     document.serie,
                     style: AppTheme.normalStyle,
-                  )
+                  ),
 
                   // Text(
                   //   "Bodega origen:",
