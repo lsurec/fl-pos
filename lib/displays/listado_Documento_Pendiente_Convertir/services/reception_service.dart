@@ -10,6 +10,64 @@ class ReceptionService {
   final String _baseUrl = Preferences.urlApi;
 
   //obtener docummentos pendientes de vonvertir
+  Future<ApiResModel> getTiposDoc(
+    String user,
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Recepcion/tipos/documentos/$user");
+    try {
+      //url completa
+
+      //configuraci9nes del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //documentos disp0onibles
+      List<TipoDocModel> docs = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TipoDocModel.fromMap(item);
+        //agregar item a la lista
+        docs.add(responseFinally);
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: docs,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  } //url del servidor
+
+  //obtener docummentos pendientes de vonvertir
   Future<ApiResModel> getPendindgDocs(
     String user,
     String token,
