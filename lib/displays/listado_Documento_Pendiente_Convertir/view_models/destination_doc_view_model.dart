@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/models/models.dart';
-import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/services/services.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -52,9 +52,14 @@ class DestinationDocViewModel extends ChangeNotifier {
 
     isLoading = false;
 
+//TODO:Verificar reviison de erroes en otros servicios (Este es el correcto)
     //si algo salió mal
     if (!res.succes) {
-      ErrorModel error = res.message;
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
 
       NotificationService.showErrorView(
         context,

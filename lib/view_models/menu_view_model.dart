@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -55,7 +55,7 @@ class MenuViewModel extends ChangeNotifier {
     }
 
     //cargar dtos
-    if (route == "App_Menu_Grid_01") {
+    if (route == "Listado_Documento_Pendiente_Convertir") {
       final vmHome = Provider.of<HomeViewModel>(context, listen: false);
       final vmPending =
           Provider.of<PendingDocsViewModel>(context, listen: false);

@@ -1,4 +1,4 @@
-import 'package:flutter_post_printer_example/displays/app_Menu_Grid_01/views/views.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
@@ -32,7 +32,8 @@ class AppRoutes {
     "addClient": (BuildContext context) => const AddClientView(),
     "help": (BuildContext context) => const HelpView(),
     "updateClient": (BuildContext context) => const UpdateClientView(),
-    "App_Menu_Grid_01": (BuildContext context) => const PendingDocsView(),
+    "Listado_Documento_Pendiente_Convertir": (BuildContext context) =>
+        const PendingDocsView(),
     "destionationDocs": (BuildContext context) => const DestinationDocView(),
     "convertDocs": (BuildContext context) => const ConvertDocView(),
   };
