@@ -47,13 +47,11 @@ class PendingDocsViewModel extends ChangeNotifier {
   }
 
   //Cargar datos
-  Future<void> laodData(BuildContext context) async {
+  Future<void> laodData(BuildContext context, int doc) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
     final String token = loginVM.token;
     final String user = loginVM.nameUser;
-    final int doc = menuVM.documento!;
 
     //servicio que se va a usar
     final ReceptionService receptionService = ReceptionService();

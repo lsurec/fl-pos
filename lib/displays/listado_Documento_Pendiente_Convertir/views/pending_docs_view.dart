@@ -13,6 +13,8 @@ class PendingDocsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vmMenu = Provider.of<MenuViewModel>(context);
     final vm = Provider.of<PendingDocsViewModel>(context);
+    final TipoDocModel tipoDoc =
+        ModalRoute.of(context)!.settings.arguments as TipoDocModel;
 
     return Stack(
       children: [
@@ -24,7 +26,10 @@ class PendingDocsView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () => vm.laodData(context),
+            onRefresh: () => vm.laodData(
+              context,
+              tipoDoc.tipoDocumento,
+            ),
             child: ListView(
               children: [
                 Padding(
