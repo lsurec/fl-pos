@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
+import 'package:provider/provider.dart';
 
 class ConvertDocView extends StatelessWidget {
   const ConvertDocView({Key? key}) : super(key: key);
@@ -13,6 +15,8 @@ class ConvertDocView extends StatelessWidget {
 
     final PendingDocModel docOrigen = arguments[0];
     final DestinationDocModel docDestino = arguments[1];
+
+    final vm = Provider.of<ConvertDocViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -96,11 +100,11 @@ class ConvertDocView extends StatelessWidget {
               const SizedBox(height: 10),
               const Divider(),
               const SizedBox(height: 10),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "Registros (10)",
+                    "Registros (${vm.detalles.length})",
                     style: AppTheme.normalBoldStyle,
                   ),
                 ],

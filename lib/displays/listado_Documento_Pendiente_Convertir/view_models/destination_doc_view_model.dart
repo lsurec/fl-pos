@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -20,6 +21,27 @@ class DestinationDocViewModel extends ChangeNotifier {
 
   //docummentos destino disponibles
   final List<DestinationDocModel> documents = [];
+
+  Future<void> navigateConvert(
+    BuildContext context,
+    PendingDocModel originDoc,
+    DestinationDocModel destinationDoc,
+  ) async {
+    final conVM = Provider.of<ConvertDocViewModel>(context, listen: false);
+
+    isLoading = true;
+    await conVM.loadData(context, originDoc);
+    isLoading = false;
+
+    Navigator.pushNamed(
+      context,
+      "convertDocs",
+      arguments: [
+        originDoc,
+        destinationDoc,
+      ],
+    );
+  }
 
   //Cargar datos
   Future<void> loadData(BuildContext context, PendingDocModel document) async {

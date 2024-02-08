@@ -50,16 +50,8 @@ class DestinationDocView extends StatelessWidget {
                           final DestinationDocModel doc = vm.documents[index];
 
                           return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                "convertDocs",
-                                arguments: [
-                                  document,
-                                  doc,
-                                ],
-                              );
-                            },
+                            onTap: () =>
+                                vm.navigateConvert(context, document, doc),
                             child: CardWidget(
                               color: AppTheme.grayAppBar,
                               child: Padding(
