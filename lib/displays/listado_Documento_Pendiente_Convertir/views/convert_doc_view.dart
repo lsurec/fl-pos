@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 
@@ -7,6 +8,12 @@ class ConvertDocView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+
+    final PendingDocModel docOrigen = arguments[0];
+    final DestinationDocModel docDestino = arguments[1];
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -60,10 +67,31 @@ class ConvertDocView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "ORIGEN - (84) Requerimiento de translado - (40) Cambio de producto.",
-                style: AppTheme.titleStyle,
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                color: Colors.green,
+                child: Text(
+                  "ORIGEN - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
+                width: double.infinity,
+                color: Colors.red,
+                child: Text(
+                  "DESTINO - (${docDestino.fTipoDocumento}) ${docDestino.documento} - (${docDestino.fSerieDocumento}) ${docDestino.serie}.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
               ),
               const SizedBox(height: 10),
               const Divider(),

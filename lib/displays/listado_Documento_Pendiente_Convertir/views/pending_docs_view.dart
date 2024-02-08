@@ -109,7 +109,6 @@ class _CardDoc extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 5),
         GestureDetector(
           onTap: () => vm.navigateDestination(context, document),
           child: CardWidget(
