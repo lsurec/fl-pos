@@ -18,7 +18,22 @@ class ConvertDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<OriginDetailModel> detalles = [];
+  bool _selectAllTra = false;
+  bool get selectAllTra => _selectAllTra;
+
+  set selectAllTra(bool value) {
+    _selectAllTra = value;
+
+    for (var element in detalles) {
+      element.checked = _selectAllTra;
+    }
+
+    notifyListeners();
+  }
+
+  final List<OriginDetailInterModel> detalles = [];
+
+  String textoInput = "";
 
   Future<void> loadData(BuildContext context, OriginDocModel docOrigin) async {
     //datos externos
@@ -62,6 +77,62 @@ class ConvertDocViewModel extends ChangeNotifier {
       return;
     }
 
-    detalles.addAll(res.message);
+    List<OriginDetailModel> details = res.message;
+
+    for (var element in details) {
+      detalles.add(
+        OriginDetailInterModel(
+          consecutivoInterno: element.consecutivoInterno,
+          disponible: element.disponible,
+          clase: element.clase,
+          marca: element.marca,
+          id: element.id,
+          producto: element.producto,
+          bodega: element.bodega,
+          cantidad: element.cantidad,
+          disponibleMod: element.disponible,
+          checked: false,
+        ),
+      );
+    }
+  }
+
+  selectTra(
+    int index,
+    bool value,
+  ) {
+    detalles[index].checked = value;
+    notifyListeners();
+  }
+
+  modificarDisponible(
+    BuildContext context,
+    int index,
+  ) {
+    double monto = 0;
+
+    if (double.tryParse(textoInput) == null) {
+      //si el input es nulo o vacio agregar 0
+      monto = 0;
+    } else {
+      monto = double.parse(textoInput); //parse string to double
+    }
+
+    if (monto <= 0) {
+      NotificationService.showSnackbar("El valor debe ser mmayor a 0");
+      return;
+    }
+
+    if (monto > detalles[index].disponible) {
+      NotificationService.showSnackbar(
+          "El valor debe ser mmayor al valor disponible.");
+      return;
+    }
+
+    detalles[index].disponibleMod = monto;
+    detalles[index].checked = true;
+    Navigator.of(context).pop(); // Cierra el diálogo
+
+    notifyListeners();
   }
 }

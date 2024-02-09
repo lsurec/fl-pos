@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -57,8 +58,9 @@ class ConvertDocView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Checkbox(
-                            value: false,
-                            onChanged: (value) {},
+                            activeColor: AppTheme.primary,
+                            value: vm.selectAllTra,
+                            onChanged: (value) => vm.selectAllTra = value!,
                           ),
                           Text(
                             "Registros (${vm.detalles.length})",
@@ -72,10 +74,11 @@ class ConvertDocView extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: vm.detalles.length,
                         itemBuilder: (BuildContext context, int index) {
-                          OriginDetailModel detallle = vm.detalles[index];
+                          OriginDetailInterModel detallle = vm.detalles[index];
 
                           return _CardDetalle(
                             detalle: detallle,
+                            index: index,
                           );
                         },
                       ),
@@ -174,41 +177,49 @@ class _ColorCard extends StatelessWidget {
 class _CardDetalle extends StatelessWidget {
   const _CardDetalle({
     required this.detalle,
+    required this.index,
   });
 
-  final OriginDetailModel detalle;
+  final OriginDetailInterModel detalle;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<ConvertDocViewModel>(context);
+
     return GestureDetector(
       onTap: () {
-        String texto = '';
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               backgroundColor: AppTheme.backroundColor,
-              title: Text('Diponible'),
-              content: TextField(
-                onChanged: (value) {
-                  texto = value;
+              title: const Text('Diponible'),
+              content: TextFormField(
+                initialValue: "${detalle.disponibleMod}",
+                onChanged: (value) => vm.textoInput = value,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^(\d+)?\.?\d{0,2}'))
+                ],
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Campo requerido.';
+                  } else if (double.tryParse(value) == 0) {
+                    return 'El valor no puede ser 0';
+                  }
+                  return null;
                 },
-                decoration: InputDecoration(hintText: 'Escriba aquí'),
               ),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Cierra el diálogo
-                  },
-                  child: Text('Cancelar'),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Cancelar'),
                 ),
                 TextButton(
-                  onPressed: () {
-                    // Realiza alguna acción con el texto ingresado
-                    print('Texto ingresado: $texto');
-                    Navigator.of(context).pop(); // Cierra el diálogo
-                  },
-                  child: Text('Aceptar'),
+                  onPressed: () => vm.modificarDisponible(context, index),
+                  child: const Text('Aceptar'),
                 ),
               ],
             );
@@ -218,7 +229,11 @@ class _CardDetalle extends StatelessWidget {
       child: CardWidget(
         color: AppTheme.grayAppBar,
         child: ListTile(
-          leading: Checkbox(value: false, onChanged: (value) {}),
+          leading: Checkbox(
+            value: detalle.checked,
+            onChanged: (value) => vm.selectTra(index, value!),
+            activeColor: AppTheme.primary,
+          ),
           contentPadding: const EdgeInsets.all(10),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -235,7 +250,7 @@ class _CardDetalle extends StatelessWidget {
               const SizedBox(height: 5),
               _Texts(title: "Producto: ", text: detalle.producto),
               const SizedBox(height: 5),
-              _Texts(title: "Disponible: ", text: "${detalle.disponible}"),
+              _Texts(title: "Disponible: ", text: "${detalle.disponibleMod}"),
             ],
           ),
         ),
