@@ -139,4 +139,17 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  cinvertirDocumento() {
+    List<OriginDetailInterModel> elementosCheckTrue =
+        detalles.where((elemento) => elemento.checked).toList();
+
+    if (elementosCheckTrue.isEmpty) {
+      NotificationService.showSnackbar(
+          "Selecciona por lo menos una transacción.");
+      return;
+    }
+
+    //convertir documento
+  }
 }
