@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class PendingDocModel {
+class OriginDocModel {
   int documento;
   int tipoDocumento;
   String serieDocumento;
@@ -17,7 +17,7 @@ class PendingDocModel {
   String observacion;
   dynamic fechaPedido;
 
-  PendingDocModel({
+  OriginDocModel({
     required this.documento,
     required this.tipoDocumento,
     required this.serieDocumento,
@@ -35,12 +35,12 @@ class PendingDocModel {
     required this.fechaPedido,
   });
 
-  factory PendingDocModel.fromJson(String str) =>
-      PendingDocModel.fromMap(json.decode(str));
+  factory OriginDocModel.fromJson(String str) =>
+      OriginDocModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory PendingDocModel.fromMap(Map<String, dynamic> json) => PendingDocModel(
+  factory OriginDocModel.fromMap(Map<String, dynamic> json) => OriginDocModel(
         documento: json["documento"],
         tipoDocumento: json["tipo_Documento"],
         serieDocumento: json["serie_Documento"],

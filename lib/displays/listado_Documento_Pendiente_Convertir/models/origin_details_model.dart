@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-class DocOrigenModel {
+class OriginDetailsModel {
   int consecutivoInterno;
-  int disponible;
+  double disponible;
   String clase;
   dynamic marca;
   String id;
   String producto;
   String bodega;
-  int cantidad;
+  double cantidad;
 
-  DocOrigenModel({
+  OriginDetailsModel({
     required this.consecutivoInterno,
     required this.disponible,
     required this.clase,
@@ -21,12 +21,13 @@ class DocOrigenModel {
     required this.cantidad,
   });
 
-  factory DocOrigenModel.fromJson(String str) =>
-      DocOrigenModel.fromMap(json.decode(str));
+  factory OriginDetailsModel.fromJson(String str) =>
+      OriginDetailsModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory DocOrigenModel.fromMap(Map<String, dynamic> json) => DocOrigenModel(
+  factory OriginDetailsModel.fromMap(Map<String, dynamic> json) =>
+      OriginDetailsModel(
         consecutivoInterno: json["consecutivo_Interno"],
         disponible: json["disponible"],
         clase: json["clase"],

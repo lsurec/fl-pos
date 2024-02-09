@@ -9,7 +9,7 @@ import 'package:flutter_post_printer_example/services/notification_service.dart'
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
-class TiposDocViewModel extends ChangeNotifier {
+class TypesDocViewModel extends ChangeNotifier {
   //controlar procesos
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -19,11 +19,11 @@ class TiposDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<TipoDocModel> documents = [];
+  final List<TypeDocModel> documents = [];
 
   Future<void> navigatePendDocs(
     BuildContext context,
-    TipoDocModel tipo,
+    TypeDocModel tipo,
   ) async {
     final penVM = Provider.of<PendingDocsViewModel>(context, listen: false);
 

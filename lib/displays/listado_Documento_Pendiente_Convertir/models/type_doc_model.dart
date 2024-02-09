@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-class TipoDocModel {
+class TypeDocModel {
   int tipoDocumento;
   String fDesTipoDocumento;
 
-  TipoDocModel({
+  TypeDocModel({
     required this.tipoDocumento,
     required this.fDesTipoDocumento,
   });
 
-  factory TipoDocModel.fromJson(String str) =>
-      TipoDocModel.fromMap(json.decode(str));
+  factory TypeDocModel.fromJson(String str) =>
+      TypeDocModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory TipoDocModel.fromMap(Map<String, dynamic> json) => TipoDocModel(
+  factory TypeDocModel.fromMap(Map<String, dynamic> json) => TypeDocModel(
         tipoDocumento: json["tipo_Documento"],
         fDesTipoDocumento: json["fDes_Tipo_Documento"],
       );

@@ -18,9 +18,9 @@ class ConvertDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<DocOrigenModel> detalles = [];
+  final List<OriginDetailsModel> detalles = [];
 
-  Future<void> loadData(BuildContext context, PendingDocModel docOrigin) async {
+  Future<void> loadData(BuildContext context, OriginDocModel docOrigin) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;

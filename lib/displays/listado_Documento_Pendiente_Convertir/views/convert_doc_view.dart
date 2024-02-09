@@ -13,7 +13,7 @@ class ConvertDocView extends StatelessWidget {
     final List<dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as List<dynamic>;
 
-    final PendingDocModel docOrigen = arguments[0];
+    final OriginDocModel docOrigen = arguments[0];
     final DestinationDocModel docDestino = arguments[1];
 
     final vm = Provider.of<ConvertDocViewModel>(context);
@@ -63,7 +63,7 @@ class ConvertDocView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: Icon(
+        child: const Icon(
           Icons.check,
         ),
       ),
@@ -73,29 +73,15 @@ class ConvertDocView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                width: double.infinity,
+              _ColorCard(
                 color: Colors.green,
-                child: Text(
-                  "ORIGEN - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
+                text:
+                    "ORIGEN - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
               ),
-              Container(
-                padding: EdgeInsets.all(10),
-                width: double.infinity,
+              _ColorCard(
                 color: Colors.red,
-                child: Text(
-                  "DESTINO - (${docDestino.fTipoDocumento}) ${docDestino.documento} - (${docDestino.fSerieDocumento}) ${docDestino.serie}.",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
+                text:
+                    "DESTINO - (${docDestino.fTipoDocumento}) ${docDestino.documento} - (${docDestino.fSerieDocumento}) ${docDestino.serie}.",
               ),
               const SizedBox(height: 10),
               const Divider(),
@@ -110,67 +96,114 @@ class ConvertDocView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              GestureDetector(
-                onTap: () {
-                  String texto = '';
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: vm.detalles.length,
+                itemBuilder: (BuildContext context, int index) {
+                  OriginDetailsModel detallle = vm.detalles[index];
 
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Cantidad'),
-                        content: TextField(
-                          onChanged: (value) {
-                            texto = value;
-                          },
-                          decoration: InputDecoration(hintText: 'Escriba aquí'),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Cierra el diálogo
-                            },
-                            child: Text('Cancelar'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // Realiza alguna acción con el texto ingresado
-                              print('Texto ingresado: $texto');
-                              Navigator.of(context).pop(); // Cierra el diálogo
-                            },
-                            child: Text('Aceptar'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  return _CardDetalle();
                 },
-                child: CardWidget(
-                  color: AppTheme.grayAppBar,
-                  child: ListTile(
-                    leading: Checkbox(value: false, onChanged: (value) {}),
-                    contentPadding: const EdgeInsets.all(10),
-                    subtitle: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _Texts(title: "Cantidad: ", text: "1000"),
-                        SizedBox(height: 5),
-                        _Texts(title: "Disponible: ", text: "1000"),
-                        SizedBox(height: 5),
-                        _Texts(title: "Clase: ", text: "1000"),
-                        SizedBox(height: 5),
-                        _Texts(title: "Marca: ", text: "1000"),
-                        SizedBox(height: 5),
-                        _Texts(title: "Id: ", text: "1000"),
-                        SizedBox(height: 5),
-                        _Texts(title: "Bodega: ", text: "1000"),
-                        SizedBox(height: 5),
-                        _Texts(title: "Producto: ", text: "1000"),
-                      ],
-                    ),
-                  ),
-                ),
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ColorCard extends StatelessWidget {
+  const _ColorCard({
+    super.key,
+    required this.color,
+    required this.text,
+  });
+
+  final Color color;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: double.infinity,
+      color: color,
+      child: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+      ),
+    );
+  }
+}
+
+class _CardDetalle extends StatelessWidget {
+  const _CardDetalle({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        String texto = '';
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Cantidad'),
+              content: TextField(
+                onChanged: (value) {
+                  texto = value;
+                },
+                decoration: InputDecoration(hintText: 'Escriba aquí'),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Cierra el diálogo
+                  },
+                  child: Text('Cancelar'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Realiza alguna acción con el texto ingresado
+                    print('Texto ingresado: $texto');
+                    Navigator.of(context).pop(); // Cierra el diálogo
+                  },
+                  child: Text('Aceptar'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: CardWidget(
+        color: AppTheme.grayAppBar,
+        child: ListTile(
+          leading: Checkbox(value: false, onChanged: (value) {}),
+          contentPadding: const EdgeInsets.all(10),
+          subtitle: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _Texts(title: "Cantidad: ", text: "1000"),
+              SizedBox(height: 5),
+              _Texts(title: "Disponible: ", text: "1000"),
+              SizedBox(height: 5),
+              _Texts(title: "Clase: ", text: "1000"),
+              SizedBox(height: 5),
+              _Texts(title: "Marca: ", text: "1000"),
+              SizedBox(height: 5),
+              _Texts(title: "Id: ", text: "1000"),
+              SizedBox(height: 5),
+              _Texts(title: "Bodega: ", text: "1000"),
+              SizedBox(height: 5),
+              _Texts(title: "Producto: ", text: "1000"),
             ],
           ),
         ),

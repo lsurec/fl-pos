@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/doc_origen_model.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_details_model.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -55,12 +55,12 @@ class ReceptionService {
       }
 
       //documentos disp0onibles
-      List<DocOrigenModel> detalles = [];
+      List<OriginDetailsModel> detalles = [];
 
       //recorrer lista api Y  agregar a lista local
       for (var item in res.data) {
         //Tipar a map
-        final responseFinally = DocOrigenModel.fromMap(item);
+        final responseFinally = OriginDetailsModel.fromMap(item);
         //agregar item a la lista
         detalles.add(responseFinally);
       }
@@ -113,12 +113,12 @@ class ReceptionService {
       }
 
       //documentos disp0onibles
-      List<TipoDocModel> docs = [];
+      List<TypeDocModel> docs = [];
 
       //recorrer lista api Y  agregar a lista local
       for (var item in res.data) {
         //Tipar a map
-        final responseFinally = TipoDocModel.fromMap(item);
+        final responseFinally = TypeDocModel.fromMap(item);
         //agregar item a la lista
         docs.add(responseFinally);
       }
@@ -172,12 +172,12 @@ class ReceptionService {
       }
 
       //documentos disp0onibles
-      List<PendingDocModel> docs = [];
+      List<OriginDocModel> docs = [];
 
       //recorrer lista api Y  agregar a lista local
       for (var item in res.data) {
         //Tipar a map
-        final responseFinally = PendingDocModel.fromMap(item);
+        final responseFinally = OriginDocModel.fromMap(item);
         //agregar item a la lista
         docs.add(responseFinally);
       }

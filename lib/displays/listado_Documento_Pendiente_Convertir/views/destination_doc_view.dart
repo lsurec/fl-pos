@@ -10,8 +10,8 @@ class DestinationDocView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PendingDocModel document =
-        ModalRoute.of(context)!.settings.arguments as PendingDocModel;
+    final OriginDocModel document =
+        ModalRoute.of(context)!.settings.arguments as OriginDocModel;
 
     final vm = Provider.of<DestinationDocViewModel>(context);
 

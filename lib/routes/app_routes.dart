@@ -1,4 +1,4 @@
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/tipos_doc_view.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/types_doc_view.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
@@ -34,7 +34,7 @@ class AppRoutes {
     "help": (BuildContext context) => const HelpView(),
     "updateClient": (BuildContext context) => const UpdateClientView(),
     "Listado_Documento_Pendiente_Convertir": (BuildContext context) =>
-        const TiposDocView(),
+        const TypesDocView(),
     "destionationDocs": (BuildContext context) => const DestinationDocView(),
     "pendingDocs": (BuildContext context) => const PendingDocsView(),
     "convertDocs": (BuildContext context) => const ConvertDocView(),

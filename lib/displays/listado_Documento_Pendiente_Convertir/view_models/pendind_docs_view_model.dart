@@ -21,12 +21,12 @@ class PendingDocsViewModel extends ChangeNotifier {
   }
 
   //Doucumentos disponibles
-  final List<PendingDocModel> documents = [];
+  final List<OriginDocModel> documents = [];
 
   //navgear a pantalla de documentos destino
   Future<void> navigateDestination(
     BuildContext context,
-    PendingDocModel doc,
+    OriginDocModel doc,
   ) async {
     //datos externos
     final destVM = Provider.of<DestinationDocViewModel>(context, listen: false);

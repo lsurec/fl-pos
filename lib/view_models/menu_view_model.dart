@@ -57,7 +57,7 @@ class MenuViewModel extends ChangeNotifier {
     //cargar dtos
     if (route == "Listado_Documento_Pendiente_Convertir") {
       final vmHome = Provider.of<HomeViewModel>(context, listen: false);
-      final vmTipos = Provider.of<TiposDocViewModel>(context, listen: false);
+      final vmTipos = Provider.of<TypesDocViewModel>(context, listen: false);
 
       vmHome.isLoading = true;
 

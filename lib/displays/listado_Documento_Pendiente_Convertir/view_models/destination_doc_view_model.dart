@@ -24,7 +24,7 @@ class DestinationDocViewModel extends ChangeNotifier {
 
   Future<void> navigateConvert(
     BuildContext context,
-    PendingDocModel originDoc,
+    OriginDocModel originDoc,
     DestinationDocModel destinationDoc,
   ) async {
     final conVM = Provider.of<ConvertDocViewModel>(context, listen: false);
@@ -44,7 +44,7 @@ class DestinationDocViewModel extends ChangeNotifier {
   }
 
   //Cargar datos
-  Future<void> loadData(BuildContext context, PendingDocModel document) async {
+  Future<void> loadData(BuildContext context, OriginDocModel document) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token; //token de la sesion

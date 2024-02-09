@@ -6,13 +6,13 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class TiposDocView extends StatelessWidget {
-  const TiposDocView({Key? key}) : super(key: key);
+class TypesDocView extends StatelessWidget {
+  const TypesDocView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final vmMenu = Provider.of<MenuViewModel>(context);
-    final vm = Provider.of<TiposDocViewModel>(context);
+    final vm = Provider.of<TypesDocViewModel>(context);
 
     return Stack(
       children: [
@@ -47,13 +47,13 @@ class TiposDocView extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: vm.documents.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final TipoDocModel doc = vm.documents[index];
+                            final TypeDocModel doc = vm.documents[index];
                             return CardWidget(
                               child: ListTile(
                                 onTap: () => vm.navigatePendDocs(context, doc),
                                 trailing: const Icon(Icons.arrow_right),
                                 title: Text(
-                                  "(${doc.tipoDocumento}) ${doc.fDesTipoDocumento}",
+                                  "${doc.fDesTipoDocumento} (${doc.tipoDocumento})",
                                   style: AppTheme.normalStyle,
                                 ),
                               ),

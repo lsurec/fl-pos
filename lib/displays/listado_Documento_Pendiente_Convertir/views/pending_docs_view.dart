@@ -13,8 +13,8 @@ class PendingDocsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vmMenu = Provider.of<MenuViewModel>(context);
     final vm = Provider.of<PendingDocsViewModel>(context);
-    final TipoDocModel tipoDoc =
-        ModalRoute.of(context)!.settings.arguments as TipoDocModel;
+    final TypeDocModel tipoDoc =
+        ModalRoute.of(context)!.settings.arguments as TypeDocModel;
 
     return Stack(
       children: [
@@ -82,7 +82,7 @@ class _CardDoc extends StatelessWidget {
     required this.document,
   });
 
-  final PendingDocModel document;
+  final OriginDocModel document;
 
   @override
   Widget build(BuildContext context) {

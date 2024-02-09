@@ -1,4 +1,4 @@
-export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/doc_origen_model.dart';
-export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/tipo_doc_model.dart';
+export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_details_model.dart';
+export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/type_doc_model.dart';
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/destination_doc_model.dart';
-export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/pending_doc_model.dart';
+export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_doc_model.dart';
