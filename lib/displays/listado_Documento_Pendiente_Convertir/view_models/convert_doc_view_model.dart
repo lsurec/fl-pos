@@ -119,11 +119,15 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     if (monto <= 0) {
+      Navigator.of(context).pop(); // Cierra el diálogo
+
       NotificationService.showSnackbar("El valor debe ser mmayor a 0");
       return;
     }
 
     if (monto > detalles[index].disponible) {
+      Navigator.of(context).pop(); // Cierra el diálogo
+
       NotificationService.showSnackbar(
           "El valor debe ser mmayor al valor disponible.");
       return;
