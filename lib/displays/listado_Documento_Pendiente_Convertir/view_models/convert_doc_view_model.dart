@@ -18,7 +18,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<OriginDetailsModel> detalles = [];
+  final List<OriginDetailModel> detalles = [];
 
   Future<void> loadData(BuildContext context, OriginDocModel docOrigin) async {
     //datos externos

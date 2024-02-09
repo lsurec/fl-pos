@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_details_model.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_detail_model.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -55,12 +55,12 @@ class ReceptionService {
       }
 
       //documentos disp0onibles
-      List<OriginDetailsModel> detalles = [];
+      List<OriginDetailModel> detalles = [];
 
       //recorrer lista api Y  agregar a lista local
       for (var item in res.data) {
         //Tipar a map
-        final responseFinally = OriginDetailsModel.fromMap(item);
+        final responseFinally = OriginDetailModel.fromMap(item);
         //agregar item a la lista
         detalles.add(responseFinally);
       }
