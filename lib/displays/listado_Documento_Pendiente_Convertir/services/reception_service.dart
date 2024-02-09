@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/doc_convert_model.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_detail_model.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -9,6 +10,110 @@ import 'package:http/http.dart' as http;
 class ReceptionService {
   //url del servidor
   final String _baseUrl = Preferences.urlApi;
+
+  //Crear nueva cuenta correntista
+  Future<ApiResModel> postConvertir(
+    String token,
+    ParamConvertDoc doc,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Recepcion/documento/convertir");
+    try {
+      //url completa
+
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: doc.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      DocConvertModel resDoc = DocConvertModel.fromMap(res.data);
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: resDoc,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Crear nueva cuenta correntista
+  Future<ApiResModel> postActualizar(
+    String user,
+    String token,
+    int consecutivo,
+    double cantidad,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Recepcion/documento/actualizar");
+    try {
+      //url completa
+
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+          "user": user,
+          "consecutivo": "$consecutivo",
+          "cantidad": "$cantidad",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: "ok",
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 
   //obtener docummentos pendientes de vonvertir
   Future<ApiResModel> getDetallesDocOrigen(
