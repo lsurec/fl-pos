@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/doc_convert_model.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/reception_service.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -140,7 +141,15 @@ class ConvertDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  cinvertirDocumento() {
+  Future<void> convertirDocumento(
+    BuildContext context,
+    OriginDocModel origen,
+    DestinationDocModel destino,
+  ) async {
+    // print(detalles[0].consecutivoInterno);
+
+    // return;
+
     List<OriginDetailInterModel> elementosCheckTrue =
         detalles.where((elemento) => elemento.checked).toList();
 
@@ -151,5 +160,89 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     //convertir documento
+
+    //datos externos
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final String token = loginVM.token;
+    final String user = loginVM.nameUser;
+
+    final ReceptionService receptionService = ReceptionService();
+
+    isLoading = true;
+
+    for (var element in elementosCheckTrue) {
+      final ApiResModel resUpdate = await receptionService.postActualizar(
+        user,
+        token,
+        element.consecutivoInterno, // consecutivo,
+        element.disponibleMod, // cantidad,
+      );
+
+      //si el consumo salió mal
+      if (!resUpdate.succes) {
+        isLoading = false;
+
+        ErrorModel error = ErrorModel(
+          date: DateTime.now(),
+          description: resUpdate.message,
+          storeProcedure: resUpdate.storeProcedure,
+        );
+
+        NotificationService.showErrorView(
+          context,
+          error,
+        );
+
+        return;
+      }
+
+      final ParamConvertDoc param = ParamConvertDoc(
+        pUserName: user,
+        pODocumento: origen.documento,
+        pOTipoDocumento: origen.tipoDocumento,
+        pOSerieDocumento: origen.serieDocumento,
+        pOEmpresa: origen.empresa,
+        pOEstacionTrabajo: origen.estacionTrabajo,
+        pOFechaReg: origen.fechaReg,
+        pDTipoDocumento: destino.fTipoDocumento,
+        pDSerieDocumento: destino.fSerieDocumento,
+        pDEmpresa: origen.empresa,
+        pDEstacionTrabajo: origen.estacionTrabajo,
+      );
+
+      final ApiResModel resConvert = await receptionService.postConvertir(
+        token,
+        param,
+      );
+
+      //si el consumo salió mal
+      if (!resConvert.succes) {
+        isLoading = false;
+
+        ErrorModel error = ErrorModel(
+          date: DateTime.now(),
+          description: resConvert.message,
+          storeProcedure: resConvert.storeProcedure,
+        );
+
+        NotificationService.showErrorView(
+          context,
+          error,
+        );
+
+        return;
+      }
+
+      final DocConvertModel objDest = resConvert.message;
+    }
+    // volver a cargar datos
+    await loadData(context, origen);
+
+    //Alerta
+    NotificationService.showSnackbar("Documento pocesado con exito.");
+
+    //buscar documento destino
+
+    isLoading = false;
   }
 }

@@ -27,7 +27,11 @@ class ConvertDocView extends StatelessWidget {
               // actions: const [_Actions()],
               ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => vm.cinvertirDocumento(),
+            onPressed: () => vm.convertirDocumento(
+              context,
+              docOrigen,
+              docDestino,
+            ),
             child: const Icon(Icons.check),
           ),
           body: RefreshIndicator(

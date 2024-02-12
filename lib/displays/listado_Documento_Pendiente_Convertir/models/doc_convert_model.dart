@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 class DocConvertModel {
-  Documento documento;
-  Documento tIpoDocumento;
-  Documento serieDocumento;
-  Documento empresa;
-  Documento localizacion;
-  Documento estacion;
-  Documento fechaReg;
+  int documento;
+  int tipoDocumento;
+  String serieDocumento;
+  int empresa;
+  int localizacion;
+  int estacion;
+  int fechaReg;
 
   DocConvertModel({
     required this.documento,
-    required this.tIpoDocumento,
+    required this.tipoDocumento,
     required this.serieDocumento,
     required this.empresa,
     required this.localizacion,
@@ -25,23 +25,23 @@ class DocConvertModel {
   String toJson() => json.encode(toMap());
 
   factory DocConvertModel.fromMap(Map<String, dynamic> json) => DocConvertModel(
-        documento: Documento.fromMap(json["documento"]),
-        tIpoDocumento: Documento.fromMap(json["tIpoDocumento"]),
-        serieDocumento: Documento.fromMap(json["serieDocumento"]),
-        empresa: Documento.fromMap(json["empresa"]),
-        localizacion: Documento.fromMap(json["localizacion"]),
-        estacion: Documento.fromMap(json["estacion"]),
-        fechaReg: Documento.fromMap(json["fechaReg"]),
+        documento: json["documento"],
+        tipoDocumento: json["tipoDocumento"],
+        serieDocumento: json["serieDocumento"],
+        empresa: json["empresa"],
+        localizacion: json["localizacion"],
+        estacion: json["estacion"],
+        fechaReg: json["fechaReg"],
       );
 
   Map<String, dynamic> toMap() => {
-        "documento": documento.toMap(),
-        "tIpoDocumento": tIpoDocumento.toMap(),
-        "serieDocumento": serieDocumento.toMap(),
-        "empresa": empresa.toMap(),
-        "localizacion": localizacion.toMap(),
-        "estacion": estacion.toMap(),
-        "fechaReg": fechaReg.toMap(),
+        "documento": documento,
+        "tipoDocumento": tipoDocumento,
+        "serieDocumento": serieDocumento,
+        "empresa": empresa,
+        "localizacion": localizacion,
+        "estacion": estacion,
+        "fechaReg": fechaReg,
       };
 }
 
