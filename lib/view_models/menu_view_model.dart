@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,7 @@ class MenuViewModel extends ChangeNotifier {
     }
 
     //cargar dtos
-    if (route == "Listado_Documento_Pendiente_Convertir") {
+    if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
       final vmHome = Provider.of<HomeViewModel>(context, listen: false);
       final vmTipos = Provider.of<TypesDocViewModel>(context, listen: false);
 
@@ -63,9 +64,22 @@ class MenuViewModel extends ChangeNotifier {
 
       await vmTipos.loadData(context);
 
-      vmHome.isLoading = false;
+      //si solo hay un documento sleccioanrlo
+      if (vmTipos.documents.length == 1) {
+        final penVM = Provider.of<PendingDocsViewModel>(context, listen: false);
+
+        await penVM.laodData(context, vmTipos.documents.first.tipoDocumento);
+
+        Navigator.pushNamed(context, route);
+
+        vmHome.isLoading = false;
+
+        return;
+      }
 
       Navigator.pushNamed(context, route);
+
+      vmHome.isLoading = false;
 
       return;
     }

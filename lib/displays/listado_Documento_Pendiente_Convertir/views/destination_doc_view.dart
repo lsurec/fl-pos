@@ -20,7 +20,7 @@ class DestinationDocView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: const Text(
-              "Destino",
+              "Documento Destino",
               style: AppTheme.titleStyle,
             ),
           ),

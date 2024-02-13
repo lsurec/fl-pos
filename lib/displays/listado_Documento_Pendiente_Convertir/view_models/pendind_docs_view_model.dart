@@ -36,6 +36,13 @@ class PendingDocsViewModel extends ChangeNotifier {
     //Cargar documentos destino disponibles
     await destVM.loadData(context, doc);
 
+    if (destVM.documents.length == 1) {
+      await destVM.navigateConvert(context, doc, destVM.documents.first);
+      isLoading = false;
+
+      return;
+    }
+
     isLoading = false;
 
     //Navgear a vosta de documentos destino

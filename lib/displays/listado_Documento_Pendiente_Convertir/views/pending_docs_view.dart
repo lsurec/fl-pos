@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +10,6 @@ class PendingDocsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vmMenu = Provider.of<MenuViewModel>(context);
     final vm = Provider.of<PendingDocsViewModel>(context);
     final TypeDocModel tipoDoc =
         ModalRoute.of(context)!.settings.arguments as TypeDocModel;
@@ -21,7 +19,7 @@ class PendingDocsView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: Text(
-              vmMenu.name,
+              "${tipoDoc.fDesTipoDocumento} (Origen)",
               style: AppTheme.titleStyle,
             ),
           ),
@@ -45,7 +43,9 @@ class PendingDocsView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
@@ -118,13 +118,6 @@ class _CardDoc extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Text(
-                      document.documentoDecripcion,
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                  ),
-                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -153,15 +146,13 @@ class _CardDoc extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  const Text(
-                    "Serie documento:",
-                    style: AppTheme.normalBoldStyle,
-                  ),
-                  Text(
-                    document.serie,
-                    style: AppTheme.normalStyle,
-                  ),
-
+                  TextsWidget(
+                      title: "Serie documento: ",
+                      text: "${document.serie} (${document.serieDocumento})"),
+                  const SizedBox(height: 5),
+                  if (document.observacion.isNotEmpty)
+                    TextsWidget(
+                        title: "Observacion: ", text: document.observacion),
                   // Text(
                   //   "Bodega origen:",
                   //   style: AppTheme.normalBoldStyle,
