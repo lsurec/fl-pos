@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
@@ -33,6 +34,7 @@ class AppRoutes {
   static const pendingDocs = 'pendingDocs';
   static const convertDocs = 'convertDocs';
   static const docsDestination = 'docsDestination';
+  static const detailsDestinationDoc = 'detailsDestinationDoc';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -64,7 +66,8 @@ class AppRoutes {
     destionationDocs: (BuildContext context) => const DestinationDocView(),
     pendingDocs: (BuildContext context) => const PendingDocsView(),
     convertDocs: (BuildContext context) => const ConvertDocView(),
-    docsDestination: (BuildContext context) =>
+    docsDestination: (BuildContext context) => const DocsDestinationView(),
+    detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
   };
 

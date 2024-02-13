@@ -50,6 +50,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DestinationDocViewModel()),
         ChangeNotifierProvider(create: (_) => TypesDocViewModel()),
         ChangeNotifierProvider(create: (_) => ConvertDocViewModel()),
+        ChangeNotifierProvider(create: (_) => DocsDestinationViewModel()),
         ChangeNotifierProvider(create: (_) => DetailsDestinationDocViewModel()),
       ],
       child: const MyApp(),
