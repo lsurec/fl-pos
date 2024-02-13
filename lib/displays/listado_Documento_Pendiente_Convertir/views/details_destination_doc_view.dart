@@ -18,8 +18,18 @@ class DetailsDestinationDocView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-              // actions: const [_Actions()],
-              ),
+            title: const Text(
+              "Detalle del documento",
+              style: AppTheme.titleStyle,
+            ),
+            actions: [
+              IconButton(
+                tooltip: "Imprimir",
+                onPressed: () {},
+                icon: const Icon(Icons.print_outlined),
+              )
+            ],
+          ),
           body: RefreshIndicator(
             onRefresh: () => vm.loadData(context, document),
             child: ListView(
@@ -29,10 +39,21 @@ class DetailsDestinationDocView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ColorTextCardWidget(
-                        color: Colors.red,
+                      TextsWidget(
+                        title: "Documento: ",
+                        text: "${document.data.documento}",
+                      ),
+                      const SizedBox(height: 3),
+                      TextsWidget(
+                        title: "Tipo Documento: ",
                         text:
-                            "DESTINO - (${document.tipoDocumento}) ${document.desTipoDocumento} - (${document.serie}) ${document.desSerie}.",
+                            "(${document.serie}) ${document.desTipoDocumento.toUpperCase()}",
+                      ),
+                      const SizedBox(height: 3),
+                      TextsWidget(
+                        title: "Serie Documento: ",
+                        text:
+                            "(${document.serie}) ${document.desSerie.toUpperCase()}",
                       ),
                       const SizedBox(height: 10),
                       const Divider(),
@@ -41,23 +62,49 @@ class DetailsDestinationDocView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "Registros (${vm.detalles.length})",
+                            "Transacciones (${vm.detalles.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      const Divider(),
-                      const SizedBox(height: 10),
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemCount: vm.detalles.length,
                         itemBuilder: (BuildContext context, int index) {
-                          DestinationDetailModel detallle = vm.detalles[index];
+                          DestinationDetailModel detalle = vm.detalles[index];
 
-                          return CardWidget(child: Container());
+                          return CardWidget(
+                            color: AppTheme.grayAppBar,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextsWidget(
+                                    title: "Cantidad: ",
+                                    text: "${detalle.cantidad}",
+                                  ),
+                                  const SizedBox(height: 5),
+                                  TextsWidget(
+                                    title: "Id: ",
+                                    text: detalle.id,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  TextsWidget(
+                                    title: "Producto: ",
+                                    text: detalle.producto,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  TextsWidget(
+                                    title: "Bodega: ",
+                                    text: detalle.bodega,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ],

@@ -121,20 +121,20 @@ class _Actions extends StatelessWidget {
               child: const SingleChildScrollView(
                 child: Column(
                   children: [
-                    _Texts(
+                    TextsWidget(
                       title: "Id. del Documento: ",
                       text: "10",
                     ),
                     SizedBox(height: 10),
-                    _Texts(
+                    TextsWidget(
                       title: "NIT: ",
                       text: "10151515",
                     ),
-                    _Texts(
+                    TextsWidget(
                       title: "Nombre: ",
                       text: "Nombre del cliente",
                     ),
-                    _Texts(
+                    TextsWidget(
                       title: "Direccion: ",
                       text: "Ciudad",
                     ),
@@ -214,50 +214,25 @@ class _CardDetalle extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Texts(title: "Id: ", text: detalle.id),
+              TextsWidget(title: "Id: ", text: detalle.id),
               const SizedBox(height: 5),
-              _Texts(title: "Clase: ", text: detalle.clase),
+              TextsWidget(title: "Clase: ", text: detalle.clase),
               const SizedBox(height: 5),
-              _Texts(title: "Marca: ", text: detalle.marca ?? "SIN MARCA"),
+              TextsWidget(title: "Marca: ", text: detalle.marca ?? "SIN MARCA"),
               const SizedBox(height: 5),
-              _Texts(title: "Bodega: ", text: detalle.bodega),
+              TextsWidget(title: "Bodega: ", text: detalle.bodega),
               const SizedBox(height: 5),
-              _Texts(title: "Producto: ", text: detalle.producto),
+              TextsWidget(title: "Producto: ", text: detalle.producto),
               const SizedBox(height: 5),
-              _Texts(title: "Cantidad: ", text: "${detalle.cantidad}"),
+              TextsWidget(title: "Cantidad: ", text: "${detalle.cantidad}"),
               const SizedBox(height: 5),
-              _Texts(title: "Disponible: ", text: "${detalle.disponible}"),
+              TextsWidget(title: "Disponible: ", text: "${detalle.disponible}"),
               const SizedBox(height: 5),
-              _Texts(title: "Autorizar: ", text: "${detalle.disponibleMod}"),
+              TextsWidget(
+                  title: "Autorizar: ", text: "${detalle.disponibleMod}"),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _Texts extends StatelessWidget {
-  const _Texts({
-    super.key,
-    required this.title,
-    required this.text,
-  });
-
-  final String title;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        style: AppTheme.normalStyle,
-        children: [
-          TextSpan(text: title, style: AppTheme.normalBoldStyle),
-          TextSpan(
-            text: text,
-          )
-        ],
       ),
     );
   }
