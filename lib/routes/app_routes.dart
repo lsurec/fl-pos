@@ -1,4 +1,3 @@
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/types_doc_view.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
@@ -38,6 +37,8 @@ class AppRoutes {
     "destionationDocs": (BuildContext context) => const DestinationDocView(),
     "pendingDocs": (BuildContext context) => const PendingDocsView(),
     "convertDocs": (BuildContext context) => const ConvertDocView(),
+    "docsDestination": (BuildContext context) =>
+        const DetailsDestinationDocView(),
   };
 
   //en caso de ruta incorrecta
