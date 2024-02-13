@@ -11,6 +11,7 @@ class CardWidget extends StatelessWidget {
     this.elevation = 2,
     this.borderColor,
     this.borderWidth = 0,
+    this.margin = const EdgeInsets.symmetric(vertical: 10),
   }) : super(key: key);
 
   final double? width;
@@ -20,11 +21,12 @@ class CardWidget extends StatelessWidget {
   final Color? borderColor;
   final Widget child;
   final double? borderWidth;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: margin,
       width: width,
       child: Card(
         color: color,

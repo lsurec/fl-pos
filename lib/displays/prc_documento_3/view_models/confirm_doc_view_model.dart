@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/fel/models/models.dart';
 import 'package:flutter_post_printer_example/fel/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -965,7 +966,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
   navigatePrint(BuildContext context) {
     Navigator.pushNamed(
       context,
-      "print",
+      AppRoutes.printer,
       arguments: [
         2,
         consecutivoDoc, //documento que se tiene que imprimmir

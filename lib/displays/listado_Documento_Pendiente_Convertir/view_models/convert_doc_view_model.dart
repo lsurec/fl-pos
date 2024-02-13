@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/reception_service.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -255,9 +256,12 @@ class ConvertDocViewModel extends ChangeNotifier {
       );
     }
 
-    // Navigator
     //navgear a documento destino
-
+    Navigator.pushNamed(
+      context,
+      AppRoutes.docsDestination,
+      arguments: docs,
+    );
     isLoading = false;
   }
 }
