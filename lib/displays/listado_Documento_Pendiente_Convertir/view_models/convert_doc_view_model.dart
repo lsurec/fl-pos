@@ -122,7 +122,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     if (monto <= 0) {
       Navigator.of(context).pop(); // Cierra el diálogo
 
-      NotificationService.showSnackbar("El valor debe ser mmayor a 0");
+      NotificationService.showSnackbar("El valor debe ser mayor a 0");
       return;
     }
 
@@ -130,7 +130,7 @@ class ConvertDocViewModel extends ChangeNotifier {
       Navigator.of(context).pop(); // Cierra el diálogo
 
       NotificationService.showSnackbar(
-          "El valor debe ser mmayor al valor disponible.");
+          "El valor no debe ser mayor al valor disponible.");
       return;
     }
 
@@ -169,6 +169,8 @@ class ConvertDocViewModel extends ChangeNotifier {
     final ReceptionService receptionService = ReceptionService();
 
     isLoading = true;
+
+    final List<DocConvertModel> dcoumentosDestino = [];
 
     for (var element in elementosCheckTrue) {
       final ApiResModel resUpdate = await receptionService.postActualizar(
@@ -234,14 +236,27 @@ class ConvertDocViewModel extends ChangeNotifier {
       }
 
       final DocConvertModel objDest = resConvert.message;
+      dcoumentosDestino.add(objDest);
     }
     // volver a cargar datos
     await loadData(context, origen);
 
-    //Alerta
-    NotificationService.showSnackbar("Documento pocesado con exito.");
+    final List<DocDestinationModel> docs = [];
 
-    //buscar documento destino
+    for (var element in dcoumentosDestino) {
+      docs.add(
+        DocDestinationModel(
+          tipoDocumento: destino.fTipoDocumento,
+          desTipoDocumento: destino.documento,
+          serie: destino.fSerieDocumento,
+          desSerie: destino.serie,
+          data: element,
+        ),
+      );
+    }
+
+    // Navigator
+    //navgear a documento destino
 
     isLoading = false;
   }

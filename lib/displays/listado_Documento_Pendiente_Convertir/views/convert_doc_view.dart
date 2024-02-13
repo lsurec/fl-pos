@@ -196,7 +196,7 @@ class _CardDetalle extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               backgroundColor: AppTheme.backroundColor,
-              title: const Text('Diponible'),
+              title: const Text('Autorizar'),
               content: TextFormField(
                 initialValue: "${detalle.disponibleMod}",
                 onChanged: (value) => vm.textoInput = value,
@@ -240,19 +240,21 @@ class _CardDetalle extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _Texts(title: "Cantidad: ", text: "${detalle.cantidad}"),
+              _Texts(title: "Id: ", text: detalle.id),
               const SizedBox(height: 5),
               _Texts(title: "Clase: ", text: detalle.clase),
               const SizedBox(height: 5),
               _Texts(title: "Marca: ", text: detalle.marca ?? "SIN MARCA"),
               const SizedBox(height: 5),
-              _Texts(title: "Id: ", text: detalle.id),
-              const SizedBox(height: 5),
               _Texts(title: "Bodega: ", text: detalle.bodega),
               const SizedBox(height: 5),
               _Texts(title: "Producto: ", text: detalle.producto),
               const SizedBox(height: 5),
-              _Texts(title: "Disponible: ", text: "${detalle.disponibleMod}"),
+              _Texts(title: "Cantidad: ", text: "${detalle.cantidad}"),
+              const SizedBox(height: 5),
+              _Texts(title: "Disponible: ", text: "${detalle.disponible}"),
+              const SizedBox(height: 5),
+              _Texts(title: "Autorizar: ", text: "${detalle.disponibleMod}"),
             ],
           ),
         ),
