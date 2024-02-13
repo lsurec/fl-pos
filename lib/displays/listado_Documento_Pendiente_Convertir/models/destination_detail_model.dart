@@ -5,7 +5,7 @@ class DestinationDetailModel {
   String id;
   String producto;
   String bodega;
-  int cantidad;
+  double cantidad;
 
   DestinationDetailModel({
     required this.consecutivoInterno,

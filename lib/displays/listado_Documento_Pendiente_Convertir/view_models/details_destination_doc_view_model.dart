@@ -20,7 +20,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
 
   final List<DestinationDetailModel> detalles = [];
 
-  Future<void> loadData(BuildContext context, OriginDocModel docOrigin) async {
+  Future<void> loadData(
+    BuildContext context,
+    DocDestinationModel document,
+  ) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
@@ -33,16 +36,16 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     isLoading = true;
 
     final ApiResModel res = await receptionService.getDetallesDocDestino(
-      token, // token,
-      user, // user,
-      docOrigin.documento, // documento,
-      docOrigin.tipoDocumento, // tipoDocumento,
-      docOrigin.serieDocumento, // serieDocumento,
-      docOrigin.empresa, // epresa,
-      docOrigin.localizacion, // localizacion,
-      docOrigin.estacionTrabajo, // estacion,
-      docOrigin.fechaReg, // fechaReg,
-    );
+        token, // token,
+        user, // user,
+        document.data.documento, // documento,
+        document.data.tipoDocumento, // tipoDocumento,
+        document.data.serieDocumento, // serieDocumento,
+        document.data.empresa, // epresa,
+        document.data.localizacion, // localizacion,
+        document.data.estacion, // estacion,
+        document.data.fechaReg // fechaReg,
+        );
 
     isLoading = false;
 

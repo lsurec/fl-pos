@@ -43,12 +43,12 @@ class ConvertDocView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _ColorCard(
+                      ColorTextCardWidget(
                         color: Colors.green,
                         text:
                             "ORIGEN - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
-                      _ColorCard(
+                      ColorTextCardWidget(
                         color: Colors.red,
                         text:
                             "DESTINO - (${docDestino.fTipoDocumento}) ${docDestino.documento} - (${docDestino.fSerieDocumento}) ${docDestino.serie}.",
@@ -146,32 +146,6 @@ class _Actions extends StatelessWidget {
         );
       },
       icon: const Icon(Icons.info_outline),
-    );
-  }
-}
-
-class _ColorCard extends StatelessWidget {
-  const _ColorCard({
-    required this.color,
-    required this.text,
-  });
-
-  final Color color;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      width: double.infinity,
-      color: color,
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-        ),
-      ),
     );
   }
 }

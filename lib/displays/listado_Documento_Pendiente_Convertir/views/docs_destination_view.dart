@@ -18,7 +18,7 @@ class DocsDestinationView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               "Destino",
               style: AppTheme.titleStyle,
             ),
@@ -69,7 +69,7 @@ class DocsDestinationView extends StatelessWidget {
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () => vm.navigateDetails(context, doc),
                               child: CardWidget(
                                 margin: EdgeInsets.zero,
                                 color: AppTheme.grayAppBar,
@@ -115,6 +115,13 @@ class DocsDestinationView extends StatelessWidget {
             ],
           ),
         ),
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
       ],
     );
   }
