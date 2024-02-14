@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -66,5 +67,9 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     }
 
     detalles.addAll(res.message);
+  }
+
+  printDoc(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.printer, arguments: [3, 0]);
   }
 }

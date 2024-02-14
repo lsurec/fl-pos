@@ -25,7 +25,7 @@ class DetailsDestinationDocView extends StatelessWidget {
             actions: [
               IconButton(
                 tooltip: "Imprimir",
-                onPressed: () {},
+                onPressed: () => vm.printDoc(context),
                 icon: const Icon(Icons.print_outlined),
               )
             ],

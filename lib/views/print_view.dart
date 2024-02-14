@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:io';
 
@@ -23,6 +25,9 @@ class PrintView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<int> arguments =
         ModalRoute.of(context)!.settings.arguments as List<int>;
+    //opcion 1 prueba  de impresora,
+    //opcion 2 impresion de docuemnto modulo factura
+    //opcion 3 impresion de documento destino (conversion)
     final int option = arguments[0];
     final int consecutivoDoc = arguments[1];
 
@@ -197,22 +202,30 @@ class _SettingsFromState extends State<SettingsFrom> {
                   child: GestureDetector(
                     onTap: (_currentStatus == BTStatus.connected)
                         ? () async {
-                            if (widget.option == 1) {
-                              //1: prueba
-                              PrintModel print = await printVM.printReceiveTest(
-                                paperDefault,
-                              );
+                            switch (widget.option) {
+                              case 1:
+                                //1: prueba
+                                PrintModel print =
+                                    await printVM.printReceiveTest(
+                                  paperDefault,
+                                );
 
-                              _printerEscPos(print.bytes, print.generator);
-                            } else {
-                              //2: docummento
-                              PrintModel print = await printVM.printDocument(
-                                context,
-                                paperDefault,
-                                widget.consecutivoDoc,
-                              );
+                                _printerEscPos(print.bytes, print.generator);
+                                break;
+                              case 2:
+                                //2: docummento factura
+                                PrintModel print = await printVM.printDocument(
+                                  context,
+                                  paperDefault,
+                                  widget.consecutivoDoc,
+                                );
 
-                              _printerEscPos(print.bytes, print.generator);
+                                _printerEscPos(print.bytes, print.generator);
+                                break;
+                              case 3:
+                                //3: documento conversion
+                                break;
+                              default:
                             }
                           }
                         : null,
@@ -222,9 +235,9 @@ class _SettingsFromState extends State<SettingsFrom> {
                           : Colors.grey,
                       child: Center(
                         child: Text(
-                          widget.option == 2
-                              ? "Impirmir documento"
-                              : "Impresion de prueba.",
+                          widget.option == 1
+                              ? "Impresion de prueba"
+                              : "Impirmir documento",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17,
