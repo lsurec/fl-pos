@@ -19,7 +19,7 @@ class DetailsDestinationDocView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: const Text(
-              "Detalle del documento",
+              "Documento Procesado",
               style: AppTheme.titleStyle,
             ),
             actions: [

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +23,12 @@ class ConvertDocView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-              // actions: const [_Actions()],
-              ),
+            title: const Text(
+              'Convertir Documento',
+              style: AppTheme.titleStyle,
+            ),
+            // actions: const [_Actions()],
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () => vm.convertirDocumento(
               context,
@@ -172,6 +175,10 @@ class _CardDetalle extends StatelessWidget {
               backgroundColor: AppTheme.backroundColor,
               title: const Text('Autorizar'),
               content: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Cantidad",
+                  hintText: "Cantidad",
+                ),
                 initialValue: "${detalle.disponibleMod}",
                 onChanged: (value) => vm.textoInput = value,
                 inputFormatters: [

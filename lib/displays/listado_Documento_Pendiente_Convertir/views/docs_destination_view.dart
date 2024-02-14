@@ -19,7 +19,7 @@ class DocsDestinationView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: const Text(
-              "Destino",
+              "Documento Procesado",
               style: AppTheme.titleStyle,
             ),
           ),
@@ -48,7 +48,6 @@ class DocsDestinationView extends StatelessWidget {
                       itemCount: documents.length,
                       itemBuilder: (BuildContext context, int index) {
                         final DocDestinationModel doc = documents[index];
-
                         return Column(
                           children: [
                             Padding(
