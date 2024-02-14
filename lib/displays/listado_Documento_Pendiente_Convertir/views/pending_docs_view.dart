@@ -26,7 +26,6 @@ class PendingDocsView extends StatelessWidget {
           body: RefreshIndicator(
             onRefresh: () => vm.laodData(
               context,
-              tipoDoc.tipoDocumento,
             ),
             child: ListView(
               children: [

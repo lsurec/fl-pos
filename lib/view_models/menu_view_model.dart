@@ -68,7 +68,9 @@ class MenuViewModel extends ChangeNotifier {
       if (vmTipos.documents.length == 1) {
         final penVM = Provider.of<PendingDocsViewModel>(context, listen: false);
 
-        await penVM.laodData(context, vmTipos.documents.first.tipoDocumento);
+        penVM.tipoDoc = vmTipos.documents.first.tipoDocumento;
+
+        await penVM.laodData(context);
 
         Navigator.pushNamed(context, route);
 

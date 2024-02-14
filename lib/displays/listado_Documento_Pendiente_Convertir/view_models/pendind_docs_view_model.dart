@@ -20,6 +20,8 @@ class PendingDocsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  int tipoDoc = 0;
+
   //Doucumentos disponibles
   final List<OriginDocModel> documents = [];
 
@@ -54,7 +56,7 @@ class PendingDocsViewModel extends ChangeNotifier {
   }
 
   //Cargar datos
-  Future<void> laodData(BuildContext context, int doc) async {
+  Future<void> laodData(BuildContext context) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
@@ -72,7 +74,7 @@ class PendingDocsViewModel extends ChangeNotifier {
     final ApiResModel res = await receptionService.getPendindgDocs(
       user,
       token,
-      doc,
+      tipoDoc,
     );
 
     isLoading = false;

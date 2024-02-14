@@ -29,7 +29,9 @@ class TypesDocViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    await penVM.laodData(context, tipo.tipoDocumento);
+    penVM.tipoDoc = tipo.tipoDocumento;
+
+    await penVM.laodData(context);
 
     isLoading = false;
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/pendind_docs_view_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -67,6 +68,19 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     }
 
     detalles.addAll(res.message);
+  }
+
+  Future<bool> backPage(BuildContext context) async {
+    final vmPend = Provider.of<PendingDocsViewModel>(context, listen: false);
+
+    isLoading = true;
+    await vmPend.laodData(context);
+
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.pendingDocs));
+
+    isLoading = false;
+
+    return false;
   }
 
   printDoc(BuildContext context) {
