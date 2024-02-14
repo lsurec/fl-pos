@@ -53,6 +53,36 @@ class PrintViewModel extends ChangeNotifier {
     );
   }
 
+  Future<PrintModel> printDocConversion(int paperDefault) async {
+    List<int> bytes = [];
+    final generator = Generator(
+        AppData.paperSize[paperDefault], await CapabilityProfile.load());
+    bytes += generator.setGlobalCodeTable('CP1252');
+    bytes += generator.text("PRUEBA TICKET",
+        styles: PosStyles(
+            align: AppData.posAlign["center"],
+            width: AppData.posTextSize[2],
+            height: AppData.posTextSize[2]));
+    bytes += generator.text("CENTER",
+        styles: PosStyles(
+            align: AppData.posAlign["center"],
+            width: AppData.posTextSize[1],
+            height: AppData.posTextSize[1]));
+    bytes += generator.text("LEFT",
+        styles: PosStyles(align: AppData.posAlign["left"]));
+    bytes += generator.text("RIGHT",
+        styles: PosStyles(align: AppData.posAlign["right"]));
+    bytes += generator.text("normal",
+        styles: PosStyles(bold: AppData.boolText["normal"]));
+    bytes += generator.text("Bool",
+        styles: PosStyles(bold: AppData.boolText["bool"]));
+
+    return PrintModel(
+      bytes: bytes,
+      generator: generator,
+    );
+  }
+
   int findTipoProducto(BuildContext context, tipoTra) {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 

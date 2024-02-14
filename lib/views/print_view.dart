@@ -224,6 +224,12 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 break;
                               case 3:
                                 //3: documento conversion
+                                PrintModel print =
+                                    await printVM.printDocConversion(
+                                  paperDefault,
+                                );
+
+                                _printerEscPos(print.bytes, print.generator);
                                 break;
                               default:
                             }
