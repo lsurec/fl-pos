@@ -248,6 +248,8 @@ class ConvertDocViewModel extends ChangeNotifier {
       }
 
       objDest = resConvert.message;
+
+      print(objDest.documento);
     }
     // volver a cargar datos
     await loadData(context, origen);

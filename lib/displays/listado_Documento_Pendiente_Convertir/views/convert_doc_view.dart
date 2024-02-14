@@ -46,6 +46,13 @@ class ConvertDocView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      TextsWidget(
+                        title: "Id del Documento: ",
+                        text: "${docOrigen.iDDocumento}",
+                      ),
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
                       ColorTextCardWidget(
                         color: Colors.green,
                         text:
