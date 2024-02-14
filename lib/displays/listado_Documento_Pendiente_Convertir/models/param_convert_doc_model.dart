@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class ParamConvertDoc {
+class ParamConvertDocModel {
   String pUserName;
   int pODocumento;
   int pOTipoDocumento;
@@ -12,8 +12,10 @@ class ParamConvertDoc {
   String pDSerieDocumento;
   int pDEmpresa;
   int pDEstacionTrabajo;
+  int pDDocumento;
+  int pDFechaReg;
 
-  ParamConvertDoc({
+  ParamConvertDocModel({
     required this.pUserName,
     required this.pODocumento,
     required this.pOTipoDocumento,
@@ -25,14 +27,17 @@ class ParamConvertDoc {
     required this.pDSerieDocumento,
     required this.pDEmpresa,
     required this.pDEstacionTrabajo,
+    required this.pDDocumento,
+    required this.pDFechaReg,
   });
 
-  factory ParamConvertDoc.fromJson(String str) =>
-      ParamConvertDoc.fromMap(json.decode(str));
+  factory ParamConvertDocModel.fromJson(String str) =>
+      ParamConvertDocModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory ParamConvertDoc.fromMap(Map<String, dynamic> json) => ParamConvertDoc(
+  factory ParamConvertDocModel.fromMap(Map<String, dynamic> json) =>
+      ParamConvertDocModel(
         pUserName: json["pUserName"],
         pODocumento: json["pO_Documento"],
         pOTipoDocumento: json["pO_Tipo_Documento"],
@@ -44,6 +49,8 @@ class ParamConvertDoc {
         pDSerieDocumento: json["pD_Serie_Documento"],
         pDEmpresa: json["pD_Empresa"],
         pDEstacionTrabajo: json["pD_Estacion_Trabajo"],
+        pDDocumento: json["pD_Documento"],
+        pDFechaReg: json["pD_Fecha_Reg"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -58,5 +65,7 @@ class ParamConvertDoc {
         "pD_Serie_Documento": pDSerieDocumento,
         "pD_Empresa": pDEmpresa,
         "pD_Estacion_Trabajo": pDEstacionTrabajo,
+        "pD_Documento": pDDocumento,
+        "pD_Fecha_Reg": pDFechaReg,
       };
 }

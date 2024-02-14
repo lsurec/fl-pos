@@ -172,7 +172,15 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    final List<DocConvertModel> dcoumentosDestino = [];
+    DocConvertModel objDest = DocConvertModel(
+      documento: 0,
+      tipoDocumento: 0,
+      serieDocumento: "",
+      empresa: 0,
+      localizacion: 0,
+      estacion: 0,
+      fechaReg: 0,
+    );
 
     for (var element in elementosCheckTrue) {
       final ApiResModel resUpdate = await receptionService.postActualizar(
@@ -200,7 +208,7 @@ class ConvertDocViewModel extends ChangeNotifier {
         return;
       }
 
-      final ParamConvertDoc param = ParamConvertDoc(
+      final ParamConvertDocModel param = ParamConvertDocModel(
         pUserName: user,
         pODocumento: origen.documento,
         pOTipoDocumento: origen.tipoDocumento,
@@ -212,6 +220,8 @@ class ConvertDocViewModel extends ChangeNotifier {
         pDSerieDocumento: destino.fSerieDocumento,
         pDEmpresa: origen.empresa,
         pDEstacionTrabajo: origen.estacionTrabajo,
+        pDDocumento: objDest.documento,
+        pDFechaReg: objDest.fechaReg,
       );
 
       final ApiResModel resConvert = await receptionService.postConvertir(
@@ -237,42 +247,32 @@ class ConvertDocViewModel extends ChangeNotifier {
         return;
       }
 
-      final DocConvertModel objDest = resConvert.message;
-      dcoumentosDestino.add(objDest);
+      objDest = resConvert.message;
     }
     // volver a cargar datos
     await loadData(context, origen);
 
-    final List<DocDestinationModel> docs = [];
+    final DocDestinationModel doc = DocDestinationModel(
+      tipoDocumento: destino.fTipoDocumento,
+      desTipoDocumento: destino.documento,
+      serie: destino.fSerieDocumento,
+      desSerie: destino.serie,
+      data: objDest,
+    );
 
-    for (var element in dcoumentosDestino) {
-      docs.add(
-        DocDestinationModel(
-          tipoDocumento: destino.fTipoDocumento,
-          desTipoDocumento: destino.documento,
-          serie: destino.fSerieDocumento,
-          desSerie: destino.serie,
-          data: element,
-        ),
-      );
-    }
+    final vmDetailsDestVM = Provider.of<DetailsDestinationDocViewModel>(
+      context,
+      listen: false,
+    );
 
-    if (docs.length == 1) {
-      final docDestVm =
-          Provider.of<DocsDestinationViewModel>(context, listen: false);
+    await vmDetailsDestVM.loadData(context, doc);
 
-      await docDestVm.navigateDetails(context, docs.first);
-
-      isLoading = false;
-      return;
-    }
-
-    //navgear a documento destino
     Navigator.pushNamed(
       context,
-      AppRoutes.docsDestination,
-      arguments: docs,
+      AppRoutes.detailsDestinationDoc,
+      arguments: doc,
     );
+
     isLoading = false;
   }
 }

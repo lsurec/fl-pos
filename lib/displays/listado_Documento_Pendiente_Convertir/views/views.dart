@@ -1,4 +1,3 @@
-export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/docs_destination_view.dart';
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/types_doc_view.dart';
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/convert_doc_view.dart';
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/destination_doc_view.dart';

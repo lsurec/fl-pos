@@ -33,7 +33,6 @@ class AppRoutes {
   static const destionationDocs = 'destionationDocs';
   static const pendingDocs = 'pendingDocs';
   static const convertDocs = 'convertDocs';
-  static const docsDestination = 'docsDestination';
   static const detailsDestinationDoc = 'detailsDestinationDoc';
 
   //otras rutas
@@ -66,7 +65,6 @@ class AppRoutes {
     destionationDocs: (BuildContext context) => const DestinationDocView(),
     pendingDocs: (BuildContext context) => const PendingDocsView(),
     convertDocs: (BuildContext context) => const ConvertDocView(),
-    docsDestination: (BuildContext context) => const DocsDestinationView(),
     detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
   };

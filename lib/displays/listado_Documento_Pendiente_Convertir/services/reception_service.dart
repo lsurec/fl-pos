@@ -85,7 +85,7 @@ class ReceptionService {
   //Crear nueva cuenta correntista
   Future<ApiResModel> postConvertir(
     String token,
-    ParamConvertDoc doc,
+    ParamConvertDocModel doc,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Recepcion/documento/convertir");
     try {
