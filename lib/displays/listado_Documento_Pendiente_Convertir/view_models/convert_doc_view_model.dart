@@ -172,16 +172,6 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    DocConvertModel objDest = DocConvertModel(
-      documento: 0,
-      tipoDocumento: 0,
-      serieDocumento: "",
-      empresa: 0,
-      localizacion: 0,
-      estacion: 0,
-      fechaReg: 0,
-    );
-
     for (var element in elementosCheckTrue) {
       final ApiResModel resUpdate = await receptionService.postActualizar(
         user,
@@ -207,50 +197,47 @@ class ConvertDocViewModel extends ChangeNotifier {
 
         return;
       }
-
-      final ParamConvertDocModel param = ParamConvertDocModel(
-        pUserName: user,
-        pODocumento: origen.documento,
-        pOTipoDocumento: origen.tipoDocumento,
-        pOSerieDocumento: origen.serieDocumento,
-        pOEmpresa: origen.empresa,
-        pOEstacionTrabajo: origen.estacionTrabajo,
-        pOFechaReg: origen.fechaReg,
-        pDTipoDocumento: destino.fTipoDocumento,
-        pDSerieDocumento: destino.fSerieDocumento,
-        pDEmpresa: origen.empresa,
-        pDEstacionTrabajo: origen.estacionTrabajo,
-        pDDocumento: objDest.documento,
-        pDFechaReg: objDest.fechaReg,
-      );
-
-      final ApiResModel resConvert = await receptionService.postConvertir(
-        token,
-        param,
-      );
-
-      //si el consumo salió mal
-      if (!resConvert.succes) {
-        isLoading = false;
-
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: resConvert.message,
-          storeProcedure: resConvert.storeProcedure,
-        );
-
-        NotificationService.showErrorView(
-          context,
-          error,
-        );
-
-        return;
-      }
-
-      objDest = resConvert.message;
-
-      print(objDest.documento);
     }
+
+    final ParamConvertDocModel param = ParamConvertDocModel(
+      pUserName: user,
+      pODocumento: origen.documento,
+      pOTipoDocumento: origen.tipoDocumento,
+      pOSerieDocumento: origen.serieDocumento,
+      pOEmpresa: origen.empresa,
+      pOEstacionTrabajo: origen.estacionTrabajo,
+      pOFechaReg: origen.fechaReg,
+      pDTipoDocumento: destino.fTipoDocumento,
+      pDSerieDocumento: destino.fSerieDocumento,
+      pDEmpresa: origen.empresa,
+      pDEstacionTrabajo: origen.estacionTrabajo,
+    );
+
+    final ApiResModel resConvert = await receptionService.postConvertir(
+      token,
+      param,
+    );
+
+    //si el consumo salió mal
+    if (!resConvert.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: resConvert.message,
+        storeProcedure: resConvert.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    DocConvertModel objDest = resConvert.message;
+
     // volver a cargar datos
     await loadData(context, origen);
 
