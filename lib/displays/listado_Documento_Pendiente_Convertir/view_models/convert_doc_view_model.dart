@@ -1,14 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/doc_convert_model.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/reception_service.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ConvertDocViewModel extends ChangeNotifier {
@@ -21,35 +20,62 @@ class ConvertDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Seleccionar transacciones para autorizar
   bool _selectAllTra = false;
   bool get selectAllTra => _selectAllTra;
 
   set selectAllTra(bool value) {
     _selectAllTra = value;
 
+    //Contador de transacciones no seleccionada
+    int cont = 0;
+
     for (var element in detalles) {
-      element.checked = _selectAllTra;
+      if (element.disponible == 0) {
+        //no seleccionar si no hay cantidad disponible
+        cont++;
+      } else {
+        //Seleccionar
+        element.checked = _selectAllTra;
+      }
+    }
+
+    //mensaje si no se seleccioanron transacciones
+    if (cont != 0 && _selectAllTra) {
+      NotificationService.showSnackbar(
+          "Las transacciones con disponibilidad 0 no serán seleccionadas.");
     }
 
     notifyListeners();
   }
 
+  //Detalles del documeto origen
   final List<OriginDetailInterModel> detalles = [];
 
+  //Input para la cantidad que se autoriza
   String textoInput = "";
 
+  //Cargar datos importantes
   Future<void> loadData(BuildContext context, OriginDocModel docOrigin) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    //datos de la sesion
     final String token = loginVM.token;
     final String user = loginVM.nameUser;
 
+    //Recivicio que se va a utilizar
     final ReceptionService receptionService = ReceptionService();
 
+    //Limpiar detalles del documento que haya previamente
     detalles.clear();
 
+    //si estan seleccioandos todos
+    selectAllTra = false;
+
+    //iniciar proceso
     isLoading = true;
 
+    //connsummo del servicio para obtener detalles
     final ApiResModel res = await receptionService.getDetallesDocOrigen(
       token, // token,
       user, // user,
@@ -62,6 +88,7 @@ class ConvertDocViewModel extends ChangeNotifier {
       docOrigin.fechaReg, // fechaReg,
     );
 
+    //detener  la carga
     isLoading = false;
 
     //si el consumo salió mal
@@ -80,10 +107,14 @@ class ConvertDocViewModel extends ChangeNotifier {
       return;
     }
 
+    //Asiganr detalles encontrados
     List<OriginDetailModel> details = res.message;
 
+    //Recorrer todos los detalles para crear una nueva lista
     for (var element in details) {
+      //Detalles
       detalles.add(
+        //Nuevo objeto con datos para el control interno
         OriginDetailInterModel(
           consecutivoInterno: element.consecutivoInterno,
           disponible: element.disponible,
@@ -100,20 +131,32 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
   }
 
+  //seleccioanr una transaccion
   selectTra(
-    int index,
-    bool value,
+    int index, //indice seleccioando
+    bool value, //valor asignado
   ) {
+    //si la transaccion no tioene cantidad siponoble no se selecciona
+    if (detalles[index].disponible == 0) {
+      NotificationService.showSnackbar(
+          "No puede marcarse una transaccion con disponibilidad 0");
+      return;
+    }
+
+    //selccioanr transaccion
     detalles[index].checked = value;
     notifyListeners();
   }
 
+  //modificar monto que se autoriza
   modificarDisponible(
     BuildContext context,
     int index,
   ) {
+    //monto numerico
     double monto = 0;
 
+    //convertir string a numero
     if (double.tryParse(textoInput) == null) {
       //si el input es nulo o vacio agregar 0
       monto = 0;
@@ -121,6 +164,7 @@ class ConvertDocViewModel extends ChangeNotifier {
       monto = double.parse(textoInput); //parse string to double
     }
 
+    //si el monto es menor o igual a 0 mostrar mensaje
     if (monto <= 0) {
       Navigator.of(context).pop(); // Cierra el diálogo
 
@@ -128,6 +172,7 @@ class ConvertDocViewModel extends ChangeNotifier {
       return;
     }
 
+    //si el mmonto es mayor a la cantidad disponible
     if (monto > detalles[index].disponible) {
       Navigator.of(context).pop(); // Cierra el diálogo
 
@@ -136,43 +181,47 @@ class ConvertDocViewModel extends ChangeNotifier {
       return;
     }
 
+    //Asiganr nuevo monto modificado
     detalles[index].disponibleMod = monto;
-    detalles[index].checked = true;
+    //seleciconar transaccion
+    selectTra(index, true);
+
     Navigator.of(context).pop(); // Cierra el diálogo
 
     notifyListeners();
   }
 
+  //Conversion de transacciones
   Future<void> convertirDocumento(
     BuildContext context,
-    OriginDocModel origen,
-    DestinationDocModel destino,
+    OriginDocModel origen, //docuento origen
+    DestinationDocModel destino, //documento destino
   ) async {
-    // print(detalles[0].consecutivoInterno);
-
-    // return;
-
+    //Buscar transacciones seleccioandas
     List<OriginDetailInterModel> elementosCheckTrue =
         detalles.where((elemento) => elemento.checked).toList();
 
+    //si no hay transacciones seleccionadas
     if (elementosCheckTrue.isEmpty) {
       NotificationService.showSnackbar(
           "Selecciona por lo menos una transacción.");
       return;
     }
 
-    //convertir documento
-
-    //datos externos
+    //datos externos de la sesion
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
     final String user = loginVM.nameUser;
 
+    //servicio que se va a utilizar
     final ReceptionService receptionService = ReceptionService();
 
+    //iniiar pantalla de carga
     isLoading = true;
 
+    //Recorrer transacciones seleccionadas
     for (var element in elementosCheckTrue) {
+      //Autorizar cantidad
       final ApiResModel resUpdate = await receptionService.postActualizar(
         user,
         token,
@@ -199,6 +248,9 @@ class ConvertDocViewModel extends ChangeNotifier {
       }
     }
 
+    //Iniciar proceso de conversion
+
+    //parametros para la conversion
     final ParamConvertDocModel param = ParamConvertDocModel(
       pUserName: user,
       pODocumento: origen.documento,
@@ -213,6 +265,7 @@ class ConvertDocViewModel extends ChangeNotifier {
       pDEstacionTrabajo: origen.estacionTrabajo,
     );
 
+    //Consumo del api para convertir
     final ApiResModel resConvert = await receptionService.postConvertir(
       token,
       param,
@@ -236,11 +289,13 @@ class ConvertDocViewModel extends ChangeNotifier {
       return;
     }
 
+    //Respuesta docummento destino procesado
     DocConvertModel objDest = resConvert.message;
 
     // volver a cargar datos
     await loadData(context, origen);
 
+    //Documento encontrado
     final DocDestinationModel doc = DocDestinationModel(
       tipoDocumento: destino.fTipoDocumento,
       desTipoDocumento: destino.documento,
@@ -249,19 +304,23 @@ class ConvertDocViewModel extends ChangeNotifier {
       data: objDest,
     );
 
+    //Proveedor de datos externo
     final vmDetailsDestVM = Provider.of<DetailsDestinationDocViewModel>(
       context,
       listen: false,
     );
 
+    //Cargar detalles del documento encontrado
     await vmDetailsDestVM.loadData(context, doc);
 
+    //navegar a pantalla para visualizar detalles
     Navigator.pushNamed(
       context,
       AppRoutes.detailsDestinationDoc,
       arguments: doc,
     );
 
+    //Detener proceso
     isLoading = false;
   }
 }

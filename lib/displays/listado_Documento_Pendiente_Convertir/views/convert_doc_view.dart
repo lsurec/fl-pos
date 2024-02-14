@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -69,10 +70,13 @@ class ConvertDocView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Checkbox(
-                            activeColor: AppTheme.primary,
-                            value: vm.selectAllTra,
-                            onChanged: (value) => vm.selectAllTra = value!,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 13),
+                            child: Checkbox(
+                              activeColor: AppTheme.primary,
+                              value: vm.selectAllTra,
+                              onChanged: (value) => vm.selectAllTra = value!,
+                            ),
                           ),
                           Text(
                             "Registros (${vm.detalles.length})",
@@ -175,6 +179,12 @@ class _CardDetalle extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        if (vm.detalles[index].disponible == 0) {
+          NotificationService.showSnackbar(
+              "No puede marcarse una transaccion con disponibilidad 0");
+          return;
+        }
+
         showDialog(
           context: context,
           builder: (BuildContext context) {
