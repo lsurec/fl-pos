@@ -31,6 +31,20 @@ class PendingDocsView extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: () async {
+                              vm.showPickerDate(context);
+                            },
+                            icon: const Icon(Icons.calendar_today_outlined),
+                            label: Text(
+                              "Fecha: ${vm.fechaInicial.text}",
+                              style: AppTheme.normalStyle,
+                            ),
+                          ),
+                        ],
+                      ),
                       Text(vm.fechaIni),
                       Text(vm.fechaFin),
                       Row(

@@ -20,12 +20,32 @@ class PendingDocsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String fechaIni = "";
-  String fechaFin = "";
+  DateTime? fechaIni;
+  DateTime? fechaFin;
   int tipoDoc = 0;
 
   //Doucumentos disponibles
   final List<OriginDocModel> documents = [];
+
+  String _addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
+  Future<DateTime?> showPickerDate(
+    BuildContext context,
+    DateTime inital,
+    DateTime first,
+  ) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: inital,
+      //fecha minima la fecha actual o lafecha inicial seleciconada
+      firstDate: first,
+      lastDate: DateTime(2100),
+    );
+
+    return pickedDate;
+  }
 
   //navgear a pantalla de documentos destino
   Future<void> navigateDestination(
@@ -73,6 +93,10 @@ class PendingDocsViewModel extends ChangeNotifier {
     documents.clear();
 
     isLoading = true;
+
+    String strFechaIni = "${dateNow!.year}${_addLeadingZero(dateNow!.month)}01";
+    String strFechaFin =
+        '${dateNow!.year}${_addLeadingZero(dateNow!.month)}${_addLeadingZero(dateNow!.day)}';
 
     //consumo del api
     final ApiResModel res = await receptionService.getPendindgDocs(
