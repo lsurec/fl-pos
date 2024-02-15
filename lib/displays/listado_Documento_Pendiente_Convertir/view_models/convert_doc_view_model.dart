@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ConvertDocViewModel extends ChangeNotifier {
@@ -207,6 +208,20 @@ class ConvertDocViewModel extends ChangeNotifier {
           "Selecciona por lo menos una transacción.");
       return;
     }
+
+    //mostrar dialogo de confirmacion
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            title: "¿Estás seguro?",
+            description: "Confirmar transacción.",
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    if (!result) return;
 
     //datos externos de la sesion
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
