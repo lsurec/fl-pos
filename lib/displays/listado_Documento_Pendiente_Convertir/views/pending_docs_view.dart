@@ -45,9 +45,7 @@ class PendingDocsView extends StatelessWidget {
                                 ),
                               ),
                               TextButton.icon(
-                                onPressed: () async {
-                                  // vm.showPickerDate(context);
-                                },
+                                onPressed: () => vm.showPickerIni(context),
                                 icon: const Icon(Icons.calendar_today_outlined),
                                 label: Text(
                                   vm.formatView(vm.fechaIni!),
@@ -67,9 +65,7 @@ class PendingDocsView extends StatelessWidget {
                                 ),
                               ),
                               TextButton.icon(
-                                onPressed: () async {
-                                  // vm.showPickerDate(context);
-                                },
+                                onPressed: () => vm.showPickerFin(context),
                                 icon: const Icon(
                                   Icons.calendar_today_outlined,
                                   color: AppTheme.primary,

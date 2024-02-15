@@ -39,24 +39,34 @@ class PendingDocsViewModel extends ChangeNotifier {
   Future<void> showPickerIni(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: inital,
+      initialDate: fechaIni!,
       //fecha minima la fecha actual o lafecha inicial seleciconada
-      firstDate: first,
+      firstDate: DateTime(1950),
       lastDate: DateTime(2100),
     );
 
     if (pickedDate == null) return;
+
+    if (pickedDate.isAfter(fechaFin!)) {
+      fechaFin = pickedDate;
+    }
+
+    fechaIni = pickedDate;
+    laodData(context);
   }
 
-  Future<void> showPickerFin() async {
+  Future<void> showPickerFin(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: inital,
+      initialDate: fechaFin!,
       //fecha minima la fecha actual o lafecha inicial seleciconada
-      firstDate: first,
+      firstDate: fechaIni!,
       lastDate: DateTime(2100),
     );
     if (pickedDate == null) return;
+
+    fechaFin = pickedDate;
+    laodData(context);
   }
 
   //navgear a pantalla de documentos destino
@@ -115,10 +125,10 @@ class PendingDocsViewModel extends ChangeNotifier {
       formatStrFilterDate(fechaFin!),
     );
 
-    isLoading = false;
-
     //si el consumo salió mal
     if (!res.succes) {
+      isLoading = false;
+
       ErrorModel error = ErrorModel(
         date: DateTime.now(),
         description: res.message,
@@ -135,6 +145,8 @@ class PendingDocsViewModel extends ChangeNotifier {
 
     //asignar documntos disponibles
     documents.addAll(res.message);
+
+    isLoading = false;
   }
 
   formatView(DateTime date) => DateFormat('dd/MM/yyyy').format(date);
