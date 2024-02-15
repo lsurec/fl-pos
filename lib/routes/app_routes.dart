@@ -36,6 +36,7 @@ class AppRoutes {
   static const convertDocs = 'convertDocs';
   static const detailsDestinationDoc = 'detailsDestinationDoc';
   static const detailsTask = 'detalleTarea';
+  static const viewComments = 'viewComments';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -70,7 +71,8 @@ class AppRoutes {
     detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
     //Rutas Display Tareas
-    detailsTask: (BuildContext context) => const DetalleTareaView(), 
+    detailsTask: (BuildContext context) => const DetalleTareaView(),
+    viewComments: (BuildContext context) => const ComentariosView(),
   };
 
   //en caso de ruta incorrecta

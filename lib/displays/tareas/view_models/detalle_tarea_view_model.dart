@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class DetalleTareaViewModel extends ChangeNotifier {
-  List<bool> expanded = [false, false]; //deplegar cambio de estado y prioridad
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 
+class DetalleTareaViewModel extends ChangeNotifier {
   final List<String> estados = [
     'Activo',
     'Cerrado',
@@ -29,6 +29,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
   final formPrioridad = GlobalKey<FormState>();
 
   verComentarios(BuildContext context) {
-    Navigator.pushNamed(context, "comentarios", arguments: observacion);
+    Navigator.pushNamed(context, AppRoutes.viewComments, arguments: observacion);
   }
 }
