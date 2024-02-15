@@ -3,7 +3,6 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 
 class TareasViewModel extends ChangeNotifier {
-
   //manejar flujo del procesp
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -13,7 +12,6 @@ class TareasViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
   final TextEditingController searchController = TextEditingController();
 
@@ -21,7 +19,6 @@ class TareasViewModel extends ChangeNotifier {
   bool isValidFormCSearch() {
     return formKeySearch.currentState?.validate() ?? false;
   }
-
 
   String buscar = ""; //para buscar tareas
   int? filtro = 1; //para filtro de busqueda Inicialmente por descripcion
@@ -95,12 +92,16 @@ class TareasViewModel extends ChangeNotifier {
       tareaObservacion1:
           'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
     ),
-
-
   ];
 
-  performSearch(){
-    if(!isValidFormCSearch()) return;
+  performSearch() {
+    if (filtro == 1) {
+      print("Formulario valido, Filtro $filtro por Descripcion");
+    }
+    if (filtro == 2) {
+      print("Formulario valido, Filtro $filtro por ID Referencia");
+    }
+    if (!isValidFormCSearch()) return;
     print("Formulario valido");
     //TODO:Funcion buscar
   }
@@ -111,9 +112,7 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   crearTarea(BuildContext context) {
-    
-
-    Navigator.pushNamed(context, "nueva_tarea");
+    Navigator.pushNamed(context, AppRoutes.createTask);
   }
 
   verDetalles(BuildContext context) {
