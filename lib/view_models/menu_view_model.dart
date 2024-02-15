@@ -23,6 +23,10 @@ class MenuViewModel extends ChangeNotifier {
   String name = "";
   String? documentoName;
 
+  String _addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
   //navegar a ruta
   Future<void> navigateDisplay(
     BuildContext context,
@@ -59,8 +63,14 @@ class MenuViewModel extends ChangeNotifier {
     if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
       final vmHome = Provider.of<HomeViewModel>(context, listen: false);
       final vmTipos = Provider.of<TypesDocViewModel>(context, listen: false);
+      final vmPend = Provider.of<PendingDocsViewModel>(context, listen: false);
 
       vmHome.isLoading = true;
+
+      DateTime now = DateTime.now();
+      vmPend.fechaIni = "${now.year}${_addLeadingZero(now.month)}01";
+      vmPend.fechaFin =
+          '${now.year}${_addLeadingZero(now.month)}${_addLeadingZero(now.day)}';
 
       await vmTipos.loadData(context);
 

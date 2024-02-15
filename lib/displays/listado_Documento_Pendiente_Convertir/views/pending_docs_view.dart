@@ -24,22 +24,34 @@ class PendingDocsView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () => vm.laodData(
-              context,
-            ),
+            onRefresh: () => vm.laodData(context),
             child: ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      Text(vm.fechaIni),
+                      Text(vm.fechaFin),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             "Registros(${vm.documents.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
+                          // DropdownButton<SellerModel>(
+                          //   isExpanded: true,
+                          //   dropdownColor: AppTheme.backroundColor,
+                          //   value: vm.vendedorSelect,
+                          //   onChanged: (value) => vm.changeSeller(value),
+                          //   items: vm.cuentasCorrentistasRef.map((seller) {
+                          //     return DropdownMenuItem<SellerModel>(
+                          //       value: seller,
+                          //       child: Text(seller.nomCuentaCorrentista),
+                          //     );
+                          //   }).toList(),
+                          // ),
                         ],
                       ),
                       const SizedBox(height: 10),

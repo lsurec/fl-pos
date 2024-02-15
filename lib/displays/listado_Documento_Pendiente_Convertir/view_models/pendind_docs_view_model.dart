@@ -20,6 +20,8 @@ class PendingDocsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String fechaIni = "";
+  String fechaFin = "";
   int tipoDoc = 0;
 
   //Doucumentos disponibles
@@ -56,7 +58,9 @@ class PendingDocsViewModel extends ChangeNotifier {
   }
 
   //Cargar datos
-  Future<void> laodData(BuildContext context) async {
+  Future<void> laodData(
+    BuildContext context,
+  ) async {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
@@ -75,6 +79,8 @@ class PendingDocsViewModel extends ChangeNotifier {
       user,
       token,
       tipoDoc,
+      fechaIni,
+      fechaFin,
     );
 
     isLoading = false;

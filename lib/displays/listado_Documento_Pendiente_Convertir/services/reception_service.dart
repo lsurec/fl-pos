@@ -322,8 +322,10 @@ class ReceptionService {
     String user,
     String token,
     int doc,
+    String fechaIni,
+    String fechaFin,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Recepcion/pending/docs/$user/$doc");
+    Uri url = Uri.parse("${_baseUrl}Recepcion/pending/documents");
     try {
       //url completa
 
@@ -332,6 +334,10 @@ class ReceptionService {
         url,
         headers: {
           "Authorization": "bearer $token",
+          "user": user,
+          "doc": "$doc",
+          "fechaIni": fechaIni,
+          "fechaFin": fechaFin,
         },
       );
 
