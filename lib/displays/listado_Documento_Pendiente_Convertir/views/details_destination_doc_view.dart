@@ -24,13 +24,13 @@ class DetailsDestinationDocView extends StatelessWidget {
                 "Documento Procesado",
                 style: AppTheme.titleStyle,
               ),
-              // actions: [
-              //   IconButton(
-              //     tooltip: "Imprimir",
-              //     onPressed: () => vm.printDoc(context),
-              //     icon: const Icon(Icons.print_outlined),
-              //   )
-              // ],
+              actions: [
+                IconButton(
+                  tooltip: "Imprimir",
+                  onPressed: () => vm.printDoc(context, document),
+                  icon: const Icon(Icons.print_outlined),
+                )
+              ],
             ),
             body: RefreshIndicator(
               onRefresh: () => vm.loadData(context, document),

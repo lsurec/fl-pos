@@ -103,8 +103,15 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
   }
 
   //imprimir docuemnto
-  printDoc(BuildContext context) {
+  printDoc(
+    BuildContext context,
+    DocDestinationModel document,
+  ) {
     //navegar a pantalla de impresion
-    Navigator.pushNamed(context, AppRoutes.printer, arguments: [3, 0]);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.printer,
+      arguments: [3, document],
+    );
   }
 }

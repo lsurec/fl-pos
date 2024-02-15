@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/bloc/print_bloc/print_bloc.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
     // ignore: library_prefixes
     as AppData;
@@ -23,13 +24,17 @@ class PrintView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> arguments =
-        ModalRoute.of(context)!.settings.arguments as List<int>;
+    final List<dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as List<dynamic>;
     //opcion 1 prueba  de impresora,
     //opcion 2 impresion de docuemnto modulo factura
     //opcion 3 impresion de documento destino (conversion)
     final int option = arguments[0];
-    final int consecutivoDoc = arguments[1];
+    int consecutivoDoc = 0;
+    DocDestinationModel? document;
+
+    if (option != 3) consecutivoDoc = arguments[1];
+    if (option == 3) document = arguments[1];
 
     return BlocProvider(
       create: (context) {
@@ -38,6 +43,7 @@ class PrintView extends StatelessWidget {
       child: SettingsFrom(
         option: option,
         consecutivoDoc: consecutivoDoc,
+        document: document,
       ),
     );
   }
@@ -46,9 +52,13 @@ class PrintView extends StatelessWidget {
 class SettingsFrom extends StatefulWidget {
   final int option; //1: prueba 2: documento
   final int consecutivoDoc;
+  final DocDestinationModel? document;
 
   const SettingsFrom(
-      {Key? key, required this.option, required this.consecutivoDoc})
+      {Key? key,
+      required this.option,
+      required this.consecutivoDoc,
+      required this.document})
       : super(key: key);
 
   @override
@@ -226,7 +236,9 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 //3: documento conversion
                                 PrintModel print =
                                     await printVM.printDocConversion(
+                                  context,
                                   paperDefault,
+                                  widget.document!,
                                 );
 
                                 _printerEscPos(print.bytes, print.generator);

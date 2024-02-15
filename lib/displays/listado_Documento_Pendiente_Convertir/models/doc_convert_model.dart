@@ -44,15 +44,3 @@ class DocConvertModel {
         "fechaReg": fechaReg,
       };
 }
-
-class Documento {
-  Documento();
-
-  factory Documento.fromJson(String str) => Documento.fromMap(json.decode(str));
-
-  String toJson() => json.encode(toMap());
-
-  factory Documento.fromMap(Map<String, dynamic> json) => Documento();
-
-  Map<String, dynamic> toMap() => {};
-}
