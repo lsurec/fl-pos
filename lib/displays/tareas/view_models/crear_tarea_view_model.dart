@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {
@@ -66,11 +67,11 @@ class CrearTareaViewModel extends ChangeNotifier {
   ];
 
   irIdReferencia(BuildContext context) {
-    Navigator.pushNamed(context, "id_referencia");
+    Navigator.pushNamed(context, AppRoutes.selectReferenceId);
   }
 
   irUsuarios(BuildContext context) {
-    Navigator.pushNamed(context, "usuarios");
+    Navigator.pushNamed(context, AppRoutes.selectResponsibleUser);
   }
 
   fechaFormateada(DateTime pickedDate, tipo) {
