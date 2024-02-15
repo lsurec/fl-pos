@@ -33,6 +33,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     final DateTime fecha10 = addDate10Min(fechaActual);
 
     fechaFinal.text = DateFormat('dd/MM/yyyy').format(fecha10);
+    //pickers hora inicial y final
+    _horaInicial =
+        TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
+    _horaFinal = addTime10Min(_horaInicial!);
 
     horaInicial.text = horaFormato(fechaActual);
     horaFinal.text = horaFormato(fecha10);
@@ -274,12 +278,12 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     //almacenar la nueva hora seleccionada en el picker
-    TimeOfDay horaSeleccionada = pickedTime!;
+    TimeOfDay? horaSeleccionada = pickedTime ?? _horaFinal;
     //verificar cuando no se seecciona una hora ne la hora fnal
     // TimeOfDay? horaSeleccionada = pickedTime ?? _horaInicial;
     if (compararFechas(nuevaFechaInicial!, nuevaFechaFinal!)) {
       // Las fechas son iguales (mismo día, mes y año).
-      if (!validarHora(horaSeleccionada, _horaInicial!)) {
+      if (!validarHora(horaSeleccionada!, _horaInicial!)) {
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -297,7 +301,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     } else {
       // Las fechas NO son iguales.
       _horaFinal = horaSeleccionada;
-      horaFinal.text = formatoHora(horaSeleccionada); //nombre de la hora
+      horaFinal.text = formatoHora(horaSeleccionada!); //nombre de la hora
       notifyListeners();
     }
   }
