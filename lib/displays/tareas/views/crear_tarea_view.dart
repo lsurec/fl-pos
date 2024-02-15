@@ -25,6 +25,13 @@ class CrearTareaView extends StatelessWidget {
           'Nueva Tarea',
           style: AppTheme.titleStyle,
         ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => vm.crear(),
+            icon: const Icon(Icons.save),
+            tooltip: "Crear Tarea",
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -200,49 +207,55 @@ class CrearTareaView extends StatelessWidget {
                     const SizedBox(height: 10),
                     const _ObservacionTarea(),
                     const SizedBox(height: 10),
-                    TextButton.icon(
-                      onPressed: () {
-                        vm.irIdReferencia(context);
-                      },
-                      icon: const Icon(Icons.search),
-                      label: Text(
-                        "ID Referencia",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton.icon(
                           onPressed: () {
-                            vm.irUsuarios(context);
+                            vm.irIdReferencia(context);
                           },
-                          icon: const Icon(Icons.person_add_alt_1_outlined),
+                          icon: const Icon(Icons.search),
                           label: const Text(
-                            "Responsable",
-                            style: AppTheme.normalBoldStyle,
+                            "Buscar ID Referencia",
+                            style: AppTheme.normalStyle,
                           ),
                         ),
-                        TextButton.icon(
-                          onPressed: () {
-                            vm.irUsuarios(context);
-                          },
-                          icon: const Icon(Icons.person_add_alt_1_outlined),
-                          label: const Text(
-                            "Invitados",
-                            style: AppTheme.normalBoldStyle,
-                          ),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "ID Referencia: ",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            Text(
+                              "IL -1",
+                              style: AppTheme.normalStyle,
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     TextButton.icon(
                       onPressed: () {
-                        vm.crear();
+                        vm.irUsuarios(context);
                       },
-                      icon: const Icon(Icons.save),
+                      icon: const Icon(Icons.person_add_alt_1_outlined),
                       label: const Text(
-                        "Guardar",
-                        style: AppTheme.normalBoldStyle,
+                        "Buscar Responsable",
+                        style: AppTheme.normalStyle,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        vm.irUsuarios(context);
+                      },
+                      icon: const Icon(Icons.person_add_alt_1_outlined),
+                      label: const Text(
+                        "Buscar Invitados",
+                        style: AppTheme.normalStyle,
                       ),
                     ),
                   ],
