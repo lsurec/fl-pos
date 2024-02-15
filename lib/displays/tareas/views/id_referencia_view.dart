@@ -51,58 +51,70 @@ class IdReferenciaView extends StatelessWidget {
                     ],
                   ),
                   const Divider(),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: referenciasEncontradas.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final IdReferenciaModel referencia =
-                          referenciasEncontradas[index];
-                      return Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                width: 1.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.12)),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 5),
-                              Text(
-                                referencia.descripcion,
-                                style: AppTheme.normalStyle,
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "ID Referencia: ",
-                                    style: AppTheme.normalStyle,
-                                  ),
-                                  Text(
-                                    referencia.referenciaId,
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  )
+                  _ReferenciasEncontradas(
+                      referenciasEncontradas: referenciasEncontradas)
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ReferenciasEncontradas extends StatelessWidget {
+  const _ReferenciasEncontradas({
+    super.key,
+    required this.referenciasEncontradas,
+  });
+
+  final List<IdReferenciaModel> referenciasEncontradas;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: referenciasEncontradas.length,
+      itemBuilder: (BuildContext context, int index) {
+        final IdReferenciaModel referencia = referenciasEncontradas[index];
+        return Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom:
+                  BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 5),
+                Text(
+                  referencia.descripcion,
+                  style: AppTheme.normalStyle,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      "ID Referencia: ",
+                      style: AppTheme.normalStyle,
+                    ),
+                    Text(
+                      referencia.referenciaId,
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

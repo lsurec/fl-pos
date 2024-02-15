@@ -51,58 +51,70 @@ class UsuariosView extends StatelessWidget {
                     ],
                   ),
                   const Divider(),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: usuariosEncontrados.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final UsuariosModel usuario = usuariosEncontrados[index];
-                      return Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                width: 1.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.12)),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 5),
-                              Text(
-                                usuario.name,
-                                style: AppTheme.normalStyle,
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    "Email: ",
-                                    style: AppTheme.normalStyle,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    usuario.email,
-                                    style: AppTheme.normalBoldStyle,
-                                  )
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  _UsuariosEncontados(usuariosEncontrados: usuariosEncontrados),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _UsuariosEncontados extends StatelessWidget {
+  const _UsuariosEncontados({
+    super.key,
+    required this.usuariosEncontrados,
+  });
+
+  final List<UsuariosModel> usuariosEncontrados;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: usuariosEncontrados.length,
+      itemBuilder: (BuildContext context, int index) {
+        final UsuariosModel usuario = usuariosEncontrados[index];
+        return Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom:
+                  BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 5),
+                Text(
+                  usuario.name,
+                  style: AppTheme.normalStyle,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      "Email: ",
+                      style: AppTheme.normalStyle,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      usuario.email,
+                      style: AppTheme.normalBoldStyle,
+                    )
+                  ],
+                ),
+                const SizedBox(height: 5),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
