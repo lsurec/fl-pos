@@ -79,31 +79,42 @@ class PendingDocsView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       const Divider(),
-                      const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          SizedBox(
+                            width: 175,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              dropdownColor: AppTheme.backroundColor,
+                              value: vm.selectFilter,
+                              onChanged: (value) => vm.changeFilter(value!),
+                              items: vm.filters.map((filter) {
+                                return DropdownMenuItem<String>(
+                                  value: filter,
+                                  child: Text(
+                                    filter,
+                                    style: AppTheme.normalStyle,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => vm.ascendente = !vm.ascendente,
+                            icon: Icon(
+                              vm.ascendente
+                                  ? Icons.arrow_upward
+                                  : Icons.arrow_downward,
+                            ),
+                          ),
+                          const Spacer(),
                           Text(
                             "Registros(${vm.documents.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
-                          // DropdownButton<SellerModel>(
-                          //   isExpanded: true,
-                          //   dropdownColor: AppTheme.backroundColor,
-                          //   value: vm.vendedorSelect,
-                          //   onChanged: (value) => vm.changeSeller(value),
-                          //   items: vm.cuentasCorrentistasRef.map((seller) {
-                          //     return DropdownMenuItem<SellerModel>(
-                          //       value: seller,
-                          //       child: Text(seller.nomCuentaCorrentista),
-                          //     );
-                          //   }).toList(),
-                          // ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       const Divider(),
                       const SizedBox(height: 10),
                       ListView.builder(
@@ -182,20 +193,6 @@ class _CardDoc extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Fecha documento:",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      Text(
-                        document.fechaDocumento,
-                        style: AppTheme.normalStyle,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
                         "Fecha hora:",
                         style: AppTheme.normalBoldStyle,
                       ),
@@ -206,6 +203,21 @@ class _CardDoc extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Fecha documento:",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      Text(
+                        document.fechaDocumento,
+                        style: AppTheme.normalStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+
                   TextsWidget(
                       title: "Serie documento: ",
                       text: "${document.serie} (${document.serieDocumento})"),

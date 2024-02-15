@@ -21,12 +21,62 @@ class PendingDocsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _ascendente = true;
+  bool get ascendente => _ascendente;
+
+  set ascendente(bool value) {
+    _ascendente = value;
+    orderList();
+
+    notifyListeners();
+  }
+
   DateTime? fechaIni;
   DateTime? fechaFin;
   int tipoDoc = 0;
 
+  String selectFilter = "Id documento";
+
+  List<String> filters = [
+    "Id documento",
+    "Fecha documento",
+  ];
+
   //Doucumentos disponibles
   final List<OriginDocModel> documents = [];
+
+  orderList() {
+    switch (selectFilter) {
+      case "Id documento":
+        if (_ascendente) {
+          documents.sort((a, b) => b.iDDocumento
+              .compareTo(a.iDDocumento)); // Orden descendente por ID
+        } else {
+          documents.sort((a, b) => a.iDDocumento
+              .compareTo(b.iDDocumento)); // Orden ascendente por ID
+        }
+
+        break;
+      case "Fecha documento":
+        if (_ascendente) {
+          documents.sort((a, b) => DateTime.parse(b.fechaHora).compareTo(
+              DateTime.parse(a.fechaHora))); // Orden descendente por ID
+        } else {
+          documents.sort((a, b) => DateTime.parse(a.fechaHora).compareTo(
+              DateTime.parse(b.fechaHora))); // Orden ascendente por ID
+        }
+
+        break;
+      default:
+    }
+
+    notifyListeners();
+  }
+
+  changeFilter(String value) {
+    selectFilter = value;
+    orderList();
+  }
 
   String _addLeadingZero(int number) {
     return number.toString().padLeft(2, '0');
@@ -145,6 +195,8 @@ class PendingDocsViewModel extends ChangeNotifier {
 
     //asignar documntos disponibles
     documents.addAll(res.message);
+
+    orderList();
 
     isLoading = false;
   }
