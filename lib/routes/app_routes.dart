@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
+import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,7 @@ class AppRoutes {
   static const pendingDocs = 'pendingDocs';
   static const convertDocs = 'convertDocs';
   static const detailsDestinationDoc = 'detailsDestinationDoc';
+  static const detailsTask = 'detalleTarea';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -67,6 +69,8 @@ class AppRoutes {
     convertDocs: (BuildContext context) => const ConvertDocView(),
     detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
+    //Rutas Display Tareas
+    detailsTask: (BuildContext context) => const DetalleTareaView(), 
   };
 
   //en caso de ruta incorrecta
