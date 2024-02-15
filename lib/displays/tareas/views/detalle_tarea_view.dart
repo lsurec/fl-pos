@@ -80,18 +80,12 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Icon(Icons.date_range),
-                              SizedBox(width: 8),
-                              Text(
-                                "20/02/2023",
-                                style: AppTheme.normalStyle,
-                              ),
-                            ],
+                        child: ListTile(
+                          title: Text(
+                            "20/02/2023",
+                            style: AppTheme.normalStyle,
                           ),
+                          leading: Icon(Icons.date_range),
                         ),
                       ),
                       const Text(
@@ -103,18 +97,12 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Icon(Icons.date_range),
-                              SizedBox(width: 8),
-                              Text(
-                                "21/02/2023",
-                                style: AppTheme.normalStyle,
-                              ),
-                            ],
+                        child: ListTile(
+                          title: Text(
+                            "21/02/2023",
+                            style: AppTheme.normalStyle,
                           ),
+                          leading: Icon(Icons.date_range),
                         ),
                       ),
                       const Text(
@@ -128,10 +116,10 @@ class DetalleTareaView extends StatelessWidget {
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                              "Ticket",
-                              style: AppTheme.normalStyle,
-                            ) ,
-                            leading: Icon(Icons.arrow_circle_right_outlined) ,
+                            "Ticket",
+                            style: AppTheme.normalStyle,
+                          ),
+                          leading: Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
 
@@ -144,18 +132,12 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Icon(Icons.arrow_circle_right_outlined),
-                              SizedBox(width: 8),
-                              Text(
-                                "IL - 1 ",
-                                style: AppTheme.normalStyle,
-                              )
-                            ],
+                        child: ListTile(
+                          title: Text(
+                            "IL - 1",
+                            style: AppTheme.normalStyle,
                           ),
+                          leading: Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
                       const Text(
@@ -167,18 +149,13 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person_2_outlined),
-                              SizedBox(width: 8),
-                              Text(
-                                "Gerencia 1 ",
-                                style: AppTheme.normalStyle,
-                              )
-                            ],
+                        child: ListTile(
+                          title: Text(
+                            "Gerencia 1",
+                            style: AppTheme.normalStyle,
                           ),
+                          leading: Icon(Icons.arrow_circle_right_outlined),
+                          trailing: Icon(Icons.person_add_alt_1_outlined),
                         ),
                       ),
 
@@ -191,37 +168,26 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
+                        child: ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.person_2_outlined),
-                              SizedBox(width: 8),
-                              Column(
-                                children: [
-                                  Text(
-                                    "Usuario 1",
-                                    style: AppTheme.normalStyle,
-                                  ),
-                                  Text(
-                                    "Usuario 2",
-                                    style: AppTheme.normalStyle,
-                                  ),
-                                  Text(
-                                    "Usuario 3",
-                                    style: AppTheme.normalStyle,
-                                  ),
-                                ],
+                              Text(
+                                "Gerencia 1",
+                                style: AppTheme.normalStyle,
                               ),
-                              Spacer(),
-                              Tooltip(
-                                message: "Agregar invitados",
-                                child: Icon(
-                                  Icons.person_add_alt_1_outlined,
-                                ),
+                              Text(
+                                "Usuario 2",
+                                style: AppTheme.normalStyle,
+                              ),
+                              Text(
+                                "Usuario 3",
+                                style: AppTheme.normalStyle,
                               ),
                             ],
                           ),
+                          leading: Icon(Icons.arrow_circle_right_outlined),
+                          trailing: Icon(Icons.person_add_alt_1_outlined),
                         ),
                       ),
 
@@ -234,18 +200,12 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Icon(Icons.person_2_outlined),
-                              SizedBox(width: 8),
-                              Text(
-                                "Gerencia 10 ",
-                                style: AppTheme.normalStyle,
-                              )
-                            ],
+                        child: ListTile(
+                          title: Text(
+                            "Gerencia 10",
+                            style: AppTheme.normalStyle,
                           ),
+                          leading: Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
                     ],
@@ -305,7 +265,7 @@ class _ActualizarEstado extends StatelessWidget {
             vm.nuevoEstado = value.toString();
           },
           buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.only(right: 15),
           ),
           iconStyleData: const IconStyleData(
             icon: Icon(
@@ -373,7 +333,7 @@ class _ActualizarPrioridad extends StatelessWidget {
             vm.nuevaPrioridad = value.toString();
           },
           buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.only(right: 15),
           ),
           iconStyleData: const IconStyleData(
             icon: Icon(
