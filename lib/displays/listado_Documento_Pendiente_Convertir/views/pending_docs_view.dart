@@ -32,21 +32,60 @@ class PendingDocsView extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
-                            onPressed: () async {
-                              vm.showPickerDate(context);
-                            },
-                            icon: const Icon(Icons.calendar_today_outlined),
-                            label: Text(
-                              "Fecha: ${vm.fechaInicial.text}",
-                              style: AppTheme.normalStyle,
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Fecha Ini:",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              TextButton.icon(
+                                onPressed: () async {
+                                  // vm.showPickerDate(context);
+                                },
+                                icon: const Icon(Icons.calendar_today_outlined),
+                                label: Text(
+                                  vm.formatView(vm.fechaIni!),
+                                  style: AppTheme.normalStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Fecha Fin:",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              TextButton.icon(
+                                onPressed: () async {
+                                  // vm.showPickerDate(context);
+                                },
+                                icon: const Icon(
+                                  Icons.calendar_today_outlined,
+                                  color: AppTheme.primary,
+                                ),
+                                label: Text(
+                                  vm.formatView(vm.fechaFin!),
+                                  style: AppTheme.normalStyle,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      Text(vm.fechaIni),
-                      Text(vm.fechaFin),
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

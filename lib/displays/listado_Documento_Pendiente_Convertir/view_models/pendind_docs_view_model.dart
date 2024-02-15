@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +32,11 @@ class PendingDocsViewModel extends ChangeNotifier {
     return number.toString().padLeft(2, '0');
   }
 
-  Future<DateTime?> showPickerDate(
-    BuildContext context,
-    DateTime inital,
-    DateTime first,
-  ) async {
+  formatStrFilterDate(DateTime date) {
+    return '${date.year}${_addLeadingZero(date.month)}${_addLeadingZero(date.day)}';
+  }
+
+  Future<void> showPickerIni(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: inital,
@@ -44,7 +45,18 @@ class PendingDocsViewModel extends ChangeNotifier {
       lastDate: DateTime(2100),
     );
 
-    return pickedDate;
+    if (pickedDate == null) return;
+  }
+
+  Future<void> showPickerFin() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: inital,
+      //fecha minima la fecha actual o lafecha inicial seleciconada
+      firstDate: first,
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate == null) return;
   }
 
   //navgear a pantalla de documentos destino
@@ -72,7 +84,7 @@ class PendingDocsViewModel extends ChangeNotifier {
     //Navgear a vosta de documentos destino
     Navigator.pushNamed(
       context,
-      "destionationDocs",
+      AppRoutes.destionationDocs,
       arguments: doc,
     );
   }
@@ -94,17 +106,13 @@ class PendingDocsViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    String strFechaIni = "${dateNow!.year}${_addLeadingZero(dateNow!.month)}01";
-    String strFechaFin =
-        '${dateNow!.year}${_addLeadingZero(dateNow!.month)}${_addLeadingZero(dateNow!.day)}';
-
     //consumo del api
     final ApiResModel res = await receptionService.getPendindgDocs(
       user,
       token,
       tipoDoc,
-      fechaIni,
-      fechaFin,
+      formatStrFilterDate(fechaIni!),
+      formatStrFilterDate(fechaFin!),
     );
 
     isLoading = false;
@@ -128,6 +136,8 @@ class PendingDocsViewModel extends ChangeNotifier {
     //asignar documntos disponibles
     documents.addAll(res.message);
   }
+
+  formatView(DateTime date) => DateFormat('dd/MM/yyyy').format(date);
 
   // Función para formatear la fecha en el nuevo formato deseado
   String formatDate(String fechaString) {
