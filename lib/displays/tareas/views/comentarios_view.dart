@@ -62,7 +62,10 @@ class ComentariosView extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       final ComentarioNuevoModel comentario =
                           comentarios[index];
-                      return _Comentario(comentario: comentario);
+                      return _Comentario(
+                        comentario: comentario,
+                        index: index,
+                      );
                     },
                   ),
                   const SizedBox(height: 10),
@@ -106,7 +109,7 @@ class _NuevoComentario extends StatelessWidget {
             IconButton(
               tooltip: "Enviar comentario.",
               onPressed: () {
-                vm.comentar(context, vm.comentarioController.text);
+                vm.comentar(context);
               },
               icon: const Icon(Icons.send),
             ),
@@ -121,15 +124,20 @@ class _Comentario extends StatelessWidget {
   const _Comentario({
     super.key,
     required this.comentario,
+    required this.index,
   });
 
   final ComentarioNuevoModel comentario;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<ComentariosViewModel>(context);
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 10),
+        // const SizedBox(height: 10),
         Container(
           padding: const EdgeInsets.all(10),
           decoration: const BoxDecoration(
@@ -177,9 +185,9 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.normalStyle,
                 textAlign: TextAlign.justify,
               ),
-              Column(
+              const Column(
                 children: [
-                  const ListTile(
+                  ListTile(
                     title: Text(
                       "archivo1.png",
                       style: AppTheme.normalStyle,
@@ -187,7 +195,7 @@ class _Comentario extends StatelessWidget {
                     leading: Icon(Icons.insert_photo_outlined),
                     contentPadding: EdgeInsets.zero,
                   ),
-                  const ListTile(
+                  ListTile(
                     title: Text(
                       "archivo1.png",
                       style: AppTheme.normalStyle,
@@ -200,7 +208,15 @@ class _Comentario extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 10),
+        if (index != vm.comentarios.length - 1)
+          Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Container(
+              color: const Color.fromRGBO(0, 0, 0, 0.12),
+              height: 20,
+              width: 3,
+            ),
+          ),
       ],
     );
   }

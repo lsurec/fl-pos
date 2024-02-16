@@ -29,6 +29,12 @@ class AppTheme {
     color: Colors.black,
   );
 
+  static const obligatoryBoldStyle = TextStyle(
+    fontSize: 20,
+    color: Colors.red,
+    fontWeight: FontWeight.bold,
+  );
+
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,

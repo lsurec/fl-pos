@@ -1,6 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/tareas/models/usuarios_model.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +19,7 @@ class CrearTareaView extends StatelessWidget {
     final List<String> tipos = vm.tipos;
 
     final List<String> prioridades = vm.prioridades;
+    final List<PeriodicidadModel> tiemposEstimados = vm.tiempos;
 
     final List<UsuariosModel> usuariosEncontrados = vm.invitados;
 
@@ -67,7 +68,7 @@ class CrearTareaView extends StatelessWidget {
                         ),
                         Text(
                           "*",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.obligatoryBoldStyle,
                         ),
                       ],
                     ),
@@ -120,7 +121,7 @@ class CrearTareaView extends StatelessWidget {
                     const Divider(),
                     const SizedBox(height: 5),
                     const Text(
-                      "Fecha y hora final:",
+                      "Fecha y hora final",
                       style: AppTheme.normalBoldStyle,
                     ),
                     Row(
@@ -151,6 +152,37 @@ class CrearTareaView extends StatelessWidget {
                     const SizedBox(height: 5),
                     const Divider(),
                     const SizedBox(height: 5),
+
+                    const Text(
+                      "Tiempo estimado: ",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: TextFormField(
+                            controller: vm.tiempoController,
+                            onChanged: (value) {
+                              vm.tiempo = value;
+                            },
+                            decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 14,
+                                horizontal: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 250,
+                          child: _TiempoEstimado(tiempos: tiemposEstimados),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     const Row(
                       children: [
                         Text(
@@ -160,7 +192,7 @@ class CrearTareaView extends StatelessWidget {
                         Padding(padding: EdgeInsets.only(left: 5)),
                         Text(
                           "*",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.obligatoryBoldStyle,
                         ),
                       ],
                     ),
@@ -178,7 +210,7 @@ class CrearTareaView extends StatelessWidget {
                             Padding(padding: EdgeInsets.only(left: 5)),
                             Text(
                               "*",
-                              style: AppTheme.normalBoldStyle,
+                              style: AppTheme.obligatoryBoldStyle,
                             ),
                           ],
                         ),
@@ -196,7 +228,7 @@ class CrearTareaView extends StatelessWidget {
                         Padding(padding: EdgeInsets.only(left: 5)),
                         Text(
                           "*",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.obligatoryBoldStyle,
                         ),
                       ],
                     ),
@@ -206,13 +238,13 @@ class CrearTareaView extends StatelessWidget {
                     const Row(
                       children: [
                         Text(
-                          "Observacion",
+                          "Observación",
                           style: AppTheme.normalBoldStyle,
                         ),
                         Padding(padding: EdgeInsets.only(left: 5)),
                         Text(
                           "*",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.obligatoryBoldStyle,
                         ),
                       ],
                     ),
@@ -225,8 +257,12 @@ class CrearTareaView extends StatelessWidget {
                         title: Row(
                           children: [
                             Text(
-                              "ID REFERENCIA* : ",
+                              "Id referencia :",
                               style: AppTheme.normalStyle,
+                            ),
+                            Text(
+                              " * ",
+                              style: AppTheme.obligatoryBoldStyle,
                             ),
                             SizedBox(width: 30),
                             Text(
@@ -246,7 +282,7 @@ class CrearTareaView extends StatelessWidget {
                       onPressed: () => vm.irUsuarios(context),
                       child: const ListTile(
                         title: Text(
-                          "AÑADIR RESPONSABLE",
+                          "Añadir responsable",
                           style: AppTheme.normalStyle,
                         ),
                         leading: Icon(Icons.person_add_alt_1_outlined),
@@ -267,13 +303,11 @@ class CrearTareaView extends StatelessWidget {
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     ),
                     const Divider(),
-
-                    // const SizedBox(height: 5),
                     TextButton(
                       onPressed: () => vm.irUsuarios(context),
                       child: const ListTile(
                         title: Text(
-                          "AÑADIR INVITADOS",
+                          "Añadir invitados",
                           style: AppTheme.normalStyle,
                         ),
                         leading: Icon(Icons.person_add_alt_1_outlined),
@@ -315,6 +349,69 @@ class CrearTareaView extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _TiempoEstimado extends StatelessWidget {
+  const _TiempoEstimado({
+    super.key,
+    required this.tiempos,
+  });
+
+  final List<PeriodicidadModel> tiempos;
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CrearTareaViewModel>(context);
+
+    return DropdownButtonFormField2<PeriodicidadModel>(
+      isExpanded: true,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: 16),
+        border: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+            color: Color.fromRGBO(0, 0, 0, 0.12),
+          ),
+        ),
+      ),
+      hint: const Text(
+        'Seleccione el tiempo de periodicidad de la tarea.',
+        style: TextStyle(fontSize: 14),
+      ),
+      items: tiempos
+          .map((item) => DropdownMenuItem<PeriodicidadModel>(
+                value: item,
+                child: Text(
+                  item.descripcion,
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+              ))
+          .toList(),
+      onChanged: (value) {
+        vm.periodicidad = value!;
+      },
+      buttonStyleData: const ButtonStyleData(
+        padding: EdgeInsets.only(right: 8),
+      ),
+      iconStyleData: const IconStyleData(
+        icon: Icon(
+          Icons.arrow_drop_down,
+          color: Colors.black45,
+        ),
+        iconSize: 24,
+      ),
+      dropdownStyleData: DropdownStyleData(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
+      menuItemStyleData: const MenuItemStyleData(
+        padding: EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }

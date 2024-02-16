@@ -9,6 +9,8 @@ class CrearTareaViewModel extends ChangeNotifier {
   TextEditingController horaInicial = TextEditingController();
   TextEditingController horaFinal = TextEditingController();
   TextEditingController tituloController = TextEditingController();
+  TextEditingController tiempoController = TextEditingController();
+
   TextEditingController observacionController = TextEditingController();
 
   DateTime fechaActual = DateTime.now();
@@ -25,8 +27,13 @@ class CrearTareaViewModel extends ChangeNotifier {
   String? prioridad;
   String? observacion;
   String? titulo;
+  String tiempo = "10";
+
+  PeriodicidadModel periodicidad =
+      PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos");
 
   CrearTareaViewModel() {
+    tiempoController.text = "10";
     nuevaFechaInicial = fechaActual;
     nuevaFechaFinal = fechaActual;
 
@@ -83,6 +90,16 @@ class CrearTareaViewModel extends ChangeNotifier {
       userName: "DLCASA01",
       name: "Karina Ortega (DLCASA01)",
     ),
+  ];
+
+  List<PeriodicidadModel> tiempos = [
+    PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos"),
+    PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos"),
+    PeriodicidadModel(tipoPeriodicidad: 2, descripcion: "Horas"),
+    PeriodicidadModel(tipoPeriodicidad: 3, descripcion: "Dias"),
+    PeriodicidadModel(tipoPeriodicidad: 4, descripcion: "Semanas"),
+    PeriodicidadModel(tipoPeriodicidad: 5, descripcion: "Mes"),
+    PeriodicidadModel(tipoPeriodicidad: 6, descripcion: "Año"),
   ];
 
   irIdReferencia(BuildContext context) {

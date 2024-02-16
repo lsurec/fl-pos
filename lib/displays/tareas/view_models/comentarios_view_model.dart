@@ -35,8 +35,8 @@ class ComentariosViewModel extends ChangeNotifier {
     ),
   ];
 
-  comentar(BuildContext context, String coment) {
-    if (coment == "") {
+  comentar(BuildContext context) {
+    if (comentarioController.text == "") {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -47,7 +47,7 @@ class ComentariosViewModel extends ChangeNotifier {
       return;
     }
     final ComentarioNuevoModel comentario = ComentarioNuevoModel(
-      comentario: coment,
+      comentario: comentarioController.text,
       fechaHora: "fecha",
       nameUser: "DESA02",
       tarea: 4000,

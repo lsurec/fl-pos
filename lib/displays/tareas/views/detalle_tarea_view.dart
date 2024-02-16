@@ -59,20 +59,20 @@ class DetalleTareaView extends StatelessWidget {
 
                       //ACTUALIZAR ESTADO DE LA TAREA
                       const Text(
-                        "Estado: ",
+                        "ESTADO: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const _ActualizarEstado(),
 
                       //ACTUALIZAR PRIORIDAD DE LA TAREA
                       const Text(
-                        "Prioridad: ",
+                        "PRIORIDAD: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const _ActualizarPrioridad(),
 
                       const Text(
-                        "Fecha Inicial: ",
+                        "FECHA Y HORA INICIAL: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
@@ -81,15 +81,25 @@ class DetalleTareaView extends StatelessWidget {
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
-                          title: Text(
-                            "20/02/2023",
-                            style: AppTheme.normalStyle,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "20/02/2023",
+                                style: AppTheme.normalStyle,
+                              ),
+                              Text(
+                                "10:00 AM",
+                                style: AppTheme.normalStyle,
+                              ),
+                            ],
                           ),
+                          trailing: Icon(Icons.schedule_outlined),
                           leading: Icon(Icons.date_range),
                         ),
                       ),
                       const Text(
-                        "Fecha Final: ",
+                        "FECHA Y HORA FINAL: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
@@ -98,15 +108,25 @@ class DetalleTareaView extends StatelessWidget {
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
-                          title: Text(
-                            "21/02/2023",
-                            style: AppTheme.normalStyle,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "21/02/2023",
+                                style: AppTheme.normalStyle,
+                              ),
+                              Text(
+                                "10:10 AM",
+                                style: AppTheme.normalStyle,
+                              ),
+                            ],
                           ),
+                          trailing: Icon(Icons.schedule_outlined),
                           leading: Icon(Icons.date_range),
                         ),
                       ),
                       const Text(
-                        "Tipo tarea: ",
+                        "TIPO TAREA: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
@@ -124,7 +144,7 @@ class DetalleTareaView extends StatelessWidget {
                       ),
 
                       const Text(
-                        "ID Referencia: ",
+                        "ID REFERENCIA: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
@@ -141,7 +161,7 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                       ),
                       const Text(
-                        "Responsable: ",
+                        "RESPONSABLE: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
@@ -160,7 +180,7 @@ class DetalleTareaView extends StatelessWidget {
                       ),
 
                       const Text(
-                        "Invitados: ",
+                        "INVITADOS: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
@@ -190,9 +210,8 @@ class DetalleTareaView extends StatelessWidget {
                           trailing: Icon(Icons.person_add_alt_1_outlined),
                         ),
                       ),
-
                       const Text(
-                        "Creador: ",
+                        "CREADOR: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const CardWidget(
