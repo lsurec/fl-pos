@@ -27,6 +27,12 @@ class DetailsDestinationDocView extends StatelessWidget {
                 "Documento Procesado",
                 style: AppTheme.titleStyle,
               ),
+              actions: [
+                IconButton(
+                  onPressed: () => vm.shareDoc(context, document),
+                  icon: const Icon(Icons.share),
+                ),
+              ],
             ),
             body: RefreshIndicator(
               onRefresh: () => vm.loadData(context, document),

@@ -139,14 +139,14 @@ class PendingDocsViewModel extends ChangeNotifier {
       return;
     }
 
-    isLoading = false;
-
     //Navgear a vosta de documentos destino
     Navigator.pushNamed(
       context,
       AppRoutes.destionationDocs,
       arguments: doc,
     );
+
+    isLoading = false;
   }
 
   //Cargar datos
