@@ -11,6 +11,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<LoginViewModel>(context);
+    final vmSplash = Provider.of<SplashViewModel>(context);
 
     return Stack(
       children: [
@@ -121,6 +122,18 @@ class LoginView extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Versión: ${vmSplash.versionLocal}",
+                        style: const TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(width: 10)
+                    ],
                   ),
                   const SizedBox(height: 10),
                   const Center(

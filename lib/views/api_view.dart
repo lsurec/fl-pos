@@ -12,6 +12,7 @@ class ApiView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmSplash = Provider.of<SplashViewModel>(context);
     final vm = Provider.of<ApiViewModel>(context);
 
     return Stack(
@@ -155,6 +156,19 @@ class ApiView extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Versión: ${vmSplash.versionLocal}",
+                        style: const TextStyle(
+                          color: Colors.black54,
+                        ),
+                      ),
+                      const SizedBox(width: 10)
+                    ],
                   ),
                 ],
               ),
