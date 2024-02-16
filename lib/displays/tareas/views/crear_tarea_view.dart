@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/usuarios_model.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,8 @@ class CrearTareaView extends StatelessWidget {
     final List<String> tipos = vm.tipos;
 
     final List<String> prioridades = vm.prioridades;
+
+    final List<UsuariosModel> usuariosEncontrados = vm.invitados;
 
     return Scaffold(
       appBar: AppBar(
@@ -214,7 +217,7 @@ class CrearTareaView extends StatelessWidget {
                           children: [
                             Text(
                               "ID REFERENCIA* : ",
-                              style: AppTheme.normalBoldStyle,
+                              style: AppTheme.normalStyle,
                             ),
                             SizedBox(width: 30),
                             Text(
@@ -227,29 +230,75 @@ class CrearTareaView extends StatelessWidget {
                         contentPadding: EdgeInsets.all(0),
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const Divider(),
+
+                    // const SizedBox(height: 5),
                     TextButton(
                       onPressed: () => vm.irUsuarios(context),
                       child: const ListTile(
                         title: Text(
                           "AÑADIR RESPONSABLE",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.normalStyle,
                         ),
                         leading: Icon(Icons.person_add_alt_1_outlined),
                         contentPadding: EdgeInsets.all(0),
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    const ListTile(
+                      title: Text(
+                        "Karina Ortega (DLCASA01)",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      subtitle: Text(
+                        "kortega@delacasa.com.gt",
+                        style: AppTheme.normalStyle,
+                      ),
+                      leading: Icon(Icons.person),
+                      trailing: Icon(Icons.close),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
+                    const Divider(),
+
+                    // const SizedBox(height: 5),
                     TextButton(
                       onPressed: () => vm.irUsuarios(context),
                       child: const ListTile(
                         title: Text(
                           "AÑADIR INVITADOS",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.normalStyle,
                         ),
                         leading: Icon(Icons.person_add_alt_1_outlined),
                         contentPadding: EdgeInsets.all(0),
                       ),
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: vm.invitados.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final UsuariosModel usuario =
+                            usuariosEncontrados[index];
+                        return Column(
+                          children: [
+                            ListTile(
+                              title: Text(
+                                usuario.name,
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                              subtitle: Text(
+                                usuario.email,
+                                style: AppTheme.normalStyle,
+                              ),
+                              leading: const Icon(Icons.person),
+                              trailing: const Icon(Icons.close),
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                            const Divider(),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
