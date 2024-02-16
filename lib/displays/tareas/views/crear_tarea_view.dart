@@ -207,55 +207,48 @@ class CrearTareaView extends StatelessWidget {
                     const SizedBox(height: 10),
                     const _ObservacionTarea(),
                     const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {
-                            vm.irIdReferencia(context);
-                          },
-                          icon: const Icon(Icons.search),
-                          label: const Text(
-                            "Buscar ID Referencia",
-                            style: AppTheme.normalStyle,
-                          ),
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    TextButton(
+                      onPressed: () => vm.irIdReferencia(context),
+                      child: const ListTile(
+                        title: Row(
                           children: [
-                            SizedBox(
-                              height: 5,
-                            ),
                             Text(
-                              "ID Referencia: ",
+                              "ID REFERENCIA* : ",
                               style: AppTheme.normalBoldStyle,
                             ),
+                            SizedBox(width: 30),
                             Text(
-                              "IL -1",
-                              style: AppTheme.normalStyle,
+                              "IL - 1",
+                              style: AppTheme.normalBoldStyle,
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    TextButton.icon(
-                      onPressed: () {
-                        vm.irUsuarios(context);
-                      },
-                      icon: const Icon(Icons.person_add_alt_1_outlined),
-                      label: const Text(
-                        "Buscar Responsable",
-                        style: AppTheme.normalStyle,
+                        leading: Icon(Icons.search),
+                        contentPadding: EdgeInsets.all(0),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () {
-                        vm.irUsuarios(context);
-                      },
-                      icon: const Icon(Icons.person_add_alt_1_outlined),
-                      label: const Text(
-                        "Buscar Invitados",
-                        style: AppTheme.normalStyle,
+                    const SizedBox(height: 5),
+                    TextButton(
+                      onPressed: () => vm.irUsuarios(context),
+                      child: const ListTile(
+                        title: Text(
+                          "AÑADIR RESPONSABLE",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        leading: Icon(Icons.person_add_alt_1_outlined),
+                        contentPadding: EdgeInsets.all(0),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextButton(
+                      onPressed: () => vm.irUsuarios(context),
+                      child: const ListTile(
+                        title: Text(
+                          "AÑADIR INVITADOS",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        leading: Icon(Icons.person_add_alt_1_outlined),
+                        contentPadding: EdgeInsets.all(0),
                       ),
                     ),
                   ],
