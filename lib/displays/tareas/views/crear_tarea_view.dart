@@ -29,10 +29,19 @@ class CrearTareaView extends StatelessWidget {
           style: AppTheme.titleStyle,
         ),
         actions: <Widget>[
-          IconButton(
-            onPressed: () => vm.crear(),
-            icon: const Icon(Icons.save),
-            tooltip: "Crear Tarea",
+          Row(
+            children: [
+              IconButton(
+                onPressed: () => vm.crear(),
+                icon: const Icon(Icons.save),
+                tooltip: "Crear Tarea",
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.attach_file_outlined),
+                tooltip: "Adjuntar Archivos",
+              ),
+            ],
           ),
         ],
       ),
@@ -78,7 +87,7 @@ class CrearTareaView extends StatelessWidget {
                           labelText: "Añada un titulo para la tarea."),
                     ),
                     const SizedBox(height: 10),
-                    Text(
+                    const Text(
                       "Fecha y hora inicial",
                       style: AppTheme.normalBoldStyle,
                     ),

@@ -66,7 +66,7 @@ class ComentariosView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 10),
-                  _NuevoComentario(),
+                  const _NuevoComentario(),
                 ],
               ),
             ),
@@ -93,12 +93,24 @@ class _NuevoComentario extends StatelessWidget {
       },
       decoration: InputDecoration(
         labelText: 'Nuevo comentario',
-        suffixIcon: IconButton(
-          tooltip: "Enviar comentario.",
-          onPressed: () {
-            vm.comentar(context, vm.comentarioController.text);
-          },
-          icon: Icon(Icons.send),
+        suffixIcon: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              tooltip: "Adjuntar Archivos",
+              onPressed: () {
+                print("Abrir explorador de archivos");
+              },
+              icon: const Icon(Icons.attach_file_outlined),
+            ),
+            IconButton(
+              tooltip: "Enviar comentario.",
+              onPressed: () {
+                vm.comentar(context, vm.comentarioController.text);
+              },
+              icon: const Icon(Icons.send),
+            ),
+          ],
         ),
       ),
     );
