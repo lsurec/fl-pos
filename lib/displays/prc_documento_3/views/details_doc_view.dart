@@ -23,11 +23,16 @@ class _DetailsDocViewState extends State<DetailsDocView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Resumen Documento",
+        title: Text(
+          "Resumen Documento (${document.consecutivo})",
           style: AppTheme.titleStyle,
         ),
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.print_outlined),
+            tooltip: "Imprimir",
+          ),
           // if (!vm.showBlock)
           //   IconButton(
           //     onPressed: () => vm.showBlock = true,
@@ -52,13 +57,58 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              RichText(
+                text: TextSpan(
+                  style: AppTheme.normalStyle,
+                  children: [
+                    const TextSpan(text: "Fecha: ", style: AppTheme.titleStyle),
+                    TextSpan(text: document.fecha, style: AppTheme.normalStyle)
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+              const Divider(),
+              const SizedBox(height: 5),
+              RichText(
+                text: TextSpan(
+                  style: AppTheme.normalStyle,
+                  children: [
+                    const TextSpan(
+                        text: "Empresa: ", style: AppTheme.titleStyle),
+                    TextSpan(
+                        text:
+                            "${document.empresa.empresaNombre} (${document.empresa.empresa})",
+                        style: AppTheme.normalStyle)
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+              const Divider(),
+              const SizedBox(height: 5),
+              RichText(
+                text: TextSpan(
+                  style: AppTheme.normalStyle,
+                  children: [
+                    const TextSpan(
+                        text: "Estación: ", style: AppTheme.titleStyle),
+                    TextSpan(
+                        text:
+                            "${document.estacion.descripcion} (${document.estacion.estacionTrabajo})",
+                        style: AppTheme.normalStyle)
+                  ],
+                ),
+              ),
+              const SizedBox(height: 5),
+              const Divider(),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Tipo docuemento",
+                        "Tipo docuemento:",
                         style: AppTheme.titleStyle,
                       ),
                       Text(
@@ -68,9 +118,10 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     ],
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Serie documento",
+                        "Serie documento:",
                         style: AppTheme.titleStyle,
                       ),
                       Text(
@@ -85,7 +136,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
               const Divider(),
               const SizedBox(height: 5),
               const Text(
-                "Receptor",
+                "Cuenta: ",
                 style: AppTheme.titleStyle,
               ),
               const SizedBox(height: 5),
@@ -96,6 +147,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                 ),
               if (document.client != null)
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Nit: ${document.client!.facturaNit}",
@@ -119,7 +171,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     const Divider(),
                     const SizedBox(height: 5),
                     const Text(
-                      "Vendedor",
+                      "Vendedor:",
                       style: AppTheme.titleStyle,
                     ),
                     const SizedBox(height: 5),
@@ -133,7 +185,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
               const Divider(),
               const SizedBox(height: 5),
               const Text(
-                "Productos",
+                "Productos:",
                 style: AppTheme.titleStyle,
               ),
               const SizedBox(height: 5),
@@ -375,7 +427,7 @@ class _Transaction extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Precio Unitario: ${currencyFormat.format(transaction.total / transaction.cantidad)}',
+                  'Precio Unitario: ${currencyFormat.format(transaction.cantidad > 0 ? transaction.total / transaction.cantidad : transaction.total)}',
                   style: AppTheme.normalStyle,
                 ),
 
