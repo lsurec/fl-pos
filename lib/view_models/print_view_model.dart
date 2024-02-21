@@ -493,6 +493,7 @@ class PrintViewModel extends ChangeNotifier {
     BuildContext context,
     int paperDefault,
     int consecutivoDoc,
+    String? cuentaCorrentistaRef,
   ) async {
     //instancia del servicio
     DocumentService documentService = DocumentService();
@@ -728,10 +729,7 @@ class PrintViewModel extends ChangeNotifier {
       );
     }
 
-    String vendedor = "";
-    if (docVM.cuentasCorrentistasRef.isNotEmpty) {
-      vendedor = docVM.vendedorSelect!.nomCuentaCorrentista;
-    }
+    String vendedor = cuentaCorrentistaRef ?? "";
 
     Certificador certificador = Certificador(
       nombre: encabezado.certificadorDteNombre!,

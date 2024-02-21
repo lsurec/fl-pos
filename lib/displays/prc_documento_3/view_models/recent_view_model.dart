@@ -456,8 +456,10 @@ class RecentViewModel extends ChangeNotifier {
       observacion: doc.estructura.docObservacion1,
       subtotal: doc.subtotal,
       total: doc.total,
-      documento: documentoDesc,
-      serie: serieDesc,
+      documento: documento,
+      serie: serieDoc,
+      documentoDesc: documentoDesc,
+      serieDesc: serieDesc,
     );
 
     Navigator.pushNamed(

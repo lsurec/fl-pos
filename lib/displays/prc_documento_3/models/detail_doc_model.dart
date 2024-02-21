@@ -8,7 +8,9 @@ class DetailDocModel {
   EmpresaModel empresa;
   EstacionModel estacion;
   String serie;
-  String documento;
+  String serieDesc;
+  int documento;
+  String documentoDesc;
   ClientModel? client;
   String? seller;
   List<TransactionDetail> transactions;
@@ -34,7 +36,9 @@ class DetailDocModel {
     required this.subtotal,
     required this.total,
     required this.documento,
+    required this.documentoDesc,
     required this.serie,
+    required this.serieDesc,
   });
 }
 

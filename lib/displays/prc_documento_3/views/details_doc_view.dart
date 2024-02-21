@@ -112,7 +112,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         style: AppTheme.titleStyle,
                       ),
                       Text(
-                        document.documento,
+                        document.documentoDesc,
                         style: AppTheme.normalStyle,
                       ),
                     ],
@@ -125,7 +125,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         style: AppTheme.titleStyle,
                       ),
                       Text(
-                        document.serie,
+                        document.serieDesc,
                         style: AppTheme.normalStyle,
                       ),
                     ],

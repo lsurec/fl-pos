@@ -119,7 +119,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
-      arguments: [3, document],
+      arguments: PrintDocSettingsModel(
+        opcion: 3,
+        destination: document,
+      ),
     );
   }
 

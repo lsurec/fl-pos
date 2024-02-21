@@ -964,13 +964,16 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
   //Navgar a pantalla de impresion
   navigatePrint(BuildContext context) {
+    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
-      arguments: [
-        2,
-        consecutivoDoc, //documento que se tiene que imprimmir
-      ],
+      arguments: PrintDocSettingsModel(
+        opcion: 2,
+        consecutivoDoc: consecutivoDoc,
+        cuentaCorrentistaRef: vmDoc.vendedorSelect?.nomCuentaCorrentista,
+      ),
     );
   }
 
