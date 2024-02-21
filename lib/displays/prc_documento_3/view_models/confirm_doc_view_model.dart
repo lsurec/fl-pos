@@ -973,6 +973,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
         opcion: 2,
         consecutivoDoc: consecutivoDoc,
         cuentaCorrentistaRef: vmDoc.vendedorSelect?.nomCuentaCorrentista,
+        client: vmDoc.clienteSelect,
       ),
     );
   }

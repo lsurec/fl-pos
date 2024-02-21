@@ -214,9 +214,8 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   context, // context,
                                   paperDefault, // paperDefault,
                                   settings.consecutivoDoc!, // consecutivoDoc,
-
-                                  settings
-                                      .cuentaCorrentistaRef!, // cuentaCorrentistaRef,
+                                  settings.cuentaCorrentistaRef!,
+                                  settings.client!, // cuentaCorrentistaRef,
                                 );
 
                                 _printerEscPos(print.bytes, print.generator);

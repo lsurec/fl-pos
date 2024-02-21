@@ -25,6 +25,7 @@ class DetailsDocViewModel extends ChangeNotifier {
         opcion: 2,
         consecutivoDoc: doc.consecutivo,
         cuentaCorrentistaRef: doc.seller,
+        client: doc.client,
       ),
     );
   }

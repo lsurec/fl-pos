@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -21,6 +22,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
     final DetailDocModel document =
         ModalRoute.of(context)?.settings.arguments as DetailDocModel;
 
+    final vm = Provider.of<DetailsDocViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,7 +32,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => vm.navigatePrint(context, document),
             icon: const Icon(Icons.print_outlined),
             tooltip: "Imprimir",
           ),
