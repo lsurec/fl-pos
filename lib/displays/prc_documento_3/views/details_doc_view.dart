@@ -108,7 +108,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Tipo docuemento:",
+                        "Tipo documento:",
                         style: AppTheme.titleStyle,
                       ),
                       Text(
