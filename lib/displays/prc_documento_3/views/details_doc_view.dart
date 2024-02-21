@@ -62,7 +62,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         style: AppTheme.titleStyle,
                       ),
                       Text(
-                        "${document.doc}",
+                        document.documento,
                         style: AppTheme.normalStyle,
                       ),
                     ],
@@ -89,18 +89,28 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                 style: AppTheme.titleStyle,
               ),
               const SizedBox(height: 5),
-              Text(
-                "Nit: ${document.client.facturaNit}",
-                style: AppTheme.normalStyle,
-              ),
-              Text(
-                "Nombre: ${document.client.facturaNombre}",
-                style: AppTheme.normalStyle,
-              ),
-              Text(
-                "Dirección: ${document.client.facturaDireccion}",
-                style: AppTheme.normalStyle,
-              ),
+              if (document.client == null)
+                const Text(
+                  "No disponible",
+                  style: AppTheme.normalStyle,
+                ),
+              if (document.client != null)
+                Column(
+                  children: [
+                    Text(
+                      "Nit: ${document.client!.facturaNit}",
+                      style: AppTheme.normalStyle,
+                    ),
+                    Text(
+                      "Nombre: ${document.client!.facturaNombre}",
+                      style: AppTheme.normalStyle,
+                    ),
+                    Text(
+                      "Dirección: ${document.client!.facturaDireccion}",
+                      style: AppTheme.normalStyle,
+                    ),
+                  ],
+                ),
               if (document.seller != null)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
