@@ -78,7 +78,11 @@ class MenuViewModel extends ChangeNotifier {
 
         await penVM.laodData(context);
 
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(
+          context,
+          AppRoutes.pendingDocs,
+          arguments: vmTipos.documents.first,
+        );
 
         vmHome.isLoading = false;
 
