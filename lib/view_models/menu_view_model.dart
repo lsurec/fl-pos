@@ -65,7 +65,7 @@ class MenuViewModel extends ChangeNotifier {
 
       DateTime now = DateTime.now();
 
-      vmPend.fechaIni = DateTime(now.year, now.month, 1);
+      vmPend.fechaIni = now;
       vmPend.fechaFin = now;
 
       await vmTipos.loadData(context);
