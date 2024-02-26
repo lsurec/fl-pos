@@ -80,22 +80,25 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Row(
                             children: [
+                              Icon(Icons.date_range),
+                              Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
                                 "20/02/2023",
                                 style: AppTheme.normalStyle,
                               ),
+                              Spacer(),
+                              Icon(Icons.schedule_outlined),
+                              Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
                                 "10:00 AM",
                                 style: AppTheme.normalStyle,
                               ),
                             ],
                           ),
-                          trailing: Icon(Icons.schedule_outlined),
-                          leading: Icon(Icons.date_range),
                         ),
                       ),
                       const Text(
@@ -107,22 +110,25 @@ class DetalleTareaView extends StatelessWidget {
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: ListTile(
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: Row(
                             children: [
+                              Icon(Icons.date_range),
+                              Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
                                 "21/02/2023",
                                 style: AppTheme.normalStyle,
                               ),
+                              Spacer(),
+                              Icon(Icons.schedule_outlined),
+                              Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
                                 "10:10 AM",
                                 style: AppTheme.normalStyle,
                               ),
                             ],
                           ),
-                          trailing: Icon(Icons.schedule_outlined),
-                          leading: Icon(Icons.date_range),
                         ),
                       ),
                       const Text(
