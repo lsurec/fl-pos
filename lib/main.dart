@@ -59,7 +59,6 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CrearTareaViewModel()),
         ChangeNotifierProvider(create: (_) => IdReferenciaViewModel()),
         ChangeNotifierProvider(create: (_) => UsuariosViewModel()),
-
       ],
       child: const MyApp(),
     );
@@ -86,8 +85,8 @@ class MyApp extends StatelessWidget {
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
-      // home: const SplashView(), // Muestra el SplashScreen durante el inicio
-      home: const TareasView(), // Muestra el SplashScreen durante el inicio
+      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      // home: const TareasView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
     );
