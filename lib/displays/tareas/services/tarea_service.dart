@@ -189,4 +189,234 @@ class TareaService {
       );
     }
   }
+
+  //Consumo api para obtener tareas de la busqueda por id de referencia.
+  Future<ApiResModel> getEstado(
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/estados");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<EstadoModel> estados = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = EstadoModel.fromMap(item);
+        //agregar item a la lista
+        estados.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: estados,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Obtener Tipos de Tarea
+  Future<ApiResModel> getTipoTarea(
+    String user,
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/tipos/$user");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TipoTareaModel> tipos = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TipoTareaModel.fromMap(item);
+        //agregar item a la lista
+        tipos.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: tipos,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener prioridades
+  Future<ApiResModel> getPrioridad(
+    String user,
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/tipo/prioridad/$user");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<PrioridadModel> prioridades = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = PrioridadModel.fromMap(item);
+        //agregar item a la lista
+        prioridades.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: prioridades,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener los comentarios de una tarea
+  Future<ApiResModel> getComentarios(
+    String user,
+    String token,
+    int tarea,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/comentarios");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "tarea": tarea.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<ComentarioModel> comentarios = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ComentarioModel.fromMap(item);
+        //agregar item a la lista
+        comentarios.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: comentarios,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 }

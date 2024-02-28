@@ -32,6 +32,10 @@ class TareasViewModel extends ChangeNotifier {
 
 //Lista ejemplo de las tareas
   final List<TareaModel> tareas = [];
+  final List<EstadoModel> estados = [];
+  final List<TipoTareaModel> tiposTarea = [];
+  final List<PrioridadModel> prioridades = [];
+  final List<ComentarioModel> comentarios = [];
 
   performSearch() {
     if (filtro == 1) {
@@ -127,6 +131,7 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
+  //Buscar por id de referencia
   Future<void> buscarTareasIdReferencia(
     BuildContext context,
     String search,
@@ -167,8 +172,181 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
+  //Obtener Estados
+  Future<void> obtenerEstados(
+    BuildContext context,
+  ) async {
+    estados.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    // String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getEstado(token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    estados.addAll(res.message);
+
+    print(estados[0]);
+
+    isLoading = false;
+  }
+
+  //Obtener Tipos
+  Future<void> obtenerTiposTarea(
+    BuildContext context,
+  ) async {
+    tiposTarea.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getTipoTarea(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    tiposTarea.addAll(res.message);
+
+    print(tiposTarea[0]);
+
+    isLoading = false;
+  }
+
+  //Obtener Prioridades
+  Future<void> obtenerPrioridades(
+    BuildContext context,
+  ) async {
+    prioridades.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getPrioridad(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    prioridades.addAll(res.message);
+
+    print(prioridades[0]);
+
+    isLoading = false;
+  }
+
+  //Obtener Prioridades
+  Future<void> obtenerComentarios(
+    BuildContext context,
+    int tarea,
+  ) async {
+    comentarios.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getComentarios(
+      user,
+      token,
+      tarea,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    comentarios.addAll(res.message);
+
+    print(comentarios[0]);
+
+    isLoading = false;
+  }
+
   crearTarea(BuildContext context) async {
-    Navigator.pushNamed(context, AppRoutes.createTask);
+    obtenerEstados(context);
+    obtenerTiposTarea(context);
+    obtenerPrioridades(context);
+    obtenerComentarios(context, 4500);
+    // Navigator.pushNamed(context, AppRoutes.createTask);
   }
 
   verDetalles(BuildContext context) {
