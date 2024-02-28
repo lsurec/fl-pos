@@ -797,6 +797,15 @@ class ConfirmDocViewModel extends ChangeNotifier {
     //transaciciones agregadas
     final List<DocTransaccion> transactions = [];
 
+    var random = Random();
+
+    // Generar dos números aleatorios de 7 dígitos cada uno
+    int firstPart = random.nextInt(10000000);
+    int secondPart = random.nextInt(10000000);
+
+    // Combinar los dos números para formar uno de 14 dígitos
+    int randomNumber = firstPart * 10000000 + secondPart;
+
     int consectivo = 1;
     //Objeto transaccion documento para estructura documento
     for (var transaction in products) {
@@ -810,6 +819,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
           consectivo++;
           cargos.add(
             DocTransaccion(
+              dConsecutivoInterno: firstPart,
               traConsecutivoInterno: consectivo,
               traConsecutivoInternoPadre: padre,
               traBodega: transaction.bodega!.bodega,
@@ -835,6 +845,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
           descuentos.add(
             DocTransaccion(
+              dConsecutivoInterno: firstPart,
               traConsecutivoInterno: consectivo,
               traConsecutivoInternoPadre: padre,
               traBodega: transaction.bodega!.bodega,
@@ -857,6 +868,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       transactions.add(
         DocTransaccion(
+          dConsecutivoInterno: firstPart,
           traConsecutivoInterno: padre,
           traConsecutivoInternoPadre: null,
           traBodega: transaction.bodega!.bodega,
@@ -886,10 +898,13 @@ class ConfirmDocViewModel extends ChangeNotifier {
       consectivo++;
     }
 
+    int consecutivoPago = 1;
     //objeto cargo abono para documento cargo abono
     for (var payment in amounts) {
       payments.add(
         DocCargoAbono(
+          dConsecutivoInterno: firstPart,
+          consecutivoInterno: consecutivoPago,
           tipoCargoAbono: payment.payment.tipoCargoAbono,
           monto: payment.amount,
           cambio: payment.diference,
@@ -902,16 +917,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
           cuentaBancaria: payment.account?.idCuentaBancaria,
         ),
       );
+
+      consecutivoPago++;
     }
-
-    var random = Random();
-
-    // Generar dos números aleatorios de 7 dígitos cada uno
-    int firstPart = random.nextInt(10000000);
-    int secondPart = random.nextInt(10000000);
-
-    // Combinar los dos números para formar uno de 14 dígitos
-    int randomNumber = firstPart * 10000000 + secondPart;
 
     double totalCA = 0;
 
@@ -923,6 +931,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     final DocEstructuraModel doc = DocEstructuraModel(
+      consecutivoInterno: firstPart,
       docTraMonto: detailsVM.total,
       docCaMonto: totalCA,
       docIdCertificador: 1, //TODO: Agrgar certificador
