@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/services/tarea_service.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class TareasViewModel extends ChangeNotifier {
   //manejar flujo del procesp
@@ -25,74 +31,7 @@ class TareasViewModel extends ChangeNotifier {
   DateTime fecha = DateTime.now(); //obtener fecha actual
 
 //Lista ejemplo de las tareas
-  List<TareaModel> tareas = [
-    TareaModel(
-      iDTarea: 4500,
-      referencia: 0123,
-      descripcion: 'Tarea, titulo tarea, tarea tarea.',
-      tareaEstado: 'Activo',
-      tareaFechaIni: DateTime.now(),
-      usuarioCreador: 'Usuario 1',
-      usuarioResponsable: 'Usuario 2',
-      tareaObservacion1:
-          'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
-    ),
-    TareaModel(
-      iDTarea: 4000,
-      referencia: 0123,
-      descripcion: 'Tarea dos, titulo tarea, tarea tarea.',
-      tareaEstado: 'Cerrado',
-      tareaFechaIni: DateTime.now(),
-      usuarioCreador: 'Usuario 3',
-      usuarioResponsable: 'Usuario 4',
-      tareaObservacion1:
-          'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
-    ),
-    TareaModel(
-      iDTarea: 3000,
-      referencia: 0123,
-      descripcion: 'Tarea tres, titulo tarea, tarea tarea.',
-      tareaEstado: 'Activo',
-      tareaFechaIni: DateTime.now(),
-      usuarioCreador: 'Usuario 1',
-      usuarioResponsable: 'Usuario 2',
-      tareaObservacion1:
-          'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
-    ),
-    TareaModel(
-      iDTarea: 3500,
-      referencia: 0123,
-      descripcion: 'Tarea cuatro, titulo tarea, tarea tarea.',
-      tareaEstado: 'Cerrado',
-      tareaFechaIni: DateTime.now(),
-      usuarioCreador: 'Usuario 3',
-      usuarioResponsable: 'Usuario 4',
-      tareaObservacion1:
-          'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
-    ),
-    TareaModel(
-      iDTarea: 3100,
-      referencia: 0123,
-      descripcion: 'Tarea cinco, titulo tarea, tarea tarea.',
-      tareaEstado: 'Activo',
-      tareaFechaIni: DateTime.now(),
-      usuarioCreador: 'Usuario 1',
-      usuarioResponsable: 'Usuario 2',
-      tareaObservacion1:
-          'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
-    ),
-    TareaModel(
-      iDTarea: 4060,
-      referencia: 0123,
-      descripcion: 'Tarea seis, titulo tarea, tarea tarea.',
-      tareaEstado: 'Cerrado',
-      tareaFechaIni: DateTime.now(),
-      usuarioCreador: 'Usuario 3',
-      usuarioResponsable: 'Usuario 4',
-      tareaObservacion1:
-          'Crear cuentas bancarias para emisión de cheques, conciliacion bancaria y orden contable.',
-    ),
-  ];
+  final List<TareaModel> tareas = [];
 
   performSearch() {
     if (filtro == 1) {
@@ -111,11 +50,138 @@ class TareasViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  crearTarea(BuildContext context) {
+  Future<void> loadData(BuildContext context) async {
+    tareas.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getTopTareas(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    tareas.addAll(res.message);
+
+    isLoading = false;
+  }
+
+  //buscar por filtro
+
+  Future<void> buscarTareasDescripcion(
+    BuildContext context,
+    String search,
+  ) async {
+    tareas.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+    final ApiResModel res =
+        await tareaService.getTareasDescripcion(user, token, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    tareas.addAll(res.message);
+
+    isLoading = false;
+  }
+
+  Future<void> buscarTareasIdReferencia(
+    BuildContext context,
+    String search,
+  ) async {
+    tareas.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res =
+        await tareaService.getTareasIdReferencia(user, token, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    tareas.addAll(res.message);
+
+    isLoading = false;
+  }
+
+  crearTarea(BuildContext context) async {
     Navigator.pushNamed(context, AppRoutes.createTask);
   }
 
   verDetalles(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.detailsTask);
+  }
+
+  String formatearFecha(DateTime fecha) {
+    // Asegurarse de que la fecha esté en la zona horaria local
+    fecha = fecha.toLocal();
+
+    // Formatear la fecha en el formato dd-mm-yyyy
+    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
+
+    return fechaFormateada;
   }
 }

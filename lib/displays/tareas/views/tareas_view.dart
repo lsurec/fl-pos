@@ -5,8 +5,24 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class TareasView extends StatelessWidget {
+class TareasView extends StatefulWidget {
   const TareasView({super.key});
+
+  @override
+  State<TareasView> createState() => _TareasViewState();
+}
+
+class _TareasViewState extends State<TareasView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
+  }
+
+  loadData(BuildContext context) async {
+    final vm = Provider.of<TareasViewModel>(context, listen: false);
+    vm.loadData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +48,7 @@ class TareasView extends StatelessWidget {
             ],
           ),
           body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(
@@ -63,7 +77,7 @@ class TareasView extends StatelessWidget {
                         itemCount: tareas.length,
                         itemBuilder: (BuildContext context, int index) {
                           final TareaModel tarea = tareas[index];
-                          return _CardTask( tarea: tarea);
+                          return _CardTask(tarea: tarea);
                         },
                       )
                     ],
@@ -105,17 +119,13 @@ class _CardTask extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextsWidget(
-                    title: "Tarea no: ",
-                    text: "${tarea.iDTarea}"),
+                TextsWidget(title: "Tarea no: ", text: "${tarea.iDTarea}"),
                 Text(
-                  tarea.tareaEstado,
+                  tarea.tareaEstado ?? "",
                   style: AppTheme.normalStyle,
                 ),
               ],
@@ -124,46 +134,50 @@ class _CardTask extends StatelessWidget {
           CardWidget(
             elevation: 0,
             borderWidth: 1.5,
-            borderColor:
-                const Color.fromRGBO(0, 0, 0, 0.12),
+            borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
                     child: Text(
-                      tarea.descripcion,
+                      tarea.descripcion ?? "",
                       style: AppTheme.normalBoldStyle,
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Text("ID Referencia: ",
                           style: AppTheme.normalStyle),
-                      Text('${tarea.referencia}',
+                      Text('${tarea.iDReferencia}',
                           style: AppTheme.normalStyle),
                       const Spacer(),
-                      const Text("fecha",
+                      Text(vm.formatearFecha(tarea.tareaFechaIni),
                           style: AppTheme.normalStyle),
                     ],
                   ),
                   Text("Creador: ${tarea.usuarioCreador}",
                       style: AppTheme.normalStyle),
                   Text(
-                      "Responsable: ${tarea.usuarioResponsable}",
+                      "Responsable: ${tarea.usuarioResponsable ?? "No asignado"}",
                       style: AppTheme.normalStyle),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5),
+                    padding: const EdgeInsets.symmetric(vertical: 5),
                     alignment: Alignment.centerLeft,
-                    child: const Text("Observacion:",
-                        style: AppTheme.normalStyle),
+                    child:
+                        const Text("Observacion:", style: AppTheme.normalStyle),
                   ),
-                  Text(tarea.tareaObservacion1,
-                      style: AppTheme.normalStyle),
+                  Text(
+                    tarea.tareaObservacion1 ?? "",
+                    style: AppTheme.normalStyle,
+                    textAlign: TextAlign.justify,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
@@ -190,7 +204,9 @@ class _InputSerach extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: vm.formKeySearch,
       child: TextFormField(
-        onFieldSubmitted: (value) => vm.performSearch(),
+        onFieldSubmitted: (value) {
+          vm.performSearch();
+        },
         textInputAction: TextInputAction.search,
         controller: vm.searchController,
         validator: (value) {
@@ -206,7 +222,17 @@ class _InputSerach extends StatelessWidget {
               Icons.search,
               color: AppTheme.primary,
             ),
-            onPressed: () => vm.performSearch(),
+            // onPressed: () => vm.performSearch(),
+            onPressed: () {
+              vm.performSearch();
+              if (vm.filtro == 1) {
+                vm.buscarTareasDescripcion(context, vm.searchController.text);
+              }
+
+              if (vm.filtro == 2) {
+                vm.buscarTareasIdReferencia(context, vm.searchController.text);
+              }
+            },
           ),
         ),
       ),
