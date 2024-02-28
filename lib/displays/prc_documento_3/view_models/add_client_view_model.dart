@@ -101,7 +101,7 @@ class AddClientViewModel extends ChangeNotifier {
       return;
     }
 
-    ApiResModel resClient = await cuentaService.getClient(
+    ApiResModel resClient = await cuentaService.getCuentaCorrentista(
       empresa,
       cuenta.nit,
       user,

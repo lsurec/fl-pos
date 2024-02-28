@@ -315,7 +315,7 @@ class DocumentViewModel extends ChangeNotifier {
     CuentaService cuentaService = CuentaService();
 
     //Consummo del api
-    ApiResModel res = await cuentaService.getSeller(
+    ApiResModel res = await cuentaService.getCeuntaCorrentistaRef(
       user, // user,
       tipoDocumento, // doc,
       serie, // serie,
@@ -414,7 +414,7 @@ class DocumentViewModel extends ChangeNotifier {
     vmFactura.isLoading = true;
 
     //Consumo del api
-    ApiResModel res = await cuentaService.getClient(
+    ApiResModel res = await cuentaService.getCuentaCorrentista(
       empresa, // empresa,
       client.text, // filter,
       user, // user,

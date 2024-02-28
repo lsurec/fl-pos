@@ -191,7 +191,8 @@ class RecentViewModel extends ChangeNotifier {
     final RespLogin nameClient = resNameClient.message;
 
     if (nameClient.data != null) {
-      final ApiResModel resCuentaClient = await cuentaService.getClient(
+      final ApiResModel resCuentaClient =
+          await cuentaService.getCuentaCorrentista(
         empresaId,
         nameClient.data,
         user,
@@ -228,7 +229,7 @@ class RecentViewModel extends ChangeNotifier {
       }
     }
 
-    final ApiResModel resVendedor = await cuentaService.getSeller(
+    final ApiResModel resVendedor = await cuentaService.getCeuntaCorrentistaRef(
       user,
       documento,
       serieDoc,

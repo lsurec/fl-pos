@@ -17,7 +17,7 @@ class TipoTransaccionService {
     String token,
     String user,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Serie/transaccion/tipo");
+    Uri url = Uri.parse("${_baseUrl}transaccion/tipo");
     try {
       //url completa
 
