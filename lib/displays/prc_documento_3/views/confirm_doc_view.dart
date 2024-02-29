@@ -90,6 +90,15 @@ class ConfirmDocView extends StatelessWidget {
                   const SizedBox(height: 10),
                   _Observacion(),
                   const SizedBox(height: 10),
+                  SwitchListTile(
+                    activeColor: AppTheme.primary,
+                    value: vm.directPrint,
+                    onChanged: (value) => vm.directPrint = value,
+                    title: const Text(
+                      "Imprimir documento después de confirmar",
+                      style: AppTheme.normalStyle,
+                    ),
+                  ),
                   if (!vm.showPrint) _Options(),
                   if (vm.showPrint) _Print(),
                 ],

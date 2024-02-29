@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/fel/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,16 @@ import 'package:xml/xml.dart';
 import 'dart:math';
 
 class ConfirmDocViewModel extends ChangeNotifier {
+  //Mostrar boton para imprimir
+  bool _directPrint = Preferences.directPrint;
+  bool get directPrint => _directPrint;
+
+  set directPrint(bool value) {
+    _directPrint = value;
+    Preferences.directPrint = value;
+    notifyListeners();
+  }
+
   //1. Cargando 2. Exitoso 3. Error
   List<LoadStepModel> steps = [
     LoadStepModel(
@@ -224,9 +235,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
     } else {
       isLoading = true;
       ApiResModel sendProcess = await sendDocument();
-      isLoading = false;
 
       if (!sendProcess.succes) {
+        isLoading = false;
+
         ErrorModel errorView = ErrorModel(
           date: DateTime.now(),
           description: sendProcess.message,
@@ -241,6 +253,12 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       consecutivoDoc = sendProcess.message["data"];
       showPrint = true;
+
+      if (directPrint) {
+        navigatePrint(context);
+      }
+
+      isLoading = false;
     }
   }
 

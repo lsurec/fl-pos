@@ -69,7 +69,7 @@ class _Tabs2ViewState extends State<Tabs2View>
                   icon: const Icon(Icons.note_add_outlined),
                 ),
                 IconButton(
-                  onPressed: () => vm.printNetwork(),
+                  onPressed: () => vm.sendDocumnet(context),
                   icon: const Icon(
                     Icons.desktop_windows_outlined,
                   ),
