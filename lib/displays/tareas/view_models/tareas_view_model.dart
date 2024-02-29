@@ -433,45 +433,6 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  Future<void> buscarUsuario(
-    BuildContext context,
-    String search,
-  ) async {
-    usuarios.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final UsuarioService usuarioService = UsuarioService();
-
-    isLoading = true;
-    final ApiResModel res =
-        await usuarioService.getUsuario(user, token, search);
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    usuarios.addAll(res.message);
-    print(usuarios[0].email);
-    isLoading = false;
-  }
-
   //Obtener Comentarios de la tarea
   Future<void> obtenerComentario(
     BuildContext context,

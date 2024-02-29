@@ -1,59 +1,65 @@
 import 'package:flutter/material.dart';
-
 import '../models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:provider/provider.dart';
 
 class UsuariosViewModel extends ChangeNotifier {
-  final TextEditingController buscarUsuario = TextEditingController();
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
-  List<UsuarioModel> usuarios = [
-    UsuarioModel(
-      email: "acabrera@demosoftonline.com",
-      userName: "acabrera",
-      name: "Antony Cabrera (acabrera)",
-    ),
-    UsuarioModel(
-      email: "rlacarreta@gmail.com",
-      userName: "LACARRETA01",
-      name: "Fredy (LACARRETA01)",
-    ),
-    UsuarioModel(
-      email: "kortega@delacasa.com.gt",
-      userName: "DLCASA01",
-      name: "Karina Ortega (DLCASA01)",
-    ),
-    UsuarioModel(
-      email: "salvador@delacasa.com.gt",
-      userName: "DLCASA03",
-      name: "Keren Bonilla (DLCASA03)",
-    ),
-    UsuarioModel(
-      email: "auditoria@delacasa.com.gt",
-      userName: "DLCASA07",
-      name: "Stuardo (DLCASA07)",
-    ),
-    UsuarioModel(
-      email: "gerenciacomercial@delacasa.com.gt",
-      userName: "DLCASA06",
-      name: "Usuario1 (DLCASA06)",
-    ),
-  ];
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
-  List<UsuarioModel> usuariosEncontrados = [];
+  final TextEditingController buscar = TextEditingController();
 
-  buscar(String criterio) {
-    usuariosEncontrados.clear(); // Limpiar la lista filtrada actual
+  List<UsuarioModel> usuarios = [];
 
-    if (criterio.isEmpty) {
-      // Si el campo de filtrado está vacío, mostrar la lista original
-      usuariosEncontrados = [];
-    } else {
-      // Filtrar la lista original basada en el texto ingresado
-      usuariosEncontrados.addAll(
-        usuarios.where((element) =>
-            element.name.toLowerCase().contains(criterio.toLowerCase())),
-      );
+  Future<void> buscarUsuario(
+    BuildContext context,
+    String search,
+  ) async {
+    usuarios.clear();
+
+    if (search.isEmpty) {
+      usuarios = [];
+      notifyListeners();
+      print("Ingrese un caracter para realizar una busqueda");
+      return;
     }
 
-    notifyListeners();
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final UsuarioService usuarioService = UsuarioService();
+
+    isLoading = true;
+    final ApiResModel res =
+        await usuarioService.getUsuario(user, token, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+    usuarios.addAll(res.message);
+    isLoading = false;
   }
 }

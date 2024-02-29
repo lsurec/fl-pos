@@ -11,8 +11,6 @@ class UsuariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
 
-    final List<UsuarioModel> usuariosEncontrados = vm.usuariosEncontrados;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -31,9 +29,9 @@ class UsuariosView extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
-                    controller: vm.buscarUsuario,
+                    controller: vm.buscar,
                     onChanged: (criterio) {
-                      vm.buscar(criterio);
+                      vm.buscarUsuario(context, criterio);
                     },
                     decoration: const InputDecoration(
                       labelText:
@@ -45,13 +43,13 @@ class UsuariosView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Registros (${usuariosEncontrados.length})",
+                        "Registros (${vm.usuarios.length})",
                         style: AppTheme.normalBoldStyle,
                       ),
                     ],
                   ),
                   const Divider(),
-                  _UsuariosEncontados(usuariosEncontrados: usuariosEncontrados),
+                  _UsuariosEncontados(usuariosEncontrados: vm.usuarios)
                 ],
               ),
             ),
@@ -96,18 +94,15 @@ class _UsuariosEncontados extends StatelessWidget {
                   usuario.name,
                   style: AppTheme.normalStyle,
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      "Email: ",
-                      style: AppTheme.normalStyle,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      usuario.email,
-                      style: AppTheme.normalBoldStyle,
-                    )
-                  ],
+                RichText(
+                  text: TextSpan(
+                    style: AppTheme.normalStyle,
+                    children: [
+                      const TextSpan(text: "Email: "),
+                      TextSpan(
+                          text: usuario.email, style: AppTheme.normalBoldStyle),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 5),
               ],
