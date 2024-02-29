@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/print_data_comanda_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/fel/models/models.dart';
@@ -18,6 +19,63 @@ class DocumentService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
   final String _baseUrlFel = ApiProvider().baseUrl;
+
+  Future<ApiResModel> getDataComanda(
+    String user,
+    String token,
+    int consecutivo,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Printer/comanda/$user/$consecutivo");
+    try {
+      //url completa
+
+      //Configuracion del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //series disponibñes
+      List<PrintDataComandaModel> detalles = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = PrintDataComandaModel.fromMap(item);
+        //agregar item a la lista
+        detalles.add(responseFinally);
+      }
+
+      //respuesta corecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: detalles,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 
 //actualizar documento
   Future<ApiResModel> postDocumentXml(
