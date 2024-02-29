@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/responsable_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:http/http.dart' as http;
@@ -217,7 +218,7 @@ class TareaService {
         );
       }
 
-      //Tareas por busqueda de descripcion retornadas por api
+      //Guardar los estados retornadas por api
       List<EstadoModel> estados = [];
 
       //recorrer lista api Y  agregar a lista local
@@ -360,8 +361,65 @@ class TareaService {
     }
   }
 
+  //Consumo api para obtener periodicidades
+  Future<ApiResModel> getPeriodicidad(
+    String user,
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/tiempo/periodicidad/$user");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<PeriodicidadModel> periodicidades = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = PeriodicidadModel.fromMap(item);
+        //agregar item a la lista
+        periodicidades.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: periodicidades,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
   //Consumo api para obtener los comentarios de una tarea
-  Future<ApiResModel> getComentarios(
+  Future<ApiResModel> getComentario(
     String user,
     String token,
     int tarea,
@@ -391,7 +449,7 @@ class TareaService {
         );
       }
 
-      //Tareas por busqueda de descripcion retornadas por api
+      //Comentarios retornados por api
       List<ComentarioModel> comentarios = [];
 
       //recorrer lista api Y  agregar a lista local
@@ -407,6 +465,308 @@ class TareaService {
         url: url.toString(),
         succes: true,
         message: comentarios,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener los objetos de un comentario de una tarea
+  Future<ApiResModel> getObjetoComentario(
+    String token,
+    int tarea,
+    int tareaComentario,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/comentario/objetos");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "tarea": tarea.toString(),
+          "tareaComentario": tareaComentario.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Objetos del comentario retornados por api
+      List<ObjetoComentarioModel> objetos = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ObjetoComentarioModel.fromMap(item);
+        //agregar item a la lista
+        objetos.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: objetos,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener al responsable de una tarea y los que han sido responsables de la tarea
+  Future<ApiResModel> getResponsable(
+    String user,
+    String token,
+    int tarea,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/responsables");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "tarea": tarea.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Responsables retornados por api
+      List<ResponsableModel> responsables = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ResponsableModel.fromMap(item);
+        //agregar item a la lista
+        responsables.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: responsables,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener a los invitados de una tarea
+  Future<ApiResModel> getInvitado(
+    String user,
+    String token,
+    int tarea,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/invitados");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "tarea": tarea.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Invitados retornados por api
+      List<InvitadoModel> invitados = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = InvitadoModel.fromMap(item);
+        //agregar item a la lista
+        invitados.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: invitados,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener id referencia.
+  Future<ApiResModel> getUsuario(
+    String user,
+    String token,
+    String filtro,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Usuarios");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "filtro": filtro,
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Invitados retornados por api
+      List<UsuarioModel> usuarios = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = UsuarioModel.fromMap(item);
+        //agregar item a la lista
+        usuarios.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: usuarios,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener id referencia.
+  Future<ApiResModel> getIdReferencia(
+    String user,
+    String token,
+    int empresa,
+    String filtro,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/idReferencia");
+    try {
+      //url completa
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "filtro": filtro,
+          "empresa": empresa.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Invitados retornados por api
+      List<IdReferenciaModel> idReferencias = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = IdReferenciaModel.fromMap(item);
+        //agregar item a la lista
+        idReferencias.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: idReferencias,
         storeProcedure: null,
       );
     } catch (e) {

@@ -1,3 +1,9 @@
+export 'package:flutter_post_printer_example/displays/tareas/models/invitado_model.dart';
+
+export 'package:flutter_post_printer_example/models/models.dart';
+
+export 'package:flutter_post_printer_example/displays/tareas/models/objeto_comentario_model.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/models/comentario_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/prioridad_model.dart';
@@ -7,7 +13,7 @@ export 'package:flutter_post_printer_example/displays/tareas/models/estado_model
 
 export 'package:flutter_post_printer_example/displays/tareas/models/periodicidad_model.dart';
 
-export 'package:flutter_post_printer_example/displays/tareas/models/usuarios_model.dart';
+export 'package:flutter_post_printer_example/displays/tareas/models/usuario_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/id_referencia_model.dart';
 

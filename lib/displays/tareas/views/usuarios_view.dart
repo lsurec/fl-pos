@@ -11,7 +11,7 @@ class UsuariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
 
-    final List<UsuariosModel> usuariosEncontrados = vm.usuariosEncontrados;
+    final List<UsuarioModel> usuariosEncontrados = vm.usuariosEncontrados;
 
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +68,7 @@ class _UsuariosEncontados extends StatelessWidget {
     required this.usuariosEncontrados,
   });
 
-  final List<UsuariosModel> usuariosEncontrados;
+  final List<UsuarioModel> usuariosEncontrados;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _UsuariosEncontados extends StatelessWidget {
       shrinkWrap: true,
       itemCount: usuariosEncontrados.length,
       itemBuilder: (BuildContext context, int index) {
-        final UsuariosModel usuario = usuariosEncontrados[index];
+        final UsuarioModel usuario = usuariosEncontrados[index];
         return Container(
           decoration: const BoxDecoration(
             border: Border(

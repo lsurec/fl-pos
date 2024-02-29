@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/responsable_model.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/tarea_service.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -35,7 +36,13 @@ class TareasViewModel extends ChangeNotifier {
   final List<EstadoModel> estados = [];
   final List<TipoTareaModel> tiposTarea = [];
   final List<PrioridadModel> prioridades = [];
+  final List<PeriodicidadModel> periodicidades = [];
+  final List<ResponsableModel> responsables = [];
+  final List<InvitadoModel> invitados = [];
+  final List<UsuarioModel> usuarios = [];
+  final List<IdReferenciaModel> idReferencias = [];
   final List<ComentarioModel> comentarios = [];
+  final List<ObjetoComentarioModel> objetosComentario = [];
 
   performSearch() {
     if (filtro == 1) {
@@ -208,7 +215,7 @@ class TareasViewModel extends ChangeNotifier {
 
     estados.addAll(res.message);
 
-    print(estados[0]);
+    print(estados[0].descripcion);
 
     isLoading = false;
   }
@@ -295,8 +302,221 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  //Obtener Prioridades
-  Future<void> obtenerComentarios(
+//Obtener Prioridades
+  Future<void> obtenerPeriodicidad(
+    BuildContext context,
+  ) async {
+    periodicidades.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getPeriodicidad(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    periodicidades.addAll(res.message);
+
+    print(periodicidades[0]);
+
+    isLoading = false;
+  }
+
+  //Obtener Comentarios de la tarea
+  Future<void> obtenerResponsable(
+    BuildContext context,
+    int tarea,
+  ) async {
+    responsables.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getResponsable(
+      user,
+      token,
+      tarea,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    responsables.addAll(res.message);
+
+    print(responsables[0].userName);
+
+    isLoading = false;
+  }
+
+  //Obtener Comentarios de la tarea
+  Future<void> obtenerInvitados(
+    BuildContext context,
+    int tarea,
+  ) async {
+    invitados.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getInvitado(
+      user,
+      token,
+      tarea,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    invitados.addAll(res.message);
+
+    print(invitados[0].userName);
+
+    isLoading = false;
+  }
+
+  Future<void> buscarUsuario(
+    BuildContext context,
+    String search,
+  ) async {
+    usuarios.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+    final ApiResModel res = await tareaService.getUsuario(user, token, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    usuarios.addAll(res.message);
+    print(usuarios[0].email);
+    isLoading = false;
+  }
+
+//Buscar Id Referencia
+  Future<void> buscarIdRefencia(
+    BuildContext context,
+    String search,
+  ) async {
+    idReferencias.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    int empresa = 1; //encontrar la empresa correcta
+    isLoading = true;
+    final ApiResModel res =
+        await tareaService.getIdReferencia(user, token, empresa, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    idReferencias.addAll(res.message);
+    print(idReferencias[0].referenciaId);
+
+    isLoading = false;
+  }
+
+  //Obtener Comentarios de la tarea
+  Future<void> obtenerComentario(
     BuildContext context,
     int tarea,
   ) async {
@@ -310,7 +530,7 @@ class TareasViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    final ApiResModel res = await tareaService.getComentarios(
+    final ApiResModel res = await tareaService.getComentario(
       user,
       token,
       tarea,
@@ -341,12 +561,65 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
+  //Obtener Objetos de un comentario de una tarea
+  Future<void> obtenerObjetoComentario(
+    BuildContext context,
+    int tarea,
+    int tareaComentario,
+  ) async {
+    objetosComentario.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    // String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getObjetoComentario(
+      token,
+      tarea,
+      tareaComentario,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    objetosComentario.addAll(res.message);
+
+    print(objetosComentario[0].objetoNombre);
+
+    isLoading = false;
+  }
+
   crearTarea(BuildContext context) async {
-    obtenerEstados(context);
-    obtenerTiposTarea(context);
-    obtenerPrioridades(context);
-    obtenerComentarios(context, 4500);
-    // Navigator.pushNamed(context, AppRoutes.createTask);
+    // obtenerEstados(context);
+    // obtenerTiposTarea(context);
+    // obtenerPrioridades(context);
+    // obtenerPeriodicidad(context);
+    // obtenerComentario(context, 4500);
+    // obtenerObjetoComentario(context, 4500, 9952);
+    // obtenerResponsable(context, 5113);
+    // obtenerInvitados(context, 5113);
+    // buscarIdRefencia(context, "012");
+    // buscarUsuario(context, "aca");
+    Navigator.pushNamed(context, AppRoutes.createTask);
   }
 
   verDetalles(BuildContext context) {

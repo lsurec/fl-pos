@@ -21,7 +21,7 @@ class CrearTareaView extends StatelessWidget {
     final List<String> prioridades = vm.prioridades;
     final List<PeriodicidadModel> tiemposEstimados = vm.tiempos;
 
-    final List<UsuariosModel> usuariosEncontrados = vm.invitados;
+    final List<UsuarioModel> usuariosEncontrados = vm.invitados;
 
     return Scaffold(
       appBar: AppBar(
@@ -320,8 +320,7 @@ class CrearTareaView extends StatelessWidget {
                       shrinkWrap: true,
                       itemCount: vm.invitados.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final UsuariosModel usuario =
-                            usuariosEncontrados[index];
+                        final UsuarioModel usuario = usuariosEncontrados[index];
                         return Column(
                           children: [
                             ListTile(

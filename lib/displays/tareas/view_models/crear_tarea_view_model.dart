@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/usuario_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:intl/intl.dart';
 
@@ -74,23 +75,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     'Bajo',
   ];
 
-  List<UsuariosModel> invitados = [
-    UsuariosModel(
-      email: "acabrera@demosoftonline.com",
-      userName: "acabrera",
-      name: "Antony Cabrera (acabrera)",
-    ),
-    UsuariosModel(
-      email: "rlacarreta@gmail.com",
-      userName: "LACARRETA01",
-      name: "Fredy (LACARRETA01)",
-    ),
-    UsuariosModel(
-      email: "kortega@delacasa.com.gt",
-      userName: "DLCASA01",
-      name: "Karina Ortega (DLCASA01)",
-    ),
-  ];
+  List<UsuarioModel> invitados = [];
 
   List<PeriodicidadModel> tiempos = [
     PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos"),
