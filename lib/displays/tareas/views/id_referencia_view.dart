@@ -11,8 +11,6 @@ class IdReferenciaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<IdReferenciaViewModel>(context);
 
-    final List<IdReferenciaModel> referenciasEncontradas = vm.listaFiltrada;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -33,7 +31,8 @@ class IdReferenciaView extends StatelessWidget {
                   TextFormField(
                     controller: vm.buscarIdReferencia,
                     onChanged: (criterio) {
-                      vm.filtrarLista(criterio);
+                      // vm.filtrarLista(criterio);
+                      vm.buscarIdRefencia(context, criterio);
                     },
                     decoration: const InputDecoration(
                       labelText:
@@ -45,14 +44,14 @@ class IdReferenciaView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Registros (${referenciasEncontradas.length})",
+                        "Registros (${vm.idReferencias.length})",
                         style: AppTheme.normalBoldStyle,
                       ),
                     ],
                   ),
                   const Divider(),
                   _ReferenciasEncontradas(
-                      referenciasEncontradas: referenciasEncontradas)
+                      referenciasEncontradas: vm.idReferencias)
                 ],
               ),
             ),

@@ -1,29 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:provider/provider.dart';
 
-import '../models/models.dart';
+import '../../../services/notification_service.dart';
 
 class IdReferenciaViewModel extends ChangeNotifier {
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   //variable de busqueda
   final TextEditingController buscarIdReferencia = TextEditingController();
 
   List<IdReferenciaModel> idReferencias = [];
 
-  List<IdReferenciaModel> listaFiltrada = [];
+  // List<IdReferenciaModel> listaFiltrada = [];
 
-  filtrarLista(String criterio) {
-    listaFiltrada.clear(); // Limpiar la lista filtrada actual
+  // filtrarLista(String criterio) {
+  //   listaFiltrada.clear(); // Limpiar la lista filtrada actual
 
-    if (criterio.isEmpty) {
-      // Si el campo de filtrado está vacío, mostrar la lista original
-      listaFiltrada = [];
-    } else {
-      // Filtrar la lista original basada en el texto ingresado
-      listaFiltrada.addAll(
-        idReferencias.where((element) =>
-            element.descripcion.toLowerCase().contains(criterio.toLowerCase())),
-      );
+  //   if (criterio.isEmpty) {
+  //     // Si el campo de filtrado está vacío, mostrar la lista original
+  //     listaFiltrada = [];
+  //   } else {
+  //     // Filtrar la lista original basada en el texto ingresado
+  //     listaFiltrada.addAll(
+  //       idReferencias.where((element) =>
+  //           element.descripcion.toLowerCase().contains(criterio.toLowerCase())),
+  //     );
+  //   }
+
+  //   notifyListeners();
+  // }
+
+//Buscar Id Referencia
+  Future<void> buscarIdRefencia(
+    BuildContext context,
+    String search,
+  ) async {
+    idReferencias.clear();
+
+    if (search.isEmpty) {
+      idReferencias = [];
+      print("Ingrese un caracter para realizar una busqueda");
+      return;
     }
 
-    notifyListeners();
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+    int empresa = vmLocal.selectedEmpresa!.empresa;
+
+    final IdReferenciaService idReferenciaService = IdReferenciaService();
+
+    isLoading = true;
+    final ApiResModel res =
+        await idReferenciaService.getIdReferencia(user, token, empresa, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        context,
+        error,
+      );
+
+      return;
+    }
+
+    idReferencias.addAll(res.message);
+
+    isLoading = false;
   }
 }

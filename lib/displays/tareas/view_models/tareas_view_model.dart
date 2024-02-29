@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/displays/tareas/models/responsable_model.dart';
-import 'package:flutter_post_printer_example/displays/tareas/services/tarea_service.dart';
-import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -445,10 +443,11 @@ class TareasViewModel extends ChangeNotifier {
     String token = vmLogin.token;
     String user = vmLogin.nameUser;
 
-    final TareaService tareaService = TareaService();
+    final UsuarioService usuarioService = UsuarioService();
 
     isLoading = true;
-    final ApiResModel res = await tareaService.getUsuario(user, token, search);
+    final ApiResModel res =
+        await usuarioService.getUsuario(user, token, search);
 
     //si el consumo salió mal
     if (!res.succes) {
@@ -470,48 +469,6 @@ class TareasViewModel extends ChangeNotifier {
 
     usuarios.addAll(res.message);
     print(usuarios[0].email);
-    isLoading = false;
-  }
-
-//Buscar Id Referencia
-  Future<void> buscarIdRefencia(
-    BuildContext context,
-    String search,
-  ) async {
-    idReferencias.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    int empresa = 1; //encontrar la empresa correcta
-    isLoading = true;
-    final ApiResModel res =
-        await tareaService.getIdReferencia(user, token, empresa, search);
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    idReferencias.addAll(res.message);
-    print(idReferencias[0].referenciaId);
-
     isLoading = false;
   }
 
