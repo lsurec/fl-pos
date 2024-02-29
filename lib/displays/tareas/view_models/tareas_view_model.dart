@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -32,7 +35,7 @@ class TareasViewModel extends ChangeNotifier {
 //Lista ejemplo de las tareas
   final List<TareaModel> tareas = [];
   final List<EstadoModel> estados = [];
-  final List<TipoTareaModel> tiposTarea = [];
+  // final List<TipoTareaModel> tiposTarea = [];
   final List<PrioridadModel> prioridades = [];
   final List<PeriodicidadModel> periodicidades = [];
   final List<ResponsableModel> responsables = [];
@@ -218,47 +221,6 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  //Obtener Tipos
-  Future<void> obtenerTiposTarea(
-    BuildContext context,
-  ) async {
-    tiposTarea.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getTipoTarea(user, token);
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    tiposTarea.addAll(res.message);
-
-    print(tiposTarea[0]);
-
-    isLoading = false;
-  }
-
   //Obtener Prioridades
   Future<void> obtenerPrioridades(
     BuildContext context,
@@ -298,6 +260,19 @@ class TareasViewModel extends ChangeNotifier {
     print(prioridades[0]);
 
     isLoading = false;
+  }
+
+  showError(BuildContext context, ApiResModel res) {
+    ErrorModel error = ErrorModel(
+      date: DateTime.now(),
+      description: res.message,
+      storeProcedure: res.storeProcedure,
+    );
+
+    NotificationService.showErrorView(
+      context,
+      error,
+    );
   }
 
 //Obtener Prioridades
@@ -537,7 +512,19 @@ class TareasViewModel extends ChangeNotifier {
     // obtenerInvitados(context, 5113);
     // buscarIdRefencia(context, "012");
     // buscarUsuario(context, "aca");
+
+    //view modles
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+    isLoading = true;
+    //consumos
+    final bool succesTipos = await vmCrear.obtenerTiposTarea(context);
+
+    if (!succesTipos) return;
+
     Navigator.pushNamed(context, AppRoutes.createTask);
+
+    isLoading = false;
   }
 
   verDetalles(BuildContext context) {

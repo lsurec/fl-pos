@@ -16,8 +16,6 @@ class CrearTareaView extends StatelessWidget {
 
     final List<String> estados = vm.estados;
 
-    final List<String> tipos = vm.tipos;
-
     final List<String> prioridades = vm.prioridades;
     final List<PeriodicidadModel> tiemposEstimados = vm.tiempos;
 
@@ -197,7 +195,7 @@ class CrearTareaView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    _TipoTarea(tipos: tipos),
+                    _TipoTarea(tipos: vm.tiposTarea),
                     const SizedBox(height: 10),
                     const Row(
                       children: [
@@ -595,13 +593,14 @@ class _TipoTarea extends StatelessWidget {
     required this.tipos,
   });
 
-  final List<String> tipos;
+  final List<TipoTareaModel> tipos;
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    return DropdownButtonFormField2<String>(
+    return DropdownButtonFormField2<TipoTareaModel>(
+      value: vm.tipo,
       isExpanded: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -618,10 +617,10 @@ class _TipoTarea extends StatelessWidget {
         style: TextStyle(fontSize: 14),
       ),
       items: tipos
-          .map((item) => DropdownMenuItem<String>(
+          .map((item) => DropdownMenuItem<TipoTareaModel>(
                 value: item,
                 child: Text(
-                  item,
+                  item.descripcion,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
@@ -629,15 +628,12 @@ class _TipoTarea extends StatelessWidget {
               ))
           .toList(),
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null) {
           return 'Seleccione un tipo tarea para continuar.';
         }
         return null;
       },
       onChanged: (value) {
-        vm.tipo = value;
-      },
-      onSaved: (value) {
         vm.tipo = value;
       },
       buttonStyleData: const ButtonStyleData(

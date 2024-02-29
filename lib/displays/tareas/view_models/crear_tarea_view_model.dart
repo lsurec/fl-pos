@@ -1,10 +1,30 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/displays/tareas/models/usuario_model.dart';
+import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {
+  final List<TipoTareaModel> tiposTarea = [];
+
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
+  loadData(BuildContext context) async {
+    await obtenerTiposTarea(context);
+  }
+
   TextEditingController fechaInicial = TextEditingController();
   TextEditingController fechaFinal = TextEditingController();
   TextEditingController horaInicial = TextEditingController();
@@ -23,7 +43,7 @@ class CrearTareaViewModel extends ChangeNotifier {
   TimeOfDay? get horaInicial1 => _horaInicial;
   TimeOfDay? get horaFinal1 => _horaFinal;
 
-  String? tipo;
+  TipoTareaModel? tipo;
   String? estado;
   String? prioridad;
   String? observacion;
@@ -59,13 +79,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     'Inactivo',
     'Anulado',
     'Finalizado'
-  ];
-
-  final List<String> tipos = [
-    'Ticket',
-    'Documento',
-    'Cita',
-    'Desarrollo interno',
   ];
 
   final List<String> prioridades = [
@@ -306,7 +319,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (compararFechas(nuevaFechaInicial!, nuevaFechaFinal!)) {
       // Las fechas son iguales (mismo día, mes y año).
       if (!validarHora(horaSeleccionada!, _horaInicial!)) {
-        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
@@ -326,5 +338,59 @@ class CrearTareaViewModel extends ChangeNotifier {
       horaFinal.text = formatoHora(horaSeleccionada!); //nombre de la hora
       notifyListeners();
     }
+  }
+
+  //Obtener Tipos
+  Future<bool> obtenerTiposTarea(
+    BuildContext context,
+  ) async {
+    tiposTarea.clear();
+    tipo = null;
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getTipoTarea(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      showError(context, res);
+
+      return false;
+    }
+
+    tiposTarea.addAll(res.message);
+
+    for (var i = 0; i < tiposTarea.length; i++) {
+      TipoTareaModel tarea = tiposTarea[i];
+      if (tarea.descripcion.toLowerCase() == "tarea") {
+        tipo = tarea;
+        break;
+      }
+    }
+
+    isLoading = false;
+
+    return true;
+  }
+
+  showError(BuildContext context, ApiResModel res) {
+    ErrorModel error = ErrorModel(
+      date: DateTime.now(),
+      description: res.message,
+      storeProcedure: res.storeProcedure,
+    );
+
+    NotificationService.showErrorView(
+      context,
+      error,
+    );
   }
 }
