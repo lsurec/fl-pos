@@ -1,5 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -11,6 +10,7 @@ import 'package:provider/provider.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {
   final List<TipoTareaModel> tiposTarea = [];
+  final List<EstadoModel> estados = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -43,8 +43,8 @@ class CrearTareaViewModel extends ChangeNotifier {
   TimeOfDay? get horaInicial1 => _horaInicial;
   TimeOfDay? get horaFinal1 => _horaFinal;
 
-  TipoTareaModel? tipo;
-  String? estado;
+  TipoTareaModel? tipoTarea;
+  EstadoModel? estado;
   String? prioridad;
   String? observacion;
   String? titulo;
@@ -71,15 +71,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     horaInicial.text = horaFormato(fechaActual);
     horaFinal.text = horaFormato(fecha10);
   }
-
-  final List<String> estados = [
-    'Activo',
-    'Cerrado',
-    'Pendiente',
-    'Inactivo',
-    'Anulado',
-    'Finalizado'
-  ];
 
   final List<String> prioridades = [
     'Critico',
@@ -180,7 +171,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     if (titulo == null ||
         observacion == null ||
-        tipo == null ||
+        tipoTarea == null ||
         estado == null ||
         prioridad == null) {
       print('Falta completar campos');
@@ -188,7 +179,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       print('Sí se puede crear la tarea');
       print('Titulo: $titulo');
       print('Observación: $observacion');
-      print('Tipo de tarea: $tipo');
+      print('Tipo de tarea: $tipoTarea');
       print('Tipo de tarea: $estado');
       print('Tipo de tarea: $prioridad');
       print('Fecha y hora inicial: ${fechaInicial.text} - ${horaInicial.text}');
@@ -345,7 +336,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     BuildContext context,
   ) async {
     tiposTarea.clear();
-    tipo = null;
+    tipoTarea = null;
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
@@ -369,9 +360,48 @@ class CrearTareaViewModel extends ChangeNotifier {
     tiposTarea.addAll(res.message);
 
     for (var i = 0; i < tiposTarea.length; i++) {
-      TipoTareaModel tarea = tiposTarea[i];
-      if (tarea.descripcion.toLowerCase() == "tarea") {
-        tipo = tarea;
+      TipoTareaModel tipo = tiposTarea[i];
+      if (tipo.descripcion.toLowerCase() == "tarea") {
+        tipoTarea = tipo;
+        break;
+      }
+    }
+
+    isLoading = false;
+
+    return true;
+  }
+
+  //Obtener Estados
+  Future<bool> obtenerEstados(
+    BuildContext context,
+  ) async {
+    estados.clear();
+    estado = null;
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    // String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getEstado(token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      showError(context, res);
+      return false;
+    }
+
+    estados.addAll(res.message);
+
+    for (var i = 0; i < estados.length; i++) {
+      EstadoModel e = estados[i];
+      if (e.descripcion.toLowerCase() == "activo") {
+        estado = e;
         break;
       }
     }

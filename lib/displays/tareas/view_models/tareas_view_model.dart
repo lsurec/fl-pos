@@ -34,7 +34,7 @@ class TareasViewModel extends ChangeNotifier {
 
 //Lista ejemplo de las tareas
   final List<TareaModel> tareas = [];
-  final List<EstadoModel> estados = [];
+  // final List<EstadoModel> estados = [];
   // final List<TipoTareaModel> tiposTarea = [];
   final List<PrioridadModel> prioridades = [];
   final List<PeriodicidadModel> periodicidades = [];
@@ -176,47 +176,6 @@ class TareasViewModel extends ChangeNotifier {
     }
 
     tareas.addAll(res.message);
-
-    isLoading = false;
-  }
-
-  //Obtener Estados
-  Future<void> obtenerEstados(
-    BuildContext context,
-  ) async {
-    estados.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    // String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getEstado(token);
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    estados.addAll(res.message);
-
-    print(estados[0].descripcion);
 
     isLoading = false;
   }
@@ -519,8 +478,9 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = true;
     //consumos
     final bool succesTipos = await vmCrear.obtenerTiposTarea(context);
+    final bool succesEstados = await vmCrear.obtenerEstados(context);
 
-    if (!succesTipos) return;
+    if (!succesTipos || !succesEstados) return;
 
     Navigator.pushNamed(context, AppRoutes.createTask);
 

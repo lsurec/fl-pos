@@ -14,8 +14,6 @@ class CrearTareaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    final List<String> estados = vm.estados;
-
     final List<String> prioridades = vm.prioridades;
     final List<PeriodicidadModel> tiemposEstimados = vm.tiempos;
 
@@ -215,7 +213,7 @@ class CrearTareaView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    _EstadoTarea(estados: estados),
+                    _EstadoTarea(estados: vm.estados),
                     const SizedBox(height: 10),
                     const Row(
                       children: [
@@ -521,13 +519,14 @@ class _EstadoTarea extends StatelessWidget {
     required this.estados,
   });
 
-  final List<String> estados;
+  final List<EstadoModel> estados;
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    return DropdownButtonFormField2<String>(
+    return DropdownButtonFormField2<EstadoModel>(
+      value: vm.estado,
       isExpanded: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -543,10 +542,10 @@ class _EstadoTarea extends StatelessWidget {
         style: TextStyle(fontSize: 14),
       ),
       items: estados
-          .map((item) => DropdownMenuItem<String>(
+          .map((item) => DropdownMenuItem<EstadoModel>(
                 value: item,
                 child: Text(
-                  item,
+                  item.descripcion,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
@@ -554,15 +553,12 @@ class _EstadoTarea extends StatelessWidget {
               ))
           .toList(),
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null) {
           return 'Seleccione un estado para continuar.';
         }
         return null;
       },
       onChanged: (value) {
-        vm.estado = value;
-      },
-      onSaved: (value) {
         vm.estado = value;
       },
       buttonStyleData: const ButtonStyleData(
@@ -600,7 +596,7 @@ class _TipoTarea extends StatelessWidget {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
     return DropdownButtonFormField2<TipoTareaModel>(
-      value: vm.tipo,
+      value: vm.tipoTarea,
       isExpanded: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -634,7 +630,7 @@ class _TipoTarea extends StatelessWidget {
         return null;
       },
       onChanged: (value) {
-        vm.tipo = value;
+        vm.tipoTarea = value;
       },
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
