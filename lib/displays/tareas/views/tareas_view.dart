@@ -113,7 +113,8 @@ class _CardTask extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        vm.verDetalles(context); //ver detalle
+        vm.detalleTarea(context, tarea);
+        // vm.verDetalles(context); //ver detalle
         // Navigator.pushNamed(context, "detalle"); //Ruta xd
       },
       child: Column(

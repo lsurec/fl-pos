@@ -39,8 +39,6 @@ class TareasViewModel extends ChangeNotifier {
   final List<InvitadoModel> invitados = [];
   final List<UsuarioModel> usuarios = [];
   final List<IdReferenciaModel> idReferencias = [];
-  final List<ComentarioModel> comentarios = [];
-  final List<ObjetoComentarioModel> objetosComentario = [];
 
   performSearch() {
     if (filtro == 1) {
@@ -190,7 +188,7 @@ class TareasViewModel extends ChangeNotifier {
     );
   }
 
-  //Obtener Comentarios de la tarea
+  //Obtener Responsable y responsables anteriores de la tarea
   Future<void> obtenerResponsable(
     BuildContext context,
     int tarea,
@@ -236,7 +234,7 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  //Obtener Comentarios de la tarea
+  //Obtener Invitados de la tarea
   Future<void> obtenerInvitados(
     BuildContext context,
     int tarea,
@@ -282,99 +280,6 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  //Obtener Comentarios de la tarea
-  Future<void> obtenerComentario(
-    BuildContext context,
-    int tarea,
-  ) async {
-    comentarios.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getComentario(
-      user,
-      token,
-      tarea,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    comentarios.addAll(res.message);
-
-    print(comentarios[0]);
-
-    isLoading = false;
-  }
-
-  //Obtener Objetos de un comentario de una tarea
-  Future<void> obtenerObjetoComentario(
-    BuildContext context,
-    int tarea,
-    int tareaComentario,
-  ) async {
-    objetosComentario.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    // String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getObjetoComentario(
-      token,
-      tarea,
-      tareaComentario,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    objetosComentario.addAll(res.message);
-
-    print(objetosComentario[0].objetoNombre);
-
-    isLoading = false;
-  }
-
   crearTarea(BuildContext context) async {
     // obtenerPeriodicidad(context);
     // obtenerComentario(context, 4500);
@@ -407,6 +312,16 @@ class TareasViewModel extends ChangeNotifier {
 
   verDetalles(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.detailsTask);
+  }
+
+  detalleTarea(BuildContext context, TareaModel tarea) {
+    isLoading = true;
+    final vmDetalle =
+        Provider.of<DetalleTareaViewModel>(context, listen: false);
+    vmDetalle.tarea = tarea;
+
+    Navigator.pushNamed(context, AppRoutes.detailsTask);
+    isLoading = false;
   }
 
   String formatearFecha(DateTime fecha) {

@@ -17,7 +17,7 @@ class DetalleTareaView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: Text(
-              'Detalles Tarea: ${vm.idTarea}',
+              'Detalles Tarea: ${vm.tarea!.iDTarea}',
               style: AppTheme.titleStyle,
             ),
           ),
@@ -37,7 +37,7 @@ class DetalleTareaView extends StatelessWidget {
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
-                        vm.observacion,
+                        vm.tarea!.tareaObservacion1 ?? "No disponible",
                         style: AppTheme.normalStyle,
                         textAlign: TextAlign.justify,
                       ),
@@ -75,26 +75,26 @@ class DetalleTareaView extends StatelessWidget {
                         "FECHA Y HORA INICIAL: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Row(
                             children: [
-                              Icon(Icons.date_range),
-                              Padding(padding: EdgeInsets.only(left: 15)),
+                              const Icon(Icons.date_range),
+                              const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                "20/02/2023",
+                                vm.formatearFecha(vm.tarea!.fechaInicial),
                                 style: AppTheme.normalStyle,
                               ),
-                              Spacer(),
-                              Icon(Icons.schedule_outlined),
-                              Padding(padding: EdgeInsets.only(left: 10)),
+                              const Spacer(),
+                              const Icon(Icons.schedule_outlined),
+                              const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                "10:00 AM",
+                                vm.formatearHora(vm.tarea!.fechaInicial),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
@@ -105,26 +105,26 @@ class DetalleTareaView extends StatelessWidget {
                         "FECHA Y HORA FINAL: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: Padding(
-                          padding: EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(15),
                           child: Row(
                             children: [
-                              Icon(Icons.date_range),
-                              Padding(padding: EdgeInsets.only(left: 15)),
+                              const Icon(Icons.date_range),
+                              const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                "21/02/2023",
+                                vm.formatearFecha(vm.tarea!.fechaFinal),
                                 style: AppTheme.normalStyle,
                               ),
-                              Spacer(),
-                              Icon(Icons.schedule_outlined),
-                              Padding(padding: EdgeInsets.only(left: 10)),
+                              const Spacer(),
+                              const Icon(Icons.schedule_outlined),
+                              const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                "10:10 AM",
+                                vm.formatearHora(vm.tarea!.fechaFinal),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
@@ -135,17 +135,18 @@ class DetalleTareaView extends StatelessWidget {
                         "TIPO TAREA: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            "Ticket",
+                            vm.tarea!.descripcionTipoTarea ?? "No disponible",
                             style: AppTheme.normalStyle,
                           ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
 
@@ -153,14 +154,14 @@ class DetalleTareaView extends StatelessWidget {
                         "ID REFERENCIA: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            "IL - 1",
+                            vm.tarea!.iDReferencia ?? "No disponible.",
                             style: AppTheme.normalStyle,
                           ),
                           leading: Icon(Icons.arrow_circle_right_outlined),
@@ -220,17 +221,18 @@ class DetalleTareaView extends StatelessWidget {
                         "CREADOR: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            "Gerencia 10",
+                            vm.tarea!.usuarioCreador ?? "No disponible.",
                             style: AppTheme.normalStyle,
                           ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
                     ],

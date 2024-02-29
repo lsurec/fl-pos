@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class TareaService {
   final String _baseUrl = Preferences.urlApi;
@@ -654,5 +655,16 @@ class TareaService {
         storeProcedure: null,
       );
     }
+  }
+
+  //formatear fechas desde el servicio
+  String formatearFecha(DateTime fecha) {
+    // Asegurarse de que la fecha esté en la zona horaria local
+    fecha = fecha.toLocal();
+
+    // Formatear la fecha en el formato dd-mm-yyyy
+    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
+
+    return fechaFormateada;
   }
 }
