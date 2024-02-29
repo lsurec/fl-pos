@@ -34,10 +34,7 @@ class TareasViewModel extends ChangeNotifier {
 
 //Lista ejemplo de las tareas
   final List<TareaModel> tareas = [];
-  // final List<EstadoModel> estados = [];
-  // final List<TipoTareaModel> tiposTarea = [];
-  final List<PrioridadModel> prioridades = [];
-  final List<PeriodicidadModel> periodicidades = [];
+  // final List<PeriodicidadModel> periodicidades = [];
   final List<ResponsableModel> responsables = [];
   final List<InvitadoModel> invitados = [];
   final List<UsuarioModel> usuarios = [];
@@ -180,47 +177,6 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  //Obtener Prioridades
-  Future<void> obtenerPrioridades(
-    BuildContext context,
-  ) async {
-    prioridades.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getPrioridad(user, token);
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    prioridades.addAll(res.message);
-
-    print(prioridades[0]);
-
-    isLoading = false;
-  }
-
   showError(BuildContext context, ApiResModel res) {
     ErrorModel error = ErrorModel(
       date: DateTime.now(),
@@ -232,47 +188,6 @@ class TareasViewModel extends ChangeNotifier {
       context,
       error,
     );
-  }
-
-//Obtener Prioridades
-  Future<void> obtenerPeriodicidad(
-    BuildContext context,
-  ) async {
-    periodicidades.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getPeriodicidad(user, token);
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    periodicidades.addAll(res.message);
-
-    print(periodicidades[0]);
-
-    isLoading = false;
   }
 
   //Obtener Comentarios de la tarea
@@ -461,9 +376,6 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   crearTarea(BuildContext context) async {
-    // obtenerEstados(context);
-    // obtenerTiposTarea(context);
-    // obtenerPrioridades(context);
     // obtenerPeriodicidad(context);
     // obtenerComentario(context, 4500);
     // obtenerObjetoComentario(context, 4500, 9952);
@@ -479,8 +391,14 @@ class TareasViewModel extends ChangeNotifier {
     //consumos
     final bool succesTipos = await vmCrear.obtenerTiposTarea(context);
     final bool succesEstados = await vmCrear.obtenerEstados(context);
+    final bool succesPrioridades = await vmCrear.obtenerPrioridades(context);
+    final bool succesPeriodicidades =
+        await vmCrear.obtenerPeriodicidad(context);
 
-    if (!succesTipos || !succesEstados) return;
+    if (!succesTipos ||
+        !succesEstados ||
+        !succesPrioridades ||
+        !succesPeriodicidades) return;
 
     Navigator.pushNamed(context, AppRoutes.createTask);
 

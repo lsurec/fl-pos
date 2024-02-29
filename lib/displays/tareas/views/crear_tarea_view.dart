@@ -14,9 +14,6 @@ class CrearTareaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    final List<String> prioridades = vm.prioridades;
-    final List<PeriodicidadModel> tiemposEstimados = vm.tiempos;
-
     final List<UsuarioModel> usuariosEncontrados = vm.invitados;
 
     return Scaffold(
@@ -174,7 +171,7 @@ class CrearTareaView extends StatelessWidget {
                         ),
                         SizedBox(
                           width: 250,
-                          child: _TiempoEstimado(tiempos: tiemposEstimados),
+                          child: _TiempoEstimado(tiempos: vm.periodicidades),
                         ),
                       ],
                     ),
@@ -229,7 +226,7 @@ class CrearTareaView extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    _PrioridadTarea(prioridades: prioridades),
+                    _PrioridadTarea(prioridades: vm.prioridades),
                     const SizedBox(height: 10),
                     const Row(
                       children: [
@@ -362,6 +359,7 @@ class _TiempoEstimado extends StatelessWidget {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
     return DropdownButtonFormField2<PeriodicidadModel>(
+      value: vm.periodicidad,
       isExpanded: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -447,13 +445,14 @@ class _PrioridadTarea extends StatelessWidget {
     required this.prioridades,
   });
 
-  final List<String> prioridades;
+  final List<PrioridadModel> prioridades;
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    return DropdownButtonFormField2<String>(
+    return DropdownButtonFormField2<PrioridadModel>(
+      value: vm.prioridad,
       isExpanded: true,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
@@ -469,10 +468,10 @@ class _PrioridadTarea extends StatelessWidget {
         style: TextStyle(fontSize: 14),
       ),
       items: prioridades
-          .map((item) => DropdownMenuItem<String>(
+          .map((item) => DropdownMenuItem<PrioridadModel>(
                 value: item,
                 child: Text(
-                  item,
+                  item.nombre,
                   style: const TextStyle(
                     fontSize: 14,
                   ),
@@ -480,15 +479,12 @@ class _PrioridadTarea extends StatelessWidget {
               ))
           .toList(),
       validator: (value) {
-        if (value == null || value.isEmpty) {
+        if (value == null) {
           return 'Seleccione el nivel de prioridad para continuar.';
         }
         return null;
       },
       onChanged: (value) {
-        vm.prioridad = value;
-      },
-      onSaved: (value) {
         vm.prioridad = value;
       },
       buttonStyleData: const ButtonStyleData(

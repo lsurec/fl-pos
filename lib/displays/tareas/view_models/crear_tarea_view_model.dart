@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 class CrearTareaViewModel extends ChangeNotifier {
   final List<TipoTareaModel> tiposTarea = [];
   final List<EstadoModel> estados = [];
+  final List<PrioridadModel> prioridades = [];
+  final List<PeriodicidadModel> periodicidades = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -45,13 +47,12 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   TipoTareaModel? tipoTarea;
   EstadoModel? estado;
-  String? prioridad;
+  PrioridadModel? prioridad;
   String? observacion;
   String? titulo;
   String tiempo = "10";
 
-  PeriodicidadModel periodicidad =
-      PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos");
+  PeriodicidadModel? periodicidad;
 
   CrearTareaViewModel() {
     tiempoController.text = "10";
@@ -72,24 +73,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     horaFinal.text = horaFormato(fecha10);
   }
 
-  final List<String> prioridades = [
-    'Critico',
-    'Alto',
-    'Normal',
-    'Bajo',
-  ];
-
   List<UsuarioModel> invitados = [];
-
-  List<PeriodicidadModel> tiempos = [
-    PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos"),
-    PeriodicidadModel(tipoPeriodicidad: 1, descripcion: "Minutos"),
-    PeriodicidadModel(tipoPeriodicidad: 2, descripcion: "Horas"),
-    PeriodicidadModel(tipoPeriodicidad: 3, descripcion: "Dias"),
-    PeriodicidadModel(tipoPeriodicidad: 4, descripcion: "Semanas"),
-    PeriodicidadModel(tipoPeriodicidad: 5, descripcion: "Mes"),
-    PeriodicidadModel(tipoPeriodicidad: 6, descripcion: "Año"),
-  ];
 
   irIdReferencia(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.selectReferenceId);
@@ -408,6 +392,85 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     isLoading = false;
 
+    return true;
+  }
+
+  //Obtener Prioridades
+  Future<bool> obtenerPrioridades(
+    BuildContext context,
+  ) async {
+    prioridades.clear();
+    prioridad = null;
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getPrioridad(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      showError(context, res);
+
+      return false;
+    }
+
+    prioridades.addAll(res.message);
+
+    for (var i = 0; i < prioridades.length; i++) {
+      PrioridadModel p = prioridades[i];
+      if (p.nombre.toLowerCase() == "normal") {
+        prioridad = p;
+        break;
+      }
+    }
+
+    isLoading = false;
+
+    return true;
+  }
+
+  //Obtener Periodicidades
+  Future<bool> obtenerPeriodicidad(
+    BuildContext context,
+  ) async {
+    periodicidades.clear();
+
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getPeriodicidad(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      showError(context, res);
+
+      return false;
+    }
+
+    periodicidades.addAll(res.message);
+
+    for (var i = 0; i < periodicidades.length; i++) {
+      PeriodicidadModel t = periodicidades[i];
+      if (t.descripcion.toLowerCase() == "minutos") {
+        periodicidad = t;
+        break;
+      }
+    }
+
+    isLoading = false;
     return true;
   }
 
