@@ -11,7 +11,6 @@ class ComentariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
 
-    List<ComentarioNuevoModel> comentarios = vm.comentarios;
     final String arguments =
         ModalRoute.of(context)!.settings.arguments as String;
 
@@ -43,11 +42,11 @@ class ComentariosView extends StatelessWidget {
                     style: AppTheme.normalStyle,
                     textAlign: TextAlign.justify,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Comentarios (4)",
+                        "Comentarios (${vm.comentarios.length})",
                         style: AppTheme.normalBoldStyle,
                       ),
                     ],
@@ -58,10 +57,9 @@ class ComentariosView extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: comentarios.length,
+                    itemCount: vm.comentarios.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final ComentarioNuevoModel comentario =
-                          comentarios[index];
+                      final ComentarioModel comentario = vm.comentarios[index];
                       return _Comentario(
                         comentario: comentario,
                         index: index,
@@ -127,7 +125,7 @@ class _Comentario extends StatelessWidget {
     required this.index,
   });
 
-  final ComentarioNuevoModel comentario;
+  final ComentarioModel comentario;
   final int index;
 
   @override
@@ -161,7 +159,7 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.normalBoldStyle,
               ),
               Text(
-                comentario.fechaHora,
+                vm.formatearFecha(comentario.fechaHora),
                 style: AppTheme.normalStyle,
               ),
             ],
