@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -12,7 +13,7 @@ class DetalleTareaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
     final vmComentarios =
-        Provider.of<ComentariosViewModel>(context, listen: true);
+        Provider.of<ComentariosViewModel>(context, listen: false);
 
     return Stack(
       children: [
@@ -173,18 +174,19 @@ class DetalleTareaView extends StatelessWidget {
                         "RESPONSABLE: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            "Gerencia 1",
+                            vm.tarea!.usuarioResponsable ?? "No asignado.",
                             style: AppTheme.normalStyle,
                           ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
-                          trailing: Icon(Icons.person_add_alt_1_outlined),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
+                          trailing: const Icon(Icons.person_add_alt_1_outlined),
                         ),
                       ),
 
@@ -192,31 +194,29 @@ class DetalleTareaView extends StatelessWidget {
                         "INVITADOS: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Gerencia 1",
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vm.invitados.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final InvitadoModel invitado = vm.invitados[index];
+                            return ListTile(
+                              title: Text(
+                                invitado.userName,
                                 style: AppTheme.normalStyle,
                               ),
-                              Text(
-                                "Usuario 2",
-                                style: AppTheme.normalStyle,
-                              ),
-                              Text(
-                                "Usuario 3",
-                                style: AppTheme.normalStyle,
-                              ),
-                            ],
-                          ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
-                          trailing: Icon(Icons.person_add_alt_1_outlined),
+                              leading:
+                                  const Icon(Icons.arrow_circle_right_outlined),
+                              trailing:
+                                  const Icon(Icons.person_add_alt_1_outlined),
+                            );
+                          },
                         ),
                       ),
                       const Text(
@@ -258,13 +258,18 @@ class _ActualizarEstado extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
 
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+    final List<EstadoModel> estados = vmCrear.estados;
+
     return CardWidget(
       elevation: 0,
       borderWidth: 0,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: DropdownButtonFormField2<String>(
+        child: DropdownButtonFormField2<EstadoModel>(
+          value: vm.estadoAtual,
           isExpanded: true,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 16),
@@ -273,11 +278,11 @@ class _ActualizarEstado extends StatelessWidget {
             'Seleccione un nuevo estado',
             style: AppTheme.normalStyle,
           ),
-          items: vm.estados
+          items: estados
               .map(
-                (item) => DropdownMenuItem<String>(
+                (item) => DropdownMenuItem<EstadoModel>(
                   value: item,
-                  child: Text(item, style: AppTheme.normalStyle),
+                  child: Text(item.descripcion, style: AppTheme.normalStyle),
                 ),
               )
               .toList(),
@@ -288,9 +293,6 @@ class _ActualizarEstado extends StatelessWidget {
             return null;
           },
           onChanged: (value) {
-            //Do something when selected item is changed.
-          },
-          onSaved: (value) {
             vm.nuevoEstado = value.toString();
           },
           buttonStyleData: const ButtonStyleData(

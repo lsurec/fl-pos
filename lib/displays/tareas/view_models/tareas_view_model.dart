@@ -35,8 +35,8 @@ class TareasViewModel extends ChangeNotifier {
 //Lista ejemplo de las tareas
   final List<TareaModel> tareas = [];
   // final List<PeriodicidadModel> periodicidades = [];
-  final List<ResponsableModel> responsables = [];
-  final List<InvitadoModel> invitados = [];
+  // final List<ResponsableModel> responsables = [];
+  // final List<InvitadoModel> invitados = [];
   final List<UsuarioModel> usuarios = [];
   final List<IdReferenciaModel> idReferencias = [];
 
@@ -188,107 +188,7 @@ class TareasViewModel extends ChangeNotifier {
     );
   }
 
-  //Obtener Responsable y responsables anteriores de la tarea
-  Future<void> obtenerResponsable(
-    BuildContext context,
-    int tarea,
-  ) async {
-    responsables.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getResponsable(
-      user,
-      token,
-      tarea,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    responsables.addAll(res.message);
-
-    print(responsables[0].userName);
-
-    isLoading = false;
-  }
-
-  //Obtener Invitados de la tarea
-  Future<void> obtenerInvitados(
-    BuildContext context,
-    int tarea,
-  ) async {
-    invitados.clear();
-
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.nameUser;
-
-    final TareaService tareaService = TareaService();
-
-    isLoading = true;
-
-    final ApiResModel res = await tareaService.getInvitado(
-      user,
-      token,
-      tarea,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    invitados.addAll(res.message);
-
-    print(invitados[0].userName);
-
-    isLoading = false;
-  }
-
   crearTarea(BuildContext context) async {
-    // obtenerPeriodicidad(context);
-    // obtenerComentario(context, 4500);
-    // obtenerObjetoComentario(context, 4500, 9952);
-    // obtenerResponsable(context, 5113);
-    // obtenerInvitados(context, 5113);
-    // buscarIdRefencia(context, "012");
-    // buscarUsuario(context, "aca");
-
     //view modles
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
@@ -314,11 +214,35 @@ class TareasViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, AppRoutes.detailsTask);
   }
 
-  detalleTarea(BuildContext context, TareaModel tarea) {
+  detalleTarea(BuildContext context, TareaModel tarea) async {
     isLoading = true;
     final vmDetalle =
         Provider.of<DetalleTareaViewModel>(context, listen: false);
     vmDetalle.tarea = tarea;
+
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final bool succesEstados = await vmCrear.obtenerEstados(context);
+    final bool succesPrioridades = await vmCrear.obtenerPrioridades(context);
+
+    final ApiResModel succesResponsables =
+        await vmDetalle.obtenerResponsable(context, tarea.iDTarea);
+    final ApiResModel succesInvitados =
+        await vmDetalle.obtenerInvitados(context, tarea.iDTarea);
+
+    if (!succesResponsables.succes || !succesInvitados.succes) {
+      tarea.usuarioResponsable = "No asignado";
+      vmDetalle.invitados.add(succesInvitados.message);
+    }
+
+    for (var i = 0; i < vmCrear.estados.length; i++) {
+      EstadoModel e = vmCrear.estados[i];
+      if (e.descripcion.toLowerCase() == tarea.tareaEstado!.toLowerCase()) {
+        vmDetalle.estadoAtual = e;
+        break;
+      }
+    }
+
+    if (!succesEstados || !succesPrioridades) return;
 
     Navigator.pushNamed(context, AppRoutes.detailsTask);
     isLoading = false;
