@@ -67,7 +67,7 @@ class ComentariosView extends StatelessWidget {
                       );
                     },
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 25),
                   const _NuevoComentario(),
                 ],
               ),
@@ -132,7 +132,7 @@ class _Comentario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
-    List<ObjetoComentarioModel> objetos = vm.comentarioDetalle[0].objetos;
+    List<ObjetoComentarioModel> objetos = vm.comentarioDetalle[index].objetos;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
