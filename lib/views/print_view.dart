@@ -136,13 +136,18 @@ class _SettingsFromState extends State<SettingsFrom> {
     bytes += generator.cut();
     pendingTask = null;
 
-    if (Platform.isAndroid) pendingTask = bytes;
-    if (Platform.isAndroid) {
-      await instanceManager.send(type: PrinterType.bluetooth, bytes: bytes);
-      pendingTask = null;
-    } else {
-      await instanceManager.send(type: PrinterType.bluetooth, bytes: bytes);
-    }
+    // if (Platform.isAndroid) pendingTask = bytes;
+    // if (Platform.isAndroid) {
+    //   await instanceManager.send(type: PrinterType.bluetooth, bytes: bytes);
+    //   pendingTask = null;
+    // } else {
+    //   await instanceManager.send(type: PrinterType.bluetooth, bytes: bytes);
+    // }
+    await PrinterManager.instance.connect(
+        type: PrinterType.network,
+        model: TcpPrinterInput(ipAddress: "192.168.0.15"));
+
+    await instanceManager.send(type: PrinterType.network, bytes: bytes);
   }
 
   void setPrinter(int paper) {

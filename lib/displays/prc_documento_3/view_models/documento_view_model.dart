@@ -107,13 +107,13 @@ class DocumentoViewModel extends ChangeNotifier {
       );
       bytes += generator.cut();
 
-      final PrinterManager instanceManager = PrinterManager.instance;
       PrinterManager.instance.connect(
         type: PrinterType.network,
         model: TcpPrinterInput(
           ipAddress: "192.168.0.15",
         ),
       );
+      final PrinterManager instanceManager = PrinterManager.instance;
 
       await instanceManager.send(type: PrinterType.network, bytes: bytes);
     } catch (e) {
@@ -155,7 +155,10 @@ class DocumentoViewModel extends ChangeNotifier {
   }
 
   //confirmar documento
-  void sendDocumnet(BuildContext context) {
+  void sendDocumnet(
+    BuildContext context,
+    int screen,
+  ) {
     //View models externos
     final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
@@ -205,7 +208,11 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     //si todas las validaciones son correctas navegar a resumen del documento
-    Navigator.pushNamed(context, "confirm");
+    Navigator.pushNamed(
+      context,
+      "confirm",
+      arguments: screen, //1 documento; 2 comanda
+    );
   }
 
   //cargar datos necesarios

@@ -14,6 +14,7 @@ class ConfirmDocView extends StatelessWidget {
   Widget build(BuildContext context) {
     final docVM = Provider.of<DocumentViewModel>(context);
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final int screen = ModalRoute.of(context)!.settings.arguments as int;
 
     return Stack(
       children: [
