@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/tarea_service.dart';
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +14,7 @@ DateTime fecha = DateTime.now();
 class ComentariosViewModel extends ChangeNotifier {
   final List<ComentarioModel> comentarios = [];
   final List<ObjetoComentarioModel> objetosComentario = [];
+  List<ComentarioDetalle> comentarioDetalle = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -51,8 +55,6 @@ class ComentariosViewModel extends ChangeNotifier {
 
     // notifyListeners();
   }
-
-  String observacion = "1235435";
 
 //Obtener Comentarios de la tarea
   Future<bool> obtenerComentario(
@@ -122,6 +124,21 @@ class ComentariosViewModel extends ChangeNotifier {
 
     isLoading = false;
     return true;
+  }
+
+  armarComentario(BuildContext context) {
+    final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
+
+    for (var i = 0; i < comentarios.length; i++) {
+      final ComentarioModel coment = comentarios[i];
+
+      obtenerObjetoComentario(
+          context, vmTarea.tarea!.iDTarea, coment.tareaComentario);
+
+      comentarioDetalle = [
+        ComentarioDetalle(comentario: coment, objetos: objetosComentario),
+      ];
+    }
   }
 
   showError(BuildContext context, ApiResModel res) {

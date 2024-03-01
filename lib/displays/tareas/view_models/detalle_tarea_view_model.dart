@@ -53,9 +53,32 @@ class DetalleTareaViewModel extends ChangeNotifier {
     final bool succesComentarios =
         await vmComentarios.obtenerComentario(context, tarea!.iDTarea);
 
-    if (!succesComentarios) return;
+    for (var i = 0; i < vmComentarios.comentarios.length; i++) {}
+
+    final bool succesObjetos = await vmComentarios.obtenerObjetoComentario(
+        context, tarea!.iDTarea, 9952);
+
+    if (!succesComentarios || !succesObjetos) return;
 
     Navigator.pushNamed(context, AppRoutes.viewComments);
+  }
+
+  armarComentario(BuildContext context) {
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+
+    for (var i = 0; i < vmComentarios.comentarios.length; i++) {
+      ComentarioModel comentario = vmComentarios.comentarios[i];
+
+      vmComentarios.obtenerObjetoComentario(
+          context, tarea!.iDTarea, comentario.tareaComentario);
+
+      // vmComentarios.comentario = [
+      //   comentario = vmComentarios.comentarios[i],
+      //   objetos = vmComentarios.objetosComentario
+
+      // ];
+    }
   }
 
   String formatearFecha(DateTime fecha) {

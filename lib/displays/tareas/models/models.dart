@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/tareas/models/comentario_detalle_model.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/models/responsable_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/invitado_model.dart';

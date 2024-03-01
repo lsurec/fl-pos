@@ -10,15 +10,14 @@ class ComentariosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
-
-    final String arguments =
-        ModalRoute.of(context)!.settings.arguments as String;
+    final vmDetalle =
+        Provider.of<DetalleTareaViewModel>(context, listen: false);
 
     return Scaffold(
       // bottomNavigationBar: Container(color: Colors.red, height: 50,),
       appBar: AppBar(
-        title: const Text(
-          'Comentarios Tarea: 310',
+        title: Text(
+          'Comentarios Tarea: ${vmDetalle.tarea!.iDTarea}',
           style: AppTheme.titleStyle,
         ),
       ),
@@ -38,7 +37,7 @@ class ComentariosView extends StatelessWidget {
                     style: AppTheme.normalBoldStyle,
                   ),
                   Text(
-                    arguments,
+                    vmDetalle.tarea!.tareaObservacion1 ?? "No Disponible.",
                     style: AppTheme.normalStyle,
                     textAlign: TextAlign.justify,
                   ),
@@ -87,31 +86,34 @@ class _NuevoComentario extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
 
-    return TextFormField(
-      controller: vm.comentarioController,
-      onChanged: (value) {
-        vm.comentText = value;
-      },
-      decoration: InputDecoration(
-        labelText: 'Nuevo comentario',
-        suffixIcon: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              tooltip: "Adjuntar Archivos",
-              onPressed: () {
-                print("Abrir explorador de archivos");
-              },
-              icon: const Icon(Icons.attach_file_outlined),
-            ),
-            IconButton(
-              tooltip: "Enviar comentario.",
-              onPressed: () {
-                vm.comentar(context);
-              },
-              icon: const Icon(Icons.send),
-            ),
-          ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: TextFormField(
+        controller: vm.comentarioController,
+        onChanged: (value) {
+          vm.comentText = value;
+        },
+        decoration: InputDecoration(
+          labelText: 'Nuevo comentario',
+          suffixIcon: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                tooltip: "Adjuntar Archivos",
+                onPressed: () {
+                  print("Abrir explorador de archivos");
+                },
+                icon: const Icon(Icons.attach_file_outlined),
+              ),
+              IconButton(
+                tooltip: "Enviar comentario.",
+                onPressed: () {
+                  vm.comentar(context);
+                },
+                icon: const Icon(Icons.send),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -183,25 +185,22 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.normalStyle,
                 textAlign: TextAlign.justify,
               ),
-              const Column(
-                children: [
-                  ListTile(
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: vm.objetosComentario.length,
+                itemBuilder: (BuildContext context, int index) {
+                  ObjetoComentarioModel objeto = vm.objetosComentario[index];
+                  return ListTile(
                     title: Text(
-                      "archivo1.png",
+                      objeto.objetoNombre,
                       style: AppTheme.normalStyle,
                     ),
-                    leading: Icon(Icons.insert_photo_outlined),
+                    leading: const Icon(Icons.insert_photo_outlined),
                     contentPadding: EdgeInsets.zero,
-                  ),
-                  ListTile(
-                    title: Text(
-                      "archivo1.png",
-                      style: AppTheme.normalStyle,
-                    ),
-                    leading: Icon(Icons.insert_photo_outlined),
-                    contentPadding: EdgeInsets.all(0),
-                  ),
-                ],
+                  );
+                },
               ),
             ],
           ),

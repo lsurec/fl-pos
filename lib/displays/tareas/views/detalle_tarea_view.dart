@@ -11,6 +11,8 @@ class DetalleTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: true);
 
     return Stack(
       children: [
@@ -33,7 +35,7 @@ class DetalleTareaView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Oservacion:",
+                        "Observación:",
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
@@ -45,9 +47,9 @@ class DetalleTareaView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () => vm.verComentarios(context),
-                            child: const Text(
-                              "Comentarios (4)",
+                            onPressed: () => vm.comentariosTarea(context),
+                            child: Text(
+                              "Comentarios (${vmComentarios.comentarios.length})",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ),
