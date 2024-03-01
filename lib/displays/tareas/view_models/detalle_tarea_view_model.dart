@@ -53,32 +53,18 @@ class DetalleTareaViewModel extends ChangeNotifier {
     final bool succesComentarios =
         await vmComentarios.obtenerComentario(context, tarea!.iDTarea);
 
-    for (var i = 0; i < vmComentarios.comentarios.length; i++) {}
+    // for (var i = 0; i < vmComentarios.comentarios.length; i++) {}
 
-    final bool succesObjetos = await vmComentarios.obtenerObjetoComentario(
-        context, tarea!.iDTarea, 9952);
+    final ApiResModel succesObjetos = await vmComentarios
+        .obtenerObjetoComentario(context, tarea!.iDTarea, 9952);
 
-    if (!succesComentarios || !succesObjetos) return;
+    if (!succesComentarios || !succesObjetos.succes) return;
+
+    // print(succesObjetos.message[0].objetoNombre);
+
+    vmComentarios.armarComentario(context);
 
     Navigator.pushNamed(context, AppRoutes.viewComments);
-  }
-
-  armarComentario(BuildContext context) {
-    final vmComentarios =
-        Provider.of<ComentariosViewModel>(context, listen: false);
-
-    for (var i = 0; i < vmComentarios.comentarios.length; i++) {
-      ComentarioModel comentario = vmComentarios.comentarios[i];
-
-      vmComentarios.obtenerObjetoComentario(
-          context, tarea!.iDTarea, comentario.tareaComentario);
-
-      // vmComentarios.comentario = [
-      //   comentario = vmComentarios.comentarios[i],
-      //   objetos = vmComentarios.objetosComentario
-
-      // ];
-    }
   }
 
   String formatearFecha(DateTime fecha) {

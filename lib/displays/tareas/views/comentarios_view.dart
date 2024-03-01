@@ -10,14 +10,14 @@ class ComentariosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
-    final vmDetalle =
-        Provider.of<DetalleTareaViewModel>(context, listen: false);
+
+    // List<ComentarioModel> comentarios = vm.comentarioDetalle.comentario;
 
     return Scaffold(
       // bottomNavigationBar: Container(color: Colors.red, height: 50,),
       appBar: AppBar(
-        title: Text(
-          'Comentarios Tarea: ${vmDetalle.tarea!.iDTarea}',
+        title: const Text(
+          'Comentarios Tarea: 310',
           style: AppTheme.titleStyle,
         ),
       ),
@@ -37,15 +37,15 @@ class ComentariosView extends StatelessWidget {
                     style: AppTheme.normalBoldStyle,
                   ),
                   Text(
-                    vmDetalle.tarea!.tareaObservacion1 ?? "No Disponible.",
+                    "sss",
                     style: AppTheme.normalStyle,
                     textAlign: TextAlign.justify,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Comentarios (${vm.comentarios.length})",
+                        "Comentarios (4)",
                         style: AppTheme.normalBoldStyle,
                       ),
                     ],
@@ -56,9 +56,10 @@ class ComentariosView extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: vm.comentarios.length,
+                    itemCount: vm.comentarioDetalle.length,
                     itemBuilder: (BuildContext context, int index) {
-                      final ComentarioModel comentario = vm.comentarios[index];
+                      final ComentarioDetalleModel comentario =
+                          vm.comentarioDetalle[index];
                       return _Comentario(
                         comentario: comentario,
                         index: index,
@@ -86,34 +87,31 @@ class _NuevoComentario extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 20),
-      child: TextFormField(
-        controller: vm.comentarioController,
-        onChanged: (value) {
-          vm.comentText = value;
-        },
-        decoration: InputDecoration(
-          labelText: 'Nuevo comentario',
-          suffixIcon: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                tooltip: "Adjuntar Archivos",
-                onPressed: () {
-                  print("Abrir explorador de archivos");
-                },
-                icon: const Icon(Icons.attach_file_outlined),
-              ),
-              IconButton(
-                tooltip: "Enviar comentario.",
-                onPressed: () {
-                  vm.comentar(context);
-                },
-                icon: const Icon(Icons.send),
-              ),
-            ],
-          ),
+    return TextFormField(
+      controller: vm.comentarioController,
+      onChanged: (value) {
+        vm.comentText = value;
+      },
+      decoration: InputDecoration(
+        labelText: 'Nuevo comentario',
+        suffixIcon: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              tooltip: "Adjuntar Archivos",
+              onPressed: () {
+                print("Abrir explorador de archivos");
+              },
+              icon: const Icon(Icons.attach_file_outlined),
+            ),
+            IconButton(
+              tooltip: "Enviar comentario.",
+              onPressed: () {
+                vm.comentar(context);
+              },
+              icon: const Icon(Icons.send),
+            ),
+          ],
         ),
       ),
     );
@@ -127,7 +125,7 @@ class _Comentario extends StatelessWidget {
     required this.index,
   });
 
-  final ComentarioModel comentario;
+  final ComentarioDetalleModel comentario;
   final int index;
 
   @override
@@ -157,11 +155,11 @@ class _Comentario extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                comentario.nameUser,
+                comentario.comentario.nameUser,
                 style: AppTheme.normalBoldStyle,
               ),
               Text(
-                vm.formatearFecha(comentario.fechaHora),
+                vm.formatearFecha(comentario.comentario.fechaHora),
                 style: AppTheme.normalStyle,
               ),
             ],
@@ -181,26 +179,29 @@ class _Comentario extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                comentario.comentario,
+                "${comentario.comentario}",
                 style: AppTheme.normalStyle,
                 textAlign: TextAlign.justify,
               ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: vm.objetosComentario.length,
-                itemBuilder: (BuildContext context, int index) {
-                  ObjetoComentarioModel objeto = vm.objetosComentario[index];
-                  return ListTile(
+              const Column(
+                children: [
+                  ListTile(
                     title: Text(
-                      objeto.objetoNombre,
+                      "archivo1.png",
                       style: AppTheme.normalStyle,
                     ),
-                    leading: const Icon(Icons.insert_photo_outlined),
+                    leading: Icon(Icons.insert_photo_outlined),
                     contentPadding: EdgeInsets.zero,
-                  );
-                },
+                  ),
+                  ListTile(
+                    title: Text(
+                      "archivo1.png",
+                      style: AppTheme.normalStyle,
+                    ),
+                    leading: Icon(Icons.insert_photo_outlined),
+                    contentPadding: EdgeInsets.all(0),
+                  ),
+                ],
               ),
             ],
           ),

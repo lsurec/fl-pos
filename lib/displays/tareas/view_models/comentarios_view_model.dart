@@ -13,8 +13,8 @@ DateTime fecha = DateTime.now();
 
 class ComentariosViewModel extends ChangeNotifier {
   final List<ComentarioModel> comentarios = [];
-  final List<ObjetoComentarioModel> objetosComentario = [];
-  List<ComentarioDetalle> comentarioDetalle = [];
+  // final List<ObjetoComentarioModel> objetosComentario = [];
+  List<ComentarioDetalleModel> comentarioDetalle = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -92,11 +92,13 @@ class ComentariosViewModel extends ChangeNotifier {
   }
 
   //Obtener Objetos de un comentario de una tarea
-  Future<bool> obtenerObjetoComentario(
+  Future<ApiResModel> obtenerObjetoComentario(
     BuildContext context,
     int tarea,
     int tareaComentario,
   ) async {
+    List<ObjetoComentarioModel> objetosComentario = [];
+
     objetosComentario.clear();
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -117,27 +119,45 @@ class ComentariosViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
       showError(context, res);
-      return false;
+
+      ApiResModel objetos = ApiResModel(
+        message: objetosComentario,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return objetos;
     }
 
     objetosComentario.addAll(res.message);
 
     isLoading = false;
-    return true;
+
+    ApiResModel objetos = ApiResModel(
+      message: objetosComentario,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    return objetos;
   }
 
-  armarComentario(BuildContext context) {
-    final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
+  armarComentario(BuildContext context) async {
+    final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false)
+        .tarea!
+        .iDTarea;
 
     for (var i = 0; i < comentarios.length; i++) {
       final ComentarioModel coment = comentarios[i];
 
-      obtenerObjetoComentario(
-          context, vmTarea.tarea!.iDTarea, coment.tareaComentario);
+      ApiResModel objeto = await obtenerObjetoComentario(
+          context, vmTarea, coment.tareaComentario);
 
-      comentarioDetalle = [
-        ComentarioDetalle(comentario: coment, objetos: objetosComentario),
-      ];
+      comentarioDetalle.add(
+          ComentarioDetalleModel(comentario: coment, objetos: objeto.message));
+      notifyListeners();
     }
   }
 
