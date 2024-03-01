@@ -178,7 +178,7 @@ class ComentariosViewModel extends ChangeNotifier {
       comentarioDetalle.add(ComentarioDetalleModel(
           comentario: comentarios.message[i], objetos: objeto.message));
 
-      if (!comentarios.succes || !objeto.succes) return false;
+      if (!comentarios.succes) return false;
     }
 
     return true;

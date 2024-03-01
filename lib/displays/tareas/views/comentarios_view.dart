@@ -132,6 +132,7 @@ class _Comentario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
+    List<ObjetoComentarioModel> objetos = vm.comentarioDetalle[0].objetos;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,25 +185,22 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.normalStyle,
                 textAlign: TextAlign.justify,
               ),
-              const Column(
-                children: [
-                  ListTile(
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: objetos.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final ObjetoComentarioModel objeto = objetos[index];
+                  return ListTile(
                     title: Text(
-                      "archivo1.png",
+                      objeto.objetoNombre,
                       style: AppTheme.normalStyle,
                     ),
-                    leading: Icon(Icons.insert_photo_outlined),
+                    leading: const Icon(Icons.insert_photo_outlined),
                     contentPadding: EdgeInsets.zero,
-                  ),
-                  ListTile(
-                    title: Text(
-                      "archivo1.png",
-                      style: AppTheme.normalStyle,
-                    ),
-                    leading: Icon(Icons.insert_photo_outlined),
-                    contentPadding: EdgeInsets.all(0),
-                  ),
-                ],
+                  );
+                },
               ),
             ],
           ),
