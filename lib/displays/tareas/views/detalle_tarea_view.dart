@@ -328,13 +328,18 @@ class _ActualizarPrioridad extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
 
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+    final List<PrioridadModel> prioridades = vmCrear.prioridades;
+
     return CardWidget(
       elevation: 0,
       borderWidth: 0,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: DropdownButtonFormField2<String>(
+        child: DropdownButtonFormField2<PrioridadModel>(
+          value: vm.prioridadActual,
           isExpanded: true,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 16),
@@ -343,11 +348,11 @@ class _ActualizarPrioridad extends StatelessWidget {
             'Seleccione una nueva prioridad',
             style: AppTheme.normalStyle,
           ),
-          items: vm.prioridades
+          items: prioridades
               .map(
-                (item) => DropdownMenuItem<String>(
+                (item) => DropdownMenuItem<PrioridadModel>(
                   value: item,
-                  child: Text(item, style: AppTheme.normalStyle),
+                  child: Text(item.nombre, style: AppTheme.normalStyle),
                 ),
               )
               .toList(),
@@ -358,9 +363,6 @@ class _ActualizarPrioridad extends StatelessWidget {
             return null;
           },
           onChanged: (value) {
-            //Do something when selected item is changed.
-          },
-          onSaved: (value) {
             vm.nuevaPrioridad = value.toString();
           },
           buttonStyleData: const ButtonStyleData(

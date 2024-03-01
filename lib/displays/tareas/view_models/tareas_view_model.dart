@@ -242,6 +242,14 @@ class TareasViewModel extends ChangeNotifier {
       }
     }
 
+    for (var i = 0; i < vmCrear.prioridades.length; i++) {
+      PrioridadModel p = vmCrear.prioridades[i];
+      if (p.nombre.toLowerCase() == tarea.nomNivelPrioridad!.toLowerCase()) {
+        vmDetalle.prioridadActual = p;
+        break;
+      }
+    }
+
     if (!succesEstados || !succesPrioridades) return;
 
     Navigator.pushNamed(context, AppRoutes.detailsTask);

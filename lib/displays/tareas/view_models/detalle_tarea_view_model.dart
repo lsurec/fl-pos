@@ -15,6 +15,7 @@ import '../../../view_models/view_models.dart';
 class DetalleTareaViewModel extends ChangeNotifier {
   final List<InvitadoModel> invitados = [];
   EstadoModel? estadoAtual;
+  PrioridadModel? prioridadActual;
   //manejar flujo del procesp
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -25,21 +26,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
   }
 
   TareaModel? tarea;
-  final List<String> estados = [
-    'Activo',
-    'Cerrado',
-    'Pendiente',
-    'Inactivo',
-    'Anulado',
-    'Finalizado'
-  ];
-
-  final List<String> prioridades = [
-    'Critico',
-    'Alto',
-    'Normal',
-    'Bajo',
-  ];
 
   String? nuevoEstado; //almacenar nuevo estado
   String? nuevaPrioridad; //almacenar nueva prioridad
