@@ -12,9 +12,9 @@ import 'package:provider/provider.dart';
 DateTime fecha = DateTime.now();
 
 class ComentariosViewModel extends ChangeNotifier {
-  final List<ComentarioModel> comentarios = [];
+  // final List<ComentarioModel> comentarios = [];
   // final List<ObjetoComentarioModel> objetosComentario = [];
-  List<ComentarioDetalleModel> comentarioDetalle = [];
+  final List<ComentarioDetalleModel> comentarioDetalle = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -57,10 +57,11 @@ class ComentariosViewModel extends ChangeNotifier {
   }
 
 //Obtener Comentarios de la tarea
-  Future<bool> obtenerComentario(
+  Future<ApiResModel> obtenerComentario(
     BuildContext context,
     int tarea,
   ) async {
+    List<ComentarioModel> comentarios = [];
     comentarios.clear();
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -81,14 +82,29 @@ class ComentariosViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
       showError(context, res);
-      return false;
+
+      ApiResModel comentario = ApiResModel(
+        message: comentarios,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return comentario;
     }
 
     comentarios.addAll(res.message);
 
     isLoading = false;
 
-    return true;
+    ApiResModel comentario = ApiResModel(
+      message: comentarios,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    return comentario;
   }
 
   //Obtener Objetos de un comentario de una tarea
@@ -144,21 +160,28 @@ class ComentariosViewModel extends ChangeNotifier {
     return objetos;
   }
 
-  armarComentario(BuildContext context) async {
+  Future<bool> armarComentario(BuildContext context) async {
+    comentarioDetalle.clear();
     final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false)
         .tarea!
         .iDTarea;
 
-    for (var i = 0; i < comentarios.length; i++) {
-      final ComentarioModel coment = comentarios[i];
+    ApiResModel comentarios = await obtenerComentario(context, vmTarea);
+
+    for (var i = 0; i < comentarios.message.length; i++) {
+      final ComentarioModel coment = comentarios.message[i];
 
       ApiResModel objeto = await obtenerObjetoComentario(
           context, vmTarea, coment.tareaComentario);
 
-      comentarioDetalle.add(
-          ComentarioDetalleModel(comentario: coment, objetos: objeto.message));
-      notifyListeners();
+      //comentario completo
+      comentarioDetalle.add(ComentarioDetalleModel(
+          comentario: comentarios.message[i], objetos: objeto.message));
+
+      if (!comentarios.succes || !objeto.succes) return false;
     }
+
+    return true;
   }
 
   showError(BuildContext context, ApiResModel res) {

@@ -50,19 +50,11 @@ class DetalleTareaViewModel extends ChangeNotifier {
     final vmComentarios =
         Provider.of<ComentariosViewModel>(context, listen: false);
 
-    final bool succesComentarios =
-        await vmComentarios.obtenerComentario(context, tarea!.iDTarea);
+    final bool succesComentarios = await vmComentarios.armarComentario(context);
 
-    // for (var i = 0; i < vmComentarios.comentarios.length; i++) {}
+    if (!succesComentarios) return;
 
-    final ApiResModel succesObjetos = await vmComentarios
-        .obtenerObjetoComentario(context, tarea!.iDTarea, 9952);
-
-    if (!succesComentarios || !succesObjetos.succes) return;
-
-    // print(succesObjetos.message[0].objetoNombre);
-
-    vmComentarios.armarComentario(context);
+    // vmComentarios.armarComentario(context);
 
     Navigator.pushNamed(context, AppRoutes.viewComments);
   }

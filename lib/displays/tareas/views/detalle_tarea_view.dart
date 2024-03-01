@@ -49,7 +49,7 @@ class DetalleTareaView extends StatelessWidget {
                           TextButton(
                             onPressed: () => vm.comentariosTarea(context),
                             child: Text(
-                              "Comentarios (${vmComentarios.comentarios.length})",
+                              "Comentarios (${vmComentarios.comentarioDetalle.length})",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ),

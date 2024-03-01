@@ -10,14 +10,15 @@ class ComentariosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
+    final vmTarea = Provider.of<DetalleTareaViewModel>(context);
 
     // List<ComentarioModel> comentarios = vm.comentarioDetalle.comentario;
 
     return Scaffold(
       // bottomNavigationBar: Container(color: Colors.red, height: 50,),
       appBar: AppBar(
-        title: const Text(
-          'Comentarios Tarea: 310',
+        title: Text(
+          'Comentarios Tarea: ${vmTarea.tarea!.iDTarea.toString()}',
           style: AppTheme.titleStyle,
         ),
       ),
@@ -37,15 +38,15 @@ class ComentariosView extends StatelessWidget {
                     style: AppTheme.normalBoldStyle,
                   ),
                   Text(
-                    "sss",
+                    vmTarea.tarea!.tareaObservacion1 ?? "No disponible.",
                     style: AppTheme.normalStyle,
                     textAlign: TextAlign.justify,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Comentarios (4)",
+                        "Comentarios (${vm.comentarioDetalle.length})",
                         style: AppTheme.normalBoldStyle,
                       ),
                     ],
@@ -179,7 +180,7 @@ class _Comentario extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${comentario.comentario}",
+                comentario.comentario.comentario,
                 style: AppTheme.normalStyle,
                 textAlign: TextAlign.justify,
               ),
@@ -206,7 +207,7 @@ class _Comentario extends StatelessWidget {
             ],
           ),
         ),
-        if (index != vm.comentarios.length - 1)
+        if (index != vm.comentarioDetalle.length - 1)
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
