@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import '../models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -76,21 +75,4 @@ class UsuariosViewModel extends ChangeNotifier {
     usuarios[index].select = value!;
     notifyListeners();
   }
-
-  // guardarUsuarios(
-  //   BuildContext context,
-  // ) {
-  //   for (var usuario in usuarios) {
-  //     if (usuario.select) {
-  //       usuariosSeleccionados.add(usuario);
-  //     }
-  //   }
-  //   notifyListeners();
-  //   final vm = Provider.of<CrearTareaViewModel>(context, listen: false);
-
-  //   if (usuariosSeleccionados.isNotEmpty) {
-  //     vm.invitados.addAll(usuariosSeleccionados);
-  //     Navigator.pop(context);
-  //   }
-  // }
 }

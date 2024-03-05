@@ -108,7 +108,7 @@ class _NuevoComentario extends StatelessWidget {
             IconButton(
               tooltip: "Enviar comentario.",
               onPressed: () {
-                vm.comentar(context);
+                vm.comentar(context, vm.comentText);
               },
               icon: const Icon(Icons.send),
             ),

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/displays/tareas/services/tarea_service.dart';
+import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
@@ -29,7 +29,7 @@ class ComentariosViewModel extends ChangeNotifier {
 
   final TextEditingController comentarioController = TextEditingController();
 
-  comentar(BuildContext context) {
+  comentar2(BuildContext context) {
     // if (comentarioController.text == "") {
     //   ScaffoldMessenger.of(context).showSnackBar(
     //     const SnackBar(
@@ -54,6 +54,68 @@ class ComentariosViewModel extends ChangeNotifier {
     // comentarioController.text = ''; //limpiar textformfield
 
     // notifyListeners();
+  }
+
+  Future<ApiResModel> comentar(
+    BuildContext context,
+    String comentario,
+  ) async {
+    //ocultar teclado
+    FocusScope.of(context).unfocus();
+    List<ComentarioModel> comentarios = [];
+
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
+
+    //usuario y token
+    String user = loginVM.nameUser;
+    String token = loginVM.token;
+    int idTarea = vmTarea.tarea!.iDTarea;
+
+    ComentarService comentarService = ComentarService();
+
+    ComentarModel comentario = ComentarModel(
+      comentario: comentarioController.text,
+      tarea: idTarea,
+      userName: user,
+    );
+
+    print(comentario.userName);
+
+    isLoading = true;
+
+    ApiResModel res = await comentarService.postComentar(
+      token,
+      comentario,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      showError(context, res);
+
+      ApiResModel comentarioNuevo = ApiResModel(
+        message: comentario,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return comentarioNuevo;
+    }
+
+    comentarios.addAll(res.message);
+
+    isLoading = false;
+
+    ApiResModel comentarioNuevo = ApiResModel(
+      message: comentarios,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    return comentarioNuevo;
   }
 
 //Obtener Comentarios de la tarea

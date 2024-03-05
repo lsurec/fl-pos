@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/tareas/services/comentario_service.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/services/id_referencia_service.dart';
 export 'package:flutter_post_printer_example/displays/tareas/services/usuario_service.dart';
 

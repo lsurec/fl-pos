@@ -1,3 +1,7 @@
+export 'package:flutter_post_printer_example/displays/tareas/models/actualizar_estado_model.dart';
+
+export 'package:flutter_post_printer_example/displays/tareas/models/comentar_model.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/models/comentario_detalle_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/responsable_model.dart';
