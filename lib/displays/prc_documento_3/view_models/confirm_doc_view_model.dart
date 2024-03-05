@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -16,8 +18,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xml/xml.dart';
 import 'dart:math';
+import 'package:flutter_post_printer_example/libraries/app_data.dart'
+    as AppData;
 
 class ConfirmDocViewModel extends ChangeNotifier {
+  final PrinterManager instanceManager = PrinterManager.instance;
+
   //Mostrar boton para imprimir
   bool _directPrint = Preferences.directPrint;
   bool get directPrint => _directPrint;
@@ -118,6 +124,204 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //si no encunetra el tipo
     return 0;
+  }
+
+  printNetwork() async {
+    //Proveedor de datos externo
+    final loginVM = Provider.of<LoginViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    final docVM = Provider.of<DocumentViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.nameUser;
+    String tokenUser = loginVM.token;
+    String cuentaRef = docVM.vendedorSelect?.nomCuentaCorrentista ?? "";
+
+    isLoading = true;
+
+    final DocumentService documentService = DocumentService();
+
+    final ApiResModel res = await documentService.getDataComanda(
+      user, // user,
+      tokenUser, // token,
+      consecutivoDoc, // consecutivo,
+    );
+
+    if (!res.succes) {
+      isLoading = false;
+
+      ErrorModel error = ErrorModel(
+        date: DateTime.now(),
+        description: res.message,
+        storeProcedure: res.storeProcedure,
+      );
+
+      NotificationService.showErrorView(
+        scaffoldKey.currentContext!,
+        error,
+      );
+
+      return;
+    }
+
+    final List<PrintDataComandaModel> detalles = res.message;
+
+    final List<FormatoComanda> formats = [];
+
+    for (var detalle in detalles) {
+      if (formats.isEmpty) {
+        formats.add(
+          FormatoComanda(
+            ipAdress: detalle.printerName,
+            bodega: detalle.bodega,
+            detalles: [detalle],
+          ),
+        );
+      } else {
+        int indexBodega = -1;
+
+        for (var i = 0; i < formats.length; i++) {
+          final FormatoComanda formato = formats[i];
+          if (detalle.bodega == formato.bodega) {
+            indexBodega = i;
+            break;
+          }
+        }
+
+        if (indexBodega == -1) {
+          formats.add(
+            FormatoComanda(
+              ipAdress: detalle.printerName,
+              bodega: detalle.bodega,
+              detalles: [detalle],
+            ),
+          );
+        } else {
+          formats[indexBodega].detalles.add(detalle);
+        }
+      }
+    }
+
+    int paperDefault = 80; //58 //72 //80
+
+    DateTime now = DateTime.now();
+
+    // Formatear la fecha como una cadena
+    String formattedDate =
+        "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
+
+    PosStyles center = const PosStyles(
+      align: PosAlign.center,
+    );
+    PosStyles centerBold = const PosStyles(
+      align: PosAlign.center,
+      bold: true,
+    );
+
+    for (var element in formats) {
+      try {
+        List<int> bytes = [];
+        final generator = Generator(
+          AppData.paperSize[paperDefault],
+          await CapabilityProfile.load(),
+        );
+
+        bytes += generator.setGlobalCodeTable('CP1252');
+
+        //Incio del formato
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: 'Cant.',
+              width: 2,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+            ),
+            PosColumn(
+              text: '',
+              width: 1,
+              styles: const PosStyles(
+                align: PosAlign.left,
+              ),
+            ),
+            PosColumn(
+              text: 'Descripcion',
+              width: 9,
+              styles: const PosStyles(
+                align: PosAlign.left,
+              ),
+            ),
+          ],
+        );
+
+        for (var tra in element.detalles) {
+          bytes += generator.row(
+            [
+              PosColumn(
+                text: "${tra.cantidad}",
+                width: 2,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.right,
+                ),
+              ),
+              PosColumn(
+                text: "",
+                width: 1,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.left,
+                ),
+              ), // Anc/ Ancho 2
+              PosColumn(
+                text: tra.desProducto,
+                width: 9,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.left,
+                ),
+              ), // Ancho 6
+            ],
+          );
+        }
+
+        bytes += generator.emptyLines(1);
+
+        //TODO:No usar el venedor de la sesion
+
+        bytes += generator.text(
+          "Le atendió: ${cuentaRef.toUpperCase()}",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          formattedDate,
+          styles: center,
+        );
+        //fin del formato
+
+        bytes += generator.cut();
+
+        await PrinterManager.instance.connect(
+            type: PrinterType.network,
+            model: TcpPrinterInput(ipAddress: element.ipAdress));
+
+        await instanceManager.send(type: PrinterType.network, bytes: bytes);
+      } catch (e) {
+        isLoading = false;
+        NotificationService.showSnackbar("No se pudo imprimir.");
+        return;
+      }
+    }
+
+    isLoading = false;
   }
 
   //Navgar a pantalla de impresion

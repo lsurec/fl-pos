@@ -1,16 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
-import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter_post_printer_example/libraries/app_data.dart'
-    as AppData;
 
 class DocumentoViewModel extends ChangeNotifier {
   //control del proceso
@@ -20,105 +15,6 @@ class DocumentoViewModel extends ChangeNotifier {
   set isLoading(bool value) {
     _isLoading = value;
     notifyListeners();
-  }
-
-  printNetwork() async {
-    int paperDefault = 80; //58 //72 //80
-
-    DateTime now = DateTime.now();
-
-    // Formatear la fecha como una cadena
-    String formattedDate =
-        "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
-
-    try {
-      List<int> bytes = [];
-      final generator = Generator(
-        AppData.paperSize[paperDefault],
-        await CapabilityProfile.load(),
-      );
-      bytes += generator.setGlobalCodeTable('CP1252');
-
-      bytes += generator.text(
-        "15 DE AGOSTO",
-        styles: PosStyles(
-          bold: true,
-          align: PosAlign.center,
-          height: PosTextSize.size2,
-        ),
-      );
-      bytes += generator.text(
-        "Mesa: Mesa 1",
-        styles: PosStyles(
-          align: PosAlign.center,
-          height: PosTextSize.size2,
-        ),
-      );
-
-      bytes += generator.text(
-        "REST - HPJ - 134",
-        styles: PosStyles(
-          align: PosAlign.center,
-          height: PosTextSize.size2,
-        ),
-      );
-
-      bytes += generator.emptyLines(2);
-
-      bytes += generator.row(
-        [
-          PosColumn(text: 'Cant.', width: 2), // Ancho 2
-          PosColumn(text: 'Descripcion', width: 10), // Ancho 6
-        ],
-      );
-      bytes += bytes += generator.row(
-        [
-          PosColumn(
-            text: '1',
-            width: 2,
-            styles: PosStyles(
-              height: PosTextSize.size2,
-            ),
-          ), // Ancho 2
-          PosColumn(
-            text: 'DESAYUNO TIPICO',
-            width: 10,
-            styles: PosStyles(
-              height: PosTextSize.size2,
-            ),
-          ), // Ancho 6
-        ],
-      );
-      bytes += generator.emptyLines(2);
-
-      bytes += generator.text(
-        "Le atendió: ANAÍ CRUZ",
-        styles: PosStyles(
-          align: PosAlign.center,
-          height: PosTextSize.size1,
-        ),
-      );
-      bytes += generator.text(
-        formattedDate,
-        styles: PosStyles(
-          align: PosAlign.center,
-          height: PosTextSize.size1,
-        ),
-      );
-      bytes += generator.cut();
-
-      PrinterManager.instance.connect(
-        type: PrinterType.network,
-        model: TcpPrinterInput(
-          ipAddress: "192.168.0.15",
-        ),
-      );
-      final PrinterManager instanceManager = PrinterManager.instance;
-
-      await instanceManager.send(type: PrinterType.network, bytes: bytes);
-    } catch (e) {
-      print("No se pudo imprimir: ${e.toString()}");
-    }
   }
 
   //nuevo documento

@@ -68,15 +68,16 @@ class _Tabs2ViewState extends State<Tabs2View>
                   onPressed: () => vm.newDocument(context, _goToFirstTab),
                   icon: const Icon(Icons.note_add_outlined),
                 ),
-                IconButton(
-                  onPressed: () => vm.sendDocumnet(
-                    context,
-                    2,
+                if (vmDoc.monitorPrint())
+                  IconButton(
+                    onPressed: () => vm.sendDocumnet(
+                      context,
+                      2,
+                    ),
+                    icon: const Icon(
+                      Icons.desktop_windows_outlined,
+                    ),
                   ),
-                  icon: const Icon(
-                    Icons.desktop_windows_outlined,
-                  ),
-                ),
                 IconButton(
                   tooltip: "Imprimir",
                   onPressed: () => vm.sendDocumnet(

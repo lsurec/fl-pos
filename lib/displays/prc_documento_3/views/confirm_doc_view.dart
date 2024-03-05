@@ -101,7 +101,7 @@ class ConfirmDocView extends StatelessWidget {
                     ),
                   ),
                   if (!vm.showPrint) _Options(),
-                  if (vm.showPrint) _Print(),
+                  if (vm.showPrint) _Print(screen: screen),
                 ],
               ),
             ),
@@ -288,6 +288,9 @@ class _Observacion extends StatelessWidget {
 }
 
 class _Print extends StatelessWidget {
+  final int screen;
+
+  const _Print({super.key, required this.screen});
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
@@ -320,7 +323,8 @@ class _Print extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.navigatePrint(context),
+              onTap: () =>
+                  screen == 1 ? vm.navigatePrint(context) : vm.printNetwork(),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,

@@ -61,6 +61,22 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool monitorPrint() {
+    bool showPrint = false;
+    //el parametro que indica si se imprime en mmonitor o no es 272
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == 272) {
+        showPrint = true;
+        break;
+      }
+    }
+
+    return showPrint;
+  }
+
   bool editPrice() {
     bool edit = false;
     //el parametro que indica si se puede esitar el precio o no es 351
