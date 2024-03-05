@@ -10,6 +10,7 @@ class UsuariosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -17,6 +18,13 @@ class UsuariosView extends StatelessWidget {
           'Buscar Invitados y Responsable',
           style: AppTheme.titleStyle,
         ),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => vmCrear.guardarUsuarios(context),
+            icon: const Icon(Icons.group_add_rounded),
+            tooltip: "Guardar cambios",
+          ),
+        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -70,6 +78,9 @@ class _UsuariosEncontados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final vm = Provider.of<UsuariosViewModel>(context, listen: false);
+
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
@@ -85,27 +96,45 @@ class _UsuariosEncontados extends StatelessWidget {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                Text(
-                  usuario.name,
-                  style: AppTheme.normalStyle,
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: GestureDetector(
+              onTap: () {
+                vmCrear.seleccionarResponsable(context, usuario);
+              },
+              child: ListTile(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 5),
+                    Text(
+                      usuario.name,
+                      style: AppTheme.normalStyle,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: AppTheme.normalStyle,
+                        children: [
+                          const TextSpan(text: "Email: "),
+                          TextSpan(
+                              text: usuario.email,
+                              style: AppTheme.normalBoldStyle),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                  ],
                 ),
-                RichText(
-                  text: TextSpan(
-                    style: AppTheme.normalStyle,
-                    children: [
-                      const TextSpan(text: "Email: "),
-                      TextSpan(
-                          text: usuario.email, style: AppTheme.normalBoldStyle),
-                    ],
-                  ),
+                leading: Column(
+                  children: [
+                    if (vm.tipoBusqueda == 2)
+                      Checkbox(
+                        activeColor: AppTheme.primary,
+                        value: usuario.select,
+                        onChanged: (value) => vm.changeChecked(value, index),
+                      ),
+                  ],
                 ),
-                const SizedBox(height: 5),
-              ],
+              ),
             ),
           ),
         );

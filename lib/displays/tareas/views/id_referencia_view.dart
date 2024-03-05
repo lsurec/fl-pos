@@ -51,7 +51,8 @@ class IdReferenciaView extends StatelessWidget {
                   ),
                   const Divider(),
                   _ReferenciasEncontradas(
-                      referenciasEncontradas: vm.idReferencias)
+                    referenciasEncontradas: vm.idReferencias,
+                  )
                 ],
               ),
             ),
@@ -72,6 +73,8 @@ class _ReferenciasEncontradas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
@@ -92,9 +95,18 @@ class _ReferenciasEncontradas extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 5),
-                Text(
-                  referencia.descripcion,
-                  style: AppTheme.normalStyle,
+                GestureDetector(
+                  onTap: () {
+                    // Tu lógica cuando se hace tap en el Texto o en la Columna completa
+                    print(
+                        'Se hizo tap en la referencia: ${referencia.descripcion}');
+
+                    vmCrear.seleccionarIdRef(context, referencia);
+                  },
+                  child: Text(
+                    referencia.descripcion,
+                    style: AppTheme.normalStyle,
+                  ),
                 ),
                 Row(
                   children: [

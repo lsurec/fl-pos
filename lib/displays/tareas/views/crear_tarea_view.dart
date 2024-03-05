@@ -246,33 +246,34 @@ class CrearTareaView extends StatelessWidget {
                     const SizedBox(height: 10),
                     TextButton(
                       onPressed: () => vm.irIdReferencia(context),
-                      child: const ListTile(
+                      child: ListTile(
                         title: Row(
                           children: [
-                            Text(
+                            const Text(
                               "Id referencia :",
                               style: AppTheme.normalStyle,
                             ),
-                            Text(
+                            const Text(
                               " * ",
                               style: AppTheme.obligatoryBoldStyle,
                             ),
-                            SizedBox(width: 30),
-                            Text(
-                              "IL - 1",
-                              style: AppTheme.normalBoldStyle,
-                            ),
+                            const SizedBox(width: 30),
+                            if (vm.idReferencia != null)
+                              Text(
+                                vm.idReferencia!.referenciaId,
+                                style: AppTheme.normalBoldStyle,
+                              ),
                           ],
                         ),
-                        leading: Icon(Icons.search),
-                        contentPadding: EdgeInsets.all(0),
+                        leading: const Icon(Icons.search),
+                        contentPadding: const EdgeInsets.all(0),
                       ),
                     ),
                     const Divider(),
 
                     // const SizedBox(height: 5),
                     TextButton(
-                      onPressed: () => vm.irUsuarios(context),
+                      onPressed: () => vm.irUsuarios(context, 1),
                       child: const ListTile(
                         title: Text(
                           "Añadir responsable",
@@ -282,22 +283,24 @@ class CrearTareaView extends StatelessWidget {
                         contentPadding: EdgeInsets.all(0),
                       ),
                     ),
-                    const ListTile(
-                      title: Text(
-                        "Karina Ortega (DLCASA01)",
-                        style: AppTheme.normalBoldStyle,
+                    if (vm.responsable != null)
+                      ListTile(
+                        title: Text(
+                          vm.responsable!.name,
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        subtitle: Text(
+                          vm.responsable!.email,
+                          style: AppTheme.normalStyle,
+                        ),
+                        leading: const Icon(Icons.person),
+                        trailing: const Icon(Icons.close),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 10),
                       ),
-                      subtitle: Text(
-                        "kortega@delacasa.com.gt",
-                        style: AppTheme.normalStyle,
-                      ),
-                      leading: Icon(Icons.person),
-                      trailing: Icon(Icons.close),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
                     const Divider(),
                     TextButton(
-                      onPressed: () => vm.irUsuarios(context),
+                      onPressed: () => vm.irUsuarios(context, 2),
                       child: const ListTile(
                         title: Text(
                           "Añadir invitados",
@@ -326,7 +329,10 @@ class CrearTareaView extends StatelessWidget {
                                 style: AppTheme.normalStyle,
                               ),
                               leading: const Icon(Icons.person),
-                              trailing: const Icon(Icons.close),
+                              trailing: GestureDetector(
+                                child: const Icon(Icons.close),
+                                onTap: () => vm.eliminarInvitado(index),
+                              ),
                               contentPadding:
                                   const EdgeInsets.symmetric(horizontal: 10),
                             ),

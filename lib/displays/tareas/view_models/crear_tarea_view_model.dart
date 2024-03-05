@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -51,6 +52,10 @@ class CrearTareaViewModel extends ChangeNotifier {
   String? observacion;
   String? titulo;
   String tiempo = "10";
+  IdReferenciaModel? idReferencia;
+
+  UsuarioModel? responsable;
+  List<UsuarioModel> invitados = [];
 
   PeriodicidadModel? periodicidad;
 
@@ -73,13 +78,14 @@ class CrearTareaViewModel extends ChangeNotifier {
     horaFinal.text = horaFormato(fecha10);
   }
 
-  List<UsuarioModel> invitados = [];
-
   irIdReferencia(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.selectReferenceId);
   }
 
-  irUsuarios(BuildContext context) {
+  irUsuarios(BuildContext context, int tipo) {
+    final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
+    invitados = [];
+    vmUsuario.tipoBusqueda = tipo;
     Navigator.pushNamed(context, AppRoutes.selectResponsibleUser);
   }
 
@@ -485,5 +491,72 @@ class CrearTareaViewModel extends ChangeNotifier {
       context,
       error,
     );
+  }
+
+  seleccionarIdRef(
+    BuildContext context,
+    IdReferenciaModel idRefe,
+  ) {
+    idReferencia = idRefe;
+
+    notifyListeners();
+
+    if (idReferencia != null) {
+      Navigator.pop(context);
+    }
+  }
+
+  seleccionarResponsable(
+    BuildContext context,
+    UsuarioModel respon,
+  ) {
+    responsable = respon;
+    notifyListeners();
+
+    if (responsable != null) {
+      Navigator.pop(context);
+    }
+  }
+
+  // seleccionarUsuarios(
+  //   BuildContext context,
+  //   UsuarioModel usuario,
+  //   int opcion,
+  // ) {
+  //   if (opcion == 1) {
+  //     responsable = usuario;
+  //     notifyListeners();
+  //   }
+
+  //   if (responsable != null) {
+  //     Navigator.pop(context);
+  //   }
+  // }
+
+  guardarUsuarios(
+    BuildContext context,
+  ) {
+    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+
+    vmUsuarios.usuariosSeleccionados.clear();
+
+    for (var usuario in vmUsuarios.usuarios) {
+      if (usuario.select) {
+        vmUsuarios.usuariosSeleccionados.add(usuario);
+      }
+    }
+    notifyListeners();
+    final vm = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+    if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
+      vm.invitados.addAll(vmUsuarios.usuariosSeleccionados);
+      Navigator.pop(context);
+    }
+  }
+
+  void eliminarInvitado(int index) {
+    invitados[index].select = false;
+    invitados.removeAt(index);
+    notifyListeners();
   }
 }
