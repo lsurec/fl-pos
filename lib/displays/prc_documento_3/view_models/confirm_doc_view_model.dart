@@ -310,10 +310,16 @@ class ConfirmDocViewModel extends ChangeNotifier {
         bytes += generator.cut();
 
         await PrinterManager.instance.connect(
-            type: PrinterType.network,
-            model: TcpPrinterInput(ipAddress: element.ipAdress));
+          type: PrinterType.network,
+          model: TcpPrinterInput(
+            ipAddress: element.ipAdress,
+          ),
+        );
 
-        await instanceManager.send(type: PrinterType.network, bytes: bytes);
+        await instanceManager.send(
+          type: PrinterType.network,
+          bytes: bytes,
+        );
       } catch (e) {
         isLoading = false;
         NotificationService.showSnackbar("No se pudo imprimir.");
