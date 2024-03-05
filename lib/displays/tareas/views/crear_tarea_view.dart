@@ -294,7 +294,10 @@ class CrearTareaView extends StatelessWidget {
                           style: AppTheme.normalStyle,
                         ),
                         leading: const Icon(Icons.person),
-                        trailing: const Icon(Icons.close),
+                        trailing: GestureDetector(
+                          child: const Icon(Icons.close),
+                          onTap: () => vm.eliminarResponsable(),
+                        ),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 10),
                       ),

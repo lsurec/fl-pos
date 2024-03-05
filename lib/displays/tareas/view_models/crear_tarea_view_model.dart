@@ -559,4 +559,9 @@ class CrearTareaViewModel extends ChangeNotifier {
     invitados.removeAt(index);
     notifyListeners();
   }
+
+  void eliminarResponsable() {
+    responsable = null;
+    notifyListeners();
+  }
 }
