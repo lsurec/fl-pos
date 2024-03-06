@@ -252,7 +252,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
               ),
             ),
             PosColumn(
-              text: 'Descripcion',
+              text: 'Descripción',
               width: 9,
               styles: const PosStyles(
                 align: PosAlign.left,
@@ -437,7 +437,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendDoc(BuildContext context) async {
+  Future<void> sendDoc(
+    BuildContext context,
+    int screen,
+  ) async {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     if (docVM.printFel()) {
@@ -465,7 +468,11 @@ class ConfirmDocViewModel extends ChangeNotifier {
       showPrint = true;
 
       if (directPrint) {
-        navigatePrint(context);
+        if (screen == 1) {
+          navigatePrint(context);
+        } else {
+          printNetwork();
+        }
       }
 
       isLoading = false;

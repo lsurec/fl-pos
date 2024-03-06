@@ -100,7 +100,10 @@ class ConfirmDocView extends StatelessWidget {
                       style: AppTheme.normalStyle,
                     ),
                   ),
-                  if (!vm.showPrint) _Options(),
+                  if (!vm.showPrint)
+                    _Options(
+                      screen: screen,
+                    ),
                   if (vm.showPrint) _Print(screen: screen),
                 ],
               ),
@@ -469,6 +472,9 @@ class _OptionsErrorAll extends StatelessWidget {
 }
 
 class _Options extends StatelessWidget {
+  final int screen;
+
+  const _Options({super.key, required this.screen});
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
@@ -503,7 +509,7 @@ class _Options extends StatelessWidget {
             child: GestureDetector(
               // onTap: () => vm.sendDocument(),
               onTap: () {
-                vm.sendDoc(context);
+                vm.sendDoc(context, screen);
                 // vm.isLoading = true
               },
               child: Container(
