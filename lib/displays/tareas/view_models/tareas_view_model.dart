@@ -99,6 +99,7 @@ class TareasViewModel extends ChangeNotifier {
     BuildContext context,
     String search,
   ) async {
+    if (!isValidFormCSearch()) return;
     tareas.clear();
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -139,6 +140,7 @@ class TareasViewModel extends ChangeNotifier {
     BuildContext context,
     String search,
   ) async {
+    if (!isValidFormCSearch()) return;
     tareas.clear();
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);

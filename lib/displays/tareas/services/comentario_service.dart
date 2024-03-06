@@ -26,8 +26,6 @@ class ComentarService {
 
       ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
 
-      print(res.data);
-
       //si el api no responde
       if (response.statusCode != 200 && response.statusCode != 201) {
         return ApiResModel(
@@ -38,7 +36,7 @@ class ComentarService {
         );
       }
 
-      ComentarModel resComent = ComentarModel.fromMap(res.data);
+      ResComentarioModel resComent = ResComentarioModel.fromMap(res.data);
 
       //Retornar respuesta correcta
       return ApiResModel(

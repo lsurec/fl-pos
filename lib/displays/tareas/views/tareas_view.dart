@@ -206,7 +206,13 @@ class _InputSerach extends StatelessWidget {
       key: vm.formKeySearch,
       child: TextFormField(
         onFieldSubmitted: (value) {
-          vm.performSearch();
+          if (vm.filtro == 1) {
+            vm.buscarTareasDescripcion(context, vm.searchController.text);
+          }
+
+          if (vm.filtro == 2) {
+            vm.buscarTareasIdReferencia(context, vm.searchController.text);
+          }
         },
         textInputAction: TextInputAction.search,
         controller: vm.searchController,
@@ -225,11 +231,9 @@ class _InputSerach extends StatelessWidget {
             ),
             // onPressed: () => vm.performSearch(),
             onPressed: () {
-              vm.performSearch();
               if (vm.filtro == 1) {
                 vm.buscarTareasDescripcion(context, vm.searchController.text);
               }
-
               if (vm.filtro == 2) {
                 vm.buscarTareasIdReferencia(context, vm.searchController.text);
               }

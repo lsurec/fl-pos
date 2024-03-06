@@ -91,28 +91,31 @@ class _NuevoComentario extends StatelessWidget {
     return TextFormField(
       controller: vm.comentarioController,
       onChanged: (value) {
-        vm.comentText = value;
+        vm.comentarioController.text = value;
       },
       decoration: InputDecoration(
         labelText: 'Nuevo comentario',
-        suffixIcon: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              tooltip: "Adjuntar Archivos",
-              onPressed: () {
-                print("Abrir explorador de archivos");
-              },
-              icon: const Icon(Icons.attach_file_outlined),
-            ),
-            IconButton(
-              tooltip: "Enviar comentario.",
-              onPressed: () {
-                vm.comentar(context, vm.comentText);
-              },
-              icon: const Icon(Icons.send),
-            ),
-          ],
+        suffixIcon: SizedBox(
+          width: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                tooltip: "Adjuntar Archivos",
+                onPressed: () {
+                  print("Abrir explorador de archivos");
+                },
+                icon: const Icon(Icons.attach_file_outlined),
+              ),
+              IconButton(
+                tooltip: "Enviar comentario.",
+                onPressed: () {
+                  vm.comentar(context, vm.comentarioController.text);
+                },
+                icon: const Icon(Icons.send),
+              ),
+            ],
+          ),
         ),
       ),
     );

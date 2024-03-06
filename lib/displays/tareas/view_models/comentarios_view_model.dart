@@ -25,36 +25,7 @@ class ComentariosViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String comentText = ""; //comenrario nuevo
-
   final TextEditingController comentarioController = TextEditingController();
-
-  comentar2(BuildContext context) {
-    // if (comentarioController.text == "") {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text(
-    //         'Ingrese un comentario.',
-    //       ),
-    //     ),
-    //   );
-    //   return;
-    // }
-    // final ComentarioNuevoModel comentario = ComentarioNuevoModel(
-    //   comentario: comentarioController.text,
-    //   fechaHora: "fecha",
-    //   nameUser: "DESA02",
-    //   tarea: 4000,
-    //   tareaComentario: 4600,
-    //   userName: "Mario ejemplo (Desa02)",
-    // );
-
-    // comentarios.add(comentario); //agregar comentario a la lista
-
-    // comentarioController.text = ''; //limpiar textformfield
-
-    // notifyListeners();
-  }
 
   Future<ApiResModel> comentar(
     BuildContext context,
@@ -62,7 +33,6 @@ class ComentariosViewModel extends ChangeNotifier {
   ) async {
     //ocultar teclado
     FocusScope.of(context).unfocus();
-    List<ComentarioModel> comentarios = [];
 
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
@@ -79,8 +49,6 @@ class ComentariosViewModel extends ChangeNotifier {
       tarea: idTarea,
       userName: user,
     );
-
-    print(comentario.userName);
 
     isLoading = true;
 
@@ -104,16 +72,30 @@ class ComentariosViewModel extends ChangeNotifier {
       return comentarioNuevo;
     }
 
-    comentarios.addAll(res.message);
-
-    isLoading = false;
+    ComentarioModel comentarioCreado = ComentarioModel(
+      comentario: comentarioController.text,
+      fechaHora: fecha,
+      nameUser: user,
+      userName: user,
+      tarea: idTarea,
+      tareaComentario: res.message.res,
+    );
 
     ApiResModel comentarioNuevo = ApiResModel(
-      message: comentarios,
+      message: comentarioCreado,
       succes: true,
       url: "",
       storeProcedure: '',
     );
+
+    comentarioDetalle.add(
+      ComentarioDetalleModel(comentario: comentarioNuevo.message, objetos: []),
+    );
+
+    notifyListeners();
+
+    comentarioController.text = ""; //limpiar input
+    isLoading = false;
 
     return comentarioNuevo;
   }
