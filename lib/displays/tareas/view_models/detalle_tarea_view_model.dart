@@ -204,7 +204,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     ComentarioModel comentario = ComentarioModel(
       comentario:
-          "Cambio de estado ( ${estado.descripcion} ) realizado por usuario $user",
+          "Cambio de estado ( ${estado.descripcion} ) realizado por usuario $user.",
       fechaHora: fecha,
       nameUser: user,
       userName: user,
@@ -224,6 +224,79 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false;
 
     return nuevoEstado;
+  }
+
+  //Actualizar el nivel de prioridad de la tarea
+  Future<ApiResModel> actualizarPrioridad(
+    BuildContext context,
+    PrioridadModel prioridad,
+  ) async {
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final ActualizarTareaService tareaService = ActualizarTareaService();
+
+    isLoading = true;
+
+    ActualizarPrioridadModel actualizar = ActualizarPrioridadModel(
+        userName: user,
+        prioridad: prioridad.nivelPrioridad,
+        tarea: tarea!.iDTarea);
+
+    final ApiResModel res = await tareaService.postPrioridadTarea(
+      token,
+      actualizar,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      showError(context, res);
+
+      ApiResModel nuevaPrioridad = ApiResModel(
+        message: actualizar,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return nuevaPrioridad;
+    }
+
+    ApiResModel nuevaPrioridad = ApiResModel(
+      message: actualizar,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    ComentarioModel comentario = ComentarioModel(
+      comentario:
+          "Cambio de Nivel de Prioridad  ( ${prioridad.nombre} ) realizado por usuario $user.",
+      fechaHora: fecha,
+      nameUser: user,
+      userName: user,
+      tarea: tarea!.iDTarea,
+      tareaComentario: 0,
+    );
+
+    tarea!.nivelPrioridad = prioridad.nivelPrioridad; // asignar id prioridad
+    tarea!.nomNivelPrioridad = prioridad.nombre; // asignar prioridad
+
+    vmComentarios.comentarioDetalle.add(ComentarioDetalleModel(
+      comentario: comentario,
+      objetos: [],
+    ));
+
+    notifyListeners();
+    isLoading = false;
+
+    return nuevaPrioridad;
   }
 
   showError(BuildContext context, ApiResModel res) {

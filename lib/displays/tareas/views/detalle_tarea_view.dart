@@ -286,15 +286,8 @@ class _ActualizarEstado extends StatelessWidget {
                 ),
               )
               .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Seleccione un nuevo estado o presione cancelar.';
-            }
-            return null;
-          },
           onChanged: (value) {
             vm.actualizarEstado(context, value!);
-            // vm.nuevoEstado = value.toString();
           },
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
@@ -357,14 +350,8 @@ class _ActualizarPrioridad extends StatelessWidget {
                 ),
               )
               .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Seleccione un nuevo estado o presione cancelar.';
-            }
-            return null;
-          },
           onChanged: (value) {
-            vm.nuevaPrioridad = value.toString();
+            vm.actualizarPrioridad(context, value!);
           },
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),

@@ -30,3 +30,4 @@ export 'package:flutter_post_printer_example/displays/tareas/models/comentario_n
 export 'package:flutter_post_printer_example/displays/tareas/models/tarea_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/res_comentario_model.dart';
+export 'package:flutter_post_printer_example/displays/tareas/models/actualizar_prioridad_model.dart';
