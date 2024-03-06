@@ -14,6 +14,7 @@ class DetalleTareaView extends StatelessWidget {
     final vm = Provider.of<DetalleTareaViewModel>(context);
     final vmComentarios =
         Provider.of<ComentariosViewModel>(context, listen: false);
+    final vmUsuarios = Provider.of<CrearTareaViewModel>(context);
 
     return Stack(
       children: [
@@ -213,8 +214,13 @@ class DetalleTareaView extends StatelessWidget {
                               ),
                               leading:
                                   const Icon(Icons.arrow_circle_right_outlined),
-                              trailing:
-                                  const Icon(Icons.person_add_alt_1_outlined),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  vmUsuarios.irUsuarios(context, 2);
+                                },
+                                icon:
+                                    const Icon(Icons.person_add_alt_1_outlined),
+                              ),
                             );
                           },
                         ),
@@ -244,6 +250,14 @@ class DetalleTareaView extends StatelessWidget {
             ),
           ),
         ),
+        //importarte para mostrar la pantalla de carga 
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
       ],
     );
   }

@@ -169,7 +169,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     final ActualizarTareaService tareaService = ActualizarTareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
     ActualizarEstadoModel actualizar = ActualizarEstadoModel(
         userName: user, estado: estado.estado, tarea: tarea!.iDTarea);
@@ -221,7 +221,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
     ));
 
     notifyListeners();
-    isLoading = false;
+
+    isLoading = false; //detener carga
 
     return nuevoEstado;
   }
@@ -240,7 +241,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     final ActualizarTareaService tareaService = ActualizarTareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
     ActualizarPrioridadModel actualizar = ActualizarPrioridadModel(
         userName: user,
@@ -294,7 +295,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
     ));
 
     notifyListeners();
-    isLoading = false;
+
+    isLoading = false; //detener carga
 
     return nuevaPrioridad;
   }

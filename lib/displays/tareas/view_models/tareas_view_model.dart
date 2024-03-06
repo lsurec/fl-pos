@@ -34,23 +34,6 @@ class TareasViewModel extends ChangeNotifier {
 
 //Lista ejemplo de las tareas
   final List<TareaModel> tareas = [];
-  // final List<PeriodicidadModel> periodicidades = [];
-  // final List<ResponsableModel> responsables = [];
-  // final List<InvitadoModel> invitados = [];
-  final List<UsuarioModel> usuarios = [];
-  final List<IdReferenciaModel> idReferencias = [];
-
-  performSearch() {
-    if (filtro == 1) {
-      print("Formulario valido, Filtro $filtro por Descripcion");
-    }
-    if (filtro == 2) {
-      print("Formulario valido, Filtro $filtro por ID Referencia");
-    }
-    if (!isValidFormCSearch()) return;
-    print("Formulario valido");
-    //TODO:Funcion buscar
-  }
 
   busqueda(int filtro) {
     this.filtro = filtro;

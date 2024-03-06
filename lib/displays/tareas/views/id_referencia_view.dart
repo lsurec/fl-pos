@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class IdReferenciaView extends StatelessWidget {
@@ -11,54 +12,66 @@ class IdReferenciaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<IdReferenciaViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Buscar ID Referencia',
-          style: AppTheme.titleStyle,
-        ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          print("Volver a ceagar");
-        },
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: vm.buscarIdReferencia,
-                    onChanged: (criterio) {
-                      // vm.filtrarLista(criterio);
-                      vm.buscarIdRefencia(context, criterio);
-                    },
-                    decoration: const InputDecoration(
-                      labelText:
-                          "Ingrese un caracter para iniciar la busqueda.",
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Buscar ID Referencia',
+              style: AppTheme.titleStyle,
+            ),
+          ),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              print("Volver a ceagar");
+            },
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
                     children: [
-                      Text(
-                        "Registros (${vm.idReferencias.length})",
-                        style: AppTheme.normalBoldStyle,
+                      TextFormField(
+                        controller: vm.buscarIdReferencia,
+                        onChanged: (criterio) {
+                          // vm.filtrarLista(criterio);
+                          vm.buscarIdRefencia(context, criterio);
+                        },
+                        decoration: const InputDecoration(
+                          labelText:
+                              "Ingrese un caracter para iniciar la busqueda.",
+                        ),
                       ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Registros (${vm.idReferencias.length})",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      _ReferenciasEncontradas(
+                        referenciasEncontradas: vm.idReferencias,
+                      )
                     ],
                   ),
-                  const Divider(),
-                  _ReferenciasEncontradas(
-                    referenciasEncontradas: vm.idReferencias,
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        //importarte para mostrar la pantalla de carga
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }

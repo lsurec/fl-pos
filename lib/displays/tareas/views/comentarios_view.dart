@@ -4,6 +4,8 @@ import 'package:flutter_post_printer_example/displays/tareas/view_models/view_mo
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
+import '../../../widgets/widgets.dart';
+
 class ComentariosView extends StatelessWidget {
   const ComentariosView({super.key});
 
@@ -14,67 +16,79 @@ class ComentariosView extends StatelessWidget {
 
     // List<ComentarioModel> comentarios = vm.comentarioDetalle.comentario;
 
-    return Scaffold(
-      // bottomNavigationBar: Container(color: Colors.red, height: 50,),
-      appBar: AppBar(
-        title: Text(
-          'Comentarios Tarea: ${vmTarea.tarea!.iDTarea.toString()}',
-          style: AppTheme.titleStyle,
-        ),
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          print("Volver a ceagar");
-        },
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Observación",
-                    style: AppTheme.normalBoldStyle,
-                  ),
-                  Text(
-                    vmTarea.tarea!.tareaObservacion1 ?? "No disponible.",
-                    style: AppTheme.normalStyle,
-                    textAlign: TextAlign.justify,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+    return Stack(
+      children: [
+        Scaffold(
+          // bottomNavigationBar: Container(color: Colors.red, height: 50,),
+          appBar: AppBar(
+            title: Text(
+              'Comentarios Tarea: ${vmTarea.tarea!.iDTarea.toString()}',
+              style: AppTheme.titleStyle,
+            ),
+          ),
+          body: RefreshIndicator(
+            onRefresh: () async {
+              print("Volver a ceagar");
+            },
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Comentarios (${vm.comentarioDetalle.length})",
+                      const Text(
+                        "Observación",
                         style: AppTheme.normalBoldStyle,
                       ),
+                      Text(
+                        vmTarea.tarea!.tareaObservacion1 ?? "No disponible.",
+                        style: AppTheme.normalStyle,
+                        textAlign: TextAlign.justify,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Comentarios (${vm.comentarioDetalle.length})",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm.comentarioDetalle.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final ComentarioDetalleModel comentario =
+                              vm.comentarioDetalle[index];
+                          return _Comentario(
+                            comentario: comentario,
+                            index: index,
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 25),
+                      const _NuevoComentario(),
                     ],
                   ),
-                  const Divider(),
-                  const SizedBox(height: 10),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: vm.comentarioDetalle.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final ComentarioDetalleModel comentario =
-                          vm.comentarioDetalle[index];
-                      return _Comentario(
-                        comentario: comentario,
-                        index: index,
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 25),
-                  const _NuevoComentario(),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        //importarte para mostrar la pantalla de carga
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }
