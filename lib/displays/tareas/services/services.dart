@@ -4,3 +4,5 @@ export 'package:flutter_post_printer_example/displays/tareas/services/id_referen
 export 'package:flutter_post_printer_example/displays/tareas/services/usuario_service.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/services/tarea_service.dart';
+
+export 'package:flutter_post_printer_example/displays/tareas/services/actualizar_tarea_service.dart';

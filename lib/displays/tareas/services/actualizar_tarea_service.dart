@@ -9,21 +9,21 @@ class ActualizarTareaService {
 
 //Consumo api para actualizar el estado de la tarea.
 
-  //no hace nada,
-
   Future<ApiResModel> postEstadoTarea(
-    String user,
     String token,
+    ActualizarEstadoModel estado,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Tareas/estado/tarea");
     try {
       //url completa
-      //Configuraciones del api
+
+      // Configurar Api y consumirla
       final response = await http.post(
         url,
+        body: estado.toJson(),
         headers: {
-          "Authorization": "bearer $token",
           "Content-Type": "application/json",
+          "Authorization": "bearer $token",
         },
       );
 
@@ -39,26 +39,15 @@ class ActualizarTareaService {
         );
       }
 
-      //Invitados retornados por api
-      List<IdReferenciaModel> idReferencias = [];
-
-      //recorrer lista api Y  agregar a lista local
-      for (var item in res.data) {
-        //Tipar a map
-        final responseFinally = IdReferenciaModel.fromMap(item);
-        //agregar item a la lista
-        idReferencias.add(responseFinally);
-      }
-
-      //retornar respuesta correcta del api
+      //Retornar respuesta correcta
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: idReferencias,
+        message: res.data,
         storeProcedure: null,
       );
     } catch (e) {
-      //en caso de error retornar el error
+      //retornar respuesta incorrecta
       return ApiResModel(
         url: url.toString(),
         succes: false,

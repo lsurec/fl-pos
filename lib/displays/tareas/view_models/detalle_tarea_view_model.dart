@@ -155,6 +155,77 @@ class DetalleTareaViewModel extends ChangeNotifier {
     return invitado;
   }
 
+  //Actualizar el estado de la tarea
+  Future<ApiResModel> actualizarEstado(
+    BuildContext context,
+    EstadoModel estado,
+  ) async {
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final ActualizarTareaService tareaService = ActualizarTareaService();
+
+    isLoading = true;
+
+    ActualizarEstadoModel actualizar = ActualizarEstadoModel(
+        userName: user, estado: estado.estado, tarea: tarea!.iDTarea);
+
+    final ApiResModel res = await tareaService.postEstadoTarea(
+      token,
+      actualizar,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      showError(context, res);
+
+      ApiResModel nuevoEstado = ApiResModel(
+        message: actualizar,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return nuevoEstado;
+    }
+
+    ApiResModel nuevoEstado = ApiResModel(
+      message: actualizar,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    ComentarioModel comentario = ComentarioModel(
+      comentario:
+          "Cambio de estado ( ${estado.descripcion} ) realizado por usuario $user",
+      fechaHora: fecha,
+      nameUser: user,
+      userName: user,
+      tarea: tarea!.iDTarea,
+      tareaComentario: 0,
+    );
+
+    tarea!.estadoObjeto = estado.estado; // asignar id estado
+    tarea!.tareaEstado = estado.descripcion; // asignar estado
+
+    vmComentarios.comentarioDetalle.add(ComentarioDetalleModel(
+      comentario: comentario,
+      objetos: [],
+    ));
+
+    notifyListeners();
+    isLoading = false;
+
+    return nuevoEstado;
+  }
+
   showError(BuildContext context, ApiResModel res) {
     ErrorModel error = ErrorModel(
       date: DateTime.now(),

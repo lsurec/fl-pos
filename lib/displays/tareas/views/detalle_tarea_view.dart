@@ -293,7 +293,8 @@ class _ActualizarEstado extends StatelessWidget {
             return null;
           },
           onChanged: (value) {
-            vm.nuevoEstado = value.toString();
+            vm.actualizarEstado(context, value!);
+            // vm.nuevoEstado = value.toString();
           },
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
