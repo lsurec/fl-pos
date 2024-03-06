@@ -191,9 +191,17 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                       ),
 
-                      const Text(
-                        "INVITADOS: ",
-                        style: AppTheme.normalBoldStyle,
+                      ListTile(
+                        title: const Text(
+                          "INVITADOS: ",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            vmUsuarios.irUsuarios(context, 2);
+                          },
+                          icon: const Icon(Icons.person_add_alt_1_outlined),
+                        ),
                       ),
                       CardWidget(
                         elevation: 0,
@@ -212,14 +220,10 @@ class DetalleTareaView extends StatelessWidget {
                                 invitado.userName,
                                 style: AppTheme.normalStyle,
                               ),
-                              leading:
-                                  const Icon(Icons.arrow_circle_right_outlined),
+                              leading: const Icon(Icons.person_4),
                               trailing: IconButton(
-                                onPressed: () {
-                                  vmUsuarios.irUsuarios(context, 2);
-                                },
-                                icon:
-                                    const Icon(Icons.person_add_alt_1_outlined),
+                                onPressed: () {},
+                                icon: const Icon(Icons.close),
                               ),
                             );
                           },
@@ -250,7 +254,7 @@ class DetalleTareaView extends StatelessWidget {
             ),
           ),
         ),
-        //importarte para mostrar la pantalla de carga 
+        //importarte para mostrar la pantalla de carga
         if (vm.isLoading)
           ModalBarrier(
             dismissible: false,
