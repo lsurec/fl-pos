@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/tareas/models/eliminar_usuario_model.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/models/actualizar_estado_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/comentar_model.dart';

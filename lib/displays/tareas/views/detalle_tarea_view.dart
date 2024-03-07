@@ -222,7 +222,9 @@ class DetalleTareaView extends StatelessWidget {
                               ),
                               leading: const Icon(Icons.person_4),
                               trailing: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  vm.eliminarInvitado(context, invitado, index);
+                                },
                                 icon: const Icon(Icons.close),
                               ),
                             );

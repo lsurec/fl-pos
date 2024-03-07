@@ -104,4 +104,51 @@ class ActualizarTareaService {
       );
     }
   }
+
+  //Consumo api para eliminar usuarios invitados de la tarea.
+  Future<ApiResModel> postEliminarInvitado(
+      String token, EliminarUsuarioModel usuario, int tareaUser) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/eliminar/usuario/invitado");
+    try {
+      //url completa
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: usuario.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+          "tareaUser": tareaUser.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: res.data,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 }

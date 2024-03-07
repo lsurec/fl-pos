@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/view_models.dart';
+import '../../../widgets/widgets.dart';
 
 class DetalleTareaViewModel extends ChangeNotifier {
   final List<InvitadoModel> invitados = [];
@@ -299,6 +300,87 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
 
     return nuevaPrioridad;
+  }
+
+  //Actualizar el nivel de prioridad de la tarea
+  Future<ApiResModel> eliminarInvitado(
+    BuildContext context,
+    InvitadoModel invitado,
+    int index,
+  ) async {
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+
+    String user = vmLogin.nameUser;
+    String token = vmLogin.token;
+
+    final ActualizarTareaService tareaService = ActualizarTareaService();
+
+    //mostrar dialogo de confirmacion
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            title: "¿Estás seguro?",
+            description:
+                "Este usuario será eliminado de la lista de invitados de esta tarea.",
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    ApiResModel cancelar = ApiResModel(
+      message: "",
+      succes: false,
+      url: "",
+      storeProcedure: '',
+    );
+
+    if (!result) return cancelar;
+
+    isLoading = true; //cargar pantalla
+
+    EliminarUsuarioModel eliminar = EliminarUsuarioModel(
+      tarea: tarea!.iDTarea,
+      userResInvi: "",
+      user: user,
+    );
+
+    final ApiResModel res = await tareaService.postEliminarInvitado(
+      token,
+      eliminar,
+      invitado.tareaUserName,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      showError(context, res);
+
+      ApiResModel usuarioEliminado = ApiResModel(
+        message: eliminar,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return usuarioEliminado;
+    }
+
+    ApiResModel usuarioEliminado = ApiResModel(
+      message: eliminar,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    invitados.removeAt(index);
+
+    notifyListeners();
+
+    isLoading = false; //detener carga
+
+    return usuarioEliminado;
   }
 
   showError(BuildContext context, ApiResModel res) {
