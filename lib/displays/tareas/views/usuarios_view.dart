@@ -13,70 +13,73 @@ class UsuariosView extends StatelessWidget {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'Buscar Invitados y Responsable',
-              style: AppTheme.titleStyle,
-            ),
-            actions: <Widget>[
-              IconButton(
-                onPressed: () => vmCrear.guardarUsuarios(context),
-                icon: const Icon(Icons.group_add_rounded),
-                tooltip: "Guardar cambios",
+    return WillPopScope(
+      onWillPop: () => vm.back(),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                'Buscar Invitados y Responsable',
+                style: AppTheme.titleStyle,
               ),
-            ],
-          ),
-          body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: vm.buscar,
-                        onChanged: (criterio) {
-                          vm.buscarUsuario(context, criterio);
-                        },
-                        decoration: const InputDecoration(
-                          labelText:
-                              "Ingrese un caracter para iniciar la busqueda.",
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Registros (${vm.usuarios.length})",
-                            style: AppTheme.normalBoldStyle,
-                          ),
-                        ],
-                      ),
-                      const Divider(),
-                      _UsuariosEncontados(usuariosEncontrados: vm.usuarios)
-                    ],
-                  ),
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () => vmCrear.guardarUsuarios(context),
+                  icon: const Icon(Icons.group_add_rounded),
+                  tooltip: "Guardar cambios",
                 ),
               ],
             ),
+            body: RefreshIndicator(
+              onRefresh: () async {
+                print("Volver a ceagar");
+              },
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: vm.buscar,
+                          onChanged: (criterio) {
+                            vm.buscarUsuario(context, criterio);
+                          },
+                          decoration: const InputDecoration(
+                            labelText:
+                                "Ingrese un caracter para iniciar la busqueda.",
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Registros (${vm.usuarios.length})",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        _UsuariosEncontados(usuariosEncontrados: vm.usuarios)
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        //importarte para mostrar la pantalla de carga
-        if (vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
-          ),
-        if (vm.isLoading) const LoadWidget(),
-      ],
+          //importarte para mostrar la pantalla de carga
+          if (vm.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.backroundColor,
+            ),
+          if (vm.isLoading) const LoadWidget(),
+        ],
+      ),
     );
   }
 }

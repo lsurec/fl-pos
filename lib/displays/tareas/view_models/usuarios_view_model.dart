@@ -21,8 +21,15 @@ class UsuariosViewModel extends ChangeNotifier {
 
   final TextEditingController buscar = TextEditingController();
 
-  List<UsuarioModel> usuarios = [];
-  List<UsuarioModel> usuariosSeleccionados = [];
+  final List<UsuarioModel> usuarios = [];
+  final List<UsuarioModel> usuariosSeleccionados = [];
+
+  Future<bool> back() async {
+    buscar.clear();
+    usuarios.clear();
+    usuariosSeleccionados.clear();
+    return true;
+  }
 
   Future<void> buscarUsuario(
     BuildContext context,
@@ -31,7 +38,7 @@ class UsuariosViewModel extends ChangeNotifier {
     usuarios.clear();
 
     if (search.isEmpty) {
-      usuarios = [];
+      usuarios.clear();
       notifyListeners();
       print("Ingrese un caracter para realizar una busqueda");
       return;
