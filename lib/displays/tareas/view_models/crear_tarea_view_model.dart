@@ -518,25 +518,12 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
-  // seleccionarUsuarios(
-  //   BuildContext context,
-  //   UsuarioModel usuario,
-  //   int opcion,
-  // ) {
-  //   if (opcion == 1) {
-  //     responsable = usuario;
-  //     notifyListeners();
-  //   }
-
-  //   if (responsable != null) {
-  //     Navigator.pop(context);
-  //   }
-  // }
-
   guardarUsuarios(
     BuildContext context,
   ) {
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+    final vmDetalle =
+        Provider.of<DetalleTareaViewModel>(context, listen: false);
 
     vmUsuarios.usuariosSeleccionados.clear();
 
@@ -552,6 +539,8 @@ class CrearTareaViewModel extends ChangeNotifier {
       vm.invitados.addAll(vmUsuarios.usuariosSeleccionados);
       Navigator.pop(context);
     }
+
+    if (vmUsuarios.tipoBusqueda == 4) vmDetalle.guardarInvitados(context);
   }
 
   void eliminarInvitado(int index) {

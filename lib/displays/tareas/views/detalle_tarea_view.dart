@@ -198,7 +198,8 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           onPressed: () {
-                            vmUsuarios.irUsuarios(context, 2);
+                            //tipoBusqueda = 4 para actualizar invitados
+                            vmUsuarios.irUsuarios(context, 4);
                           },
                           icon: const Icon(Icons.person_add_alt_1_outlined),
                         ),

@@ -12,6 +12,8 @@ class UsuariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final vmDetalle =
+        Provider.of<DetalleTareaViewModel>(context, listen: false);
 
     return WillPopScope(
       onWillPop: () => vm.back(),
@@ -19,13 +21,22 @@ class UsuariosView extends StatelessWidget {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: const Text(
-                'Buscar Invitados y Responsable',
+              title: Text(
+                vm.tipoBusqueda == 1
+                    ? 'Agregar responsable'
+                    : 'Agregar invitados',
                 style: AppTheme.titleStyle,
               ),
               actions: <Widget>[
                 IconButton(
-                  onPressed: () => vmCrear.guardarUsuarios(context),
+                  onPressed: () {
+                    if (vm.tipoBusqueda == 4) {
+                      vmDetalle.guardarInvitados(context);
+                    }
+                    if (vm.tipoBusqueda == 2) {
+                      vmCrear.guardarUsuarios(context);
+                    }
+                  },
                   icon: const Icon(Icons.group_add_rounded),
                   tooltip: "Guardar cambios",
                 ),
@@ -142,7 +153,7 @@ class _UsuariosEncontados extends StatelessWidget {
                 ),
                 leading: Column(
                   children: [
-                    if (vm.tipoBusqueda == 2)
+                    if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
                       Checkbox(
                         activeColor: AppTheme.primary,
                         value: usuario.select,

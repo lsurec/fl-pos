@@ -151,4 +151,54 @@ class ActualizarTareaService {
       );
     }
   }
+
+  //Consumo api para agregar usuarios invitados a la tarea.
+  Future<ApiResModel> postInvitados(
+    String token,
+    NuevoUsuarioModel usuario,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/usuario/invitado");
+    try {
+      //url completa
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: usuario.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      ResNuevoUsuarioModel resComent = ResNuevoUsuarioModel.fromMap(res.data);
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: resComent,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 }

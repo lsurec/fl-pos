@@ -415,4 +415,119 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     return horaFormateada;
   }
+
+//hace falta insetarlo en la lista de invitados
+  Future<ApiResModel> guardarInvitados(
+    BuildContext context,
+  ) async {
+    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String user = vmLogin.nameUser;
+    String token = vmLogin.token;
+
+    final ActualizarTareaService tareaService = ActualizarTareaService();
+
+    final List<InvitadoModel> agregados = []; // guardar invitados nuevos
+    final List<String> repetidos = []; //guardar invitados repetidos
+
+    for (var usuarioInvitado in vmUsuarios.usuariosSeleccionados) {
+      // Verificar si el usuario ya está en la lista de invitados
+      if (invitados.any((inv) => inv.userName == usuarioInvitado.userName)) {
+        repetidos.add(usuarioInvitado.userName);
+        continue;
+      }
+
+      print(repetidos.length);
+
+      NuevoUsuarioModel invitado = NuevoUsuarioModel(
+        tarea: tarea!.iDTarea,
+        userResInvi: usuarioInvitado.userName,
+        user: user,
+      );
+
+      isLoading = true; //cargar pantalla
+
+      final ApiResModel res = await tareaService.postInvitados(
+        token,
+        invitado,
+      );
+
+      //si el consumo salió mal
+      if (!res.succes) {
+        isLoading = false;
+
+        showError(context, res);
+
+        ApiResModel nuevoInvitado = ApiResModel(
+          message: res.message,
+          succes: false,
+          url: "",
+          storeProcedure: '',
+        );
+
+        print(nuevoInvitado.message);
+        return nuevoInvitado;
+      }
+
+      InvitadoModel resInvitados = res.message;
+
+      InvitadoModel agregarInvitado = InvitadoModel(
+        tareaUserName: resInvitados.tareaUserName,
+        eMail: usuarioInvitado.email,
+        userName: usuarioInvitado.userName,
+      );
+
+      agregados.add(agregarInvitado);
+    }
+
+    if (repetidos.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Uno o más usuarios seleccionados ya son invitados de la tarea.',
+          ),
+        ),
+      );
+      ApiResModel nuevoInvitado = ApiResModel(
+        message: agregados,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      print("${nuevoInvitado.message}, hay repetidos");
+
+      return nuevoInvitado;
+    } else {
+      //agregar invitados
+      invitados.addAll(agregados);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Se actualizó la lista de invitados a la tarea.',
+          ),
+        ),
+      );
+    }
+
+    ApiResModel nuevoInvitado = ApiResModel(
+      message: agregados,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
+    print("${nuevoInvitado.message}, no hay repetidos");
+
+    vmUsuarios.usuariosSeleccionados.clear();
+
+    invitados.addAll(agregados);
+
+    vmUsuarios.back();
+    notifyListeners();
+
+    isLoading = false;
+
+    return nuevoInvitado;
+  }
 }
