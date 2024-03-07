@@ -1,5 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
-
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:image/image.dart';
+import 'package:image/image.dart' as img;
 import 'dart:convert';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
@@ -224,6 +227,13 @@ class ConfirmDocViewModel extends ChangeNotifier {
       bold: true,
     );
 
+    final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
+    final Uint8List bytesImg = data.buffer.asUint8List();
+    final img.Image? image = decodeImage(bytesImg);
+
+    // final img.Image? image = img.decodeImage(bytesImg);
+// Using `ESC *`
+
     for (var element in formats) {
       try {
         List<int> bytes = [];
@@ -233,6 +243,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         );
 
         bytes += generator.setGlobalCodeTable('CP1252');
+
+        bytes += generator.image(
+          img.copyResize(image!, height: 200, width: 250),
+        );
 
         //Incio del formato
         bytes += generator.row(
@@ -321,6 +335,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
           bytes: bytes,
         );
       } catch (e) {
+        print(e.toString());
         isLoading = false;
         NotificationService.showSnackbar("No se pudo imprimir.");
         return;
