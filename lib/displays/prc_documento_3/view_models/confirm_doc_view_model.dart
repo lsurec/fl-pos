@@ -1,8 +1,4 @@
 // ignore_for_file: use_build_context_synchronously
-import 'dart:io';
-import 'package:flutter/services.dart';
-import 'package:image/image.dart';
-import 'package:image/image.dart' as img;
 import 'dart:convert';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
@@ -136,15 +132,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final docVM = Provider.of<DocumentViewModel>(
-      scaffoldKey.currentContext!,
-      listen: false,
-    );
-
     //usuario token y cadena de conexion
     String user = loginVM.nameUser;
     String tokenUser = loginVM.token;
-    String cuentaRef = docVM.vendedorSelect?.nomCuentaCorrentista ?? "";
 
     isLoading = true;
 
@@ -215,10 +205,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     PosStyles center = const PosStyles(
       align: PosAlign.center,
-    );
-    PosStyles centerBold = const PosStyles(
-      align: PosAlign.center,
-      bold: true,
     );
 
     // final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
