@@ -7,6 +7,11 @@ class PrintDataComandaModel {
   String iDDocumentoRef;
   String comensal;
   int consecutivoInterno;
+  DateTime fechaHora;
+  String desUbicacion;
+  String desMesa;
+  String desSerieDocumento;
+  String userName;
   String productoId;
   String unidadMedida;
   String desProducto;
@@ -23,6 +28,11 @@ class PrintDataComandaModel {
     required this.iDDocumentoRef,
     required this.comensal,
     required this.consecutivoInterno,
+    required this.fechaHora,
+    required this.desUbicacion,
+    required this.desMesa,
+    required this.desSerieDocumento,
+    required this.userName,
     required this.productoId,
     required this.unidadMedida,
     required this.desProducto,
@@ -46,6 +56,11 @@ class PrintDataComandaModel {
         iDDocumentoRef: json["iD_Documento_Ref"],
         comensal: json["comensal"],
         consecutivoInterno: json["consecutivo_Interno"],
+        fechaHora: DateTime.parse(json["fecha_Hora"]),
+        desUbicacion: json["des_Ubicacion"],
+        desMesa: json["des_Mesa"],
+        desSerieDocumento: json["des_Serie_Documento"],
+        userName: json["userName"],
         productoId: json["producto_Id"],
         unidadMedida: json["unidad_Medida"],
         desProducto: json["des_Producto"],
@@ -63,6 +78,11 @@ class PrintDataComandaModel {
         "iD_Documento_Ref": iDDocumentoRef,
         "comensal": comensal,
         "consecutivo_Interno": consecutivoInterno,
+        "fecha_Hora": fechaHora.toIso8601String(),
+        "des_Ubicacion": desUbicacion,
+        "des_Mesa": desMesa,
+        "des_Serie_Documento": desSerieDocumento,
+        "userName": userName,
         "producto_Id": productoId,
         "unidad_Medida": unidadMedida,
         "des_Producto": desProducto,

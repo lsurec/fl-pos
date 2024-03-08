@@ -213,12 +213,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     int paperDefault = 80; //58 //72 //80
 
-    DateTime now = DateTime.now();
-
-    // Formatear la fecha como una cadena
-    String formattedDate =
-        "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
-
     PosStyles center = const PosStyles(
       align: PosAlign.center,
     );
@@ -227,12 +221,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
       bold: true,
     );
 
-    final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
-    final Uint8List bytesImg = data.buffer.asUint8List();
-    final img.Image? image = decodeImage(bytesImg);
-
-    // final img.Image? image = img.decodeImage(bytesImg);
-// Using `ESC *`
+    // final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
+    // final Uint8List bytesImg = data.buffer.asUint8List();
+    // final img.Image? image = decodeImage(bytesImg);
 
     for (var element in formats) {
       try {
@@ -244,9 +235,33 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
         bytes += generator.setGlobalCodeTable('CP1252');
 
-        bytes += generator.image(
-          img.copyResize(image!, height: 200, width: 250),
+        // bytes += generator.image(
+        //   img.copyResize(image!, height: 200, width: 250),
+        // );
+        bytes += generator.text(
+          element.detalles[0].desUbicacion,
+          styles: const PosStyles(
+            bold: true,
+            align: PosAlign.center,
+            height: PosTextSize.size2,
+          ),
         );
+
+        bytes += generator.text(
+          "Mesa: ${element.detalles[0].desMesa.toUpperCase()}",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].idDocumento}",
+          styles: const PosStyles(
+            bold: true,
+            align: PosAlign.center,
+            height: PosTextSize.size2,
+          ),
+        );
+
+        bytes += generator.emptyLines(1);
 
         //Incio del formato
         bytes += generator.row(
@@ -289,10 +304,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
               PosColumn(
                 text: "",
                 width: 1,
-                styles: const PosStyles(
-                  height: PosTextSize.size2,
-                  align: PosAlign.left,
-                ),
               ), // Anc/ Ancho 2
               PosColumn(
                 text: tra.desProducto,
@@ -308,18 +319,38 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
         bytes += generator.emptyLines(1);
 
-        //TODO:No usar el venedor de la sesion
+        bytes += generator.text(
+          "Le atendió: ${element.detalles[0].userName.toUpperCase()}",
+          styles: center,
+        );
+
+        final now = element.detalles[0].fechaHora;
 
         bytes += generator.text(
-          "Le atendió: ${cuentaRef.toUpperCase()}",
+          "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}",
+          styles: center,
+        );
+
+        bytes += generator.emptyLines(2);
+
+        bytes += generator.text(
+          "----------------------------",
           styles: center,
         );
 
         bytes += generator.text(
-          formattedDate,
+          "Powered By:",
           styles: center,
         );
-        //fin del formato
+
+        bytes += generator.text(
+          "Desarrollo Moderno de Software S.A.",
+          styles: center,
+        );
+        bytes += generator.text(
+          "www.demosoft.com.gt",
+          styles: center,
+        );
 
         bytes += generator.cut();
 
