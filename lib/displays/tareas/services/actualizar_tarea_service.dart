@@ -182,13 +182,22 @@ class ActualizarTareaService {
         );
       }
 
-      ResNuevoUsuarioModel resComent = ResNuevoUsuarioModel.fromMap(res.data);
+      //Invitado nuevo retornado por api
+      List<ResNuevoUsuarioModel> invitado = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ResNuevoUsuarioModel.fromMap(item);
+        //agregar item a la lista
+        invitado.add(responseFinally);
+      }
 
       //Retornar respuesta correcta
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: resComent,
+        message: invitado,
         storeProcedure: null,
       );
     } catch (e) {
