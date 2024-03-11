@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
 class TareaService {
   final String _baseUrl = Preferences.urlApi;
@@ -657,14 +656,62 @@ class TareaService {
     }
   }
 
-  //formatear fechas desde el servicio
-  String formatearFecha(DateTime fecha) {
-    // Asegurarse de que la fecha esté en la zona horaria local
-    fecha = fecha.toLocal();
+//Servicio para crear una nueva tarea
+  Future<ApiResModel> postTarea(
+    String token,
+    NuevaTareaModel tarea,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/tarea");
+    try {
+      //url completa
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: tarea.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
 
-    // Formatear la fecha en el formato dd-mm-yyyy
-    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
 
-    return fechaFormateada;
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Invitado nuevo retornado por api
+      List<NuevaTareaModel> resTarea = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = NuevaTareaModel.fromMap(item);
+        //agregar item a la lista
+        resTarea.add(responseFinally);
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: resTarea,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
   }
 }

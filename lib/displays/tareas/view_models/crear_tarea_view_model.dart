@@ -183,6 +183,76 @@ class CrearTareaViewModel extends ChangeNotifier {
     return formKey.currentState?.validate() ?? false;
   }
 
+  Future crearTarea(BuildContext context) async {
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+
+    String token = vmLogin.token;
+    String user = vmLogin.nameUser;
+
+    final TareaService tareaService = TareaService();
+
+    // NuevaTareaModel comentario = NuevaTareaModel(
+    //   tarea: 0,
+    //   descripcion: observacionController.text,
+    //   fechaIni: nuevaFechaInicial!,
+    //   fechaFin: nuevaFechaFinal!,
+    //   referencia: idReferencia!.referencia,
+    //   userName: userName,
+    //   observacion1: observacion1,
+    //   tipoTarea: tipoTarea,
+    //   cuentaCorrentista: cuentaCorrentista,
+    //   cuentaCta: cuentaCta,
+    //   cantidadContacto: cantidadContacto,
+    //   nombreContacto: nombreContacto,
+    //   tipoDocumento: tipoDocumento,
+    //   idDocumento: idDocumento,
+    //   refSerie: refSerie,
+    //   fechaDocumento: fechaDocumento,
+    //   elementoAsignado: elementoAsignado,
+    //   actividadPaso: actividadPaso,
+    //   ejecutado: ejecutado,
+    //   ejecutadoPor: ejecutadoPor,
+    //   ejecutadoFecha: ejecutadoFecha,
+    //   ejecutadoFechaHora: ejecutadoFechaHora,
+    //   producto: producto,
+    //   estado: estado,
+    //   empresa: empresa,
+    //   nivelPrioridad: nivelPrioridad,
+    //   tareaPadre: tareaPadre,
+    //   tiempoEstimadoTipoPeriocidad: tiempoEstimadoTipoPeriocidad,
+    //   tiempoEstimado: tiempoEstimado,
+    //   mUserName: mUserName,
+    //   observacion2: observacion2,
+    // );
+
+    isLoading = true;
+
+    final ApiResModel res = await tareaService.getTipoTarea(user, token);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      showError(context, res);
+
+      return false;
+    }
+
+    tiposTarea.addAll(res.message);
+
+    for (var i = 0; i < tiposTarea.length; i++) {
+      TipoTareaModel tipo = tiposTarea[i];
+      if (tipo.descripcion.toLowerCase() == "tarea") {
+        tipoTarea = tipo;
+        break;
+      }
+    }
+
+    isLoading = false;
+
+    return true;
+  }
+
   Future<DateTime?> abrirFechaInicial(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,

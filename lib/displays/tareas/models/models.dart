@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/tareas/models/nueva_tarea_model.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/models/res_nuevo_usuario_model.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/models/nuevo_usuario_model.dart';
