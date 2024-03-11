@@ -137,70 +137,14 @@ class MenuViewModel extends ChangeNotifier {
     homeVM.isLoading = false;
   }
 
+  final List<MenuData> menuData = [];
+
   //cargar menu
-  Future<void> loadDataMenu(BuildContext context) async {
+  loadDataMenu(BuildContext context) {
     //limmpiar listas que se usan
     menuActive.clear();
     routeMenu.clear();
     menu.clear();
-
-    //view model externo
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-
-    //Lista aplicaciones y displays ()
-    late List<MenuData> menuData = [];
-
-    //Usario y token
-    final String user = loginVM.user;
-    final String token = loginVM.token;
-
-    //Menu service
-    MenuService menuService = MenuService();
-
-    //Get data service application
-    ApiResModel res = await menuService.getApplication(user, token);
-
-    if (!res.succes) {
-      await NotificationService.showErrorView(
-        context,
-        res,
-      );
-      return;
-    }
-
-    ///asiganr aplicacviones
-    List<ApplicationModel> applications = res.message;
-
-    //Si menu data tiene datos anteriores limpiar la lista
-    menuData.clear();
-
-    //Guardar en menu datos applicaciones y displays sin ordenar
-    for (var application in applications) {
-      menuData.add(MenuData(application: application, children: []));
-    }
-
-    //Llamar a los displays de cada applicacion
-    for (var app in menuData) {
-      ApiResModel res = await menuService.getDisplay(
-        app.application.application,
-        user,
-        token,
-      );
-
-      if (!res.succes) {
-        await NotificationService.showErrorView(
-          context,
-          res,
-        );
-        return;
-      }
-
-      //asignar displays
-      List<DisplayModel> displays = res.message;
-
-      //agregar displays a la applicacion correspondientes
-      app.children.addAll(displays);
-    }
 
     //Separar displays nodo 1
     for (var item in menuData) {

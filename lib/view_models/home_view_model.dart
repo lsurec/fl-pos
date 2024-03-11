@@ -52,6 +52,8 @@ class HomeViewModel extends ChangeNotifier {
     //agregar precios encontrados
     if (cambios.isNotEmpty) {
       tipoCambio = cambios[0].tipoCambio;
+    } else {
+      tipoCambio = 0;
     }
     notifyListeners();
   }
