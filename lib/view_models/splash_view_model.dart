@@ -1,7 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter_post_printer_example/displays/shr_local_config/services/empresa_service.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/services/estacion_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
+import 'package:flutter_post_printer_example/models/api_res_model.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -86,6 +90,9 @@ class SplashViewModel extends ChangeNotifier {
       loginVM.conStr = Preferences.conStr;
     }
 
+    final String user = loginVM.user;
+    final String token = loginVM.token;
+
     //si no hay una url para las apis configurada
     if (Preferences.urlApi.isEmpty) {
       // Simula una carga de datos
@@ -115,17 +122,51 @@ class SplashViewModel extends ChangeNotifier {
     //Si hay sesion y url del api
 
     //cargar estaciones
-    final bool succesLocal = await localVM.loadData(context);
 
-    if (!succesLocal) {
+    final EmpresaService empresaService = EmpresaService();
+
+    final ApiResModel resEmpresas = await empresaService.getEmpresa(
+      user,
+      token,
+    );
+
+    if (!resEmpresas.succes) {
       //si hay mas de una estacion o mas de una empresa mostar configuracion local
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const LocalSettingsView(),
-        ), // Cambiar a la pantalla principal después de cargar los datos
+
+      localVM.resApis = resEmpresas;
+
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        AppRoutes
+            .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
+        (Route<dynamic> route) => false,
       );
+
       return;
     }
+
+    final EstacionService estacionService = EstacionService();
+
+    final ApiResModel resEstaciones = await estacionService.getEstacion(
+      user,
+      token,
+    );
+
+    if (!resEmpresas.succes) {
+      //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+      localVM.resApis = resEstaciones;
+
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        AppRoutes
+            .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
+        (Route<dynamic> route) => false,
+      );
+
+      return;
+    }
+
+    localVM.empresas.addAll(resEmpresas.message);
+    localVM.estaciones.addAll(resEstaciones.message);
 
     //si solo hay una estacion y una empresa mostrar home
     if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {
@@ -146,10 +187,11 @@ class SplashViewModel extends ChangeNotifier {
     }
 
     //si hay mas de una estacion o mas de una empresa mostar configuracion local
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const LocalSettingsView(),
-      ), // Cambiar a la pantalla principal después de cargar los datos
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      AppRoutes
+          .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
+      (Route<dynamic> route) =>
+          false, // Condición para eliminar todas las rutas anteriores
     );
   }
 }

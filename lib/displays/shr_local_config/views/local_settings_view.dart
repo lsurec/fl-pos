@@ -1,13 +1,32 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LocalSettingsView extends StatelessWidget {
+class LocalSettingsView extends StatefulWidget {
   const LocalSettingsView({super.key});
+
+  @override
+  State<LocalSettingsView> createState() => _LocalSettingsViewState();
+}
+
+class _LocalSettingsViewState extends State<LocalSettingsView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
+  }
+
+  loadData(BuildContext context) {
+    final vm = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    if (vm.resApis != null) {
+      NotificationService.showErrorView(context, vm.resApis!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

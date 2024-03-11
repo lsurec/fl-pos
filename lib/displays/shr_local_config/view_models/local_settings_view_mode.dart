@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LocalSettingsViewModel extends ChangeNotifier {
+  ApiResModel? resApis;
+
   //empresas disponibles
   final List<EmpresaModel> empresas = [];
   //Estaciones disponibles
