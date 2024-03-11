@@ -16,7 +16,10 @@ class MenuViewModel extends ChangeNotifier {
   //lista de navegacion (Nodos que se han miviso)
   final List<MenuModel> routeMenu = [];
   //menu completo
-  late List<MenuModel> menu = [];
+  final List<MenuModel> menu = [];
+
+  //menu
+  final List<MenuData> menuData = [];
 
   //tipo docuento
   int? documento;
@@ -132,12 +135,57 @@ class MenuViewModel extends ChangeNotifier {
   //actualizar menu
   Future<void> refreshData(BuildContext context) async {
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+
+    final String user = loginVM.user;
+    final String token = loginVM.token;
+
     homeVM.isLoading = true;
-    await loadDataMenu(context);
+
+    final MenuService menuService = MenuService();
+
+    final ApiResModel resApps = await menuService.getApplication(user, token);
+
+    if (!resApps.succes) {
+      //si hay mas de una estacion o mas de una empresa mostar configuracion local
+      homeVM.isLoading = false;
+
+      NotificationService.showErrorView(context, resApps);
+      return;
+    }
+
+    final List<ApplicationModel> applications = resApps.message;
+
+    menuData.clear();
+
+    for (var application in applications) {
+      final ApiResModel resDisplay = await menuService.getDisplay(
+        application.application,
+        user,
+        token,
+      );
+
+      if (!resDisplay.succes) {
+        //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+        homeVM.isLoading = false;
+
+        NotificationService.showErrorView(context, resDisplay);
+        return;
+      }
+
+      menuData.add(
+        MenuData(
+          application: application,
+          children: resDisplay.message,
+        ),
+      );
+    }
+
+    loadDataMenu(context);
+
     homeVM.isLoading = false;
   }
-
-  final List<MenuData> menuData = [];
 
   //cargar menu
   loadDataMenu(BuildContext context) {
