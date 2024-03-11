@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -60,6 +61,7 @@ class HomeViewModel extends ChangeNotifier {
 
   //Cerrar sesion
   Future<void> logout(BuildContext context) async {
+    print("Paso por aqui");
     //view model externo
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
@@ -80,8 +82,9 @@ class HomeViewModel extends ChangeNotifier {
 
     //cerar sesion y navegar a login
     loginVM.logout();
+
     Navigator.of(context).pushNamedAndRemoveUntil(
-      'login', // Ruta a la que se redirigirá después de cerrar sesión
+      AppRoutes.login, // Ruta a la que se redirigirá después de cerrar sesión
       (Route<dynamic> route) =>
           false, // Condición para eliminar todas las rutas anteriores
     );

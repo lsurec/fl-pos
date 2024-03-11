@@ -125,10 +125,6 @@ class LoginViewModel extends ChangeNotifier {
         //view models externos
         final localVM =
             Provider.of<LocalSettingsViewModel>(context, listen: false);
-        final menuVM = Provider.of<MenuViewModel>(context, listen: false);
-        final homeVM = Provider.of<HomeViewModel>(context, listen: false);
-
-        //cargar empresas y etsaciones
 
         //cargar emmpresas
 
@@ -260,21 +256,15 @@ class LoginViewModel extends ChangeNotifier {
 
           //navegar a home
           Navigator.pushReplacementNamed(context, AppRoutes.home);
+          isLoading = false;
 
           return;
         }
 
         localVM.resApis = null;
 
-        //si hay mas de una estacion o mas de una empresa mostar configuracion local
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes
-              .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
-          (Route<dynamic> route) =>
-              false, // Condición para eliminar todas las rutas anteriores
-        );
-
         Navigator.pushReplacementNamed(context, AppRoutes.shrLocalConfig);
+        isLoading = false;
       } else {
         //finalizar proceso
         isLoading = false;
