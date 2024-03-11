@@ -1,11 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../displays/shr_local_config/services/services.dart';
 
 class LoginViewModel extends ChangeNotifier {
   //manejar flujo del procesp
@@ -125,23 +128,153 @@ class LoginViewModel extends ChangeNotifier {
         final menuVM = Provider.of<MenuViewModel>(context, listen: false);
         final homeVM = Provider.of<HomeViewModel>(context, listen: false);
 
-        //cargar datos del menu
-        await localVM.loadData(context);
+        //cargar empresas y etsaciones
 
-        //si hay solo una estacion y una empresa
-        if (localVM.empresas.length == 1 && localVM.estaciones.length == 1) {
-          //cargar datos del menu
-          await menuVM.loadDataMenu(context);
-          homeVM.getTipoCambio(context);
+        //cargar emmpresas
 
-          //finalizar proceso
-          Navigator.pushReplacementNamed(context, "home");
+        final EmpresaService empresaService = EmpresaService();
+
+        final ApiResModel resEmpresas = await empresaService.getEmpresa(
+          user,
+          token,
+        );
+
+        if (!resEmpresas.succes) {
+          //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
           isLoading = false;
-        } else {
-          //finalizar proceso
-          Navigator.pushReplacementNamed(context, "shrLocalConfig");
-          isLoading = false;
+          NotificationService.showErrorView(context, resEmpresas);
+          return;
         }
+
+        final EstacionService estacionService = EstacionService();
+
+        final ApiResModel resEstaciones = await estacionService.getEstacion(
+          user,
+          token,
+        );
+
+        if (!resEmpresas.succes) {
+          //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+          isLoading = false;
+          NotificationService.showErrorView(context, resEstaciones);
+
+          return;
+        }
+
+        localVM.empresas.addAll(resEmpresas.message);
+        localVM.empresas.addAll(resEmpresas.message);
+        localVM.estaciones.addAll(resEstaciones.message);
+
+        if (localVM.estaciones.length == 1) {
+          localVM.selectedEstacion = localVM.estaciones.first;
+        }
+
+        if (localVM.empresas.length == 1) {
+          localVM.selectedEmpresa = localVM.empresas.first;
+        }
+
+        //si solo hay una estacion y una empresa mostrar home
+        if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {
+          //view model externo
+          final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+          final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+
+          //Load tipo cambio
+
+          TipoCambioService tipoCambioService = TipoCambioService();
+
+          final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
+            localVM.selectedEmpresa!.empresa,
+            user,
+            token,
+          );
+
+          if (!resCambio.succes) {
+            //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+            isLoading = false;
+            NotificationService.showErrorView(context, resCambio);
+
+            return;
+          }
+
+          final List<TipoCambioModel> cambios = resCambio.message;
+
+          if (cambios.isNotEmpty) {
+            homeVM.tipoCambio = cambios[0].tipoCambio;
+          } else {
+            resCambio.message =
+                "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+            localVM.resApis = resCambio;
+
+            isLoading = false;
+            NotificationService.showErrorView(context, resCambio);
+
+            return;
+          }
+
+          final MenuService menuService = MenuService();
+
+          final ApiResModel resApps =
+              await menuService.getApplication(user, token);
+
+          if (!resApps.succes) {
+            //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+            isLoading = false;
+            NotificationService.showErrorView(context, resApps);
+
+            return;
+          }
+
+          final List<ApplicationModel> applications = resApps.message;
+
+          menuVM.menuData.clear();
+
+          for (var application in applications) {
+            final ApiResModel resDisplay = await menuService.getDisplay(
+              application.application,
+              user,
+              token,
+            );
+
+            if (!resDisplay.succes) {
+              //si hay mas de una estacion o mas de una empresa mostar configuracion local
+              isLoading = false;
+              NotificationService.showErrorView(context, resDisplay);
+
+              return;
+            }
+
+            menuVM.menuData.add(
+              MenuData(
+                application: application,
+                children: resDisplay.message,
+              ),
+            );
+          }
+
+          menuVM.loadDataMenu(context);
+
+          //navegar a home
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+
+          return;
+        }
+
+        localVM.resApis = null;
+
+        //si hay mas de una estacion o mas de una empresa mostar configuracion local
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          AppRoutes
+              .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
+          (Route<dynamic> route) =>
+              false, // Condición para eliminar todas las rutas anteriores
+        );
+
+        Navigator.pushReplacementNamed(context, AppRoutes.shrLocalConfig);
       } else {
         //finalizar proceso
         isLoading = false;

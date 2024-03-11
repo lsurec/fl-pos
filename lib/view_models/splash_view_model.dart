@@ -116,7 +116,7 @@ class SplashViewModel extends ChangeNotifier {
     final String user = loginVM.user;
     final String token = loginVM.token;
 
-    //cargar estaciones
+    //cargar emmpresas
 
     final EmpresaService empresaService = EmpresaService();
 
@@ -280,6 +280,8 @@ class SplashViewModel extends ChangeNotifier {
       );
       return;
     }
+
+    localVM.resApis = null;
 
     //si hay mas de una estacion o mas de una empresa mostar configuracion local
     Navigator.of(context).pushNamedAndRemoveUntil(
