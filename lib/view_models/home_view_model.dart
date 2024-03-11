@@ -61,7 +61,6 @@ class HomeViewModel extends ChangeNotifier {
 
   //Cerrar sesion
   Future<void> logout(BuildContext context) async {
-    print("Paso por aqui");
     //view model externo
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 

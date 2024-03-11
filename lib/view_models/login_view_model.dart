@@ -128,6 +128,9 @@ class LoginViewModel extends ChangeNotifier {
 
         //cargar emmpresas
 
+        localVM.selectedEmpresa = null;
+        localVM.selectedEstacion = null;
+
         final EmpresaService empresaService = EmpresaService();
 
         final ApiResModel resEmpresas = await empresaService.getEmpresa(
@@ -159,7 +162,9 @@ class LoginViewModel extends ChangeNotifier {
           return;
         }
 
-        localVM.empresas.addAll(resEmpresas.message);
+        localVM.empresas.clear();
+        localVM.estaciones.clear();
+
         localVM.empresas.addAll(resEmpresas.message);
         localVM.estaciones.addAll(resEstaciones.message);
 
@@ -203,7 +208,6 @@ class LoginViewModel extends ChangeNotifier {
           } else {
             resCambio.message =
                 "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
-            localVM.resApis = resCambio;
 
             isLoading = false;
             NotificationService.showErrorView(context, resCambio);

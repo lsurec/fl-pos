@@ -3,6 +3,7 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -33,22 +34,102 @@ class LocalSettingsViewModel extends ChangeNotifier {
 
   //navegar a home
   Future<void> navigateHome(BuildContext context) async {
+    if (selectedEmpresa == null || selectedEstacion == null) {
+      NotificationService.showSnackbar(
+        "Para continuar, selecciona una empresa y estación de trabajo",
+      );
+      return;
+    }
+
     //view model externi
     final menuVM = Provider.of<MenuViewModel>(context, listen: false);
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+
+    final String user = loginVM.user;
+    final String token = loginVM.token;
 
     //inicia de proceso
     isLoading = true;
 
-    //cargar menu
-    await menuVM.loadDataMenu(context);
-    await homeVM.getTipoCambio(context);
+    //Load tipo cambio
 
-    //finalizar proceso
-    isLoading = false;
+    TipoCambioService tipoCambioService = TipoCambioService();
+
+    final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
+      selectedEmpresa!.empresa,
+      user,
+      token,
+    );
+
+    if (!resCambio.succes) {
+      //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+      isLoading = false;
+      NotificationService.showErrorView(context, resCambio);
+
+      return;
+    }
+
+    final List<TipoCambioModel> cambios = resCambio.message;
+
+    if (cambios.isNotEmpty) {
+      homeVM.tipoCambio = cambios[0].tipoCambio;
+    } else {
+      resCambio.message =
+          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+
+      isLoading = false;
+      NotificationService.showErrorView(context, resCambio);
+
+      return;
+    }
+
+    final MenuService menuService = MenuService();
+
+    final ApiResModel resApps = await menuService.getApplication(user, token);
+
+    if (!resApps.succes) {
+      //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+      isLoading = false;
+      NotificationService.showErrorView(context, resApps);
+
+      return;
+    }
+
+    final List<ApplicationModel> applications = resApps.message;
+
+    menuVM.menuData.clear();
+
+    for (var application in applications) {
+      final ApiResModel resDisplay = await menuService.getDisplay(
+        application.application,
+        user,
+        token,
+      );
+
+      if (!resDisplay.succes) {
+        //si hay mas de una estacion o mas de una empresa mostar configuracion local
+        isLoading = false;
+        NotificationService.showErrorView(context, resDisplay);
+
+        return;
+      }
+
+      menuVM.menuData.add(
+        MenuData(
+          application: application,
+          children: resDisplay.message,
+        ),
+      );
+    }
+
+    menuVM.loadDataMenu(context);
 
     //navegar a home
-    Navigator.pushReplacementNamed(context, "home");
+    Navigator.pushReplacementNamed(context, AppRoutes.home);
+    isLoading = false;
   }
 
   //Seleccioanr tipo rpecio
@@ -64,7 +145,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
   }
 
   //Cargar datos necesaarios
-  Future<bool> loadData(BuildContext context) async {
+  Future<void> loadData(BuildContext context) async {
     //view model externo
     final loginVM = Provider.of<LoginViewModel>(
       context,
@@ -102,7 +183,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
         resEmpresa,
       );
 
-      return false;
+      return;
     }
 
     //consu,o del api estacion
@@ -120,7 +201,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
         context,
         resEstacion,
       );
-      return false;
+      return;
     }
 
     //agregar empresas y estaciones
@@ -138,6 +219,5 @@ class LocalSettingsViewModel extends ChangeNotifier {
     }
 
     isLoading = false;
-    return true;
   }
 }
