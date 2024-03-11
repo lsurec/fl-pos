@@ -141,6 +141,7 @@ class MenuViewModel extends ChangeNotifier {
     final String token = loginVM.token;
 
     homeVM.isLoading = true;
+    //TODO:GET TIPO CAMBIO
 
     final MenuService menuService = MenuService();
 

@@ -54,7 +54,9 @@ class HomeViewModel extends ChangeNotifier {
     if (cambios.isNotEmpty) {
       tipoCambio = cambios[0].tipoCambio;
     } else {
-      tipoCambio = 0;
+      res.message =
+          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+      NotificationService.showErrorView(context, res);
     }
     notifyListeners();
   }
