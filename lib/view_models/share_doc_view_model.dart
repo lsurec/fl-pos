@@ -32,7 +32,7 @@ class ShareDocViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
     //usario y token
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //consumir servicio obtener encabezados
@@ -45,14 +45,7 @@ class ShareDocViewModel extends ChangeNotifier {
     //valid succes response
     //Si el api falló
     if (!resEncabezado.succes) {
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEncabezado.message,
-        url: resEncabezado.url,
-        storeProcedure: resEncabezado.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(context, error);
+      await NotificationService.showErrorView(context, resEncabezado);
 
       return;
     }
@@ -71,16 +64,8 @@ class ShareDocViewModel extends ChangeNotifier {
     if (!resDetalle.succes) {
       //finalozar el proceso
 
-      //alerta informe de error
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resDetalle.message,
-        url: resDetalle.url,
-        storeProcedure: resDetalle.storeProcedure,
-      );
-
       //mostrar alerta
-      await NotificationService.showErrorView(context, error);
+      await NotificationService.showErrorView(context, resDetalle);
 
       return;
     }

@@ -65,7 +65,7 @@ class ErrorViewModel extends ChangeNotifier {
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text(
-                      "Usuario: ${vmLogin.nameUser}",
+                      "Usuario: ${vmLogin.user}",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                       ),

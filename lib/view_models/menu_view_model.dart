@@ -151,7 +151,7 @@ class MenuViewModel extends ChangeNotifier {
     late List<MenuData> menuData = [];
 
     //Usario y token
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
     final String token = loginVM.token;
 
     //Menu service
@@ -161,16 +161,9 @@ class MenuViewModel extends ChangeNotifier {
     ApiResModel res = await menuService.getApplication(user, token);
 
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -195,16 +188,9 @@ class MenuViewModel extends ChangeNotifier {
       );
 
       if (!res.succes) {
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: res.message,
-          url: res.url,
-          storeProcedure: res.storeProcedure,
-        );
-
         await NotificationService.showErrorView(
           context,
-          error,
+          res,
         );
         return;
       }

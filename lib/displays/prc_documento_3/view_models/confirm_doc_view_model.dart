@@ -133,7 +133,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     );
 
     //usuario token y cadena de conexion
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String tokenUser = loginVM.token;
 
     isLoading = true;
@@ -149,15 +149,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         scaffoldKey.currentContext!,
-        error,
+        res,
       );
 
       return;
@@ -484,14 +478,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       if (!sendProcess.succes) {
         isLoading = false;
 
-        ErrorModel errorView = ErrorModel(
-          date: DateTime.now(),
-          description: sendProcess.message,
-          url: sendProcess.url,
-          storeProcedure: sendProcess.storeProcedure,
-        );
-
-        NotificationService.showErrorView(context, errorView);
+        NotificationService.showErrorView(context, sendProcess);
 
         return;
       }
@@ -630,7 +617,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //usuario token y cadena de conexion
     String conStr = loginVM.conStr;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String tokenUser = loginVM.token;
 
     //Servicio para documentos
@@ -1043,7 +1030,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
         Provider.of<HomeViewModel>(scaffoldKey.currentContext!, listen: false);
 
     //usuario token y cadena de conexion
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String tokenUser = loginVM.token;
 
     //valores necesarios para el docuemento

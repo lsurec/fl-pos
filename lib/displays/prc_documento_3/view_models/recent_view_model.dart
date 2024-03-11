@@ -62,16 +62,9 @@ class RecentViewModel extends ChangeNotifier {
     if (!resEmpresa.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEmpresa.message,
-        url: resEmpresa.url,
-        storeProcedure: resEmpresa.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resEmpresa,
       );
       return;
     }
@@ -98,16 +91,9 @@ class RecentViewModel extends ChangeNotifier {
     if (!resEstacion.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEstacion.message,
-        url: resEstacion.url,
-        storeProcedure: resEstacion.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resEstacion,
       );
       return;
     }
@@ -137,16 +123,9 @@ class RecentViewModel extends ChangeNotifier {
     if (!resSerie.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resSerie.message,
-        url: resSerie.url,
-        storeProcedure: resSerie.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resSerie,
       );
       return;
     }
@@ -174,16 +153,9 @@ class RecentViewModel extends ChangeNotifier {
     if (!resNameClient.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resNameClient.message,
-        url: resNameClient.url,
-        storeProcedure: resNameClient.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resNameClient,
       );
       return;
     }
@@ -203,16 +175,9 @@ class RecentViewModel extends ChangeNotifier {
       if (!resCuentaClient.succes) {
         isLoading = false;
 
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: resCuentaClient.message,
-          url: resCuentaClient.url,
-          storeProcedure: resCuentaClient.storeProcedure,
-        );
-
         await NotificationService.showErrorView(
           context,
-          error,
+          resCuentaClient,
         );
         return;
       }
@@ -241,16 +206,9 @@ class RecentViewModel extends ChangeNotifier {
     if (!resVendedor.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resVendedor.message,
-        url: resVendedor.url,
-        storeProcedure: resVendedor.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resVendedor,
       );
       return;
     }
@@ -281,16 +239,9 @@ class RecentViewModel extends ChangeNotifier {
       if (!resSku.succes) {
         isLoading = false;
 
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: resSku.message,
-          url: resSku.url,
-          storeProcedure: resSku.storeProcedure,
-        );
-
         await NotificationService.showErrorView(
           context,
-          error,
+          resSku,
         );
         return;
       }
@@ -306,16 +257,9 @@ class RecentViewModel extends ChangeNotifier {
       if (!resProduct.succes) {
         isLoading = false;
 
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: resProduct.message,
-          url: resProduct.url,
-          storeProcedure: resProduct.storeProcedure,
-        );
-
         await NotificationService.showErrorView(
           context,
-          error,
+          resProduct,
         );
         return;
       }
@@ -479,16 +423,9 @@ class RecentViewModel extends ChangeNotifier {
   ) async {
     //Si el api para  falló
 
-    ErrorModel error = ErrorModel(
-      date: DateTime.now(),
-      description: res.message,
-      url: res.url,
-      storeProcedure: res.storeProcedure,
-    );
-
     await NotificationService.showErrorView(
       context,
-      error,
+      res,
     );
   }
 
@@ -509,7 +446,7 @@ class RecentViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
     //usuario y token
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //servicio documentos
@@ -533,16 +470,10 @@ class RecentViewModel extends ChangeNotifier {
       //finalizar procesp
       isLoading = false;
       //mostrar dialogo de confirmacion
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }

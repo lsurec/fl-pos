@@ -56,7 +56,7 @@ class TypesDocViewModel extends ChangeNotifier {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //limpiar docunentos  anteriores
     documents.clear();
@@ -75,15 +75,9 @@ class TypesDocViewModel extends ChangeNotifier {
 
     //si el consumo salió mal
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;

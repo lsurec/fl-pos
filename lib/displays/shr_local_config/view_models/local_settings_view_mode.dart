@@ -61,17 +61,16 @@ class LocalSettingsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Reload datos
-  Future<void> refreshData(BuildContext context) async {
-    isLoading = true;
-    await loadData(context);
-    isLoading = false;
-  }
-
   //Cargar datos necesaarios
-  loadData(BuildContext context) async {
+  Future<bool> loadData(BuildContext context) async {
     //view model externo
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String user = loginVM.user;
+    final String token = loginVM.token;
 
     //instancia del servicio empresa
     EmpresaService empresaService = EmpresaService();
@@ -85,54 +84,41 @@ class LocalSettingsViewModel extends ChangeNotifier {
     empresas.clear();
     estaciones.clear();
 
+    isLoading = true;
+
     // Consumo api empresas
     ApiResModel resEmpresa = await empresaService.getEmpresa(
-      loginVM.nameUser,
-      loginVM.token,
+      user,
+      token,
     );
 
     //valid succes response
     if (!resEmpresa.succes) {
-      // isLoading = false;
-
-      //si algo salio mal mostrar alerta
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEmpresa.message,
-        url: resEmpresa.url,
-        storeProcedure: resEmpresa.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(
+      isLoading = false;
+      NotificationService.showErrorView(
         context,
-        error,
+        resEmpresa,
       );
 
-      return;
+      return false;
     }
 
     //consu,o del api estacion
     ApiResModel resEstacion = await estacionService.getEstacion(
-      loginVM.nameUser,
-      loginVM.token,
+      user,
+      token,
     );
 
     //valid succes response
     if (!resEstacion.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEstacion.message,
-        url: resEstacion.url,
-        storeProcedure: resEstacion.storeProcedure,
-      );
+      isLoading = false;
 
       await NotificationService.showErrorView(
         context,
-        error,
+        resEstacion,
       );
-      return;
+      return false;
     }
 
     //agregar empresas y estaciones
@@ -149,6 +135,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
       selectedEstacion = estaciones.first;
     }
 
-    notifyListeners();
+    isLoading = false;
+    return true;
   }
 }

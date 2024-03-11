@@ -23,9 +23,7 @@ class UserWidget extends StatelessWidget {
           color: AppTheme.primary,
           child: Center(
             child: Text(
-              vmLogin.nameUser.isNotEmpty
-                  ? vmLogin.nameUser[0].toUpperCase()
-                  : "",
+              vmLogin.user.isNotEmpty ? vmLogin.user[0].toUpperCase() : "",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -73,7 +71,7 @@ void _showUserInfoModal(
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         title: Text(
-                          vmLogin.nameUser.toUpperCase(),
+                          vmLogin.user.toUpperCase(),
                           style: AppTheme.normalStyle,
                         ),
                         leading: IconButton(
@@ -85,7 +83,7 @@ void _showUserInfoModal(
                               color: AppTheme.primary,
                               child: Center(
                                 child: Text(
-                                  vmLogin.nameUser[0].toUpperCase(),
+                                  vmLogin.user[0].toUpperCase(),
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

@@ -156,7 +156,7 @@ class PendingDocsViewModel extends ChangeNotifier {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //servicio que se va a usar
     final ReceptionService receptionService = ReceptionService();
@@ -179,15 +179,9 @@ class PendingDocsViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;

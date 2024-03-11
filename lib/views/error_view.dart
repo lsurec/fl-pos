@@ -36,7 +36,7 @@ class ErrorView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Usuario: ${vmLogin.nameUser}"),
+              Text("Usuario: ${vmLogin.user}"),
               const SizedBox(height: 10),
               Text(
                 "Fecha: ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",

@@ -168,7 +168,7 @@ class DocumentViewModel extends ChangeNotifier {
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
     int tipoDoc = menuVM.documento!;
     String serie = serieSelect!.serieDocumento!;
@@ -187,16 +187,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -222,22 +216,16 @@ class DocumentViewModel extends ChangeNotifier {
       serieSelect!.serieDocumento!, // serie,
       localVM.selectedEmpresa!.empresa, // empresa,
       loginVM.token, // token,
-      loginVM.nameUser, // user,
+      loginVM.user, // user,
     );
 
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -258,7 +246,7 @@ class DocumentViewModel extends ChangeNotifier {
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
     int estacion = localVM.selectedEstacion!.estacionTrabajo;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //limpiar serie seleccionada
@@ -281,16 +269,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -324,7 +306,7 @@ class DocumentViewModel extends ChangeNotifier {
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //instancia del servicio
@@ -342,16 +324,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -417,7 +393,7 @@ class DocumentViewModel extends ChangeNotifier {
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //limpiar lista clientes
@@ -443,16 +419,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }

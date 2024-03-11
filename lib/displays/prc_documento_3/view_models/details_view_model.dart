@@ -145,16 +145,9 @@ class DetailsViewModel extends ChangeNotifier {
       //si algo salio mal mostrar alerta
       vmFactura.isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;
@@ -212,7 +205,7 @@ class DetailsViewModel extends ChangeNotifier {
 
           NotificationService.showErrorView(
             context,
-            error,
+            precios,
           );
           return;
         }

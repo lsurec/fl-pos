@@ -20,7 +20,7 @@ class LoginViewModel extends ChangeNotifier {
   //token del usuario
   String token = "";
   //nombre del usuario
-  String nameUser = "";
+  String user = "";
   //Cadena de conexion
   String conStr = "";
   //conytrolar seion permanente
@@ -63,7 +63,7 @@ class LoginViewModel extends ChangeNotifier {
     //limpiar datos en preferencias
     Preferences.clearToken();
     token = "";
-    nameUser = "";
+    user = "";
     conStr = "";
     notifyListeners();
   }
@@ -94,16 +94,10 @@ class LoginViewModel extends ChangeNotifier {
       if (!res.succes) {
         //finalizar proceso
         isLoading = false;
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: res.message,
-          url: res.url,
-          storeProcedure: res.storeProcedure,
-        );
 
         await NotificationService.showErrorView(
           context,
-          error,
+          res,
         );
         return;
       }
@@ -115,13 +109,13 @@ class LoginViewModel extends ChangeNotifier {
       if (respLogin.success) {
         //guardar token y nombre de usuario
         token = respLogin.message;
-        nameUser = respLogin.user;
+        user = respLogin.user;
         conStr = respLogin.con;
 
         //si la sesion es permanente guardar en preferencias el token
         if (isSliderDisabledSession) {
           Preferences.token = token;
-          Preferences.userName = nameUser;
+          Preferences.userName = user;
           Preferences.conStr = conStr;
         }
 

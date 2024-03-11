@@ -55,7 +55,7 @@ class DestinationDocViewModel extends ChangeNotifier {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token; //token de la sesion
-    final String user = loginVM.nameUser; //usuario de la sesion
+    final String user = loginVM.user; //usuario de la sesion
     final int doc = document.tipoDocumento; //tipo documento
     final String serie = document.serieDocumento; //serie documento
     final int empresa = document.empresa; //empresa
@@ -84,15 +84,9 @@ class DestinationDocViewModel extends ChangeNotifier {
     //TODO:Verificar reviison de erroes en otros servicios (Este es el correcto)
     //si algo salió mal
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;

@@ -28,7 +28,7 @@ class LocalSettingsView extends StatelessWidget {
             ],
           ),
           body: RefreshIndicator(
-            onRefresh: () => vm.refreshData(context),
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(

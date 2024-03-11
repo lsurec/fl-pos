@@ -33,23 +33,17 @@ class HomeViewModel extends ChangeNotifier {
 
     ApiResModel res = await tipoCambioService.getTipoCambio(
       localVM.selectedEmpresa!.empresa, // empresa,
-      loginVM.nameUser, // user,
+      loginVM.user, // user,
       loginVM.token, // token,
     );
 
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }

@@ -39,7 +39,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //Servicio
     final ReceptionService receptionService = ReceptionService();
@@ -68,15 +68,9 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
 
     //si el consumo salió mal
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;
@@ -133,7 +127,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //Buscar datos paar imprimir
     final ReceptionService receptionService = ReceptionService();
@@ -156,15 +150,9 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;
@@ -175,14 +163,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     if (data.isEmpty) {
       isLoading = false;
 
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description:
-            "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.",
-        storeProcedure: res.storeProcedure,
-      );
+      res.message =
+          "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.";
 
-      NotificationService.showErrorView(context, error);
+      NotificationService.showErrorView(context, res);
 
       return;
     }

@@ -60,7 +60,7 @@ class AddClientViewModel extends ChangeNotifier {
     );
 
     //usuario token y cadena de conexion
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
     int empresa = localVM.selectedEmpresa!.empresa;
 
@@ -87,16 +87,10 @@ class AddClientViewModel extends ChangeNotifier {
       isLoading = false;
       //finalizar proceso
       isLoading = false;
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -111,16 +105,9 @@ class AddClientViewModel extends ChangeNotifier {
 
     //validar respuesta del servico, si es incorrecta
     if (!resClient.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resClient.message,
-        url: resClient.url,
-        storeProcedure: resClient.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resClient,
       );
 
       NotificationService.showSnackbar(

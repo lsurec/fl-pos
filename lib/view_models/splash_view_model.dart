@@ -78,11 +78,11 @@ class SplashViewModel extends ChangeNotifier {
     //   }
     // }
 
-    //Buscar si hay u ntojken en preferencias
+    //Buscar si hay u token en preferencias
     if (Preferences.token.isNotEmpty) {
       //si hay uuna sesion asiganr token y usuario global
       loginVM.token = Preferences.token;
-      loginVM.nameUser = Preferences.userName;
+      loginVM.user = Preferences.userName;
       loginVM.conStr = Preferences.conStr;
     }
 
@@ -115,7 +115,17 @@ class SplashViewModel extends ChangeNotifier {
     //Si hay sesion y url del api
 
     //cargar estaciones
-    await localVM.loadData(context);
+    final bool succesLocal = await localVM.loadData(context);
+
+    if (!succesLocal) {
+      //si hay mas de una estacion o mas de una empresa mostar configuracion local
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LocalSettingsView(),
+        ), // Cambiar a la pantalla principal después de cargar los datos
+      );
+      return;
+    }
 
     //si solo hay una estacion y una empresa mostrar home
     if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {

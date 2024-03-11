@@ -62,7 +62,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     //datos de la sesion
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //Recivicio que se va a utilizar
     final ReceptionService receptionService = ReceptionService();
@@ -94,15 +94,9 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     //si el consumo salió mal
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;
@@ -226,7 +220,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     //datos externos de la sesion
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //servicio que se va a utilizar
     final ReceptionService receptionService = ReceptionService();
@@ -248,15 +242,9 @@ class ConvertDocViewModel extends ChangeNotifier {
       if (!resUpdate.succes) {
         isLoading = false;
 
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: resUpdate.message,
-          storeProcedure: resUpdate.storeProcedure,
-        );
-
         NotificationService.showErrorView(
           context,
-          error,
+          resUpdate,
         );
 
         return;
@@ -290,15 +278,9 @@ class ConvertDocViewModel extends ChangeNotifier {
     if (!resConvert.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resConvert.message,
-        storeProcedure: resConvert.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        resConvert,
       );
 
       return;

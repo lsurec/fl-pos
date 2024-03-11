@@ -490,7 +490,7 @@ class DocumentService {
 
     //Documento que se guarda en Preferences
     final saveDocument = SaveDocModel(
-      user: loginVM.nameUser,
+      user: loginVM.user,
       empresa: localVM.selectedEmpresa!,
       estacion: localVM.selectedEstacion!,
       cliente: docVM.clienteSelect,
@@ -526,7 +526,7 @@ class DocumentService {
     );
 
     //si el usuario de la sesion y el documento es distinto no hacer nada
-    if (saveDocument.user != loginVM.nameUser) return;
+    if (saveDocument.user != loginVM.user) return;
 
     //si la estacion de trabajo de la sesion y la del documento son distintos no hacer nada
     if (saveDocument.estacion != localVM.selectedEstacion) return;

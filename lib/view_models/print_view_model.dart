@@ -63,7 +63,7 @@ class PrintViewModel extends ChangeNotifier {
     //datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final String token = loginVM.token;
-    final String user = loginVM.nameUser;
+    final String user = loginVM.user;
 
     //Buscar datos paar imprimir
     final ReceptionService receptionService = ReceptionService();
@@ -86,15 +86,9 @@ class PrintViewModel extends ChangeNotifier {
 
     //si el consumo salió mal
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
       NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
 
       return;
@@ -103,14 +97,9 @@ class PrintViewModel extends ChangeNotifier {
     final List<PrintConvertModel> data = res.message;
 
     if (data.isEmpty) {
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description:
-            "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.",
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(context, error);
+      res.message =
+          "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.";
+      NotificationService.showErrorView(context, res);
 
       return;
     }
@@ -502,7 +491,7 @@ class PrintViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
     //usario y token
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //iniciar proceso
@@ -520,17 +509,9 @@ class PrintViewModel extends ChangeNotifier {
       //finalozar el proceso
       isLoading = false;
 
-      //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEncabezado.message,
-        url: resEncabezado.url,
-        storeProcedure: resEncabezado.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resEncabezado,
       );
 
       return;
@@ -550,17 +531,9 @@ class PrintViewModel extends ChangeNotifier {
       //finalozar el proceso
       isLoading = false;
 
-      //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resDetalle.message,
-        url: resDetalle.url,
-        storeProcedure: resDetalle.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resDetalle,
       );
       return;
     }
@@ -579,17 +552,9 @@ class PrintViewModel extends ChangeNotifier {
       //finalozar el proceso
       isLoading = false;
 
-      //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resPago.message,
-        url: resPago.url,
-        storeProcedure: resPago.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resPago,
       );
       return;
     }
@@ -601,14 +566,9 @@ class PrintViewModel extends ChangeNotifier {
     //validar que haya datos
 
     if (encabezadoTemplate.isEmpty) {
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description:
-            "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
-        storeProcedure: resEncabezado.storeProcedure,
-      );
-
-      NotificationService.showErrorView(context, error);
+      resEncabezado.message =
+          "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.";
+      NotificationService.showErrorView(context, resEncabezado);
 
       return;
     }
