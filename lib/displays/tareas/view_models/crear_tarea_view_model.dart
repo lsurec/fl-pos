@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -184,50 +185,56 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   Future crearTarea(BuildContext context) async {
+    if (!isValidForm()) return;
+
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
     String token = vmLogin.token;
     String user = vmLogin.nameUser;
+    int empresa = vmLocal.selectedEmpresa!.empresa;
 
     final TareaService tareaService = TareaService();
 
-    // NuevaTareaModel comentario = NuevaTareaModel(
-    //   tarea: 0,
-    //   descripcion: observacionController.text,
-    //   fechaIni: nuevaFechaInicial!,
-    //   fechaFin: nuevaFechaFinal!,
-    //   referencia: idReferencia!.referencia,
-    //   userName: userName,
-    //   observacion1: observacion1,
-    //   tipoTarea: tipoTarea,
-    //   cuentaCorrentista: cuentaCorrentista,
-    //   cuentaCta: cuentaCta,
-    //   cantidadContacto: cantidadContacto,
-    //   nombreContacto: nombreContacto,
-    //   tipoDocumento: tipoDocumento,
-    //   idDocumento: idDocumento,
-    //   refSerie: refSerie,
-    //   fechaDocumento: fechaDocumento,
-    //   elementoAsignado: elementoAsignado,
-    //   actividadPaso: actividadPaso,
-    //   ejecutado: ejecutado,
-    //   ejecutadoPor: ejecutadoPor,
-    //   ejecutadoFecha: ejecutadoFecha,
-    //   ejecutadoFechaHora: ejecutadoFechaHora,
-    //   producto: producto,
-    //   estado: estado,
-    //   empresa: empresa,
-    //   nivelPrioridad: nivelPrioridad,
-    //   tareaPadre: tareaPadre,
-    //   tiempoEstimadoTipoPeriocidad: tiempoEstimadoTipoPeriocidad,
-    //   tiempoEstimado: tiempoEstimado,
-    //   mUserName: mUserName,
-    //   observacion2: observacion2,
-    // );
+    NuevaTareaModel tarea = NuevaTareaModel(
+      tarea: 0,
+      descripcion: tituloController.text,
+      fechaIni: nuevaFechaInicial!,
+      fechaFin: nuevaFechaFinal!,
+      referencia: idReferencia!.referencia,
+      userName: user,
+      observacion1: observacionController.text,
+      tipoTarea: tipoTarea!.tipoTarea,
+      cuentaCorrentista: 1110,
+      cuentaCta: null,
+      cantidadContacto: null,
+      nombreContacto: null,
+      tipoDocumento: null,
+      idDocumento: null,
+      refSerie: null,
+      fechaDocumento: null,
+      elementoAsignado: null,
+      actividadPaso: null,
+      ejecutado: null,
+      ejecutadoPor: null,
+      ejecutadoFecha: null,
+      ejecutadoFechaHora: null,
+      producto: null,
+      estado: estado!.estado,
+      empresa: empresa,
+      nivelPrioridad: prioridad!.nivelPrioridad,
+      tareaPadre: null,
+      tiempoEstimadoTipoPeriocidad: periodicidad!.tipoPeriodicidad,
+      tiempoEstimado: tiempoController.text,
+      mUserName: null,
+      observacion2: null,
+    );
 
     isLoading = true;
 
-    final ApiResModel res = await tareaService.getTipoTarea(user, token);
+//Realizar consumo de api para crear tareas
+    final ApiResModel res = await tareaService.postTarea(token, tarea);
 
     //si el consumo salió mal
     if (!res.succes) {
@@ -238,15 +245,44 @@ class CrearTareaViewModel extends ChangeNotifier {
       return false;
     }
 
-    tiposTarea.addAll(res.message);
+    NuevaTareaModel creada = res.message[0];
 
-    for (var i = 0; i < tiposTarea.length; i++) {
-      TipoTareaModel tipo = tiposTarea[i];
-      if (tipo.descripcion.toLowerCase() == "tarea") {
-        tipoTarea = tipo;
-        break;
-      }
-    }
+    TareaModel resCreada = TareaModel(
+      tarea: tarea,
+      iDTarea: creada.tarea,
+      usuarioCreador: user,
+      emailCreador: "",
+      usuarioResponsable: null,
+      descripcion: tituloController.text,
+      fechaInicial: nuevaFechaInicial!,
+      fechaFinal: nuevaFechaFinal!,
+      referencia: idReferencia!.referencia,
+      iDReferencia: idReferencia!.referenciaId,
+      descripcionReferencia: idReferencia!.descripcion,
+      ultimoComentario: "",
+      fechaUltimoComentario: null,
+      usuarioUltimoComentario: null,
+      tareaObservacion1: observacionController.text,
+      tareaFechaIni: nuevaFechaInicial!,
+      tareaFechaFin: nuevaFechaFinal!,
+      tipoTarea: tipoTarea!.tipoTarea,
+      descripcionTipoTarea: tipoTarea!.descripcion,
+      estadoObjeto: estado!.estado,
+      tareaEstado: estado!.descripcion,
+      usuarioTarea: user,
+      backColor: "#000",
+      nivelPrioridad: prioridad!.nivelPrioridad,
+      nomNivelPrioridad: prioridad!.nombre,
+    );
+
+    vmTarea.tareas.insert(0, resCreada);
+
+    notifyListeners();
+
+    vmTarea.loadData(context);
+
+    // Navigator.pushNamed(context, AppRoutes.tareas);
+    Navigator.pop(context);
 
     isLoading = false;
 

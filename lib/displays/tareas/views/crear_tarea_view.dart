@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../view_models/view_models.dart';
@@ -16,188 +17,173 @@ class CrearTareaView extends StatelessWidget {
 
     final List<UsuarioModel> usuariosEncontrados = vm.invitados;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Nueva Tarea',
-          style: AppTheme.titleStyle,
-        ),
-        actions: <Widget>[
-          Row(
-            children: [
-              IconButton(
-                onPressed: () => vm.crear(),
-                icon: const Icon(Icons.save),
-                tooltip: "Crear Tarea",
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.attach_file_outlined),
-                tooltip: "Adjuntar Archivos",
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Nueva Tarea',
+              style: AppTheme.titleStyle,
+            ),
+            actions: <Widget>[
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => vm.crearTarea(context),
+                    icon: const Icon(Icons.save),
+                    tooltip: "Crear Tarea",
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.attach_file_outlined),
+                    tooltip: "Adjuntar Archivos",
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          print("Volver a ceagar");
-        },
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: vm.formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
+          body: RefreshIndicator(
+            onRefresh: () async {
+              print("Volver a ceagar");
+            },
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Form(
+                    key: vm.formKey,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Titulo",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                        Text(
-                          "*",
-                          style: AppTheme.obligatoryBoldStyle,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Campo requerido.';
-                        }
-                        return null;
-                      },
-                      controller: vm.tituloController,
-                      onChanged: (value) {
-                        vm.titulo = value;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: "Añada un titulo para la tarea."),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "Fecha y hora inicial",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () async {
-                            vm.abrirFechaInicial(context);
-                          },
-                          icon: const Icon(Icons.calendar_today_outlined),
-                          label: Text(
-                            "Fecha: ${vm.fechaInicial.text}",
-                            style: AppTheme.normalStyle,
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () async {
-                            vm.abrirHoraInicial(context);
-                          },
-                          icon: const Icon(Icons.schedule_outlined),
-                          label: Text(
-                            "Hora: ${vm.horaInicial.text}",
-                            style: AppTheme.normalStyle,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    const Divider(),
-                    const SizedBox(height: 5),
-                    const Text(
-                      "Fecha y hora final",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () async {
-                            vm.abrirFechaFinal(context);
-                          },
-                          icon: const Icon(Icons.calendar_today_outlined),
-                          label: Text(
-                            "Fecha: ${vm.fechaFinal.text}",
-                            style: AppTheme.normalStyle,
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () async {
-                            vm.abrirHoraFinal(context);
-                          },
-                          icon: const Icon(Icons.schedule_outlined),
-                          label: Text(
-                            "Hora: ${vm.horaFinal.text}",
-                            style: AppTheme.normalStyle,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    const Divider(),
-                    const SizedBox(height: 5),
-
-                    const Text(
-                      "Tiempo estimado: ",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 150,
-                          child: TextFormField(
-                            controller: vm.tiempoController,
-                            onChanged: (value) {
-                              vm.tiempo = value;
-                            },
-                            decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: 14,
-                                horizontal: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          child: _TiempoEstimado(tiempos: vm.periodicidades),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const Row(
-                      children: [
-                        Text(
-                          "Tipo",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          "*",
-                          style: AppTheme.obligatoryBoldStyle,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    _TipoTarea(tipos: vm.tiposTarea),
-                    const SizedBox(height: 10),
-                    const Row(
-                      children: [
-                        Row(
+                        const Row(
                           children: [
                             Text(
-                              "Estado",
+                              "Titulo",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            Text(
+                              "*",
+                              style: AppTheme.obligatoryBoldStyle,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Campo requerido.';
+                            }
+                            return null;
+                          },
+                          controller: vm.tituloController,
+                          onChanged: (value) {
+                            vm.titulo = value;
+                          },
+                          decoration: const InputDecoration(
+                              labelText: "Añada un titulo para la tarea."),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          "Fecha y hora inicial",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () async {
+                                vm.abrirFechaInicial(context);
+                              },
+                              icon: const Icon(Icons.calendar_today_outlined),
+                              label: Text(
+                                "Fecha: ${vm.fechaInicial.text}",
+                                style: AppTheme.normalStyle,
+                              ),
+                            ),
+                            TextButton.icon(
+                              onPressed: () async {
+                                vm.abrirHoraInicial(context);
+                              },
+                              icon: const Icon(Icons.schedule_outlined),
+                              label: Text(
+                                "Hora: ${vm.horaInicial.text}",
+                                style: AppTheme.normalStyle,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        const Text(
+                          "Fecha y hora final",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () async {
+                                vm.abrirFechaFinal(context);
+                              },
+                              icon: const Icon(Icons.calendar_today_outlined),
+                              label: Text(
+                                "Fecha: ${vm.fechaFinal.text}",
+                                style: AppTheme.normalStyle,
+                              ),
+                            ),
+                            TextButton.icon(
+                              onPressed: () async {
+                                vm.abrirHoraFinal(context);
+                              },
+                              icon: const Icon(Icons.schedule_outlined),
+                              label: Text(
+                                "Hora: ${vm.horaFinal.text}",
+                                style: AppTheme.normalStyle,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+
+                        const Text(
+                          "Tiempo estimado: ",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 150,
+                              child: TextFormField(
+                                controller: vm.tiempoController,
+                                onChanged: (value) {
+                                  vm.tiempo = value;
+                                },
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    vertical: 14,
+                                    horizontal: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              child:
+                                  _TiempoEstimado(tiempos: vm.periodicidades),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        const Row(
+                          children: [
+                            Text(
+                              "Tipo",
                               style: AppTheme.normalBoldStyle,
                             ),
                             Padding(padding: EdgeInsets.only(left: 5)),
@@ -207,150 +193,179 @@ class CrearTareaView extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    _EstadoTarea(estados: vm.estados),
-                    const SizedBox(height: 10),
-                    const Row(
-                      children: [
-                        Text(
-                          "Prioridad",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          "*",
-                          style: AppTheme.obligatoryBoldStyle,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    _PrioridadTarea(prioridades: vm.prioridades),
-                    const SizedBox(height: 10),
-                    const Row(
-                      children: [
-                        Text(
-                          "Observación",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          "*",
-                          style: AppTheme.obligatoryBoldStyle,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    const _ObservacionTarea(),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () => vm.irIdReferencia(context),
-                      child: ListTile(
-                        title: Row(
+                        const SizedBox(height: 10),
+                        _TipoTarea(tipos: vm.tiposTarea),
+                        const SizedBox(height: 10),
+                        const Row(
                           children: [
-                            const Text(
-                              "Id referencia :",
-                              style: AppTheme.normalStyle,
+                            Row(
+                              children: [
+                                Text(
+                                  "Estado",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                                Padding(padding: EdgeInsets.only(left: 5)),
+                                Text(
+                                  "*",
+                                  style: AppTheme.obligatoryBoldStyle,
+                                ),
+                              ],
                             ),
-                            const Text(
-                              " * ",
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        _EstadoTarea(estados: vm.estados),
+                        const SizedBox(height: 10),
+                        const Row(
+                          children: [
+                            Text(
+                              "Prioridad",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            Padding(padding: EdgeInsets.only(left: 5)),
+                            Text(
+                              "*",
                               style: AppTheme.obligatoryBoldStyle,
                             ),
-                            const SizedBox(width: 30),
-                            if (vm.idReferencia != null)
-                              Text(
-                                vm.idReferencia!.referenciaId,
-                                style: AppTheme.normalBoldStyle,
-                              ),
                           ],
                         ),
-                        leading: const Icon(Icons.search),
-                        contentPadding: const EdgeInsets.all(0),
-                      ),
-                    ),
-                    const Divider(),
-
-                    // const SizedBox(height: 5),
-                    TextButton(
-                      onPressed: () => vm.irUsuarios(context, 1),
-                      child: const ListTile(
-                        title: Text(
-                          "Añadir responsable",
-                          style: AppTheme.normalStyle,
-                        ),
-                        leading: Icon(Icons.person_add_alt_1_outlined),
-                        contentPadding: EdgeInsets.all(0),
-                      ),
-                    ),
-                    if (vm.responsable != null)
-                      ListTile(
-                        title: Text(
-                          vm.responsable!.name,
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                        subtitle: Text(
-                          vm.responsable!.email,
-                          style: AppTheme.normalStyle,
-                        ),
-                        leading: const Icon(Icons.person),
-                        trailing: GestureDetector(
-                          child: const Icon(Icons.close),
-                          onTap: () => vm.eliminarResponsable(),
-                        ),
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                      ),
-                    const Divider(),
-                    TextButton(
-                      onPressed: () => vm.irUsuarios(context, 2),
-                      child: const ListTile(
-                        title: Text(
-                          "Añadir invitados",
-                          style: AppTheme.normalStyle,
-                        ),
-                        leading: Icon(Icons.person_add_alt_1_outlined),
-                        contentPadding: EdgeInsets.all(0),
-                      ),
-                    ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: vm.invitados.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final UsuarioModel usuario = usuariosEncontrados[index];
-                        return Column(
+                        const SizedBox(height: 10),
+                        _PrioridadTarea(prioridades: vm.prioridades),
+                        const SizedBox(height: 10),
+                        const Row(
                           children: [
-                            ListTile(
-                              title: Text(
-                                usuario.name,
-                                style: AppTheme.normalBoldStyle,
-                              ),
-                              subtitle: Text(
-                                usuario.email,
-                                style: AppTheme.normalStyle,
-                              ),
-                              leading: const Icon(Icons.person),
-                              trailing: GestureDetector(
-                                child: const Icon(Icons.close),
-                                onTap: () => vm.eliminarInvitado(index),
-                              ),
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                            Text(
+                              "Observación",
+                              style: AppTheme.normalBoldStyle,
                             ),
-                            const Divider(),
+                            Padding(padding: EdgeInsets.only(left: 5)),
+                            Text(
+                              "*",
+                              style: AppTheme.obligatoryBoldStyle,
+                            ),
                           ],
-                        );
-                      },
+                        ),
+                        const SizedBox(height: 10),
+                        const _ObservacionTarea(),
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: () => vm.irIdReferencia(context),
+                          child: ListTile(
+                            title: Row(
+                              children: [
+                                const Text(
+                                  "Id referencia :",
+                                  style: AppTheme.normalStyle,
+                                ),
+                                const Text(
+                                  " * ",
+                                  style: AppTheme.obligatoryBoldStyle,
+                                ),
+                                const SizedBox(width: 30),
+                                if (vm.idReferencia != null)
+                                  Text(
+                                    vm.idReferencia!.referenciaId,
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                              ],
+                            ),
+                            leading: const Icon(Icons.search),
+                            contentPadding: const EdgeInsets.all(0),
+                          ),
+                        ),
+                        const Divider(),
+
+                        // const SizedBox(height: 5),
+                        TextButton(
+                          onPressed: () => vm.irUsuarios(context, 1),
+                          child: const ListTile(
+                            title: Text(
+                              "Añadir responsable",
+                              style: AppTheme.normalStyle,
+                            ),
+                            leading: Icon(Icons.person_add_alt_1_outlined),
+                            contentPadding: EdgeInsets.all(0),
+                          ),
+                        ),
+                        if (vm.responsable != null)
+                          ListTile(
+                            title: Text(
+                              vm.responsable!.name,
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            subtitle: Text(
+                              vm.responsable!.email,
+                              style: AppTheme.normalStyle,
+                            ),
+                            leading: const Icon(Icons.person),
+                            trailing: GestureDetector(
+                              child: const Icon(Icons.close),
+                              onTap: () => vm.eliminarResponsable(),
+                            ),
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 10),
+                          ),
+                        const Divider(),
+                        TextButton(
+                          onPressed: () => vm.irUsuarios(context, 2),
+                          child: const ListTile(
+                            title: Text(
+                              "Añadir invitados",
+                              style: AppTheme.normalStyle,
+                            ),
+                            leading: Icon(Icons.person_add_alt_1_outlined),
+                            contentPadding: EdgeInsets.all(0),
+                          ),
+                        ),
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vm.invitados.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final UsuarioModel usuario =
+                                usuariosEncontrados[index];
+                            return Column(
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                    usuario.name,
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                                  subtitle: Text(
+                                    usuario.email,
+                                    style: AppTheme.normalStyle,
+                                  ),
+                                  leading: const Icon(Icons.person),
+                                  trailing: GestureDetector(
+                                    child: const Icon(Icons.close),
+                                    onTap: () => vm.eliminarInvitado(index),
+                                  ),
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                ),
+                                const Divider(),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        //importarte para mostrar la pantalla de carga
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }

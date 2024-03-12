@@ -104,37 +104,37 @@ class _ReferenciasEncontradas extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-                GestureDetector(
-                  onTap: () {
-                    // Tu lógica cuando se hace tap en el Texto o en la Columna completa
-                    print(
-                        'Se hizo tap en la referencia: ${referencia.descripcion}');
+            child: GestureDetector(
+              onTap: () {
+                // Tu lógica cuando se hace tap en el Texto o en la Columna completa
+                print(
+                    'Se hizo tap en la referencia: ${referencia.descripcion}');
 
-                    vmCrear.seleccionarIdRef(context, referencia);
-                  },
-                  child: Text(
+                vmCrear.seleccionarIdRef(context, referencia);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  Text(
                     referencia.descripcion,
                     style: AppTheme.normalStyle,
                   ),
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "ID Referencia: ",
-                      style: AppTheme.normalStyle,
-                    ),
-                    Text(
-                      referencia.referenciaId,
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-              ],
+                  Row(
+                    children: [
+                      const Text(
+                        "ID Referencia: ",
+                        style: AppTheme.normalStyle,
+                      ),
+                      Text(
+                        referencia.referenciaId,
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                ],
+              ),
             ),
           ),
         );
