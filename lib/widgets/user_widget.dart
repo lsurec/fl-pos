@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserWidget extends StatelessWidget {
@@ -45,6 +46,12 @@ void _showUserInfoModal(
   final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
   final vmHome = Provider.of<HomeViewModel>(context, listen: false);
 
+  // Crear una instancia de NumberFormat para el formato de moneda
+  final currencyFormat = NumberFormat.currency(
+    symbol: vmHome
+        .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+    decimalDigits: 2, // Número de decimales a mostrar
+  );
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -122,7 +129,7 @@ void _showUserInfoModal(
                           style: AppTheme.normalBoldStyle,
                         ),
                         subtitle: Text(
-                          vmHome.tipoCambio.toStringAsPrecision(2),
+                          currencyFormat.format(vmHome.tipoCambio),
                           style: AppTheme.normalStyle,
                         ),
                       ),
