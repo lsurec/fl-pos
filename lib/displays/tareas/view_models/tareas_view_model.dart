@@ -250,4 +250,9 @@ class TareasViewModel extends ChangeNotifier {
 
     return fechaFormateada;
   }
+
+  insertarTarea(TareaModel tarea) {
+    tareas.insert(0, tarea);
+    notifyListeners();
+  }
 }

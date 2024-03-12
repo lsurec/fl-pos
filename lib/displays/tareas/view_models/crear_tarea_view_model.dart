@@ -275,14 +275,12 @@ class CrearTareaViewModel extends ChangeNotifier {
       nomNivelPrioridad: prioridad!.nombre,
     );
 
-    vmTarea.tareas.insert(0, resCreada);
+    if (responsable != null) {
+      await agregarResponsable(context, resCreada);
+    }
 
-    notifyListeners();
-
-    vmTarea.loadData(context);
-
-    // Navigator.pushNamed(context, AppRoutes.tareas);
-    Navigator.pop(context);
+    //insertar tarea al inicio de la lista de tareas
+    vmTarea.insertarTarea(resCreada);
 
     isLoading = false;
 
@@ -658,5 +656,68 @@ class CrearTareaViewModel extends ChangeNotifier {
   void eliminarResponsable() {
     responsable = null;
     notifyListeners();
+  }
+
+  Future agregarResponsable(
+    BuildContext context,
+    TareaModel tarea,
+  ) async {
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String user = vmLogin.nameUser;
+    String token = vmLogin.token;
+
+    final TareaService tareaService = TareaService();
+
+    //usuario nuevo
+    NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
+      tarea: tarea.iDTarea,
+      userResInvi: responsable!.userName,
+      user: user,
+    );
+
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel res = await tareaService.postResponsable(
+      token,
+      usuarioResponsable,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      //Abrir dialogo de error
+      // showError(context, res);
+
+      ApiResModel responsable = ApiResModel(
+        message: res.message,
+        succes: false,
+        url: "",
+        storeProcedure: '',
+      );
+
+      return responsable;
+    }
+
+    ResponsableModel seleccionado = res.message;
+
+    ResponsableModel reponsableSeleccionado = ResponsableModel(
+      tUserName: responsable!.email,
+      estado: "activo",
+      userName: seleccionado.userName,
+      fechaHora: seleccionado.fechaHora,
+      mUserName: seleccionado.mUserName,
+      mFechaHora: seleccionado.mFechaHora,
+      dHm: seleccionado.dHm,
+      consecutivoInterno: seleccionado.consecutivoInterno,
+    );
+
+    tarea.usuarioResponsable = reponsableSeleccionado.userName;
+
+    notifyListeners();
+
+    isLoading = false;
+    //
   }
 }

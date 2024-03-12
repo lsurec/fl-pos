@@ -714,4 +714,63 @@ class TareaService {
       );
     }
   }
+
+  //Consumo api para agregar usuario responsable a la tarea.
+  Future<ApiResModel> postResponsable(
+    String token,
+    NuevoUsuarioModel usuario,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/usuario/responsable");
+    try {
+      //url completa
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: usuario.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Invitado nuevo retornado por api
+      List<ResNuevoUsuarioModel> responsable = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ResNuevoUsuarioModel.fromMap(item);
+        //agregar item a la lista
+        responsable.add(responseFinally);
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: responsable,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 }
