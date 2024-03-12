@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -114,7 +115,7 @@ class MenuViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Cambiar rutas (Agreagar)
+  //Cambiar rutas (Agragar)
   void changeRoute(int index) {
     //Si el indice del padre seleccionado es menor al total de itemes
     //eliminar todos los qe sigan a partir del indice seleccoinado
@@ -136,12 +137,40 @@ class MenuViewModel extends ChangeNotifier {
   Future<void> refreshData(BuildContext context) async {
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
 
     final String user = loginVM.user;
     final String token = loginVM.token;
 
     homeVM.isLoading = true;
-    //TODO:GET TIPO CAMBIO
+
+    final TipoCambioService tipoCambioService = TipoCambioService();
+
+    final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
+      localVM.selectedEmpresa!.empresa,
+      user,
+      token,
+    );
+
+    if (!resCambio.succes) {
+      homeVM.isLoading = false;
+      NotificationService.showErrorView(context, resCambio);
+      return;
+    }
+
+    final List<TipoCambioModel> cambios = resCambio.message;
+
+    if (cambios.isNotEmpty) {
+      homeVM.tipoCambio = cambios[0].tipoCambio;
+    } else {
+      resCambio.message =
+          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+
+      homeVM.isLoading = false;
+      NotificationService.showErrorView(context, resCambio);
+
+      return;
+    }
 
     final MenuService menuService = MenuService();
 
