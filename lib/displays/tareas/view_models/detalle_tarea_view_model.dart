@@ -166,7 +166,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     String token = vmLogin.token;
     String user = vmLogin.nameUser;
 
-    final ActualizarTareaService tareaService = ActualizarTareaService();
+    final TareaService tareaService = TareaService();
 
     isLoading = true; //cargar pantalla
 
@@ -238,7 +238,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     String token = vmLogin.token;
     String user = vmLogin.nameUser;
 
-    final ActualizarTareaService tareaService = ActualizarTareaService();
+    final TareaService tareaService = TareaService();
 
     isLoading = true; //cargar pantalla
 
@@ -311,7 +311,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     String user = vmLogin.nameUser;
     String token = vmLogin.token;
 
-    final ActualizarTareaService tareaService = ActualizarTareaService();
+    final TareaService tareaService = TareaService();
 
     //mostrar dialogo de confirmacion
     bool result = await showDialog(
@@ -426,7 +426,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     String user = vmLogin.nameUser;
     String token = vmLogin.token;
 
-    final ActualizarTareaService tareaService = ActualizarTareaService();
+    final TareaService tareaService = TareaService();
 
     final List<InvitadoModel> agregados = []; // guardar invitados nuevos
     // final List<InvitadoModel> resInvitado = []; // guardar invitados nuevos

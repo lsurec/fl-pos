@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class ResNuevoUsuarioModel {
-  int tareaUserName;
+  dynamic tareaUserName;
   int tarea;
-  String userNameT;
+  dynamic userNameT;
   int estado;
-  String userName;
+  dynamic userName;
   DateTime fechaHora;
   dynamic mUserName;
   dynamic mFechaHora;

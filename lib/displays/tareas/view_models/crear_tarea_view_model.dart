@@ -276,7 +276,44 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     if (responsable != null) {
-      await agregarResponsable(context, resCreada);
+      //usuario nuevo
+      NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
+        tarea: creada.tarea,
+        userResInvi: responsable!.userName,
+        user: user,
+      );
+      print(usuarioResponsable.userResInvi);
+      isLoading = true; //cargar pantalla
+
+      //consumo de api
+      final ApiResModel res = await tareaService.postResponsable(
+        token,
+        usuarioResponsable,
+      );
+
+      //si el consumo salió mal
+      if (!res.succes) {
+        isLoading = false;
+
+        //Abrir dialogo de error
+        showError(context, res);
+
+        ApiResModel responsable = ApiResModel(
+          message: res.message,
+          succes: false,
+          url: "",
+          storeProcedure: '',
+        );
+
+        return responsable;
+      }
+
+      ResNuevoUsuarioModel seleccionado = res.message[0];
+
+      resCreada.usuarioResponsable = seleccionado.userName;
+      notifyListeners();
+
+      //agregar fin de la carga pero es obligatorio el responsable
     }
 
     //insertar tarea al inicio de la lista de tareas
