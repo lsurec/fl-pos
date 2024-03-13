@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import '../displays/prc_documento_3/view_models/view_models.dart';
 
 class MenuViewModel extends ChangeNotifier {
@@ -29,42 +31,6 @@ class MenuViewModel extends ChangeNotifier {
   String name = "";
   String? documentoName;
 
-  //obtener tipo de cambio
-  Future<void> getTipoCambio(BuildContext context) async {
-    //Load tipo cambio
-
-    TipoCambioService tipoCambioService = TipoCambioService();
-
-    final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
-      localVM.selectedEmpresa!.empresa,
-      user,
-      token,
-    );
-
-    if (!resCambio.succes) {
-      //si hay mas de una estacion o mas de una empresa mostar configuracion local
-
-      isLoading = false;
-      NotificationService.showErrorView(context, resCambio);
-
-      return;
-    }
-
-    final List<TipoCambioModel> cambios = resCambio.message;
-
-    if (cambios.isNotEmpty) {
-      homeVM.tipoCambio = cambios[0].tipoCambio;
-    } else {
-      resCambio.message =
-          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
-
-      isLoading = false;
-      NotificationService.showErrorView(context, resCambio);
-
-      return;
-    }
-  }
-
   //navegar a ruta
   Future<void> navigateDisplay(
     BuildContext context,
@@ -78,27 +44,269 @@ class MenuViewModel extends ChangeNotifier {
     name = nameDisplay;
     documentoName = docName;
 
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+    final vmLocal = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final int empresa = vmLocal.selectedEmpresa!.empresa;
+    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+    final String user = vmLogin.user;
+    final String token = vmLogin.token;
+
     if (route.toLowerCase() == "prcdocumento_3") {
-      final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
-      final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
-      final vmHome = Provider.of<HomeViewModel>(context, listen: false);
-
-      vmHome.isLoading = true;
-      await vmFactura.loadData(context);
-
-      vmHome.isLoading = false;
-
-      if (vmPayment.paymentList.isEmpty) {
-        Navigator.pushNamed(context, "withoutPayment");
+      if (documento == null) {
+        NotificationService.showSnackbar(
+            "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.");
         return;
       }
 
-      Navigator.pushNamed(context, "withPayment");
+      final vmFactura = Provider.of<DocumentoViewModel>(
+        context,
+        listen: false,
+      );
+      final vmPayment = Provider.of<PaymentViewModel>(
+        context,
+        listen: false,
+      );
+      final vmHome = Provider.of<HomeViewModel>(
+        context,
+        listen: false,
+      );
+
+      final vmDoc = Provider.of<DocumentViewModel>(
+        context,
+        listen: false,
+      );
+
+      final String serie = vmDoc.serieSelect!.serieDocumento!;
+
+      vmHome.isLoading = true;
+      //Load data
+
+      TipoCambioService tipoCambioService = TipoCambioService();
+
+      final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
+        empresa,
+        user,
+        token,
+      );
+
+      if (!resCambio.succes) {
+        vmHome.isLoading = false;
+        NotificationService.showErrorView(context, resCambio);
+        return;
+      }
+
+      final List<TipoCambioModel> cambios = resCambio.message;
+
+      if (cambios.isNotEmpty) {
+        tipoCambio = cambios[0].tipoCambio;
+      } else {
+        resCambio.message =
+            "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+
+        vmHome.isLoading = false;
+        NotificationService.showErrorView(context, resCambio);
+
+        return;
+      }
+
+      //limpiar serie seleccionada
+      vmDoc.serieSelect = null;
+      //simpiar lista serie
+      vmDoc.series.clear();
+
+      //instancia del servicio
+      SerieService serieService = SerieService();
+
+      //consumo del api
+      ApiResModel resSeries = await serieService.getSerie(
+        documento!, // documento,
+        empresa, // empresa,
+        estacion, // estacion,
+        user, // user,
+        token, // token,
+      );
+
+      //valid succes response
+      if (!resSeries.succes) {
+        //si algo salio mal mostrar alerta
+        vmHome.isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resSeries,
+        );
+        return;
+      }
+
+      //Agregar series encontradas
+      vmDoc.series.addAll(resSeries.message);
+
+      // si sololo hay una serie seleccionarla por defecto
+      if (vmDoc.series.length == 1) {
+        vmDoc.serieSelect = vmDoc.series.first;
+      }
+
+      // si hay solo una serie buscar vendedores
+      if (vmDoc.series.length == 1) {
+        //limpiar vendedor seleccionado
+        vmDoc.vendedorSelect = null;
+
+        //limmpiar lista vendedor
+        vmDoc.cuentasCorrentistasRef.clear();
+
+        //instancia del servicio
+        CuentaService cuentaService = CuentaService();
+
+        //Consummo del api
+        ApiResModel resCuentRef = await cuentaService.getCeuntaCorrentistaRef(
+          user, // user,
+          documento!, // doc,
+          serie, // serie,
+          empresa, // empresa,
+          token, // token,
+        );
+
+        //valid succes response
+        if (!resCuentRef.succes) {
+          //si algo salio mal mostrar alerta
+
+          vmHome.isLoading = false;
+          await NotificationService.showErrorView(
+            context,
+            resCuentRef,
+          );
+          return;
+        }
+
+        //agregar vendedores
+        vmDoc.cuentasCorrentistasRef.addAll(resCuentRef.message);
+
+        //si solo hay un vendedor agregarlo por defecto
+        if (vmDoc.cuentasCorrentistasRef.length == 1) {
+          vmDoc.vendedorSelect = vmDoc.cuentasCorrentistasRef.first;
+        }
+
+        //instancia del servicio
+        vmDoc.tiposTransaccion.clear();
+        TipoTransaccionService tipoTransaccionService =
+            TipoTransaccionService();
+
+        //consumo del api
+        ApiResModel resTiposTra =
+            await tipoTransaccionService.getTipoTransaccion(
+          documento!, // documento,
+          serie, // serie,
+          empresa, // empresa,
+          token, // token,
+          user, // user,
+        );
+
+        //valid succes response
+        if (!resTiposTra.succes) {
+          //si algo salio mal mostrar alerta
+          vmHome.isLoading = false;
+
+          await NotificationService.showErrorView(
+            context,
+            resTiposTra,
+          );
+          return;
+        }
+
+        //Agregar series encontradas
+        vmDoc.tiposTransaccion.addAll(resTiposTra.message);
+
+        vmDoc.parametros.clear();
+
+        ParametroService parametroService = ParametroService();
+
+        ApiResModel resParams = await parametroService.getParametro(
+          user,
+          documento!,
+          serie,
+          empresa,
+          estacion,
+          token,
+        );
+
+        //valid succes response
+        if (!resParams.succes) {
+          //si algo salio mal mostrar alerta
+          vmHome.isLoading = false;
+
+          await NotificationService.showErrorView(
+            context,
+            resParams,
+          );
+          return;
+        }
+
+        //Agregar series encontradas
+        vmDoc.parametros.addAll(resParams.message);
+      }
+
+      //limpiar lista
+      vmPayment.paymentList.clear();
+
+      //TODO: si ahay varias series no se carga los pagos y no hay pagos
+      if (vmDoc.serieSelect != null) {
+        //instancia del servicio
+        PagoService pagoService = PagoService();
+
+        //load prosses
+        vmFactura.isLoading = true;
+
+        //Consumo del servicio
+        ApiResModel resPayments = await pagoService.getFormas(
+          documento!, // doc,
+          serie, // serie,
+          empresa, // empresa,
+          token, // token,
+        );
+
+        //valid succes response
+        if (!resPayments.succes) {
+          //si algo salio mal mostrar alerta
+          vmHome.isLoading = false;
+
+          await NotificationService.showErrorView(
+            context,
+            resPayments,
+          );
+          return;
+        }
+
+        //agregar formas de pago encontradas
+        vmPayment.paymentList.addAll(resPayments.message);
+      }
+
+      if (vmPayment.paymentList.isEmpty) {
+        Navigator.pushNamed(context, AppRoutes.withoutPayment);
+        vmHome.isLoading = false;
+
+        return;
+      }
+
+      Navigator.pushNamed(context, AppRoutes.withPayment);
+      vmHome.isLoading = false;
       return;
     }
 
     //cargar dtos
     if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
+      if (documento == null) {
+        NotificationService.showSnackbar(
+            "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.");
+        return;
+      }
+
       final vmHome = Provider.of<HomeViewModel>(context, listen: false);
       final vmTipos = Provider.of<TypesDocViewModel>(context, listen: false);
       final vmPend = Provider.of<PendingDocsViewModel>(context, listen: false);
@@ -110,7 +318,32 @@ class MenuViewModel extends ChangeNotifier {
       vmPend.fechaIni = now;
       vmPend.fechaFin = now;
 
-      await vmTipos.loadData(context);
+      //limpiar docunentos  anteriores
+      vmTipos.documents.clear();
+
+      //servicio
+      final ReceptionService receptionService = ReceptionService();
+
+      //iniciar carga
+      vmHome.isLoading = true;
+
+      //consumo del api
+      final ApiResModel res = await receptionService.getTiposDoc(user, token);
+
+      //si el consumo salió mal
+      if (!res.succes) {
+        vmHome.isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          res,
+        );
+
+        return;
+      }
+
+      //agregar tipos de docuentos encontrados
+      vmTipos.documents.addAll(res.message);
 
       //si solo hay un documento sleccioanrlo
       if (vmTipos.documents.length == 1) {
@@ -118,7 +351,37 @@ class MenuViewModel extends ChangeNotifier {
 
         penVM.tipoDoc = vmTipos.documents.first.tipoDocumento;
 
-        await penVM.laodData(context);
+        //servicio que se va a usar
+        final ReceptionService receptionService = ReceptionService();
+
+        //limpiar docuemntos existentes
+        penVM.documents.clear();
+
+        //consumo del api
+        final ApiResModel res = await receptionService.getPendindgDocs(
+          user,
+          token,
+          documento!,
+          penVM.formatStrFilterDate(penVM.fechaIni!),
+          penVM.formatStrFilterDate(penVM.fechaFin!),
+        );
+
+        //si el consumo salió mal
+        if (!res.succes) {
+          vmHome.isLoading = false;
+
+          NotificationService.showErrorView(
+            context,
+            res,
+          );
+
+          return;
+        }
+
+        //asignar documntos disponibles
+        penVM.documents.addAll(res.message);
+
+        penVM.orderList();
 
         Navigator.pushNamed(
           context,
