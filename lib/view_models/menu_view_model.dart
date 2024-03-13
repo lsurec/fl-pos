@@ -58,6 +58,8 @@ class MenuViewModel extends ChangeNotifier {
     final String user = vmLogin.user;
     final String token = vmLogin.token;
 
+    tipoCambio = 0;
+
     if (route.toLowerCase() == "prcdocumento_3") {
       if (documento == null) {
         NotificationService.showSnackbar(
@@ -65,10 +67,6 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
-      final vmFactura = Provider.of<DocumentoViewModel>(
-        context,
-        listen: false,
-      );
       final vmPayment = Provider.of<PaymentViewModel>(
         context,
         listen: false,
@@ -82,8 +80,6 @@ class MenuViewModel extends ChangeNotifier {
         context,
         listen: false,
       );
-
-      final String serie = vmDoc.serieSelect!.serieDocumento!;
 
       vmHome.isLoading = true;
       //Load data
@@ -107,10 +103,11 @@ class MenuViewModel extends ChangeNotifier {
       if (cambios.isNotEmpty) {
         tipoCambio = cambios[0].tipoCambio;
       } else {
+        vmHome.isLoading = false;
+
         resCambio.message =
             "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
 
-        vmHome.isLoading = false;
         NotificationService.showErrorView(context, resCambio);
 
         return;
@@ -168,7 +165,7 @@ class MenuViewModel extends ChangeNotifier {
         ApiResModel resCuentRef = await cuentaService.getCeuntaCorrentistaRef(
           user, // user,
           documento!, // doc,
-          serie, // serie,
+          vmDoc.serieSelect!.serieDocumento!, // serie,
           empresa, // empresa,
           token, // token,
         );
@@ -202,7 +199,7 @@ class MenuViewModel extends ChangeNotifier {
         ApiResModel resTiposTra =
             await tipoTransaccionService.getTipoTransaccion(
           documento!, // documento,
-          serie, // serie,
+          vmDoc.serieSelect!.serieDocumento!, // serie,
           empresa, // empresa,
           token, // token,
           user, // user,
@@ -230,7 +227,7 @@ class MenuViewModel extends ChangeNotifier {
         ApiResModel resParams = await parametroService.getParametro(
           user,
           documento!,
-          serie,
+          vmDoc.serieSelect!.serieDocumento!,
           empresa,
           estacion,
           token,
@@ -260,13 +257,10 @@ class MenuViewModel extends ChangeNotifier {
         //instancia del servicio
         PagoService pagoService = PagoService();
 
-        //load prosses
-        vmFactura.isLoading = true;
-
         //Consumo del servicio
         ApiResModel resPayments = await pagoService.getFormas(
           documento!, // doc,
-          serie, // serie,
+          vmDoc.serieSelect!.serieDocumento!, // serie,
           empresa, // empresa,
           token, // token,
         );

@@ -124,16 +124,17 @@ void _showUserInfoModal(
                           style: AppTheme.normalStyle,
                         ),
                       ),
-                      ListTile(
-                        title: const Text(
-                          "Tipo cambio",
-                          style: AppTheme.normalBoldStyle,
+                      if (vmMenu.tipoCambio != 0)
+                        ListTile(
+                          title: const Text(
+                            "Tipo cambio",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          subtitle: Text(
+                            currencyFormat.format(vmMenu.tipoCambio),
+                            style: AppTheme.normalStyle,
+                          ),
                         ),
-                        subtitle: Text(
-                          currencyFormat.format(vmMenu.tipoCambio),
-                          style: AppTheme.normalStyle,
-                        ),
-                      ),
                     ],
                   ),
                 ),
