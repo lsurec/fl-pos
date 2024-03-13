@@ -52,39 +52,6 @@ class LocalSettingsViewModel extends ChangeNotifier {
     //inicia de proceso
     isLoading = true;
 
-    //Load tipo cambio
-
-    TipoCambioService tipoCambioService = TipoCambioService();
-
-    final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
-      selectedEmpresa!.empresa,
-      user,
-      token,
-    );
-
-    if (!resCambio.succes) {
-      //si hay mas de una estacion o mas de una empresa mostar configuracion local
-
-      isLoading = false;
-      NotificationService.showErrorView(context, resCambio);
-
-      return;
-    }
-
-    final List<TipoCambioModel> cambios = resCambio.message;
-
-    if (cambios.isNotEmpty) {
-      homeVM.tipoCambio = cambios[0].tipoCambio;
-    } else {
-      resCambio.message =
-          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
-
-      isLoading = false;
-      NotificationService.showErrorView(context, resCambio);
-
-      return;
-    }
-
     final MenuService menuService = MenuService();
 
     final ApiResModel resApps = await menuService.getApplication(user, token);

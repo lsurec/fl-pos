@@ -45,6 +45,7 @@ void _showUserInfoModal(
   final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
   final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
   final vmHome = Provider.of<HomeViewModel>(context, listen: false);
+  final vmMenu = Provider.of<MenuViewModel>(context, listen: false);
 
   // Crear una instancia de NumberFormat para el formato de moneda
   final currencyFormat = NumberFormat.currency(
@@ -129,7 +130,7 @@ void _showUserInfoModal(
                           style: AppTheme.normalBoldStyle,
                         ),
                         subtitle: Text(
-                          currencyFormat.format(vmHome.tipoCambio),
+                          currencyFormat.format(vmMenu.tipoCambio),
                           style: AppTheme.normalStyle,
                         ),
                       ),

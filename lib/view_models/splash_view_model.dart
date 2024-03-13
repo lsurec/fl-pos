@@ -175,49 +175,6 @@ class SplashViewModel extends ChangeNotifier {
     if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {
       //view model externo
       final menuVM = Provider.of<MenuViewModel>(context, listen: false);
-      final homeVM = Provider.of<HomeViewModel>(context, listen: false);
-
-      //Load tipo cambio
-
-      TipoCambioService tipoCambioService = TipoCambioService();
-
-      final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
-        localVM.selectedEmpresa!.empresa,
-        user,
-        token,
-      );
-
-      if (!resCambio.succes) {
-        //si hay mas de una estacion o mas de una empresa mostar configuracion local
-
-        localVM.resApis = resCambio;
-
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes
-              .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
-          (Route<dynamic> route) => false,
-        );
-
-        return;
-      }
-
-      final List<TipoCambioModel> cambios = resCambio.message;
-
-      if (cambios.isNotEmpty) {
-        homeVM.tipoCambio = cambios[0].tipoCambio;
-      } else {
-        resCambio.message =
-            "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
-        localVM.resApis = resCambio;
-
-        Navigator.of(context).pushNamedAndRemoveUntil(
-          AppRoutes
-              .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
-          (Route<dynamic> route) => false,
-        );
-
-        return;
-      }
 
       final MenuService menuService = MenuService();
 

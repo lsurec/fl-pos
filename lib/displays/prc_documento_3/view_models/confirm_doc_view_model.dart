@@ -1026,8 +1026,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
         listen: false);
     final paymentVM = Provider.of<PaymentViewModel>(scaffoldKey.currentContext!,
         listen: false);
-    final vmHome =
-        Provider.of<HomeViewModel>(scaffoldKey.currentContext!, listen: false);
 
     //usuario token y cadena de conexion
     String user = loginVM.user;
@@ -1080,7 +1078,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
               traProducto: transaction.producto.producto,
               traUnidadMedida: transaction.producto.unidadMedida,
               traCantidad: 0,
-              traTipoCambio: vmHome.tipoCambio,
+              traTipoCambio: menuVM.tipoCambio,
               traMoneda: transaction.precio!.moneda,
               traTipoPrecio:
                   transaction.precio!.precio ? transaction.precio!.id : null,
@@ -1106,7 +1104,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
               traProducto: transaction.producto.producto,
               traUnidadMedida: transaction.producto.unidadMedida,
               traCantidad: 0,
-              traTipoCambio: vmHome.tipoCambio,
+              traTipoCambio: menuVM.tipoCambio,
               traMoneda: transaction.precio!.moneda,
               traTipoPrecio:
                   transaction.precio!.precio ? transaction.precio!.id : null,
@@ -1129,7 +1127,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
           traProducto: transaction.producto.producto,
           traUnidadMedida: transaction.producto.unidadMedida,
           traCantidad: transaction.cantidad,
-          traTipoCambio: vmHome.tipoCambio,
+          traTipoCambio: menuVM.tipoCambio,
           traMoneda: transaction.precio!.moneda,
           traTipoPrecio:
               transaction.precio!.precio ? transaction.precio!.id : null,
@@ -1162,9 +1160,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
           tipoCargoAbono: payment.payment.tipoCargoAbono,
           monto: payment.amount,
           cambio: payment.diference,
-          tipoCambio: vmHome.tipoCambio,
+          tipoCambio: menuVM.tipoCambio,
           moneda: transactions[0].traMoneda,
-          montoMoneda: payment.amount / vmHome.tipoCambio,
+          montoMoneda: payment.amount / menuVM.tipoCambio,
           referencia: payment.reference,
           autorizacion: payment.authorization,
           banco: payment.bank?.banco,

@@ -1,9 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +9,6 @@ import 'package:provider/provider.dart';
 class HomeViewModel extends ChangeNotifier {
   //TODO: Buscar moneda
   String moneda = "";
-  double tipoCambio = 0;
 
   //control del proceso
   bool _isLoading = false;
@@ -20,44 +16,6 @@ class HomeViewModel extends ChangeNotifier {
 
   set isLoading(bool value) {
     _isLoading = value;
-    notifyListeners();
-  }
-
-  //obtener tipo de cambio
-  Future<void> getTipoCambio(BuildContext context) async {
-    //view model externo
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-    final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
-
-    //instancia del servicio
-    TipoCambioService tipoCambioService = TipoCambioService();
-
-    ApiResModel res = await tipoCambioService.getTipoCambio(
-      localVM.selectedEmpresa!.empresa, // empresa,
-      loginVM.user, // user,
-      loginVM.token, // token,
-    );
-
-    //valid succes response
-    if (!res.succes) {
-      //si algo salio mal mostrar alerta
-
-      await NotificationService.showErrorView(
-        context,
-        res,
-      );
-      return;
-    }
-
-    List<TipoCambioModel> cambios = res.message;
-    //agregar precios encontrados
-    if (cambios.isNotEmpty) {
-      tipoCambio = cambios[0].tipoCambio;
-    } else {
-      res.message =
-          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
-      NotificationService.showErrorView(context, res);
-    }
     notifyListeners();
   }
 
@@ -92,6 +50,9 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   navigateSettings(BuildContext context) {
-    Navigator.pushNamed(context, "settings");
+    Navigator.pushNamed(
+      context,
+      AppRoutes.settings,
+    );
   }
 }
