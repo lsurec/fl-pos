@@ -35,6 +35,10 @@ class AppTheme {
     fontWeight: FontWeight.bold,
   );
 
+  static const tareaStyle = TextStyle(
+    fontSize: 10,
+    color: Colors.black,
+  );
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,

@@ -19,6 +19,11 @@ class CalendarioView extends StatelessWidget {
               'Calendario',
               style: AppTheme.titleStyle,
             ),
+            leading: IconButton(
+                onPressed: () {
+                  vm.obtenerDiasDelMes(2024, 11);
+                },
+                icon: const Icon(Icons.home)),
           ),
           body: RefreshIndicator(
             onRefresh: () async {
@@ -31,9 +36,8 @@ class CalendarioView extends StatelessWidget {
                   child: Column(
                     children: [
                       const SizedBox(height: 10),
-                      Center(
-                        child: _Dias(),
-                      )
+                      _NombreDias(),
+                      _TablaDiasMes()
                     ],
                   ),
                 ),
@@ -61,27 +65,79 @@ class _Dias extends StatelessWidget {
 
     final List<int> dias = vm.obtenerDiasDelMes(2024, 3);
 
-    // Dividir los días en sublistas de 7 días cada una
-    List<List<int>> diasDivididos = [];
-    for (int i = 0; i < dias.length; i += 7) {
-      diasDivididos
-          .add(dias.sublist(i, i + 7 > dias.length ? dias.length : i + 7));
-    }
-
     return Table(
       border: TableBorder.all(),
       children: List.generate(
-        diasDivididos.length,
+        5,
         (index) => TableRow(
           children: List.generate(
-            diasDivididos[index].length,
+            7,
             (index2) => TableCell(
               child: Container(
                 height: 50,
                 width: 50,
-                alignment: Alignment.center,
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${index * 7 + index2 + 1}',
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _NombreDias extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    final List<String> inicialDia = vm.inicialDia;
+
+    return Table(
+      border: const TableBorder(
+        top: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde arriba
+        left: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde izquierdo
+        right: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde derecho
+        bottom: BorderSide.none, // Sin borde abajo
+        horizontalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde horizontal dentro de la tabla
+        verticalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde vertical dentro de la tabla
+      ),
+      children: List.generate(
+        1,
+        (index) => TableRow(
+          children: List.generate(
+            7,
+            (index2) => TableCell(
+              child: Container(
+                height: 25,
+                width: 50,
+                alignment: Alignment.topCenter,
+                // Accediendo a la inicial del día correspondiente
                 child: Text(
-                  '${diasDivididos[index][index2]}',
+                  inicialDia[index2],
                   style: AppTheme.normalBoldStyle,
                 ),
               ),
@@ -93,55 +149,67 @@ class _Dias extends StatelessWidget {
   }
 }
 
+class _TablaDiasMes extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final List<int> dias = vm.diasMes;
 
-// class _Dias extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-//     final List<int> dias = vm.obtenerDiasDelMes(2024, 3);
-
-//     return Table(
-//       border: TableBorder.all(),
-//       children: List.generate(
-//         1,
-//         (index) => TableRow(
-//           children: List.generate(
-//             7,
-//             (index2) => TableCell(
-//               child: ListView.builder(
-//                 physics: const NeverScrollableScrollPhysics(),
-//                 scrollDirection: Axis.vertical,
-//                 shrinkWrap: true,
-//                 itemCount: dias.length,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   final int dia = dias[index];
-//                   return Container(
-//                     height: 50,
-//                     width: 50,
-//                     alignment: Alignment.topCenter,
-//                     child: Column(
-//                       children: [
-//                         Row(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             Text(
-//                               // '${index * 7 + index2 + 1}',
-//                               '$dia',
-
-//                               style: AppTheme.normalBoldStyle,
-//                             ),
-//                           ],
-//                         ),
-//                       ],
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+    return Table(
+      border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
+      children: List.generate(
+        5,
+        (rowIndex) => TableRow(
+          children: List.generate(
+            7,
+            (columnIndex) {
+              final index = rowIndex * 7 + columnIndex;
+              final dia = index < dias.length ? '${dias[index]}' : '';
+              final backgroundColor =
+                  dia == '14' ? Colors.lightBlueAccent : null;
+              return Container(
+                height: 100,
+                width: 50,
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                  bottom: 10,
+                  top: 0,
+                ),
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(0, 0, 0, 0.12),
+                          ),
+                        ), // Agregar borde inferior
+                      ),
+                      child: Center(
+                        child: Text(
+                          dia,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Text(
+                        "Tarea 450 ",
+                        style: AppTheme.tareaStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}

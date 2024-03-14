@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 
 class CalendarioViewModel extends ChangeNotifier {
@@ -11,14 +13,11 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<int> dias = [];
+  final List<int> diasMes = [];
   DateTime? hoy;
 
   CalendarioViewModel() {
     hoy = DateTime.now();
-
-    List<int> dias = obtenerDiasDelMes(hoy!.year, hoy!.month);
-    print(dias.length);
   }
 
   List<int> obtenerDiasDelMes(int year, int month) {
@@ -32,8 +31,21 @@ class CalendarioViewModel extends ChangeNotifier {
     for (int i = 1; i <= daysInThisMonth; i++) {
       daysInMonth.add(i);
     }
+    print(daysInMonth.length);
 
+    diasMes.addAll(daysInMonth);
     return daysInMonth;
   }
 
+  armarSemanas(dias) {}
+
+  List<String> inicialDia = [
+    "L",
+    "M",
+    "M",
+    "J",
+    "V",
+    "S",
+    "D",
+  ];
 }
