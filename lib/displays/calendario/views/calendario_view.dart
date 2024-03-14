@@ -35,9 +35,17 @@ class CalendarioView extends StatelessWidget {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      const Row(
+                        children: [
+                          Text("Anterior"),
+                          Spacer(),
+                          Text("Siguiente"),
+                        ],
+                      ),
                       const SizedBox(height: 10),
                       _NombreDias(),
-                      _TablaDiasMes()
+                      // _TablaDiasMes(),
+                      _TablaDiasSemana(),
                     ],
                   ),
                 ),
@@ -159,6 +167,71 @@ class _TablaDiasMes extends StatelessWidget {
       border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
       children: List.generate(
         5,
+        (rowIndex) => TableRow(
+          children: List.generate(
+            7,
+            (columnIndex) {
+              final index = rowIndex * 7 + columnIndex;
+              final dia = index < dias.length ? '${dias[index]}' : '';
+              final backgroundColor =
+                  dia == '14' ? Colors.lightBlueAccent : null;
+              return Container(
+                height: 100,
+                width: 50,
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                  bottom: 10,
+                  top: 0,
+                ),
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(0, 0, 0, 0.12),
+                          ),
+                        ), // Agregar borde inferior
+                      ),
+                      child: Center(
+                        child: Text(
+                          dia,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Text(
+                        "Tarea 450 ",
+                        style: AppTheme.tareaStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TablaDiasSemana extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final List<int> dias = vm.diasMes;
+
+    return Table(
+      border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
+      children: List.generate(
+        1,
         (rowIndex) => TableRow(
           children: List.generate(
             7,
