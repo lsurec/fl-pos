@@ -108,8 +108,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     int tarea,
   ) async {
-    // List<InvitadoModel> invitados = [];
-
+    List<InvitadoModel> invitadosTarea = [];
+    invitadosTarea.clear();
     invitados.clear();
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -133,7 +133,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       showError(context, res);
 
       ApiResModel invitado = ApiResModel(
-        message: invitados,
+        message: invitadosTarea,
         succes: false,
         url: "",
         storeProcedure: '',
@@ -144,13 +144,17 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     isLoading = false;
 
+    invitadosTarea.addAll(res.message);
+
     ApiResModel invitado = ApiResModel(
-      message: invitados,
+      message: invitadosTarea,
       succes: true,
       url: "",
       storeProcedure: '',
     );
 
+    invitados.addAll(invitado.message);
+    notifyListeners();
     return invitado;
   }
 

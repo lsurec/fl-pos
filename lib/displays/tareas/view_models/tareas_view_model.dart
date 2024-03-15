@@ -216,7 +216,8 @@ class TareasViewModel extends ChangeNotifier {
 
     if (!succesResponsables.succes || !succesInvitados.succes) {
       tarea.usuarioResponsable = "No asignado";
-      vmDetalle.invitados.add(succesInvitados.message);
+      vmDetalle.invitados.addAll(succesInvitados.message);
+      notifyListeners();
     }
 
     for (var i = 0; i < vmCrear.estados.length; i++) {
@@ -239,6 +240,7 @@ class TareasViewModel extends ChangeNotifier {
 
     Navigator.pushNamed(context, AppRoutes.detailsTask);
     isLoading = false;
+    print("${vmDetalle.invitados.length}: invitados");
   }
 
   String formatearFecha(DateTime fecha) {
