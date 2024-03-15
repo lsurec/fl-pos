@@ -194,7 +194,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       NotificationService.showSnackbar("Añada Id Referencia para continuar.");
       return;
     }
-    
+
     if (responsable == null) {
       NotificationService.showSnackbar("Añada un responsable para continuar.");
       return;
@@ -288,7 +288,6 @@ class CrearTareaViewModel extends ChangeNotifier {
       nomNivelPrioridad: prioridad!.nombre,
     );
 
-    // if (responsable != null) {
     //usuario nuevo
     NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
       tarea: creada.tarea,
@@ -327,11 +326,51 @@ class CrearTareaViewModel extends ChangeNotifier {
         responsable != null ? responsable!.name : seleccionado.userName;
     notifyListeners();
 
-    //agregar fin de la carga pero es obligatorio el responsable
-    // }
+    //si hay invitados seleccionados
+    if (invitados.isNotEmpty) {
+      for (var usuario in invitados) {
+        //usuario nuevo
+        NuevoUsuarioModel usuarioInvitado = NuevoUsuarioModel(
+          tarea: creada.tarea,
+          userResInvi: usuario.userName,
+          user: user,
+        );
+
+        print(usuarioInvitado.userResInvi);
+
+        isLoading = true; //cargar pantalla
+
+        //consumo de api
+        final ApiResModel resInvitado = await tareaService.postInvitados(
+          token,
+          usuarioInvitado,
+        );
+
+        //si el consumo salió mal
+        if (!resInvitado.succes) {
+          isLoading = false;
+
+          //Abrir dialogo de error
+          showError(context, resInvitado);
+
+          ApiResModel invitado = ApiResModel(
+            message: resInvitado.message,
+            succes: false,
+            url: "",
+            storeProcedure: '',
+          );
+
+          return invitado;
+        }
+      }
+    }
 
     //insertar tarea al inicio de la lista de tareas
     vmTarea.insertarTarea(resCreada);
+    //mostrra mensaje
+    NotificationService.showSnackbar(
+      "Tarea creada correctamente.",
+    );
 
     isLoading = false;
 
