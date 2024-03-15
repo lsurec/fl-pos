@@ -30,7 +30,12 @@ class CrearTareaView extends StatelessWidget {
                 children: [
                   IconButton(
                     onPressed: () => vm.crearTarea(context),
-                    icon: const Icon(Icons.save),
+                    icon: const Icon(Icons.save_outlined),
+                    tooltip: "Nuevo",
+                  ),
+                  IconButton(
+                    onPressed: () => vm.limpiar(),
+                    icon: const Icon(Icons.note_add_outlined),
                     tooltip: "Crear Tarea",
                   ),
                   IconButton(
@@ -148,7 +153,6 @@ class CrearTareaView extends StatelessWidget {
                         const SizedBox(height: 5),
                         const Divider(),
                         const SizedBox(height: 5),
-
                         const Text(
                           "Tiempo estimado: ",
                           style: AppTheme.normalBoldStyle,

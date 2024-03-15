@@ -184,6 +184,15 @@ class CrearTareaViewModel extends ChangeNotifier {
     return formKey.currentState?.validate() ?? false;
   }
 
+  limpiar() {
+    tituloController.text = "";
+    observacionController.text = "";
+    tiempoController.text = "10";
+    responsable = null;
+    idReferencia = null;
+    invitados = [];
+  }
+
   Future crearTarea(BuildContext context) async {
     if (!isValidForm()) {
       NotificationService.showSnackbar(
