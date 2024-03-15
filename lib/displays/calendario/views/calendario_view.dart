@@ -44,8 +44,9 @@ class CalendarioView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       _NombreDias(),
-                      // _TablaDiasMes(),
-                      _TablaDiasSemana(),
+                      _TablaDiasMes(),
+                      // _TablaDiasSemana(),
+                      // _Horas()
                     ],
                   ),
                 ),
@@ -280,6 +281,57 @@ class _TablaDiasSemana extends StatelessWidget {
                 ),
               );
             },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+class _Horas extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    final List<String> hora = vm.horas;
+
+    return Table(
+      border: const TableBorder(
+        top: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde arriba
+        left: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde izquierdo
+        right: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde derecho
+        bottom: BorderSide.none, // Sin borde abajo
+        horizontalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde horizontal dentro de la tabla
+        verticalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde vertical dentro de la tabla
+      ),
+      children: List.generate(
+        12,
+        (index) => TableRow(
+          children: List.generate(
+            1,
+            (index2) => TableCell(
+              child: Container(
+                height: 25,
+                width: 50,
+                alignment: Alignment.topCenter,
+                // Accediendo a la inicial del día correspondiente
+                child: Text(
+                  hora[index],
+                  style: AppTheme.normalBoldStyle,
+                ),
+              ),
+            ),
           ),
         ),
       ),

@@ -49,5 +49,5 @@ class CalendarioViewModel extends ChangeNotifier {
     "D",
   ];
 
-  List<int> horas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  List<String> horas = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 }
