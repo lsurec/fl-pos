@@ -185,9 +185,18 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   Future crearTarea(BuildContext context) async {
-    if (!isValidForm()) return;
+    if (!isValidForm()) {
+      NotificationService.showSnackbar(
+          "Complete todos loa campos obligarorios para continuar");
+      return;
+    }
+    if (idReferencia == null) {
+      NotificationService.showSnackbar("Añada Id Referencia para continuar.");
+      return;
+    }
+    
     if (responsable == null) {
-      
+      NotificationService.showSnackbar("Añada un responsable para continuar.");
       return;
     }
 
