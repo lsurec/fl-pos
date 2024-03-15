@@ -70,9 +70,9 @@ class CalendarioView extends StatelessWidget {
 class _Dias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    // final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-    final List<int> dias = vm.obtenerDiasDelMes(2024, 3);
+    // final List<int> dias = vm.obtenerDiasDelMes(2024, 3);
 
     return Table(
       border: TableBorder.all(),
