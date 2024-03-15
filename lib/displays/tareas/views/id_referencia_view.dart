@@ -35,7 +35,7 @@ class IdReferenciaView extends StatelessWidget {
                         controller: vm.buscarIdReferencia,
                         onChanged: (criterio) {
                           // vm.filtrarLista(criterio);
-                          vm.buscarIdRefencia(context, criterio);
+                          vm.buscarRefTemp(context, criterio);
                         },
                         decoration: const InputDecoration(
                           labelText:

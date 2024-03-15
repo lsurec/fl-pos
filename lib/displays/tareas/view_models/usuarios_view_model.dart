@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -31,7 +33,7 @@ class UsuariosViewModel extends ChangeNotifier {
     return true;
   }
 
-  Future<void> buscarUsuario(
+  Future<void> buscarUsuarioService(
     BuildContext context,
     String search,
   ) async {
@@ -81,5 +83,15 @@ class UsuariosViewModel extends ChangeNotifier {
   ) {
     usuarios[index].select = value!;
     notifyListeners();
+  }
+
+  Timer? timer; // Temporizador
+
+  void buscarUsuarioTemp(BuildContext context, String search) {
+    timer?.cancel(); // Cancelar el temporizador existente si existe
+    timer = Timer(const Duration(milliseconds: 1000), () {
+      // Función de filtrado que consume el servicio
+      buscarUsuarioService(context, search);
+    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }

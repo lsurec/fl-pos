@@ -55,7 +55,7 @@ class UsuariosView extends StatelessWidget {
                         TextFormField(
                           controller: vm.buscar,
                           onChanged: (criterio) {
-                            vm.buscarUsuario(context, criterio);
+                            vm.buscarUsuarioTemp(context, criterio);
                           },
                           decoration: const InputDecoration(
                             labelText:

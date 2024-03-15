@@ -186,6 +186,10 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   Future crearTarea(BuildContext context) async {
     if (!isValidForm()) return;
+    if (responsable == null) {
+      
+      return;
+    }
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
@@ -275,46 +279,47 @@ class CrearTareaViewModel extends ChangeNotifier {
       nomNivelPrioridad: prioridad!.nombre,
     );
 
-    if (responsable != null) {
-      //usuario nuevo
-      NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
-        tarea: creada.tarea,
-        userResInvi: responsable!.userName,
-        user: user,
+    // if (responsable != null) {
+    //usuario nuevo
+    NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
+      tarea: creada.tarea,
+      userResInvi: responsable!.userName,
+      user: user,
+    );
+    print(usuarioResponsable.userResInvi);
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel resResponsable = await tareaService.postResponsable(
+      token,
+      usuarioResponsable,
+    );
+
+    //si el consumo salió mal
+    if (!resResponsable.succes) {
+      isLoading = false;
+
+      //Abrir dialogo de error
+      showError(context, resResponsable);
+
+      ApiResModel responsable = ApiResModel(
+        message: resResponsable.message,
+        succes: false,
+        url: "",
+        storeProcedure: '',
       );
-      print(usuarioResponsable.userResInvi);
-      isLoading = true; //cargar pantalla
 
-      //consumo de api
-      final ApiResModel res = await tareaService.postResponsable(
-        token,
-        usuarioResponsable,
-      );
-
-      //si el consumo salió mal
-      if (!res.succes) {
-        isLoading = false;
-
-        //Abrir dialogo de error
-        showError(context, res);
-
-        ApiResModel responsable = ApiResModel(
-          message: res.message,
-          succes: false,
-          url: "",
-          storeProcedure: '',
-        );
-
-        return responsable;
-      }
-
-      ResNuevoUsuarioModel seleccionado = res.message[0];
-
-      resCreada.usuarioResponsable = seleccionado.userName;
-      notifyListeners();
-
-      //agregar fin de la carga pero es obligatorio el responsable
+      return responsable;
     }
+
+    ResNuevoUsuarioModel seleccionado = resResponsable.message[0];
+
+    resCreada.usuarioResponsable =
+        responsable != null ? responsable!.name : seleccionado.userName;
+    notifyListeners();
+
+    //agregar fin de la carga pero es obligatorio el responsable
+    // }
 
     //insertar tarea al inicio de la lista de tareas
     vmTarea.insertarTarea(resCreada);

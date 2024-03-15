@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -18,6 +20,8 @@ class IdReferenciaViewModel extends ChangeNotifier {
     _isLoading = value;
     notifyListeners();
   }
+
+  Timer? timer; // Temporizador
 
   //variable de busqueda
   final TextEditingController buscarIdReferencia = TextEditingController();
@@ -70,5 +74,13 @@ class IdReferenciaViewModel extends ChangeNotifier {
     idReferencias.addAll(res.message);
 
     isLoading = false;
+  }
+
+  void buscarRefTemp(BuildContext context, String search) {
+    timer?.cancel(); // Cancelar el temporizador existente si existe
+    timer = Timer(const Duration(milliseconds: 1000), () {
+      // Función de filtrado que consume el servicio
+      buscarIdRefencia(context, search);
+    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }

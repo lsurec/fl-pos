@@ -173,7 +173,7 @@ class CrearTareaView extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 250,
+                              width: 175,
                               child:
                                   _TiempoEstimado(tiempos: vm.periodicidades),
                             ),
@@ -274,14 +274,20 @@ class CrearTareaView extends StatelessWidget {
                           ),
                         ),
                         const Divider(),
-
-                        // const SizedBox(height: 5),
                         TextButton(
                           onPressed: () => vm.irUsuarios(context, 1),
                           child: const ListTile(
-                            title: Text(
-                              "Añadir responsable",
-                              style: AppTheme.normalStyle,
+                            title: Row(
+                              children: [
+                                Text(
+                                  "Añadir responsable",
+                                  style: AppTheme.normalStyle,
+                                ),
+                                Text(
+                                  " * ",
+                                  style: AppTheme.obligatoryBoldStyle,
+                                ),
+                              ],
                             ),
                             leading: Icon(Icons.person_add_alt_1_outlined),
                             contentPadding: EdgeInsets.all(0),
