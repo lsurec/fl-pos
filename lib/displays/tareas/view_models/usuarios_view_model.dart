@@ -77,11 +77,9 @@ class UsuariosViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  void changeChecked(
-    bool? value,
-    int index,
-  ) {
-    usuarios[index].select = value!;
+  void changeChecked(bool? value, int index) {
+    // Invertir el valor actual
+    usuarios[index].select = !usuarios[index].select;
     notifyListeners();
   }
 

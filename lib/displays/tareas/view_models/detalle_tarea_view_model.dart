@@ -421,12 +421,13 @@ class DetalleTareaViewModel extends ChangeNotifier {
   Future<ApiResModel> guardarInvitados(
     BuildContext context,
   ) async {
-    final List<ResNuevoUsuarioModel> resInvitado =
-        []; // guardar invitados nuevos
+    // guardar invitados nuevos
+    final List<ResNuevoUsuarioModel> resInvitado = [];
     resInvitado.clear();
 
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+
     String user = vmLogin.nameUser;
     String token = vmLogin.token;
 
@@ -443,7 +444,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
         vmUsuarios.usuariosSeleccionados.add(usuario);
       }
     }
-
     //verificar que no hayan repetidos
     for (var usuarioInvitado in vmUsuarios.usuariosSeleccionados) {
       repetidos.clear();
@@ -470,8 +470,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       //si el consumo salió mal
       if (!res.succes) {
-        isLoading = false;
-
         showError(context, res);
 
         ApiResModel nuevoInvitado = ApiResModel(
@@ -481,12 +479,11 @@ class DetalleTareaViewModel extends ChangeNotifier {
           storeProcedure: '',
         );
 
+        isLoading = false;
         return nuevoInvitado;
       }
 
       resInvitado.add(res.message[0]);
-
-      // InvitadoModel resInvitados = res.message;
 
       InvitadoModel agregarInvitado = InvitadoModel(
         tareaUserName: resInvitado[0].tareaUserName,
@@ -502,32 +499,23 @@ class DetalleTareaViewModel extends ChangeNotifier {
     if (!repetidos.isNotEmpty) {
       print("${repetidos.length}, no hay repetidos");
 
+      isLoading = true;
       //agregar invitados
       invitados.addAll(agregados);
       notifyListeners();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Se actualizó la lista de invitados a la tarea.',
-          ),
-        ),
+      NotificationService.showSnackbar(
+        "Se actualizó la lista de invitados a la tarea.",
       );
 
       vmUsuarios.usuariosSeleccionados.clear();
       vmUsuarios.usuarios.clear();
+      isLoading = false;
     } else {
       print("${repetidos.length}, si hay repetidos");
 
-      vmUsuarios.usuariosSeleccionados.clear();
-      vmUsuarios.usuarios.clear();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Uno o más usuarios seleccionados ya son invitados de la tarea.',
-          ),
-        ),
+      NotificationService.showSnackbar(
+        "Uno o más usuarios seleccionados ya son invitados de la tarea.",
       );
 
       ApiResModel nuevoInvitado = ApiResModel(
@@ -537,6 +525,13 @@ class DetalleTareaViewModel extends ChangeNotifier {
         storeProcedure: '',
       );
 
+      for (var usuario in vmUsuarios.usuariosSeleccionados) {
+        usuario.select = false;
+      }
+      vmUsuarios.usuariosSeleccionados.clear();
+      vmUsuarios.usuarios.clear();
+      notifyListeners();
+      isLoading = false;
       return nuevoInvitado;
     }
 
@@ -554,8 +549,24 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     notifyListeners();
 
+    Navigator.pop(context);
+
     isLoading = false;
 
     return nuevoInvitado;
+  }
+
+  // Función para verificar usuarios repetidos
+  List<String> usuariosRepetidos(
+    List<UsuarioModel> usuariosSelec,
+    List<InvitadoModel> invitados,
+  ) {
+    List<String> repetidos = [];
+    for (var usuarioInvitado in usuariosSelec) {
+      if (invitados.any((inv) => inv.userName == usuarioInvitado.userName)) {
+        repetidos.add(usuarioInvitado.userName);
+      }
+    }
+    return repetidos;
   }
 }
