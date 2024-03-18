@@ -27,6 +27,26 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   loadData(BuildContext context) async {
     await obtenerTiposTarea(context);
+    await obtenerEstados(context);
+    await obtenerPeriodicidad(context);
+    await obtenerPrioridades(context);
+
+    //Fechas y horas
+
+    fechaActual = DateTime.now();
+
+    nuevaFechaInicial = fechaActual;
+    nuevaFechaFinal = addDate10Min(fechaActual);
+    _horaInicial =
+        TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
+    _horaFinal = addTime10Min(_horaInicial!);
+
+    //Texts de fechas y horas
+    fechaInicial.text = DateFormat('dd/MM/yyyy').format(nuevaFechaInicial!);
+    fechaFinal.text =
+        DateFormat('dd/MM/yyyy').format(addDate10Min(nuevaFechaFinal!));
+    horaInicial.text = horaFormato(nuevaFechaInicial!);
+    horaFinal.text = horaFormato(nuevaFechaFinal!);
   }
 
   TextEditingController fechaInicial = TextEditingController();

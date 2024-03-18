@@ -418,6 +418,18 @@ class DetalleTareaViewModel extends ChangeNotifier {
     return horaFormateada;
   }
 
+  invitadosButton(BuildContext context) {
+    final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+    if (vmUsuario.tipoBusqueda == 4) {
+      guardarInvitados(context);
+    }
+    if (vmUsuario.tipoBusqueda == 2) {
+      vmCrear.guardarUsuarios(context);
+    }
+  }
+
   Future<ApiResModel> guardarInvitados(
     BuildContext context,
   ) async {
@@ -573,5 +585,17 @@ class DetalleTareaViewModel extends ChangeNotifier {
   verHistorial() {
     historialResposables = !historialResposables;
     notifyListeners();
+  }
+
+  loadData(BuildContext context) async {
+    //final vm = Provider.of<CrearTareaViewModel>(context, listen: false);
+    // vm.estados.clear();
+    // vm.periodicidades.clear();
+    // vm.periodicidades.clear();
+    // await vm.obtenerEstados(context);
+    // await vm.obtenerPrioridades(context);
+    // await vm.obtenerPeriodicidad(context);
+    await obtenerInvitados(context, tarea!.iDTarea);
+    await obtenerResponsable(context, tarea!.iDTarea);
   }
 }

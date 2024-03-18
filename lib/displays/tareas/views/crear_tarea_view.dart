@@ -48,9 +48,7 @@ class CrearTareaView extends StatelessWidget {
             ],
           ),
           body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(
@@ -382,7 +380,6 @@ class CrearTareaView extends StatelessWidget {
 
 class _TiempoEstimado extends StatelessWidget {
   const _TiempoEstimado({
-    super.key,
     required this.tiempos,
   });
 
@@ -445,9 +442,7 @@ class _TiempoEstimado extends StatelessWidget {
 }
 
 class _ObservacionTarea extends StatelessWidget {
-  const _ObservacionTarea({
-    super.key,
-  });
+  const _ObservacionTarea();
 
   @override
   Widget build(BuildContext context) {
@@ -475,7 +470,6 @@ class _ObservacionTarea extends StatelessWidget {
 
 class _PrioridadTarea extends StatelessWidget {
   const _PrioridadTarea({
-    super.key,
     required this.prioridades,
   });
 
@@ -545,7 +539,6 @@ class _PrioridadTarea extends StatelessWidget {
 
 class _EstadoTarea extends StatelessWidget {
   const _EstadoTarea({
-    super.key,
     required this.estados,
   });
 
@@ -615,7 +608,6 @@ class _EstadoTarea extends StatelessWidget {
 
 class _TipoTarea extends StatelessWidget {
   const _TipoTarea({
-    super.key,
     required this.tipos,
   });
 

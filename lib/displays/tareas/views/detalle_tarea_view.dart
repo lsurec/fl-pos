@@ -14,6 +14,7 @@ class DetalleTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
+    // final vmTarea = Provider.of<TareasViewModel>(context);
     final vmComentarios = Provider.of<ComentariosViewModel>(context);
     final vmUsuarios = Provider.of<CrearTareaViewModel>(context);
 
@@ -27,9 +28,7 @@ class DetalleTareaView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(
@@ -162,7 +161,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -236,10 +235,8 @@ class DetalleTareaView extends StatelessWidget {
                           style: AppTheme.normalBoldStyle,
                         ),
                         trailing: IconButton(
-                          onPressed: () {
-                            //tipoBusqueda = 4 para actualizar invitados
-                            vmUsuarios.irUsuarios(context, 4);
-                          },
+                          //tipoBusqueda = 4 para actualizar invitados
+                          onPressed: () => vmUsuarios.irUsuarios(context, 4),
                           icon: const Icon(Icons.person_add_alt_1_outlined),
                         ),
                       ),
@@ -262,9 +259,11 @@ class DetalleTareaView extends StatelessWidget {
                               ),
                               leading: const Icon(Icons.person_4),
                               trailing: IconButton(
-                                onPressed: () {
-                                  vm.eliminarInvitado(context, invitado, index);
-                                },
+                                onPressed: () => vm.eliminarInvitado(
+                                  context,
+                                  invitado,
+                                  index,
+                                ),
                                 icon: const Icon(Icons.close),
                               ),
                             );
@@ -310,9 +309,7 @@ class DetalleTareaView extends StatelessWidget {
 }
 
 class _ActualizarEstado extends StatelessWidget {
-  const _ActualizarEstado({
-    super.key,
-  });
+  const _ActualizarEstado();
 
   @override
   Widget build(BuildContext context) {
@@ -346,9 +343,7 @@ class _ActualizarEstado extends StatelessWidget {
                 ),
               )
               .toList(),
-          onChanged: (value) {
-            vm.actualizarEstado(context, value!);
-          },
+          onChanged: (value) => vm.actualizarEstado(context, value!),
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
           ),
@@ -374,9 +369,7 @@ class _ActualizarEstado extends StatelessWidget {
 }
 
 class _ActualizarPrioridad extends StatelessWidget {
-  const _ActualizarPrioridad({
-    super.key,
-  });
+  const _ActualizarPrioridad();
 
   @override
   Widget build(BuildContext context) {
@@ -410,9 +403,7 @@ class _ActualizarPrioridad extends StatelessWidget {
                 ),
               )
               .toList(),
-          onChanged: (value) {
-            vm.actualizarPrioridad(context, value!);
-          },
+          onChanged: (value) => vm.actualizarPrioridad(context, value!),
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
           ),

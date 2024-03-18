@@ -13,13 +13,9 @@ class ComentariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
     final vmTarea = Provider.of<DetalleTareaViewModel>(context);
-
-    // List<ComentarioModel> comentarios = vm.comentarioDetalle.comentario;
-
     return Stack(
       children: [
         Scaffold(
-          // bottomNavigationBar: Container(color: Colors.red, height: 50,),
           appBar: AppBar(
             title: Text(
               'Comentarios Tarea: ${vmTarea.tarea!.iDTarea.toString()}',
@@ -27,9 +23,7 @@ class ComentariosView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
+            onRefresh: () => vmTarea.comentariosTarea(context),
             child: ListView(
               children: [
                 Padding(
@@ -94,9 +88,7 @@ class ComentariosView extends StatelessWidget {
 }
 
 class _NuevoComentario extends StatelessWidget {
-  const _NuevoComentario({
-    super.key,
-  });
+  const _NuevoComentario();
 
   @override
   Widget build(BuildContext context) {
@@ -116,16 +108,13 @@ class _NuevoComentario extends StatelessWidget {
             children: [
               IconButton(
                 tooltip: "Adjuntar Archivos",
-                onPressed: () {
-                  print("Abrir explorador de archivos");
-                },
+                onPressed: () {},
                 icon: const Icon(Icons.attach_file_outlined),
               ),
               IconButton(
                 tooltip: "Enviar comentario.",
-                onPressed: () {
-                  vm.comentar(context, vm.comentarioController.text);
-                },
+                onPressed: () =>
+                    vm.comentar(context, vm.comentarioController.text),
                 icon: const Icon(Icons.send),
               ),
             ],
@@ -138,7 +127,6 @@ class _NuevoComentario extends StatelessWidget {
 
 class _Comentario extends StatelessWidget {
   const _Comentario({
-    super.key,
     required this.comentario,
     required this.index,
   });

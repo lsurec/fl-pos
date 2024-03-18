@@ -49,9 +49,7 @@ class IdReferenciaView extends StatelessWidget {
                       ],
                     ),
                     const Divider(),
-                    _ReferenciasEncontradas(
-                      referenciasEncontradas: vm.idReferencias,
-                    )
+                    _ReferenciasEncontradas()
                   ],
                 ),
               ),
@@ -72,24 +70,18 @@ class IdReferenciaView extends StatelessWidget {
 }
 
 class _ReferenciasEncontradas extends StatelessWidget {
-  const _ReferenciasEncontradas({
-    super.key,
-    required this.referenciasEncontradas,
-  });
-
-  final List<IdReferenciaModel> referenciasEncontradas;
-
   @override
   Widget build(BuildContext context) {
     final vmCrear = Provider.of<CrearTareaViewModel>(context);
+    final vm = Provider.of<IdReferenciaViewModel>(context);
 
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: referenciasEncontradas.length,
+      itemCount: vm.idReferencias.length,
       itemBuilder: (BuildContext context, int index) {
-        final IdReferenciaModel referencia = referenciasEncontradas[index];
+        final IdReferenciaModel referencia = vm.idReferencias[index];
         return GestureDetector(
           onTap: () => vmCrear.seleccionarIdRef(context, referencia),
           child: Container(

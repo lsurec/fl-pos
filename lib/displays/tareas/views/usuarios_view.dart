@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -13,9 +13,7 @@ class UsuariosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
-    final vmCrear = Provider.of<CrearTareaViewModel>(context);
-    final vmDetalle =
-        Provider.of<DetalleTareaViewModel>(context);
+    final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vm.back(),
@@ -31,14 +29,7 @@ class UsuariosView extends StatelessWidget {
               ),
               actions: <Widget>[
                 IconButton(
-                  onPressed: () {
-                    if (vm.tipoBusqueda == 4) {
-                      vmDetalle.guardarInvitados(context);
-                    }
-                    if (vm.tipoBusqueda == 2) {
-                      vmCrear.guardarUsuarios(context);
-                    }
-                  },
+                  onPressed: () => vmDetalle.invitadosButton(context),
                   icon: const Icon(Icons.group_add_rounded),
                   tooltip: "Guardar cambios",
                 ),
@@ -56,9 +47,8 @@ class UsuariosView extends StatelessWidget {
                       children: [
                         TextFormField(
                           controller: vm.buscar,
-                          onChanged: (criterio) {
-                            vm.buscarUsuarioTemp(context, criterio);
-                          },
+                          onChanged: (criterio) =>
+                              vm.buscarUsuarioTemp(context, criterio),
                           decoration: const InputDecoration(
                             labelText:
                                 "Ingrese un caracter para iniciar la busqueda.",
@@ -100,7 +90,6 @@ class UsuariosView extends StatelessWidget {
 class _UsuariosEncontados extends StatelessWidget {
   const _UsuariosEncontados();
 
-
   @override
   Widget build(BuildContext context) {
     final vmCrear = Provider.of<CrearTareaViewModel>(context);
@@ -123,9 +112,7 @@ class _UsuariosEncontados extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: GestureDetector(
-              onTap: () {
-                vmCrear.seleccionarResponsable(context, usuario);
-              },
+              onTap: () => vmCrear.seleccionarResponsable(context, usuario),
               child: ListTile(
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

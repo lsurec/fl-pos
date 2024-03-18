@@ -36,8 +36,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
     idReferencias.clear();
 
     if (search.isEmpty) {
-      idReferencias = [];
-      print("Ingrese un caracter para realizar una busqueda");
+      idReferencias.clear();
       return;
     }
 

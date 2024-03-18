@@ -112,11 +112,7 @@ class _CardTask extends StatelessWidget {
     final vm = Provider.of<TareasViewModel>(context);
 
     return GestureDetector(
-      onTap: () {
-        vm.detalleTarea(context, tarea);
-        // vm.verDetalles(context); //ver detalle
-        // Navigator.pushNamed(context, "detalle"); //Ruta xd
-      },
+      onTap: () => vm.detalleTarea(context, tarea),
       child: Column(
         children: [
           Padding(
