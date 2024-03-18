@@ -17,6 +17,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
   final List<InvitadoModel> invitados = [];
   EstadoModel? estadoAtual;
   PrioridadModel? prioridadActual;
+  bool historialResposables = false;
+
   //manejar flujo del procesp
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -52,13 +54,15 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
+  List<ResponsableModel> responsablesHistorial = [];
+
   //Obtener Responsable y responsables anteriores de la tarea
   Future<ApiResModel> obtenerResponsable(
     BuildContext context,
     int idTarea,
   ) async {
-    List<ResponsableModel> responsables = [];
-    responsables.clear();
+    List<ResponsableModel> responsablesTarea = [];
+    responsablesTarea.clear();
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
@@ -80,7 +84,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       showError(context, res);
 
       ApiResModel responsable = ApiResModel(
-        message: responsables,
+        message: responsablesTarea,
         succes: false,
         url: "",
         storeProcedure: '',
@@ -89,12 +93,21 @@ class DetalleTareaViewModel extends ChangeNotifier {
       return responsable;
     }
 
-    responsables.addAll(res.message);
+    responsablesTarea.addAll(res.message);
+
+    for (var i = 0; i < responsablesTarea.length; i++) {
+      ResponsableModel responsable = responsablesTarea[i];
+      if (responsable.estado.toLowerCase() == "inactivo") {
+        responsablesHistorial.add(responsable);
+        notifyListeners();
+        break;
+      }
+    }
 
     isLoading = false;
 
     ApiResModel responsable = ApiResModel(
-      message: responsables,
+      message: responsablesTarea,
       succes: true,
       url: "",
       storeProcedure: '',
@@ -568,5 +581,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       }
     }
     return repetidos;
+  }
+
+  verHistorial() {
+    historialResposables = !historialResposables;
+    notifyListeners();
   }
 }

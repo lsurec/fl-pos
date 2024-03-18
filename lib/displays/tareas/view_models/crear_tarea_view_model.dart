@@ -477,7 +477,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     // Definir la hora inicial del picker y la hora final reestablecida
-    TimeOfDay initialPickerTime;
     TimeOfDay resetFinalTime = _horaFinal != null &&
             (_horaFinal!.hour < _horaInicial!.hour ||
                 (_horaFinal!.hour == _horaInicial!.hour &&

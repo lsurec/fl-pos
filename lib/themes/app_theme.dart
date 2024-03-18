@@ -39,6 +39,11 @@ class AppTheme {
     fontSize: 10,
     color: Colors.black,
   );
+
+  static const inactivoStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+  );
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,

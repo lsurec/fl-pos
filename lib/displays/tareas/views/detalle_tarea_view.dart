@@ -12,8 +12,7 @@ class DetalleTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
-    final vmComentarios =
-        Provider.of<ComentariosViewModel>(context);
+    final vmComentarios = Provider.of<ComentariosViewModel>(context);
     final vmUsuarios = Provider.of<CrearTareaViewModel>(context);
 
     return Stack(
@@ -27,8 +26,6 @@ class DetalleTareaView extends StatelessWidget {
           ),
           body: RefreshIndicator(
             onRefresh: () async {
-
-
               print("Volver a ceagar");
             },
             child: ListView(
@@ -170,7 +167,8 @@ class DetalleTareaView extends StatelessWidget {
                             vm.tarea!.iDReferencia ?? "No disponible.",
                             style: AppTheme.normalStyle,
                           ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
                       const Text(
@@ -189,10 +187,47 @@ class DetalleTareaView extends StatelessWidget {
                           ),
                           leading:
                               const Icon(Icons.arrow_circle_right_outlined),
-                          trailing: const Icon(Icons.person_add_alt_1_outlined),
+                          trailing: IconButton(
+                            onPressed: () => vm.verHistorial(),
+                            icon: const Icon(Icons.history),
+                            tooltip: "Ver historial",
+                          ),
                         ),
                       ),
-
+                      //Listado de responsables anteriores
+                      if (vm.historialResposables == true)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "HISTORIAL RESPONSABLES:",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            CardWidget(
+                              elevation: 0,
+                              borderWidth: 1.5,
+                              borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                              raidus: 10,
+                              child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: vm.responsablesHistorial.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final ResponsableModel responsable =
+                                      vm.responsablesHistorial[index];
+                                  return ListTile(
+                                    title: Text(
+                                      responsable.tUserName,
+                                      style: AppTheme.inactivoStyle,
+                                    ),
+                                    leading: const Icon(Icons.person_4),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ListTile(
                         title: const Text(
                           "INVITADOS: ",
