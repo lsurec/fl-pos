@@ -86,7 +86,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
 
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),

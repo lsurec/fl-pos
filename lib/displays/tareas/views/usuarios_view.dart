@@ -11,9 +11,9 @@ class UsuariosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
     final vmDetalle =
-        Provider.of<DetalleTareaViewModel>(context, listen: false);
+        Provider.of<DetalleTareaViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vm.back(),
@@ -105,8 +105,8 @@ class _UsuariosEncontados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
-    final vm = Provider.of<UsuariosViewModel>(context, listen: false);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
+    final vm = Provider.of<UsuariosViewModel>(context);
 
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),

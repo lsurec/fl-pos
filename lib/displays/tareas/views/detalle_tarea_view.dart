@@ -316,7 +316,7 @@ class _ActualizarEstado extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
 
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
 
     final List<EstadoModel> estados = vmCrear.estados;
 
@@ -380,7 +380,7 @@ class _ActualizarPrioridad extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
 
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
 
     final List<PrioridadModel> prioridades = vmCrear.prioridades;
 

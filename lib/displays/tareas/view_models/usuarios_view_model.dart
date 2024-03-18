@@ -30,6 +30,7 @@ class UsuariosViewModel extends ChangeNotifier {
     buscar.clear();
     usuarios.clear();
     usuariosSeleccionados.clear();
+    buscar.clear();
     return true;
   }
 
