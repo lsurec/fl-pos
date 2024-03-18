@@ -38,7 +38,7 @@ class ComentariosViewModel extends ChangeNotifier {
     final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
 
     //usuario y token
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
     int idTarea = vmTarea.tarea!.iDTarea;
 
@@ -60,7 +60,8 @@ class ComentariosViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      showError(context, res);
+
+      NotificationService.showErrorView(context, res);
 
       ApiResModel comentarioNuevo = ApiResModel(
         message: comentario,
@@ -110,7 +111,7 @@ class ComentariosViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -125,7 +126,7 @@ class ComentariosViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel comentario = ApiResModel(
         message: comentarios,
@@ -178,7 +179,7 @@ class ComentariosViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel objetos = ApiResModel(
         message: objetosComentario,
@@ -226,19 +227,6 @@ class ComentariosViewModel extends ChangeNotifier {
     }
 
     return true;
-  }
-
-  showError(BuildContext context, ApiResModel res) {
-    ErrorModel error = ErrorModel(
-      date: DateTime.now(),
-      description: res.message,
-      storeProcedure: res.storeProcedure,
-    );
-
-    NotificationService.showErrorView(
-      context,
-      error,
-    );
   }
 
   String formatearFecha(DateTime fecha) {

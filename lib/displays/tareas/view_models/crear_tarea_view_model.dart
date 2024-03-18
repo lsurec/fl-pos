@@ -204,7 +204,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
     int empresa = vmLocal.selectedEmpresa!.empresa;
 
     final TareaService tareaService = TareaService();
@@ -252,7 +252,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       return false;
     }
@@ -307,7 +307,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       isLoading = false;
 
       //Abrir dialogo de error
-      showError(context, resResponsable);
+      NotificationService.showErrorView(context, resResponsable);
 
       ApiResModel responsable = ApiResModel(
         message: resResponsable.message,
@@ -350,7 +350,7 @@ class CrearTareaViewModel extends ChangeNotifier {
           isLoading = false;
 
           //Abrir dialogo de error
-          showError(context, resInvitado);
+          NotificationService.showErrorView(context, resInvitado);
 
           ApiResModel invitado = ApiResModel(
             message: resInvitado.message,
@@ -524,7 +524,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -536,7 +536,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       return false;
     }
@@ -576,7 +576,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
       return false;
     }
 
@@ -604,7 +604,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -616,7 +616,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       return false;
     }
@@ -644,7 +644,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -655,7 +655,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       return false;
     }
@@ -672,19 +672,6 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     isLoading = false;
     return true;
-  }
-
-  showError(BuildContext context, ApiResModel res) {
-    ErrorModel error = ErrorModel(
-      date: DateTime.now(),
-      description: res.message,
-      storeProcedure: res.storeProcedure,
-    );
-
-    NotificationService.showErrorView(
-      context,
-      error,
-    );
   }
 
   seleccionarIdRef(
@@ -753,7 +740,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     TareaModel tarea,
   ) async {
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
     String token = vmLogin.token;
 
     final TareaService tareaService = TareaService();
@@ -778,7 +765,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       isLoading = false;
 
       //Abrir dialogo de error
-      // showError(context, res);
+      // NotificationService.showErrorView(context, res);
 
       ApiResModel responsable = ApiResModel(
         message: res.message,

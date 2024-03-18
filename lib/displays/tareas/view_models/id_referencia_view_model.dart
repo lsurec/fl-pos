@@ -44,7 +44,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
     int empresa = vmLocal.selectedEmpresa!.empresa;
 
     final IdReferenciaService idReferenciaService = IdReferenciaService();
@@ -57,16 +57,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
+      NotificationService.showErrorView(context, res);
 
       return;
     }

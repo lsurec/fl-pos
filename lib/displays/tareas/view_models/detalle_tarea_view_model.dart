@@ -66,7 +66,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -81,7 +81,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel responsable = ApiResModel(
         message: responsablesTarea,
@@ -127,7 +127,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -143,7 +143,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel invitado = ApiResModel(
         message: invitadosTarea,
@@ -181,7 +181,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
         Provider.of<ComentariosViewModel>(context, listen: false);
 
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -199,7 +199,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel nuevoEstado = ApiResModel(
         message: actualizar,
@@ -253,7 +253,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
         Provider.of<ComentariosViewModel>(context, listen: false);
 
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -273,7 +273,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel nuevaPrioridad = ApiResModel(
         message: actualizar,
@@ -325,7 +325,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
   ) async {
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
 
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
     String token = vmLogin.token;
 
     final TareaService tareaService = TareaService();
@@ -370,7 +370,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      showError(context, res);
+      NotificationService.showErrorView(context, res);
 
       ApiResModel usuarioEliminado = ApiResModel(
         message: eliminar,
@@ -396,19 +396,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
 
     return usuarioEliminado;
-  }
-
-  showError(BuildContext context, ApiResModel res) {
-    ErrorModel error = ErrorModel(
-      date: DateTime.now(),
-      description: res.message,
-      storeProcedure: res.storeProcedure,
-    );
-
-    NotificationService.showErrorView(
-      context,
-      error,
-    );
   }
 
   String formatearFecha(DateTime fecha) {
@@ -441,7 +428,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
 
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
     String token = vmLogin.token;
 
     final TareaService tareaService = TareaService();
@@ -483,7 +470,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       //si el consumo salió mal
       if (!res.succes) {
-        showError(context, res);
+        NotificationService.showErrorView(context, res);
 
         ApiResModel nuevoInvitado = ApiResModel(
           message: res.message,

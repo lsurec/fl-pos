@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'dart:async';
 
@@ -49,7 +49,7 @@ class UsuariosViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final UsuarioService usuarioService = UsuarioService();
 
@@ -61,16 +61,7 @@ class UsuariosViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
+      NotificationService.showErrorView(context, res);
 
       return;
     }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -97,7 +99,6 @@ class UsuariosView extends StatelessWidget {
 
 class _UsuariosEncontados extends StatelessWidget {
   const _UsuariosEncontados({
-    super.key,
     required this.usuariosEncontrados,
   });
 

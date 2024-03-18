@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -45,7 +45,7 @@ class TareasViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -57,16 +57,7 @@ class TareasViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
+      NotificationService.showErrorView(context, res);
 
       return;
     }
@@ -87,7 +78,7 @@ class TareasViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -99,17 +90,7 @@ class TareasViewModel extends ChangeNotifier {
     if (!res.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
+      NotificationService.showErrorView(context, res);
       return;
     }
 
@@ -128,7 +109,7 @@ class TareasViewModel extends ChangeNotifier {
 
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = vmLogin.user;
 
     final TareaService tareaService = TareaService();
 
@@ -140,37 +121,13 @@ class TareasViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        storeProcedure: res.storeProcedure,
-      );
-
-      NotificationService.showErrorView(
-        context,
-        error,
-      );
-
+      NotificationService.showErrorView(context, res);
       return;
     }
 
     tareas.addAll(res.message);
 
     isLoading = false;
-  }
-
-  showError(BuildContext context, ApiResModel res) {
-    ErrorModel error = ErrorModel(
-      date: DateTime.now(),
-      description: res.message,
-      storeProcedure: res.storeProcedure,
-    );
-
-    NotificationService.showErrorView(
-      context,
-      error,
-    );
   }
 
   crearTarea(BuildContext context) async {
