@@ -77,6 +77,9 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     horaInicial.text = horaFormato(fechaActual);
     horaFinal.text = horaFormato(fecha10);
+
+    nuevaFechaInicial = fechaActual;
+    nuevaFechaFinal = addDate10Min(fechaActual);
   }
 
   irIdReferencia(BuildContext context) {
@@ -90,20 +93,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, AppRoutes.selectResponsibleUser);
   }
 
-  fechaFormateada(DateTime pickedDate, tipo) {
-    String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
-    //para fecha inicial
-    if (tipo == 1) {
-      fechaInicial.text = formattedDate;
-    }
-    //para fecha final
-    if (tipo == 2) {
-      fechaFinal.text = formattedDate;
-    }
-    notifyListeners();
-  }
-
-//recibe el Date time y devuelve la hora formateada
+  //recibe el Date time y devuelve la hora formateada
   String horaFormato(DateTime fecha) => DateFormat('h:mm a').format(fecha);
 
   formatoHora(TimeOfDay pickedTime) {
@@ -222,8 +212,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     NuevaTareaModel tarea = NuevaTareaModel(
       tarea: 0,
       descripcion: tituloController.text,
-      fechaIni: nuevaFechaInicial!,
-      fechaFin: nuevaFechaFinal!,
+      fechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
+      fechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
       referencia: idReferencia!.referencia,
       userName: user,
       observacion1: observacionController.text,
@@ -276,8 +266,8 @@ class CrearTareaViewModel extends ChangeNotifier {
       emailCreador: "",
       usuarioResponsable: null,
       descripcion: tituloController.text,
-      fechaInicial: nuevaFechaInicial!,
-      fechaFinal: nuevaFechaFinal!,
+      fechaInicial: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
+      fechaFinal: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
       referencia: idReferencia!.referencia,
       iDReferencia: idReferencia!.referenciaId,
       descripcionReferencia: idReferencia!.descripcion,
@@ -285,8 +275,8 @@ class CrearTareaViewModel extends ChangeNotifier {
       fechaUltimoComentario: null,
       usuarioUltimoComentario: null,
       tareaObservacion1: observacionController.text,
-      tareaFechaIni: nuevaFechaInicial!,
-      tareaFechaFin: nuevaFechaFinal!,
+      tareaFechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
+      tareaFechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
       tipoTarea: tipoTarea!.tipoTarea,
       descripcionTipoTarea: tipoTarea!.descripcion,
       estadoObjeto: estado!.estado,
@@ -486,40 +476,42 @@ class CrearTareaViewModel extends ChangeNotifier {
       _horaInicial = TimeOfDay(hour: inicio.hour, minute: inicio.minute);
     }
 
-    // Si _horaInicial no es nulo, agrega 10 minutos a _horaFinal.
-    _horaFinal = addTime10Min(_horaInicial!);
+    // Definir la hora inicial del picker y la hora final reestablecida
+    TimeOfDay initialPickerTime;
+    TimeOfDay resetFinalTime = _horaFinal != null &&
+            (_horaFinal!.hour < _horaInicial!.hour ||
+                (_horaFinal!.hour == _horaInicial!.hour &&
+                    _horaFinal!.minute < _horaInicial!.minute))
+        ? TimeOfDay(hour: _horaInicial!.hour, minute: _horaInicial!.minute + 10)
+        : _horaFinal!;
 
-    //abre el picker
+    // Abre el picker con la última hora seleccionada o la hora inicial + 10 minutos si la hora final es menor que la hora inicial.
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      //la fecha con la que inicia es la que se le ha asignado en la hora inicial (+ 10 min);
-      initialTime: _horaFinal!,
+      initialTime: _horaFinal != null &&
+              (_horaFinal!.hour < _horaInicial!.hour ||
+                  (_horaFinal!.hour == _horaInicial!.hour &&
+                      _horaFinal!.minute < _horaInicial!.minute))
+          ? resetFinalTime
+          : _horaFinal ?? _horaInicial!,
     );
 
-    //almacenar la nueva hora seleccionada en el picker
-    TimeOfDay? horaSeleccionada = pickedTime ?? _horaFinal;
-    //verificar cuando no se seecciona una hora ne la hora fnal
-    // TimeOfDay? horaSeleccionada = pickedTime ?? _horaInicial;
-    if (compararFechas(nuevaFechaInicial!, nuevaFechaFinal!)) {
-      // Las fechas son iguales (mismo día, mes y año).
-      if (!validarHora(horaSeleccionada!, _horaInicial!)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final',
-            ),
-          ),
-        );
-        return;
-      } else {
-        _horaFinal = horaSeleccionada;
-        horaFinal.text = formatoHora(horaSeleccionada); //nombre de la hora
-        notifyListeners();
+    // Almacena la nueva hora seleccionada en el picker.
+    if (pickedTime != null) {
+      _horaFinal = pickedTime;
+
+      // Verifica si las fechas son iguales (mismo día, mes y año).
+      if (compararFechas(nuevaFechaInicial!, nuevaFechaFinal!)) {
+        if (!validarHora(_horaFinal!, _horaInicial!)) {
+          NotificationService.showSnackbar(
+            'La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.',
+          );
+          return;
+        }
       }
-    } else {
-      // Las fechas NO son iguales.
-      _horaFinal = horaSeleccionada;
-      horaFinal.text = formatoHora(horaSeleccionada!); //nombre de la hora
+
+      // Actualiza el campo de texto con la nueva hora seleccionada.
+      horaFinal.text = formatoHora(_horaFinal!);
       notifyListeners();
     }
   }
@@ -818,5 +810,18 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     isLoading = false;
     //
+  }
+
+  //armar fecha
+  DateTime construirFechaCompleta(DateTime fecha, TimeOfDay hora) {
+    // Obteniendo la fecha y la hora de entrada
+    final year = fecha.year;
+    final month = fecha.month;
+    final day = fecha.day;
+    final hour = hora.hour;
+    final minute = hora.minute;
+
+    // Construyendo y retornando la fecha completa
+    return DateTime(year, month, day, hour, minute);
   }
 }

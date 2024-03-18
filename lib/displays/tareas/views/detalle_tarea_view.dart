@@ -13,7 +13,7 @@ class DetalleTareaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
     final vmComentarios =
-        Provider.of<ComentariosViewModel>(context, listen: false);
+        Provider.of<ComentariosViewModel>(context);
     final vmUsuarios = Provider.of<CrearTareaViewModel>(context);
 
     return Stack(
@@ -27,6 +27,8 @@ class DetalleTareaView extends StatelessWidget {
           ),
           body: RefreshIndicator(
             onRefresh: () async {
+
+
               print("Volver a ceagar");
             },
             child: ListView(
@@ -91,14 +93,14 @@ class DetalleTareaView extends StatelessWidget {
                               const Icon(Icons.date_range),
                               const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                vm.formatearFecha(vm.tarea!.fechaInicial),
+                                vm.formatearFecha(vm.tarea!.tareaFechaIni),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
                               const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                vm.formatearHora(vm.tarea!.fechaInicial),
+                                vm.formatearHora(vm.tarea!.tareaFechaIni),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
@@ -121,14 +123,14 @@ class DetalleTareaView extends StatelessWidget {
                               const Icon(Icons.date_range),
                               const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                vm.formatearFecha(vm.tarea!.fechaFinal),
+                                vm.formatearFecha(vm.tarea!.tareaFechaFin),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
                               const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                vm.formatearHora(vm.tarea!.fechaFinal),
+                                vm.formatearHora(vm.tarea!.tareaFechaFin),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
