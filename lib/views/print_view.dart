@@ -23,33 +23,24 @@ class PrintView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<int> arguments =
-        ModalRoute.of(context)!.settings.arguments as List<int>;
-    //opcion 1 prueba  de impresora,
-    //opcion 2 impresion de docuemnto modulo factura
-    //opcion 3 impresion de documento destino (conversion)
-    final int option = arguments[0];
-    final int consecutivoDoc = arguments[1];
+    final PrintDocSettingsModel argument =
+        ModalRoute.of(context)!.settings.arguments as PrintDocSettingsModel;
 
     return BlocProvider(
       create: (context) {
         return PrintBloc()..add(GetPrinterEvent());
       },
       child: SettingsFrom(
-        option: option,
-        consecutivoDoc: consecutivoDoc,
+        settings: argument,
       ),
     );
   }
 }
 
 class SettingsFrom extends StatefulWidget {
-  final int option; //1: prueba 2: documento
-  final int consecutivoDoc;
+  final PrintDocSettingsModel settings;
 
-  const SettingsFrom(
-      {Key? key, required this.option, required this.consecutivoDoc})
-      : super(key: key);
+  const SettingsFrom({Key? key, required this.settings}) : super(key: key);
 
   @override
   State<SettingsFrom> createState() => _SettingsFromState();
@@ -202,7 +193,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                   child: GestureDetector(
                     onTap: (_currentStatus == BTStatus.connected)
                         ? () async {
-                            switch (widget.option) {
+                            final PrintDocSettingsModel settings =
+                                widget.settings;
+
+                            switch (settings.opcion) {
                               case 1:
                                 //1: prueba
                                 PrintModel print =
@@ -214,10 +208,13 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 break;
                               case 2:
                                 //2: docummento factura
+
                                 PrintModel print = await printVM.printDocument(
-                                  context,
-                                  paperDefault,
-                                  widget.consecutivoDoc,
+                                  context, // context,
+                                  paperDefault, // paperDefault,
+                                  settings.consecutivoDoc!, // consecutivoDoc,
+                                  settings.cuentaCorrentistaRef!,
+                                  settings.client!, // cuentaCorrentistaRef,
                                 );
 
                                 _printerEscPos(print.bytes, print.generator);
@@ -226,7 +223,9 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 //3: documento conversion
                                 PrintModel print =
                                     await printVM.printDocConversion(
+                                  context,
                                   paperDefault,
+                                  settings.destination!,
                                 );
 
                                 _printerEscPos(print.bytes, print.generator);
@@ -241,8 +240,8 @@ class _SettingsFromState extends State<SettingsFrom> {
                           : Colors.grey,
                       child: Center(
                         child: Text(
-                          widget.option == 1
-                              ? "Impresion de prueba"
+                          widget.settings.opcion == 1
+                              ? "Impirmir prueba"
                               : "Impirmir documento",
                           style: const TextStyle(
                             color: Colors.white,

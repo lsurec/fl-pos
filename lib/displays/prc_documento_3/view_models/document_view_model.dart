@@ -61,6 +61,22 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool monitorPrint() {
+    bool showPrint = false;
+    //el parametro que indica si se imprime en mmonitor o no es 272
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == 272) {
+        showPrint = true;
+        break;
+      }
+    }
+
+    return showPrint;
+  }
+
   bool editPrice() {
     bool edit = false;
     //el parametro que indica si se puede esitar el precio o no es 351
@@ -152,7 +168,7 @@ class DocumentViewModel extends ChangeNotifier {
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
     int tipoDoc = menuVM.documento!;
     String serie = serieSelect!.serieDocumento!;
@@ -171,16 +187,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -206,22 +216,16 @@ class DocumentViewModel extends ChangeNotifier {
       serieSelect!.serieDocumento!, // serie,
       localVM.selectedEmpresa!.empresa, // empresa,
       loginVM.token, // token,
-      loginVM.nameUser, // user,
+      loginVM.user, // user,
     );
 
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -242,7 +246,7 @@ class DocumentViewModel extends ChangeNotifier {
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
     int estacion = localVM.selectedEstacion!.estacionTrabajo;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //limpiar serie seleccionada
@@ -265,16 +269,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -308,14 +306,14 @@ class DocumentViewModel extends ChangeNotifier {
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //instancia del servicio
     CuentaService cuentaService = CuentaService();
 
     //Consummo del api
-    ApiResModel res = await cuentaService.getSeller(
+    ApiResModel res = await cuentaService.getCeuntaCorrentistaRef(
       user, // user,
       tipoDocumento, // doc,
       serie, // serie,
@@ -326,16 +324,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -401,7 +393,7 @@ class DocumentViewModel extends ChangeNotifier {
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //limpiar lista clientes
@@ -414,7 +406,7 @@ class DocumentViewModel extends ChangeNotifier {
     vmFactura.isLoading = true;
 
     //Consumo del api
-    ApiResModel res = await cuentaService.getClient(
+    ApiResModel res = await cuentaService.getCuentaCorrentista(
       empresa, // empresa,
       client.text, // filter,
       user, // user,
@@ -427,16 +419,10 @@ class DocumentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }

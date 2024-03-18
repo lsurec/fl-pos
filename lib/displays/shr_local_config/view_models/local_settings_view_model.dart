@@ -3,12 +3,15 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LocalSettingsViewModel extends ChangeNotifier {
+  ApiResModel? resApis;
+
   //empresas disponibles
   final List<EmpresaModel> empresas = [];
   //Estaciones disponibles
@@ -31,22 +34,69 @@ class LocalSettingsViewModel extends ChangeNotifier {
 
   //navegar a home
   Future<void> navigateHome(BuildContext context) async {
+    if (selectedEmpresa == null || selectedEstacion == null) {
+      NotificationService.showSnackbar(
+        "Para continuar, selecciona una empresa y estación de trabajo",
+      );
+      return;
+    }
+
     //view model externi
     final menuVM = Provider.of<MenuViewModel>(context, listen: false);
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+
+    final String user = loginVM.user;
+    final String token = loginVM.token;
 
     //inicia de proceso
     isLoading = true;
 
-    //cargar menu
-    await menuVM.loadDataMenu(context);
-    await homeVM.getTipoCambio(context);
+    final MenuService menuService = MenuService();
 
-    //finalizar proceso
-    isLoading = false;
+    final ApiResModel resApps = await menuService.getApplication(user, token);
+
+    if (!resApps.succes) {
+      //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+      isLoading = false;
+      NotificationService.showErrorView(context, resApps);
+
+      return;
+    }
+
+    final List<ApplicationModel> applications = resApps.message;
+
+    menuVM.menuData.clear();
+
+    for (var application in applications) {
+      final ApiResModel resDisplay = await menuService.getDisplay(
+        application.application,
+        user,
+        token,
+      );
+
+      if (!resDisplay.succes) {
+        //si hay mas de una estacion o mas de una empresa mostar configuracion local
+        isLoading = false;
+        NotificationService.showErrorView(context, resDisplay);
+
+        return;
+      }
+
+      menuVM.menuData.add(
+        MenuData(
+          application: application,
+          children: resDisplay.message,
+        ),
+      );
+    }
+
+    menuVM.loadDataMenu(context);
 
     //navegar a home
-    Navigator.pushReplacementNamed(context, "home");
+    Navigator.pushReplacementNamed(context, AppRoutes.home);
+    isLoading = false;
   }
 
   //Seleccioanr tipo rpecio
@@ -61,17 +111,16 @@ class LocalSettingsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Reload datos
-  Future<void> refreshData(BuildContext context) async {
-    isLoading = true;
-    await loadData(context);
-    isLoading = false;
-  }
-
   //Cargar datos necesaarios
-  loadData(BuildContext context) async {
+  Future<void> loadData(BuildContext context) async {
     //view model externo
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String user = loginVM.user;
+    final String token = loginVM.token;
 
     //instancia del servicio empresa
     EmpresaService empresaService = EmpresaService();
@@ -85,28 +134,20 @@ class LocalSettingsViewModel extends ChangeNotifier {
     empresas.clear();
     estaciones.clear();
 
+    isLoading = true;
+
     // Consumo api empresas
     ApiResModel resEmpresa = await empresaService.getEmpresa(
-      loginVM.nameUser,
-      loginVM.token,
+      user,
+      token,
     );
 
     //valid succes response
     if (!resEmpresa.succes) {
-      // isLoading = false;
-
-      //si algo salio mal mostrar alerta
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEmpresa.message,
-        url: resEmpresa.url,
-        storeProcedure: resEmpresa.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(
+      isLoading = false;
+      NotificationService.showErrorView(
         context,
-        error,
+        resEmpresa,
       );
 
       return;
@@ -114,23 +155,18 @@ class LocalSettingsViewModel extends ChangeNotifier {
 
     //consu,o del api estacion
     ApiResModel resEstacion = await estacionService.getEstacion(
-      loginVM.nameUser,
-      loginVM.token,
+      user,
+      token,
     );
 
     //valid succes response
     if (!resEstacion.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEstacion.message,
-        url: resEstacion.url,
-        storeProcedure: resEstacion.storeProcedure,
-      );
+      isLoading = false;
 
       await NotificationService.showErrorView(
         context,
-        error,
+        resEstacion,
       );
       return;
     }
@@ -149,6 +185,6 @@ class LocalSettingsViewModel extends ChangeNotifier {
       selectedEstacion = estaciones.first;
     }
 
-    notifyListeners();
+    isLoading = false;
   }
 }

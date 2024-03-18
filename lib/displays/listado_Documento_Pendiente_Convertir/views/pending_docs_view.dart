@@ -24,9 +24,7 @@ class PendingDocsView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () => vm.laodData(
-              context,
-            ),
+            onRefresh: () => vm.laodData(context),
             child: ListView(
               children: [
                 Padding(
@@ -34,15 +32,89 @@ class PendingDocsView extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Fecha Ini:",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              TextButton.icon(
+                                onPressed: () => vm.showPickerIni(context),
+                                icon: const Icon(Icons.calendar_today_outlined),
+                                label: Text(
+                                  vm.formatView(vm.fechaIni!),
+                                  style: AppTheme.normalStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Fecha Fin:",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              TextButton.icon(
+                                onPressed: () => vm.showPickerFin(context),
+                                icon: const Icon(
+                                  Icons.calendar_today_outlined,
+                                  color: AppTheme.primary,
+                                ),
+                                label: Text(
+                                  vm.formatView(vm.fechaFin!),
+                                  style: AppTheme.normalStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 175,
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              dropdownColor: AppTheme.backroundColor,
+                              value: vm.selectFilter,
+                              onChanged: (value) => vm.changeFilter(value!),
+                              items: vm.filters.map((filter) {
+                                return DropdownMenuItem<String>(
+                                  value: filter,
+                                  child: Text(
+                                    filter,
+                                    style: AppTheme.normalStyle,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => vm.ascendente = !vm.ascendente,
+                            icon: Icon(
+                              vm.ascendente
+                                  ? Icons.arrow_upward
+                                  : Icons.arrow_downward,
+                            ),
+                          ),
+                          const Spacer(),
                           Text(
                             "Registros(${vm.documents.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       const Divider(),
                       const SizedBox(height: 10),
                       ListView.builder(
@@ -121,20 +193,6 @@ class _CardDoc extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Fecha documento:",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      Text(
-                        document.fechaDocumento,
-                        style: AppTheme.normalStyle,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
                         "Fecha hora:",
                         style: AppTheme.normalBoldStyle,
                       ),
@@ -145,6 +203,21 @@ class _CardDoc extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Fecha documento:",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      Text(
+                        document.fechaDocumento,
+                        style: AppTheme.normalStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+
                   TextsWidget(
                       title: "Serie documento: ",
                       text: "${document.serie} (${document.serieDocumento})"),

@@ -82,16 +82,10 @@ class PaymentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -118,7 +112,7 @@ class PaymentViewModel extends ChangeNotifier {
     isLoading = true;
 
     ApiResModel res = await pagoService.getCuentas(
-      loginVM.nameUser, // user,
+      loginVM.user, // user,
       localVM.selectedEmpresa!.empresa, // empresa,
       banco, // banco,
       loginVM.token, // token,
@@ -130,16 +124,10 @@ class PaymentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -174,7 +162,7 @@ class PaymentViewModel extends ChangeNotifier {
     //call service obtener Informacion de usuario
 
     ApiResModel res = await pagoService.getBancos(
-      loginVM.nameUser, //usuario
+      loginVM.user, //usuario
       localVM.selectedEmpresa!.empresa, //empresa
       loginVM.token, //token
     );
@@ -185,16 +173,10 @@ class PaymentViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }

@@ -14,6 +14,7 @@ class ConfirmDocView extends StatelessWidget {
   Widget build(BuildContext context) {
     final docVM = Provider.of<DocumentViewModel>(context);
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final int screen = ModalRoute.of(context)!.settings.arguments as int;
 
     return Stack(
       children: [
@@ -90,8 +91,20 @@ class ConfirmDocView extends StatelessWidget {
                   const SizedBox(height: 10),
                   _Observacion(),
                   const SizedBox(height: 10),
-                  if (!vm.showPrint) _Options(),
-                  if (vm.showPrint) _Print(),
+                  SwitchListTile(
+                    activeColor: AppTheme.primary,
+                    value: vm.directPrint,
+                    onChanged: (value) => vm.directPrint = value,
+                    title: const Text(
+                      "Imprimir documento después de confirmar",
+                      style: AppTheme.normalStyle,
+                    ),
+                  ),
+                  if (!vm.showPrint)
+                    _Options(
+                      screen: screen,
+                    ),
+                  if (vm.showPrint) _Print(screen: screen),
                 ],
               ),
             ),
@@ -278,6 +291,9 @@ class _Observacion extends StatelessWidget {
 }
 
 class _Print extends StatelessWidget {
+  final int screen;
+
+  const _Print({super.key, required this.screen});
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
@@ -310,7 +326,8 @@ class _Print extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.navigatePrint(context),
+              onTap: () =>
+                  screen == 1 ? vm.navigatePrint(context) : vm.printNetwork(),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,
@@ -455,6 +472,9 @@ class _OptionsErrorAll extends StatelessWidget {
 }
 
 class _Options extends StatelessWidget {
+  final int screen;
+
+  const _Options({super.key, required this.screen});
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
@@ -489,7 +509,7 @@ class _Options extends StatelessWidget {
             child: GestureDetector(
               // onTap: () => vm.sendDocument(),
               onTap: () {
-                vm.sendDoc(context);
+                vm.sendDoc(context, screen);
                 // vm.isLoading = true
               },
               child: Container(

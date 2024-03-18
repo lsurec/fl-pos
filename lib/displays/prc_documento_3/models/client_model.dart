@@ -46,7 +46,7 @@ class ClientModel {
         eMail: json["eMail"],
         telefono: json["telefono"],
         permitirCxC: json["permitir_CxC"],
-        limiteCredito: json["limite_Credito"],
+        limiteCredito: json["limite_Credito"] ?? 0,
       );
 
   Map<String, dynamic> toMap() => {

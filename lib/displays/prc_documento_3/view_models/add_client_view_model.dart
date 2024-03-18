@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/cuenta_service.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/document_view_model.dart';
-import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_mode.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -60,7 +60,7 @@ class AddClientViewModel extends ChangeNotifier {
     );
 
     //usuario token y cadena de conexion
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
     int empresa = localVM.selectedEmpresa!.empresa;
 
@@ -87,21 +87,15 @@ class AddClientViewModel extends ChangeNotifier {
       isLoading = false;
       //finalizar proceso
       isLoading = false;
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
 
-    ApiResModel resClient = await cuentaService.getClient(
+    ApiResModel resClient = await cuentaService.getCuentaCorrentista(
       empresa,
       cuenta.nit,
       user,
@@ -111,16 +105,9 @@ class AddClientViewModel extends ChangeNotifier {
 
     //validar respuesta del servico, si es incorrecta
     if (!resClient.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resClient.message,
-        url: resClient.url,
-        storeProcedure: resClient.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resClient,
       );
 
       NotificationService.showSnackbar(

@@ -116,13 +116,13 @@ class CuentaService {
   }
 
   //Consumo api buscar clinete
-  Future<ApiResModel> getClient(
+  Future<ApiResModel> getCuentaCorrentista(
     int empresa,
     String filter,
     String user,
     String token,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Cuenta/cliente");
+    Uri url = Uri.parse("${_baseUrl}Cuenta");
     try {
       //url completa
 
@@ -179,14 +179,14 @@ class CuentaService {
   }
 
   //Consumo api obtner vendedores
-  Future<ApiResModel> getSeller(
+  Future<ApiResModel> getCeuntaCorrentistaRef(
     String user,
     int doc,
     String serie,
     int empresa,
     String token,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Cuenta/vendedor");
+    Uri url = Uri.parse("${_baseUrl}Cuenta/ref");
     try {
       //url completa
 
