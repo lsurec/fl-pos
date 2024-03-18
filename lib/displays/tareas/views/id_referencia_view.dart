@@ -23,46 +23,39 @@ class IdReferenciaView extends StatelessWidget {
               style: AppTheme.titleStyle,
             ),
           ),
-          body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: vm.buscarIdReferencia,
-                        onChanged: (criterio) {
-                          // vm.filtrarLista(criterio);
-                          vm.buscarRefTemp(context, criterio);
-                        },
-                        decoration: const InputDecoration(
-                          labelText:
-                              "Ingrese un caracter para iniciar la busqueda.",
+          body: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: vm.buscarIdReferencia,
+                      onChanged: (criterio) =>
+                          vm.buscarRefTemp(context, criterio),
+                      decoration: const InputDecoration(
+                        labelText:
+                            "Ingrese un caracter para iniciar la busqueda.",
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "Registros (${vm.idReferencias.length})",
+                          style: AppTheme.normalBoldStyle,
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Registros (${vm.idReferencias.length})",
-                            style: AppTheme.normalBoldStyle,
-                          ),
-                        ],
-                      ),
-                      const Divider(),
-                      _ReferenciasEncontradas(
-                        referenciasEncontradas: vm.idReferencias,
-                      )
-                    ],
-                  ),
+                      ],
+                    ),
+                    const Divider(),
+                    _ReferenciasEncontradas(
+                      referenciasEncontradas: vm.idReferencias,
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         //importarte para mostrar la pantalla de carga
@@ -97,46 +90,39 @@ class _ReferenciasEncontradas extends StatelessWidget {
       itemCount: referenciasEncontradas.length,
       itemBuilder: (BuildContext context, int index) {
         final IdReferenciaModel referencia = referenciasEncontradas[index];
-        return Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom:
-                  BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+        return GestureDetector(
+          onTap: () => vmCrear.seleccionarIdRef(context, referencia),
+          child: Container(
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                    width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+              ),
             ),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              vmCrear.seleccionarIdRef(context, referencia);
-            },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              child: GestureDetector(
-                onTap: () {
-                  vmCrear.seleccionarIdRef(context, referencia);
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 5),
-                    Text(
-                      referencia.descripcion,
-                      style: AppTheme.normalStyle,
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "ID Referencia: ",
-                          style: AppTheme.normalStyle,
-                        ),
-                        Text(
-                          referencia.referenciaId,
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 5),
+                  Text(
+                    referencia.descripcion,
+                    style: AppTheme.normalStyle,
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "ID Referencia: ",
+                        style: AppTheme.normalStyle,
+                      ),
+                      Text(
+                        referencia.referenciaId,
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                ],
               ),
             ),
           ),

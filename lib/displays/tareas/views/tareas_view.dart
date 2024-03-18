@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TareasView extends StatefulWidget {
@@ -27,6 +28,7 @@ class _TareasViewState extends State<TareasView> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TareasViewModel>(context);
+    final vmMenu = Provider.of<MenuViewModel>(context);
 
     List<TareaModel> tareas = vm.tareas;
 
@@ -34,9 +36,8 @@ class _TareasViewState extends State<TareasView> {
       children: [
         Scaffold(
           appBar: AppBar(
-            //TODO:Nommbre del display
-            title: const Text(
-              'Tareas',
+            title: Text(
+              vmMenu.name,
               style: AppTheme.titleStyle,
             ),
             actions: <Widget>[
@@ -55,7 +56,7 @@ class _TareasViewState extends State<TareasView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const _Filtros(),
+                      _RadioFilter(),
                       const _InputSerach(),
                       const SizedBox(height: 10),
                       const Divider(),
@@ -101,7 +102,6 @@ class _TareasViewState extends State<TareasView> {
 
 class _CardTask extends StatelessWidget {
   const _CardTask({
-    super.key,
     required this.tarea,
   });
 
@@ -193,9 +193,7 @@ class _CardTask extends StatelessWidget {
 }
 
 class _InputSerach extends StatelessWidget {
-  const _InputSerach({
-    super.key,
-  });
+  const _InputSerach();
 
   @override
   Widget build(BuildContext context) {
@@ -205,15 +203,7 @@ class _InputSerach extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: vm.formKeySearch,
       child: TextFormField(
-        onFieldSubmitted: (value) {
-          if (vm.filtro == 1) {
-            vm.buscarTareasDescripcion(context, vm.searchController.text);
-          }
-
-          if (vm.filtro == 2) {
-            vm.buscarTareasIdReferencia(context, vm.searchController.text);
-          }
-        },
+        onFieldSubmitted: (value) => vm.searchText(context),
         textInputAction: TextInputAction.search,
         controller: vm.searchController,
         validator: (value) {
@@ -225,63 +215,63 @@ class _InputSerach extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Buscar',
           suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: AppTheme.primary,
-            ),
-            // onPressed: () => vm.performSearch(),
-            onPressed: () {
-              if (vm.filtro == 1) {
-                vm.buscarTareasDescripcion(context, vm.searchController.text);
-              }
-              if (vm.filtro == 2) {
-                vm.buscarTareasIdReferencia(context, vm.searchController.text);
-              }
-            },
-          ),
+              icon: const Icon(
+                Icons.search,
+                color: AppTheme.primary,
+              ),
+              // onPressed: () => vm.performSearch(),
+              onPressed: () => vm.searchText(context)),
         ),
       ),
     );
   }
 }
 
-class _Filtros extends StatelessWidget {
-  const _Filtros({
-    super.key,
-  });
-
+class _RadioFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TareasViewModel>(context);
 
-    return Row(children: [
-      const Text(
-        "Filtos",
-        style: AppTheme.normalStyle,
-      ),
-      const Spacer(),
-      Radio(
-        value: 1,
-        groupValue: vm.filtro,
-        onChanged: (value) {
-          vm.busqueda(value!);
-        },
-      ),
-      const Text(
-        "Descripcion",
-        style: AppTheme.normalStyle,
-      ),
-      Radio(
-        value: 2,
-        groupValue: vm.filtro,
-        onChanged: (value) {
-          vm.busqueda(value!);
-        },
-      ),
-      const Text(
-        "ID Referencia",
-        style: AppTheme.normalStyle,
-      ),
-    ]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        GestureDetector(
+          onTap: () => vm.busqueda(1),
+          child: Row(
+            children: [
+              Radio(
+                value: 1,
+                groupValue: vm.filtro,
+                onChanged: (value) {
+                  vm.busqueda(value!);
+                },
+              ),
+              const Text(
+                'Descripcion',
+                style: AppTheme.normalStyle,
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () => vm.busqueda(2),
+          child: Row(
+            children: [
+              Radio(
+                value: 2,
+                groupValue: vm.filtro,
+                onChanged: (value) {
+                  vm.busqueda(value!);
+                },
+              ),
+              const Text(
+                "ID Referencia",
+                style: AppTheme.normalStyle,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

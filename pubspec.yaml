@@ -49,16 +49,6 @@ dependencies:
   provider: ^6.0.5
   share: ^2.0.2
   shared_preferences: ^2.0.15
-  clipboard: ^0.1.3 #funciona
-  flutter_barcode_scanner: ^2.0.0 #funciona
-  http: ^1.1.0 #funciona
-  intl: ^0.18.1 #funciona
-  package_info: ^2.0.2 #funciona
-  path_provider: ^2.0.0 #funciona
-  percent_indicator: ^4.2.3 #funciona
-  pdf: ^3.3.1 #funciona
-  provider: ^6.0.5 #funciona
-  share: ^2.0.2  #funciona
   dropdown_button2: ^2.3.8
 
 dev_dependencies:

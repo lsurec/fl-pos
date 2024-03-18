@@ -75,7 +75,7 @@ class UsuariosView extends StatelessWidget {
                           ],
                         ),
                         const Divider(),
-                        _UsuariosEncontados(usuariosEncontrados: vm.usuarios)
+                        const _UsuariosEncontados()
                       ],
                     ),
                   ),
@@ -98,11 +98,8 @@ class UsuariosView extends StatelessWidget {
 }
 
 class _UsuariosEncontados extends StatelessWidget {
-  const _UsuariosEncontados({
-    required this.usuariosEncontrados,
-  });
+  const _UsuariosEncontados();
 
-  final List<UsuarioModel> usuariosEncontrados;
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +110,9 @@ class _UsuariosEncontados extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: usuariosEncontrados.length,
+      itemCount: vm.usuarios.length,
       itemBuilder: (BuildContext context, int index) {
-        final UsuarioModel usuario = usuariosEncontrados[index];
+        final UsuarioModel usuario = vm.usuarios[index];
         return Container(
           decoration: const BoxDecoration(
             border: Border(

@@ -1,12 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +22,16 @@ class TareasViewModel extends ChangeNotifier {
 
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
   final TextEditingController searchController = TextEditingController();
+
+  searchText(BuildContext context) {
+    if (filtro == 1) {
+      buscarTareasDescripcion(context, searchController.text);
+    }
+
+    if (filtro == 2) {
+      buscarTareasIdReferencia(context, searchController.text);
+    }
+  }
 
 //Validar formulario barra busqueda
   bool isValidFormCSearch() {

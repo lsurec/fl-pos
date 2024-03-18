@@ -71,7 +71,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
     timer?.cancel(); // Cancelar el temporizador existente si existe
     timer = Timer(const Duration(milliseconds: 1000), () {
       // Función de filtrado que consume el servicio
-      buscarIdRefencia(context, search);
+      buscarIdRefencia(context, buscarIdReferencia.text);
     }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }
