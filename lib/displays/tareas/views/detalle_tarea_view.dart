@@ -200,7 +200,7 @@ class DetalleTareaView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "HISTORIAL RESPONSABLES:",
+                              "HISTORIAL DE RESPONSABLES:",
                               style: AppTheme.normalBoldStyle,
                             ),
                             CardWidget(
