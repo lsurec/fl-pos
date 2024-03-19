@@ -80,7 +80,7 @@ class CrearTareaView extends StatelessWidget {
                             return null;
                           },
                           controller: vm.tituloController,
-                          onChanged: (value) => vm.titulo = value,
+                          onChanged: (value) => vm.tituloController.text = value,
                           decoration: const InputDecoration(
                               labelText: "Añada un titulo para la tarea."),
                         ),
@@ -161,7 +161,7 @@ class CrearTareaView extends StatelessWidget {
                               width: 150,
                               child: TextFormField(
                                 controller: vm.tiempoController,
-                                onChanged: (value) => vm.tiempo = value,
+                                onChanged: (value) => vm.tiempoController.text = value,
                                 decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
                                     vertical: 14,
@@ -444,7 +444,7 @@ class _ObservacionTarea extends StatelessWidget {
 
     return TextFormField(
       controller: vm.observacionController,
-      onChanged: (value) => vm.observacion = value,
+      onChanged: (value) => vm.observacionController.text = value,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Campo requerido.';

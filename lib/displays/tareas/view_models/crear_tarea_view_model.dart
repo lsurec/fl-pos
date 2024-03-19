@@ -1,5 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
-import 'package:flutter/material.dart';
+// ignore_for_file: use_build_context_synchronously, avoid_print
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -7,10 +6,12 @@ import 'package:flutter_post_printer_example/displays/tareas/view_models/view_mo
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {
+  //Listas para almacenar la respuesta de los servicios
   final List<TipoTareaModel> tiposTarea = [];
   final List<EstadoModel> estados = [];
   final List<PrioridadModel> prioridades = [];
@@ -25,6 +26,58 @@ class CrearTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Validador del formulario
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  //Text controller de fechas, horas, tiempo, titulo, observacion.
+  TextEditingController fechaInicial = TextEditingController();
+  TextEditingController fechaFinal = TextEditingController();
+  TextEditingController horaInicial = TextEditingController();
+  TextEditingController horaFinal = TextEditingController();
+  TextEditingController tituloController = TextEditingController();
+  TextEditingController tiempoController = TextEditingController();
+  TextEditingController observacionController = TextEditingController();
+
+  DateTime fechaActual = DateTime.now();
+  DateTime? nuevaFechaInicial; //fecha inicial
+  DateTime? nuevaFechaFinal; //fecha final
+  TimeOfDay? _horaInicial; //hora inicial
+  TimeOfDay? _horaFinal; //hora final
+  TipoTareaModel? tipoTarea; //tipo tarea
+  EstadoModel? estado; //estado tarea
+  PrioridadModel? prioridad; //prioridad tarea
+  IdReferenciaModel? idReferencia; //id referencia
+  UsuarioModel? responsable; //responsable activo de la tarea
+  PeriodicidadModel? periodicidad; //peroodicidad tarea
+
+  //Guardar usuarios seleccionados para ser invitados de la tarea
+  List<UsuarioModel> invitados = [];
+
+  CrearTareaViewModel() {
+    //inicializar tiempo con 10 minutos
+    tiempoController.text = "10";
+    //Inicializar fecha Inicio con fecha actual
+    nuevaFechaInicial = fechaActual;
+    //fecha actual mas 10 minutos más
+    final DateTime fecha10 = addDate10Min(fechaActual);
+    //Inicializar fecha final con 10 minutos más que la inicial
+    nuevaFechaFinal = fecha10;
+
+    //Texto de la fecha inicial
+    fechaInicial.text = DateFormat('dd/MM/yyyy').format(fechaActual);
+    fechaFinal.text = DateFormat('dd/MM/yyyy').format(fecha10);
+
+    //pickers hora inicial y final
+    _horaInicial =
+        TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
+    _horaFinal = addTime10Min(_horaInicial!);
+
+    //Tectos de las horas
+    horaInicial.text = horaFormato(fechaActual);
+    horaFinal.text = horaFormato(fecha10);
+  }
+
+  //Volver a cargar tados
   loadData(BuildContext context) async {
     await obtenerTiposTarea(context);
     await obtenerEstados(context);
@@ -32,7 +85,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     await obtenerPrioridades(context);
 
     //Fechas y horas
-
     fechaActual = DateTime.now();
 
     nuevaFechaInicial = fechaActual;
@@ -49,63 +101,12 @@ class CrearTareaViewModel extends ChangeNotifier {
     horaFinal.text = horaFormato(nuevaFechaFinal!);
   }
 
-  TextEditingController fechaInicial = TextEditingController();
-  TextEditingController fechaFinal = TextEditingController();
-  TextEditingController horaInicial = TextEditingController();
-  TextEditingController horaFinal = TextEditingController();
-  TextEditingController tituloController = TextEditingController();
-  TextEditingController tiempoController = TextEditingController();
-
-  TextEditingController observacionController = TextEditingController();
-
-  DateTime fechaActual = DateTime.now();
-  DateTime? nuevaFechaInicial;
-  DateTime? nuevaFechaFinal;
-  DateTime? nuevaHoraInicial;
-  TimeOfDay? _horaInicial;
-  TimeOfDay? _horaFinal;
-  TimeOfDay? get horaInicial1 => _horaInicial;
-  TimeOfDay? get horaFinal1 => _horaFinal;
-
-  TipoTareaModel? tipoTarea;
-  EstadoModel? estado;
-  PrioridadModel? prioridad;
-  String? observacion;
-  String? titulo;
-  String tiempo = "10";
-  IdReferenciaModel? idReferencia;
-
-  UsuarioModel? responsable;
-  List<UsuarioModel> invitados = [];
-
-  PeriodicidadModel? periodicidad;
-
-  CrearTareaViewModel() {
-    tiempoController.text = "10";
-    nuevaFechaInicial = fechaActual;
-    nuevaFechaFinal = fechaActual;
-
-    fechaInicial.text = DateFormat('dd/MM/yyyy').format(fechaActual);
-
-    final DateTime fecha10 = addDate10Min(fechaActual);
-
-    fechaFinal.text = DateFormat('dd/MM/yyyy').format(fecha10);
-    //pickers hora inicial y final
-    _horaInicial =
-        TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
-    _horaFinal = addTime10Min(_horaInicial!);
-
-    horaInicial.text = horaFormato(fechaActual);
-    horaFinal.text = horaFormato(fecha10);
-
-    nuevaFechaInicial = fechaActual;
-    nuevaFechaFinal = addDate10Min(fechaActual);
-  }
-
+  //Navegar a view para buscar Id de referencia.
   irIdReferencia(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.selectReferenceId);
   }
 
+  //Navegar a view para buscar usuarios
   irUsuarios(BuildContext context, int tipo) {
     final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
     invitados = [];
@@ -116,6 +117,7 @@ class CrearTareaViewModel extends ChangeNotifier {
   //recibe el Date time y devuelve la hora formateada
   String horaFormato(DateTime fecha) => DateFormat('h:mm a').format(fecha);
 
+  //Recibe una hora y la formatea en formato de 12 horas, AM o PM
   formatoHora(TimeOfDay pickedTime) {
     String formattedTime = DateFormat('h:mm a').format(
       DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute),
@@ -124,6 +126,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     return formattedTime;
   }
 
+  //Recibe una hora y le asigna 10 minutos más.
   TimeOfDay addTime10Min(TimeOfDay pickedTime) {
     int newMinute = pickedTime.minute + 10;
     int newHour = pickedTime.hour;
@@ -140,25 +143,11 @@ class CrearTareaViewModel extends ChangeNotifier {
     return TimeOfDay(hour: newHour, minute: newMinute);
   }
 
-  TimeOfDay subtract10Min(TimeOfDay pickedTime) {
-    int newMinute = pickedTime.minute - 10;
-    int newHour = pickedTime.hour;
-
-    if (newMinute < 0) {
-      newHour -= 1;
-      newMinute += 60;
-    }
-
-    if (newHour < 0) {
-      newHour += 24;
-    }
-
-    return TimeOfDay(hour: newHour, minute: newMinute);
-  }
-
+  //Recibe una fecha y le asigna 10 minutos más.
   DateTime addDate10Min(DateTime fecha) =>
       fecha.add(const Duration(minutes: 10));
 
+  //Recibe una hora y lq asigna 10 minutos nás
   horaFinal10Min(TimeOfDay pickedTime) {
     return DateFormat('h:mm a').format(
       DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute + 10),
@@ -170,16 +159,10 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     print("Formulario valido");
 
-    if (titulo == null ||
-        observacion == null ||
-        tipoTarea == null ||
-        estado == null ||
-        prioridad == null) {
+    if (tipoTarea == null || estado == null || prioridad == null) {
       print('Falta completar campos');
     } else {
       print('Sí se puede crear la tarea');
-      print('Titulo: $titulo');
-      print('Observación: $observacion');
       print('Tipo de tarea: $tipoTarea');
       print('Tipo de tarea: $estado');
       print('Tipo de tarea: $prioridad');
@@ -188,47 +171,58 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
+  //Validar formulario
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;
   }
 
+  //Limpiar formulario
   limpiar() {
     tituloController.text = "";
     observacionController.text = "";
     tiempoController.text = "10";
     responsable = null;
     idReferencia = null;
-    invitados = [];
+    invitados.clear();
   }
 
-  Future crearTarea(BuildContext context) async {
+  //Crear tarea
+  Future<void> crearTarea(BuildContext context) async {
+    //Validar el formulario
     if (!isValidForm()) {
       NotificationService.showSnackbar(
           "Complete todos loa campos obligarorios para continuar");
       return;
     }
+
+    //sino ha seleccionado la referencia
     if (idReferencia == null) {
       NotificationService.showSnackbar("Añada Id Referencia para continuar.");
       return;
     }
 
+    //sino hay resoinsable
     if (responsable == null) {
       NotificationService.showSnackbar("Añada un responsable para continuar.");
       return;
     }
 
+    //View model para obtener el usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
-    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
-
     String token = vmLogin.token;
     String user = vmLogin.user;
+
+    //View model para obtenerla empresa
+    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
     int empresa = vmLocal.selectedEmpresa!.empresa;
 
+    //view model de Tareas para insertar la nueva tarea en la lista de tareas
+    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
+
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
+    //Crear modelo de la nueva tarea
     NuevaTareaModel tarea = NuevaTareaModel(
       tarea: 0,
       descripcion: tituloController.text,
@@ -263,9 +257,9 @@ class CrearTareaViewModel extends ChangeNotifier {
       observacion2: null,
     );
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
-//Realizar consumo de api para crear tareas
+    //Realizar consumo de api para crear tareas
     final ApiResModel res = await tareaService.postTarea(token, tarea);
 
     //si el consumo salió mal
@@ -274,11 +268,13 @@ class CrearTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
-      return false;
+      return;
     }
 
+    //Obtener respuesta correcta del api
     NuevaTareaModel creada = res.message[0];
 
+    //Crear modelo de Tarea para agregarla a la lista de tareas
     TareaModel resCreada = TareaModel(
       tarea: tarea,
       iDTarea: creada.tarea,
@@ -307,16 +303,17 @@ class CrearTareaViewModel extends ChangeNotifier {
       nomNivelPrioridad: prioridad!.nombre,
     );
 
-    //usuario nuevo
+    //Usuario responsable de la tarea
+    //Crear modelo de usuario nuevo
     NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
       tarea: creada.tarea,
       userResInvi: responsable!.userName,
       user: user,
     );
-    print(usuarioResponsable.userResInvi);
+
     isLoading = true; //cargar pantalla
 
-    //consumo de api
+    //consumo de api para asignar responsable
     final ApiResModel resResponsable = await tareaService.postResponsable(
       token,
       usuarioResponsable,
@@ -329,20 +326,17 @@ class CrearTareaViewModel extends ChangeNotifier {
       //Abrir dialogo de error
       NotificationService.showErrorView(context, resResponsable);
 
-      ApiResModel responsable = ApiResModel(
-        message: resResponsable.message,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
-      return responsable;
+      //Retornar respuesta incorrecta
+      return;
     }
 
+    //Obtener respuesta de api responsable
     ResNuevoUsuarioModel seleccionado = resResponsable.message[0];
 
+    //Asignar responsable a la propiedad de la tarea
     resCreada.usuarioResponsable =
         responsable != null ? responsable!.name : seleccionado.userName;
+
     notifyListeners();
 
     //si hay invitados seleccionados
@@ -372,14 +366,8 @@ class CrearTareaViewModel extends ChangeNotifier {
           //Abrir dialogo de error
           NotificationService.showErrorView(context, resInvitado);
 
-          ApiResModel invitado = ApiResModel(
-            message: resInvitado.message,
-            succes: false,
-            url: "",
-            storeProcedure: '',
-          );
-
-          return invitado;
+          //Retornar respusta incorrecta
+          return;
         }
       }
     }
@@ -391,25 +379,28 @@ class CrearTareaViewModel extends ChangeNotifier {
       "Tarea creada correctamente.",
     );
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
-    return true;
+    return;
   }
 
+  //Abrir picker de fecha inicial
   Future<DateTime?> abrirFechaInicial(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: nuevaFechaInicial ?? DateTime.now(),
       firstDate: DateTime(1950),
-      lastDate: DateTime(2100),
+      lastDate: DateTime(2100), //puede cambiar
     );
 
     // Verifica si el usuario seleccionó una fecha
     if (pickedDate != null) {
-      // Puedes almacenar la fecha en una variable, imprimirlo, o realizar cualquier acción que desees.
+      //Asignar fecha seleccionada a la fecha inicial y fecha final
       nuevaFechaInicial = pickedDate;
       nuevaFechaFinal = pickedDate;
 
+      //asignar fechas a los textos de fechas
       fechaInicial.text = DateFormat('dd/MM/yyyy').format(pickedDate);
       fechaFinal.text = DateFormat('dd/MM/yyyy').format(pickedDate);
 
@@ -422,8 +413,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     return null;
   }
 
-//para la final
-
+  //para la final
   Future<DateTime?> abrirFechaFinal(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -434,9 +424,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
     // Verifica si el usuario seleccionó una fecha
     if (pickedDate != null) {
-      // Puedes almacenar la fecha en una variable, imprimirlo, o realizar cualquier acción que desees.
+      //Asignar fecha seleccionada a variable de nuevaFechaFinal.
       nuevaFechaFinal = pickedDate;
 
+      //Actualizar texto de la fecha final
       fechaFinal.text = DateFormat('dd/MM/yyyy').format(pickedDate);
       notifyListeners();
       // Puedes devolver la fecha si es necesario en el lugar donde llamaste a esta función.
@@ -474,6 +465,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
+  //Validar que la fecha final no sea menor o igual a la inicial
   bool validarHora(TimeOfDay horaFinal, TimeOfDay horaInicial) {
     if (horaFinal.hour < horaInicial.hour ||
         (horaFinal.hour == horaInicial.hour &&
@@ -484,11 +476,14 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
+  //Verifica si las fechas son iguales en día mes y año (iguales = true) (diferentes = false)
   bool compararFechas(DateTime fechaInicio, DateTime fechaFinal) {
-    return fechaInicio.month == fechaFinal.month &&
+    return fechaInicio.year == fechaFinal.year &&
+        fechaInicio.month == fechaFinal.month &&
         fechaInicio.day == fechaFinal.day;
   }
 
+  //Abrir picker de la fecha final
   Future<void> abrirHoraFinal(BuildContext context) async {
     if (_horaInicial == null) {
       // Si _horaInicial es nulo, asigna la hora actual.
@@ -517,6 +512,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     // Almacena la nueva hora seleccionada en el picker.
     if (pickedTime != null) {
+      //Asignar hora final seleccionada en el picker
       _horaFinal = pickedTime;
 
       // Verifica si las fechas son iguales (mismo día, mes y año).
@@ -539,17 +535,20 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<bool> obtenerTiposTarea(
     BuildContext context,
   ) async {
-    tiposTarea.clear();
-    tipoTarea = null;
+    tiposTarea.clear(); //Limpiar lista de tipos de tarea
+    tipoTarea = null; //tipo de tarea = null
 
+    //View model de login para obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
     String user = vmLogin.user;
 
+    //Instancia del servico
     final TareaService tareaService = TareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
+    //Consumo de api
     final ApiResModel res = await tareaService.getTipoTarea(user, token);
 
     //si el consumo salió mal
@@ -558,11 +557,14 @@ class CrearTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
+      //retornar false si algo salio mal
       return false;
     }
 
+    //Agregar respuesta de api a la lista de tipos de tarea
     tiposTarea.addAll(res.message);
 
+    //Recorrer la lista y asignar a la variable tipoTarea: "Tarea"
     for (var i = 0; i < tiposTarea.length; i++) {
       TipoTareaModel tipo = tiposTarea[i];
       if (tipo.descripcion.toLowerCase() == "tarea") {
@@ -571,8 +573,9 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
+    //retorar true si todo está correcto
     return true;
   }
 
@@ -580,17 +583,19 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<bool> obtenerEstados(
     BuildContext context,
   ) async {
-    estados.clear();
-    estado = null;
+    estados.clear(); //limpiar lista de estados
+    estado = null; //estado = null
 
+    //View model de login para obtener token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
-    // String user = vmLogin.nameUser;
 
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
+    //Consumo de api
     final ApiResModel res = await tareaService.getEstado(token);
 
     //si el consumo salió mal
@@ -600,8 +605,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       return false;
     }
 
+    //Agregar respuesta de api a la lista de estados de tarea
     estados.addAll(res.message);
 
+    //Recorrer la lista y asignar a la variable estado; "Activo"
     for (var i = 0; i < estados.length; i++) {
       EstadoModel e = estados[i];
       if (e.descripcion.toLowerCase() == "activo") {
@@ -610,8 +617,9 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
+    //retornar true si todo está correcto
     return true;
   }
 
@@ -619,17 +627,20 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<bool> obtenerPrioridades(
     BuildContext context,
   ) async {
-    prioridades.clear();
-    prioridad = null;
+    prioridades.clear(); //limpiar lista de prioridades
+    prioridad = null; //prioridad = null
 
+    //View model de login para obtener token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
     String user = vmLogin.user;
 
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
+    //Consumo de api
     final ApiResModel res = await tareaService.getPrioridad(user, token);
 
     //si el consumo salió mal
@@ -638,11 +649,14 @@ class CrearTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
+      //retornar false si algo salio mal
       return false;
     }
 
+    //Agregar respuesta de api a la lista de prioridades de tarea
     prioridades.addAll(res.message);
 
+    //Recorrer la lista y asignar a la variable prioridad: "Normal"
     for (var i = 0; i < prioridades.length; i++) {
       PrioridadModel p = prioridades[i];
       if (p.nombre.toLowerCase() == "normal") {
@@ -651,8 +665,9 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
+    //Retornar true si todo está correcto
     return true;
   }
 
@@ -660,16 +675,19 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<bool> obtenerPeriodicidad(
     BuildContext context,
   ) async {
-    periodicidades.clear();
+    periodicidades.clear(); //limpiar lista de periodicidades
+    periodicidad = null; //periodicidad = null
 
+    //View model de login para obtener token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
     String user = vmLogin.user;
-
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
+    //Consumo de api
     final ApiResModel res = await tareaService.getPeriodicidad(user, token);
 
     //si el consumo salió mal
@@ -677,11 +695,14 @@ class CrearTareaViewModel extends ChangeNotifier {
       isLoading = false;
       NotificationService.showErrorView(context, res);
 
+      //si algo salió mal retornar false
       return false;
     }
 
+    //Agregar a la lista de periodicidades la respuesta del api
     periodicidades.addAll(res.message);
 
+    //Recorrer la lista de periodicidades y asignar a la variable periodicidad : "Minutos"
     for (var i = 0; i < periodicidades.length; i++) {
       PeriodicidadModel t = periodicidades[i];
       if (t.descripcion.toLowerCase() == "minutos") {
@@ -690,10 +711,13 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    isLoading = false;
+    isLoading = false; //detener carga
+
+    //Si todo está correcto retornar true
     return true;
   }
 
+  //Seleccionar el ID regerencia
   seleccionarIdRef(
     BuildContext context,
     IdReferenciaModel idRefe,
@@ -707,6 +731,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
+  //Seleccionar responsable
   seleccionarResponsable(
     BuildContext context,
     UsuarioModel respon,
@@ -719,37 +744,46 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
+  //Guardar usuario
   guardarUsuarios(
     BuildContext context,
   ) {
+    //View model de usuarios
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+    //View model de detalle tarea
     final vmDetalle =
         Provider.of<DetalleTareaViewModel>(context, listen: false);
 
+    //Limpiar lista de usuarios seleccionados
     vmUsuarios.usuariosSeleccionados.clear();
 
+    //Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
     for (var usuario in vmUsuarios.usuarios) {
       if (usuario.select) {
         vmUsuarios.usuariosSeleccionados.add(usuario);
       }
     }
-    notifyListeners();
-    final vm = Provider.of<CrearTareaViewModel>(context, listen: false);
 
+    notifyListeners();
+
+    //Si hay usuarios seleccionados agrefarlos a la lista de invitados
     if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
-      vm.invitados.addAll(vmUsuarios.usuariosSeleccionados);
+      invitados.addAll(vmUsuarios.usuariosSeleccionados);
       Navigator.pop(context);
     }
 
+    //si es tipo de busqueda es = 4 fuardar invitados desde detalle de tarea
     if (vmUsuarios.tipoBusqueda == 4) vmDetalle.guardarInvitados(context);
   }
 
+  //Eliminar invitado de la lista de usuarios seleccionados para invitados
   void eliminarInvitado(int index) {
     invitados[index].select = false;
     invitados.removeAt(index);
     notifyListeners();
   }
 
+  //Eliminar responsable selecionado para ser invitado de la tarea
   void eliminarResponsable() {
     responsable = null;
     notifyListeners();
@@ -759,13 +793,15 @@ class CrearTareaViewModel extends ChangeNotifier {
     BuildContext context,
     TareaModel tarea,
   ) async {
+    //View model del Login para obtener el usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String user = vmLogin.user;
     String token = vmLogin.token;
 
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
-    //usuario nuevo
+    //Crear modelo de usuario responsable
     NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
       tarea: tarea.iDTarea,
       userResInvi: responsable!.userName,
