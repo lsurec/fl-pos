@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
+import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../widgets/widgets.dart';
 
 class ComentariosView extends StatelessWidget {
   const ComentariosView({super.key});
@@ -96,9 +95,7 @@ class _NuevoComentario extends StatelessWidget {
 
     return TextFormField(
       controller: vm.comentarioController,
-      onChanged: (value) {
-        vm.comentarioController.text = value;
-      },
+      onChanged: (value) => vm.comentarioController.text = value,
       decoration: InputDecoration(
         labelText: 'Nuevo comentario',
         suffixIcon: SizedBox(

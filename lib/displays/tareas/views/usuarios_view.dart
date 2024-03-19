@@ -48,7 +48,7 @@ class UsuariosView extends StatelessWidget {
                         TextFormField(
                           controller: vm.buscar,
                           onChanged: (criterio) =>
-                              vm.buscarUsuarioTemp(context, criterio),
+                              vm.buscarUsuarioTemp(context),
                           decoration: const InputDecoration(
                             labelText:
                                 "Ingrese un caracter para iniciar la busqueda.",

@@ -30,6 +30,12 @@ class DetalleTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  DateTime? fecha; //fecha para comentarios
+
+  DetalleTareaViewModel() {
+    fecha = DateTime.now();
+  }
+
   //Cargar comentarios
   comentariosTarea(BuildContext context) async {
     isLoading = true; //cargar pantalla
@@ -231,7 +237,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     ComentarioModel comentario = ComentarioModel(
       comentario:
           "Cambio de estado ( ${estado.descripcion} ) realizado por usuario $user.",
-      fechaHora: fecha,
+      fechaHora: fecha!,
       nameUser: user,
       userName: user,
       tarea: tarea!.iDTarea,
@@ -315,7 +321,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     ComentarioModel comentario = ComentarioModel(
       comentario:
           "Cambio de Nivel de Prioridad  ( ${prioridad.nombre} ) realizado por usuario $user.",
-      fechaHora: fecha,
+      fechaHora: fecha!,
       nameUser: user,
       userName: user,
       tarea: tarea!.iDTarea,
