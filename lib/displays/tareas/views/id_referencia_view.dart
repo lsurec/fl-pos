@@ -31,8 +31,7 @@ class IdReferenciaView extends StatelessWidget {
                   children: [
                     TextFormField(
                       controller: vm.buscarIdReferencia,
-                      onChanged: (criterio) =>
-                          vm.buscarRefTemp(context, criterio),
+                      onChanged: (criterio) => vm.buscarRefTemp(context),
                       decoration: const InputDecoration(
                         labelText:
                             "Ingrese un caracter para iniciar la busqueda.",
