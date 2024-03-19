@@ -833,8 +833,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       return responsable;
     }
 
+    //obtener respuesta del api
     ResponsableModel seleccionado = res.message;
 
+    //Crear modelo del responsable
     ResponsableModel reponsableSeleccionado = ResponsableModel(
       tUserName: responsable!.email,
       estado: "activo",
@@ -846,15 +848,15 @@ class CrearTareaViewModel extends ChangeNotifier {
       consecutivoInterno: seleccionado.consecutivoInterno,
     );
 
+    //agregar responsable a la porpiedad responsable de la tarea
     tarea.usuarioResponsable = reponsableSeleccionado.userName;
 
     notifyListeners();
 
-    isLoading = false;
-    //
+    isLoading = false; //detener carga
   }
 
-  //armar fecha
+  //armar fecha completa con la fecha y hora seleccionadas
   DateTime construirFechaCompleta(DateTime fecha, TimeOfDay hora) {
     // Obteniendo la fecha y la hora de entrada
     final year = fecha.year;
