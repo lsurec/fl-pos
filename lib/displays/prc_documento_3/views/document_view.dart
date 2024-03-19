@@ -51,6 +51,33 @@ class DocumentView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    TextButton.icon(
+                      onPressed: () async {
+                        // vm.abrirFechaInicial(context);
+                      },
+                      icon: const Icon(Icons.calendar_today_outlined),
+                      label: Text(
+                        "",
+                        // "Fecha: ${vm.fechaInicial.text}",
+                        style: AppTheme.normalStyle,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () async {
+                        // vm.abrirHoraInicial(context);
+                      },
+                      icon: const Icon(Icons.schedule_outlined),
+                      label: Text(
+                        "",
+                        // "Hora: ${vm.horaInicial.text}",
+                        style: AppTheme.normalStyle,
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                     Text(
                       vm.getTextCuenta(),
                       style: AppTheme.titleStyle,
