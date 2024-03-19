@@ -80,9 +80,7 @@ class CrearTareaView extends StatelessWidget {
                             return null;
                           },
                           controller: vm.tituloController,
-                          onChanged: (value) {
-                            vm.titulo = value;
-                          },
+                          onChanged: (value) => vm.titulo = value,
                           decoration: const InputDecoration(
                               labelText: "Añada un titulo para la tarea."),
                         ),
@@ -163,9 +161,7 @@ class CrearTareaView extends StatelessWidget {
                               width: 150,
                               child: TextFormField(
                                 controller: vm.tiempoController,
-                                onChanged: (value) {
-                                  vm.tiempo = value;
-                                },
+                                onChanged: (value) => vm.tiempo = value,
                                 decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
                                     vertical: 14,
@@ -416,9 +412,7 @@ class _TiempoEstimado extends StatelessWidget {
                 ),
               ))
           .toList(),
-      onChanged: (value) {
-        vm.periodicidad = value!;
-      },
+      onChanged: (value) => vm.periodicidad = value!,
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
@@ -450,9 +444,7 @@ class _ObservacionTarea extends StatelessWidget {
 
     return TextFormField(
       controller: vm.observacionController,
-      onChanged: (value) {
-        vm.observacion = value;
-      },
+      onChanged: (value) => vm.observacion = value,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Campo requerido.';
@@ -512,9 +504,7 @@ class _PrioridadTarea extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) {
-        vm.prioridad = value;
-      },
+      onChanged: (value) => vm.prioridad = value,
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
@@ -581,9 +571,7 @@ class _EstadoTarea extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) {
-        vm.estado = value;
-      },
+      onChanged: (value) => vm.estado = value,
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
@@ -651,9 +639,7 @@ class _TipoTarea extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) {
-        vm.tipoTarea = value;
-      },
+      onChanged: (value) => vm.tipoTarea = value,
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
