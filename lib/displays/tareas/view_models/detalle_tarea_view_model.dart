@@ -1,23 +1,25 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:flutter/material.dart';
+import '../../../view_models/view_models.dart';
+import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_models/view_models.dart';
-import '../../../widgets/widgets.dart';
-
 class DetalleTareaViewModel extends ChangeNotifier {
-  final List<InvitadoModel> invitados = [];
-  EstadoModel? estadoAtual;
-  PrioridadModel? prioridadActual;
-  bool historialResposables = false;
+  final List<InvitadoModel> invitados = []; //alamcenar invitados
+  EstadoModel? estadoAtual; //nuevo estado
+  PrioridadModel? prioridadActual; //nueva prioridad
+  bool historialResposables = false; //mostrra y ocultar historial
+  //Almacenar historias de resonsables de la tarea
+  List<ResponsableModel> responsablesHistorial = [];
+  //almacenar tarea
+  TareaModel? tarea;
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -28,50 +30,44 @@ class DetalleTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  TareaModel? tarea;
-
-  String? nuevoEstado; //almacenar nuevo estado
-  String? nuevaPrioridad; //almacenar nueva prioridad
-
-  final formEstado = GlobalKey<FormState>();
-  final formPrioridad = GlobalKey<FormState>();
-
-  verComentarios(BuildContext context) {
-    Navigator.pushNamed(context, AppRoutes.viewComments,
-        arguments: tarea!.tareaObservacion1);
-  }
-
+  //Cargar comentarios
   comentariosTarea(BuildContext context) async {
-    isLoading = true;
+    isLoading = true; //cargar pantalla
+    //View model de comentarios
     final vmComentarios =
         Provider.of<ComentariosViewModel>(context, listen: false);
 
+    //validar resppuesta de los comentarios
     final bool succesComentarios = await vmComentarios.armarComentario(context);
 
+    //sino se realizo el consumo correctamente retornar
     if (!succesComentarios) return;
 
+    //navegar a comentarios
     Navigator.pushNamed(context, AppRoutes.viewComments);
-    isLoading = false;
+    isLoading = false; //detener carga
   }
-
-  List<ResponsableModel> responsablesHistorial = [];
 
   //Obtener Responsable y responsables anteriores de la tarea
   Future<ApiResModel> obtenerResponsable(
     BuildContext context,
     int idTarea,
   ) async {
+    //Lista de responsables
     List<ResponsableModel> responsablesTarea = [];
-    responsablesTarea.clear();
+    responsablesTarea.clear(); //limpiar lista
 
+    //View model Login, obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
     String user = vmLogin.user;
 
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
-    isLoading = true;
+    isLoading = true; //cargar pantalla
 
+    //Consumo de api
     final ApiResModel res = await tareaService.getResponsable(
       user,
       token,
@@ -93,18 +89,21 @@ class DetalleTareaViewModel extends ChangeNotifier {
       return responsable;
     }
 
+    //añadir a la lista los usuarios responsables encontrados
     responsablesTarea.addAll(res.message);
 
+    //recorrer la lista y buscar los de estado "inactivo"
     for (var i = 0; i < responsablesTarea.length; i++) {
       ResponsableModel responsable = responsablesTarea[i];
       if (responsable.estado.toLowerCase() == "inactivo") {
+        //insertarlo en la lista del historial
         responsablesHistorial.add(responsable);
         notifyListeners();
         break;
       }
     }
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
     ApiResModel responsable = ApiResModel(
       message: responsablesTarea,
@@ -113,6 +112,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       storeProcedure: '',
     );
 
+    //retornar respuesta correcta
     return responsable;
   }
 
@@ -121,18 +121,22 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     int tarea,
   ) async {
+    //Lista de invitados
     List<InvitadoModel> invitadosTarea = [];
-    invitadosTarea.clear();
-    invitados.clear();
+    invitadosTarea.clear(); //invitados tarea
+    invitados.clear(); //invitados
 
+    //View model de login para obtener token y usuario
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
     String user = vmLogin.user;
 
+    //Instancia de servicio
     final TareaService tareaService = TareaService();
 
-    isLoading = true;
+    isLoading = true; //Cargar pantalla
 
+    //Consumo de api.
     final ApiResModel res = await tareaService.getInvitado(
       user,
       token,
@@ -145,6 +149,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
+      //Retornar respuesta incorrecta
       ApiResModel invitado = ApiResModel(
         message: invitadosTarea,
         succes: false,
@@ -155,8 +160,9 @@ class DetalleTareaViewModel extends ChangeNotifier {
       return invitado;
     }
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
+    //Agregar invitados de la tarea encontrados
     invitadosTarea.addAll(res.message);
 
     ApiResModel invitado = ApiResModel(
@@ -166,8 +172,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       storeProcedure: '',
     );
 
+    //Agregar a lista de invitados
     invitados.addAll(invitado.message);
     notifyListeners();
+    //Retornar respuesta correcta
     return invitado;
   }
 
@@ -176,20 +184,28 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     EstadoModel estado,
   ) async {
+    //View model para obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    final vmComentarios =
-        Provider.of<ComentariosViewModel>(context, listen: false);
-
     String token = vmLogin.token;
     String user = vmLogin.user;
 
+    //View model comentario
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
     isLoading = true; //cargar pantalla
 
+    //Crear modelo de nuevo estado
     ActualizarEstadoModel actualizar = ActualizarEstadoModel(
-        userName: user, estado: estado.estado, tarea: tarea!.iDTarea);
+      userName: user,
+      estado: estado.estado,
+      tarea: tarea!.iDTarea,
+    );
 
+    //Consumo de api
     final ApiResModel res = await tareaService.postEstadoTarea(
       token,
       actualizar,
@@ -208,16 +224,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
         storeProcedure: '',
       );
 
+      //Retornar respuesta incorrecta
       return nuevoEstado;
     }
-
-    ApiResModel nuevoEstado = ApiResModel(
-      message: actualizar,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
+    //Crear comentario por el cambio de estado.
     ComentarioModel comentario = ComentarioModel(
       comentario:
           "Cambio de estado ( ${estado.descripcion} ) realizado por usuario $user.",
@@ -228,9 +238,11 @@ class DetalleTareaViewModel extends ChangeNotifier {
       tareaComentario: 0,
     );
 
+    //Asignar nuevo estado a la tarea
     tarea!.estadoObjeto = estado.estado; // asignar id estado
     tarea!.tareaEstado = estado.descripcion; // asignar estado
 
+    //Insertar comentario a la Lista de comentarios
     vmComentarios.comentarioDetalle.add(ComentarioDetalleModel(
       comentario: comentario,
       objetos: [],
@@ -238,8 +250,15 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     notifyListeners();
 
-    isLoading = false; //detener carga
+    ApiResModel nuevoEstado = ApiResModel(
+      message: actualizar,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
 
+    isLoading = false; //detener carga
+    //Retornar respuesta incorrecta
     return nuevoEstado;
   }
 
@@ -248,22 +267,28 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     PrioridadModel prioridad,
   ) async {
+    //View model de login para obtener el usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    final vmComentarios =
-        Provider.of<ComentariosViewModel>(context, listen: false);
-
     String token = vmLogin.token;
     String user = vmLogin.user;
 
+    //View model de comentarios
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
     isLoading = true; //cargar pantalla
 
+    //Crear modelo de nueva prioridad
     ActualizarPrioridadModel actualizar = ActualizarPrioridadModel(
-        userName: user,
-        prioridad: prioridad.nivelPrioridad,
-        tarea: tarea!.iDTarea);
+      userName: user,
+      prioridad: prioridad.nivelPrioridad,
+      tarea: tarea!.iDTarea,
+    );
 
+    //Consumo de api
     final ApiResModel res = await tareaService.postPrioridadTarea(
       token,
       actualizar,
@@ -282,16 +307,11 @@ class DetalleTareaViewModel extends ChangeNotifier {
         storeProcedure: '',
       );
 
+      //Retornar respuesta incorrecta
       return nuevaPrioridad;
     }
 
-    ApiResModel nuevaPrioridad = ApiResModel(
-      message: actualizar,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
+    //Crear comentario por cambio de nueva prioridad.
     ComentarioModel comentario = ComentarioModel(
       comentario:
           "Cambio de Nivel de Prioridad  ( ${prioridad.nombre} ) realizado por usuario $user.",
@@ -302,9 +322,11 @@ class DetalleTareaViewModel extends ChangeNotifier {
       tareaComentario: 0,
     );
 
+    //Asignar la nueva prioridad a la tarea
     tarea!.nivelPrioridad = prioridad.nivelPrioridad; // asignar id prioridad
     tarea!.nomNivelPrioridad = prioridad.nombre; // asignar prioridad
 
+    //Insertar nuevo comentario  ala lsiat de comentarios
     vmComentarios.comentarioDetalle.add(ComentarioDetalleModel(
       comentario: comentario,
       objetos: [],
@@ -312,22 +334,31 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     notifyListeners();
 
+    ApiResModel nuevaPrioridad = ApiResModel(
+      message: actualizar,
+      succes: true,
+      url: "",
+      storeProcedure: '',
+    );
+
     isLoading = false; //detener carga
 
+    //Retornar resspuesta correcta
     return nuevaPrioridad;
   }
 
-  //Actualizar el nivel de prioridad de la tarea
+  //Eliminar usuario invitado de la tarea
   Future<ApiResModel> eliminarInvitado(
     BuildContext context,
     InvitadoModel invitado,
     int index,
   ) async {
+    //View model login para obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-
     String user = vmLogin.user;
     String token = vmLogin.token;
 
+    //Instancia del servicio
     final TareaService tareaService = TareaService();
 
     //mostrar dialogo de confirmacion
@@ -354,12 +385,14 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     isLoading = true; //cargar pantalla
 
+    //Crear modelo para eliminar invitado
     EliminarUsuarioModel eliminar = EliminarUsuarioModel(
       tarea: tarea!.iDTarea,
       userResInvi: "",
       user: user,
     );
 
+    //Consumo de api
     final ApiResModel res = await tareaService.postEliminarInvitado(
       token,
       eliminar,
@@ -379,6 +412,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
         storeProcedure: '',
       );
 
+      //Retornar respuesta incorrecta
       return usuarioEliminado;
     }
 
@@ -389,15 +423,18 @@ class DetalleTareaViewModel extends ChangeNotifier {
       storeProcedure: '',
     );
 
+    //Eliminar invitado
     invitados.removeAt(index);
 
     notifyListeners();
 
     isLoading = false; //detener carga
 
+    //Retornar respuesta correcta
     return usuarioEliminado;
   }
 
+  //Formatear fecha
   String formatearFecha(DateTime fecha) {
     // Asegurarse de que la fecha esté en la zona horaria local
     fecha = fecha.toLocal();
@@ -408,6 +445,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     return fechaFormateada;
   }
 
+  //Formatear hora
   String formatearHora(DateTime fecha) {
     // Asegurarse de que la fecha esté en la zona horaria local
     fecha = fecha.toLocal();
@@ -418,35 +456,42 @@ class DetalleTareaViewModel extends ChangeNotifier {
     return horaFormateada;
   }
 
+  //Invitados button
   invitadosButton(BuildContext context) {
+    //View model usuarios
     final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
     if (vmUsuario.tipoBusqueda == 4) {
+      //Agregar invitados a la tarea desde detalles
       guardarInvitados(context);
     }
     if (vmUsuario.tipoBusqueda == 2) {
+      //Guardar invitados de la tarea desde detalle
       vmCrear.guardarUsuarios(context);
     }
   }
 
+  //Guardar nuevos invitados
   Future<ApiResModel> guardarInvitados(
     BuildContext context,
   ) async {
     // guardar invitados nuevos
     final List<ResNuevoUsuarioModel> resInvitado = [];
-    resInvitado.clear();
+    resInvitado.clear(); //limpiar invitados
 
+    //View model de usuarios
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
 
+    //View model de Login para obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String user = vmLogin.user;
     String token = vmLogin.token;
 
+    //Instancia de servicio
     final TareaService tareaService = TareaService();
 
     final List<InvitadoModel> agregados = []; // guardar invitados nuevos
-    // final List<InvitadoModel> resInvitado = []; // guardar invitados nuevos
 
     final List<String> repetidos = []; //guardar invitados repetidos
 
@@ -495,24 +540,26 @@ class DetalleTareaViewModel extends ChangeNotifier {
         return nuevoInvitado;
       }
 
+      //Respuesta del invitado
       resInvitado.add(res.message[0]);
 
+      //Crear modelo del nuevo inivtado
       InvitadoModel agregarInvitado = InvitadoModel(
         tareaUserName: resInvitado[0].tareaUserName,
         eMail: usuarioInvitado.email,
         userName: usuarioInvitado.userName,
       );
 
+      //Agregar inivtado a la lista de agregados
       agregados.add(agregarInvitado);
 
       notifyListeners();
     }
 
+    //No hay repetidos
     if (!repetidos.isNotEmpty) {
-      print("${repetidos.length}, no hay repetidos");
-
       isLoading = true;
-      //agregar invitados
+      //agregar invitados a la lista de invitados
       invitados.addAll(agregados);
       notifyListeners();
 
@@ -520,11 +567,12 @@ class DetalleTareaViewModel extends ChangeNotifier {
         "Se actualizó la lista de invitados a la tarea.",
       );
 
+      //Limpiar lista de usuarios seleccionados y usuarios encontrados
       vmUsuarios.usuariosSeleccionados.clear();
       vmUsuarios.usuarios.clear();
-      isLoading = false;
+      isLoading = false; //detener carga
     } else {
-      print("${repetidos.length}, si hay repetidos");
+      //Hay usuarios repetidos
 
       NotificationService.showSnackbar(
         "Uno o más usuarios seleccionados ya son invitados de la tarea.",
@@ -537,16 +585,23 @@ class DetalleTareaViewModel extends ChangeNotifier {
         storeProcedure: '',
       );
 
+      //recorrer la lista de usuarios seleccionados y deselecionarlos
       for (var usuario in vmUsuarios.usuariosSeleccionados) {
         usuario.select = false;
       }
+
+      //limpiar listas de usuarios seleccionados y usuarios encontrados
       vmUsuarios.usuariosSeleccionados.clear();
       vmUsuarios.usuarios.clear();
       notifyListeners();
-      isLoading = false;
+
+      isLoading = false; //dentener carga
+
+      //Retornar respuesta incorrecta
       return nuevoInvitado;
     }
 
+    //Respuesta correcta
     ApiResModel nuevoInvitado = ApiResModel(
       message: agregados,
       succes: true,
@@ -554,39 +609,27 @@ class DetalleTareaViewModel extends ChangeNotifier {
       storeProcedure: '',
     );
 
+    //limpiar listas de usuarios seleccionados y usuarios encontrados
     vmUsuarios.usuariosSeleccionados.clear();
     vmUsuarios.usuarios.clear();
 
-    // invitados.addAll(agregados);
-
     notifyListeners();
 
-    Navigator.pop(context);
+    Navigator.pop(context); //regresar a vista anterior
 
-    isLoading = false;
+    isLoading = false; //detener carga
 
+    //Retornar respuesta correcta
     return nuevoInvitado;
   }
 
-  // Función para verificar usuarios repetidos
-  List<String> usuariosRepetidos(
-    List<UsuarioModel> usuariosSelec,
-    List<InvitadoModel> invitados,
-  ) {
-    List<String> repetidos = [];
-    for (var usuarioInvitado in usuariosSelec) {
-      if (invitados.any((inv) => inv.userName == usuarioInvitado.userName)) {
-        repetidos.add(usuarioInvitado.userName);
-      }
-    }
-    return repetidos;
-  }
-
+  //Ver y ocultar historial de responsables
   verHistorial() {
     historialResposables = !historialResposables;
     notifyListeners();
   }
 
+  //Volver a cargar detalles
   loadData(BuildContext context) async {
     //final vm = Provider.of<CrearTareaViewModel>(context, listen: false);
     // vm.estados.clear();
