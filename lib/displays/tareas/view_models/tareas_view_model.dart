@@ -7,7 +7,6 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TareasViewModel extends ChangeNotifier {
@@ -264,16 +263,6 @@ class TareasViewModel extends ChangeNotifier {
     //Navegar a detalles
     Navigator.pushNamed(context, AppRoutes.detailsTask);
     isLoading = false; //detener carga
-  }
-
-  //formatear fecha dd-MM-yyyy
-  String formatearFecha(DateTime fecha) {
-    // Asegurarse de que la fecha esté en la zona horaria local
-    fecha = fecha.toLocal();
-    // Formatear la fecha en el formato dd-mm-yyyy
-    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
-    //retornar fecha formateada
-    return fechaFormateada;
   }
 
   //insertar nueva tarea al inicio de la lista de tareas

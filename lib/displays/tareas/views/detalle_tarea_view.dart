@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print
 
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTareaView extends StatelessWidget {
@@ -14,7 +15,6 @@ class DetalleTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
-    // final vmTarea = Provider.of<TareasViewModel>(context);
     final vmComentarios = Provider.of<ComentariosViewModel>(context);
     final vmUsuarios = Provider.of<CrearTareaViewModel>(context);
 
@@ -91,14 +91,16 @@ class DetalleTareaView extends StatelessWidget {
                               const Icon(Icons.date_range),
                               const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                vm.formatearFecha(vm.tarea!.tareaFechaIni),
+                                Utilities.formatearFecha(
+                                    vm.tarea!.tareaFechaIni),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
                               const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                vm.formatearHora(vm.tarea!.tareaFechaIni),
+                                Utilities.formatearHora(
+                                    vm.tarea!.tareaFechaIni),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
@@ -121,14 +123,16 @@ class DetalleTareaView extends StatelessWidget {
                               const Icon(Icons.date_range),
                               const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                vm.formatearFecha(vm.tarea!.tareaFechaFin),
+                                Utilities.formatearFecha(
+                                    vm.tarea!.tareaFechaFin),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
                               const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                vm.formatearHora(vm.tarea!.tareaFechaFin),
+                                Utilities.formatearHora(
+                                    vm.tarea!.tareaFechaFin),
                                 style: AppTheme.normalStyle,
                               ),
                             ],

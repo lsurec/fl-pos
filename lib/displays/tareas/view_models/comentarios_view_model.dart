@@ -242,6 +242,9 @@ class ComentariosViewModel extends ChangeNotifier {
     //Obtener comentarios de la tarea
     ApiResModel comentarios = await obtenerComentario(context, vmTarea);
 
+    //Sino encontró comentarios retornar false
+    if (!comentarios.succes) return false;
+
     //Recorrer lista de comentarios para obtener los objetos de los comentarios
     for (var i = 0; i < comentarios.message.length; i++) {
       final ComentarioModel coment = comentarios.message[i];
@@ -255,9 +258,6 @@ class ComentariosViewModel extends ChangeNotifier {
         comentario: comentarios.message[i],
         objetos: objeto.message,
       ));
-
-      //Sino encontró comentarios retornar false
-      if (!comentarios.succes) return false;
     }
 
     //si todo está bien retornar true

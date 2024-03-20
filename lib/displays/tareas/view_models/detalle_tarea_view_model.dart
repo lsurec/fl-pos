@@ -1,14 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
-
 import '../../../view_models/view_models.dart';
 import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTareaViewModel extends ChangeNotifier {
@@ -30,12 +28,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  DateTime? fecha; //fecha para comentarios
-
-  DetalleTareaViewModel() {
-    fecha = DateTime.now();
-  }
-
   //Cargar comentarios
   comentariosTarea(BuildContext context) async {
     isLoading = true; //cargar pantalla
@@ -47,7 +39,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
     final bool succesComentarios = await vmComentarios.armarComentario(context);
 
     //sino se realizo el consumo correctamente retornar
-    if (!succesComentarios) return;
+    if (!succesComentarios) {
+      isLoading = false;
+      return;
+    }
 
     //navegar a comentarios
     Navigator.pushNamed(context, AppRoutes.viewComments);
@@ -60,7 +55,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     int idTarea,
   ) async {
     //Lista de responsables
-    List<ResponsableModel> responsablesTarea = [];
+    final List<ResponsableModel> responsablesTarea = [];
     responsablesTarea.clear(); //limpiar lista
 
     //View model Login, obtener usuario y token
@@ -85,14 +80,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       isLoading = false;
       NotificationService.showErrorView(context, res);
 
-      ApiResModel responsable = ApiResModel(
-        message: responsablesTarea,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
-      return responsable;
+      return res;
     }
 
     //añadir a la lista los usuarios responsables encontrados
@@ -111,15 +99,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
 
-    ApiResModel responsable = ApiResModel(
-      message: responsablesTarea,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
     //retornar respuesta correcta
-    return responsable;
+    return res;
   }
 
   //Obtener Invitados de la tarea
@@ -127,9 +108,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     int tarea,
   ) async {
-    //Lista de invitados
-    List<InvitadoModel> invitadosTarea = [];
-    invitadosTarea.clear(); //invitados tarea
     invitados.clear(); //invitados
 
     //View model de login para obtener token y usuario
@@ -155,34 +133,15 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
-      //Retornar respuesta incorrecta
-      ApiResModel invitado = ApiResModel(
-        message: invitadosTarea,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
-      return invitado;
+      return res;
     }
 
+    //Agregar a lista de invitados
+    invitados.addAll(res.message);
+    //Retornar respuesta correcta
     isLoading = false; //detener carga
 
-    //Agregar invitados de la tarea encontrados
-    invitadosTarea.addAll(res.message);
-
-    ApiResModel invitado = ApiResModel(
-      message: invitadosTarea,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
-    //Agregar a lista de invitados
-    invitados.addAll(invitado.message);
-    notifyListeners();
-    //Retornar respuesta correcta
-    return invitado;
+    return res;
   }
 
   //Actualizar el estado de la tarea
@@ -223,21 +182,14 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
-      ApiResModel nuevoEstado = ApiResModel(
-        message: actualizar,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
       //Retornar respuesta incorrecta
-      return nuevoEstado;
+      return res;
     }
     //Crear comentario por el cambio de estado.
     ComentarioModel comentario = ComentarioModel(
       comentario:
           "Cambio de estado ( ${estado.descripcion} ) realizado por usuario $user.",
-      fechaHora: fecha!,
+      fechaHora: DateTime.now(),
       nameUser: user,
       userName: user,
       tarea: tarea!.iDTarea,
@@ -254,18 +206,9 @@ class DetalleTareaViewModel extends ChangeNotifier {
       objetos: [],
     ));
 
-    notifyListeners();
-
-    ApiResModel nuevoEstado = ApiResModel(
-      message: actualizar,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
     isLoading = false; //detener carga
     //Retornar respuesta incorrecta
-    return nuevoEstado;
+    return res;
   }
 
   //Actualizar el nivel de prioridad de la tarea
@@ -306,22 +249,15 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
-      ApiResModel nuevaPrioridad = ApiResModel(
-        message: actualizar,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
       //Retornar respuesta incorrecta
-      return nuevaPrioridad;
+      return res;
     }
 
     //Crear comentario por cambio de nueva prioridad.
     ComentarioModel comentario = ComentarioModel(
       comentario:
           "Cambio de Nivel de Prioridad  ( ${prioridad.nombre} ) realizado por usuario $user.",
-      fechaHora: fecha!,
+      fechaHora: DateTime.now(),
       nameUser: user,
       userName: user,
       tarea: tarea!.iDTarea,
@@ -338,19 +274,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       objetos: [],
     ));
 
-    notifyListeners();
-
-    ApiResModel nuevaPrioridad = ApiResModel(
-      message: actualizar,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
     isLoading = false; //detener carga
 
     //Retornar resspuesta correcta
-    return nuevaPrioridad;
+    return res;
   }
 
   //Eliminar usuario invitado de la tarea
@@ -411,55 +338,17 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
-      ApiResModel usuarioEliminado = ApiResModel(
-        message: eliminar,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
       //Retornar respuesta incorrecta
-      return usuarioEliminado;
+      return res;
     }
-
-    ApiResModel usuarioEliminado = ApiResModel(
-      message: eliminar,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
 
     //Eliminar invitado
     invitados.removeAt(index);
 
-    notifyListeners();
-
     isLoading = false; //detener carga
 
     //Retornar respuesta correcta
-    return usuarioEliminado;
-  }
-
-  //Formatear fecha
-  String formatearFecha(DateTime fecha) {
-    // Asegurarse de que la fecha esté en la zona horaria local
-    fecha = fecha.toLocal();
-
-    // Formatear la fecha en el formato dd-mm-yyyy
-    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
-
-    return fechaFormateada;
-  }
-
-  //Formatear hora
-  String formatearHora(DateTime fecha) {
-    // Asegurarse de que la fecha esté en la zona horaria local
-    fecha = fecha.toLocal();
-
-    // Formatear la hora en formato hh:mm a AM/PM
-    String horaFormateada = DateFormat('hh:mm a').format(fecha);
-
-    return horaFormateada;
+    return res;
   }
 
   //Invitados button
@@ -533,17 +422,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       //si el consumo salió mal
       if (!res.succes) {
+        isLoading = false;
         NotificationService.showErrorView(context, res);
 
-        ApiResModel nuevoInvitado = ApiResModel(
-          message: res.message,
-          succes: false,
-          url: "",
-          storeProcedure: '',
-        );
-
-        isLoading = false;
-        return nuevoInvitado;
+        return res;
       }
 
       //Respuesta del invitado
@@ -599,7 +481,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
       //limpiar listas de usuarios seleccionados y usuarios encontrados
       vmUsuarios.usuariosSeleccionados.clear();
       vmUsuarios.usuarios.clear();
-      notifyListeners();
 
       isLoading = false; //dentener carga
 
@@ -619,8 +500,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
     vmUsuarios.usuariosSeleccionados.clear();
     vmUsuarios.usuarios.clear();
 
-    notifyListeners();
-
     Navigator.pop(context); //regresar a vista anterior
 
     isLoading = false; //detener carga
@@ -637,14 +516,14 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
   //Volver a cargar detalles
   loadData(BuildContext context) async {
-    //final vm = Provider.of<CrearTareaViewModel>(context, listen: false);
-    // vm.estados.clear();
-    // vm.periodicidades.clear();
-    // vm.periodicidades.clear();
-    // await vm.obtenerEstados(context);
-    // await vm.obtenerPrioridades(context);
-    // await vm.obtenerPeriodicidad(context);
-    await obtenerInvitados(context, tarea!.iDTarea);
-    await obtenerResponsable(context, tarea!.iDTarea);
+    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
+
+    estadoAtual = null;
+    prioridadActual = null;
+    isLoading = true;
+    vmTarea.detalleTarea(context, tarea!);
+    isLoading = false;
+
+//Copiar funcion aesta funcion
   }
 }
