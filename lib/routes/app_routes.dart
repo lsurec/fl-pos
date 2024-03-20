@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
+import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,12 @@ class AppRoutes {
   static const pendingDocs = 'pendingDocs';
   static const convertDocs = 'convertDocs';
   static const detailsDestinationDoc = 'detailsDestinationDoc';
+  static const detailsTask = 'detalleTarea';
+  static const viewComments = 'viewComments';
+  static const createTask = 'createTask';
+  static const selectReferenceId = 'selectReferenceId';
+  static const selectResponsibleUser = 'selectResponsibleUser';
+  static const tareas = 'Tareas';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -67,6 +74,13 @@ class AppRoutes {
     convertDocs: (BuildContext context) => const ConvertDocView(),
     detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
+    //Rutas Display Tareas
+    tareas: (BuildContext context) => const TareasView(),
+    detailsTask: (BuildContext context) => const DetalleTareaView(),
+    viewComments: (BuildContext context) => const ComentariosView(),
+    createTask: (BuildContext context) => const CrearTareaView(),
+    selectReferenceId: (BuildContext context) => const IdReferenciaView(),
+    selectResponsibleUser: (BuildContext context) => const UsuariosView(),
   };
 
   //en caso de ruta incorrecta
