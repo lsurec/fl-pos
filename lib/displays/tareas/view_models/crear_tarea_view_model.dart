@@ -338,11 +338,13 @@ class CrearTareaViewModel extends ChangeNotifier {
       context: context,
       initialDate: fechaInicial,
       firstDate: DateTime(1950),
-      lastDate: DateTime(2100), //puede cambiar
+      lastDate: DateTime(2100),
     );
 
+    //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
 
+    //armar fecha con la fecha seleccionada en el picker
     fechaInicial = DateTime(
       pickedDate.year,
       pickedDate.month,
@@ -351,7 +353,9 @@ class CrearTareaViewModel extends ChangeNotifier {
       fechaInicial.minute,
     );
 
+    //si la fecha inicial es despues de la final
     if (fechaInicial.isAfter(fechaFinal)) {
+      //fecha final será igual a la fecha inicial + 10 minutos
       fechaFinal = addDate10Min(fechaInicial);
     }
 
@@ -363,13 +367,15 @@ class CrearTareaViewModel extends ChangeNotifier {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaFinal,
-      //fecha minima la fecha actual o lafecha inicial seleciconada
+      //fecha minima es la inicial
       firstDate: fechaInicial,
       lastDate: DateTime(2100),
     );
 
+    //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
-    // Verifica si el usuario seleccionó una fecha
+
+    //armar fecha final con la fecha seleccionada en el picker
     fechaFinal = DateTime(
       pickedDate.year,
       pickedDate.month,
@@ -388,14 +394,16 @@ class CrearTareaViewModel extends ChangeNotifier {
       minute: fechaInicial.minute,
     );
 
-    //abre el time picker con la hora en que se abrio le formulario
+    //abre el time picker con la hora inicial
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: initialTime, //hora inicial
     );
 
+    //si la hora seleccionada es null, no hacer nada.
     if (pickedTime == null) return;
 
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
     fechaInicial = DateTime(
       fechaInicial.year,
       fechaInicial.month,
@@ -404,19 +412,13 @@ class CrearTareaViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    //si la fecha inicial es despues de la final
     if (fechaInicial.isAfter(fechaFinal)) {
+      //fecha final será igual a la fecha inicial + 10 minutos
       fechaFinal = addDate10Min(fechaInicial);
     }
 
     notifyListeners();
-    // }
-  }
-
-  //Verifica si las fechas son iguales en día mes y año (iguales = true) (diferentes = false)
-  bool compararFechas(DateTime fechaInicio, DateTime fechaFinal) {
-    return fechaInicio.year == fechaFinal.year &&
-        fechaInicio.month == fechaFinal.month &&
-        fechaInicio.day == fechaFinal.day;
   }
 
   //Abrir picker de la fecha final
@@ -426,14 +428,16 @@ class CrearTareaViewModel extends ChangeNotifier {
       minute: fechaFinal.minute,
     );
 
-    //abre el time picker con la hora en que se abrio le formulario
+    //abre el time picker con la hora creada con la fecha final
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: initialTime, //hora inicial
     );
 
+    //si la hora es null no hace nada
     if (pickedTime == null) return;
 
+    //armar fecha final temporal con la fecha final y hora seleccionada en el picker
     final DateTime fechaTemp = DateTime(
       fechaFinal.year,
       fechaFinal.month,
@@ -444,7 +448,9 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     // Verifica si las fechas son iguales (mismo día, mes y año).
     if (compararFechas(fechaInicial, fechaTemp)) {
+      //verificar si la fecha temporal es menor a la incial
       if (fechaTemp.isBefore(fechaInicial)) {
+        //mostrar mensaje de la hora de la fecha final no es valida
         NotificationService.showSnackbar(
           'La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.',
         );
@@ -452,6 +458,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
     fechaFinal = DateTime(
       fechaFinal.year,
       fechaFinal.month,
@@ -461,6 +468,13 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
+  }
+
+  //Verifica si las fechas son iguales en día mes y año (iguales = true) (diferentes = false)
+  bool compararFechas(DateTime fechaInicio, DateTime fechaFinal) {
+    return fechaInicio.year == fechaFinal.year &&
+        fechaInicio.month == fechaFinal.month &&
+        fechaInicio.day == fechaFinal.day;
   }
 
   //Obtener Tipos

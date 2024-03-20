@@ -39,11 +39,11 @@ class CrearTareaView extends StatelessWidget {
                     icon: const Icon(Icons.note_add_outlined),
                     tooltip: "Crear Tarea",
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.attach_file_outlined),
-                    tooltip: "Adjuntar Archivos",
-                  ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: const Icon(Icons.attach_file_outlined),
+                  //   tooltip: "Adjuntar Archivos",
+                  // ),
                 ],
               ),
             ],
