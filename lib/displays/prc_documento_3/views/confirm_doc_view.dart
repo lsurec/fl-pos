@@ -38,6 +38,45 @@ class ConfirmDocView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Text(
+                    "Serie",
+                    style: AppTheme.titleStyle,
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    "${docVM.serieSelect!.descripcion} (${docVM.serieSelect!.serieDocumento})",
+                    style: AppTheme.normalStyle,
+                  ),
+                  if (docVM.valueParam(58))
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        const Text(
+                          "Tipo Evento",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "${docVM.tipoReferenciaSelect!.descripcion} (${docVM.tipoReferenciaSelect!.tipoReferencia})",
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 5),
+                      const Divider(),
+                      const SizedBox(height: 5),
+                      // Text(docVM.fechaEntrega)
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  const Divider(),
+                  const SizedBox(height: 5),
                   _DataUser(
                     title: "Cliente",
                     user: DataUserModel(
