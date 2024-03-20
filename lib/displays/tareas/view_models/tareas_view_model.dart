@@ -262,6 +262,15 @@ class TareasViewModel extends ChangeNotifier {
       }
     }
 
+    //validar resppuesta de los comentarios
+    final bool succesComentarios = await armarComentario(context);
+
+    //sino se realizo el consumo correctamente retornar
+    if (!succesComentarios) {
+      isLoading = false;
+      return;
+    }
+
     //Navegar a detalles
     Navigator.pushNamed(context, AppRoutes.detailsTask);
     isLoading = false; //detener carga
@@ -271,5 +280,43 @@ class TareasViewModel extends ChangeNotifier {
   insertarTarea(TareaModel tarea) {
     tareas.insert(0, tarea);
     notifyListeners();
+  }
+
+  //Armar comentarios con objetos adjuntos
+  Future<bool> armarComentario(BuildContext context) async {
+    final vmComentario =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+    vmComentario.comentarioDetalle.clear(); //limpiar lista de detalleComentario
+
+    //View model de Detalle tarea para obtener el id de la tarea
+    final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
+
+    //Obtener comentarios de la tarea
+    ApiResModel comentarios =
+        await vmTarea.obtenerComentario(context, vmTarea.tarea!.iDTarea);
+
+    //Sino encontró comentarios retornar false
+    if (!comentarios.succes) return false;
+
+    //Recorrer lista de comentarios para obtener los objetos de los comentarios
+    for (var i = 0; i < comentarios.message.length; i++) {
+      final ComentarioModel coment = comentarios.message[i];
+
+      //Obtener los objetos del comentario
+      ApiResModel objeto = await vmTarea.obtenerObjetoComentario(
+        context,
+        vmTarea.tarea!.iDTarea,
+        coment.tareaComentario,
+      );
+
+      //comentario completo (comentario y objetos)
+      vmComentario.comentarioDetalle.add(ComentarioDetalleModel(
+        comentario: comentarios.message[i],
+        objetos: objeto.message,
+      ));
+    }
+
+    //si todo está bien retornar true
+    return true;
   }
 }

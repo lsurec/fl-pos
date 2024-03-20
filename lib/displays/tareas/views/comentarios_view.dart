@@ -24,7 +24,7 @@ class ComentariosView extends StatelessWidget {
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () => vmTarea.comentariosTarea(context),
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(

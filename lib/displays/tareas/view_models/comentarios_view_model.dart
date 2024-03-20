@@ -95,126 +95,20 @@ class ComentariosViewModel extends ChangeNotifier {
     return;
   }
 
-  //Obtener Comentarios de la tarea
-  Future<ApiResModel> obtenerComentario(
-    BuildContext context,
-    int tarea,
-  ) async {
-    //Almacenar comentarios de la tarea
-    List<ComentarioModel> comentarios = [];
-    comentarios.clear();
-
-    //View model Login para obtener usuario y token
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.user;
-
-    //Instancia del servicio
-    final TareaService tareaService = TareaService();
-
+  loadData(BuildContext context) async {
     isLoading = true; //cargar pantalla
+    //View model de comentarios
+    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
-    //Consumo de servicio
-    final ApiResModel res = await tareaService.getComentario(
-      user,
-      token,
-      tarea,
-    );
+    //validar resppuesta de los comentarios
+    final bool succesComentarios = await vmTarea.armarComentario(context);
 
-    //si el consumo salió mal
-    if (!res.succes) {
+    //sino se realizo el consumo correctamente retornar
+    if (!succesComentarios) {
       isLoading = false;
-      NotificationService.showErrorView(context, res);
-
-      //Si algo salió mal retornar
-      return res;
+      return;
     }
-
-    //Agregar repuesta de api a la lista de comentarios
-    comentarios.addAll(res.message);
 
     isLoading = false; //detener carga
-
-    //Si todo está correcto retornar
-    return res;
   }
-
-  //Obtener Objetos de un comentario de una tarea
-  Future<ApiResModel> obtenerObjetoComentario(
-    BuildContext context,
-    int tarea,
-    int tareaComentario,
-  ) async {
-    //Almacenar objetos del comentario
-    List<ObjetoComentarioModel> objetosComentario = [];
-    objetosComentario.clear(); //limpiar lista de objetos del comentario
-
-    //View model de Login para obtener token
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-
-    //Instancia del servicio
-    final TareaService tareaService = TareaService();
-
-    isLoading = true; //cargar pantalla
-
-    //Consumo de api
-    final ApiResModel res = await tareaService.getObjetoComentario(
-      token,
-      tarea,
-      tareaComentario,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, res);
-
-      //Si algo salió mal, retornar:
-      return res;
-    }
-
-    //Almacener respuesta de api a la lista de objetosComentario
-    objetosComentario.addAll(res.message);
-
-    isLoading = false; //detener carga
-
-    //Si todo está correcto, retornar:
-    return res;
-  }
-
-  //Armar comentarios con objetos adjuntos
-  Future<bool> armarComentario(BuildContext context) async {
-    comentarioDetalle.clear(); //limpiar lista de detalleComentario
-
-    //View model de Detalle tarea para obtener el id de la tarea
-    final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false)
-        .tarea!
-        .iDTarea;
-
-    //Obtener comentarios de la tarea
-    ApiResModel comentarios = await obtenerComentario(context, vmTarea);
-
-    //Sino encontró comentarios retornar false
-    if (!comentarios.succes) return false;
-
-    //Recorrer lista de comentarios para obtener los objetos de los comentarios
-    for (var i = 0; i < comentarios.message.length; i++) {
-      final ComentarioModel coment = comentarios.message[i];
-
-      //Obtener los objetos del comentario
-      ApiResModel objeto = await obtenerObjetoComentario(
-          context, vmTarea, coment.tareaComentario);
-
-      //comentario completo (comentario y objetos)
-      comentarioDetalle.add(ComentarioDetalleModel(
-        comentario: comentarios.message[i],
-        objetos: objeto.message,
-      ));
-    }
-
-    //si todo está bien retornar true
-    return true;
-  }
-
 }
