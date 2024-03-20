@@ -48,162 +48,199 @@ class DocumentView extends StatelessWidget {
                     }).toList(),
                   ),
                 const SizedBox(height: 20),
-                const Text(
-                  "DATOS DE EVENTO",
-                  style: AppTheme.titleStyle,
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Tipo de referencia",
-                  style: AppTheme.titleStyle,
-                ),
-                DropdownButton<SerieModel>(
-                  isExpanded: true,
-                  dropdownColor: AppTheme.backroundColor,
-                  value: vm.serieSelect,
-                  onChanged: (value) => vm.changeSerie(value, context),
-                  items: vm.series.map((serie) {
-                    return DropdownMenuItem<SerieModel>(
-                      value: serie,
-                      child: Text(serie.descripcion!),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    //TODO:Parametrizar
-                    const Text(
-                      "Fecha Entrega:",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    const Spacer(),
-                    TextButton.icon(
-                      onPressed: () => vm.showDateEntrega(context),
-                      icon: const Icon(Icons.calendar_today_outlined),
-                      label: Text(
-                        vm.getDateStr(vm.fechaEntrega),
-                        style: AppTheme.normalStyle,
+                if (vm.valueParam(58))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        vm.getTextParam(58) ?? "DATOS DE EVENTO",
+                        style: AppTheme.titleStyle,
+                      ),
+                      const SizedBox(height: 5),
+                      const Divider(),
+                      const SizedBox(height: 5),
+                      const Text(
+                        "Tipo de referencia",
+                        style: AppTheme.titleStyle,
+                      ),
+                      if (vm.series.isEmpty)
+                        const NotFoundWidget(
+                          text: "No hay elementos",
+                          icon: Icon(
+                            Icons.browser_not_supported_outlined,
+                            size: 50,
+                          ),
+                        ),
+                      if (vm.series.isNotEmpty)
+                        DropdownButton<SerieModel>(
+                          isExpanded: true,
+                          dropdownColor: AppTheme.backroundColor,
+                          value: vm.serieSelect,
+                          onChanged: (value) => vm.changeSerie(value, context),
+                          items: vm.series.map((serie) {
+                            return DropdownMenuItem<SerieModel>(
+                              value: serie,
+                              child: Text(serie.descripcion!),
+                            );
+                          }).toList(),
+                        ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                if (vm.valueParam(381))
+                  Row(
+                    children: [
+                      Text(
+                        vm.getTextParam(381) ?? "Fecha Entrega:",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      const Spacer(),
+                      TextButton.icon(
+                        onPressed: () => vm.showDateEntrega(context),
+                        icon: const Icon(Icons.calendar_today_outlined),
+                        label: Text(
+                          vm.getDateStr(vm.fechaEntrega),
+                          style: AppTheme.normalStyle,
+                        ),
+                      ),
+                      TextButton.icon(
+                        onPressed: () => vm.showTimeEntrega(context),
+                        icon: const Icon(Icons.schedule_outlined),
+                        label: Text(
+                          vm.getTimeStr(vm.fechaEntrega),
+                          style: AppTheme.normalStyle,
+                        ),
+                      )
+                    ],
+                  ),
+                if (vm.valueParam(382))
+                  Row(
+                    children: [
+                      Text(
+                        vm.getTextParam(382) ?? "Fecha Recoger:",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      const Spacer(),
+                      TextButton.icon(
+                        onPressed: () => vm.showDateRecoger(context),
+                        icon: const Icon(Icons.calendar_today_outlined),
+                        label: Text(
+                          vm.getDateStr(vm.fechaRecoger),
+                          style: AppTheme.normalStyle,
+                        ),
+                      ),
+                      TextButton.icon(
+                        onPressed: () => vm.showTimeRecoger(context),
+                        icon: const Icon(Icons.schedule_outlined),
+                        label: Text(
+                          vm.getTimeStr(vm.fechaRecoger),
+                          style: AppTheme.normalStyle,
+                        ),
+                      )
+                    ],
+                  ),
+                if (vm.valueParam(382)) const Divider(),
+                if (vm.valueParam(44))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            "Fecha Inicio:",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          const Spacer(),
+                          TextButton.icon(
+                            onPressed: () => vm.showDateInicio(context),
+                            icon: const Icon(Icons.calendar_today_outlined),
+                            label: Text(
+                              vm.getDateStr(vm.fechaInicio),
+                              style: AppTheme.normalStyle,
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => vm.showTimeInicio(context),
+                            icon: const Icon(Icons.schedule_outlined),
+                            label: Text(
+                              vm.getTimeStr(vm.fechaInicio),
+                              style: AppTheme.normalStyle,
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Fecha Fin:",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          const Spacer(),
+                          TextButton.icon(
+                            onPressed: () => vm.showDateFin(context),
+                            icon: const Icon(Icons.calendar_today_outlined),
+                            label: Text(
+                              vm.getDateStr(vm.fechaFin),
+                              style: AppTheme.normalStyle,
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => vm.showTimeFin(context),
+                            icon: const Icon(Icons.schedule_outlined),
+                            label: Text(
+                              vm.getTimeStr(vm.fechaFin),
+                              style: AppTheme.normalStyle,
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                    ],
+                  ),
+                if (vm.valueParam(385))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextField(
+                      controller: vm.inputContacto,
+                      decoration: InputDecoration(
+                        hintText: vm.getTextParam(385),
+                        labelText: vm.getTextParam(385),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () => vm.showTimeEntrega(context),
-                      icon: const Icon(Icons.schedule_outlined),
-                      label: Text(
-                        vm.getTimeStr(vm.fechaEntrega),
-                        style: AppTheme.normalStyle,
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    //TODO:Parametrizar
-                    const Text(
-                      "Fecha Recoger:",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    const Spacer(),
-                    TextButton.icon(
-                      onPressed: () => vm.showDateRecoger(context),
-                      icon: const Icon(Icons.calendar_today_outlined),
-                      label: Text(
-                        vm.getDateStr(vm.fechaRecoger),
-                        style: AppTheme.normalStyle,
+                  ),
+                if (vm.valueParam(383))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextField(
+                      controller: vm.inputDescripcion,
+                      decoration: InputDecoration(
+                        hintText: vm.getTextParam(383),
+                        labelText: vm.getTextParam(383),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () => vm.showTimeRecoger(context),
-                      icon: const Icon(Icons.schedule_outlined),
-                      label: Text(
-                        vm.getTimeStr(vm.fechaRecoger),
-                        style: AppTheme.normalStyle,
-                      ),
-                    )
-                  ],
-                ),
-                const Divider(),
-                Row(
-                  children: [
-                    //TODO:Parametrizar
-                    const Text(
-                      "Fecha Inicio:",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    const Spacer(),
-                    TextButton.icon(
-                      onPressed: () => vm.showDateInicio(context),
-                      icon: const Icon(Icons.calendar_today_outlined),
-                      label: Text(
-                        vm.getDateStr(vm.fechaInicio),
-                        style: AppTheme.normalStyle,
+                  ),
+                if (vm.valueParam(386))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextField(
+                      controller: vm.inputDireccionEntrega,
+                      decoration: InputDecoration(
+                        hintText: vm.getTextParam(386),
+                        labelText: vm.getTextParam(386),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () => vm.showTimeInicio(context),
-                      icon: const Icon(Icons.schedule_outlined),
-                      label: Text(
-                        vm.getTimeStr(vm.fechaInicio),
-                        style: AppTheme.normalStyle,
-                      ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    //TODO:Parametrizar
-                    const Text(
-                      "Fecha Fin:",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    const Spacer(),
-                    TextButton.icon(
-                      onPressed: () => vm.showDateFin(context),
-                      icon: const Icon(Icons.calendar_today_outlined),
-                      label: Text(
-                        vm.getDateStr(vm.fechaFin),
-                        style: AppTheme.normalStyle,
+                  ),
+                if (vm.valueParam(384))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextField(
+                      controller: vm.inputDireccionEntrega,
+                      decoration: InputDecoration(
+                        hintText: vm.getTextParam(384),
+                        labelText: vm.getTextParam(384),
                       ),
                     ),
-                    TextButton.icon(
-                      onPressed: () => vm.showTimeFin(context),
-                      icon: const Icon(Icons.schedule_outlined),
-                      label: Text(
-                        vm.getTimeStr(vm.fechaFin),
-                        style: AppTheme.normalStyle,
-                      ),
-                    )
-                  ],
-                ),
-                const Divider(),
-                InputWidget(
-                  maxLines: 2,
-                  formProperty: "user",
-                  formValues: vm.formValues,
-                  hintText: "Contacto",
-                  labelText: "Contacto",
-                ),
-                InputWidget(
-                  maxLines: 2,
-                  formProperty: "user",
-                  formValues: vm.formValues,
-                  hintText: "Descripcion",
-                  labelText: "Descripcion",
-                ),
-                InputWidget(
-                  maxLines: 2,
-                  formProperty: "user",
-                  formValues: vm.formValues,
-                  hintText: "Direccion Entrega",
-                  labelText: "Direccion Entrega",
-                ),
-                InputWidget(
-                  maxLines: 2,
-                  formProperty: "user",
-                  formValues: vm.formValues,
-                  hintText: "Observacion",
-                  labelText: "Observacion",
-                ),
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

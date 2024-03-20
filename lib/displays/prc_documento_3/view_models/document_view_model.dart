@@ -11,12 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DocumentViewModel extends ChangeNotifier {
-  final Map<String, String> formValues = {
-    'user': '',
-  };
-
   //Controlador input buscar cliente
   final TextEditingController client = TextEditingController();
+
+  final TextEditingController inputContacto = TextEditingController();
+  final TextEditingController inputDescripcion = TextEditingController();
+  final TextEditingController inputDireccionEntrega = TextEditingController();
+  final TextEditingController inputObservacion = TextEditingController();
 
   //Seleccionar consummidor final
   bool cf = false;
@@ -357,6 +358,12 @@ class DocumentViewModel extends ChangeNotifier {
     client.text = "";
     clienteSelect = null;
     vendedorSelect = null;
+
+    inputContacto.text = "";
+    inputDescripcion.text = "";
+    inputDireccionEntrega.text = "";
+    inputObservacion.text = "";
+
     cf = false;
     notifyListeners();
   }
