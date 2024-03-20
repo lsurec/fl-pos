@@ -517,14 +517,66 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
   //Volver a cargar detalles
   loadData(BuildContext context) async {
-    // final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
+    isLoading = true; //cargar pantalla
+    estadoAtual = null;
+    prioridadActual = null;
 
-    // estadoAtual = null;
-    // prioridadActual = null;
-    // isLoading = true;
-    // vmTarea.detalleTarea(context, tarea!);
-    // isLoading = false;
+    final ApiResModel succesResponsables = await obtenerResponsable(
+      context,
+      tarea!.iDTarea,
+    ); //obtener responsable activo de la tarea
 
-//Copiar funcion aesta funcion
+    if (!succesResponsables.succes) {
+      isLoading = false;
+      return;
+    }
+
+    final ApiResModel succesInvitados = await obtenerInvitados(
+      context,
+      tarea!.iDTarea,
+    ); //obtener invitados de la tarea
+
+    if (!succesInvitados.succes) {
+      isLoading = false;
+      return;
+    }
+
+    //viwe model de Crear tarea
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final bool succesEstados = await vmCrear.obtenerEstados(
+      context,
+    ); //obtener estados de tarea
+
+    if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
+    final bool succesPrioridades = await vmCrear.obtenerPrioridades(
+      context,
+    ); //obtener prioridades de la tarea
+
+    if (!succesPrioridades) {
+      isLoading = false;
+      return;
+    }
+
+    //Mostrar estado actual de la tarea en ls lista de estados
+    for (var i = 0; i < vmCrear.estados.length; i++) {
+      EstadoModel estado = vmCrear.estados[i];
+      if (estado.estado == tarea!.estadoObjeto) {
+        estadoAtual = estado;
+        break;
+      }
+    }
+    //Mostrar prioridad actual de la tarea en ls lista de prioridades
+    for (var i = 0; i < vmCrear.prioridades.length; i++) {
+      PrioridadModel prioridad = vmCrear.prioridades[i];
+      if (prioridad.nivelPrioridad == tarea!.nivelPrioridad) {
+        prioridadActual = prioridad;
+        break;
+      }
+    }
+
+    isLoading = false; //detener carga
   }
 }
