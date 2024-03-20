@@ -234,7 +234,7 @@ class DocumentView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: TextField(
-                      controller: vm.inputDireccionEntrega,
+                      controller: vm.inputObservacion,
                       decoration: InputDecoration(
                         hintText: vm.getTextParam(384),
                         labelText: vm.getTextParam(384),

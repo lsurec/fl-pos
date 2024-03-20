@@ -1,6 +1,7 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -65,15 +66,72 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                       ],
                     ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 5),
-                      const Divider(),
-                      const SizedBox(height: 5),
-                      // Text(docVM.fechaEntrega)
-                    ],
-                  ),
+                  if (docVM.valueParam(381))
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(381) ?? "Fecha entrega",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          Utilities.formatComplete(docVM.fechaEntrega),
+                          style: AppTheme.normalStyle,
+                        )
+                      ],
+                    ),
+                  if (docVM.valueParam(382))
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(382) ?? "Fecha recoger",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          Utilities.formatComplete(docVM.fechaRecoger),
+                          style: AppTheme.normalStyle,
+                        )
+                      ],
+                    ),
+                  if (docVM.valueParam(44))
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        const Text(
+                          "Fecha incio",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          Utilities.formatComplete(docVM.fechaInicio),
+                          style: AppTheme.normalStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        const Text(
+                          "Fecha fin",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          Utilities.formatComplete(docVM.fechaFin),
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 5),
                   const Divider(),
                   const SizedBox(height: 5),

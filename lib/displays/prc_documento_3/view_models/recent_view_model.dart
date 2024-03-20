@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/services/
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -388,7 +389,7 @@ class RecentViewModel extends ChangeNotifier {
     }
 
     final DetailDocModel detallesDoc = DetailDocModel(
-      fecha: strDate(doc.item.fechaHora),
+      fecha: Utilities.strDate(doc.item.fechaHora),
       consecutivo: doc.item.consecutivoInterno,
       empresa: empresa!,
       estacion: estacion!,
@@ -427,17 +428,6 @@ class RecentViewModel extends ChangeNotifier {
       context,
       res,
     );
-  }
-
-  //fehca str a Date formmat dd/MM/yyyy hh:mm
-  String strDate(String dateStr) {
-    // Convierte la cadena a un objeto DateTime
-    DateTime dateTime = DateTime.parse(dateStr);
-
-    // Formatea la fecha en el formato dd/MM/yyyy
-    String formattedDate = DateFormat('dd/MM/yyyy hh:mm').format(dateTime);
-
-    return formattedDate;
   }
 
   //buscar documentos recientes

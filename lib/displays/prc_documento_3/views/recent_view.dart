@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:intl/intl.dart';
@@ -89,7 +90,7 @@ class _RecentViewState extends State<RecentView> {
                                     style: AppTheme.normalBoldStyle,
                                   ),
                                   Text(
-                                    vm.strDate(doc.item.fechaHora),
+                                    Utilities.strDate(doc.item.fechaHora),
                                     style: AppTheme.normalStyle,
                                   ),
                                 ],
