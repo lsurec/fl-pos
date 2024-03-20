@@ -103,6 +103,14 @@ class DocumentoViewModel extends ChangeNotifier {
       }
     }
 
+    if (documentVM.valueParam(58)) {
+      if (documentVM.tipoReferenciaSelect == null) {
+        NotificationService.showSnackbar(
+            "No se ha seleccioando tipo referencia.");
+        return;
+      }
+    }
+
     //si todas las validaciones son correctas navegar a resumen del documento
     Navigator.pushNamed(
       context,
