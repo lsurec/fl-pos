@@ -12,8 +12,6 @@ class ParamConvertDocModel {
   String pDSerieDocumento;
   int pDEmpresa;
   int pDEstacionTrabajo;
-  int pDDocumento;
-  int pDFechaReg;
 
   ParamConvertDocModel({
     required this.pUserName,
@@ -27,8 +25,6 @@ class ParamConvertDocModel {
     required this.pDSerieDocumento,
     required this.pDEmpresa,
     required this.pDEstacionTrabajo,
-    required this.pDDocumento,
-    required this.pDFechaReg,
   });
 
   factory ParamConvertDocModel.fromJson(String str) =>
@@ -49,8 +45,6 @@ class ParamConvertDocModel {
         pDSerieDocumento: json["pD_Serie_Documento"],
         pDEmpresa: json["pD_Empresa"],
         pDEstacionTrabajo: json["pD_Estacion_Trabajo"],
-        pDDocumento: json["pD_Documento"],
-        pDFechaReg: json["pD_Fecha_Reg"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -65,7 +59,5 @@ class ParamConvertDocModel {
         "pD_Serie_Documento": pDSerieDocumento,
         "pD_Empresa": pDEmpresa,
         "pD_Estacion_Trabajo": pDEstacionTrabajo,
-        "pD_Documento": pDDocumento,
-        "pD_Fecha_Reg": pDFechaReg,
       };
 }

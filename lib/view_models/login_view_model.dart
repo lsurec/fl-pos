@@ -1,11 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../displays/shr_local_config/services/services.dart';
 
 class LoginViewModel extends ChangeNotifier {
   //manejar flujo del procesp
@@ -20,7 +23,7 @@ class LoginViewModel extends ChangeNotifier {
   //token del usuario
   String token = "";
   //nombre del usuario
-  String nameUser = "";
+  String user = "";
   //Cadena de conexion
   String conStr = "";
   //conytrolar seion permanente
@@ -63,7 +66,7 @@ class LoginViewModel extends ChangeNotifier {
     //limpiar datos en preferencias
     Preferences.clearToken();
     token = "";
-    nameUser = "";
+    user = "";
     conStr = "";
     notifyListeners();
   }
@@ -94,16 +97,10 @@ class LoginViewModel extends ChangeNotifier {
       if (!res.succes) {
         //finalizar proceso
         isLoading = false;
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: res.message,
-          url: res.url,
-          storeProcedure: res.storeProcedure,
-        );
 
         await NotificationService.showErrorView(
           context,
-          error,
+          res,
         );
         return;
       }
@@ -115,39 +112,129 @@ class LoginViewModel extends ChangeNotifier {
       if (respLogin.success) {
         //guardar token y nombre de usuario
         token = respLogin.message;
-        nameUser = respLogin.user;
+        user = respLogin.user;
         conStr = respLogin.con;
 
         //si la sesion es permanente guardar en preferencias el token
         if (isSliderDisabledSession) {
           Preferences.token = token;
-          Preferences.userName = nameUser;
+          Preferences.userName = user;
           Preferences.conStr = conStr;
         }
 
         //view models externos
         final localVM =
             Provider.of<LocalSettingsViewModel>(context, listen: false);
-        final menuVM = Provider.of<MenuViewModel>(context, listen: false);
-        final homeVM = Provider.of<HomeViewModel>(context, listen: false);
 
-        //cargar datos del menu
-        await localVM.loadData(context);
+        //cargar emmpresas
 
-        //si hay solo una estacion y una empresa
-        if (localVM.empresas.length == 1 && localVM.estaciones.length == 1) {
-          //cargar datos del menu
-          await menuVM.loadDataMenu(context);
-          homeVM.getTipoCambio(context);
+        localVM.selectedEmpresa = null;
+        localVM.selectedEstacion = null;
 
-          //finalizar proceso
-          Navigator.pushReplacementNamed(context, "home");
+        final EmpresaService empresaService = EmpresaService();
+
+        final ApiResModel resEmpresas = await empresaService.getEmpresa(
+          user,
+          token,
+        );
+
+        if (!resEmpresas.succes) {
+          //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
           isLoading = false;
-        } else {
-          //finalizar proceso
-          Navigator.pushReplacementNamed(context, "shrLocalConfig");
-          isLoading = false;
+          NotificationService.showErrorView(context, resEmpresas);
+          return;
         }
+
+        final EstacionService estacionService = EstacionService();
+
+        final ApiResModel resEstaciones = await estacionService.getEstacion(
+          user,
+          token,
+        );
+
+        if (!resEmpresas.succes) {
+          //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+          isLoading = false;
+          NotificationService.showErrorView(context, resEstaciones);
+
+          return;
+        }
+
+        localVM.empresas.clear();
+        localVM.estaciones.clear();
+
+        localVM.empresas.addAll(resEmpresas.message);
+        localVM.estaciones.addAll(resEstaciones.message);
+
+        if (localVM.estaciones.length == 1) {
+          localVM.selectedEstacion = localVM.estaciones.first;
+        }
+
+        if (localVM.empresas.length == 1) {
+          localVM.selectedEmpresa = localVM.empresas.first;
+        }
+
+        //si solo hay una estacion y una empresa mostrar home
+        if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {
+          //view model externo
+          final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+
+          final MenuService menuService = MenuService();
+
+          final ApiResModel resApps =
+              await menuService.getApplication(user, token);
+
+          if (!resApps.succes) {
+            //si hay mas de una estacion o mas de una empresa mostar configuracion local
+
+            isLoading = false;
+            NotificationService.showErrorView(context, resApps);
+
+            return;
+          }
+
+          final List<ApplicationModel> applications = resApps.message;
+
+          menuVM.menuData.clear();
+
+          for (var application in applications) {
+            final ApiResModel resDisplay = await menuService.getDisplay(
+              application.application,
+              user,
+              token,
+            );
+
+            if (!resDisplay.succes) {
+              //si hay mas de una estacion o mas de una empresa mostar configuracion local
+              isLoading = false;
+              NotificationService.showErrorView(context, resDisplay);
+
+              return;
+            }
+
+            menuVM.menuData.add(
+              MenuData(
+                application: application,
+                children: resDisplay.message,
+              ),
+            );
+          }
+
+          menuVM.loadDataMenu(context);
+
+          //navegar a home
+          Navigator.pushReplacementNamed(context, AppRoutes.home);
+          isLoading = false;
+
+          return;
+        }
+
+        localVM.resApis = null;
+
+        Navigator.pushReplacementNamed(context, AppRoutes.shrLocalConfig);
+        isLoading = false;
       } else {
         //finalizar proceso
         isLoading = false;

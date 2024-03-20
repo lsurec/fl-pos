@@ -109,11 +109,9 @@ class ProductViewModel extends ChangeNotifier {
       isLoading = false;
 
       if (!precios.succes) {
-        ErrorModel error = precios.message;
-
         NotificationService.showErrorView(
           context,
-          error,
+          precios,
         );
         return;
       }
@@ -148,7 +146,7 @@ class ProductViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
     String token = loginVM.token;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
 
     ProductService productService = ProductService();
 
@@ -306,7 +304,7 @@ class ProductViewModel extends ChangeNotifier {
 
     //consumo del api
     ApiResModel res = await productService.getBodegaProducto(
-      loginVM.nameUser, // user,
+      loginVM.user, // user,
       localVM.selectedEmpresa!.empresa, // empresa,
       localVM.selectedEstacion!.estacionTrabajo, // estacion,
       product, // producto,
@@ -317,16 +315,10 @@ class ProductViewModel extends ChangeNotifier {
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
@@ -404,11 +396,9 @@ class ProductViewModel extends ChangeNotifier {
     isLoading = false;
 
     if (!precios.succes) {
-      ErrorModel error = precios.message;
-
       NotificationService.showErrorView(
         context,
-        error,
+        precios,
       );
       return;
     }

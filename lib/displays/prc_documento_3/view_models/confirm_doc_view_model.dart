@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:convert';
-import 'dart:io';
+import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -11,19 +11,28 @@ import 'package:flutter_post_printer_example/fel/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
 import 'package:xml/xml.dart';
 import 'dart:math';
+import 'package:flutter_post_printer_example/libraries/app_data.dart'
+    as AppData;
 
 class ConfirmDocViewModel extends ChangeNotifier {
+  final PrinterManager instanceManager = PrinterManager.instance;
+
+  //Mostrar boton para imprimir
+  bool _directPrint = Preferences.directPrint;
+  bool get directPrint => _directPrint;
+
+  set directPrint(bool value) {
+    _directPrint = value;
+    Preferences.directPrint = value;
+    notifyListeners();
+  }
+
   //1. Cargando 2. Exitoso 3. Error
   List<LoadStepModel> steps = [
     LoadStepModel(
@@ -83,864 +92,18 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
   //generar formato pdf para compartir
   Future<void> sheredDoc(BuildContext context) async {
-    //instancia del servicio
-    DocumentService documentService = DocumentService();
-    //Proveedores externos
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-    final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
-    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
-
-    //usario y token
-    String user = loginVM.nameUser;
-    String token = loginVM.token;
-
-    //iniciar proceso
+    final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
+    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+    final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
     isLoading = true;
-
-    //consumir servicio obtener encabezados
-    ApiResModel resEncabezado = await documentService.getEncabezados(
-      consecutivoDoc, // doc,
-      user, // user,
-      token, // token,
+    await vmShare.sheredDoc(
+      context,
+      consecutivoDoc,
+      vmDoc.vendedorSelect?.nomCuentaCorrentista,
+      vmDoc.clienteSelect!,
+      vmDetails.total,
     );
-
-    //valid succes response
-    //Si el api falló
-    if (!resEncabezado.succes) {
-      isLoading = false;
-
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resEncabezado.message,
-        url: resEncabezado.url,
-        storeProcedure: resEncabezado.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(context, error);
-
-      return;
-    }
-
-    //encabezados encontrados
-    List<EncabezadoModel> encabezadoTemplate = resEncabezado.message;
-
-    //consumir servicio obetener detalles del documento
-    ApiResModel resDetalle = await documentService.getDetalles(
-      consecutivoDoc, // doc,
-      user, // user,
-      token, // token,
-    );
-
-    //valid succes response
-    if (!resDetalle.succes) {
-      //finalozar el proceso
-      isLoading = false;
-
-      //alerta informe de error
-      final ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resDetalle.message,
-        url: resDetalle.url,
-        storeProcedure: resDetalle.storeProcedure,
-      );
-
-      //mostrar alerta
-      await NotificationService.showErrorView(context, error);
-
-      return;
-    }
-
-    //Detalles del documento
-    List<DetalleModel> detallesTemplate = resDetalle.message;
-
-    //validar que haya datos para imprimir
-    if (encabezadoTemplate.isEmpty || detallesTemplate.isEmpty) {
-      isLoading = false;
-
-      NotificationService.showSnackbar(
-        "No hay datos para imprimir, intente más tarde.",
-      );
-
-      return;
-    }
-
-    //Encabezado
-    final EncabezadoModel encabezado = encabezadoTemplate.first;
-
-    //Empresa (impresion)
-    Empresa empresa = Empresa(
-      razonSocial: encabezado.razonSocial!,
-      nombre: encabezado.empresaNombre!,
-      direccion: encabezado.empresaDireccion!,
-      nit: encabezado.empresaNit!,
-      tel: encabezado.empresaTelefono!,
-    );
-
-    //TODO: Remplazar datos de certificacion
-    Documento documento = Documento(
-      titulo: encabezado.tipoDocumento!,
-      descripcion: "DOCUMENTO TRIBUTARIO ELECTRONICO", //Documenyo generico
-      fechaCert: encabezado.feLFechaCertificacion ?? "",
-      serie: encabezado.feLSerie ?? "",
-      no: encabezado.feLNumeroDocumento ?? "",
-      autorizacion: encabezado.feLUuid ?? "",
-      noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
-    );
-
-    //vendedor del docummento
-    String vendedor = docVM.vendedorSelect?.nomCuentaCorrentista ?? "";
-
-    //fecha del usuario
-    DateTime now = DateTime.now();
-
-    // Formatear la fecha como una cadena
-    String formattedDate =
-        "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
-
-    //Cliente seleccionado
-    Cliente cliente = Cliente(
-      nombre: docVM.clienteSelect!.facturaNombre,
-      direccion: docVM.clienteSelect!.facturaDireccion,
-      nit: docVM.clienteSelect!.facturaNit,
-      fecha: formattedDate,
-      tel: "", //TODO: Telefono del cliente
-    );
-
-    // Crear una instancia de NumberFormat para el formato de moneda
-    final currencyFormat = NumberFormat.currency(
-      symbol: detallesTemplate[0]
-          .simboloMoneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
-    );
-
-    //Logos para el pdf
-    final ByteData logoEmpresa = await rootBundle.load('assets/empresa.png');
-    final ByteData imgFel = await rootBundle.load('assets/fel.png');
-    final ByteData imgDemo = await rootBundle.load('assets/logo_demosoft.png');
-
-    //formato de imagenes valido
-    Uint8List logoData = (logoEmpresa).buffer.asUint8List();
-    Uint8List logoFel = (imgFel).buffer.asUint8List();
-    Uint8List logoDemo = (imgDemo).buffer.asUint8List();
-
-    //Estilos para el pdf
-    pw.TextStyle font8 = const pw.TextStyle(fontSize: 8);
-
-    pw.TextStyle font8Bold = pw.TextStyle(
-      fontSize: 8,
-      fontWeight: pw.FontWeight.bold,
-    );
-
-    pw.TextStyle font8BoldWhite = pw.TextStyle(
-      color: PdfColors.white,
-      fontSize: 8,
-      fontWeight: pw.FontWeight.bold,
-    );
-
-    PdfColor backCell = PdfColor.fromHex("134895");
-
-    bool isFel = docVM.printFel();
-
-    //Docuemnto pdf nuevo
-    final pdf = pw.Document();
-
-    // Agrega páginas con encabezado y pie de página
-    pdf.addPage(
-      pw.MultiPage(
-        pageFormat: PdfPageFormat.letter.copyWith(
-          marginBottom: 20,
-          marginLeft: 20,
-          marginTop: 20,
-          marginRight: 20,
-        ),
-        build: (pw.Context context) {
-          return [
-            // Contenido de la página 1
-            pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.SizedBox(height: 20),
-                //No interno y vendedor
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text(
-                      'No.Interno: ${documento.noInterno}',
-                      style: font8,
-                    ),
-                    pw.Text(
-                      'Vendedor: $vendedor',
-                      style: font8,
-                    ),
-                  ],
-                ),
-                pw.SizedBox(height: 10),
-                //Datos del cliente
-                pw.Container(
-                  decoration: pw.BoxDecoration(
-                    border: pw.Border.all(
-                      color: PdfColors.black, // Color del borde
-                      width: 1, // Ancho del borde
-                    ),
-                  ),
-                  width: double.infinity,
-                  child: pw.Row(
-                    children: [
-                      pw.Container(
-                        padding: const pw.EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        width: PdfPageFormat.letter.width * 0.70,
-                        decoration: const pw.BoxDecoration(
-                          border: pw.Border(
-                            right: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
-                        child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Row(
-                              children: [
-                                pw.Text(
-                                  "Nombre:",
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.nombre,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                            pw.SizedBox(height: 2),
-                            pw.Row(
-                              children: [
-                                pw.Text(
-                                  "Direccion:",
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.direccion,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                            pw.SizedBox(height: 2),
-                            pw.Row(
-                              children: [
-                                pw.Text(
-                                  "NIT:",
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.nit,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      pw.Container(
-                        padding: const pw.EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          children: [
-                            pw.Row(
-                              children: [
-                                pw.Text(
-                                  "Fecha:",
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.fecha,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                            pw.SizedBox(height: 2),
-                            pw.Row(
-                              children: [
-                                pw.Text(
-                                  "Tel:",
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.tel,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                pw.SizedBox(height: 20),
-                //Detalles del documento
-                pw.Container(
-                  decoration: pw.BoxDecoration(
-                    border: pw.Border.all(
-                      color: PdfColors.black, // Color del borde
-                      width: 1, // Ancho del borde
-                    ),
-                    // borderRadius: pw.BorderRadius.circular(8.0),
-                  ),
-                  width: double.infinity,
-                  child: pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    mainAxisAlignment: pw.MainAxisAlignment.start,
-                    children: [
-                      //Titulos de las columnas
-                      pw.Container(
-                        decoration: pw.BoxDecoration(
-                          color: backCell,
-                          border: const pw.Border(
-                            bottom: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
-                        width: PdfPageFormat.letter.width,
-                        child: pw.Row(
-                          children: [
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
-                              child: pw.Text(
-                                "CODIGO",
-                                style: font8BoldWhite,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                            ),
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
-                              child: pw.Text(
-                                "CANTIDAD",
-                                style: font8BoldWhite,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                            ),
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
-                              child: pw.Text(
-                                "UM",
-                                textAlign: pw.TextAlign.center,
-                                style: font8BoldWhite,
-                              ),
-                            ),
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.40,
-                              child: pw.Text(
-                                "Descripcion",
-                                style: font8BoldWhite,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                            ),
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
-                              child: pw.Text(
-                                "UNITARIO",
-                                textAlign: pw.TextAlign.center,
-                                style: font8BoldWhite,
-                              ),
-                            ),
-                            pw.Container(
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
-                              child: pw.Text(
-                                "TOTAL",
-                                textAlign: pw.TextAlign.center,
-                                style: font8BoldWhite,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      pw.SizedBox(height: 5),
-                      //Deatlles (Prductos/transacciones)
-                      pw.ListView.builder(
-                        itemCount: detallesTemplate.length,
-                        itemBuilder: (context, index) {
-                          //Detalle
-                          final DetalleModel detalle = detallesTemplate[index];
-                          return pw.Row(
-                            children: [
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  detalle.productoId,
-                                  textAlign: pw.TextAlign.center,
-                                  style: font8,
-                                ),
-                              ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  "${detalle.cantidad}",
-                                  textAlign: pw.TextAlign.center,
-                                  style: font8,
-                                ),
-                              ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  detalle.simbolo,
-                                  textAlign: pw.TextAlign.center,
-                                  style: font8,
-                                ),
-                              ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.40,
-                                child: pw.Text(
-                                  detalle.desProducto,
-                                  textAlign: pw.TextAlign.left,
-                                  style: font8,
-                                ),
-                              ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  detalle.montoUMTipoMoneda,
-                                  textAlign: pw.TextAlign.right,
-                                  style: font8,
-                                ),
-                              ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  detalle.montoTotalTipoMoneda,
-                                  textAlign: pw.TextAlign.right,
-                                  style: font8,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-
-                      pw.SizedBox(height: 5),
-                      //Total del documento
-                      pw.Container(
-                        decoration: const pw.BoxDecoration(
-                          border: pw.Border(
-                            top: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
-                        width: PdfPageFormat.letter.width,
-                        child: pw.Row(
-                          children: [
-                            pw.Container(
-                              padding: const pw.EdgeInsets.all(5),
-                              decoration: pw.BoxDecoration(
-                                color: backCell,
-                                border: const pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              width: PdfPageFormat.letter.width * 0.80,
-                              child: pw.Text(
-                                "TOTAL:",
-                                style: font8BoldWhite,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                            ),
-                            pw.Expanded(
-                              child: pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                child: pw.Text(
-                                  currencyFormat.format(detailsVM.total),
-                                  style: font8Bold,
-                                  textAlign: pw.TextAlign.center,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      pw.Container(
-                        width: PdfPageFormat.letter.width,
-                        padding: const pw.EdgeInsets.all(5),
-                        decoration: const pw.BoxDecoration(
-                          border: pw.Border(
-                            top: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
-                        child: pw.Text(
-                          "TOTAL EN LETRAS: ${encabezado.montoLetras}."
-                              .toUpperCase(),
-                          style: font8Bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //TODO: Mostrar frase
-                // pw.SizedBox(height: 10),
-                // pw.Center(
-                //   child: pw.Text(
-                //     "**SUJETO A PAGOS TRIMESTRALES**",
-                //     style: pw.TextStyle(
-                //       fontSize: 9,
-                //       fontWeight: pw.FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
-                pw.SizedBox(height: 5),
-                pw.Center(
-                  child: pw.Text(
-                    "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
-                    style: pw.TextStyle(
-                      fontSize: 9,
-                      fontWeight: pw.FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ];
-        },
-        //encabezado
-        header: (pw.Context context) => buildHeader(
-          logoData,
-          empresa,
-          documento,
-          isFel,
-        ),
-        //pie de pagina
-        footer: (pw.Context context) => buildFooter(
-          logoDemo,
-          logoFel,
-          encabezado,
-          isFel,
-        ),
-      ),
-    );
-
-    //Crear y guardar el pdf
-    final directory = await getTemporaryDirectory();
-    final filePath = '${directory.path}/${DateTime.now().toString()}.pdf';
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
-
-    //Detener proceso de carag
     isLoading = false;
-    //compartir documento
-    Share.shareFiles([filePath], text: 'Here is your PDF file');
-  }
-
-  //encabezado del pdf
-  pw.Widget buildHeader(
-    Uint8List logo,
-    Empresa empresa,
-    Documento documento,
-    bool isFel,
-  ) {
-    return pw.Container(
-      margin: const pw.EdgeInsets.only(bottom: 10),
-      child: pw.Row(
-        children: [
-          // Item 1 (50%)
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.20,
-            height: 65,
-            child: pw.Image(
-              pw.MemoryImage(logo),
-            ),
-          ),
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.10,
-          ),
-          // Item 2 (25%)
-          pw.Container(
-            margin: const pw.EdgeInsets.symmetric(horizontal: 15),
-            width: PdfPageFormat.letter.width * 0.40,
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.center,
-              children: [
-                pw.Text(
-                  empresa.razonSocial,
-                  style: pw.TextStyle(
-                    fontSize: 10,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                  textAlign: pw.TextAlign.center,
-                ),
-                pw.Text(
-                  empresa.nombre,
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                  ),
-                  textAlign: pw.TextAlign.center,
-                ),
-                pw.Text(
-                  empresa.direccion,
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                  ),
-                  textAlign: pw.TextAlign.center,
-                ),
-                pw.Text(
-                  "NIT: ${empresa.nit}",
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                  ),
-                  textAlign: pw.TextAlign.center,
-                ),
-                pw.Text(
-                  "TEL: ${empresa.tel}",
-                  style: const pw.TextStyle(
-                    fontSize: 9,
-                  ),
-                  textAlign: pw.TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.02,
-          ),
-          // Item 3 (25%)
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.30,
-            child: isFel
-                ? pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text(
-                        documento.descripcion,
-                        style: pw.TextStyle(
-                          fontSize: 8,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                      pw.Text(
-                        documento.titulo,
-                        style: pw.TextStyle(
-                          fontSize: 8,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                      pw.Text(
-                        'Serie: ${documento.serie}',
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                        ),
-                      ),
-                      pw.Text(
-                        'Numero: ${documento.no}',
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                        ),
-                      ),
-                      pw.Text(
-                        'Fecha de certificacion: ${documento.fechaCert}',
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                        ),
-                      ),
-                      pw.Text(
-                        'Firma electronica:',
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                        ),
-                      ),
-                      pw.Text(
-                        documento.autorizacion,
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                        ),
-                      ),
-                    ],
-                  )
-                : pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    children: [
-                      pw.Text(
-                        "DOCUMENTO GENERICO",
-                        style: pw.TextStyle(
-                          fontSize: 8,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                      pw.Text(
-                        documento.titulo,
-                        style: pw.TextStyle(
-                          fontSize: 8,
-                          fontWeight: pw.FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  pw.Widget buildFooter(
-    Uint8List logoDemo,
-    Uint8List logoFel,
-    EncabezadoModel encabezado,
-    bool isFel,
-  ) {
-    return pw.Container(
-      margin: const pw.EdgeInsets.only(top: 10),
-      child: pw.Row(
-        children: [
-          // Item 1 (50%)
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.20,
-            height: 35,
-            child: pw.Image(
-              pw.MemoryImage(logoFel),
-            ),
-          ),
-
-          // Item 2 (25%)
-          pw.Container(
-            margin: const pw.EdgeInsets.symmetric(horizontal: 15),
-            width: PdfPageFormat.letter.width * 0.70,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-              children: [
-                if (isFel)
-                  pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.center,
-                    children: [
-                      pw.Text(
-                        "Datos del ceritificador",
-                        style: const pw.TextStyle(
-                            fontSize: 8, color: PdfColors.grey),
-                        textAlign: pw.TextAlign.center,
-                      ),
-                      pw.Text(
-                        "Nit: ${encabezado.certificadorDteNit}",
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                          color: PdfColors.grey,
-                        ),
-                        textAlign: pw.TextAlign.center,
-                      ),
-                      pw.Text(
-                        "Nombre: ${encabezado.certificadorDteNombre}",
-                        style: const pw.TextStyle(
-                          fontSize: 8,
-                          color: PdfColors.grey,
-                        ),
-                        textAlign: pw.TextAlign.center,
-                      ),
-                    ],
-                  ),
-                pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.center,
-                  children: [
-                    pw.Text(
-                      "Powered By:",
-                      style: const pw.TextStyle(
-                          fontSize: 8, color: PdfColors.grey),
-                      textAlign: pw.TextAlign.center,
-                    ),
-                    pw.Text(
-                      "Desarrollo Moderno de Software S.A",
-                      style: const pw.TextStyle(
-                          fontSize: 8, color: PdfColors.grey),
-                      textAlign: pw.TextAlign.center,
-                    ),
-                    pw.Text(
-                      "www.demosoft.com.gt",
-                      style: const pw.TextStyle(
-                          fontSize: 8, color: PdfColors.grey),
-                      textAlign: pw.TextAlign.center,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          // Item 3 (25%)
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.20,
-            height: 45,
-            child: pw.Image(
-              pw.MemoryImage(logoDemo),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   //devuelve el tipo de transaccion que se va a usar
@@ -962,15 +125,250 @@ class ConfirmDocViewModel extends ChangeNotifier {
     return 0;
   }
 
+  printNetwork() async {
+    //Proveedor de datos externo
+    final loginVM = Provider.of<LoginViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.user;
+    String tokenUser = loginVM.token;
+
+    isLoading = true;
+
+    final DocumentService documentService = DocumentService();
+
+    final ApiResModel res = await documentService.getDataComanda(
+      user, // user,
+      tokenUser, // token,
+      consecutivoDoc, // consecutivo,
+    );
+
+    if (!res.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(
+        scaffoldKey.currentContext!,
+        res,
+      );
+
+      return;
+    }
+
+    final List<PrintDataComandaModel> detalles = res.message;
+
+    final List<FormatoComanda> formats = [];
+
+    for (var detalle in detalles) {
+      if (formats.isEmpty) {
+        formats.add(
+          FormatoComanda(
+            ipAdress: detalle.printerName,
+            bodega: detalle.bodega,
+            detalles: [detalle],
+          ),
+        );
+      } else {
+        int indexBodega = -1;
+
+        for (var i = 0; i < formats.length; i++) {
+          final FormatoComanda formato = formats[i];
+          if (detalle.bodega == formato.bodega) {
+            indexBodega = i;
+            break;
+          }
+        }
+
+        if (indexBodega == -1) {
+          formats.add(
+            FormatoComanda(
+              ipAdress: detalle.printerName,
+              bodega: detalle.bodega,
+              detalles: [detalle],
+            ),
+          );
+        } else {
+          formats[indexBodega].detalles.add(detalle);
+        }
+      }
+    }
+
+    int paperDefault = 80; //58 //72 //80
+
+    PosStyles center = const PosStyles(
+      align: PosAlign.center,
+    );
+
+    // final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
+    // final Uint8List bytesImg = data.buffer.asUint8List();
+    // final img.Image? image = decodeImage(bytesImg);
+
+    for (var element in formats) {
+      try {
+        List<int> bytes = [];
+        final generator = Generator(
+          AppData.paperSize[paperDefault],
+          await CapabilityProfile.load(),
+        );
+
+        bytes += generator.setGlobalCodeTable('CP1252');
+
+        // bytes += generator.image(
+        //   img.copyResize(image!, height: 200, width: 250),
+        // );
+        bytes += generator.text(
+          element.detalles[0].desUbicacion,
+          styles: const PosStyles(
+            bold: true,
+            align: PosAlign.center,
+            height: PosTextSize.size2,
+          ),
+        );
+
+        bytes += generator.text(
+          "Mesa: ${element.detalles[0].desMesa.toUpperCase()}",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].idDocumento}",
+          styles: const PosStyles(
+            bold: true,
+            align: PosAlign.center,
+            height: PosTextSize.size2,
+          ),
+        );
+
+        bytes += generator.emptyLines(1);
+
+        //Incio del formato
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: 'Cant.',
+              width: 2,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+            ),
+            PosColumn(
+              text: '',
+              width: 1,
+              styles: const PosStyles(
+                align: PosAlign.left,
+              ),
+            ),
+            PosColumn(
+              text: 'Descripción',
+              width: 9,
+              styles: const PosStyles(
+                align: PosAlign.left,
+              ),
+            ),
+          ],
+        );
+
+        for (var tra in element.detalles) {
+          bytes += generator.row(
+            [
+              PosColumn(
+                text: "${tra.cantidad}",
+                width: 2,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.right,
+                ),
+              ),
+              PosColumn(
+                text: "",
+                width: 1,
+              ), // Anc/ Ancho 2
+              PosColumn(
+                text: tra.desProducto,
+                width: 9,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.left,
+                ),
+              ), // Ancho 6
+            ],
+          );
+        }
+
+        bytes += generator.emptyLines(1);
+
+        bytes += generator.text(
+          "Le atendió: ${element.detalles[0].userName.toUpperCase()}",
+          styles: center,
+        );
+
+        final now = element.detalles[0].fechaHora;
+
+        bytes += generator.text(
+          "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}",
+          styles: center,
+        );
+
+        bytes += generator.emptyLines(2);
+
+        bytes += generator.text(
+          "----------------------------",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "Powered By:",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "Desarrollo Moderno de Software S.A.",
+          styles: center,
+        );
+        bytes += generator.text(
+          "www.demosoft.com.gt",
+          styles: center,
+        );
+
+        bytes += generator.cut();
+
+        await PrinterManager.instance.connect(
+          type: PrinterType.network,
+          model: TcpPrinterInput(
+            ipAddress: element.ipAdress,
+          ),
+        );
+
+        await instanceManager.send(
+          type: PrinterType.network,
+          bytes: bytes,
+        );
+      } catch (e) {
+        print(e.toString());
+        isLoading = false;
+        NotificationService.showSnackbar("No se pudo imprimir.");
+        return;
+      }
+    }
+
+    isLoading = false;
+  }
+
   //Navgar a pantalla de impresion
   navigatePrint(BuildContext context) {
+    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
-      arguments: [
-        2,
-        consecutivoDoc, //documento que se tiene que imprimmir
-      ],
+      arguments: PrintDocSettingsModel(
+        opcion: 2,
+        consecutivoDoc: consecutivoDoc,
+        cuentaCorrentistaRef: vmDoc.vendedorSelect?.nomCuentaCorrentista,
+        client: vmDoc.clienteSelect,
+      ),
     );
   }
 
@@ -1065,7 +463,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendDoc(BuildContext context) async {
+  Future<void> sendDoc(
+    BuildContext context,
+    int screen,
+  ) async {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     if (docVM.printFel()) {
@@ -1073,23 +474,27 @@ class ConfirmDocViewModel extends ChangeNotifier {
     } else {
       isLoading = true;
       ApiResModel sendProcess = await sendDocument();
-      isLoading = false;
 
       if (!sendProcess.succes) {
-        ErrorModel errorView = ErrorModel(
-          date: DateTime.now(),
-          description: sendProcess.message,
-          url: sendProcess.url,
-          storeProcedure: sendProcess.storeProcedure,
-        );
+        isLoading = false;
 
-        NotificationService.showErrorView(context, errorView);
+        NotificationService.showErrorView(context, sendProcess);
 
         return;
       }
 
       consecutivoDoc = sendProcess.message["data"];
       showPrint = true;
+
+      if (directPrint) {
+        if (screen == 1) {
+          navigatePrint(context);
+        } else {
+          printNetwork();
+        }
+      }
+
+      isLoading = false;
     }
   }
 
@@ -1212,7 +617,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //usuario token y cadena de conexion
     String conStr = loginVM.conStr;
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String tokenUser = loginVM.token;
 
     //Servicio para documentos
@@ -1621,11 +1026,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
         listen: false);
     final paymentVM = Provider.of<PaymentViewModel>(scaffoldKey.currentContext!,
         listen: false);
-    final vmHome =
-        Provider.of<HomeViewModel>(scaffoldKey.currentContext!, listen: false);
 
     //usuario token y cadena de conexion
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String tokenUser = loginVM.token;
 
     //valores necesarios para el docuemento
@@ -1646,6 +1049,15 @@ class ConfirmDocViewModel extends ChangeNotifier {
     //transaciciones agregadas
     final List<DocTransaccion> transactions = [];
 
+    var random = Random();
+
+    // Generar dos números aleatorios de 7 dígitos cada uno
+    int firstPart = random.nextInt(10000000);
+    int secondPart = random.nextInt(10000000);
+
+    // Combinar los dos números para formar uno de 14 dígitos
+    int randomNumber = firstPart * 10000000 + secondPart;
+
     int consectivo = 1;
     //Objeto transaccion documento para estructura documento
     for (var transaction in products) {
@@ -1659,13 +1071,14 @@ class ConfirmDocViewModel extends ChangeNotifier {
           consectivo++;
           cargos.add(
             DocTransaccion(
+              dConsecutivoInterno: firstPart,
               traConsecutivoInterno: consectivo,
               traConsecutivoInternoPadre: padre,
               traBodega: transaction.bodega!.bodega,
               traProducto: transaction.producto.producto,
               traUnidadMedida: transaction.producto.unidadMedida,
               traCantidad: 0,
-              traTipoCambio: vmHome.tipoCambio,
+              traTipoCambio: menuVM.tipoCambio,
               traMoneda: transaction.precio!.moneda,
               traTipoPrecio:
                   transaction.precio!.precio ? transaction.precio!.id : null,
@@ -1684,13 +1097,14 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
           descuentos.add(
             DocTransaccion(
+              dConsecutivoInterno: firstPart,
               traConsecutivoInterno: consectivo,
               traConsecutivoInternoPadre: padre,
               traBodega: transaction.bodega!.bodega,
               traProducto: transaction.producto.producto,
               traUnidadMedida: transaction.producto.unidadMedida,
               traCantidad: 0,
-              traTipoCambio: vmHome.tipoCambio,
+              traTipoCambio: menuVM.tipoCambio,
               traMoneda: transaction.precio!.moneda,
               traTipoPrecio:
                   transaction.precio!.precio ? transaction.precio!.id : null,
@@ -1706,13 +1120,14 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       transactions.add(
         DocTransaccion(
+          dConsecutivoInterno: firstPart,
           traConsecutivoInterno: padre,
           traConsecutivoInternoPadre: null,
           traBodega: transaction.bodega!.bodega,
           traProducto: transaction.producto.producto,
           traUnidadMedida: transaction.producto.unidadMedida,
           traCantidad: transaction.cantidad,
-          traTipoCambio: vmHome.tipoCambio,
+          traTipoCambio: menuVM.tipoCambio,
           traMoneda: transaction.precio!.moneda,
           traTipoPrecio:
               transaction.precio!.precio ? transaction.precio!.id : null,
@@ -1735,32 +1150,28 @@ class ConfirmDocViewModel extends ChangeNotifier {
       consectivo++;
     }
 
+    int consecutivoPago = 1;
     //objeto cargo abono para documento cargo abono
     for (var payment in amounts) {
       payments.add(
         DocCargoAbono(
+          dConsecutivoInterno: firstPart,
+          consecutivoInterno: consecutivoPago,
           tipoCargoAbono: payment.payment.tipoCargoAbono,
           monto: payment.amount,
           cambio: payment.diference,
-          tipoCambio: vmHome.tipoCambio,
+          tipoCambio: menuVM.tipoCambio,
           moneda: transactions[0].traMoneda,
-          montoMoneda: payment.amount / vmHome.tipoCambio,
+          montoMoneda: payment.amount / menuVM.tipoCambio,
           referencia: payment.reference,
           autorizacion: payment.authorization,
           banco: payment.bank?.banco,
           cuentaBancaria: payment.account?.idCuentaBancaria,
         ),
       );
+
+      consecutivoPago++;
     }
-
-    var random = Random();
-
-    // Generar dos números aleatorios de 7 dígitos cada uno
-    int firstPart = random.nextInt(10000000);
-    int secondPart = random.nextInt(10000000);
-
-    // Combinar los dos números para formar uno de 14 dígitos
-    int randomNumber = firstPart * 10000000 + secondPart;
 
     double totalCA = 0;
 
@@ -1772,6 +1183,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     final DocEstructuraModel doc = DocEstructuraModel(
+      consecutivoInterno: firstPart,
       docTraMonto: detailsVM.total,
       docCaMonto: totalCA,
       docIdCertificador: 1, //TODO: Agrgar certificador

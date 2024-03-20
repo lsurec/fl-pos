@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 
 class SettingsViewModel extends ChangeNotifier {
@@ -6,10 +7,7 @@ class SettingsViewModel extends ChangeNotifier {
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
-      arguments: [
-        1,
-        0,
-      ],
+      arguments: PrintDocSettingsModel(opcion: 1),
     );
   }
 }

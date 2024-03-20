@@ -10,6 +10,79 @@ class ReceptionService {
   final String _baseUrl = Preferences.urlApi;
 
   //obtener docummentos pendientes de vonvertir
+  Future<ApiResModel> getDataPrint(
+    String token,
+    String user,
+    int documento,
+    int tipoDocumento,
+    String serieDocumento,
+    int empresa,
+    int localizacion,
+    int estacion,
+    int fechaReg,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Recepcion/data/print");
+    try {
+      //url completa
+
+      //configuraci9nes del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "documento": "$documento",
+          "tipoDocumento": "$tipoDocumento",
+          "serieDocumento": serieDocumento,
+          "empresa": "$empresa",
+          "localizacion": "$localizacion",
+          "estacion": "$estacion",
+          "fechaReg": "$fechaReg",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          message: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //documentos disp0onibles
+      List<PrintConvertModel> detalles = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = PrintConvertModel.fromMap(item);
+        //agregar item a la lista
+        detalles.add(responseFinally);
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        message: detalles,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        message: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //obtener docummentos pendientes de vonvertir
   Future<ApiResModel> getDetallesDocDestino(
     String token,
     String user,
@@ -322,8 +395,10 @@ class ReceptionService {
     String user,
     String token,
     int doc,
+    String fechaIni,
+    String fechaFin,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Recepcion/pending/docs/$user/$doc");
+    Uri url = Uri.parse("${_baseUrl}Recepcion/pending/documents");
     try {
       //url completa
 
@@ -332,6 +407,10 @@ class ReceptionService {
         url,
         headers: {
           "Authorization": "bearer $token",
+          "user": user,
+          "doc": "$doc",
+          "fechaIni": fechaIni,
+          "fechaFin": fechaFin,
         },
       );
 

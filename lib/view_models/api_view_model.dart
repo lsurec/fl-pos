@@ -69,16 +69,9 @@ class ApiViewModel extends ChangeNotifier {
 
     //verificar respuesta del servicio si es incorrecta
     if (!res.succes) {
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: null,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }

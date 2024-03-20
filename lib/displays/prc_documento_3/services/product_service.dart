@@ -57,57 +57,6 @@ class ProductService {
     }
   }
 
-  Future<ApiResModel> getDescripcion(
-    String token,
-    int product,
-  ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/descripcion/$product");
-    try {
-      //url completa
-
-      //Configuraciones del api
-      final response = await http.get(
-        url,
-        headers: {
-          "Authorization": "bearer $token",
-        },
-      );
-
-      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
-
-      //si el api no responde
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        return ApiResModel(
-          url: url.toString(),
-          succes: false,
-          message: res.data,
-          storeProcedure: res.storeProcedure,
-        );
-      }
-
-      //respuesta del servicio
-      final resJson = json.decode(response.body);
-
-      RespLogin respLogin = RespLogin.fromMap(resJson);
-
-      //retornar respuesta correcta del api
-      return ApiResModel(
-        url: url.toString(),
-        succes: true,
-        message: respLogin,
-        storeProcedure: null,
-      );
-    } catch (e) {
-      //en caso de error retornar el error
-      return ApiResModel(
-        url: url.toString(),
-        succes: false,
-        message: e.toString(),
-        storeProcedure: null,
-      );
-    }
-  }
-
   //obtener bodegas, existencias de un producto
   Future<ApiResModel> getBodegaProducto(
     String user,
@@ -117,7 +66,7 @@ class ProductService {
     int um,
     String token,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Bodega/producto");
+    Uri url = Uri.parse("${_baseUrl}producto/Bodega");
     try {
       //url completa
 

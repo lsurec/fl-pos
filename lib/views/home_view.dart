@@ -11,6 +11,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<HomeViewModel>(context);
+    final menuVM = Provider.of<MenuViewModel>(context);
 
     return Stack(
       children: [
@@ -25,7 +26,10 @@ class HomeView extends StatelessWidget {
               ],
             ),
             drawer: _MyDrawer(),
-            body: Container(),
+            body: RefreshIndicator(
+              onRefresh: () => menuVM.refreshData(context),
+              child: ListView(),
+            ),
           ),
         ),
         if (vm.isLoading)
@@ -44,8 +48,8 @@ class _MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menuVM = Provider.of<MenuViewModel>(context);
-    List<MenuModel> routeMenu = menuVM.routeMenu;
-    List<MenuModel> menu = menuVM.menuActive;
+    final List<MenuModel> routeMenu = menuVM.routeMenu;
+    final List<MenuModel> menu = menuVM.menuActive;
 
     final screenSize = MediaQuery.of(context).size;
 
@@ -90,39 +94,36 @@ class _MyDrawer extends StatelessWidget {
           ),
           const Divider(),
           Expanded(
-            child: RefreshIndicator(
-              onRefresh: () => menuVM.refreshData(context),
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                itemCount: menu.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Divider();
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  MenuModel itemMenu = menu[index];
-                  return ListTile(
-                    titleTextStyle: AppTheme.normalStyle,
-                    title: Text(
-                      itemMenu.name,
-                    ),
-                    trailing: itemMenu.children.isNotEmpty
-                        ? const Icon(Icons.chevron_right)
-                        : null,
-                    onTap: () => itemMenu.children.isEmpty
-                        ? menuVM.navigateDisplay(
-                            context,
-                            itemMenu.route,
-                            itemMenu.display?.tipoDocumento,
-                            itemMenu.display!.name,
-                            itemMenu.display!.desTipoDocumento,
-                          ) //Mostar contenido
-                        : menuVM.changeMenuActive(
-                            itemMenu.children,
-                            itemMenu,
-                          ), //Mostar rutas
-                  );
-                },
-              ),
+            child: ListView.separated(
+              padding: EdgeInsets.zero,
+              itemCount: menu.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return const Divider();
+              },
+              itemBuilder: (BuildContext context, int index) {
+                MenuModel itemMenu = menu[index];
+                return ListTile(
+                  titleTextStyle: AppTheme.normalStyle,
+                  title: Text(
+                    itemMenu.name,
+                  ),
+                  trailing: itemMenu.children.isNotEmpty
+                      ? const Icon(Icons.chevron_right)
+                      : null,
+                  onTap: () => itemMenu.children.isEmpty
+                      ? menuVM.navigateDisplay(
+                          context,
+                          itemMenu.route,
+                          itemMenu.display?.tipoDocumento,
+                          itemMenu.display!.name,
+                          itemMenu.display!.desTipoDocumento,
+                        ) //Mostar contenido
+                      : menuVM.changeMenuActive(
+                          itemMenu.children,
+                          itemMenu,
+                        ), //Mostar rutas
+                );
+              },
             ),
           ),
           const _FooterDrawer(),

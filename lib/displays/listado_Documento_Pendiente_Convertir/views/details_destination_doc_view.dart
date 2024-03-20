@@ -19,6 +19,9 @@ class DetailsDestinationDocView extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
+            bottomNavigationBar: _PrintActions(
+              document: document,
+            ),
             appBar: AppBar(
               title: const Text(
                 "Documento Procesado",
@@ -26,10 +29,9 @@ class DetailsDestinationDocView extends StatelessWidget {
               ),
               actions: [
                 IconButton(
-                  tooltip: "Imprimir",
-                  onPressed: () => vm.printDoc(context),
-                  icon: const Icon(Icons.print_outlined),
-                )
+                  onPressed: () => vm.shareDoc(context, document),
+                  icon: const Icon(Icons.share),
+                ),
               ],
             ),
             body: RefreshIndicator(
@@ -42,7 +44,7 @@ class DetailsDestinationDocView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextsWidget(
-                          title: "Documento: ",
+                          title: "ID del Documento: ",
                           text: "${document.data.documento}",
                         ),
                         const SizedBox(height: 3),
@@ -123,6 +125,73 @@ class DetailsDestinationDocView extends StatelessWidget {
               color: AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
+        ],
+      ),
+    );
+  }
+}
+
+class _PrintActions extends StatelessWidget {
+  const _PrintActions({
+    super.key,
+    required this.document,
+  });
+
+  final DocDestinationModel document;
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<DetailsDestinationDocViewModel>(context);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      height: 75,
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => vm.backPage(context),
+              child: Container(
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  right: 10,
+                ),
+                color: AppTheme.primary,
+                child: const Center(
+                  child: Text(
+                    "Listo",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => vm.printDoc(context, document),
+              child: Container(
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  bottom: 10,
+                  left: 10,
+                ),
+                color: AppTheme.primary,
+                child: const Center(
+                  child: Text(
+                    "Imprimir",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class UserWidget extends StatelessWidget {
@@ -23,9 +24,7 @@ class UserWidget extends StatelessWidget {
           color: AppTheme.primary,
           child: Center(
             child: Text(
-              vmLogin.nameUser.isNotEmpty
-                  ? vmLogin.nameUser[0].toUpperCase()
-                  : "",
+              vmLogin.user.isNotEmpty ? vmLogin.user[0].toUpperCase() : "",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -46,7 +45,14 @@ void _showUserInfoModal(
   final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
   final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
   final vmHome = Provider.of<HomeViewModel>(context, listen: false);
+  final vmMenu = Provider.of<MenuViewModel>(context, listen: false);
 
+  // Crear una instancia de NumberFormat para el formato de moneda
+  final currencyFormat = NumberFormat.currency(
+    symbol: vmHome
+        .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+    decimalDigits: 2, // Número de decimales a mostrar
+  );
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -73,7 +79,7 @@ void _showUserInfoModal(
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         title: Text(
-                          vmLogin.nameUser.toUpperCase(),
+                          vmLogin.user.toUpperCase(),
                           style: AppTheme.normalStyle,
                         ),
                         leading: IconButton(
@@ -85,7 +91,7 @@ void _showUserInfoModal(
                               color: AppTheme.primary,
                               child: Center(
                                 child: Text(
-                                  vmLogin.nameUser[0].toUpperCase(),
+                                  vmLogin.user[0].toUpperCase(),
                                   style: const TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -118,16 +124,17 @@ void _showUserInfoModal(
                           style: AppTheme.normalStyle,
                         ),
                       ),
-                      ListTile(
-                        title: const Text(
-                          "Tipo cambio",
-                          style: AppTheme.normalBoldStyle,
+                      if (vmMenu.tipoCambio != 0)
+                        ListTile(
+                          title: const Text(
+                            "Tipo cambio",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          subtitle: Text(
+                            currencyFormat.format(vmMenu.tipoCambio),
+                            style: AppTheme.normalStyle,
+                          ),
                         ),
-                        subtitle: Text(
-                          vmHome.tipoCambio.toStringAsPrecision(2),
-                          style: AppTheme.normalStyle,
-                        ),
-                      ),
                     ],
                   ),
                 ),

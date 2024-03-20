@@ -2,15 +2,12 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -18,204 +15,118 @@ import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:share/share.dart';
 
-class DetailsDestinationDocViewModel extends ChangeNotifier {
-  //controlar procesos
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+import '../displays/prc_documento_3/services/services.dart';
 
-  set isLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  //Detalles del documento destino
-  final List<DestinationDetailModel> detalles = [];
-
-  //cargar datos necesarios
-  Future<void> loadData(
+class ShareDocViewModel extends ChangeNotifier {
+  //generar formato pdf para compartir
+  Future<void> sheredDoc(
     BuildContext context,
-    DocDestinationModel document, //Documento destino
+    int consecutivoDoc,
+    String? vendedorDoc,
+    ClientModel clientDoc,
+    double totalDoc,
   ) async {
-    //datos externos
+    //instancia del servicio
+    DocumentService documentService = DocumentService();
+    //Proveedores externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-    final String token = loginVM.token;
-    final String user = loginVM.user;
 
-    //Servicio
-    final ReceptionService receptionService = ReceptionService();
+    //usario y token
+    String user = loginVM.user;
+    String token = loginVM.token;
 
-    //limmpiar detlles previos
-    detalles.clear();
+    //consumir servicio obtener encabezados
+    ApiResModel resEncabezado = await documentService.getEncabezados(
+      consecutivoDoc, // doc,
+      user, // user,
+      token, // token,
+    );
 
-    //Iniciar pantalla de carga
-    isLoading = true;
+    //valid succes response
+    //Si el api falló
+    if (!resEncabezado.succes) {
+      await NotificationService.showErrorView(context, resEncabezado);
 
-    //Consumo del api para obtenr los detalles del documento destino
-    final ApiResModel res = await receptionService.getDetallesDocDestino(
-        token, // token,
-        user, // user,
-        document.data.documento, // documento,
-        document.data.tipoDocumento, // tipoDocumento,
-        document.data.serieDocumento, // serieDocumento,
-        document.data.empresa, // epresa,
-        document.data.localizacion, // localizacion,
-        document.data.estacion, // estacion,
-        document.data.fechaReg // fechaReg,
-        );
+      return;
+    }
 
-    //detener carga
-    isLoading = false;
+    //encabezados encontrados
+    List<EncabezadoModel> encabezadoTemplate = resEncabezado.message;
 
-    //si el consumo salió mal
-    if (!res.succes) {
-      NotificationService.showErrorView(
-        context,
-        res,
+    //consumir servicio obetener detalles del documento
+    ApiResModel resDetalle = await documentService.getDetalles(
+      consecutivoDoc, // doc,
+      user, // user,
+      token, // token,
+    );
+
+    //valid succes response
+    if (!resDetalle.succes) {
+      //finalozar el proceso
+
+      //mostrar alerta
+      await NotificationService.showErrorView(context, resDetalle);
+
+      return;
+    }
+
+    //Detalles del documento
+    List<DetalleModel> detallesTemplate = resDetalle.message;
+
+    //validar que haya datos para imprimir
+    if (encabezadoTemplate.isEmpty || detallesTemplate.isEmpty) {
+      NotificationService.showSnackbar(
+        "No hay datos para imprimir, intente más tarde.",
       );
 
       return;
     }
 
-    //agregar detalles
-    detalles.addAll(res.message);
-  }
+    //Encabezado
+    final EncabezadoModel encabezado = encabezadoTemplate.first;
 
-  //Salir de la pantalla
-  Future<bool> backPage(BuildContext context) async {
-    //proveedores externos de datos
-    final vmPend = Provider.of<PendingDocsViewModel>(context, listen: false);
-    final vmConvert = Provider.of<ConvertDocViewModel>(context, listen: false);
-
-    //desmarcar csilla seleccionar transacciones
-    vmConvert.selectAllTra = false;
-
-    //iniciar carga
-    isLoading = true;
-
-    //cardar documentos origrn
-    await vmPend.laodData(context);
-
-    //regresar a docuemntos pendientes de recepcionar
-    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.pendingDocs));
-
-    //Detener carga
-    isLoading = false;
-
-    return false;
-  }
-
-  //imprimir docuemnto
-  printDoc(
-    BuildContext context,
-    DocDestinationModel document,
-  ) {
-    //navegar a pantalla de impresion
-    Navigator.pushNamed(
-      context,
-      AppRoutes.printer,
-      arguments: PrintDocSettingsModel(
-        opcion: 3,
-        destination: document,
-      ),
-    );
-  }
-
-  Future shareDoc(
-    BuildContext context,
-    DocDestinationModel document,
-  ) async {
-    //datos externos
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
-    final String token = loginVM.token;
-    final String user = loginVM.user;
-
-    //Buscar datos paar imprimir
-    final ReceptionService receptionService = ReceptionService();
-
-    isLoading = true;
-
-    final ApiResModel res = await receptionService.getDataPrint(
-      token, //token,
-      user, //user,
-      document.data.documento, //documento,
-      document.data.tipoDocumento, //tipoDocumento,
-      document.data.serieDocumento, //serieDocumento,
-      document.data.empresa, //empresa,
-      document.data.localizacion, //localizacion,
-      document.data.estacion, //estacion,
-      document.data.fechaReg, //fechaReg,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      NotificationService.showErrorView(
-        context,
-        res,
-      );
-
-      return;
-    }
-
-    final List<PrintConvertModel> data = res.message;
-
-    if (data.isEmpty) {
-      isLoading = false;
-
-      res.message =
-          "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.";
-
-      NotificationService.showErrorView(context, res);
-
-      return;
-    }
-
-    final vmHome = Provider.of<HomeViewModel>(context, listen: false);
-
-    // Crear una instancia de NumberFormat para el formato de moneda
-    final currencyFormat = NumberFormat.currency(
-      symbol: vmHome
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
-    );
-
-    final PrintConvertModel encabezado = data.first;
-
+    //Empresa (impresion)
     Empresa empresa = Empresa(
-      razonSocial: encabezado.razonSocial ?? "",
-      nombre: encabezado.empresaNombre ?? "",
-      direccion: encabezado.empresaDireccion ?? "",
-      nit: encabezado.empresaNit ?? "",
-      tel: encabezado.empresaTelefono ?? "",
+      razonSocial: encabezado.razonSocial!,
+      nombre: encabezado.empresaNombre!,
+      direccion: encabezado.empresaDireccion!,
+      nit: encabezado.empresaNit!,
+      tel: encabezado.empresaTelefono!,
     );
 
-    //TODO: Certificar
+    //TODO: Remplazar datos de certificacion
     Documento documento = Documento(
       titulo: encabezado.tipoDocumento!,
-      descripcion: "DOCUMENTO GENERICO",
-      fechaCert: "",
-      serie: "",
-      no: "",
-      autorizacion: "",
+      descripcion: "DOCUMENTO TRIBUTARIO ELECTRONICO", //Documenyo generico
+      fechaCert: encabezado.feLFechaCertificacion ?? "",
+      serie: encabezado.feLSerie ?? "",
+      no: encabezado.feLNumeroDocumento ?? "",
+      autorizacion: encabezado.feLUuid ?? "",
       noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
     );
 
+    //fecha del usuario
     DateTime now = DateTime.now();
 
     // Formatear la fecha como una cadena
     String formattedDate =
         "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
 
+    //Cliente seleccionado
     Cliente cliente = Cliente(
-      nombre: encabezado.documentoNombre ?? "",
-      direccion: encabezado.documentoDireccion ?? "",
-      nit: encabezado.documentoNit ?? "",
+      nombre: clientDoc.facturaNombre,
+      direccion: clientDoc.facturaDireccion,
+      nit: clientDoc.facturaNit,
       fecha: formattedDate,
-      tel: encabezado.documentoTelefono ?? "",
+      tel: clientDoc.telefono,
     );
 
-    String vendedor = encabezado.atendio ?? "";
+    // Crear una instancia de NumberFormat para el formato de moneda
+    final currencyFormat = NumberFormat.currency(
+      symbol: detallesTemplate[0]
+          .simboloMoneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      decimalDigits: 2, // Número de decimales a mostrar
+    );
 
     //Logos para el pdf
     final ByteData logoEmpresa = await rootBundle.load('assets/empresa.png');
@@ -242,6 +153,8 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     );
 
     PdfColor backCell = PdfColor.fromHex("134895");
+
+    bool isFel = false;
 
     //Docuemnto pdf nuevo
     final pdf = pw.Document();
@@ -271,7 +184,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                       style: font8,
                     ),
                     pw.Text(
-                      'Vendedor: $vendedor',
+                      'Vendedor: $vendedorDoc ?? ' '',
                       style: font8,
                     ),
                   ],
@@ -519,17 +432,17 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                       pw.SizedBox(height: 5),
                       //Deatlles (Prductos/transacciones)
                       pw.ListView.builder(
-                        itemCount: data.length,
+                        itemCount: detallesTemplate.length,
                         itemBuilder: (context, index) {
                           //Detalle
-                          final PrintConvertModel detalle = data[index];
+                          final DetalleModel detalle = detallesTemplate[index];
                           return pw.Row(
                             children: [
                               pw.Container(
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
-                                  detalle.productoId ?? "",
+                                  detalle.productoId,
                                   textAlign: pw.TextAlign.center,
                                   style: font8,
                                 ),
@@ -547,7 +460,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
-                                  detalle.simbolo ?? "",
+                                  detalle.simbolo,
                                   textAlign: pw.TextAlign.center,
                                   style: font8,
                                 ),
@@ -556,7 +469,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.40,
                                 child: pw.Text(
-                                  detalle.desProducto ?? "",
+                                  detalle.desProducto,
                                   textAlign: pw.TextAlign.left,
                                   style: font8,
                                 ),
@@ -565,7 +478,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
-                                  detalle.montoUMTipoMoneda ?? "",
+                                  detalle.montoUMTipoMoneda,
                                   textAlign: pw.TextAlign.right,
                                   style: font8,
                                 ),
@@ -574,7 +487,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
-                                  detalle.montoTotalTipoMoneda ?? "",
+                                  detalle.montoTotalTipoMoneda,
                                   textAlign: pw.TextAlign.right,
                                   style: font8,
                                 ),
@@ -620,9 +533,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               child: pw.Container(
                                 padding: const pw.EdgeInsets.all(5),
                                 child: pw.Text(
-                                  currencyFormat.format(
-                                      (encabezado.subTotal ?? 0) +
-                                          (encabezado.descuento ?? 0)),
+                                  currencyFormat.format(totalDoc),
                                   style: font8Bold,
                                   textAlign: pw.TextAlign.center,
                                 ),
@@ -681,14 +592,14 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
           logoData,
           empresa,
           documento,
-          false,
+          isFel,
         ),
         //pie de pagina
         footer: (pw.Context context) => buildFooter(
           logoDemo,
           logoFel,
           encabezado,
-          false,
+          isFel,
         ),
       ),
     );
@@ -700,7 +611,6 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     await file.writeAsBytes(await pdf.save());
 
     //Detener proceso de carag
-    isLoading = false;
     //compartir documento
     Share.shareFiles([filePath], text: 'Here is your PDF file');
   }
@@ -857,7 +767,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
   pw.Widget buildFooter(
     Uint8List logoDemo,
     Uint8List logoFel,
-    PrintConvertModel encabezado,
+    EncabezadoModel encabezado,
     bool isFel,
   ) {
     return pw.Container(
@@ -866,11 +776,13 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
         children: [
           // Item 1 (50%)
           pw.Container(
-              width: PdfPageFormat.letter.width * 0.20,
-              height: 35,
-              child: pw.Image(
-                pw.MemoryImage(logoFel),
-              )),
+            width: PdfPageFormat.letter.width * 0.20,
+            height: 35,
+            child: pw.Image(
+              pw.MemoryImage(logoFel),
+            ),
+          ),
+
           // Item 2 (25%)
           pw.Container(
             margin: const pw.EdgeInsets.symmetric(horizontal: 15),
@@ -882,28 +794,28 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.center,
                     children: [
-                      //   pw.Text(
-                      //     "Datos del ceritificador",
-                      //     style: const pw.TextStyle(
-                      //         fontSize: 8, color: PdfColors.grey),
-                      //     textAlign: pw.TextAlign.center,
-                      //   ),
-                      //   pw.Text(
-                      //     "Nit: ${encabezado.certificadorDteNit}",
-                      //     style: const pw.TextStyle(
-                      //       fontSize: 8,
-                      //       color: PdfColors.grey,
-                      //     ),
-                      //     textAlign: pw.TextAlign.center,
-                      //   ),
-                      //   pw.Text(
-                      //     "Nombre: ${encabezado.certificadorDteNombre}",
-                      //     style: const pw.TextStyle(
-                      //       fontSize: 8,
-                      //       color: PdfColors.grey,
-                      //     ),
-                      //     textAlign: pw.TextAlign.center,
-                      //   ),
+                      pw.Text(
+                        "Datos del ceritificador",
+                        style: const pw.TextStyle(
+                            fontSize: 8, color: PdfColors.grey),
+                        textAlign: pw.TextAlign.center,
+                      ),
+                      pw.Text(
+                        "Nit: ${encabezado.certificadorDteNit}",
+                        style: const pw.TextStyle(
+                          fontSize: 8,
+                          color: PdfColors.grey,
+                        ),
+                        textAlign: pw.TextAlign.center,
+                      ),
+                      pw.Text(
+                        "Nombre: ${encabezado.certificadorDteNombre}",
+                        style: const pw.TextStyle(
+                          fontSize: 8,
+                          color: PdfColors.grey,
+                        ),
+                        textAlign: pw.TextAlign.center,
+                      ),
                     ],
                   ),
                 pw.Column(

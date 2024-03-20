@@ -1,12 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/documento_resumen_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/services/empresa_service.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/services/estacion_service.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -21,507 +25,408 @@ class RecentViewModel extends ChangeNotifier {
   }
 
   //Lista de documentos recentes
-  final List<GetDocModel> documents = [];
-
-  final List<TipoTransaccionModel> tiposTransacciones = [];
-
-  Future<void> loadTipoTransaccion(
-    BuildContext context,
-    int documento,
-    String serie,
-    int empresa,
-    String token,
-    String user,
-  ) async {
-    //instancia del servicio
-    tiposTransacciones.clear();
-    TipoTransaccionService tipoTransaccionService = TipoTransaccionService();
-
-    //consumo del api
-    ApiResModel res = await tipoTransaccionService.getTipoTransaccion(
-      documento, // documento,
-      serie, // serie,
-      empresa, // empresa,
-      token, // token,
-      user, // user,
-    );
-
-    //valid succes response
-    if (!res.succes) {
-      //si algo salio mal mostrar alerta
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(
-        context,
-        error,
-      );
-      return;
-    }
-
-    //Agregar series encontradas
-    tiposTransacciones.addAll(res.message);
-  }
-
-  //devuelve el tipo de transaccion que se va a usar
-  int resolveTipoTransaccion(
-    int tipo,
-  ) {
-    for (var i = 0; i < tiposTransacciones.length; i++) {
-      final TipoTransaccionModel tipoTra = tiposTransacciones[i];
-
-      if (tipo == tipoTra.tipo) {
-        return tipoTra.tipoTransaccion;
-      }
-    }
-
-    //si no encunetra el tipo
-    return 0;
-  }
+  final List<DocumentoResumenModel> documents = [];
 
   //Navegar a vista detalles
   Future<void> navigateView(
     BuildContext context,
-    GetDocModel doc,
+    DocumentoResumenModel doc,
   ) async {
-    //Documento estructura json
-    DocEstructuraModel document = DocEstructuraModel.fromJson(
-      doc.estructura,
-    );
-
     //Proveedor de datos externo
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
 
     //usuario y token
     String token = vmLogin.token;
-    String user = vmLogin.nameUser;
+    String user = doc.estructura.docUserName;
+    int empresaId = doc.estructura.docEmpresa;
+    int estacionid = doc.estructura.docEstacionTrabajo;
+    int documento = doc.estructura.docTipoDocumento;
+    String serieDoc = doc.estructura.docSerieDocumento;
+    int cuentaCorrentista = doc.estructura.docCuentaCorrentista;
+    int cuentaCorrentistaRef = doc.estructura.docCuentaVendedor ?? 0;
 
-    //empresa del documento
-    int empresa = document.docEmpresa;
-    int documento = document.docTipoDocumento;
-    String serie = document.docSerieDocumento;
+    EmpresaModel? empresa;
+    EstacionModel? estacion;
+    String documentoDesc = "";
+    String serieDesc = "";
+    ClientModel? client;
+    String seller = "";
 
-    //servicio para cuentas
-    CuentaService cuentaService = CuentaService();
-
-    //iniciar proceso
     isLoading = true;
 
-    //buscar nombre del cliente
-    ApiResModel resNameClient = await cuentaService.getNombreCuenta(
-      token, //token
-      document.docCuentaCorrentista, //nombre del cliente (documento)
+    final EmpresaService empresaService = EmpresaService();
+
+    final ApiResModel resEmpresa = await empresaService.getEmpresa(user, token);
+
+    //Si el api para  falló
+    if (!resEmpresa.succes) {
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        resEmpresa,
+      );
+      return;
+    }
+
+    final List<EmpresaModel> empresas = resEmpresa.message;
+
+    for (var i = 0; i < empresas.length; i++) {
+      final EmpresaModel item = empresas[i];
+
+      if (item.empresa == empresaId) {
+        empresa = item;
+        break;
+      }
+    }
+
+    final EstacionService estacionService = EstacionService();
+
+    final ApiResModel resEstacion = await estacionService.getEstacion(
+      user,
+      token,
+    );
+
+    //Si el api para  falló
+    if (!resEstacion.succes) {
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        resEstacion,
+      );
+      return;
+    }
+
+    final List<EstacionModel> estaciones = resEstacion.message;
+
+    for (var i = 0; i < estaciones.length; i++) {
+      final EstacionModel item = estaciones[i];
+
+      if (item.estacionTrabajo == estacionid) {
+        estacion = item;
+        break;
+      }
+    }
+
+    final SerieService serieService = SerieService();
+
+    final ApiResModel resSerie = await serieService.getSerie(
+      documento,
+      empresaId,
+      estacionid,
+      user,
+      token,
+    );
+
+    //Si el api para  falló
+    if (!resSerie.succes) {
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        resSerie,
+      );
+      return;
+    }
+
+    final List<SerieModel> series = resSerie.message;
+
+    for (var i = 0; i < series.length; i++) {
+      final SerieModel item = series[i];
+
+      if (item.serieDocumento == serieDoc) {
+        serieDesc = "${item.descripcion} ($serieDoc)";
+        documentoDesc = "${item.desTipoDocumento} ($documento)";
+        break;
+      }
+    }
+
+    final CuentaService cuentaService = CuentaService();
+
+    final ApiResModel resNameClient = await cuentaService.getNombreCuenta(
+      token,
+      cuentaCorrentista,
     );
 
     //Si el api para  falló
     if (!resNameClient.succes) {
       isLoading = false;
 
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resNameClient.message,
-        url: resNameClient.url,
-        storeProcedure: resNameClient.storeProcedure,
-      );
-
       await NotificationService.showErrorView(
         context,
-        error,
+        resNameClient,
       );
       return;
     }
 
-    //si la respuesta es correcta pero no se encontró ningun nombre
-    if (!resNameClient.succes) {
-      isLoading = false;
-      //mostrar alerta
-      showDialog(
-        context: context,
-        builder: (context) => AlertInfoWidget(
-          title: "Algo salió mal",
-          description:
-              "No fue posible obtener el cliente asignado al documento.",
-          onOk: () => Navigator.pop(context),
-        ),
-      );
-      return;
-    }
+    final RespLogin nameClient = resNameClient.message;
 
-    //Nommbre del cliente del documemnto
-    RespLogin nameClient = resNameClient.message;
-
-    //Buscar cuenta del cliente
-    ApiResModel resClient = await cuentaService.getClient(
-      empresa,
-      nameClient.data,
-      user,
-      token,
-    );
-
-    //Si el api  falló
-    if (!resClient.succes) {
-      isLoading = false;
-      //mostrar dialogo de confirmacion
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resClient.message,
-        url: resClient.url,
-        storeProcedure: resClient.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    //clientes encontrados
-    List<ClientModel> clients = resClient.message;
-
-    //si no se encontraron clientes
-    if (clients.isEmpty) {
-      isLoading = false;
-      //Mostrar alerta
-      showDialog(
-        context: context,
-        builder: (context) => AlertInfoWidget(
-          title: "Algo salió mal",
-          description:
-              "No fue posible obtener el cliente asignado al documento.",
-          onOk: () => Navigator.pop(context),
-        ),
-      );
-      return;
-    }
-
-    //cuenta cliente del docuemento
-    ClientModel? client;
-
-    //buscar el cliente nen los clientes encontrados
-    for (var element in clients) {
-      //si es el mismo mcliente
-      if (element.cuentaCorrentista == document.docCuentaCorrentista) {
-        client = element; //asignar cliente
-        break;
-      }
-    }
-
-    //vendedor del docuemmtnp
-    String? seller;
-
-    if (document.docCuentaVendedor != null) {
-      //buscar nombre del vendedor del documento
-      ApiResModel resVendedor = await cuentaService.getNombreCuenta(
+    if (nameClient.data != null) {
+      final ApiResModel resCuentaClient =
+          await cuentaService.getCuentaCorrentista(
+        empresaId,
+        nameClient.data,
+        user,
         token,
-        document.docCuentaVendedor!,
       );
 
-      //Si el api  falló
-      if (!resVendedor.succes) {
+      //Si el api para  falló
+      if (!resCuentaClient.succes) {
         isLoading = false;
-
-        ErrorModel error = ErrorModel(
-          date: DateTime.now(),
-          description: resVendedor.message,
-          url: resVendedor.url,
-          storeProcedure: resVendedor.storeProcedure,
-        );
 
         await NotificationService.showErrorView(
           context,
-          error,
-        );
-
-        return;
-      }
-
-      //vendedor
-      RespLogin vendedor = resVendedor.message;
-
-      //si el api estuvo bien pero no se encontró el vendedor
-      if (!vendedor.success) {
-        isLoading = false;
-        //mmostrar alerta
-        showDialog(
-          context: context,
-          builder: (context) => AlertInfoWidget(
-            title: "Algo salió mal",
-            description:
-                "No fue posible obtener el vendedor asignado al documento.",
-            onOk: () => Navigator.pop(context),
-          ),
+          resCuentaClient,
         );
         return;
       }
 
-      seller = vendedor.data;
-    }
+      final List<ClientModel> cuentas = resCuentaClient.message;
 
-    //servicio para los productos
-    ProductService productService = ProductService();
+      for (var i = 0; i < cuentas.length; i++) {
+        final ClientModel item = cuentas[i];
 
-    await loadTipoTransaccion(
-      context,
-      documento,
-      serie,
-      empresa,
-      token,
-      user,
-    );
-
-    //id tipo transaccon cargo
-    int tipoCargo = resolveTipoTransaccion(4);
-    //id tipo transaccon descuento
-    int tipoDescuento = resolveTipoTransaccion(3);
-
-    //totales
-    double cargo = 0;
-    double descuento = 0;
-    double subtotal = 0;
-    double total = 0;
-
-    //transacciones del docummento
-    final List<TransactionDetail> transactions = [];
-
-    //buscar productos
-    for (var item in document.docTransaccion) {
-      //si la transaccion es cargo sumar cargos
-      if (item.traTipoTransaccion == tipoCargo) {
-        cargo += item.traMonto;
-      }
-
-      //si la transaccion es desceunto sumar descuentos
-      if (item.traTipoTransaccion == tipoDescuento) {
-        descuento += item.traMonto;
-      }
-
-      //si la transaccion no es cargo ni descuento
-      if (item.traTipoTransaccion != tipoCargo &&
-          item.traTipoTransaccion != tipoDescuento) {
-        //sumar total transacciones
-        subtotal += item.traMonto;
-
-        //api buscar suku del producto
-        ApiResModel resSku = await productService.getSku(
-          token,
-          item.traProducto,
-          item.traUnidadMedida,
-        );
-
-        //Si el api  falló
-        if (!resSku.succes) {
-          isLoading = false;
-
-          ErrorModel error = ErrorModel(
-            date: DateTime.now(),
-            description: resSku.message,
-            url: resSku.url,
-            storeProcedure: resSku.storeProcedure,
-          );
-
-          await NotificationService.showErrorView(
-            context,
-            error,
-          );
-
-          return;
-        }
-
-        //sku del producto
-        RespLogin sku = resSku.message;
-
-        //si el api fue correcto pero no encontró el sku
-        if (!sku.success) {
-          isLoading = false;
-          showDialog(
-            context: context,
-            builder: (context) => AlertInfoWidget(
-              title: "Algo salió mal",
-              description:
-                  "No fue posible obtener las transacciones del documento. (sku)",
-              onOk: () => Navigator.pop(context),
-            ),
-          );
-          return;
-        }
-
-        //Buscar producto por sku
-        ApiResModel resProduct = await productService.getProductId(
-          sku.data,
-          token,
-        );
-
-        //I el api falló
-        if (!resProduct.succes) {
-          isLoading = false;
-
-          ErrorModel error = ErrorModel(
-            date: DateTime.now(),
-            description: resProduct.message,
-            url: resProduct.url,
-            storeProcedure: resProduct.storeProcedure,
-          );
-
-          await NotificationService.showErrorView(
-            context,
-            error,
-          );
-
-          return;
-        }
-
-        //productos encontrados
-        List<ProductModel> products = resProduct.message;
-
-        //si no se encontró el producto
-        if (products.isEmpty) {
-          isLoading = false;
-
-          //mmostrar alerrta
-          showDialog(
-            context: context,
-            builder: (context) => AlertInfoWidget(
-              title: "Algo salió mal",
-              description:
-                  "No fue posible obtener las transacciones del documento. (api)",
-              onOk: () => Navigator.pop(context),
-            ),
-          );
-          return;
-        }
-
-        //si solo hay un producto
-        if (products.length == 1) {
-          //objeto transaccion
-          TransactionDetail transactionDetail = TransactionDetail(
-            product: products.first,
-            cantidad: item.traCantidad,
-            total: item.traMonto,
-          );
-
-          //agregar transaccion
-          transactions.add(transactionDetail);
-        } else {
-          //si hay mas productos
-          for (var product in products) {
-            //buscar producto de la transaccion
-            if (product.producto == item.traProducto) {
-              //Objeti transaccion
-              TransactionDetail transactionDetail = TransactionDetail(
-                product: products.first,
-                cantidad: item.traCantidad,
-                total: item.traMonto,
-              );
-
-              //transaccion
-              transactions.add(transactionDetail);
-            }
-
-            break;
-          }
-        }
-      }
-    }
-
-    //calcular total
-    total += (subtotal + cargo) + descuento;
-
-    //search pagos
-    final List<AmountModel> payments = [];
-
-    //proveedor de datos externo
-    PagoService pagoService = PagoService();
-
-    ApiResModel resFormas = await pagoService.getFormas(
-      document.docTipoDocumento,
-      document.docSerieDocumento,
-      empresa,
-      token,
-    );
-
-    if (!resFormas.succes) {
-      isLoading = false;
-
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: resFormas.message,
-        url: resFormas.url,
-        storeProcedure: resFormas.storeProcedure,
-      );
-
-      await NotificationService.showErrorView(
-        context,
-        error,
-      );
-
-      return;
-    }
-
-    final List<PaymentModel> formas = resFormas.message;
-
-    if (formas.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertInfoWidget(
-          title: "Algo salió mal",
-          description:
-              "No fue posible obtener la forma de pago asignada al documento.",
-          onOk: () => Navigator.pop(context),
-        ),
-      );
-      return;
-    }
-
-    for (var formaDoc in document.docCargoAbono) {
-      for (var i = 0; i < formas.length; i++) {
-        final PaymentModel forma = formas[i];
-        if (formaDoc.tipoCargoAbono == forma.tipoCargoAbono) {
-          AmountModel amount = AmountModel(
-            checked: false,
-            amount: formaDoc.monto,
-            diference: formaDoc.cambio,
-            authorization: formaDoc.autorizacion,
-            reference: formaDoc.referencia,
-            payment: forma,
-          );
-
-          //agregar forma de pago
-          payments.add(amount);
+        if (item.cuentaCorrentista == cuentaCorrentista) {
+          client = item;
           break;
         }
       }
     }
 
-    //Objeto detalles del documento
-    final DetailDocModel details = DetailDocModel(
-      doc: document.docTipoDocumento,
-      serie: document.docSerieDocumento,
-      client: client!,
-      seller: seller,
-      transactions: transactions,
-      payments: payments,
-      subtotal: subtotal,
-      total: total,
-      cargo: cargo,
-      descuento: descuento,
-      observacion: document.docObservacion1,
+    final ApiResModel resVendedor = await cuentaService.getCeuntaCorrentistaRef(
+      user,
+      documento,
+      serieDoc,
+      empresaId,
+      token,
     );
 
-    //navegar a pantalla detalles
+    //Si el api para  falló
+    if (!resVendedor.succes) {
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        resVendedor,
+      );
+      return;
+    }
+
+    final List<SellerModel> vendedores = resVendedor.message;
+
+    for (var i = 0; i < vendedores.length; i++) {
+      final SellerModel item = vendedores[i];
+
+      if (item.cuentaCorrentista == cuentaCorrentistaRef) {
+        seller = item.nomCuentaCorrentista;
+        break;
+      }
+    }
+
+    final List<TransactionDetail> transacciones = [];
+
+    final ProductService productService = ProductService();
+
+    for (var tra in doc.estructura.docTransaccion) {
+      final ApiResModel resSku = await productService.getSku(
+        token,
+        tra.traProducto,
+        tra.traUnidadMedida,
+      );
+
+      //Si el api para  falló
+      if (!resSku.succes) {
+        isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resSku,
+        );
+        return;
+      }
+
+      final RespLogin sku = resSku.message;
+
+      final ApiResModel resProduct = await productService.getProductId(
+        sku.data,
+        token,
+      );
+
+      //Si el api para  falló
+      if (!resProduct.succes) {
+        isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resProduct,
+        );
+        return;
+      }
+
+      final List<ProductModel> products = resProduct.message;
+
+      for (var i = 0; i < products.length; i++) {
+        final ProductModel item = products[i];
+
+        if (item.producto == tra.traProducto) {
+          transacciones.add(
+            TransactionDetail(
+              product: item,
+              cantidad: tra.traCantidad,
+              total: tra.traMonto,
+            ),
+          );
+          break;
+        }
+      }
+    }
+
+    final PagoService pagoService = PagoService();
+
+    final ApiResModel resPagos = await pagoService.getFormas(
+      documento,
+      serieDoc,
+      empresaId,
+      token,
+    );
+
+    //Si el api para  falló
+    if (!resPagos.succes) {
+      isLoading = false;
+
+      showError(context, resPagos);
+
+      return;
+    }
+
+    final List<PaymentModel> pagos = resPagos.message;
+
+    final List<AmountModel> montos = [];
+
+    for (var pago in doc.estructura.docCargoAbono) {
+      BankModel? banco;
+      AccountModel? ceuntaBanco;
+
+      if (pago.banco != null) {
+        final ApiResModel resBancos = await pagoService.getBancos(
+          user,
+          empresaId,
+          token,
+        );
+
+        //Si el api para  falló
+        if (!resBancos.succes) {
+          isLoading = false;
+
+          showError(context, resBancos);
+
+          return;
+        }
+
+        final List<BankModel> bancos = resBancos.message;
+
+        for (var i = 0; i < bancos.length; i++) {
+          final BankModel item = bancos[i];
+
+          if (item.banco == pago.banco) {
+            banco = item;
+            break;
+          }
+        }
+
+        if (banco != null && pago.cuentaBancaria != null) {
+          final ApiResModel resCuentaBanco = await pagoService.getCuentas(
+            user,
+            empresaId,
+            banco.banco,
+            token,
+          );
+
+          //Si el api para  falló
+          if (!resCuentaBanco.succes) {
+            isLoading = false;
+
+            showError(context, resCuentaBanco);
+
+            return;
+          }
+
+          List<AccountModel> cuentasBanco = resCuentaBanco.message;
+
+          for (var i = 0; i < cuentasBanco.length; i++) {
+            final AccountModel item = cuentasBanco[i];
+
+            if (item.banco == pago.banco) {
+              ceuntaBanco = item;
+              break;
+            }
+          }
+        }
+      }
+
+      for (var i = 0; i < pagos.length; i++) {
+        final PaymentModel item = pagos[i];
+
+        if (item.tipoCargoAbono == pago.tipoCargoAbono) {
+          montos.add(
+            AmountModel(
+              checked: false,
+              amount: pago.monto,
+              diference: pago.cambio,
+              authorization: pago.autorizacion,
+              reference: pago.referencia,
+              payment: item,
+              account: ceuntaBanco,
+              bank: banco,
+            ),
+          );
+
+          break;
+        }
+      }
+    }
+
+    final DetailDocModel detallesDoc = DetailDocModel(
+      fecha: strDate(doc.item.fechaHora),
+      consecutivo: doc.item.consecutivoInterno,
+      empresa: empresa!,
+      estacion: estacion!,
+      client: client,
+      seller: seller,
+      transactions: transacciones,
+      payments: montos,
+      cargo: doc.cargo,
+      descuento: doc.descuento,
+      observacion: doc.estructura.docObservacion1,
+      subtotal: doc.subtotal,
+      total: doc.total,
+      documento: documento,
+      serie: serieDoc,
+      documentoDesc: documentoDesc,
+      serieDesc: serieDesc,
+    );
+
     Navigator.pushNamed(
       context,
-      "detailsDoc",
-      arguments: details,
+      AppRoutes.detailsDoc,
+      arguments: detallesDoc,
     );
 
     //finalizar proceso
     isLoading = false;
+  }
+
+  showError(
+    BuildContext context,
+    ApiResModel res,
+  ) async {
+    //Si el api para  falló
+
+    await NotificationService.showErrorView(
+      context,
+      res,
+    );
   }
 
   //fehca str a Date formmat dd/MM/yyyy hh:mm
@@ -535,63 +440,13 @@ class RecentViewModel extends ChangeNotifier {
     return formattedDate;
   }
 
-  //ibtener total del documento
-  Map<String, double> getTotalDoc(BuildContext context, String document) {
-    //TODO:Resumen ambiguo
-    //porveedor de dtaos externos
-
-    //id tipo transaccion cargo
-    int tipoCargo = resolveTipoTransaccion(4);
-    //id tipo transaccion descuento
-    int tipoDescuento = resolveTipoTransaccion(3);
-
-    //Totales
-    double cargo = 0;
-    double descuento = 0;
-    double subtotal = 0;
-    double total = 0;
-
-    //Docummento estructura
-    DocEstructuraModel doc = DocEstructuraModel.fromJson(document);
-
-    //recorrer la transacciones
-    for (var tra in doc.docTransaccion) {
-      //Si no es ni cargo ni desceuntosumar total transaccones
-      if (tra.traTipoTransaccion != tipoCargo &&
-          tra.traTipoTransaccion != tipoDescuento) {
-        subtotal += tra.traMonto;
-      }
-
-      //sii es cargo sumar cargo
-      if (tra.traTipoTransaccion == tipoCargo) {
-        cargo += tra.traMonto;
-      }
-
-      //si es descuento sumar descuento
-      if (tra.traTipoTransaccion == tipoDescuento) {
-        descuento += tra.traMonto;
-      }
-    }
-
-    //calcular total
-    total = (subtotal + cargo) + descuento;
-
-    //retornar totales
-    return <String, double>{
-      'cargo': cargo,
-      'descuento': descuento,
-      'subtotal': subtotal,
-      'total': total,
-    };
-  }
-
   //buscar documentos recientes
   Future<void> loadDocs(BuildContext context) async {
     //Proveedor de datos externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
 
     //usuario y token
-    String user = loginVM.nameUser;
+    String user = loginVM.user;
     String token = loginVM.token;
 
     //servicio documentos
@@ -604,29 +459,61 @@ class RecentViewModel extends ChangeNotifier {
     isLoading = true;
 
     //consummo api buscar documentos recienets
-    final ApiResModel res = await documentService.getDocument(0, user, token);
-
-    //finalizar procesp
-    isLoading = false;
+    final ApiResModel res = await documentService.getDocument(
+      0,
+      user,
+      token,
+    );
 
     //Si el api falló
     if (!res.succes) {
+      //finalizar procesp
+      isLoading = false;
       //mostrar dialogo de confirmacion
-      ErrorModel error = ErrorModel(
-        date: DateTime.now(),
-        description: res.message,
-        url: res.url,
-        storeProcedure: res.storeProcedure,
-      );
 
       await NotificationService.showErrorView(
         context,
-        error,
+        res,
       );
       return;
     }
 
-    //agregar documentos encontrados
-    documents.addAll(res.message);
+    final List<GetDocModel> docs = res.message;
+
+    for (var doc in docs) {
+      final DocEstructuraModel estructura =
+          DocEstructuraModel.fromJson(doc.estructura);
+
+      double subtotal = 0;
+      double cargo = 0;
+      double descuento = 0;
+      double total = 0;
+
+      for (var tra in estructura.docTransaccion) {
+        if (tra.traCantidad == 0 && tra.traMonto > 0) {
+          cargo += tra.traMonto;
+        } else if (tra.traCantidad == 0 && tra.traMonto < 0) {
+          descuento += tra.traMonto;
+        } else {
+          subtotal += tra.traMonto;
+        }
+      }
+
+      total = (subtotal + cargo) + descuento;
+
+      documents.add(
+        DocumentoResumenModel(
+          item: doc,
+          estructura: estructura,
+          subtotal: subtotal,
+          cargo: cargo,
+          descuento: descuento,
+          total: total,
+        ),
+      );
+    }
+
+    //finalizar procesp
+    isLoading = false;
   }
 }

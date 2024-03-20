@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -81,8 +82,15 @@ class NotificationService {
 
   static Future<void> showErrorView(
     BuildContext context,
-    ErrorModel error,
+    ApiResModel res,
   ) async {
+    ErrorModel error = ErrorModel(
+      date: DateTime.now(),
+      description: res.message,
+      url: res.url,
+      storeProcedure: res.storeProcedure,
+    );
+
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
@@ -100,7 +108,11 @@ class NotificationService {
     //Si quiere verse el error
     if (!result) {
       //navegar a pantalla para ver el error
-      Navigator.pushNamed(context, "error", arguments: error);
+      Navigator.pushNamed(
+        context,
+        "error",
+        arguments: error,
+      );
     }
   }
 }

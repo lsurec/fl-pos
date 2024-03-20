@@ -51,7 +51,10 @@ class DocumentoViewModel extends ChangeNotifier {
   }
 
   //confirmar documento
-  void sendDocumnet(BuildContext context) {
+  void sendDocumnet(
+    BuildContext context,
+    int screen,
+  ) {
     //View models externos
     final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
@@ -101,7 +104,11 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     //si todas las validaciones son correctas navegar a resumen del documento
-    Navigator.pushNamed(context, "confirm");
+    Navigator.pushNamed(
+      context,
+      "confirm",
+      arguments: screen, //1 documento; 2 comanda
+    );
   }
 
   //cargar datos necesarios
