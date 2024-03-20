@@ -10,7 +10,7 @@ class ReferenciaService {
   final String _baseUrl = Preferences.urlApi;
 
   //obtner series
-  Future<ApiResModel> getSerie(
+  Future<ApiResModel> getTiposReferencia(
     String user,
     String token,
   ) async {

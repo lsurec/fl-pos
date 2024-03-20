@@ -63,7 +63,7 @@ class DocumentView extends StatelessWidget {
                         "Tipo de referencia",
                         style: AppTheme.titleStyle,
                       ),
-                      if (vm.series.isEmpty)
+                      if (vm.tiposReferencia.isEmpty)
                         const NotFoundWidget(
                           text: "No hay elementos",
                           icon: Icon(
@@ -71,14 +71,14 @@ class DocumentView extends StatelessWidget {
                             size: 50,
                           ),
                         ),
-                      if (vm.series.isNotEmpty)
-                        DropdownButton<SerieModel>(
+                      if (vm.tiposReferencia.isNotEmpty)
+                        DropdownButton<TipoReferenciaModel>(
                           isExpanded: true,
                           dropdownColor: AppTheme.backroundColor,
-                          value: vm.serieSelect,
-                          onChanged: (value) => vm.changeSerie(value, context),
-                          items: vm.series.map((serie) {
-                            return DropdownMenuItem<SerieModel>(
+                          value: vm.tipoReferenciaSelect,
+                          onChanged: (value) => vm.changeTipoReferencia(value),
+                          items: vm.tiposReferencia.map((serie) {
+                            return DropdownMenuItem<TipoReferenciaModel>(
                               value: serie,
                               child: Text(serie.descripcion!),
                             );

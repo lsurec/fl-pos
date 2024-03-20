@@ -289,7 +289,33 @@ class MenuViewModel extends ChangeNotifier {
       }
 
       if (vmDoc.valueParam(58)) {
-//Cargar tioos referencia
+        vmDoc.tiposReferencia.clear();
+        vmDoc.tipoReferenciaSelect = null;
+
+        //Cargar tioos referencia
+        final ReferenciaService referenciaService = ReferenciaService();
+
+        final resTipoReferencia = await referenciaService.getTiposReferencia(
+          user,
+          token,
+        );
+
+        if (!resTipoReferencia.succes) {
+          //si algo salio mal mostrar alerta
+          vmHome.isLoading = false;
+
+          await NotificationService.showErrorView(
+            context,
+            resTipoReferencia,
+          );
+          return;
+        }
+
+        vmDoc.tiposReferencia.addAll(resTipoReferencia.message);
+
+        if (vmDoc.tiposReferencia.length == 1) {
+          vmDoc.tipoReferenciaSelect = vmDoc.tiposReferencia.first;
+        }
       }
 
       Navigator.pushNamed(context, AppRoutes.withPayment);

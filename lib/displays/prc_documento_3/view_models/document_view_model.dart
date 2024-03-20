@@ -34,12 +34,15 @@ class DocumentViewModel extends ChangeNotifier {
   //serie seleccionada
   SerieModel? serieSelect;
 
+  TipoReferenciaModel? tipoReferenciaSelect;
+
   //listas globales
   final List<ClientModel> cuentasCorrentistas = []; //cunetas correntisat
   final List<SellerModel> cuentasCorrentistasRef = []; //cuenta correntisat ref
   final List<SerieModel> series = [];
   final List<TipoTransaccionModel> tiposTransaccion = [];
   final List<ParametroModel> parametros = [];
+  final List<TipoReferenciaModel> tiposReferencia = [];
 
   DateTime fechaEntrega = DateTime.now();
   DateTime fechaRecoger = DateTime.now();
@@ -429,6 +432,11 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     return name == null ? name : capitalizeFirstLetter(name);
+  }
+
+  changeTipoReferencia(TipoReferenciaModel? referencia) {
+    tipoReferenciaSelect = referencia;
+    notifyListeners();
   }
 
   //seleccionar serie
