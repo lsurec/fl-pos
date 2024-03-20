@@ -1,3 +1,5 @@
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
+
 import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -144,7 +146,10 @@ class _Comentario extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: const BoxDecoration(
             border: Border(
-              top: BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+              top: BorderSide(
+                width: 1.5,
+                color: Color.fromRGBO(0, 0, 0, 0.12),
+              ),
               left:
                   BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
               right:
@@ -163,7 +168,7 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.normalBoldStyle,
               ),
               Text(
-                vm.formatearFecha(comentario.comentario.fechaHora),
+                Utilities.formatearFecha(comentario.comentario.fechaHora),
                 style: AppTheme.normalStyle,
               ),
             ],

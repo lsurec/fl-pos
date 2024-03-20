@@ -3,10 +3,9 @@
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
-import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ComentariosViewModel extends ChangeNotifier {
@@ -24,14 +23,9 @@ class ComentariosViewModel extends ChangeNotifier {
 
   //comentario
   final TextEditingController comentarioController = TextEditingController();
-  DateTime? fecha; //fecha para comentarios
-
-  ComentariosViewModel() {
-    fecha = DateTime.now();
-  }
 
   //Nuevo comentario
-  Future<ApiResModel> comentar(
+  Future<void> comentar(
     BuildContext context,
     String comentario,
   ) async {
@@ -71,47 +65,34 @@ class ComentariosViewModel extends ChangeNotifier {
 
       NotificationService.showErrorView(context, res);
 
-      ApiResModel comentarioNuevo = ApiResModel(
-        message: comentario,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
       //Respuesta incorrecta
-      return comentarioNuevo;
+      return;
     }
 
     //Crear modelo de comentario
     ComentarioModel comentarioCreado = ComentarioModel(
       comentario: comentarioController.text,
-      fechaHora: fecha!,
+      fechaHora: DateTime.now(),
       nameUser: user,
       userName: user,
       tarea: idTarea,
       tareaComentario: res.message.res,
     );
 
-    ApiResModel comentarioNuevo = ApiResModel(
-      message: comentarioCreado,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
     //Crear modelo de comentario detalle, (comentario y objetos)
     comentarioDetalle.add(
-      ComentarioDetalleModel(comentario: comentarioNuevo.message, objetos: []),
+      ComentarioDetalleModel(
+        comentario: comentarioCreado,
+        objetos: [],
+      ),
     );
-
-    notifyListeners();
 
     comentarioController.text = ""; //limpiar input
 
     isLoading = false; //detener carga
 
     //Retornar respuesta correcta
-    return comentarioNuevo;
+    return;
   }
 
   //Obtener Comentarios de la tarea
@@ -145,15 +126,8 @@ class ComentariosViewModel extends ChangeNotifier {
       isLoading = false;
       NotificationService.showErrorView(context, res);
 
-      ApiResModel comentario = ApiResModel(
-        message: comentarios,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
       //Si algo salió mal retornar
-      return comentario;
+      return res;
     }
 
     //Agregar repuesta de api a la lista de comentarios
@@ -161,15 +135,8 @@ class ComentariosViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
 
-    ApiResModel comentario = ApiResModel(
-      message: comentarios,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
     //Si todo está correcto retornar
-    return comentario;
+    return res;
   }
 
   //Obtener Objetos de un comentario de una tarea
@@ -203,15 +170,8 @@ class ComentariosViewModel extends ChangeNotifier {
       isLoading = false;
       NotificationService.showErrorView(context, res);
 
-      ApiResModel objetos = ApiResModel(
-        message: objetosComentario,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
       //Si algo salió mal, retornar:
-      return objetos;
+      return res;
     }
 
     //Almacener respuesta de api a la lista de objetosComentario
@@ -219,15 +179,8 @@ class ComentariosViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
 
-    ApiResModel objetos = ApiResModel(
-      message: objetosComentario,
-      succes: true,
-      url: "",
-      storeProcedure: '',
-    );
-
     //Si todo está correcto, retornar:
-    return objetos;
+    return res;
   }
 
   //Armar comentarios con objetos adjuntos
@@ -264,14 +217,4 @@ class ComentariosViewModel extends ChangeNotifier {
     return true;
   }
 
-  //Formatear fecha
-  String formatearFecha(DateTime fecha) {
-    // Asegurarse de que la fecha esté en la zona horaria local
-    fecha = fecha.toLocal();
-
-    // Formatear la fecha en el formato dd-mm-yyyy
-    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
-
-    return fechaFormateada;
-  }
 }

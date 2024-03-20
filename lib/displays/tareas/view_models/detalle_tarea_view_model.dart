@@ -516,13 +516,13 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
   //Volver a cargar detalles
   loadData(BuildContext context) async {
-    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
+    // final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
-    estadoAtual = null;
-    prioridadActual = null;
-    isLoading = true;
-    vmTarea.detalleTarea(context, tarea!);
-    isLoading = false;
+    // estadoAtual = null;
+    // prioridadActual = null;
+    // isLoading = true;
+    // vmTarea.detalleTarea(context, tarea!);
+    // isLoading = false;
 
 //Copiar funcion aesta funcion
   }
