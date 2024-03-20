@@ -204,10 +204,16 @@ class DetalleTareaView extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              "HISTORIAL DE RESPONSABLES:",
-                              style: AppTheme.normalBoldStyle,
-                            ),
+                            if (vm.responsablesHistorial.isEmpty)
+                              const Text(
+                                "No hay responsables en el historial",
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                            if (vm.responsablesHistorial.isNotEmpty)
+                              const Text(
+                                "HISTORIAL DE RESPONSABLES:",
+                                style: AppTheme.normalBoldStyle,
+                              ),
                             CardWidget(
                               elevation: 0,
                               borderWidth: 1.5,

@@ -57,6 +57,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     //Lista de responsables
     final List<ResponsableModel> responsablesTarea = [];
     responsablesTarea.clear(); //limpiar lista
+    responsablesHistorial.clear(); //Limpiar lista
 
     //View model Login, obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
