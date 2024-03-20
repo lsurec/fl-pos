@@ -35,15 +35,19 @@ class CrearTareaViewModel extends ChangeNotifier {
   TextEditingController tiempoController = TextEditingController();
   TextEditingController observacionController = TextEditingController();
 
-  String? horaInicial;
-  String? horaFinal;
-  String? fechaInicial;
-  String? fechaFinal;
-  DateTime fechaActual = DateTime.now();
-  DateTime? nuevaFechaInicial; //fecha inicial
-  DateTime? nuevaFechaFinal; //fecha final
-  TimeOfDay? _horaInicial; //hora inicial
-  TimeOfDay? _horaFinal; //hora final
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
+
+  // String? horaInicial;
+  // String? horaFinal;
+  // String? fechaInicial;
+  // String? fechaFinal;
+  // DateTime fechaActual = DateTime.now();
+  // DateTime? nuevaFechaInicial; //fecha inicial
+  // DateTime? nuevaFechaFinal; //fecha final
+  // TimeOfDay? _horaInicial; //hora inicial
+  // TimeOfDay? _horaFinal; //hora final
+
   TipoTareaModel? tipoTarea; //tipo tarea
   EstadoModel? estado; //estado tarea
   PrioridadModel? prioridad; //prioridad tarea
@@ -57,25 +61,28 @@ class CrearTareaViewModel extends ChangeNotifier {
   CrearTareaViewModel() {
     //inicializar tiempo con 10 minutos
     tiempoController.text = "10";
-    //Inicializar fecha Inicio con fecha actual
-    nuevaFechaInicial = fechaActual;
-    //fecha actual mas 10 minutos más
-    final DateTime fecha10 = addDate10Min(fechaActual);
-    //Inicializar fecha final con 10 minutos más que la inicial
-    nuevaFechaFinal = fecha10;
 
-    //Texto de la fecha inicial
-    fechaInicial = DateFormat('dd/MM/yyyy').format(fechaActual);
-    fechaFinal = DateFormat('dd/MM/yyyy').format(fecha10);
+    endDate = addDate10Min(startDate);
 
-    //pickers hora inicial y final
-    _horaInicial =
-        TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
-    _horaFinal = addTime10Min(_horaInicial!);
+    // //Inicializar fecha Inicio con fecha actual
+    // nuevaFechaInicial = fechaActual;
+    // //fecha actual mas 10 minutos más
+    // final DateTime fecha10 = addDate10Min(fechaActual);
+    // //Inicializar fecha final con 10 minutos más que la inicial
+    // nuevaFechaFinal = fecha10;
 
-    //Tectos de las horas
-    horaInicial = horaFormato(fechaActual);
-    horaFinal = horaFormato(fecha10);
+    // //Texto de la fecha inicial
+    // fechaInicial = DateFormat('dd/MM/yyyy').format(fechaActual);
+    // fechaFinal = DateFormat('dd/MM/yyyy').format(fecha10);
+
+    // //pickers hora inicial y final
+    // _horaInicial =
+    //     TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
+    // _horaFinal = addTime10Min(_horaInicial!);
+
+    // //Tectos de las horas
+    // horaInicial = horaFormato(fechaActual);
+    // horaFinal = horaFormato(fecha10);
   }
 
   //Volver a cargar tados
@@ -86,20 +93,23 @@ class CrearTareaViewModel extends ChangeNotifier {
     await obtenerPrioridades(context);
 
     //Fechas y horas
-    fechaActual = DateTime.now();
+    startDate = DateTime.now();
+    endDate = addDate10Min(startDate);
 
-    nuevaFechaInicial = fechaActual;
-    nuevaFechaFinal = addDate10Min(fechaActual);
-    _horaInicial =
-        TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
-    _horaFinal = addTime10Min(_horaInicial!);
+    // fechaActual = DateTime.now();
 
-    //Texts de fechas y horas
-    fechaInicial = DateFormat('dd/MM/yyyy').format(nuevaFechaInicial!);
-    fechaFinal =
-        DateFormat('dd/MM/yyyy').format(addDate10Min(nuevaFechaFinal!));
-    horaInicial = horaFormato(nuevaFechaInicial!);
-    horaFinal = horaFormato(nuevaFechaFinal!);
+    // nuevaFechaInicial = fechaActual;
+    // nuevaFechaFinal = addDate10Min(fechaActual);
+    // _horaInicial =
+    //     TimeOfDay(hour: fechaActual.hour, minute: fechaActual.minute);
+    // _horaFinal = addTime10Min(_horaInicial!);
+
+    // //Texts de fechas y horas
+    // fechaInicial = DateFormat('dd/MM/yyyy').format(nuevaFechaInicial!);
+    // fechaFinal =
+    //     DateFormat('dd/MM/yyyy').format(addDate10Min(nuevaFechaFinal!));
+    // horaInicial = horaFormato(nuevaFechaInicial!);
+    // horaFinal = horaFormato(nuevaFechaFinal!);
   }
 
   //Navegar a view para buscar Id de referencia.
@@ -210,8 +220,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     NuevaTareaModel tarea = NuevaTareaModel(
       tarea: 0,
       descripcion: tituloController.text,
-      fechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
-      fechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
+      // fechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
+      fechaIni: startDate,
+      // fechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
+      fechaFin: endDate,
       referencia: idReferencia!.referencia,
       userName: user,
       observacion1: observacionController.text,
@@ -266,8 +278,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       emailCreador: "",
       usuarioResponsable: null,
       descripcion: tituloController.text,
-      fechaInicial: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
-      fechaFinal: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
+      // fechaInicial: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
+      fechaInicial: startDate,
+      // fechaFinal: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
+      fechaFinal: endDate,
       referencia: idReferencia!.referencia,
       iDReferencia: idReferencia!.referenciaId,
       descripcionReferencia: idReferencia!.descripcion,
@@ -275,8 +289,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       fechaUltimoComentario: null,
       usuarioUltimoComentario: null,
       tareaObservacion1: observacionController.text,
-      tareaFechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
-      tareaFechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
+      // tareaFechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
+      tareaFechaIni: startDate,
+      // tareaFechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
+      tareaFechaFin: endDate,
       tipoTarea: tipoTarea!.tipoTarea,
       descripcionTipoTarea: tipoTarea!.descripcion,
       estadoObjeto: estado!.estado,
@@ -369,17 +385,18 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   //Abrir picker de fecha inicial
-  Future<DateTime?> abrirFechaInicial(BuildContext context) async {
+  Future<void> abrirFechaInicial(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: nuevaFechaInicial ?? DateTime.now(),
+      initialDate: startDate,
       firstDate: DateTime(1950),
       lastDate: DateTime(2100), //puede cambiar
     );
 
+    if(pickedDate == null) return;
+
     // Verifica si el usuario seleccionó una fecha
-    if (pickedDate != null) {
       //Asignar fecha seleccionada a la fecha inicial y fecha final
       nuevaFechaInicial = pickedDate;
       nuevaFechaFinal = pickedDate;
@@ -390,11 +407,8 @@ class CrearTareaViewModel extends ChangeNotifier {
 
       notifyListeners();
       // Puedes devolver la fecha si es necesario en el lugar donde llamaste a esta función.
-      return pickedDate;
-    }
 
     // Si el usuario cancela la selección, puedes devolver null o cualquier otro valor según tus necesidades.
-    return null;
   }
 
   //para la final
@@ -840,16 +854,16 @@ class CrearTareaViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
-  //armar fecha completa con la fecha y hora seleccionadas
-  DateTime construirFechaCompleta(DateTime fecha, TimeOfDay hora) {
-    // Obteniendo la fecha y la hora de entrada
-    final year = fecha.year;
-    final month = fecha.month;
-    final day = fecha.day;
-    final hour = hora.hour;
-    final minute = hora.minute;
+  // //armar fecha completa con la fecha y hora seleccionadas
+  // DateTime construirFechaCompleta(DateTime fecha, TimeOfDay hora) {
+  //   // Obteniendo la fecha y la hora de entrada
+  //   final year = fecha.year;
+  //   final month = fecha.month;
+  //   final day = fecha.day;
+  //   final hour = hora.hour;
+  //   final minute = hora.minute;
 
-    // Construyendo y retornando la fecha completa
-    return DateTime(year, month, day, hour, minute);
-  }
+  //   // Construyendo y retornando la fecha completa
+  //   return DateTime(year, month, day, hour, minute);
+  // }
 }

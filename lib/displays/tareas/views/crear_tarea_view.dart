@@ -1,3 +1,5 @@
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
+
 import '../view_models/view_models.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -96,7 +98,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaInicial(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${vm.fechaInicial}",
+                                "Fecha: ${Utilities.formatearFecha(vm.startDate)}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
@@ -104,7 +106,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraInicial(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${vm.horaInicial}",
+                                "Hora: ${Utilities.formatearHora(vm.startDate)}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
@@ -124,7 +126,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaFinal(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${vm.fechaFinal}",
+                                "Fecha: ${Utilities.formatearFecha(vm.endDate)}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
@@ -132,7 +134,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraFinal(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${vm.horaFinal}",
+                                "Hora: ${Utilities.formatearHora(vm.endDate)}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
