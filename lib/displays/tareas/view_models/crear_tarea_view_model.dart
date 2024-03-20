@@ -54,10 +54,41 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Volver a cargar tados
   loadData(BuildContext context) async {
-    await obtenerTiposTarea(context);
-    await obtenerEstados(context);
-    await obtenerPeriodicidad(context);
-    await obtenerPrioridades(context);
+    final bool succesEstados = await obtenerEstados(
+      context,
+    ); //obtener estados de tarea
+
+    if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
+
+    final bool succesPrioridades = await obtenerPrioridades(
+      context,
+    ); //obtener prioridades de la tarea
+
+    if (!succesPrioridades) {
+      isLoading = false;
+      return;
+    }
+
+    final bool succesPeriodicidades = await obtenerPeriodicidad(
+      context,
+    ); //obtener periodicidades
+
+    if (!succesPeriodicidades) {
+      isLoading = false;
+      return;
+    }
+
+    final bool succesTipos = await obtenerTiposTarea(
+      context,
+    ); //obtener tipos de tarea
+
+    if (!succesTipos) {
+      isLoading = false;
+      return;
+    }
 
     //Fechas y horas
     fechaInicial = DateTime.now();
@@ -559,9 +590,9 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     //Recorrer la lista y asignar a la variable prioridad: "Normal"
     for (var i = 0; i < prioridades.length; i++) {
-      PrioridadModel prioridad = prioridades[i];
-      if (prioridad.nombre.toLowerCase() == "normal") {
-        prioridad = prioridad;
+      PrioridadModel resPrioridad = prioridades[i];
+      if (resPrioridad.nombre.toLowerCase() == "normal") {
+        prioridad = resPrioridad;
         break;
       }
     }
@@ -605,9 +636,9 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     //Recorrer la lista de periodicidades y asignar a la variable periodicidad : "Minutos"
     for (var i = 0; i < periodicidades.length; i++) {
-      PeriodicidadModel periodicidad = periodicidades[i];
-      if (periodicidad.descripcion.toLowerCase() == "minutos") {
-        periodicidad = periodicidad;
+      PeriodicidadModel resPeriodicidad = periodicidades[i];
+      if (resPeriodicidad.descripcion.toLowerCase() == "minutos") {
+        periodicidad = resPeriodicidad;
         break;
       }
     }
