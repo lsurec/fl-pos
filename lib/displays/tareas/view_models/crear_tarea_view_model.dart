@@ -30,14 +30,15 @@ class CrearTareaViewModel extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   //Text controller de fechas, horas, tiempo, titulo, observacion.
-  TextEditingController fechaInicial = TextEditingController();
-  TextEditingController fechaFinal = TextEditingController();
-  TextEditingController horaInicial = TextEditingController();
-  TextEditingController horaFinal = TextEditingController();
+
   TextEditingController tituloController = TextEditingController();
   TextEditingController tiempoController = TextEditingController();
   TextEditingController observacionController = TextEditingController();
 
+  String? horaInicial;
+  String? horaFinal;
+  String? fechaInicial;
+  String? fechaFinal;
   DateTime fechaActual = DateTime.now();
   DateTime? nuevaFechaInicial; //fecha inicial
   DateTime? nuevaFechaFinal; //fecha final
@@ -64,8 +65,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     nuevaFechaFinal = fecha10;
 
     //Texto de la fecha inicial
-    fechaInicial.text = DateFormat('dd/MM/yyyy').format(fechaActual);
-    fechaFinal.text = DateFormat('dd/MM/yyyy').format(fecha10);
+    fechaInicial = DateFormat('dd/MM/yyyy').format(fechaActual);
+    fechaFinal = DateFormat('dd/MM/yyyy').format(fecha10);
 
     //pickers hora inicial y final
     _horaInicial =
@@ -73,8 +74,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     _horaFinal = addTime10Min(_horaInicial!);
 
     //Tectos de las horas
-    horaInicial.text = horaFormato(fechaActual);
-    horaFinal.text = horaFormato(fecha10);
+    horaInicial = horaFormato(fechaActual);
+    horaFinal = horaFormato(fecha10);
   }
 
   //Volver a cargar tados
@@ -94,11 +95,11 @@ class CrearTareaViewModel extends ChangeNotifier {
     _horaFinal = addTime10Min(_horaInicial!);
 
     //Texts de fechas y horas
-    fechaInicial.text = DateFormat('dd/MM/yyyy').format(nuevaFechaInicial!);
-    fechaFinal.text =
+    fechaInicial = DateFormat('dd/MM/yyyy').format(nuevaFechaInicial!);
+    fechaFinal =
         DateFormat('dd/MM/yyyy').format(addDate10Min(nuevaFechaFinal!));
-    horaInicial.text = horaFormato(nuevaFechaInicial!);
-    horaFinal.text = horaFormato(nuevaFechaFinal!);
+    horaInicial = horaFormato(nuevaFechaInicial!);
+    horaFinal = horaFormato(nuevaFechaFinal!);
   }
 
   //Navegar a view para buscar Id de referencia.
@@ -152,23 +153,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     return DateFormat('h:mm a').format(
       DateTime(2022, 1, 1, pickedTime.hour, pickedTime.minute + 10),
     );
-  }
-
-  crear() {
-    if (!isValidForm()) return;
-
-    print("Formulario valido");
-
-    if (tipoTarea == null || estado == null || prioridad == null) {
-      print('Falta completar campos');
-    } else {
-      print('Sí se puede crear la tarea');
-      print('Tipo de tarea: $tipoTarea');
-      print('Tipo de tarea: $estado');
-      print('Tipo de tarea: $prioridad');
-      print('Fecha y hora inicial: ${fechaInicial.text} - ${horaInicial.text}');
-      print('Fecha y hora final: ${fechaFinal.text} - ${horaFinal.text}');
-    }
   }
 
   //Validar formulario
@@ -401,8 +385,8 @@ class CrearTareaViewModel extends ChangeNotifier {
       nuevaFechaFinal = pickedDate;
 
       //asignar fechas a los textos de fechas
-      fechaInicial.text = DateFormat('dd/MM/yyyy').format(pickedDate);
-      fechaFinal.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+      fechaInicial = DateFormat('dd/MM/yyyy').format(pickedDate);
+      fechaFinal = DateFormat('dd/MM/yyyy').format(pickedDate);
 
       notifyListeners();
       // Puedes devolver la fecha si es necesario en el lugar donde llamaste a esta función.
@@ -428,7 +412,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       nuevaFechaFinal = pickedDate;
 
       //Actualizar texto de la fecha final
-      fechaFinal.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+      fechaFinal = DateFormat('dd/MM/yyyy').format(pickedDate);
       notifyListeners();
       // Puedes devolver la fecha si es necesario en el lugar donde llamaste a esta función.
       return pickedDate;
@@ -455,12 +439,12 @@ class CrearTareaViewModel extends ChangeNotifier {
       //asignar la nueva hora inicial seleccionada al picker
       _horaInicial = pickedTime;
       //nombre de la nueva hora inicial
-      horaInicial.text = formatoHora(_horaInicial!);
+      horaInicial = formatoHora(_horaInicial!);
       // Inicialmente, establecer la hora final 10 minutos más tarde que la hora inicial.
       _horaFinal = addTime10Min(pickedTime);
 
       //nombre de la hora final asignada arriba
-      horaFinal.text = horaFinal10Min(_horaInicial!);
+      horaFinal = horaFinal10Min(_horaInicial!);
       notifyListeners();
     }
   }
@@ -526,7 +510,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
 
       // Actualiza el campo de texto con la nueva hora seleccionada.
-      horaFinal.text = formatoHora(_horaFinal!);
+      horaFinal = formatoHora(_horaFinal!);
       notifyListeners();
     }
   }

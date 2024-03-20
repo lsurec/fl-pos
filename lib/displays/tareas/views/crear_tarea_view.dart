@@ -1,11 +1,10 @@
+import '../view_models/view_models.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../view_models/view_models.dart';
 
 class CrearTareaView extends StatelessWidget {
   const CrearTareaView({super.key});
@@ -80,7 +79,8 @@ class CrearTareaView extends StatelessWidget {
                             return null;
                           },
                           controller: vm.tituloController,
-                          onChanged: (value) => vm.tituloController.text = value,
+                          onChanged: (value) =>
+                              vm.tituloController.text = value,
                           decoration: const InputDecoration(
                               labelText: "Añada un titulo para la tarea."),
                         ),
@@ -93,22 +93,18 @@ class CrearTareaView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton.icon(
-                              onPressed: () async {
-                                vm.abrirFechaInicial(context);
-                              },
+                              onPressed: () => vm.abrirFechaInicial(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${vm.fechaInicial.text}",
+                                "Fecha: ${vm.fechaInicial}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
                             TextButton.icon(
-                              onPressed: () async {
-                                vm.abrirHoraInicial(context);
-                              },
+                              onPressed: () => vm.abrirHoraInicial(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${vm.horaInicial.text}",
+                                "Hora: ${vm.horaInicial}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
@@ -125,22 +121,18 @@ class CrearTareaView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton.icon(
-                              onPressed: () async {
-                                vm.abrirFechaFinal(context);
-                              },
+                              onPressed: () => vm.abrirFechaFinal(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${vm.fechaFinal.text}",
+                                "Fecha: ${vm.fechaFinal}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
                             TextButton.icon(
-                              onPressed: () async {
-                                vm.abrirHoraFinal(context);
-                              },
+                              onPressed: () => vm.abrirHoraFinal(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${vm.horaFinal.text}",
+                                "Hora: ${vm.horaFinal}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
@@ -161,7 +153,8 @@ class CrearTareaView extends StatelessWidget {
                               width: 150,
                               child: TextFormField(
                                 controller: vm.tiempoController,
-                                onChanged: (value) => vm.tiempoController.text = value,
+                                onChanged: (value) =>
+                                    vm.tiempoController.text = value,
                                 decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.symmetric(
                                     vertical: 14,
