@@ -208,7 +208,7 @@ class DocumentView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      vm.getTextCuenta(),
+                      vm.getTextParam(57) ?? "Cuenta",
                       style: AppTheme.titleStyle,
                     ),
                     IconButton(
@@ -233,7 +233,7 @@ class DocumentView extends StatelessWidget {
                         vm.performSearchClient(context),
                     textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
-                      hintText: vm.getTextCuenta(),
+                      hintText: vm.getTextParam(57) ?? "Cuenta",
                       suffixIcon: IconButton(
                         color: AppTheme.primary,
                         icon: const Icon(Icons.search),
@@ -267,7 +267,7 @@ class DocumentView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            vm.getTextCuenta(),
+                            vm.getTextParam(57) ?? "Cuenta",
                             style: TextStyle(
                               color: Colors.grey[500],
                               fontSize: 20,

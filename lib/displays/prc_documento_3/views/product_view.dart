@@ -103,7 +103,7 @@ class ProductView extends StatelessWidget {
                   if (vm.prices.isEmpty)
                     const Text("No se encontraron precios"),
                   const SizedBox(height: 5),
-                  if (vm.prices.isNotEmpty && docVM.editPrice())
+                  if (vm.prices.isNotEmpty && docVM.valueParam(351))
                     TextFormField(
                       decoration: const InputDecoration(
                         hintText: "Precio Unitario",
@@ -117,7 +117,7 @@ class ProductView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       onChanged: (value) => vm.chanchePrice(value),
                     ),
-                  if (vm.prices.isNotEmpty && !docVM.editPrice())
+                  if (vm.prices.isNotEmpty && !docVM.valueParam(351))
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -130,7 +130,7 @@ class ProductView extends StatelessWidget {
                         SizedBox(height: 5),
                       ],
                     ),
-                  if (vm.prices.isNotEmpty && !docVM.editPrice())
+                  if (vm.prices.isNotEmpty && !docVM.valueParam(351))
                     Text(currencyFormat.format(vm.price)),
                   const SizedBox(height: 20),
                   Row(

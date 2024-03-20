@@ -350,6 +350,10 @@ class DocumentViewModel extends ChangeNotifier {
 
   //limmpiar campos de la vista del usuario
   void clearView() {
+    fechaEntrega = DateTime.now();
+    fechaRecoger = DateTime.now();
+    fechaInicio = DateTime.now();
+    fechaFin = DateTime.now();
     client.text = "";
     clienteSelect = null;
     vendedorSelect = null;
@@ -389,37 +393,35 @@ class DocumentViewModel extends ChangeNotifier {
     return showPrint;
   }
 
-  bool editPrice() {
-    bool edit = false;
+  bool valueParam(int param) {
+    bool exist = false;
     //el parametro que indica si se puede esitar el precio o no es 351
 
     for (var i = 0; i < parametros.length; i++) {
       final ParametroModel parametro = parametros[i];
 
-      if (parametro.parametro == 351) {
-        edit = true;
+      if (parametro.parametro == param) {
+        exist = true;
         break;
       }
     }
 
-    return edit;
+    return exist;
   }
 
-  bool printFel() {
-    bool fel = false;
-
-    //el parametro que indica si genera fel o no es 349
+  String? getTextParam(int paramValue) {
+    String? name;
 
     for (var i = 0; i < parametros.length; i++) {
-      final ParametroModel parametro = parametros[i];
+      final ParametroModel param = parametros[i];
 
-      if (parametro.parametro == 349) {
-        fel = true;
+      if (param.parametro == paramValue) {
+        name = param.paCaracter;
         break;
       }
     }
 
-    return fel;
+    return name == null ? name : capitalizeFirstLetter(name);
   }
 
   //seleccionar serie
@@ -448,24 +450,6 @@ class DocumentViewModel extends ChangeNotifier {
     vmFactura.isLoading = false;
 
     notifyListeners();
-  }
-
-  String getTextCuenta() {
-    String fileName = "Cuenta";
-
-    for (var i = 0; i < parametros.length; i++) {
-      final ParametroModel param = parametros[i];
-
-      //buscar nombre del campo en el parametro 57
-      if (param.parametro == 57) {
-        fileName = param.paCaracter ?? "Cuenta";
-        break;
-      }
-    }
-
-    fileName = capitalizeFirstLetter(fileName);
-
-    return fileName;
   }
 
   String capitalizeFirstLetter(String text) {

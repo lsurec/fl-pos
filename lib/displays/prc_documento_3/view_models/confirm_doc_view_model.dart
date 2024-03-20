@@ -469,7 +469,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
   ) async {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    if (docVM.printFel()) {
+    if (docVM.valueParam(349)) {
       processDocument();
     } else {
       isLoading = true;
