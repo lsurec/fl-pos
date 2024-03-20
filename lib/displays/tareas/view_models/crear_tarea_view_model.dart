@@ -325,8 +325,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
-
-
   }
 
   //para la final
@@ -348,15 +346,12 @@ class CrearTareaViewModel extends ChangeNotifier {
       fechaFinal.hour,
       fechaFinal.minute,
     );
-    
-    notifyListeners();
 
+    notifyListeners();
   }
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
-    
-
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaInicial.hour,
       minute: fechaInicial.minute,
@@ -382,11 +377,9 @@ class CrearTareaViewModel extends ChangeNotifier {
       fechaFinal = addDate10Min(fechaInicial);
     }
 
-    
     notifyListeners();
     // }
   }
-
 
   //Verifica si las fechas son iguales en día mes y año (iguales = true) (diferentes = false)
   bool compararFechas(DateTime fechaInicio, DateTime fechaFinal) {
@@ -437,8 +430,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
-
-   
   }
 
   //Obtener Tipos
@@ -568,9 +559,9 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     //Recorrer la lista y asignar a la variable prioridad: "Normal"
     for (var i = 0; i < prioridades.length; i++) {
-      PrioridadModel p = prioridades[i];
-      if (p.nombre.toLowerCase() == "normal") {
-        prioridad = p;
+      PrioridadModel prioridad = prioridades[i];
+      if (prioridad.nombre.toLowerCase() == "normal") {
+        prioridad = prioridad;
         break;
       }
     }
@@ -614,9 +605,9 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     //Recorrer la lista de periodicidades y asignar a la variable periodicidad : "Minutos"
     for (var i = 0; i < periodicidades.length; i++) {
-      PeriodicidadModel t = periodicidades[i];
-      if (t.descripcion.toLowerCase() == "minutos") {
-        periodicidad = t;
+      PeriodicidadModel periodicidad = periodicidades[i];
+      if (periodicidad.descripcion.toLowerCase() == "minutos") {
+        periodicidad = periodicidad;
         break;
       }
     }
@@ -698,72 +689,4 @@ class CrearTareaViewModel extends ChangeNotifier {
     responsable = null;
     notifyListeners();
   }
-
-  Future agregarResponsable(
-    BuildContext context,
-    TareaModel tarea,
-  ) async {
-    //View model del Login para obtener el usuario y token
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String user = vmLogin.user;
-    String token = vmLogin.token;
-
-    //Instancia del servicio
-    final TareaService tareaService = TareaService();
-
-    //Crear modelo de usuario responsable
-    NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
-      tarea: tarea.iDTarea,
-      userResInvi: responsable!.userName,
-      user: user,
-    );
-
-    isLoading = true; //cargar pantalla
-
-    //consumo de api
-    final ApiResModel res = await tareaService.postResponsable(
-      token,
-      usuarioResponsable,
-    );
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-
-      //Abrir dialogo de error
-      // NotificationService.showErrorView(context, res);
-
-      ApiResModel responsable = ApiResModel(
-        message: res.message,
-        succes: false,
-        url: "",
-        storeProcedure: '',
-      );
-
-      return responsable;
-    }
-
-    //obtener respuesta del api
-    ResponsableModel seleccionado = res.message;
-
-    //Crear modelo del responsable
-    ResponsableModel reponsableSeleccionado = ResponsableModel(
-      tUserName: responsable!.email,
-      estado: "activo",
-      userName: seleccionado.userName,
-      fechaHora: seleccionado.fechaHora,
-      mUserName: seleccionado.mUserName,
-      mFechaHora: seleccionado.mFechaHora,
-      dHm: seleccionado.dHm,
-      consecutivoInterno: seleccionado.consecutivoInterno,
-    );
-
-    //agregar responsable a la porpiedad responsable de la tarea
-    tarea.usuarioResponsable = reponsableSeleccionado.userName;
-
-    notifyListeners();
-
-    isLoading = false; //detener carga
-  }
-
 }
