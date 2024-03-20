@@ -238,9 +238,7 @@ class _RadioFilter extends StatelessWidget {
               Radio(
                 value: 1,
                 groupValue: vm.filtro,
-                onChanged: (value) {
-                  vm.busqueda(value!);
-                },
+                onChanged: (value) => vm.busqueda(value!),
               ),
               const Text(
                 'Descripcion',
@@ -256,9 +254,7 @@ class _RadioFilter extends StatelessWidget {
               Radio(
                 value: 2,
                 groupValue: vm.filtro,
-                onChanged: (value) {
-                  vm.busqueda(value!);
-                },
+                onChanged: (value) => vm.busqueda(value!),
               ),
               const Text(
                 "ID Referencia",

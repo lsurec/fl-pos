@@ -26,7 +26,6 @@ class TareasViewModel extends ChangeNotifier {
   //imput de busqueda de tareas
   final TextEditingController searchController = TextEditingController();
   int? filtro = 1; //para filtro de busqueda Inicialmente por descripcion
-  DateTime fecha = DateTime.now(); //obtener fecha actual
 
   //Lista de tareas
   final List<TareaModel> tareas = [];
@@ -164,18 +163,31 @@ class TareasViewModel extends ChangeNotifier {
     //consumos
     final bool succesTipos =
         await vmCrear.obtenerTiposTarea(context); //tipos de tarea
+
+    if (!succesTipos) {
+      isLoading = false;
+      return;
+    }
+
     final bool succesEstados =
         await vmCrear.obtenerEstados(context); //estados de tarea
+    if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
     final bool succesPrioridades =
         await vmCrear.obtenerPrioridades(context); //prioridades de tarea
+    if (!succesPrioridades) {
+      isLoading = false;
+      return;
+    }
+
     final bool succesPeriodicidades =
         await vmCrear.obtenerPeriodicidad(context); //periodicidades
-
-    //Validar que todos los consumos se hayan realizado correctamente para navegar
-    if (!succesTipos ||
-        !succesEstados ||
-        !succesPrioridades ||
-        !succesPeriodicidades) return;
+    if (!succesPeriodicidades) {
+      isLoading = false;
+      return;
+    }
 
     //Navegar a la vista de crear tareas
     Navigator.pushNamed(context, AppRoutes.createTask);
@@ -187,48 +199,67 @@ class TareasViewModel extends ChangeNotifier {
   detalleTarea(BuildContext context, TareaModel tarea) async {
     isLoading = true; //cargar pantalla
     //view model de Detalle
-    final vmDetalle =
-        Provider.of<DetalleTareaViewModel>(context, listen: false);
+    final vmDetalle = Provider.of<DetalleTareaViewModel>(
+      context,
+      listen: false,
+    );
 
     vmDetalle.tarea = tarea; //guardar la tarea
     final ApiResModel succesResponsables = await vmDetalle.obtenerResponsable(
-        context, tarea.iDTarea); //obtener responsable activo de la tarea
+      context,
+      tarea.iDTarea,
+    ); //obtener responsable activo de la tarea
+
+    if (!succesResponsables.succes) {
+      isLoading = false;
+      return;
+    }
+
     final ApiResModel succesInvitados = await vmDetalle.obtenerInvitados(
-        context, tarea.iDTarea); //obtener invitados de la tarea
+      context,
+      tarea.iDTarea,
+    ); //obtener invitados de la tarea
+
+    if (!succesInvitados.succes) {
+      isLoading = false;
+      return;
+    }
 
     //viwe model de Crear tarea
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
-    final bool succesEstados =
-        await vmCrear.obtenerEstados(context); //obtener estados de tarea
-    final bool succesPrioridades = await vmCrear
-        .obtenerPrioridades(context); //obtener prioridades de la tarea
+    final bool succesEstados = await vmCrear.obtenerEstados(
+      context,
+    ); //obtener estados de tarea
 
-    //validar consumos de responsable e inivitados
-    if (!succesResponsables.succes || !succesInvitados.succes) {
-      tarea.usuarioResponsable = "No asignado";
-      vmDetalle.invitados.addAll(succesInvitados.message);
-      notifyListeners();
+    if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
+    final bool succesPrioridades = await vmCrear.obtenerPrioridades(
+      context,
+    ); //obtener prioridades de la tarea
+
+    if (!succesPrioridades) {
+      isLoading = false;
+      return;
     }
 
     //Mostrar estado actual de la tarea en ls lista de estados
     for (var i = 0; i < vmCrear.estados.length; i++) {
-      EstadoModel e = vmCrear.estados[i];
-      if (e.descripcion.toLowerCase() == tarea.tareaEstado!.toLowerCase()) {
-        vmDetalle.estadoAtual = e;
+      EstadoModel estado = vmCrear.estados[i];
+      if (estado.estado == tarea.estadoObjeto) {
+        vmDetalle.estadoAtual = estado;
         break;
       }
     }
     //Mostrar prioridad actual de la tarea en ls lista de prioridades
     for (var i = 0; i < vmCrear.prioridades.length; i++) {
-      PrioridadModel p = vmCrear.prioridades[i];
-      if (p.nombre.toLowerCase() == tarea.nomNivelPrioridad!.toLowerCase()) {
-        vmDetalle.prioridadActual = p;
+      PrioridadModel prioridad = vmCrear.prioridades[i];
+      if (prioridad.nivelPrioridad == tarea.nivelPrioridad) {
+        vmDetalle.prioridadActual = prioridad;
         break;
       }
     }
-
-    //validar el consumo de los estados y prioridades
-    if (!succesEstados || !succesPrioridades) return;
 
     //Navegar a detalles
     Navigator.pushNamed(context, AppRoutes.detailsTask);
