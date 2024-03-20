@@ -48,32 +48,161 @@ class DocumentView extends StatelessWidget {
                     }).toList(),
                   ),
                 const SizedBox(height: 20),
+                const Text(
+                  "DATOS DE EVENTO",
+                  style: AppTheme.titleStyle,
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  "Tipo de referencia",
+                  style: AppTheme.titleStyle,
+                ),
+                DropdownButton<SerieModel>(
+                  isExpanded: true,
+                  dropdownColor: AppTheme.backroundColor,
+                  value: vm.serieSelect,
+                  onChanged: (value) => vm.changeSerie(value, context),
+                  items: vm.series.map((serie) {
+                    return DropdownMenuItem<SerieModel>(
+                      value: serie,
+                      child: Text(serie.descripcion!),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    //TODO:Parametrizar
+                    const Text(
+                      "Fecha Entrega:",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                    const Spacer(),
                     TextButton.icon(
-                      onPressed: () async {
-                        // vm.abrirFechaInicial(context);
-                      },
+                      onPressed: () => vm.showDateEntrega(context),
                       icon: const Icon(Icons.calendar_today_outlined),
                       label: Text(
-                        "",
-                        // "Fecha: ${vm.fechaInicial.text}",
+                        vm.getDateStr(vm.fechaEntrega),
                         style: AppTheme.normalStyle,
                       ),
                     ),
                     TextButton.icon(
-                      onPressed: () async {
-                        // vm.abrirHoraInicial(context);
-                      },
+                      onPressed: () => vm.showTimeEntrega(context),
                       icon: const Icon(Icons.schedule_outlined),
                       label: Text(
-                        "",
-                        // "Hora: ${vm.horaInicial.text}",
+                        vm.getTimeStr(vm.fechaEntrega),
                         style: AppTheme.normalStyle,
                       ),
                     )
                   ],
+                ),
+                Row(
+                  children: [
+                    //TODO:Parametrizar
+                    const Text(
+                      "Fecha Recoger:",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                    const Spacer(),
+                    TextButton.icon(
+                      onPressed: () => vm.showDateRecoger(context),
+                      icon: const Icon(Icons.calendar_today_outlined),
+                      label: Text(
+                        vm.getDateStr(vm.fechaRecoger),
+                        style: AppTheme.normalStyle,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () => vm.showTimeRecoger(context),
+                      icon: const Icon(Icons.schedule_outlined),
+                      label: Text(
+                        vm.getTimeStr(vm.fechaRecoger),
+                        style: AppTheme.normalStyle,
+                      ),
+                    )
+                  ],
+                ),
+                const Divider(),
+                Row(
+                  children: [
+                    //TODO:Parametrizar
+                    const Text(
+                      "Fecha Inicio:",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                    const Spacer(),
+                    TextButton.icon(
+                      onPressed: () => vm.showDateInicio(context),
+                      icon: const Icon(Icons.calendar_today_outlined),
+                      label: Text(
+                        vm.getDateStr(vm.fechaInicio),
+                        style: AppTheme.normalStyle,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () => vm.showTimeInicio(context),
+                      icon: const Icon(Icons.schedule_outlined),
+                      label: Text(
+                        vm.getTimeStr(vm.fechaInicio),
+                        style: AppTheme.normalStyle,
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    //TODO:Parametrizar
+                    const Text(
+                      "Fecha Fin:",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                    const Spacer(),
+                    TextButton.icon(
+                      onPressed: () => vm.showDateFin(context),
+                      icon: const Icon(Icons.calendar_today_outlined),
+                      label: Text(
+                        vm.getDateStr(vm.fechaFin),
+                        style: AppTheme.normalStyle,
+                      ),
+                    ),
+                    TextButton.icon(
+                      onPressed: () => vm.showTimeFin(context),
+                      icon: const Icon(Icons.schedule_outlined),
+                      label: Text(
+                        vm.getTimeStr(vm.fechaFin),
+                        style: AppTheme.normalStyle,
+                      ),
+                    )
+                  ],
+                ),
+                const Divider(),
+                InputWidget(
+                  maxLines: 2,
+                  formProperty: "user",
+                  formValues: vm.formValues,
+                  hintText: "Contacto",
+                  labelText: "Contacto",
+                ),
+                InputWidget(
+                  maxLines: 2,
+                  formProperty: "user",
+                  formValues: vm.formValues,
+                  hintText: "Descripcion",
+                  labelText: "Descripcion",
+                ),
+                InputWidget(
+                  maxLines: 2,
+                  formProperty: "user",
+                  formValues: vm.formValues,
+                  hintText: "Direccion Entrega",
+                  labelText: "Direccion Entrega",
+                ),
+                InputWidget(
+                  maxLines: 2,
+                  formProperty: "user",
+                  formValues: vm.formValues,
+                  hintText: "Observacion",
+                  labelText: "Observacion",
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

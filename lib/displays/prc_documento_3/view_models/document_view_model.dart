@@ -11,6 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DocumentViewModel extends ChangeNotifier {
+  final Map<String, String> formValues = {
+    'user': '',
+  };
+
   //Controlador input buscar cliente
   final TextEditingController client = TextEditingController();
 
@@ -35,6 +39,314 @@ class DocumentViewModel extends ChangeNotifier {
   final List<SerieModel> series = [];
   final List<TipoTransaccionModel> tiposTransaccion = [];
   final List<ParametroModel> parametros = [];
+
+  DateTime fechaEntrega = DateTime.now();
+  DateTime fechaRecoger = DateTime.now();
+  DateTime fechaInicio = DateTime.now();
+  DateTime fechaFin = DateTime.now();
+
+  Future<void> showDateEntrega(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaEntrega,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2100),
+    );
+
+    // Verifica si el usuario seleccionó una fecha
+    if (pickedDate == null) return;
+
+    fechaEntrega = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaEntrega.hour,
+      fechaEntrega.minute,
+    );
+
+    if (fechaEntrega.isAfter(fechaRecoger)) {
+      fechaRecoger = DateTime(
+        pickedDate.year,
+        pickedDate.month,
+        pickedDate.day,
+        fechaRecoger.hour,
+        fechaRecoger.minute,
+      );
+    }
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> showTimeEntrega(BuildContext context) async {
+    //busca la hora inicial o apartir de Inicio se crea la hora en que iniciara el picker
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaEntrega.hour,
+      minute: fechaEntrega.minute,
+    );
+
+    //abre el time picker con la hora en que se abrio le formulario
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+    );
+
+    if (pickedTime == null) return;
+
+    fechaEntrega = DateTime(
+      fechaEntrega.year,
+      fechaEntrega.month,
+      fechaEntrega.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    if (fechaEntrega.isAfter(fechaRecoger)) {
+      fechaRecoger = DateTime(
+        fechaRecoger.year,
+        fechaRecoger.month,
+        fechaRecoger.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> showDateRecoger(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaRecoger,
+      firstDate: fechaEntrega,
+      lastDate: DateTime(2100),
+    );
+
+    // Verifica si el usuario seleccionó una fecha
+    if (pickedDate == null) return;
+
+    fechaRecoger = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaRecoger.hour,
+      fechaRecoger.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> showTimeRecoger(BuildContext context) async {
+    //busca la hora inicial o apartir de Inicio se crea la hora en que iniciara el picker
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaEntrega.hour,
+      minute: fechaEntrega.minute,
+    );
+
+    //abre el time picker con la hora en que se abrio le formulario
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+    );
+
+    if (pickedTime == null) return;
+
+    if (fechasSonIguales(fechaEntrega, fechaRecoger)) {
+      final dateValue = DateTime(
+        fechaRecoger.year,
+        fechaRecoger.month,
+        fechaRecoger.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+
+      if (dateValue.isBefore(fechaRecoger)) {
+        NotificationService.showSnackbar(
+            "La hora debe ser mayor a la hora inical");
+        return;
+      }
+    }
+
+    fechaRecoger = DateTime(
+      fechaRecoger.year,
+      fechaRecoger.month,
+      fechaRecoger.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> showDateInicio(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaInicio,
+      firstDate: DateTime(1950),
+      lastDate: DateTime(2100),
+    );
+
+    // Verifica si el usuario seleccionó una fecha
+    if (pickedDate == null) return;
+
+    fechaInicio = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaInicio.hour,
+      fechaInicio.minute,
+    );
+
+    if (fechaInicio.isAfter(fechaFin)) {
+      fechaFin = DateTime(
+        pickedDate.year,
+        pickedDate.month,
+        pickedDate.day,
+        fechaFin.hour,
+        fechaFin.minute,
+      );
+    }
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> showTimeInicio(BuildContext context) async {
+    //busca la hora inicial o apartir de Inicio se crea la hora en que iniciara el picker
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaInicio.hour,
+      minute: fechaInicio.minute,
+    );
+
+    //abre el time picker con la hora en que se abrio le formulario
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+    );
+
+    if (pickedTime == null) return;
+
+    fechaInicio = DateTime(
+      fechaInicio.year,
+      fechaInicio.month,
+      fechaInicio.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    if (fechaInicio.isAfter(fechaFin)) {
+      fechaFin = DateTime(
+        fechaFin.year,
+        fechaFin.month,
+        fechaFin.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> showDateFin(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      firstDate: fechaInicio,
+      initialDate: fechaFin,
+      lastDate: DateTime(2100),
+    );
+
+    // Verifica si el usuario seleccionó una fecha
+    if (pickedDate == null) return;
+
+    fechaFin = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaFin.hour,
+      fechaFin.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> showTimeFin(BuildContext context) async {
+    //busca la hora inicial o apartir de Inicio se crea la hora en que iniciara el picker
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaInicio.hour,
+      minute: fechaInicio.minute,
+    );
+
+    //abre el time picker con la hora en que se abrio le formulario
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+    );
+
+    if (pickedTime == null) return;
+
+    if (fechasSonIguales(fechaInicio, fechaFin)) {
+      final dateValue = DateTime(
+        fechaFin.year,
+        fechaFin.month,
+        fechaFin.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+
+      if (dateValue.isBefore(fechaFin)) {
+        NotificationService.showSnackbar(
+            "La hora debe ser mayor a la hora inical");
+        return;
+      }
+    }
+
+    fechaFin = DateTime(
+      fechaFin.year,
+      fechaFin.month,
+      fechaFin.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  String _addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
+  bool fechasSonIguales(DateTime fecha1, DateTime fecha2) {
+    return fecha1.year == fecha2.year &&
+        fecha1.month == fecha2.month &&
+        fecha1.day == fecha2.day;
+  }
+
+  getDateStr(DateTime date) {
+    return "${_addLeadingZero(date.day)}/${_addLeadingZero(date.month)}/${_addLeadingZero(date.year)}";
+  }
+
+  String getTimeStr(DateTime date) {
+    String period = 'AM';
+    int hour = date.hour;
+
+    if (hour >= 12) {
+      period = 'PM';
+      if (hour > 12) {
+        hour -= 12;
+      }
+    }
+
+    if (hour == 0) {
+      hour = 12;
+    }
+
+    String hourStr = _addLeadingZero(hour);
+    String minuteStr = _addLeadingZero(date.minute);
+
+    return "$hourStr:$minuteStr $period";
+  }
 
   //limmpiar campos de la vista del usuario
   void clearView() {
