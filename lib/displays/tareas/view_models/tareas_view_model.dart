@@ -187,6 +187,8 @@ class TareasViewModel extends ChangeNotifier {
       isLoading = false;
       return;
     }
+    vmCrear.fechaInicial = DateTime.now();
+    vmCrear.fechaFinal = vmCrear.addDate10Min(vmCrear.fechaInicial);
 
     //Navegar a la vista de crear tareas
     Navigator.pushNamed(context, AppRoutes.createTask);

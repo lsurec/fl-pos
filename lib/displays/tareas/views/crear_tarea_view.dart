@@ -98,7 +98,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaInicial(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${Utilities.formatearFecha(vm.startDate)}",
+                                "Fecha: ${Utilities.formatearFecha(vm.fechaInicial)}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
@@ -106,7 +106,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraInicial(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${Utilities.formatearHora(vm.startDate)}",
+                                "Hora: ${Utilities.formatearHora(vm.fechaInicial)}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
@@ -126,7 +126,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaFinal(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${Utilities.formatearFecha(vm.endDate)}",
+                                "Fecha: ${Utilities.formatearFecha(vm.fechaFinal)}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
@@ -134,7 +134,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraFinal(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${Utilities.formatearHora(vm.endDate)}",
+                                "Hora: ${Utilities.formatearHora(vm.fechaFinal)}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
