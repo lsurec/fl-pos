@@ -1,16 +1,35 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class TareasView extends StatelessWidget {
+class TareasView extends StatefulWidget {
   const TareasView({super.key});
+
+  @override
+  State<TareasView> createState() => _TareasViewState();
+}
+
+class _TareasViewState extends State<TareasView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
+  }
+
+  loadData(BuildContext context) async {
+    final vm = Provider.of<TareasViewModel>(context, listen: false);
+    vm.loadData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TareasViewModel>(context);
+    final vmMenu = Provider.of<MenuViewModel>(context);
 
     List<TareaModel> tareas = vm.tareas;
 
@@ -18,9 +37,8 @@ class TareasView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            //TODO:Nommbre del display
-            title: const Text(
-              'Tareas',
+            title: Text(
+              vmMenu.name,
               style: AppTheme.titleStyle,
             ),
             actions: <Widget>[
@@ -32,16 +50,14 @@ class TareasView extends StatelessWidget {
             ],
           ),
           body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const _Filtros(),
+                      _RadioFilter(),
                       const _InputSerach(),
                       const SizedBox(height: 10),
                       const Divider(),
@@ -63,7 +79,7 @@ class TareasView extends StatelessWidget {
                         itemCount: tareas.length,
                         itemBuilder: (BuildContext context, int index) {
                           final TareaModel tarea = tareas[index];
-                          return _CardTask( tarea: tarea);
+                          return _CardTask(tarea: tarea);
                         },
                       )
                     ],
@@ -87,7 +103,6 @@ class TareasView extends StatelessWidget {
 
 class _CardTask extends StatelessWidget {
   const _CardTask({
-    super.key,
     required this.tarea,
   });
 
@@ -98,24 +113,17 @@ class _CardTask extends StatelessWidget {
     final vm = Provider.of<TareasViewModel>(context);
 
     return GestureDetector(
-      onTap: () {
-        vm.verDetalles(context); //ver detalle
-        // Navigator.pushNamed(context, "detalle"); //Ruta xd
-      },
+      onTap: () => vm.detalleTarea(context, tarea),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextsWidget(
-                    title: "Tarea no: ",
-                    text: "${tarea.iDTarea}"),
+                TextsWidget(title: "Tarea no: ", text: "${tarea.iDTarea}"),
                 Text(
-                  tarea.tareaEstado,
+                  tarea.tareaEstado ?? "",
                   style: AppTheme.normalStyle,
                 ),
               ],
@@ -124,46 +132,50 @@ class _CardTask extends StatelessWidget {
           CardWidget(
             elevation: 0,
             borderWidth: 1.5,
-            borderColor:
-                const Color.fromRGBO(0, 0, 0, 0.12),
+            borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
                     child: Text(
-                      tarea.descripcion,
+                      tarea.descripcion ?? "",
                       style: AppTheme.normalBoldStyle,
+                      textAlign: TextAlign.center,
                     ),
                   ),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Text("ID Referencia: ",
                           style: AppTheme.normalStyle),
-                      Text('${tarea.referencia}',
+                      Text('${tarea.iDReferencia}',
                           style: AppTheme.normalStyle),
                       const Spacer(),
-                      const Text("fecha",
+                      Text(Utilities.formatearFecha(tarea.tareaFechaIni),
                           style: AppTheme.normalStyle),
                     ],
                   ),
                   Text("Creador: ${tarea.usuarioCreador}",
                       style: AppTheme.normalStyle),
                   Text(
-                      "Responsable: ${tarea.usuarioResponsable}",
+                      "Responsable: ${tarea.usuarioResponsable ?? "No asignado"}",
                       style: AppTheme.normalStyle),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5),
+                    padding: const EdgeInsets.symmetric(vertical: 5),
                     alignment: Alignment.centerLeft,
-                    child: const Text("Observacion:",
-                        style: AppTheme.normalStyle),
+                    child:
+                        const Text("Observacion:", style: AppTheme.normalStyle),
                   ),
-                  Text(tarea.tareaObservacion1,
-                      style: AppTheme.normalStyle),
+                  Text(
+                    tarea.tareaObservacion1 ?? "",
+                    style: AppTheme.normalStyle,
+                    textAlign: TextAlign.justify,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
@@ -178,9 +190,7 @@ class _CardTask extends StatelessWidget {
 }
 
 class _InputSerach extends StatelessWidget {
-  const _InputSerach({
-    super.key,
-  });
+  const _InputSerach();
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +200,7 @@ class _InputSerach extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       key: vm.formKeySearch,
       child: TextFormField(
-        onFieldSubmitted: (value) => vm.performSearch(),
+        onFieldSubmitted: (value) => vm.searchText(context),
         textInputAction: TextInputAction.search,
         controller: vm.searchController,
         validator: (value) {
@@ -202,55 +212,59 @@ class _InputSerach extends StatelessWidget {
         decoration: InputDecoration(
           hintText: 'Buscar',
           suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: AppTheme.primary,
-            ),
-            onPressed: () => vm.performSearch(),
-          ),
+              icon: const Icon(
+                Icons.search,
+                color: AppTheme.primary,
+              ),
+              // onPressed: () => vm.performSearch(),
+              onPressed: () => vm.searchText(context)),
         ),
       ),
     );
   }
 }
 
-class _Filtros extends StatelessWidget {
-  const _Filtros({
-    super.key,
-  });
-
+class _RadioFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TareasViewModel>(context);
 
-    return Row(children: [
-      const Text(
-        "Filtos",
-        style: AppTheme.normalStyle,
-      ),
-      const Spacer(),
-      Radio(
-        value: 1,
-        groupValue: vm.filtro,
-        onChanged: (value) {
-          vm.busqueda(value!);
-        },
-      ),
-      const Text(
-        "Descripcion",
-        style: AppTheme.normalStyle,
-      ),
-      Radio(
-        value: 2,
-        groupValue: vm.filtro,
-        onChanged: (value) {
-          vm.busqueda(value!);
-        },
-      ),
-      const Text(
-        "ID Referencia",
-        style: AppTheme.normalStyle,
-      ),
-    ]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        GestureDetector(
+          onTap: () => vm.busqueda(1),
+          child: Row(
+            children: [
+              Radio(
+                value: 1,
+                groupValue: vm.filtro,
+                onChanged: (value) => vm.busqueda(value!),
+              ),
+              const Text(
+                'Descripcion',
+                style: AppTheme.normalStyle,
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () => vm.busqueda(2),
+          child: Row(
+            children: [
+              Radio(
+                value: 2,
+                groupValue: vm.filtro,
+                onChanged: (value) => vm.busqueda(value!),
+              ),
+              const Text(
+                "ID Referencia",
+                style: AppTheme.normalStyle,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

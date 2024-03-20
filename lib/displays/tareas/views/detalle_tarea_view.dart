@@ -1,8 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTareaView extends StatelessWidget {
@@ -11,20 +15,20 @@ class DetalleTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
+    final vmComentarios = Provider.of<ComentariosViewModel>(context);
+    final vmUsuarios = Provider.of<CrearTareaViewModel>(context);
 
     return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
             title: Text(
-              'Detalles Tarea: ${vm.idTarea}',
+              'Detalles Tarea: ${vm.tarea!.iDTarea}',
               style: AppTheme.titleStyle,
             ),
           ),
           body: RefreshIndicator(
-            onRefresh: () async {
-              print("Volver a ceagar");
-            },
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(
@@ -33,11 +37,11 @@ class DetalleTareaView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        "Oservacion:",
+                        "Observación:",
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
-                        vm.observacion,
+                        vm.tarea!.tareaObservacion1 ?? "No disponible",
                         style: AppTheme.normalStyle,
                         textAlign: TextAlign.justify,
                       ),
@@ -45,9 +49,9 @@ class DetalleTareaView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () => vm.verComentarios(context),
-                            child: const Text(
-                              "Comentarios (4)",
+                            onPressed: () => vm.comentariosTarea(context),
+                            child: Text(
+                              "Comentarios (${vmComentarios.comentarioDetalle.length})",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ),
@@ -59,153 +63,239 @@ class DetalleTareaView extends StatelessWidget {
 
                       //ACTUALIZAR ESTADO DE LA TAREA
                       const Text(
-                        "Estado: ",
+                        "ESTADO: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const _ActualizarEstado(),
 
                       //ACTUALIZAR PRIORIDAD DE LA TAREA
                       const Text(
-                        "Prioridad: ",
+                        "PRIORIDAD: ",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const _ActualizarPrioridad(),
 
                       const Text(
-                        "Fecha Inicial: ",
+                        "FECHA Y HORA INICIAL: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
-                        child: ListTile(
-                          title: Text(
-                            "20/02/2023",
-                            style: AppTheme.normalStyle,
-                          ),
-                          leading: Icon(Icons.date_range),
-                        ),
-                      ),
-                      const Text(
-                        "Fecha Final: ",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      const CardWidget(
-                        elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
-                        raidus: 10,
-                        child: ListTile(
-                          title: Text(
-                            "21/02/2023",
-                            style: AppTheme.normalStyle,
-                          ),
-                          leading: Icon(Icons.date_range),
-                        ),
-                      ),
-                      const Text(
-                        "Tipo tarea: ",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      const CardWidget(
-                        elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
-                        raidus: 10,
-                        child: ListTile(
-                          title: Text(
-                            "Ticket",
-                            style: AppTheme.normalStyle,
-                          ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
-                        ),
-                      ),
-
-                      const Text(
-                        "ID Referencia: ",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      const CardWidget(
-                        elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
-                        raidus: 10,
-                        child: ListTile(
-                          title: Text(
-                            "IL - 1",
-                            style: AppTheme.normalStyle,
-                          ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
-                        ),
-                      ),
-                      const Text(
-                        "Responsable: ",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      const CardWidget(
-                        elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
-                        raidus: 10,
-                        child: ListTile(
-                          title: Text(
-                            "Gerencia 1",
-                            style: AppTheme.normalStyle,
-                          ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
-                          trailing: Icon(Icons.person_add_alt_1_outlined),
-                        ),
-                      ),
-
-                      const Text(
-                        "Invitados: ",
-                        style: AppTheme.normalBoldStyle,
-                      ),
-                      const CardWidget(
-                        elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
-                        raidus: 10,
-                        child: ListTile(
-                          title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
                             children: [
+                              const Icon(Icons.date_range),
+                              const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                "Gerencia 1",
+                                Utilities.formatearFecha(
+                                    vm.tarea!.tareaFechaIni),
                                 style: AppTheme.normalStyle,
                               ),
+                              const Spacer(),
+                              const Icon(Icons.schedule_outlined),
+                              const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                "Usuario 2",
-                                style: AppTheme.normalStyle,
-                              ),
-                              Text(
-                                "Usuario 3",
+                                Utilities.formatearHora(
+                                    vm.tarea!.tareaFechaIni),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
                           ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
-                          trailing: Icon(Icons.person_add_alt_1_outlined),
+                        ),
+                      ),
+                      const Text(
+                        "FECHA Y HORA FINAL: ",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      CardWidget(
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        raidus: 10,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.date_range),
+                              const Padding(padding: EdgeInsets.only(left: 15)),
+                              Text(
+                                Utilities.formatearFecha(
+                                    vm.tarea!.tareaFechaFin),
+                                style: AppTheme.normalStyle,
+                              ),
+                              const Spacer(),
+                              const Icon(Icons.schedule_outlined),
+                              const Padding(padding: EdgeInsets.only(left: 10)),
+                              Text(
+                                Utilities.formatearHora(
+                                    vm.tarea!.tareaFechaFin),
+                                style: AppTheme.normalStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const Text(
+                        "TIPO TAREA: ",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      CardWidget(
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        raidus: 10,
+                        child: ListTile(
+                          title: Text(
+                            vm.tarea!.descripcionTipoTarea ?? "No disponible",
+                            style: AppTheme.normalStyle,
+                          ),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
 
                       const Text(
-                        "Creador: ",
+                        "ID REFERENCIA: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      const CardWidget(
+                      CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            "Gerencia 10",
+                            vm.tarea!.iDReferencia ?? "No disponible.",
                             style: AppTheme.normalStyle,
                           ),
-                          leading: Icon(Icons.arrow_circle_right_outlined),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
+                        ),
+                      ),
+                      const Text(
+                        "RESPONSABLE: ",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      CardWidget(
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        raidus: 10,
+                        child: ListTile(
+                          title: Text(
+                            vm.tarea!.usuarioResponsable ?? "No asignado.",
+                            style: AppTheme.normalStyle,
+                          ),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
+                          trailing: IconButton(
+                            onPressed: () => vm.verHistorial(),
+                            icon: const Icon(Icons.history),
+                            tooltip: "Ver historial",
+                          ),
+                        ),
+                      ),
+                      //Listado de responsables anteriores
+                      if (vm.historialResposables == true)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (vm.responsablesHistorial.isEmpty)
+                              const Text(
+                                "No hay responsables en el historial",
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                            if (vm.responsablesHistorial.isNotEmpty)
+                              const Text(
+                                "HISTORIAL DE RESPONSABLES:",
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                            CardWidget(
+                              elevation: 0,
+                              borderWidth: 1.5,
+                              borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                              raidus: 10,
+                              child: ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: vm.responsablesHistorial.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final ResponsableModel responsable =
+                                      vm.responsablesHistorial[index];
+                                  return ListTile(
+                                    title: Text(
+                                      responsable.tUserName,
+                                      style: AppTheme.inactivoStyle,
+                                    ),
+                                    leading: const Icon(Icons.person_4),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ListTile(
+                        title: const Text(
+                          "INVITADOS: ",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                        trailing: IconButton(
+                          //tipoBusqueda = 4 para actualizar invitados
+                          onPressed: () => vmUsuarios.irUsuarios(context, 4),
+                          icon: const Icon(Icons.person_add_alt_1_outlined),
+                        ),
+                      ),
+                      CardWidget(
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        raidus: 10,
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vm.invitados.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final InvitadoModel invitado = vm.invitados[index];
+                            return ListTile(
+                              title: Text(
+                                invitado.userName,
+                                style: AppTheme.normalStyle,
+                              ),
+                              leading: const Icon(Icons.person_4),
+                              trailing: IconButton(
+                                onPressed: () => vm.eliminarInvitado(
+                                  context,
+                                  invitado,
+                                  index,
+                                ),
+                                icon: const Icon(Icons.close),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const Text(
+                        "CREADOR: ",
+                        style: AppTheme.normalBoldStyle,
+                      ),
+                      CardWidget(
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        raidus: 10,
+                        child: ListTile(
+                          title: Text(
+                            vm.tarea!.usuarioCreador ?? "No disponible.",
+                            style: AppTheme.normalStyle,
+                          ),
+                          leading:
+                              const Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
                     ],
@@ -215,19 +305,29 @@ class DetalleTareaView extends StatelessWidget {
             ),
           ),
         ),
+        //importarte para mostrar la pantalla de carga
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.backroundColor,
+          ),
+        if (vm.isLoading) const LoadWidget(),
       ],
     );
   }
 }
 
 class _ActualizarEstado extends StatelessWidget {
-  const _ActualizarEstado({
-    super.key,
-  });
+  const _ActualizarEstado();
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
+
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
+
+    final List<EstadoModel> estados = vmCrear.estados;
 
     return CardWidget(
       elevation: 0,
@@ -235,7 +335,8 @@ class _ActualizarEstado extends StatelessWidget {
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: DropdownButtonFormField2<String>(
+        child: DropdownButtonFormField2<EstadoModel>(
+          value: vm.estadoAtual,
           isExpanded: true,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 16),
@@ -244,26 +345,15 @@ class _ActualizarEstado extends StatelessWidget {
             'Seleccione un nuevo estado',
             style: AppTheme.normalStyle,
           ),
-          items: vm.estados
+          items: estados
               .map(
-                (item) => DropdownMenuItem<String>(
+                (item) => DropdownMenuItem<EstadoModel>(
                   value: item,
-                  child: Text(item, style: AppTheme.normalStyle),
+                  child: Text(item.descripcion, style: AppTheme.normalStyle),
                 ),
               )
               .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Seleccione un nuevo estado o presione cancelar.';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            //Do something when selected item is changed.
-          },
-          onSaved: (value) {
-            vm.nuevoEstado = value.toString();
-          },
+          onChanged: (value) => vm.actualizarEstado(context, value!),
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
           ),
@@ -289,13 +379,15 @@ class _ActualizarEstado extends StatelessWidget {
 }
 
 class _ActualizarPrioridad extends StatelessWidget {
-  const _ActualizarPrioridad({
-    super.key,
-  });
+  const _ActualizarPrioridad();
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetalleTareaViewModel>(context);
+
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
+
+    final List<PrioridadModel> prioridades = vmCrear.prioridades;
 
     return CardWidget(
       elevation: 0,
@@ -303,7 +395,8 @@ class _ActualizarPrioridad extends StatelessWidget {
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: DropdownButtonFormField2<String>(
+        child: DropdownButtonFormField2<PrioridadModel>(
+          value: vm.prioridadActual,
           isExpanded: true,
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 16),
@@ -312,26 +405,15 @@ class _ActualizarPrioridad extends StatelessWidget {
             'Seleccione una nueva prioridad',
             style: AppTheme.normalStyle,
           ),
-          items: vm.prioridades
+          items: prioridades
               .map(
-                (item) => DropdownMenuItem<String>(
+                (item) => DropdownMenuItem<PrioridadModel>(
                   value: item,
-                  child: Text(item, style: AppTheme.normalStyle),
+                  child: Text(item.nombre, style: AppTheme.normalStyle),
                 ),
               )
               .toList(),
-          validator: (value) {
-            if (value == null) {
-              return 'Seleccione un nuevo estado o presione cancelar.';
-            }
-            return null;
-          },
-          onChanged: (value) {
-            //Do something when selected item is changed.
-          },
-          onSaved: (value) {
-            vm.nuevaPrioridad = value.toString();
-          },
+          onChanged: (value) => vm.actualizarPrioridad(context, value!),
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
           ),

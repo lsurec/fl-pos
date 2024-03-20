@@ -1,3 +1,5 @@
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -57,6 +59,9 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DetalleTareaViewModel()),
         ChangeNotifierProvider(create: (_) => ComentariosViewModel()),
         ChangeNotifierProvider(create: (_) => CrearTareaViewModel()),
+        ChangeNotifierProvider(create: (_) => IdReferenciaViewModel()),
+        ChangeNotifierProvider(create: (_) => UsuariosViewModel()),
+        ChangeNotifierProvider(create: (_) => CalendarioViewModel()),
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
       ],
@@ -85,8 +90,9 @@ class MyApp extends StatelessWidget {
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
-      // home: const SplashView(), // Muestra el SplashScreen durante el inicio
-      home: const TareasView(), // Muestra el SplashScreen durante el inicio
+      // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
+      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      // home: const TareasView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
     );
