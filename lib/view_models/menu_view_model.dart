@@ -288,6 +288,10 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
+      if (vmDoc.valueParam(58)) {
+//Cargar tioos referencia
+      }
+
       Navigator.pushNamed(context, AppRoutes.withPayment);
       vmHome.isLoading = false;
       return;

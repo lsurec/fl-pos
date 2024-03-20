@@ -201,8 +201,6 @@ class DetailsViewModel extends ChangeNotifier {
         vmFactura.isLoading = false;
 
         if (!precios.succes) {
-          ErrorModel error = precios.message;
-
           NotificationService.showErrorView(
             context,
             precios,
