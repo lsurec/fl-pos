@@ -14,6 +14,7 @@ class ConfirmDocView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final docVM = Provider.of<DocumentViewModel>(context);
+    final menuVM = Provider.of<MenuViewModel>(context);
     final vm = Provider.of<ConfirmDocViewModel>(context);
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
 
@@ -39,6 +40,24 @@ class ConfirmDocView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (menuVM.documentoName != null && menuVM.documento != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Tipo Documento",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "${menuVM.documentoName!} (${menuVM.documento})",
+                          style: AppTheme.normalStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                      ],
+                    ),
                   const Text(
                     "Serie",
                     style: AppTheme.titleStyle,
@@ -128,6 +147,82 @@ class ConfirmDocView extends StatelessWidget {
                         const SizedBox(height: 5),
                         Text(
                           Utilities.formatComplete(docVM.fechaFin),
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
+                  if (docVM.valueParam(385) &&
+                      docVM.inputContacto.text.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(385) ?? "Contatco",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.inputContacto.text,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
+                  if (docVM.valueParam(383) &&
+                      docVM.inputDescripcion.text.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(383) ?? "Descripcion",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.inputDescripcion.text,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
+                  if (docVM.valueParam(386) &&
+                      docVM.inputDireccionEntrega.text.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(386) ?? "Direccion entrega",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.inputDireccionEntrega.text,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ],
+                    ),
+                  if (docVM.valueParam(384) &&
+                      docVM.inputObservacion.text.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(384) ?? "Observacion",
+                          style: AppTheme.titleStyle,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.inputObservacion.text,
                           style: AppTheme.normalStyle,
                         ),
                       ],
