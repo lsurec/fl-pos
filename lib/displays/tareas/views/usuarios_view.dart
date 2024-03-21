@@ -20,13 +20,16 @@ class UsuariosView extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () => vmDetalle.invitadosButton(context),
-              child: const Icon(
-                Icons.group_add_rounded,
-                color: Colors.white,
-              ),
-            ),
+            //Mostrar boton solo cuando se buscan invitados
+            floatingActionButton: vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
+                ? FloatingActionButton(
+                    onPressed: () => vmDetalle.invitadosButton(context),
+                    child: const Icon(
+                      Icons.group_add_rounded,
+                      color: Colors.white,
+                    ),
+                  )
+                : null,
             appBar: AppBar(
               title: Text(
                 vm.tipoBusqueda == 1
