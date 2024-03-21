@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -733,5 +734,20 @@ class CrearTareaViewModel extends ChangeNotifier {
   void eliminarResponsable() {
     responsable = null;
     notifyListeners();
+  }
+
+  void openFileExplorer(BuildContext context) async {
+    try {
+      final result = await FilePicker.platform.pickFiles();
+      if (result != null) {
+        // Aquí puedes manejar el archivo seleccionado, por ejemplo, subirlo a tu aplicación.
+        print("Archivo seleccionado: ${result.files.single.path}");
+      } else {
+        // El usuario canceló la selección.
+        print("Usuario canceló la selección.");
+      }
+    } catch (e) {
+      print("Error al abrir el explorador de archivos: $e");
+    }
   }
 }

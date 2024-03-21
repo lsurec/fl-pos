@@ -50,6 +50,7 @@ dependencies:
   share: ^2.0.2
   shared_preferences: ^2.0.15
   dropdown_button2: ^2.3.8
+  file_picker: ^4.1.4
 
 dev_dependencies:
   flutter_lints: ^2.0.0
