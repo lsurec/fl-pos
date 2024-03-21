@@ -354,6 +354,9 @@ class DetalleTareaViewModel extends ChangeNotifier {
     invitados.removeAt(index);
 
     isLoading = false; //detener carga
+        NotificationService.showSnackbar(
+      "Usuario eliminado correctamente.",
+    );
 
     //Retornar respuesta correcta
     return res;
