@@ -20,6 +20,13 @@ class UsuariosView extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => vmDetalle.invitadosButton(context),
+              child: const Icon(
+                Icons.group_add_rounded,
+                color: Colors.white,
+              ),
+            ),
             appBar: AppBar(
               title: Text(
                 vm.tipoBusqueda == 1
@@ -27,13 +34,6 @@ class UsuariosView extends StatelessWidget {
                     : 'Agregar invitados',
                 style: AppTheme.titleStyle,
               ),
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () => vmDetalle.invitadosButton(context),
-                  icon: const Icon(Icons.group_add_rounded),
-                  tooltip: "Guardar cambios",
-                ),
-              ],
             ),
             body: RefreshIndicator(
               onRefresh: () async {

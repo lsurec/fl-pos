@@ -206,6 +206,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       objetos: [],
     ));
 
+    NotificationService.showSnackbar(
+      "El Estado de la tarea se actualizó correctamente.",
+    );
+
     isLoading = false; //detener carga
     //Retornar respuesta incorrecta
     return res;
@@ -273,6 +277,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       comentario: comentario,
       objetos: [],
     ));
+
+    NotificationService.showSnackbar(
+      "El Nivel de prioridad de la tarea se actualizó correctamente.",
+    );
 
     isLoading = false; //detener carga
 
