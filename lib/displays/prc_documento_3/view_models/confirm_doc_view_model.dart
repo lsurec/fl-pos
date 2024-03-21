@@ -346,7 +346,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
           bytes: bytes,
         );
       } catch (e) {
-        print(e.toString());
         isLoading = false;
         NotificationService.showSnackbar("No se pudo imprimir.");
         return;
@@ -1181,8 +1180,23 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     DateTime myDateTime = DateTime.now();
     String serializedDateTime = myDateTime.toIso8601String();
+
     //Objeto documento estrucutra
     final DocEstructuraModel doc = DocEstructuraModel(
+      docTipoReferencia: docVM.valueParam(85)
+          ? docVM.tipoReferenciaSelect!.tipoReferencia
+          : null,
+      docFechaEntrega: docVM.valueParam(381) ? docVM.fechaEntrega : null,
+      docFechaRecoger: docVM.valueParam(382) ? docVM.fechaRecoger : null,
+      docFechaInicio: docVM.valueParam(44) ? docVM.fechaInicio : null,
+      docFechaFinalizacion: docVM.valueParam(44) ? docVM.fechaFin : null,
+      docRefContacto: docVM.valueParam(385) ? docVM.inputContacto.text : null,
+      docRefDescripcion:
+          docVM.valueParam(383) ? docVM.inputDescripcion.text : null,
+      docRefDireccionEntrega:
+          docVM.valueParam(386) ? docVM.inputDireccionEntrega.text : null,
+      docRefObservacion:
+          docVM.valueParam(384) ? docVM.inputObservacion.text : null,
       consecutivoInterno: firstPart,
       docTraMonto: detailsVM.total,
       docCaMonto: totalCA,

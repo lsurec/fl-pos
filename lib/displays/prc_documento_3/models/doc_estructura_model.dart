@@ -1,6 +1,15 @@
 import 'dart:convert';
 
 class DocEstructuraModel {
+  int? docTipoReferencia;
+  DateTime? docFechaEntrega;
+  DateTime? docFechaRecoger;
+  DateTime? docFechaInicio;
+  DateTime? docFechaFinalizacion;
+  String? docRefContacto;
+  String? docRefDescripcion;
+  String? docRefDireccionEntrega;
+  String? docRefObservacion;
   int consecutivoInterno;
   double docTraMonto;
   double docCaMonto;
@@ -26,6 +35,15 @@ class DocEstructuraModel {
   List<DocCargoAbono> docCargoAbono;
 
   DocEstructuraModel({
+    required this.docTipoReferencia,
+    required this.docFechaEntrega,
+    required this.docFechaRecoger,
+    required this.docFechaInicio,
+    required this.docFechaFinalizacion,
+    required this.docRefContacto,
+    required this.docRefDescripcion,
+    required this.docRefDireccionEntrega,
+    required this.docRefObservacion,
     required this.consecutivoInterno,
     required this.docTraMonto,
     required this.docCaMonto,
@@ -58,6 +76,15 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
+        docTipoReferencia: json["Doc_Tipo_Referencia"],
+        docFechaEntrega: json["Doc_Fecha_Entrega"],
+        docFechaRecoger: json["Doc_Fecha_Recoger"],
+        docFechaInicio: json["Doc_Fecha_Incio"],
+        docFechaFinalizacion: json["Doc_Fecha_Finalizacion"],
+        docRefContacto: json["Doc_Ref_Contacto"],
+        docRefDescripcion: json["Doc_Ref_Descripcion"],
+        docRefDireccionEntrega: json["Doc_Ref_Direccion_Entrega"],
+        docRefObservacion: json["Doc_Ref_Observacion"],
         consecutivoInterno: json["Consecutivo_Interno"] ?? 0,
         docTraMonto: json["Doc_Tra_Monto"].toDouble(),
         docCaMonto: json["Doc_CA_Monto"].toDouble(),
@@ -87,6 +114,15 @@ class DocEstructuraModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "Doc_Tipo_Referencia": docTipoReferencia,
+        "Doc_Fecha_Entrega": docFechaEntrega?.toIso8601String(),
+        "Doc_Fecha_Recoger": docFechaRecoger?.toIso8601String(),
+        "Doc_Fecha_Incio": docFechaInicio?.toIso8601String(),
+        "Doc_Fecha_Finalizacion": docFechaFinalizacion?.toIso8601String(),
+        "Doc_Ref_Contacto": docRefContacto,
+        "Doc_Ref_Descripcion": docRefDescripcion,
+        "Doc_Ref_Direccion_Entrega": docRefDireccionEntrega,
+        "Doc_Ref_Observacion": docRefObservacion,
         "Consecutivo_Interno": consecutivoInterno,
         "Doc_Tra_Monto": docTraMonto,
         "Doc_CA_Monto": docCaMonto,
