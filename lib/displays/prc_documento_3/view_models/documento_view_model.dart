@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class DocumentoViewModel extends ChangeNotifier {
     detailsVM.clearView(context);
     paymentVM.clearView(context);
     confirmVM.newDoc();
+    Preferences.clearDocument();
 
     // Cambiar al primer tab al presionar el botón
     backTab();

@@ -76,11 +76,14 @@ class DocumentView extends StatelessWidget {
                           isExpanded: true,
                           dropdownColor: AppTheme.backroundColor,
                           value: vm.tipoReferenciaSelect,
-                          onChanged: (value) => vm.changeTipoReferencia(value),
-                          items: vm.tiposReferencia.map((serie) {
+                          onChanged: (value) => vm.changeTipoReferencia(
+                            value,
+                            context,
+                          ),
+                          items: vm.tiposReferencia.map((tipoReferencia) {
                             return DropdownMenuItem<TipoReferenciaModel>(
-                              value: serie,
-                              child: Text(serie.descripcion!),
+                              value: tipoReferencia,
+                              child: Text(tipoReferencia.descripcion),
                             );
                           }).toList(),
                         ),
@@ -290,7 +293,7 @@ class DocumentView extends StatelessWidget {
                   activeColor: AppTheme.primary,
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
-                  onChanged: (value) => vm.changeCF(value),
+                  onChanged: (value) => vm.changeCF(value, context),
                   title: const Text(
                     "C/F",
                     style: AppTheme.titleStyle,

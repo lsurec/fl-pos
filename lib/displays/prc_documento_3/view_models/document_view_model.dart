@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,8 @@ class DocumentViewModel extends ChangeNotifier {
       );
     }
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -115,6 +118,8 @@ class DocumentViewModel extends ChangeNotifier {
       );
     }
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -136,6 +141,8 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRecoger.hour,
       fechaRecoger.minute,
     );
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -180,6 +187,8 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -211,6 +220,8 @@ class DocumentViewModel extends ChangeNotifier {
         fechaFin.minute,
       );
     }
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -249,6 +260,8 @@ class DocumentViewModel extends ChangeNotifier {
       );
     }
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -270,6 +283,8 @@ class DocumentViewModel extends ChangeNotifier {
       fechaFin.hour,
       fechaFin.minute,
     );
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -313,6 +328,8 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.hour,
       pickedTime.minute,
     );
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -378,6 +395,7 @@ class DocumentViewModel extends ChangeNotifier {
 
   addClient(ClientModel? client) {
     clienteSelect = client;
+
     notifyListeners();
   }
 
@@ -385,22 +403,6 @@ class DocumentViewModel extends ChangeNotifier {
   void changeSeller(SellerModel? value) {
     vendedorSelect = value;
     notifyListeners();
-  }
-
-  bool monitorPrint() {
-    bool showPrint = false;
-    //el parametro que indica si se imprime en mmonitor o no es 272
-
-    for (var i = 0; i < parametros.length; i++) {
-      final ParametroModel parametro = parametros[i];
-
-      if (parametro.parametro == 272) {
-        showPrint = true;
-        break;
-      }
-    }
-
-    return showPrint;
   }
 
   bool valueParam(int param) {
@@ -434,8 +436,10 @@ class DocumentViewModel extends ChangeNotifier {
     return name == null ? name : capitalizeFirstLetter(name);
   }
 
-  changeTipoReferencia(TipoReferenciaModel? referencia) {
+  changeTipoReferencia(TipoReferenciaModel? referencia, BuildContext context) {
     tipoReferenciaSelect = referencia;
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -463,6 +467,8 @@ class DocumentViewModel extends ChangeNotifier {
 
     //finalizar proceso
     vmFactura.isLoading = false;
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -655,7 +661,7 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   //agregar consumidor final
-  changeCF(bool value) {
+  changeCF(bool value, BuildContext context) {
     cf = value;
 
     //si cf es verdadero
@@ -681,6 +687,8 @@ class DocumentViewModel extends ChangeNotifier {
       //no seleccionar
       clienteSelect = null;
     }
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -750,18 +758,24 @@ class DocumentViewModel extends ChangeNotifier {
     //Si solo hay un cliente seleccionarlo por defecto
     if (cuentasCorrentistas.length == 1) {
       clienteSelect = cuentasCorrentistas.first;
+      DocumentService.saveDocumentLocal(context);
+
       notifyListeners();
       return;
     }
 
     //si son varias coicidencias navegar a pantalla seleccionar cliente
-    Navigator.pushNamed(context, "selectClient",
-        arguments: cuentasCorrentistas);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.selectClient,
+      arguments: cuentasCorrentistas,
+    );
   }
 
   //Seleccionar clinte
   void selectClient(ClientModel client, BuildContext context) {
     clienteSelect = client;
+    DocumentService.saveDocumentLocal(context);
     notifyListeners();
     Navigator.pop(context);
   }

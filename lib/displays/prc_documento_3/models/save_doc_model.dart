@@ -5,6 +5,15 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/models/mo
 
 class SaveDocModel {
   SaveDocModel({
+    required this.referencia,
+    required this.fechaEntrega,
+    required this.fechaRecoger,
+    required this.fechaInicio,
+    required this.fechaFin,
+    required this.refContatco,
+    required this.refDescripcion,
+    required this.refDireccionEntrega,
+    required this.refObservacion,
     required this.user,
     required this.empresa,
     required this.estacion,
@@ -16,6 +25,15 @@ class SaveDocModel {
     required this.pagos,
   });
 
+  TipoReferenciaModel? referencia;
+  DateTime? fechaEntrega;
+  DateTime? fechaRecoger;
+  DateTime? fechaInicio;
+  DateTime? fechaFin;
+  String? refContatco;
+  String? refDescripcion;
+  String? refDireccionEntrega;
+  String? refObservacion;
   String user;
   EmpresaModel empresa;
   EstacionModel estacion;
@@ -32,6 +50,15 @@ class SaveDocModel {
   String toJson() => json.encode(toMap());
 
   factory SaveDocModel.fromMap(Map<String, dynamic> json) => SaveDocModel(
+        referencia: TipoReferenciaModel.fromMap(json["referencia"]),
+        fechaEntrega: json["fechaEntrega"],
+        fechaRecoger: json["fechaRecoger"],
+        fechaInicio: json["fechaInicio"],
+        fechaFin: json["fechaFin"],
+        refContatco: json["refContatco"],
+        refDescripcion: json["refDescripcion"],
+        refDireccionEntrega: json["refDireccionEntrega"],
+        refObservacion: json["refObservacion"],
         user: json["user"],
         empresa: EmpresaModel.fromMap(json["empresa"] ?? {}),
         estacion: EstacionModel.fromMap(json["estacion"] ?? {}),
@@ -50,6 +77,15 @@ class SaveDocModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "referencia": referencia?.toMap(),
+        "fechaEntrega": fechaEntrega,
+        "fechaRecoger": fechaRecoger,
+        "fechaInicio": fechaInicio,
+        "fechaFin": fechaFin,
+        "refContatco": refContatco,
+        "refDescripcion": refDescripcion,
+        "refDireccionEntrega": refDireccionEntrega,
+        "refObservacion": refObservacion,
         "user": user,
         "empresa": empresa.toMap(),
         "estacion": estacion.toMap(),
