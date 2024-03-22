@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/tareas/views/archivos_view.dart';
+
 export 'package:flutter_post_printer_example/displays/tareas/views/usuarios_view.dart';
 
 export 'package:flutter_post_printer_example/displays/tareas/views/id_referencia_view.dart';
