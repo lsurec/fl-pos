@@ -40,7 +40,14 @@ class CrearTareaView extends StatelessWidget {
                     tooltip: "Crear Tarea",
                   ),
                   IconButton(
-                    onPressed: () => vm.openFileExplorer(context),
+                    onPressed: () => vm.requestStoragePermission(context),
+                    // onPressed: () async {
+                    //   String? filePath = await vm.openFileExplorerAndGetPath();
+                    //   if (filePath != null) {
+                    //     // Aquí puedes manejar el archivo seleccionado
+                    //     print('Archivo seleccionado: $filePath');
+                    //   }
+                    // },
                     icon: const Icon(Icons.attach_file_outlined),
                     tooltip: "Adjuntar Archivos",
                   ),

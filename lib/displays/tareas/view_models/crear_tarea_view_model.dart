@@ -8,6 +8,8 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/widgets/alert_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {
@@ -736,10 +738,15 @@ class CrearTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void openFileExplorer(BuildContext context) async {
+  void openFileExplorer2(BuildContext context) async {
+    print("aqui");
     try {
+      print("aqui x2");
+
       final result = await FilePicker.platform.pickFiles();
       if (result != null) {
+        print("aqui x3");
+
         // Aquí puedes manejar el archivo seleccionado, por ejemplo, subirlo a tu aplicación.
         print("Archivo seleccionado: ${result.files.single.path}");
       } else {
@@ -748,6 +755,91 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     } catch (e) {
       print("Error al abrir el explorador de archivos: $e");
+    }
+  }
+
+  Future<bool> requestStoragePermission(BuildContext context) async {
+    print("solicitanto");
+    var status = await Permission.storage.status;
+    print("solicitanto $status");
+
+    if (status.isDenied) {
+      bool result = await showDialog(
+            context: context,
+            builder: (context) => AlertWidget(
+              title: "¿Estás seguro?",
+              description: "Conceder permiso.",
+              onOk: () => Navigator.of(context).pop(true),
+              onCancel: () => Navigator.of(context).pop(false),
+            ),
+          ) ??
+          false;
+
+      if (!result) return false;
+
+      status = PermissionStatus.granted;
+      print("concediendo $status");
+      if (!status.isGranted) {
+        var result = await Permission.storage.request();
+        return result.isGranted;
+      }
+    }
+    // if (!status.isGranted) {
+    //   var result = await Permission.storage.request();
+    //   return result.isGranted;
+    // }
+    return true;
+  }
+
+  Future<String?> openFileExplorer() async {
+    try {
+      // Abre el explorador de archivos o la galería de imágenes
+      final result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        // El usuario seleccionó un archivo
+        final filePath = result.files.single.path;
+        return filePath;
+      } else {
+        // El usuario canceló la selección de archivos
+        return null;
+      }
+    } catch (e) {
+      // Maneja cualquier error que pueda ocurrir al abrir el explorador de archivos
+      print("Error al abrir el explorador de archivos: $e");
+      return null;
+    }
+  }
+
+  Future<String?> openFileExplorerAndGetPath() async {
+    try {
+      // Solicita permiso de almacenamiento
+      var storagePermissionStatus = await Permission.storage.status;
+      if (!storagePermissionStatus.isGranted) {
+        var result = await Permission.storage.request();
+        if (!result.isGranted) {
+          // Si el usuario no concede permisos, devuelve null
+          print('El usuario no concedió los permisos necesarios.');
+          return null;
+        }
+      }
+
+      // Abre el explorador de archivos o la galería de imágenes
+      final result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        // El usuario seleccionó un archivo
+        final filePath = result.files.single.path;
+        return filePath;
+      } else {
+        // El usuario canceló la selección de archivos
+        print('El usuario canceló la selección de archivos.');
+        return null;
+      }
+    } catch (e) {
+      // Maneja cualquier error que pueda ocurrir al abrir el explorador de archivos
+      print("Error al abrir el explorador de archivos: $e");
+      return null;
     }
   }
 }
