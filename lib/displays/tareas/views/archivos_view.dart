@@ -3,17 +3,35 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/selectors/imagen_selector.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class ArchivosView extends StatelessWidget {
+class ArchivosView extends StatefulWidget {
   const ArchivosView({super.key});
 
   @override
+  State<ArchivosView> createState() => _ArchivosViewState();
+}
+
+class _ArchivosViewState extends State<ArchivosView> {
+  List<File> selectedImages = [];
+
+  void handleImageSelection(List<XFile>? selectedFiles) {
+    if (selectedFiles != null) {
+      print(selectedFiles.length);
+      setState(() {
+        selectedImages =
+            selectedFiles.map((xFile) => File(xFile.path)).toList();
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<ArchivosViewModel>(context);
+    // final vm = Provider.of<ArchivosViewModel>(context);
 
     return Stack(
       children: [
@@ -26,9 +44,9 @@ class ArchivosView extends StatelessWidget {
           ),
           body: Column(
             children: [
-              ImageSelector(onSelectImages: vm.handleImageSelection),
-              if (vm.selectedImages.isNotEmpty)
-                ImagePreview(images: vm.selectedImages),
+              ImageSelector(onSelectImages: handleImageSelection),
+              if (selectedImages.isNotEmpty)
+                ImagePreview(images: selectedImages),
               // Center(
               //   child: IconButton(
               //     onPressed: () => vm.abrirExplorador(context),
@@ -57,50 +75,50 @@ class ArchivosView extends StatelessWidget {
   }
 }
 
-class ImageSelector extends StatelessWidget {
-  final Function(List<XFile>?) onSelectImages;
+// class ImageSelector extends StatelessWidget {
+//   final Function(List<XFile>?) onSelectImages;
 
-  const ImageSelector({
-    super.key,
-    required this.onSelectImages,
-  });
+//   const ImageSelector({
+//     super.key,
+//     required this.onSelectImages,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<ArchivosViewModel>(context);
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<ArchivosViewModel>(context);
 
-    return FloatingActionButton(
-      onPressed: () {
-        vm.selectImages(context, (List<XFile>? pickedFiles) {
-          // Aquí puedes manejar las imágenes seleccionadas
-        });
-      },
-      heroTag: 'imageSelector',
-      tooltip: 'Pick Images from gallery',
-      child: const Icon(
-        Icons.photo,
-        color: Colors.white,
-      ),
-    );
-  }
-}
+//     return FloatingActionButton(
+//       onPressed: () {
+//         vm.selectImages(context, (List<XFile>? pickedFiles) {
+//           // Aquí puedes manejar las imágenes seleccionadas
+//         });
+//       },
+//       heroTag: 'imageSelector',
+//       tooltip: 'Pick Images from gallery',
+//       child: const Icon(
+//         Icons.photo,
+//         color: Colors.white,
+//       ),
+//     );
+//   }
+// }
 
-class ImagePreview extends StatelessWidget {
-  final List<File> images;
+// class ImagePreview extends StatelessWidget {
+//   final List<File> images;
 
-  const ImagePreview({
-    super.key,
-    required this.images,
-  });
+//   const ImagePreview({
+//     super.key,
+//     required this.images,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: images.length,
-      itemBuilder: (context, index) {
-        print(images.length);
-        return Image.file(images[index]);
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       itemCount: images.length,
+//       itemBuilder: (context, index) {
+//         print(images.length);
+//         return Image.file(images[index]);
+//       },
+//     );
+//   }
+// }
