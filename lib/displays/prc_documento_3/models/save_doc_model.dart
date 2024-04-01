@@ -50,7 +50,7 @@ class SaveDocModel {
   String toJson() => json.encode(toMap());
 
   factory SaveDocModel.fromMap(Map<String, dynamic> json) => SaveDocModel(
-        referencia: TipoReferenciaModel.fromMap(json["referencia"]),
+        referencia: TipoReferenciaModel.fromMap(json["referencia"] ?? {}),
         fechaEntrega: json["fechaEntrega"],
         fechaRecoger: json["fechaRecoger"],
         fechaInicio: json["fechaInicio"],

@@ -1,4 +1,6 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -209,6 +211,8 @@ class DocumentView extends StatelessWidget {
                         hintText: vm.getTextParam(385),
                         labelText: vm.getTextParam(385),
                       ),
+                      onChanged: (value) =>
+                          DocumentService.saveDocumentLocal(context),
                     ),
                   ),
                 if (vm.valueParam(383))
@@ -220,6 +224,8 @@ class DocumentView extends StatelessWidget {
                         hintText: vm.getTextParam(383),
                         labelText: vm.getTextParam(383),
                       ),
+                      onChanged: (value) =>
+                          DocumentService.saveDocumentLocal(context),
                     ),
                   ),
                 if (vm.valueParam(386))
@@ -231,6 +237,8 @@ class DocumentView extends StatelessWidget {
                         hintText: vm.getTextParam(386),
                         labelText: vm.getTextParam(386),
                       ),
+                      onChanged: (value) =>
+                          DocumentService.saveDocumentLocal(context),
                     ),
                   ),
                 if (vm.valueParam(384))
@@ -242,6 +250,8 @@ class DocumentView extends StatelessWidget {
                         hintText: vm.getTextParam(384),
                         labelText: vm.getTextParam(384),
                       ),
+                      onChanged: (value) =>
+                          DocumentService.saveDocumentLocal(context),
                     ),
                   ),
                 Row(
@@ -254,7 +264,7 @@ class DocumentView extends StatelessWidget {
                     IconButton(
                       onPressed: () => Navigator.pushNamed(
                         context,
-                        "addClient",
+                        AppRoutes.addClient,
                       ),
                       icon: const Icon(
                         Icons.person_add_outlined,

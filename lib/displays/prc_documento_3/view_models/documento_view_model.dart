@@ -46,7 +46,7 @@ class DocumentoViewModel extends ChangeNotifier {
     detailsVM.clearView(context);
     paymentVM.clearView(context);
     confirmVM.newDoc();
-    Preferences.clearDocument();
+    // Preferences.clearDocument();
 
     // Cambiar al primer tab al presionar el botón
     backTab();
