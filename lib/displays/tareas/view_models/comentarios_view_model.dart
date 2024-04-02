@@ -138,6 +138,7 @@ class ComentariosViewModel extends ChangeNotifier {
 
     notifyListeners();
     comentarioController.text = ""; //limpiar input
+    files.clear(); //limpiar lista de archivos
 
     isLoading = false; //detener carga
 
@@ -170,6 +171,8 @@ class ComentariosViewModel extends ChangeNotifier {
     if (result != null) {
       files = result.paths.map((path) => File(path!)).toList();
     }
+    notifyListeners();
+
   }
 
   String obtenerNombreArchivo(File archivo) {
@@ -180,5 +183,11 @@ class ComentariosViewModel extends ChangeNotifier {
     String nombreArchivo = File(path).path.split('/').last;
 
     return nombreArchivo;
+  }
+
+  //Eliminar archivos de la lista de inivtados
+  void eliminarArchivos(int index) {
+    files.removeAt(index);
+    notifyListeners();
   }
 }

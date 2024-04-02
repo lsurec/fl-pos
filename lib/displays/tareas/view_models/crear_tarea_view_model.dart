@@ -358,6 +358,8 @@ class CrearTareaViewModel extends ChangeNotifier {
         //Respuesta incorrecta
         return;
       }
+
+      files.clear(); //limpiar lista de archivos
       notifyListeners();
       isLoading = false;
     }
@@ -811,109 +813,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void openFileExplorer2(BuildContext context) async {
-    print("aqui");
-    try {
-      print("aqui x2");
-
-      final result = await FilePicker.platform.pickFiles();
-      if (result != null) {
-        print("aqui x3");
-
-        // Aquí puedes manejar el archivo seleccionado, por ejemplo, subirlo a tu aplicación.
-        print("Archivo seleccionado: ${result.files.single.path}");
-      } else {
-        // El usuario canceló la selección.
-        print("Usuario canceló la selección.");
-      }
-    } catch (e) {
-      print("Error al abrir el explorador de archivos: $e");
-    }
-  }
-
-  Future<bool> requestStoragePermission(BuildContext context) async {
-    print("solicitanto");
-    var status = await Permission.storage.status;
-    print("solicitanto $status");
-
-    if (status.isDenied) {
-      bool result = await showDialog(
-            context: context,
-            builder: (context) => AlertWidget(
-              title: "¿Estás seguro?",
-              description: "Conceder permiso.",
-              onOk: () => Navigator.of(context).pop(true),
-              onCancel: () => Navigator.of(context).pop(false),
-            ),
-          ) ??
-          false;
-
-      if (!result) return false;
-
-      status = PermissionStatus.granted;
-      print("concediendo $status");
-      if (!status.isGranted) {
-        var result = await Permission.storage.request();
-        return result.isGranted;
-      }
-    }
-    // if (!status.isGranted) {
-    //   var result = await Permission.storage.request();
-    //   return result.isGranted;
-    // }
-    return true;
-  }
-
-  Future<String?> openFileExplorer() async {
-    try {
-      // Abre el explorador de archivos o la galería de imágenes
-      final result = await FilePicker.platform.pickFiles();
-
-      if (result != null) {
-        // El usuario seleccionó un archivo
-        final filePath = result.files.single.path;
-        return filePath;
-      } else {
-        // El usuario canceló la selección de archivos
-        return null;
-      }
-    } catch (e) {
-      // Maneja cualquier error que pueda ocurrir al abrir el explorador de archivos
-      print("Error al abrir el explorador de archivos: $e");
-      return null;
-    }
-  }
-
-  Future<String?> openFileExplorerAndGetPath() async {
-    try {
-      // Solicita permiso de almacenamiento
-      var storagePermissionStatus = await Permission.storage.status;
-      if (!storagePermissionStatus.isGranted) {
-        var result = await Permission.storage.request();
-        if (!result.isGranted) {
-          // Si el usuario no concede permisos, devuelve null
-          print('El usuario no concedió los permisos necesarios.');
-          return null;
-        }
-      }
-
-      // Abre el explorador de archivos o la galería de imágenes
-      final result = await FilePicker.platform.pickFiles();
-
-      if (result != null) {
-        // El usuario seleccionó un archivo
-        final filePath = result.files.single.path;
-        return filePath;
-      } else {
-        // El usuario canceló la selección de archivos
-        print('El usuario canceló la selección de archivos.');
-        return null;
-      }
-    } catch (e) {
-      // Maneja cualquier error que pueda ocurrir al abrir el explorador de archivos
-      print("Error al abrir el explorador de archivos: $e");
-      return null;
-    }
+  //Eliminar archivos de la lista de inivtados
+  void eliminarArchivos(int index) {
+    files.removeAt(index);
+    notifyListeners();
   }
 
   Future<void> selectFiles() async {
@@ -924,5 +827,17 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (result != null) {
       files = result.paths.map((path) => File(path!)).toList();
     }
+
+    notifyListeners();
+  }
+
+  String obtenerNombreArchivo(File archivo) {
+    // Obtener el path del archivo
+    String path = archivo.path;
+
+    // Utilizar la función basename para obtener solo el nombre del archivo
+    String nombreArchivo = File(path).path.split('/').last;
+
+    return nombreArchivo;
   }
 }

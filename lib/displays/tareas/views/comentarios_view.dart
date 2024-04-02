@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
 import '../../../widgets/widgets.dart';
@@ -68,6 +70,42 @@ class ComentariosView extends StatelessWidget {
                       ),
                       const SizedBox(height: 25),
                       const _NuevoComentario(),
+                      const SizedBox(height: 15),
+                      if (vm.files.isNotEmpty)
+                        Text(
+                          "Archivos seleccionados (${vm.files.length})",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                      const SizedBox(height: 5),
+                      if (vm.files.isNotEmpty)
+                      const Divider(),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm.files.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final File archivo = vm.files[index];
+                          return Column(
+                            children: [
+                              ListTile(
+                                title: Text(
+                                  vm.obtenerNombreArchivo(archivo),
+                                  style: AppTheme.normalStyle,
+                                ),
+                                leading: const Icon(Icons.attachment),
+                                trailing: GestureDetector(
+                                  child: const Icon(Icons.close),
+                                  onTap: () => vm.eliminarArchivos(index),
+                                ),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                              const Divider(),
+                            ],
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
