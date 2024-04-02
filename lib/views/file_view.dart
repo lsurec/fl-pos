@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class FileUploader extends StatefulWidget {
   @override
@@ -23,32 +26,73 @@ class _FileUploaderState extends State<FileUploader> {
     }
   }
 
+  // Future<void> _uploadFiles() async {
+  //   if (_files.isEmpty) return;
+
+  //   try {
+  //     // var uri = Uri.parse('http://192.168.0.10:9193/api/Files/upload');
+  //     var uri = Uri.parse('http://192.168.1.7:3036/api/Files');
+  //     var request = http.MultipartRequest('POST', uri);
+
+  //     // Add files to the request
+  //     for (var file in _files) {
+  //       request.files
+  //           .add(await http.MultipartFile.fromPath('files', file.path));
+  //     }
+
+  //     // Add any additional data if needed
+  //     request.fields['additionalField'] = 'additionalValue';
+
+  //     var response = await request.send();
+
+  //     // Handle response
+  //     if (response.statusCode == 200) {
+  //       print('Files uploaded successfully');
+  //     } else {
+  //       print('Failed to upload files. Status code: ${response.statusCode}');
+  //     }
+  //   } catch (e) {
+  //     print('Error uploading files: $e');
+  //   }
+  // }
+
   Future<void> _uploadFiles() async {
+    //View model para obtener el usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
     if (_files.isEmpty) return;
 
     try {
-      var uri = Uri.parse('http://192.168.0.10:9193/api/Files/upload');
+      var uri = Uri.parse('http://192.168.1.7:3036/api/Files');
       var request = http.MultipartRequest('POST', uri);
 
-      // Add files to the request
+      // Agregar encabezados a la solicitud
+      request.headers.addAll({
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDAxIiwibmJmIjoxNzEyMDIyMzMyLCJleHAiOjE3NDMxMjYzMzIsImlhdCI6MTcxMjAyMjMzMn0.wb11vqB5EofWPgUnx9GxzI4MhmwB6cmpPJGxyP390WY',
+        'Content-Type': 'multipart/form-data',
+      });
+
+      // Agregar archivos a la solicitud
       for (var file in _files) {
         request.files
             .add(await http.MultipartFile.fromPath('files', file.path));
       }
 
-      // Add any additional data if needed
+      // Agregar cualquier dato adicional si es necesario
       request.fields['additionalField'] = 'additionalValue';
 
       var response = await request.send();
 
-      // Handle response
+      // Manejar la respuesta
       if (response.statusCode == 200) {
-        print('Files uploaded successfully');
+        print('Archivos subidos exitosamente');
       } else {
-        print('Failed to upload files. Status code: ${response.statusCode}');
+        print(
+            'Error al subir archivos. Código de estado: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error uploading files: $e');
+      print('Error al subir archivos: $e');
     }
   }
 
@@ -56,7 +100,10 @@ class _FileUploaderState extends State<FileUploader> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('File Uploader'),
+        title: const Text(
+          'File Uploader',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Center(
         child: Column(
@@ -64,12 +111,18 @@ class _FileUploaderState extends State<FileUploader> {
           children: <Widget>[
             ElevatedButton(
               onPressed: _selectFiles,
-              child: Text('Select Files'),
+              child: const Text(
+                'Seleccionar Archivos',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _uploadFiles,
-              child: Text('Upload Files'),
+              child: const Text(
+                'Subir Archivos',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
