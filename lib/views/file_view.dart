@@ -63,14 +63,18 @@ class _FileUploaderState extends State<FileUploader> {
     if (_files.isEmpty) return;
 
     try {
-      var uri = Uri.parse('http://192.168.1.7:3036/api/Files');
+      var uri =
+          Uri.parse('http://192.168.0.7:3036/api/Tareas/objetos/comentario');
       var request = http.MultipartRequest('POST', uri);
 
       // Agregar encabezados a la solicitud
       request.headers.addAll({
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDAxIiwibmJmIjoxNzEyMDIyMzMyLCJleHAiOjE3NDMxMjYzMzIsImlhdCI6MTcxMjAyMjMzMn0.wb11vqB5EofWPgUnx9GxzI4MhmwB6cmpPJGxyP390WY',
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDAxIiwibmJmIjoxNzEwOTQyNDAzLCJleHAiOjE3NDIwNDY0MDMsImlhdCI6MTcxMDk0MjQwM30.6x_R5wlXTYhsZDhtYaUvyZXn-dCx2du_-GiHZKeCKnw',
         'Content-Type': 'multipart/form-data',
+        "user": "desa001",
+        "tarea": 5245.toString(),
+        "tareaComentario": 11883.toString(),
       });
 
       // Agregar archivos a la solicitud

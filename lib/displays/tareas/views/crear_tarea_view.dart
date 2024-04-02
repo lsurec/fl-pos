@@ -40,7 +40,7 @@ class CrearTareaView extends StatelessWidget {
                     tooltip: "Crear Tarea",
                   ),
                   IconButton(
-                    onPressed: () => vm.requestStoragePermission(context),
+                    onPressed: () => vm.selectFiles(),
                     // onPressed: () async {
                     //   String? filePath = await vm.openFileExplorerAndGetPath();
                     //   if (filePath != null) {

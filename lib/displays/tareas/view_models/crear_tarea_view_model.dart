@@ -1,4 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -18,6 +20,8 @@ class CrearTareaViewModel extends ChangeNotifier {
   final List<EstadoModel> estados = [];
   final List<PrioridadModel> prioridades = [];
   final List<PeriodicidadModel> periodicidades = [];
+  //almacenar archivos seleccionados
+  List<File> files = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -288,6 +292,78 @@ class CrearTareaViewModel extends ChangeNotifier {
         responsable != null ? responsable!.name : seleccionado.userName;
 
     notifyListeners();
+
+    if (files.isNotEmpty) {
+      ComentarService comentarService = ComentarService();
+
+      //Crear modelo de nuevo comentario
+      ComentarModel comentario = ComentarModel(
+        comentario: observacionController.text,
+        tarea: resCreada.iDTarea,
+        userName: user,
+      );
+
+      //consumo de api
+      ApiResModel resComent = await comentarService.postComentar(
+        token,
+        comentario,
+      );
+
+      //si el consumo salió mal
+      if (!resComent.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(context, resComent);
+
+        //Respuesta incorrecta
+        return;
+      }
+
+      print(resComent.message.res);
+
+      //Crear modelo de comentario
+      ComentarioModel comentarioCreado = ComentarioModel(
+        comentario: comentario.comentario,
+        fechaHora: DateTime.now(),
+        nameUser: user,
+        userName: user,
+        tarea: comentario.tarea,
+        tareaComentario: resComent.message.res,
+      );
+
+      final vmComentarios = Provider.of<ComentariosViewModel>(context, listen: false);
+
+      FilesService filesService = FilesService();
+
+      ApiResModel resFiles = await filesService.posFilesComent(
+        token,
+        user,
+        files,
+        comentarioCreado.tarea,
+        comentarioCreado.tareaComentario,
+      );
+
+      //si el consumo salió mal
+      if (!resFiles.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(context, resFiles);
+
+        //Respuesta incorrecta
+        return;
+      }
+
+      //Crear modelo de comentario detalle, (comentario y objetos)
+      vmComentarios.comentarioDetalle.add(
+        ComentarioDetalleModel(
+          comentario: comentarioCreado,
+          objetos: resFiles.message,
+        ),
+      );
+      notifyListeners();
+      isLoading = false;
+
+    }
 
     //si hay invitados seleccionados
     if (invitados.isNotEmpty) {
@@ -840,6 +916,18 @@ class CrearTareaViewModel extends ChangeNotifier {
       // Maneja cualquier error que pueda ocurrir al abrir el explorador de archivos
       print("Error al abrir el explorador de archivos: $e");
       return null;
+    }
+  }
+
+  Future<void> selectFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+    );
+
+    if (result != null) {
+      // setState(() {
+      files = result.paths.map((path) => File(path!)).toList();
+      // });
     }
   }
 }
