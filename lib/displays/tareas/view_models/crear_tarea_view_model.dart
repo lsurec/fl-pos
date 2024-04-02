@@ -331,11 +331,9 @@ class CrearTareaViewModel extends ChangeNotifier {
         tareaComentario: resComent.message.res,
       );
 
-      final vmComentarios = Provider.of<ComentariosViewModel>(context, listen: false);
-
       FilesService filesService = FilesService();
 
-      ApiResModel resFiles = await filesService.posFilesComent(
+      bool resFiles = await filesService.posFilesComent(
         token,
         user,
         files,
@@ -344,25 +342,24 @@ class CrearTareaViewModel extends ChangeNotifier {
       );
 
       //si el consumo salió mal
-      if (!resFiles.succes) {
+      if (!resFiles) {
         isLoading = false;
 
-        NotificationService.showErrorView(context, resFiles);
+        // NotificationService.showErrorView(context, resFiles);
 
         //Respuesta incorrecta
         return;
       }
 
       //Crear modelo de comentario detalle, (comentario y objetos)
-      vmComentarios.comentarioDetalle.add(
-        ComentarioDetalleModel(
-          comentario: comentarioCreado,
-          objetos: resFiles.message,
-        ),
-      );
+      // vmComentarios.comentarioDetalle.add(
+      //   ComentarioDetalleModel(
+      //     comentario: comentarioCreado,
+      //     objetos: resFiles,
+      //   ),
+      // );
       notifyListeners();
       isLoading = false;
-
     }
 
     //si hay invitados seleccionados
