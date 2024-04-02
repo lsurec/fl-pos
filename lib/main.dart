@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/views/file_view.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -91,7 +92,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
       // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: FileUploader(), // Muestra el SplashScreen durante el inicio
       // home: const TareasView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
