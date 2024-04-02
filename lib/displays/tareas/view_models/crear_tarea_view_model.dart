@@ -130,6 +130,9 @@ class CrearTareaViewModel extends ChangeNotifier {
     responsable = null;
     idReferencia = null;
     invitados.clear();
+    files.clear();
+    notifyListeners();
+
     //Fechas y horas
     fechaInicial = DateTime.now();
     fechaFinal = addDate10Min(fechaInicial);
