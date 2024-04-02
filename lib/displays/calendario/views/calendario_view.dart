@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -175,7 +177,7 @@ class _TablaDiasMes extends StatelessWidget {
               final index = rowIndex * 7 + columnIndex;
               final dia = index < dias.length ? '${dias[index]}' : '';
               final backgroundColor =
-                  dia == '14' ? Colors.lightBlueAccent : null;
+                  dia == '2' ? Colors.lightBlueAccent : null;
               return Container(
                 height: 100,
                 width: 50,
