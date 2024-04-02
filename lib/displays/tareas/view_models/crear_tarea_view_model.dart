@@ -10,8 +10,6 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/widgets/alert_widget.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {

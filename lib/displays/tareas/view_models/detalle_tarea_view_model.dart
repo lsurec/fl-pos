@@ -31,7 +31,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
   //Cargar comentarios
   comentariosTarea(BuildContext context) async {
     isLoading = true; //cargar pantalla
-    //View model de comentarios
+    //View model de tareas
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
     //validar resppuesta de los comentarios
@@ -42,6 +42,12 @@ class DetalleTareaViewModel extends ChangeNotifier {
       isLoading = false;
       return;
     }
+
+    //View model de tareas
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+    //limpiar lista de archivos seleccionados
+    vmComentarios.files.clear();
 
     //navegar a comentarios
     Navigator.pushNamed(context, AppRoutes.viewComments);
@@ -354,7 +360,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     invitados.removeAt(index);
 
     isLoading = false; //detener carga
-        NotificationService.showSnackbar(
+    NotificationService.showSnackbar(
       "Usuario eliminado correctamente.",
     );
 
