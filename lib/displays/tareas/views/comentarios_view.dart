@@ -77,8 +77,7 @@ class ComentariosView extends StatelessWidget {
                           style: AppTheme.normalBoldStyle,
                         ),
                       const SizedBox(height: 5),
-                      if (vm.files.isNotEmpty)
-                      const Divider(),
+                      if (vm.files.isNotEmpty) const Divider(),
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
@@ -243,10 +242,28 @@ class _Comentario extends StatelessWidget {
                       style: AppTheme.normalStyle,
                     ),
                     leading: const Icon(Icons.insert_photo_outlined),
-                    contentPadding: EdgeInsets.zero,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                    ),
                   );
                 },
               ),
+              //PAra ver archivos
+              // TextButton(
+              //   onPressed: () => vm.openFile(
+              //     "https://img.freepik.com/vector-gratis/coleccion-nubes-dibujos-animados_23-2149016996.jpg?w=740&t=st=1712090936~exp=1712091536~hmac=9a41f6eea5ff605f25d77ec34a404ef416983e2166c5d8ac14a8a555718f9741"
+              //     // "/Almacenamiento interno/DCIM/Screenshots/Screenshot_20240321_102723.jpg"
+              //       // "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.es%2Ffotos-vectores-gratis%2Fnubes-dibujo&psig=AOvVaw3GydpjiHrk5UbiVhGfSgtB&ust=1712176733294000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCICvosGxpIUDFQAAAAAdAAAAABAE",
+              //       ),
+              //   child: const ListTile(
+              //     title: Text(
+              //       "nubess",
+              //       style: AppTheme.normalStyle,
+              //     ),
+              //     leading: Icon(Icons.insert_photo_outlined),
+              //     contentPadding: EdgeInsets.zero,
+              //   ),
+              // ),
             ],
           ),
         ),
