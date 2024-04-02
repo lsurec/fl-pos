@@ -1,5 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -11,6 +14,8 @@ import 'package:provider/provider.dart';
 class ComentariosViewModel extends ChangeNotifier {
   //Almacenar comentarios de la tarea
   final List<ComentarioDetalleModel> comentarioDetalle = [];
+  //almacenar archivos seleccionados
+  List<File> files = [];
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -79,14 +84,59 @@ class ComentariosViewModel extends ChangeNotifier {
       tareaComentario: res.message.res,
     );
 
+    final List<ObjetoComentarioModel> archivos = [];
+
+    for (var i = 0; i < files.length; i++) {
+      File file = files[i];
+      ObjetoComentarioModel archivo = ObjetoComentarioModel(
+        tareaComentarioObjeto: 1,
+        objetoNombre: obtenerNombreArchivo(file),
+        objetoSize: "",
+        objetoUrl: "",
+      );
+
+      archivos.add(archivo);
+    }
+
+    FilesService filesService = FilesService();
+
+    bool resFiles = await filesService.posFilesComent(
+      token,
+      user,
+      files,
+      comentarioCreado.tarea,
+      comentarioCreado.tareaComentario,
+    );
+
+    //si el consumo salió mal
+    if (!resFiles) {
+      isLoading = false;
+
+      ApiResModel error = ApiResModel(
+        succes: false,
+        message:
+            "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
+        url: "",
+        storeProcedure: null,
+      );
+
+      NotificationService.showErrorView(context, error);
+
+      //Respuesta incorrecta
+      return;
+    }
+
+    isLoading = false;
+
     //Crear modelo de comentario detalle, (comentario y objetos)
     comentarioDetalle.add(
       ComentarioDetalleModel(
         comentario: comentarioCreado,
-        objetos: [],
+        objetos: archivos,
       ),
     );
 
+    notifyListeners();
     comentarioController.text = ""; //limpiar input
 
     isLoading = false; //detener carga
@@ -110,5 +160,25 @@ class ComentariosViewModel extends ChangeNotifier {
     }
 
     isLoading = false; //detener carga
+  }
+
+  Future<void> selectFiles() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+    );
+
+    if (result != null) {
+      files = result.paths.map((path) => File(path!)).toList();
+    }
+  }
+
+  String obtenerNombreArchivo(File archivo) {
+    // Obtener el path del archivo
+    String path = archivo.path;
+
+    // Utilizar la función basename para obtener solo el nombre del archivo
+    String nombreArchivo = File(path).path.split('/').last;
+
+    return nombreArchivo;
   }
 }

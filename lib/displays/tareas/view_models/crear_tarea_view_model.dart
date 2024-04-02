@@ -345,19 +345,19 @@ class CrearTareaViewModel extends ChangeNotifier {
       if (!resFiles) {
         isLoading = false;
 
-        // NotificationService.showErrorView(context, resFiles);
+        ApiResModel error = ApiResModel(
+          succes: false,
+          message:
+              "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
+          url: "",
+          storeProcedure: null,
+        );
+
+        NotificationService.showErrorView(context, error);
 
         //Respuesta incorrecta
         return;
       }
-
-      //Crear modelo de comentario detalle, (comentario y objetos)
-      // vmComentarios.comentarioDetalle.add(
-      //   ComentarioDetalleModel(
-      //     comentario: comentarioCreado,
-      //     objetos: resFiles,
-      //   ),
-      // );
       notifyListeners();
       isLoading = false;
     }
@@ -922,9 +922,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     if (result != null) {
-      // setState(() {
       files = result.paths.map((path) => File(path!)).toList();
-      // });
     }
   }
 }

@@ -105,11 +105,11 @@ class _NuevoComentario extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // IconButton(
-              //   tooltip: "Adjuntar Archivos",
-              //   onPressed: () {},
-              //   icon: const Icon(Icons.attach_file_outlined),
-              // ),
+              IconButton(
+                tooltip: "Adjuntar Archivos",
+                onPressed: () => vm.selectFiles(),
+                icon: const Icon(Icons.attach_file_outlined),
+              ),
               IconButton(
                 tooltip: "Enviar comentario.",
                 onPressed: () =>
