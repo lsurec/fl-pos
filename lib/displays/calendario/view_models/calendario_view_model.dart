@@ -16,31 +16,88 @@ class CalendarioViewModel extends ChangeNotifier {
 
   final List<int> diasMes = [];
   DateTime? hoy;
-  int primerDiaSemana = 3; // Puedes cambiar el valor según tu necesidad
 
+  //Variables a utlizar en e calendario
+
+  List<DiaModel> monthSelect = []; //dias del mes seleccionado
+  List<String> diasSemanaEspaniol = []; //Nombres de los dias de la semana
+  int primerDiaSemana = 0; // 0 = domingo, 1 = lunes, ..., 6 = sábado
+
+  //fecha de hoy (fecha de la maquina)
+  DateTime fechaHoy = DateTime.now(); //fecha completa DateNow
+  int today = 0; //fecha dia
+  int month = 0; //fecha mesooo
+  int year = 0; //fecha año
+
+  //fecha vista usuario
+  int monthSelectView = 0; //mes
+  int yearSelect = 0; //año
+  int daySelect = 0; //dia
+
+  //semena seleccionada
+  int indexWeekActive = 0;
+
+  //semanas del mes actual
+  List<List<DiaModel>> semanas = [];
+
+  //Constructor
   CalendarioViewModel() {
-    hoy = DateTime.now();
-    crearArregloDias();
+    // hoy = DateTime.now();
+
+    //obtener feccha de hoy y asignar
+    today = fechaHoy.day; //fecha del dia
+    month = fechaHoy.month; //mes
+    year = fechaHoy.year; //año
+
+    // primerDiaSemana = 0;
   }
 
-  List<int> obtenerDiasDelMes(int year, int month) {
-    // Lista que contendrá los días del mes
-    List<int> daysInMonth = [];
+  datos() {
 
-    // Obtiene la cantidad de días en el mes y año dados
-    int daysInThisMonth = DateTime(year, month + 1, 0).day;
+    // print(fechaHoy);
+    // print(monthSelect.length);
+    // print(monthSelectView);
 
-    // Llena la lista con los días del mes
-    for (int i = 1; i <= daysInThisMonth; i++) {
-      daysInMonth.add(i);
-    }
-    print(daysInMonth.length);
+    // print(monthSelect[monthSelect.length -4].name);
+    // print(monthSelect[monthSelect.length -4].indexWeek);
 
-    diasMes.addAll(daysInMonth);
-    return daysInMonth;
+    // print(monthSelect[monthSelect.length -4].value);
+
+    // print(monthSelect[monthSelect.length - 1].name);
+    // print(monthSelect[monthSelect.length - 1].value);
+    // print(monthSelect[monthSelect.length - 1].indexWeek);
+
+    // print("año actual: $yearSelect");
+    // print("num mes actual: $monthSelectView");
+    // print("num dias mes actual: ${monthSelect.length}");
+    // print("num dia hoy: $daySelect");
+    // print("primer dia: $primerDiaSemana");
+    // print("primer dia: ${monthSelect[monthSelect.length - 1].name}");
+
+    // print("año actual: $year");
+    // print("mes actual: $month");
+    // print("dia actual: $today");
   }
 
-  armarSemanas(dias) {}
+  loadData(BuildContext context) async {
+    // //primer dia
+    // primerDiaSemana = 4;
+
+    //Ordenar dia semmana por el primer dia asigando  0 = domingo, 1 = lunes, ..., 6 = sábado
+    diasSemana = crearArregloDias();
+    //obtener mes actual
+    monthSelect = obtenerDiasMes(year, month, primerDiaSemana);
+    //asiganr semanas del mes
+    semanas = addWeeks(monthSelect);
+    //fecha de hoy
+    monthSelectView = month; //mes
+    yearSelect = year; //año
+    daySelect = today; //dia
+
+    notifyListeners();
+
+    datos();
+  }
 
   List<String> inicialDia = [
     "L",
@@ -67,18 +124,14 @@ class CalendarioViewModel extends ChangeNotifier {
     "12"
   ];
 
-  primerDia(int inicioMes) {
-    print(inicioMes);
-  }
-
   List<String> diasSemana = [
+    "Domingo",
     "Lunes",
     "Martes",
     "Miércoles",
     "Jueves",
     "Viernes",
     "Sábado",
-    "Domingo"
   ];
 
   List<String> crearArregloDias() {
@@ -103,7 +156,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //almacenar dias del mes
     List<DiaModel> diasMes = [];
     // Obtenemos el primer día del mes
-    DateTime primerDia = DateTime(anio, mes - 1, 1);
+    DateTime primerDia = DateTime(anio, mes, 1);
     // Obtenemos el último día del mes sumando 1 al mes siguiente y restando 1 día
     DateTime ultimoDia = DateTime(anio, mes, 0);
 
@@ -123,6 +176,8 @@ class CalendarioViewModel extends ChangeNotifier {
         value: fecha.day,
         indexWeek: diaSemana + 1,
       );
+
+      print("${diaObjeto.name} ${diaObjeto.value} indice: ${diaObjeto.indexWeek} ");
 
       //insertar nuevo arreglo de dias
       diasMes.add(diaObjeto);
@@ -166,14 +221,14 @@ class CalendarioViewModel extends ChangeNotifier {
   //Ej: si busco 10 dias obtengo los primeros 10 dias del mes
   List<DiaModel> obtenerDiasMesCantidad(int mes, int anio, int cantidad) {
     // El mes en JavaScript comienza desde 0, por lo que se resta 1 al mes ingresado
-    DateTime fecha = DateTime(anio, mes - 1, 1);
+    DateTime fecha = DateTime(anio, mes, 1);
     //dias encontrados
     List<DiaModel> diasMes = [];
 
     //bucar cantidad de dias deseados en el mes
     for (var i = 0; i < cantidad; i++) {
-      int diaSemana =
-          (fecha.day + 7) % 7; // Aseguramos que el resultado esté entre 0 y 6
+      // Aseguramos que el resultado esté entre 0 y 6
+      int diaSemana = (fecha.day + 7) % 7;
       //objeto dias
       DiaModel diaObjeto = DiaModel(
         name: diasSemana[diaSemana],
@@ -188,13 +243,12 @@ class CalendarioViewModel extends ChangeNotifier {
     return diasMes;
   }
 
-  //Dividir el mes por semanas (en semanas de 0..6)
   List<List<DiaModel>> addWeeks(List<DiaModel> diasDelMes) {
-    // Lista con sublistas de semanas
     List<List<DiaModel>> semanas = [];
 
     for (int i = 0; i < diasDelMes.length; i += 7) {
-      List<DiaModel> sublista = diasDelMes.sublist(i, i + 7);
+      int endIndex = (i + 7 <= diasDelMes.length) ? i + 7 : diasDelMes.length;
+      final List<DiaModel> sublista = diasDelMes.sublist(i, endIndex);
       semanas.add(sublista);
     }
 

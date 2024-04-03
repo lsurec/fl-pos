@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
@@ -41,6 +42,7 @@ class AppRoutes {
   static const selectReferenceId = 'selectReferenceId';
   static const selectResponsibleUser = 'selectResponsibleUser';
   static const tareas = 'Tareas';
+  static const calendario = 'Calenadario Tareas';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -81,6 +83,7 @@ class AppRoutes {
     createTask: (BuildContext context) => const CrearTareaView(),
     selectReferenceId: (BuildContext context) => const IdReferenciaView(),
     selectResponsibleUser: (BuildContext context) => const UsuariosView(),
+    calendario: (BuildContext context) => const CalendarioView(),
   };
 
   //en caso de ruta incorrecta

@@ -6,8 +6,24 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/load_widget.dart';
 import 'package:provider/provider.dart';
 
-class CalendarioView extends StatelessWidget {
+class CalendarioView extends StatefulWidget {
   const CalendarioView({super.key});
+
+  @override
+  State<CalendarioView> createState() => _CalendarioViewState();
+}
+
+class _CalendarioViewState extends State<CalendarioView> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
+  }
+
+  loadData(BuildContext context) async {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    vm.loadData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +40,14 @@ class CalendarioView extends StatelessWidget {
             leading: IconButton(
                 onPressed: () {
                   // vm.obtenerDiasDelMes(2024, 11);
-                  vm.crearArregloDias();
+                  // vm.crearArregloDias();
                 },
                 icon: const Icon(Icons.home)),
           ),
           body: RefreshIndicator(
             onRefresh: () async {
-              print("Volver a ceagar");
+              vm.loadData(context);
+              // print("Volver a ceagar");
             },
             child: ListView(
               children: [
@@ -182,7 +199,7 @@ class _TablaDiasMes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-    final List<int> dias = vm.diasMes;
+    // final List<DiaModel> dias = vm.monthSelect;
 
     return Table(
       border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
@@ -193,7 +210,7 @@ class _TablaDiasMes extends StatelessWidget {
             7,
             (columnIndex) {
               final index = rowIndex * 7 + columnIndex;
-              final dia = index < dias.length ? '${dias[index]}' : '';
+              final dia = index < vm.monthSelect.length ? '${vm.monthSelect[index].value}' : '';
               final backgroundColor =
                   dia == '2' ? Colors.lightBlueAccent : null;
               return Container(
