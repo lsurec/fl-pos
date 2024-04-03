@@ -10,7 +10,6 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:open_file/open_file.dart';
 
 class ComentariosViewModel extends ChangeNotifier {
   //Almacenar comentarios de la tarea
@@ -191,20 +190,20 @@ class ComentariosViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //para abrir archivos, recibe el archivo completo y envia la url del archivo
-  verArchivos(ObjetoComentarioModel archivo) async {
-    await OpenFile.open(archivo.objetoUrl);
-    notifyListeners();
-    print(archivo.objetoUrl);
+  // //para abrir archivos, recibe el archivo completo y envia la url del archivo
+  // verArchivos(ObjetoComentarioModel archivo) async {
+  //   await OpenFile.open(archivo.objetoUrl);
+  //   notifyListeners();
+  //   print(archivo.objetoUrl);
 
-  }
+  // }
 
-  //Recibe la url del archivo
-  void openFile(String filePath) async {
-    // Abre el archivo con la aplicación predeterminada asociada a su extensión.
-    await OpenFile.open(filePath);
-    print(filePath);
-    notifyListeners();
+  // //Recibe la url del archivo
+  // void openFile(String filePath) async {
+  //   // Abre el archivo con la aplicación predeterminada asociada a su extensión.
+  //   await OpenFile.open(filePath);
+  //   print(filePath);
+  //   notifyListeners();
     
-  }
+  // }
 }
