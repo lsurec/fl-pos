@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,10 +30,13 @@ class MonthDays extends StatelessWidget {
     DateTime firstDayOfMonth = DateTime(year, month, 1);
 
     // Obtener el número de días en el mes
-    int numberOfDaysInMonth = DateTime(year, month + 1, 0).day;
+    int numberOfDaysInMonth = DateTime(year, month, 0).day;
 
     // Obtener el nombre del día de la semana del primer día del mes
     int firstDayOfWeekIndex = firstDayOfMonth.weekday;
+
+    print(firstDayOfWeekIndex);
+    print(month);
 
     // Construir widgets para cada día del mes
     for (int i = 0; i < numberOfDaysInMonth; i++) {
@@ -55,9 +60,9 @@ class MonthDays extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(const MaterialApp(
-    home: MonthDays(
-        year: 2024, month: 4), // Cambia el año y el mes según lo necesites
-  ));
-}
+// void main() {
+//   runApp(const MaterialApp(
+//     home: MonthDays(
+//         year: 2024, month: 4), // Cambia el año y el mes según lo necesites
+//   ));
+// }

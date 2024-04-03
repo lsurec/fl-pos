@@ -23,7 +23,8 @@ class CalendarioView extends StatelessWidget {
             ),
             leading: IconButton(
                 onPressed: () {
-                  vm.obtenerDiasDelMes(2024, 11);
+                  // vm.obtenerDiasDelMes(2024, 11);
+                  vm.crearArregloDias();
                 },
                 icon: const Icon(Icons.home)),
           ),
@@ -115,8 +116,6 @@ class _NombreDias extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-    final List<String> inicialDia = vm.inicialDia;
-
     return Table(
       border: const TableBorder(
         top: BorderSide(
@@ -139,23 +138,42 @@ class _NombreDias extends StatelessWidget {
       children: List.generate(
         1,
         (index) => TableRow(
-          children: List.generate(
-            7,
-            (index2) => TableCell(
+          children: vm.diasSemana.map((dia) {
+            return TableCell(
               child: Container(
                 height: 25,
                 width: 50,
                 alignment: Alignment.topCenter,
-                // Accediendo a la inicial del día correspondiente
                 child: Text(
-                  inicialDia[index2],
+                  // Para obtener solo las tres primeras letras del día
+                  dia.substring(0, 3),
                   style: AppTheme.normalBoldStyle,
                 ),
               ),
-            ),
-          ),
+            );
+          }).toList(),
         ),
       ),
+      // children: List.generate(
+      //   1,
+      //   (index) => TableRow(
+      //     children: List.generate(
+      //       7,
+      //       (index2) => TableCell(
+      //         child: Container(
+      //           height: 25,
+      //           width: 50,
+      //           alignment: Alignment.topCenter,
+      //           // Accediendo a la inicial del día correspondiente
+      //           child: Text(
+      //             vm.inicialDia[index2],
+      //             style: AppTheme.normalBoldStyle,
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
@@ -289,7 +307,6 @@ class _TablaDiasSemana extends StatelessWidget {
     );
   }
 }
-
 
 class _Horas extends StatelessWidget {
   @override
