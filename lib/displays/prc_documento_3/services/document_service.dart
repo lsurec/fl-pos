@@ -490,18 +490,18 @@ class DocumentService {
 
     //Documento que se guarda en Preferences
     final saveDocument = SaveDocModel(
-      referencia: docVM.valueParam(85) ? docVM.tipoReferenciaSelect : null,
-      fechaEntrega: docVM.valueParam(381) ? docVM.fechaEntrega : null,
-      fechaRecoger: docVM.valueParam(382) ? docVM.fechaRecoger : null,
-      fechaInicio: docVM.valueParam(44) ? docVM.fechaInicio : null,
-      fechaFin: docVM.valueParam(44) ? docVM.fechaFin : null,
-      refContatco: docVM.valueParam(385) ? docVM.inputContacto.text : null,
-      refDescripcion:
-          docVM.valueParam(383) ? docVM.inputDescripcion.text : null,
-      refDireccionEntrega:
-          docVM.valueParam(386) ? docVM.inputDireccionEntrega.text : null,
-      refObservacion:
-          docVM.valueParam(384) ? docVM.inputObservacion.text : null,
+      // referencia: docVM.valueParam(85) ? docVM.tipoReferenciaSelect : null,
+      // fechaEntrega: docVM.valueParam(381) ? docVM.fechaEntrega : null,
+      // fechaRecoger: docVM.valueParam(382) ? docVM.fechaRecoger : null,
+      // fechaInicio: docVM.valueParam(44) ? docVM.fechaInicio : null,
+      // fechaFin: docVM.valueParam(44) ? docVM.fechaFin : null,
+      // refContatco: docVM.valueParam(385) ? docVM.inputContacto.text : null,
+      // refDescripcion:
+      //     docVM.valueParam(383) ? docVM.inputDescripcion.text : null,
+      // refDireccionEntrega:
+      //     docVM.valueParam(386) ? docVM.inputDireccionEntrega.text : null,
+      // refObservacion:
+      //     docVM.valueParam(384) ? docVM.inputObservacion.text : null,
       user: loginVM.user,
       empresa: localVM.selectedEmpresa!,
       estacion: localVM.selectedEstacion!,
