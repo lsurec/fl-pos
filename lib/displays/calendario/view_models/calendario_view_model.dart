@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:quiver/time.dart'; // Importa esta línea
 
 class CalendarioViewModel extends ChangeNotifier {
   //cargar pantalla
@@ -52,33 +55,6 @@ class CalendarioViewModel extends ChangeNotifier {
     // primerDiaSemana = 0;
   }
 
-  datos() {
-
-    // print(fechaHoy);
-    // print(monthSelect.length);
-    // print(monthSelectView);
-
-    // print(monthSelect[monthSelect.length -4].name);
-    // print(monthSelect[monthSelect.length -4].indexWeek);
-
-    // print(monthSelect[monthSelect.length -4].value);
-
-    // print(monthSelect[monthSelect.length - 1].name);
-    // print(monthSelect[monthSelect.length - 1].value);
-    // print(monthSelect[monthSelect.length - 1].indexWeek);
-
-    // print("año actual: $yearSelect");
-    // print("num mes actual: $monthSelectView");
-    // print("num dias mes actual: ${monthSelect.length}");
-    // print("num dia hoy: $daySelect");
-    // print("primer dia: $primerDiaSemana");
-    // print("primer dia: ${monthSelect[monthSelect.length - 1].name}");
-
-    // print("año actual: $year");
-    // print("mes actual: $month");
-    // print("dia actual: $today");
-  }
-
   loadData(BuildContext context) async {
     // //primer dia
     // primerDiaSemana = 4;
@@ -95,8 +71,6 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = today; //dia
 
     notifyListeners();
-
-    datos();
   }
 
   List<String> inicialDia = [
@@ -177,7 +151,9 @@ class CalendarioViewModel extends ChangeNotifier {
         indexWeek: diaSemana + 1,
       );
 
-      print("${diaObjeto.name} ${diaObjeto.value} indice: ${diaObjeto.indexWeek} ");
+      print(
+        "${diaObjeto.name} ${diaObjeto.value} indice: ${diaObjeto.indexWeek} ",
+      );
 
       //insertar nuevo arreglo de dias
       diasMes.add(diaObjeto);
@@ -260,4 +236,69 @@ class CalendarioViewModel extends ChangeNotifier {
 
     return semanas;
   }
+
+  //Nuevooooooooo
+
+  dias() async {
+    // Inicializa el formato para español (España)
+    await initializeDateFormatting('es_ES', null);
+
+    const year = 2024; //año
+    const month = 5; // mes
+
+    //primer dia del mes
+    final primerDiaMes = DateTime(year, month, 1);
+
+    //nombre del dia lun, mar... o dom.
+    final nomDia = DateFormat('EEEE', 'es_ES').format(primerDiaMes);
+
+    //nombre del mes infresado
+    final nombreMes = DateFormat.MMMM('es_ES').format(DateTime(2024, month));
+
+    // print('El primer dia del mes de $nombreMes del año $year fue el $nomDia');
+
+    final int weekIndex = indiceEnSemanaPrimerDiaMes(nomDia);
+    final int weekIndexFinal = indiceEnSemanaUltimoDiaMes(year, month);
+
+    print(
+      '$weekIndex es el indice de la semana del primer dia del mes $nombreMes.',
+    );
+
+    print(
+      '$weekIndexFinal es el indice de la semana del ultomo dia del mes $nombreMes.',
+    );
+
+    final diasMes = daysInMonth(year, month);
+    print('El mes de $nombreMes tiene $diasMes dias.');
+  }
+
+  int indiceEnSemanaPrimerDiaMes(String primerDiaSemana) {
+    // Días de la semana en orden (0 = domingo, 6 = sábado)
+    final List<String> daysOfWeek = [
+      'domingo',
+      'lunes',
+      'martes',
+      'miércoles',
+      'jueves',
+      'viernes',
+      'sábado'
+    ];
+
+    // Encuentra el índice del primer día de la semana
+    final int firstDayIndex = daysOfWeek.indexOf(primerDiaSemana.toLowerCase());
+
+    return firstDayIndex;
+  }
+
+  int indiceEnSemanaUltimoDiaMes(int year, int month) {
+    // Calcula la fecha del último día del mes
+    final DateTime lastDayOfMonth = DateTime(year, month + 1, 0);
+
+    // Obtiene el día de la semana (0 = domingo, 6 = sábado)
+    final int lastDayOfWeek = lastDayOfMonth.weekday;
+
+    return lastDayOfWeek;
+  }
+
+  armarSemanas() {}
 }

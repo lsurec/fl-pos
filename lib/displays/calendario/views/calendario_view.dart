@@ -39,6 +39,7 @@ class _CalendarioViewState extends State<CalendarioView> {
             ),
             leading: IconButton(
                 onPressed: () {
+                  vm.dias();
                   // vm.obtenerDiasDelMes(2024, 11);
                   // vm.crearArregloDias();
                 },
