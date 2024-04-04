@@ -22,6 +22,8 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //Variables a utlizar en e calendario
 
+  List<DiaModel> diasDelMes = [];
+
   List<DiaModel> monthSelect = []; //dias del mes seleccionado
   List<String> diasSemanaEspaniol = []; //Nombres de los dias de la semana
   int primerDiaSemana = 0; // 0 = domingo, 1 = lunes, ..., 6 = sábado
@@ -56,6 +58,10 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   loadData(BuildContext context) async {
+    diasDelMes = obtenerDiasDelMes(
+      DateTime.now().month,
+      DateTime.now().year,
+    );
     // //primer dia
     // primerDiaSemana = 4;
 
@@ -151,9 +157,9 @@ class CalendarioViewModel extends ChangeNotifier {
         indexWeek: diaSemana + 1,
       );
 
-      print(
-        "${diaObjeto.name} ${diaObjeto.value} indice: ${diaObjeto.indexWeek} ",
-      );
+      // print(
+      //   "${diaObjeto.name} ${diaObjeto.value} indice: ${diaObjeto.indexWeek} ",
+      // );
 
       //insertar nuevo arreglo de dias
       diasMes.add(diaObjeto);
@@ -300,5 +306,54 @@ class CalendarioViewModel extends ChangeNotifier {
     return lastDayOfWeek;
   }
 
-  armarSemanas() {}
+  armarSemanas(int mes, int anio) {
+    List<DiaModel> dias = obtenerDiasDelMes(mes, anio);
+
+    // Imprimir los días del mes
+    for (var dia in dias) {
+      print(
+        "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
+      );
+    }
+  }
+
+  // Función para obtener los días de un mes dado el año y el mes
+  List<DiaModel> obtenerDiasDelMes(int mes, int anio) {
+    List<DiaModel> diasDelMes = [];
+
+    // Obtener la cantidad de días en el mes dado
+    int cantidadDias = DateTime(anio, mes + 1, 0).day;
+
+    // Obtener el primer día del mes
+    DateTime primerDiaMes = DateTime(anio, mes, 1);
+
+    // Obtener el índice del primer día de la semana
+    int primerDiaSemana = primerDiaMes.weekday;
+
+    // Iterar sobre cada día del mes y crear el objeto DiaModel correspondiente
+    for (int i = 0; i < cantidadDias; i++) {
+      int dia = i + 1;
+      DateTime fecha = DateTime(anio, mes, dia);
+      int indiceDiaSemana = (primerDiaSemana + i) % 7;
+      String nombreDia = diasSemana[indiceDiaSemana];
+      DiaModel diaObjeto = DiaModel(
+        name: nombreDia,
+        value: dia,
+        indexWeek: indiceDiaSemana,
+      );
+      diasDelMes.add(diaObjeto);
+    }
+
+    return diasDelMes;
+  }
+
+  mesSiguiente(int mes, int anio) {
+    diasDelMes = obtenerDiasDelMes(mes++, anio);
+    notifyListeners();
+  }
+
+  mesAnterior(int mes, int anio) {
+    diasDelMes = obtenerDiasDelMes(mes--, anio);
+    notifyListeners();
+  }
 }

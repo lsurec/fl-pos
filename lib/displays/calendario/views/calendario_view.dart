@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/load_widget.dart';
@@ -39,7 +40,10 @@ class _CalendarioViewState extends State<CalendarioView> {
             ),
             leading: IconButton(
                 onPressed: () {
-                  vm.dias();
+                  vm.armarSemanas(
+                    DateTime.now().month,
+                    DateTime.now().year,
+                  );
                   // vm.obtenerDiasDelMes(2024, 11);
                   // vm.crearArregloDias();
                 },
@@ -56,11 +60,25 @@ class _CalendarioViewState extends State<CalendarioView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const Row(
+                      Row(
                         children: [
-                          Text("Anterior"),
-                          Spacer(),
-                          Text("Siguiente"),
+                          TextButton(
+                            onPressed: () {},
+                            // => vm.mesAnterior(vm.month, vm.year),
+                            child: const Text(
+                              "Anterior",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                          ),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {},
+                            // onPressed: () => vm.mesSiguiente(vm.month, vm.year),
+                            child: const Text(
+                              "Siguiente",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -200,7 +218,9 @@ class _TablaDiasMes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-    // final List<DiaModel> dias = vm.monthSelect;
+
+    // Encontrar el índice del primer día del mes
+    int primerDiaIndex = vm.diasDelMes.first.indexWeek;
 
     return Table(
       border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
@@ -210,8 +230,84 @@ class _TablaDiasMes extends StatelessWidget {
           children: List.generate(
             7,
             (columnIndex) {
-              final index = rowIndex * 7 + columnIndex;
-              final dia = index < vm.monthSelect.length ? '${vm.monthSelect[index].value}' : '';
+              final index = (rowIndex * 7 + columnIndex) - primerDiaIndex + 1;
+              final dia = index > 0 && index <= vm.diasDelMes.length
+                  ? '${vm.diasDelMes[index - 1].value}'
+                  : '';
+              final backgroundColor =
+                  dia == '${vm.fechaHoy.day}' ? Colors.lightBlueAccent : null;
+              return Container(
+                height: 100,
+                width: 50,
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                  bottom: 10,
+                  top: 0,
+                ),
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(0, 0, 0, 0.12),
+                          ),
+                        ), // Agregar borde inferior
+                      ),
+                      child: Center(
+                        child: Text(
+                          dia,
+                          style: AppTheme.normalStyle,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Text(
+                        "Tarea 450 ",
+                        style: AppTheme.tareaStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TablaDiasMesOriginal extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final List<DiaModel> dias = vm.obtenerDiasDelMes(
+      2,
+      // DateTime.now().month,
+      DateTime.now().year,
+    );
+
+    // Encontrar el índice del primer día del mes
+    int primerDiaIndex = dias.indexWhere((dia) => dia.value == 1);
+
+    return Table(
+      border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
+      children: List.generate(
+        5,
+        (rowIndex) => TableRow(
+          children: List.generate(
+            7,
+            (columnIndex) {
+              final index = (rowIndex * 7 + columnIndex) - primerDiaIndex;
+              final dia = index >= 0 && index < dias.length
+                  ? '${dias[index].value}'
+                  : '';
               final backgroundColor =
                   dia == '2' ? Colors.lightBlueAccent : null;
               return Container(
