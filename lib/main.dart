@@ -93,8 +93,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
       // home: const MonthDays(year: 2024,month: 6,), // Muestra el SplashScreen durante el inicio
-      home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
-      // home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
+      home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
     );

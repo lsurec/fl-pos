@@ -1,9 +1,14 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
+import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
+import 'package:flutter_post_printer_example/models/api_res_model.dart';
+import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 import 'package:quiver/time.dart'; // Importa esta línea
 
 class CalendarioViewModel extends ChangeNotifier {
@@ -84,6 +89,8 @@ class CalendarioViewModel extends ChangeNotifier {
       notifyListeners();
     }
     nombreMes(monthSelectView, yearSelect);
+
+    obtenerTareasCalendario(context);
     notifyListeners();
   }
 
@@ -326,16 +333,6 @@ class CalendarioViewModel extends ChangeNotifier {
     return false;
   }
 
-  // bool diasSiguientes(int dia, int index) {
-  //   if (index >= mesCompleto.length - 6 &&
-  //       index < mesCompleto.length &&
-  //       dia < mesCompleto[mesCompleto.length - 1].value) {
-  //     print("dia $dia, indice $index");
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   bool diasSiguientes(int dia, int index) {
     List<DiaModel> dias = mesCompleto;
 
@@ -371,5 +368,38 @@ class CalendarioViewModel extends ChangeNotifier {
     }
     nombreMes(monthSelectView, yearSelect);
     notifyListeners();
+  }
+
+  List<TareaCalendarioModel> tareas = [];
+
+  obtenerTareasCalendario(BuildContext context) async {
+    tareas.clear(); //limpiar lista
+
+    //obtener token y usuario
+    // final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    // String token = vmLogin.token;
+    // String user = vmLogin.user;
+
+    //instancia del servicio
+    final CalendarioTareaService tareaService = CalendarioTareaService();
+
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel res = await tareaService.getTareaCalendario("desa026",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDAxIiwibmJmIjoxNzEwODg2NDMwLCJleHAiOjE3NDE5OTA0MzAsImlhdCI6MTcxMDg4NjQzMH0.dpsc7-kj0Lsxm9QAPVJLTM7IGdjvrG6NOBYtnIgprwM");
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, res);
+      return;
+    }
+    //agregar tareas encontradas a la lista de tareas
+    tareas.addAll(res.message);
+
+    print("tareas asigandas al usuario ${tareas.length}");
+
+    isLoading = false; //detener carga
   }
 }

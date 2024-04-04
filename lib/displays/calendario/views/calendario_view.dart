@@ -230,7 +230,8 @@ class _TablaDiasMes extends StatelessWidget {
               final backgroundColor =
                   vm.diaHoy(dia, index) ? Colors.blue.shade300 : null;
               final dias =
-                  vm.diasAnteriores(dia, index) || vm.diasSiguientes(dia, index)
+                  vm.diasAnteriores(dia, index) 
+                  || vm.diasSiguientes(dia, index)
                       ? AppTheme.diasFueraMes
                       : AppTheme.normalBoldStyle;
               return Container(
