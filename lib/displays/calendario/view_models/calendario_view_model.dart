@@ -65,12 +65,6 @@ class CalendarioViewModel extends ChangeNotifier {
   String mesNombre = "";
 
   loadData(BuildContext context) async {
-    // Inicializa el formato para español (España)
-    await initializeDateFormatting('es_ES', null);
-    //nombre del mes infresado
-    mesNombre =
-        DateFormat.MMMM('es_ES').format(DateTime(yearSelect, monthSelectView));
-
     diasDelMes = obtenerDiasDelMes(month, year);
 
     primerDiaIndex = diasDelMes.first.indexWeek;
@@ -124,6 +118,7 @@ class CalendarioViewModel extends ChangeNotifier {
     await initializeDateFormatting('es_ES', null);
     //nombre del mes infresado
     mesNombre = DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
+    notifyListeners();
   }
 
   dias() async {
