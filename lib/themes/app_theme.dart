@@ -44,6 +44,13 @@ class AppTheme {
     fontSize: 17,
     color: Colors.grey,
   );
+
+  static const diasFueraMes = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 111, 111, 111),
+    fontWeight: FontWeight.bold,
+  );
+
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,

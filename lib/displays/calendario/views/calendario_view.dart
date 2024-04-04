@@ -39,15 +39,9 @@ class _CalendarioViewState extends State<CalendarioView> {
               style: AppTheme.titleStyle,
             ),
             leading: IconButton(
-                onPressed: () {
-                  vm.armarSemanas(
-                    DateTime.now().month,
-                    DateTime.now().year,
-                  );
-                  // vm.obtenerDiasDelMes(2024, 11);
-                  // vm.crearArregloDias();
-                },
-                icon: const Icon(Icons.home)),
+              onPressed: () => vm.regresarHoy(),
+              icon: const Icon(Icons.calendar_today_outlined),
+            ),
           ),
           body: RefreshIndicator(
             onRefresh: () async {
@@ -233,10 +227,12 @@ class _TablaDiasMes extends StatelessWidget {
               final dia = index > 0 && index <= vm.mesCompleto.length
                   ? vm.mesCompleto[index - 1].value
                   : 0;
-              // final backgroundColor =
-              //     dia == vm.fechaHoy.day ? Colors.lightBlueAccent : null;
               final backgroundColor =
-                  vm.diaHoy(dia, index) == true ? Colors.lightBlueAccent : null;
+                  vm.diaHoy(dia, index) ? Colors.blue.shade300 : null;
+              final dias =
+                  vm.diasAnteriores(dia, index) || vm.diasSiguientes(dia, index)
+                      ? AppTheme.diasFueraMes
+                      : AppTheme.normalBoldStyle;
               return Container(
                 height: 100,
                 width: 50,
@@ -262,7 +258,7 @@ class _TablaDiasMes extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "$dia",
-                          style: AppTheme.normalStyle,
+                          style: dias,
                         ),
                       ),
                     ),

@@ -83,7 +83,7 @@ class CalendarioViewModel extends ChangeNotifier {
       numSemanas = 5;
       notifyListeners();
     }
-
+    nombreMes(monthSelectView, yearSelect);
     notifyListeners();
   }
 
@@ -315,5 +315,61 @@ class CalendarioViewModel extends ChangeNotifier {
       return false;
     }
     return false;
+  }
+
+  bool diasAnteriores(int dia, int index) {
+    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
+
+    if (index >= 0 && index < 7 && dia > dias[6].value) {
+      return true;
+    }
+    return false;
+  }
+
+  // bool diasSiguientes(int dia, int index) {
+  //   if (index >= mesCompleto.length - 6 &&
+  //       index < mesCompleto.length &&
+  //       dia < mesCompleto[mesCompleto.length - 1].value) {
+  //     print("dia $dia, indice $index");
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  bool diasSiguientes(int dia, int index) {
+    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
+
+    final ultimoDiaMes = dias.last.value;
+    final diasUltimaSemana = dias.sublist(dias.length - 7);
+
+    if (index >= dias.length - 7 &&
+        dia <= ultimoDiaMes &&
+        diasUltimaSemana.any((diaModel) => diaModel.value == dia)) {
+      return true;
+    }
+    return false;
+  }
+
+  regresarHoy() {
+    diasDelMes = obtenerDiasDelMes(month, year);
+
+    monthSelectView = month; //mes
+    yearSelect = year; //año
+    daySelect = today; //hoy
+
+    mesCompleto = armarMes(monthSelect, yearSelect);
+
+    primerDiaIndex = diasDelMes.first.indexWeek;
+    ultimoDiaIndex = diasDelMes.last.indexWeek;
+
+    if (primerDiaIndex == 6 && ultimoDiaIndex == 0) {
+      numSemanas = 6;
+      notifyListeners();
+    } else {
+      numSemanas = 5;
+      notifyListeners();
+    }
+    nombreMes(monthSelectView, yearSelect);
+    notifyListeners();
   }
 }
