@@ -60,6 +60,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      Text(
+                        "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
+                        style: AppTheme.normalBoldStyle,
+                      ),
                       Row(
                         children: [
                           TextButton(
@@ -219,20 +223,17 @@ class _TablaDiasMes extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-    // Encontrar el índice del primer día del mes
-    int primerDiaIndex = vm.diasDelMes.first.indexWeek;
-
     return Table(
       border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
       children: List.generate(
-        5,
+        vm.numSemanas,
         (rowIndex) => TableRow(
           children: List.generate(
             7,
             (columnIndex) {
-              final index = (rowIndex * 7 + columnIndex) - primerDiaIndex + 1;
-              final dia = index > 0 && index <= vm.diasDelMes.length
-                  ? '${vm.diasDelMes[index - 1].value}'
+              final index = (rowIndex * 7 + columnIndex) + 1;
+              final dia = index > 0 && index <= vm.mesCompleto.length
+                  ? '${vm.mesCompleto[index - 1].value}'
                   : '';
               final backgroundColor =
                   dia == '${vm.fechaHoy.day}' ? Colors.lightBlueAccent : null;

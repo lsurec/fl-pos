@@ -56,38 +56,40 @@ class CalendarioViewModel extends ChangeNotifier {
 
     // primerDiaSemana = 0;
   }
+  // Encontrar el índice del primer día del mes
+  int primerDiaIndex = 0;
+  int ultimoDiaIndex = 0;
+  int numSemanas = 5;
+
+  String mesNombre = "";
 
   loadData(BuildContext context) async {
-    diasDelMes = obtenerDiasDelMes(
-      DateTime.now().month,
-      DateTime.now().year,
-    );
-    // //primer dia
-    // primerDiaSemana = 4;
+    // Inicializa el formato para español (España)
+    await initializeDateFormatting('es_ES', null);
+    //nombre del mes infresado
+    mesNombre =
+        DateFormat.MMMM('es_ES').format(DateTime(yearSelect, monthSelectView));
 
-    //Ordenar dia semmana por el primer dia asigando  0 = domingo, 1 = lunes, ..., 6 = sábado
-    diasSemana = crearArregloDias();
-    //obtener mes actual
-    monthSelect = obtenerDiasMes(year, month, primerDiaSemana);
-    //asiganr semanas del mes
-    semanas = addWeeks(monthSelect);
-    //fecha de hoy
+    diasDelMes = obtenerDiasDelMes(month, year);
+
+    primerDiaIndex = diasDelMes.first.indexWeek;
+    ultimoDiaIndex = diasDelMes.last.indexWeek;
+
+    if (primerDiaIndex == 6 && ultimoDiaIndex == 0) {
+      numSemanas = 6;
+      notifyListeners();
+    } else {
+      numSemanas = 5;
+      notifyListeners();
+    }
     monthSelectView = month; //mes
     yearSelect = year; //año
-    daySelect = today; //dia
+    daySelect = today; //hoy
+
+    armarMes(month, year);
 
     notifyListeners();
   }
-
-  List<String> inicialDia = [
-    "L",
-    "M",
-    "M",
-    "J",
-    "V",
-    "S",
-    "D",
-  ];
 
   List<String> horas = [
     "1",
@@ -114,136 +116,17 @@ class CalendarioViewModel extends ChangeNotifier {
     "Sábado",
   ];
 
-  List<String> crearArregloDias() {
-    List<String> arregloDias = [];
-
-    // Encontramos el índice del día inicial en el arreglo díasSemana
-    int indiceDiaInicial = primerDiaSemana % 7;
-    // Agregamos los días de la semana en el orden configurado
-    for (int i = 0; i < 7; i++) {
-      int indiceDia = (indiceDiaInicial + i) % 7;
-      arregloDias.add(diasSemana[indiceDia]);
-    }
-    // Retorna nueva semana ordenada
-    return arregloDias;
-  }
-
-  List<DiaModel> obtenerDiasMes(
-    int anio,
-    int mes,
-    int primerDiaSemana,
-  ) {
-    //almacenar dias del mes
-    List<DiaModel> diasMes = [];
-    // Obtenemos el primer día del mes
-    DateTime primerDia = DateTime(anio, mes, 1);
-    // Obtenemos el último día del mes sumando 1 al mes siguiente y restando 1 día
-    DateTime ultimoDia = DateTime(anio, mes, 0);
-
-    // Determinamos el desplazamiento necesario para el primer día de la semana
-    int desplazamiento = (primerDia.day + 7 - primerDiaSemana) % 7;
-
-    // Recorremos los días del mes, teniendo en cuenta el desplazamiento
-    for (var dia = 1 - desplazamiento; dia <= ultimoDia.day; dia++) {
-      DateTime fecha = DateTime(anio, mes - 1, dia);
-
-      // Aseguramos que el resultado esté entre 0 y 6
-      int diaSemana = (fecha.day + 7) % 7;
-
-      // Creamos un objeto con la información del día
-      DiaModel diaObjeto = DiaModel(
-        name: diasSemana[diaSemana],
-        value: fecha.day,
-        indexWeek: diaSemana + 1,
-      );
-
-      // print(
-      //   "${diaObjeto.name} ${diaObjeto.value} indice: ${diaObjeto.indexWeek} ",
-      // );
-
-      //insertar nuevo arreglo de dias
-      diasMes.add(diaObjeto);
-    }
-    //ultimo dia del mes (fecha)
-    int ultimaCoincidencia = -1;
-    //buscar el ultimo dia del mes
-    for (var index = 0; index < diasMes.length; index++) {
-      DiaModel diaUltimoMes = diasMes[index];
-      if (diaUltimoMes.value == ultimoDia.day) {
-        ultimaCoincidencia = index;
-      }
-    }
-
-    //buscar que dia de la semana es
-    int ultimoIndice = diasSemana.lastIndexOf(
-      diasMes[ultimaCoincidencia].name,
-    );
-
-    //cuantos dias me faltan
-    int diasRestantes = (diasSemana.length - 1) - ultimoIndice;
-
-    //buscar los días que faltan (cantidad) del siguiente mes
-    diasMes.addAll(obtenerDiasMesCantidad(
-      mes == 12 ? 1 : mes + 1,
-      mes == 12 ? anio + 1 : anio,
-      diasRestantes,
-    ));
-
-    //enumerar mes indexWeek
-    for (var index = 0; index < diasMes.length; index++) {
-      diasMes[index].indexWeek = index;
-    }
-
-    //retornar dias del mes buscado con los dias del mes anterior y siguiente
-    //(completando todas las semanas)
-    return diasMes;
-  }
-
-  //Obtner una cantidad de dias del mes
-  //Ej: si busco 10 dias obtengo los primeros 10 dias del mes
-  List<DiaModel> obtenerDiasMesCantidad(int mes, int anio, int cantidad) {
-    // El mes en JavaScript comienza desde 0, por lo que se resta 1 al mes ingresado
-    DateTime fecha = DateTime(anio, mes, 1);
-    //dias encontrados
-    List<DiaModel> diasMes = [];
-
-    //bucar cantidad de dias deseados en el mes
-    for (var i = 0; i < cantidad; i++) {
-      // Aseguramos que el resultado esté entre 0 y 6
-      int diaSemana = (fecha.day + 7) % 7;
-      //objeto dias
-      DiaModel diaObjeto = DiaModel(
-        name: diasSemana[diaSemana],
-        value: fecha.day,
-        indexWeek: diaSemana + 1,
-      );
-
-      diasMes.add(diaObjeto);
-      fecha = fecha.add(const Duration(days: 1));
-    }
-    //retornar dias requeridos
-    return diasMes;
-  }
-
-  List<List<DiaModel>> addWeeks(List<DiaModel> diasDelMes) {
-    List<List<DiaModel>> semanas = [];
-
-    for (int i = 0; i < diasDelMes.length; i += 7) {
-      int endIndex = (i + 7 <= diasDelMes.length) ? i + 7 : diasDelMes.length;
-      final List<DiaModel> sublista = diasDelMes.sublist(i, endIndex);
-      semanas.add(sublista);
-    }
-
-    for (int i = 0; i < semanas.length; i++) {
-      for (int j = 0; j < semanas[i].length; j++) {
-        semanas[i][j].indexWeek = j;
-      }
-    }
-
-    return semanas;
-  }
-
   //Nuevooooooooo
+
+  Future<String> nombreMes(int mes, int anio) async {
+    // Inicializa el formato para español (España)
+    await initializeDateFormatting('es_ES', null);
+    //nombre del mes infresado
+    final nombreMes = DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
+
+    print(nombreMes);
+    return nombreMes;
+  }
 
   dias() async {
     // Inicializa el formato para español (España)
@@ -333,7 +216,6 @@ class CalendarioViewModel extends ChangeNotifier {
     // Iterar sobre cada día del mes y crear el objeto DiaModel correspondiente
     for (int i = 0; i < cantidadDias; i++) {
       int dia = i + 1;
-      DateTime fecha = DateTime(anio, mes, dia);
       int indiceDiaSemana = (primerDiaSemana + i) % 7;
       String nombreDia = diasSemana[indiceDiaSemana];
       DiaModel diaObjeto = DiaModel(
@@ -355,5 +237,54 @@ class CalendarioViewModel extends ChangeNotifier {
   mesAnterior(int mes, int anio) {
     diasDelMes = obtenerDiasDelMes(mes--, anio);
     notifyListeners();
+  }
+
+  List<DiaModel> mesCompleto = [];
+
+  armarMes(mes, anio) {
+    int mesAnterior = month - 1;
+    List<DiaModel> diasMesAnterior = obtenerDiasDelMes(mesAnterior, anio);
+
+    primerDiaIndex = diasDelMes.first.indexWeek;
+    ultimoDiaIndex = diasDelMes.last.indexWeek;
+
+    // Limpiar la lista mesCompleto
+    mesCompleto.clear();
+
+    // Agregar los días del mes anterior a la lista
+    for (int i = primerDiaIndex - 1; i >= 0; i--) {
+      mesCompleto.insert(
+        0,
+        DiaModel(
+          name: diasSemana[i],
+          value: diasMesAnterior.length,
+          indexWeek: i,
+        ),
+      );
+      diasMesAnterior.length--;
+    }
+
+    mesCompleto.addAll(diasDelMes);
+
+    // Calcular cuántos días faltan para completar la última semana
+    int diasFaltantesFin = 7 - (mesCompleto.length % 7);
+
+    // Agregar los primeros días del mes siguiente a la última semana
+    for (int i = 0; i < diasFaltantesFin; i++) {
+      mesCompleto.add(
+        DiaModel(
+          name: diasSemana[(ultimoDiaIndex + i) % 7],
+          value: i + 1,
+          indexWeek: (ultimoDiaIndex + i) % 7,
+        ),
+      );
+    }
+
+    // // Imprimir los días del mes
+    // for (var dia in mesCompleto) {
+    //   print(
+    //     "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
+    //   );
+    // }
   }
 }
