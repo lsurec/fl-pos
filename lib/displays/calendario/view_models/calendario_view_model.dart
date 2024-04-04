@@ -54,6 +54,7 @@ class CalendarioViewModel extends ChangeNotifier {
     month = fechaHoy.month; //mes
     year = fechaHoy.year; //año
 
+    nombreMes(month, year);
     // primerDiaSemana = 0;
   }
   // Encontrar el índice del primer día del mes
@@ -118,14 +119,11 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //Nuevooooooooo
 
-  Future<String> nombreMes(int mes, int anio) async {
+  Future<void> nombreMes(int mes, int anio) async {
     // Inicializa el formato para español (España)
     await initializeDateFormatting('es_ES', null);
     //nombre del mes infresado
-    final nombreMes = DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
-
-    print(nombreMes);
-    return nombreMes;
+    mesNombre = DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
   }
 
   dias() async {
