@@ -337,7 +337,7 @@ class CalendarioViewModel extends ChangeNotifier {
   // }
 
   bool diasSiguientes(int dia, int index) {
-    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
+    List<DiaModel> dias = mesCompleto;
 
     final ultimoDiaMes = dias.last.value;
     final diasUltimaSemana = dias.sublist(dias.length - 7);
