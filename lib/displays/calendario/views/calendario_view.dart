@@ -67,8 +67,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                       Row(
                         children: [
                           TextButton(
-                            onPressed: () {},
-                            // => vm.mesAnterior(vm.month, vm.year),
+                            onPressed: () => vm.mesAnterior(),
                             child: const Text(
                               "Anterior",
                               style: AppTheme.normalBoldStyle,
@@ -76,8 +75,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                           ),
                           const Spacer(),
                           TextButton(
-                            onPressed: () {},
-                            // onPressed: () => vm.mesSiguiente(vm.month, vm.year),
+                            onPressed: () => vm.mesSiguiente(),
                             child: const Text(
                               "Siguiente",
                               style: AppTheme.normalBoldStyle,
@@ -233,10 +231,12 @@ class _TablaDiasMes extends StatelessWidget {
             (columnIndex) {
               final index = (rowIndex * 7 + columnIndex) + 1;
               final dia = index > 0 && index <= vm.mesCompleto.length
-                  ? '${vm.mesCompleto[index - 1].value}'
-                  : '';
+                  ? vm.mesCompleto[index - 1].value
+                  : 0;
+              // final backgroundColor =
+              //     dia == vm.fechaHoy.day ? Colors.lightBlueAccent : null;
               final backgroundColor =
-                  dia == '${vm.fechaHoy.day}' ? Colors.lightBlueAccent : null;
+                  vm.diaHoy(dia, index) == true ? Colors.lightBlueAccent : null;
               return Container(
                 height: 100,
                 width: 50,
@@ -261,7 +261,7 @@ class _TablaDiasMes extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          dia,
+                          "$dia",
                           style: AppTheme.normalStyle,
                         ),
                       ),
