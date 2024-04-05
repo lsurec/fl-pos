@@ -27,6 +27,10 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //Variables a utlizar en e calendario
 
+  bool vistaMes = true;
+  bool vistaSemana = false;
+  bool vistaDia = false;
+
   List<DiaModel> diasDelMes = [];
   bool diasFueraMes = false;
 
@@ -46,10 +50,10 @@ class CalendarioViewModel extends ChangeNotifier {
   int daySelect = 0; //dia
 
   //semena seleccionada
-  int indexWeekActive = 0;
+  int? indexWeekActive;
 
   //semanas del mes actual
-  List<List<DiaModel>> semanas = [];
+  List<List<DiaModel>> semanasDelMes = [];
 
   //Constructor
   CalendarioViewModel() {
@@ -94,6 +98,13 @@ class CalendarioViewModel extends ChangeNotifier {
     nombreMes(monthSelectView, yearSelect);
 
     obtenerTareasCalendario(context);
+
+    semanasDelMes = addWeeks(mesCompleto);
+
+    print(semanasDelMes.length);
+
+    indexWeekActive = 0;
+
     notifyListeners();
   }
 
@@ -341,12 +352,12 @@ class CalendarioViewModel extends ChangeNotifier {
 
     dias.addAll(mesCompleto);
 
-    final ultimoDiaMes = dias.last.value;
-    final diasUltimaSemana = dias.sublist(dias.length - 7);
+    final int ultimoDiaMes = dias.last.value;
+    final List<DiaModel> diasUltimaSemana = dias.sublist(dias.length - 7);
 
-    print(
-      "${diasUltimaSemana[0].value}  ${diasUltimaSemana[diasUltimaSemana.length - 1].value} ",
-    );
+    // print(
+    //   "${diasUltimaSemana[0].value}  ${diasUltimaSemana[diasUltimaSemana.length - 1].value} ",
+    // );
 
     if (index >= dias.length - 7 &&
         dia <= ultimoDiaMes &&
@@ -407,7 +418,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //agregar tareas encontradas a la lista de tareas
     tareas.addAll(res.message);
 
-    print("tareas asigandas al usuario ${tareas.length}");
+    // print("tareas asigandas al usuario ${tareas.length}");
 
     // String nuevaFecha = convertDateFormat(tareas[0].fechaIni);
     // print(nuevaFecha);
@@ -460,5 +471,36 @@ class CalendarioViewModel extends ChangeNotifier {
     // }
 
     return true;
+  }
+
+  //Dividir el mes por semanas (en semanas de 0..6)
+  List<List<DiaModel>> addWeeks(List<DiaModel> diasDelMes) {
+    //lista con sublistas de semanas
+    List<List<DiaModel>> semanas = [];
+    semanas.clear();
+
+    for (int i = 0; i < diasDelMes.length; i += 7) {
+      List<DiaModel> sublista = diasDelMes.sublist(i, i + 7);
+      semanas.add(sublista);
+    }
+
+    for (int i = 0; i < semanas.length; i++) {
+      for (int j = 0; j < semanas[i].length; j++) {
+        semanas[i][j].indexWeek = j;
+      }
+    }
+    return semanas;
+  }
+
+  verrr() {
+    List<List<DiaModel>> semanass = addWeeks(mesCompleto);
+    for (int i = 0; i < semanass.length; i++) {
+      print("Semana ${i + 1}:");
+      for (int j = 0; j < semanass[i].length; j++) {
+        print("Día ${semanass[i][j].value}: ${semanass[i][j].name}");
+        // Asegúrate de reemplazar 'nombreDelDia' con el nombre de tu atributo que contiene el nombre del día
+      }
+      print(""); // Para separar las semanas
+    }
   }
 }

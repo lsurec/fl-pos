@@ -39,7 +39,7 @@ class _CalendarioViewState extends State<CalendarioView> {
               style: AppTheme.titleStyle,
             ),
             leading: IconButton(
-              onPressed: () => vm.regresarHoy(),
+              onPressed: () => vm.verrr(),
               icon: const Icon(Icons.calendar_today_outlined),
             ),
           ),
@@ -79,7 +79,26 @@ class _CalendarioViewState extends State<CalendarioView> {
                       ),
                       const SizedBox(height: 10),
                       _NombreDias(),
-                      _TablaDiasMes(),
+                      _Semanasss(),
+                      // _TablaDiasMesOriginal(),
+                      // ListView.builder(
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   scrollDirection: Axis.vertical,
+                      //   shrinkWrap: true,
+                      //   itemCount: vm.semanasDelMes.length,
+                      //   itemBuilder: (BuildContext context, int index) {
+                      //     final List<List<DiaModel>> dia = vm.semanasDelMes;
+
+                      //     return Text(
+                      //       " ${dia[index][0].value}",
+                      //       style: AppTheme.normalBoldStyle,
+                      //     );
+                      //   },
+                      // )
+                      // _SemanasCalendario(),
+
+                      // _TablaDiasMes(),
+                      // _NombreDiasSemana(),
                       // _TablaDiasSemana(),
                       // _Horas()
                     ],
@@ -186,26 +205,216 @@ class _NombreDias extends StatelessWidget {
           }).toList(),
         ),
       ),
-      // children: List.generate(
-      //   1,
-      //   (index) => TableRow(
-      //     children: List.generate(
-      //       7,
-      //       (index2) => TableCell(
-      //         child: Container(
-      //           height: 25,
-      //           width: 50,
-      //           alignment: Alignment.topCenter,
-      //           // Accediendo a la inicial del día correspondiente
-      //           child: Text(
-      //             vm.inicialDia[index2],
-      //             style: AppTheme.normalBoldStyle,
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
+    );
+  }
+}
+
+class _Semanasss extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    return Table(
+      border: const TableBorder(
+        top: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde arriba
+        left: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde izquierdo
+        right: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde derecho
+        bottom: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Sin borde abajo
+        horizontalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde horizontal dentro de la tabla
+        verticalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde vertical dentro de la tabla
+      ),
+      children: List.generate(
+        1,
+        (index) => TableRow(
+          children: vm.semanasDelMes[vm.indexWeekActive!].map((dia) {
+            return TableCell(
+              child: Container(
+                height: 400,
+                width: 50,
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                  bottom: 10,
+                  top: 0,
+                ),
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: dia.value == 5 ? Colors.amber[400] : null,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(0, 0, 0, 0.12),
+                          ),
+                        ), // Agregar borde inferior
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${dia.value}",
+                          style: AppTheme.normalStyle,
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Text(
+                        "Tarea 450 ",
+                        style: AppTheme.tareaStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+// class _NombreDiasSemana extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+//     return Table(
+//       border: const TableBorder(
+//         top: BorderSide(
+//           color: Color.fromRGBO(0, 0, 0, 0.12),
+//         ), // Borde arriba
+//         left: BorderSide(
+//           color: Color.fromRGBO(0, 0, 0, 0.12),
+//         ), // Borde izquierdo
+//         right: BorderSide(
+//           color: Color.fromRGBO(0, 0, 0, 0.12),
+//         ), // Borde derecho
+//         bottom: BorderSide.none, // Sin borde abajo
+//         horizontalInside: BorderSide(
+//           color: Color.fromRGBO(0, 0, 0, 0.12),
+//         ), // Borde horizontal dentro de la tabla
+//         verticalInside: BorderSide(
+//           color: Color.fromRGBO(0, 0, 0, 0.12),
+//         ), // Borde vertical dentro de la tabla
+//       ),
+//       children: [
+//         for (final dia in vm.diasSemana)
+//           TableRow(
+//             children: [
+//               TableCell(
+//                 child: Container(
+//                   height: 25,
+//                   width: 50,
+//                   alignment: Alignment.topCenter,
+//                   child: Text(
+//                     // Para obtener solo las tres primeras letras del día
+//                     dia.substring(0, 3),
+//                     style: AppTheme.normalBoldStyle,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//       ],
+//     );
+//   }
+// }
+
+class _NombreDiasSemana extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    return Table(
+      border: const TableBorder(
+        top: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde arriba
+        left: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde izquierdo
+        right: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde derecho
+        bottom: BorderSide.none, // Sin borde abajo
+        horizontalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde horizontal dentro de la tabla
+        verticalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde vertical dentro de la tabla
+      ),
+      children: [
+        for (int i = 0; i < vm.diasSemana.length; i++)
+          TableRow(
+            children: [
+              TableCell(
+                child: Container(
+                  height: 25,
+                  width: 30, // Ancho corto para la primera columna
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    // Para obtener solo las tres primeras letras del día
+                    vm.diasSemana[i].substring(0, 3),
+                    style: AppTheme.normalBoldStyle,
+                  ),
+                ),
+              ),
+              // _SemanasCalendario(vm: vm),
+              TableCell(
+                child: Container(
+                  height: 25,
+                  width: 50,
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    '${i + 1}tareas que corresponden al dia',
+                    style: AppTheme.normalStyle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+      ],
+    );
+  }
+}
+
+class _SemanasCalendario extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: vm.semanasDelMes.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Row(
+          children: vm.semanasDelMes[index].map((dia) {
+            return Container(
+              margin: EdgeInsets.all(5.0),
+              padding: EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                border: Border.all(),
+              ),
+              child: Text("${dia.value}"),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
@@ -230,7 +439,7 @@ class _TablaDiasMes extends StatelessWidget {
               final backgroundColor =
                   vm.diaHoy(dia, index) ? Colors.blue.shade300 : null;
               final dias = vm.diasAnteriores(dia, index)
-                  || vm.diasSiguientes(dia, index)
+                  // || vm.diasSiguientes(dia, index)
                   ? AppTheme.diasFueraMes
                   : AppTheme.normalBoldStyle;
               return Container(
