@@ -61,7 +61,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                       Row(
                         children: [
                           TextButton(
-                            onPressed: () => vm.mesAnterior(),
+                            onPressed: () => vm.semanaAnterior(),
                             child: const Text(
                               "Anterior",
                               style: AppTheme.normalBoldStyle,
@@ -69,7 +69,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                           ),
                           const Spacer(),
                           TextButton(
-                            onPressed: () => vm.mesSiguiente(),
+                            onPressed: () => vm.semanaSiguiente(),
                             child: const Text(
                               "Siguiente",
                               style: AppTheme.normalBoldStyle,
@@ -80,7 +80,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                       const SizedBox(height: 10),
                       _NombreDias(),
                       _Semanasss(),
-                      // _TablaDiasMesOriginal(),
+                      // _TablaDiasMes(),
                       // ListView.builder(
                       //   physics: const NeverScrollableScrollPhysics(),
                       //   scrollDirection: Axis.vertical,
@@ -238,7 +238,7 @@ class _Semanasss extends StatelessWidget {
       children: List.generate(
         1,
         (index) => TableRow(
-          children: vm.semanasDelMes[vm.indexWeekActive!].map((dia) {
+          children: vm.semanasDelMes[vm.indexWeekActive].map((dia) {
             return TableCell(
               child: Container(
                 height: 400,
@@ -439,7 +439,7 @@ class _TablaDiasMes extends StatelessWidget {
               final backgroundColor =
                   vm.diaHoy(dia, index) ? Colors.blue.shade300 : null;
               final dias = vm.diasAnteriores(dia, index)
-                  // || vm.diasSiguientes(dia, index)
+                  || vm.diasSiguientes(dia, index)
                   ? AppTheme.diasFueraMes
                   : AppTheme.normalBoldStyle;
               return Container(

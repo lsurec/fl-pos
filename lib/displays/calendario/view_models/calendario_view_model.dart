@@ -50,7 +50,7 @@ class CalendarioViewModel extends ChangeNotifier {
   int daySelect = 0; //dia
 
   //semena seleccionada
-  int? indexWeekActive;
+  int indexWeekActive = 0;
 
   //semanas del mes actual
   List<List<DiaModel>> semanasDelMes = [];
@@ -502,5 +502,16 @@ class CalendarioViewModel extends ChangeNotifier {
       }
       print(""); // Para separar las semanas
     }
+  }
+
+  semanaAnterior() {
+    indexWeekActive = indexWeekActive - 1;
+    notifyListeners();
+  }
+
+  semanaSiguiente() {
+    indexWeekActive = indexWeekActive + 1;
+    notifyListeners();
+    
   }
 }
