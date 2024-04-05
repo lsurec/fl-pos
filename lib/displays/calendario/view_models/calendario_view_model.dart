@@ -334,7 +334,7 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   bool diasSiguientes(int dia, int index) {
-    List<DiaModel> dias = mesCompleto;
+    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
 
     final ultimoDiaMes = dias.last.value;
     final diasUltimaSemana = dias.sublist(dias.length - 7);
@@ -400,6 +400,56 @@ class CalendarioViewModel extends ChangeNotifier {
 
     print("tareas asigandas al usuario ${tareas.length}");
 
+    // String nuevaFecha = convertDateFormat(tareas[0].fechaIni);
+    // print(nuevaFecha);
+
     isLoading = false; //detener carga
+  }
+
+  String convertDateFormat(String inputDate) {
+    print(inputDate);
+
+    // Parse the input date string
+    DateTime parsedDate =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(inputDate);
+
+    // Format the parsed date to the desired output format
+    String formattedDate =
+        DateFormat('EEE MMM dd yyyy HH:mm:ss \'GMT\'Z (zzzz)')
+            .format(parsedDate);
+
+    return formattedDate;
+  }
+
+  List<TareaCalendarioModel> tareaDia(int day, int month, int year) {
+    final fechaBusqueda = DateTime(year, month, day);
+    final fechaBusquedaFormateada =
+        DateFormat('yyyy-MM-dd').format(fechaBusqueda);
+
+    // Filtra las tareas por fecha
+    return tareas.where((objeto) {
+      final fechaObjeto = objeto.fechaIni.toString().split('T')[0];
+      return fechaObjeto == fechaBusquedaFormateada;
+    }).toList();
+  }
+
+  //Verificar si una fecha es del mes seleccionado
+  bool monthCurrent(int date, int i) {
+    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
+
+    if (i >= 0 && i < 7 && date > dias[6].value) return false;
+    if (i >= dias.length - 6 &&
+        i < dias.length &&
+        date < dias[dias.length - 1].value) {
+      // print(" indiece $i dia $date");
+      return false;
+    }
+
+    //para no mostrra en la ultima semana
+    // if (i >= dias[dias.length - 5].indexWeek) {
+    //   return false;
+    // }
+    
+    return true;
   }
 }

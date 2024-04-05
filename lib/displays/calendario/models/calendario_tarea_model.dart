@@ -4,8 +4,8 @@ class TareaCalendarioModel {
   String rUserName;
   int tarea;
   String descripcion;
-  DateTime fechaIni;
-  DateTime fechaFin;
+  String fechaIni;
+  String fechaFin;
   int referencia;
   String userName;
   String observacion1;
@@ -67,8 +67,8 @@ class TareaCalendarioModel {
         rUserName: json["r_UserName"],
         tarea: json["tarea"],
         descripcion: json["descripcion"],
-        fechaIni: DateTime.parse(json["fecha_Ini"]),
-        fechaFin: DateTime.parse(json["fecha_Fin"]),
+        fechaIni: json["fecha_Ini"],
+        fechaFin: json["fecha_Fin"],
         referencia: json["referencia"],
         userName: json["userName"],
         observacion1: json["observacion_1"],
@@ -96,8 +96,8 @@ class TareaCalendarioModel {
         "r_UserName": rUserName,
         "tarea": tarea,
         "descripcion": descripcion,
-        "fecha_Ini": fechaIni.toIso8601String(),
-        "fecha_Fin": fechaFin.toIso8601String(),
+        "fecha_Ini": fechaIni,
+        "fecha_Fin": fechaFin,
         "referencia": referencia,
         "userName": userName,
         "observacion_1": observacion1,

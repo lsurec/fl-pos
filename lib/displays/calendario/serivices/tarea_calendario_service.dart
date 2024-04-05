@@ -15,6 +15,7 @@ class CalendarioTareaService {
   ) async {
     //url completa
     // Uri url = Uri.parse("${_baseUrl}Tareas/calendario/$user");
+    // Uri url = Uri.parse("http://192.168.0.7:3036/api/Tareas/calendario/ASISTENTEG");
     Uri url = Uri.parse("http://192.168.0.7:3036/api/Tareas/calendario/desa026");
 
     // Uri url = Uri.parse("${_baseUrl}Tareas/calendario/desa026");
@@ -27,7 +28,7 @@ class CalendarioTareaService {
         },
       );
 
-print(response.body);
+// print(response.body);
 
       ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
 

@@ -229,11 +229,10 @@ class _TablaDiasMes extends StatelessWidget {
                   : 0;
               final backgroundColor =
                   vm.diaHoy(dia, index) ? Colors.blue.shade300 : null;
-              final dias =
-                  vm.diasAnteriores(dia, index) 
-                  || vm.diasSiguientes(dia, index)
-                      ? AppTheme.diasFueraMes
-                      : AppTheme.normalBoldStyle;
+              final dias = vm.diasAnteriores(dia, index)
+                  // || vm.diasSiguientes(dia, index)
+                  ? AppTheme.diasFueraMes
+                  : AppTheme.normalBoldStyle;
               return Container(
                 height: 100,
                 width: 50,
@@ -263,13 +262,29 @@ class _TablaDiasMes extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Text(
-                        "Tarea 450 ",
-                        style: AppTheme.tareaStyle,
+                    if (vm.monthCurrent(dia, index))
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vm
+                              .tareaDia(dia, vm.monthSelectView, vm.yearSelect)
+                              .length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final List<TareaCalendarioModel> tareasDia =
+                                vm.tareaDia(
+                              dia,
+                              vm.monthSelectView,
+                              vm.yearSelect,
+                            );
+                            if (tareasDia.isNotEmpty) {
+                              return Text(tareasDia[index].tarea.toString());
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
                   ],
                 ),
               );
@@ -466,6 +481,30 @@ class _Horas extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _TareasDelDia extends StatelessWidget {
+  final int dia;
+
+  const _TareasDelDia({
+    required this.dia,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    return ListView.builder(
+      itemCount: vm.tareaDia(dia, vm.monthSelectView, vm.yearSelect).length,
+      itemBuilder: (BuildContext context, int index) {
+        final tarea =
+            vm.tareaDia(dia, vm.monthSelectView, vm.yearSelect)[index];
+        return ListTile(
+          title: Text(tarea.tarea.toString()),
+        );
+      },
     );
   }
 }
