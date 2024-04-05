@@ -28,6 +28,7 @@ class CalendarioViewModel extends ChangeNotifier {
   //Variables a utlizar en e calendario
 
   List<DiaModel> diasDelMes = [];
+  bool diasFueraMes = false;
 
   List<DiaModel> monthSelect = []; //dias del mes seleccionado
   List<String> diasSemanaEspaniol = []; //Nombres de los dias de la semana
@@ -77,6 +78,8 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = today; //hoy
 
     mesCompleto = armarMes(monthSelect, yearSelect);
+
+    // diasFueraMes = true;
 
     primerDiaIndex = diasDelMes.first.indexWeek;
     ultimoDiaIndex = diasDelMes.last.indexWeek;
@@ -242,7 +245,7 @@ class CalendarioViewModel extends ChangeNotifier {
     primerDiaIndex = diasDelMes.first.indexWeek;
     ultimoDiaIndex = diasDelMes.last.indexWeek;
 
-    if (primerDiaIndex == 6 && ultimoDiaIndex == 0) {
+    if (primerDiaIndex == 6 || ultimoDiaIndex == 0) {
       numSemanas = 6;
       notifyListeners();
     } else {
@@ -334,10 +337,16 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   bool diasSiguientes(int dia, int index) {
-    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
+    List<DiaModel> dias = [];
+
+    dias.addAll(mesCompleto);
 
     final ultimoDiaMes = dias.last.value;
     final diasUltimaSemana = dias.sublist(dias.length - 7);
+
+    print(
+      "${diasUltimaSemana[0].value}  ${diasUltimaSemana[diasUltimaSemana.length - 1].value} ",
+    );
 
     if (index >= dias.length - 7 &&
         dia <= ultimoDiaMes &&
@@ -449,7 +458,7 @@ class CalendarioViewModel extends ChangeNotifier {
     // if (i >= dias[dias.length - 5].indexWeek) {
     //   return false;
     // }
-    
+
     return true;
   }
 }
