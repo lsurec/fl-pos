@@ -1,68 +1,57 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:provider/provider.dart';
 
-class MonthDays extends StatelessWidget {
-  final int year;
-  final int month;
+class Calendario2View extends StatefulWidget {
+  const Calendario2View({super.key});
 
-  const MonthDays({
-    super.key,
-    required this.year,
-    required this.month,
-  });
+  @override
+  State<Calendario2View> createState() => _Calendario2ViewState();
+}
+
+class _Calendario2ViewState extends State<Calendario2View> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
+  }
+
+  loadData(BuildContext context) async {
+    final vm = Provider.of<Calendario2ViewModel>(context, listen: false);
+    vm.loadData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Días del Mes'),
-      ),
-      body: _buildMonthDays(),
-    );
-  }
+    final vm = Provider.of<Calendario2ViewModel>(context, listen: false);
 
-  Widget _buildMonthDays() {
-    List<Widget> dayWidgets = [];
-
-    // Obtener el primer día del mes
-    DateTime firstDayOfMonth = DateTime(year, month, 1);
-
-    // Obtener el número de días en el mes
-    int numberOfDaysInMonth = DateTime(year, month, 0).day;
-
-    // Obtener el nombre del día de la semana del primer día del mes
-    int firstDayOfWeekIndex = firstDayOfMonth.weekday;
-
-    print(firstDayOfWeekIndex);
-    print(month);
-
-    // Construir widgets para cada día del mes
-    for (int i = 0; i < numberOfDaysInMonth; i++) {
-      DateTime currentDate = DateTime(year, month, i + 1);
-      String dayOfWeek = DateFormat('EEEE').format(currentDate);
-      int dayOfWeekIndex = (currentDate.weekday - 1 + 7) %
-          7; // Ajuste del índice para que lunes sea 0
-
-      dayWidgets.add(
-        ListTile(
-          title: Text('Día: ${i + 1}'),
-          subtitle: Text('Nombre del día: $dayOfWeek'),
-          trailing: Text('Índice en la semana: $dayOfWeekIndex'),
+    return Stack(children: [
+      Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Calendario nuevoooo',
+            style: AppTheme.titleStyle,
+          ),
         ),
-      );
-    }
-
-    return ListView(
-      children: dayWidgets,
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              TextButton(
+                onPressed: () => vm.mesSiguiente(),
+                child: const Text(
+                  "siquiente",
+                  style: AppTheme.normalBoldStyle,
+                ),
+              ),
+              const Text("holo", style: AppTheme.normalBoldStyle),
+            ],
+          ),
+        ),
+      )
+    ]);
   }
 }
-
-// void main() {
-//   runApp(const MaterialApp(
-//     home: MonthDays(
-//         year: 2024, month: 4), // Cambia el año y el mes según lo necesites
-//   ));
-// }

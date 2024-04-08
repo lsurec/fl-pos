@@ -64,6 +64,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => IdReferenciaViewModel()),
         ChangeNotifierProvider(create: (_) => UsuariosViewModel()),
         ChangeNotifierProvider(create: (_) => CalendarioViewModel()),
+        ChangeNotifierProvider(create: (_) => Calendario2ViewModel()),
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
       ],
@@ -93,8 +94,8 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
       // home: const MonthDays(year: 2024,month: 6,), // Muestra el SplashScreen durante el inicio
-      // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: const Calendario2View(), // Muestra el SplashScreen durante el inicio
+      // home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
     );

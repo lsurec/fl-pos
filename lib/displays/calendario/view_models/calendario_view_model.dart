@@ -22,19 +22,23 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  DateTime? hoy;
+
   //Variables a utlizar en e calendario
 
-  bool vistaMes = true; // ver el mes
-  bool vistaSemana = false; //ver la semana
-  bool vistaDia = false; // ver el día
+  bool vistaMes = true;
+  bool vistaSemana = false;
+  bool vistaDia = false;
 
-  List<DiaModel> diasDelMes = []; //dias del mes seleccionado
-  bool diasFueraMes = false; //confirmar si hay mpas dias que son fuera del mes
+  List<DiaModel> diasDelMes = [];
+  bool diasFueraMes = false;
 
-  List<DiaModel> mesCompleto = [];
+  List<DiaModel> monthSelect = []; //dias del mes seleccionado
+  List<String> diasSemanaEspaniol = []; //Nombres de los dias de la semana
+  int primerDiaSemana = 0; // 0 = domingo, 1 = lunes, ..., 6 = sábado
 
   //fecha de hoy (fecha de la maquina)
-  DateTime? fechaHoy; //fecha completa DateNow
+  DateTime fechaHoy = DateTime.now(); //fecha completa DateNow
   int today = 0; //fecha dia
   int month = 0; //fecha mesooo
   int year = 0; //fecha año
@@ -58,22 +62,25 @@ class CalendarioViewModel extends ChangeNotifier {
   String mesNombre = "";
 
   Future<void> loadData(BuildContext context) async {
-    mesCompleto.clear();
+    diasDelMes = obtenerDiasDelMes(month, year);
+
     fechaHoy = DateTime.now();
 
-    //obtener feccha de hoy y asignar
-    today = fechaHoy!.day; //fecha del dia
-    month = fechaHoy!.month; //mes
-    year = fechaHoy!.year; // año
+    today = fechaHoy.day;
+    month = fechaHoy.month;
+    year = fechaHoy.year;
 
-    nuevoMes(month, year);
-
-    List<DiaModel> mesSeleccionado = armarMes(month, year);
-
-    mesCompleto.addAll(mesSeleccionado);
+    mesCompleto = await armarMes(month, year);
 
     monthSelectView = month; //mes
     yearSelect = year; //año
+    daySelect = today; //hoy
+    // diasFueraMes = true;
+
+    buscarHoy(mesCompleto);
+    diasSiguientes(mesCompleto);
+
+    print(siguientes);
 
     primerDiaIndex = diasDelMes.first.indexWeek;
     ultimoDiaIndex = diasDelMes.last.indexWeek;
@@ -90,6 +97,8 @@ class CalendarioViewModel extends ChangeNotifier {
     obtenerTareasCalendario(context);
 
     semanasDelMes = await addWeeks(mesCompleto);
+
+    print(semanasDelMes.length);
 
     indexWeekActive = 0;
 
@@ -232,9 +241,11 @@ class CalendarioViewModel extends ChangeNotifier {
     return diasDelMes;
   }
 
-  List<DiaModel> armarMes(int mes, int anio) {
+  List<DiaModel> mesCompleto = [];
+
+  Future<List<DiaModel>> armarMes(int mes, int anio) async {
     List<DiaModel> completarMes = [];
-    int mesAnterior = month - 1;
+    int mesAnterior = mes - 1;
     List<DiaModel> diasMesAnterior = obtenerDiasDelMes(mesAnterior, anio);
 
     diasDelMes = obtenerDiasDelMes(monthSelectView, yearSelect);
@@ -276,9 +287,9 @@ class CalendarioViewModel extends ChangeNotifier {
     for (int i = 0; i < diasFaltantesFin; i++) {
       completarMes.add(
         DiaModel(
-          name: diasSemana[(ultimoDiaIndex + i) % 7],
+          name: diasSemana[(ultimoDiaIndex + i) % 7 + 1],
           value: i + 1,
-          indexWeek: (ultimoDiaIndex + i) % 7,
+          indexWeek: (ultimoDiaIndex + i) % 7 + 1,
         ),
       );
     }
@@ -299,6 +310,7 @@ class CalendarioViewModel extends ChangeNotifier {
     nombreMes(monthSelectView, yearSelect);
 
     notifyListeners();
+    verrr();
   }
 
   mesAnterior() async {
@@ -324,6 +336,31 @@ class CalendarioViewModel extends ChangeNotifier {
     return false;
   }
 
+  bool siEsHoy = false;
+  bool siguientes = false;
+
+  buscarHoy(List<DiaModel> dias) {
+    for (var i = 0; i < dias.length; i++) {
+      DiaModel diaRecorrido = dias[i];
+      if (today == diaRecorrido.value &&
+          monthSelectView == month &&
+          yearSelect == year) {
+        if (diaRecorrido.value == today &&
+                diaRecorrido.value >= mesCompleto[0].value ||
+            diaRecorrido.value <= mesCompleto[6].value &&
+                diaRecorrido.indexWeek >= 0 &&
+                diaRecorrido.indexWeek <= 7) {
+          siEsHoy = true;
+          notifyListeners();
+        }
+        siEsHoy = false;
+        notifyListeners();
+      }
+      siEsHoy = false;
+      notifyListeners();
+    }
+  }
+
   bool diasAnteriores(int dia, int index) {
     List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
 
@@ -333,24 +370,56 @@ class CalendarioViewModel extends ChangeNotifier {
     return false;
   }
 
-  bool diasSiguientes(int dia, int index) {
-    List<DiaModel> dias = [];
+  diasSiguientes(List<DiaModel> dias) {
+    final int ultimaSemanaInicio =
+        dias.length - 7; // Índice de inicio de la última semana
 
-    dias.addAll(mesCompleto);
+    // Verificar si el día proporcionado es mayor que el último día de la última semana del mes
+    for (int i = ultimaSemanaInicio; i < dias.length; i++) {
+      DiaModel diaRecorrido = dias[i];
 
-    final int ultimoDiaMes = dias.last.value;
+      if (diaRecorrido.value > dias[i].value) {
+        siguientes = true;
+        notifyListeners();
+      }
+    }
+    siguientes = false;
+    notifyListeners();
+  }
+
+  // bool diasSiguientes(int dia, int index) {
+  //   List<DiaModel> dias = [];
+
+  //   dias.addAll(mesCompleto);
+
+  //   final int ultimoDiaMes = dias.last.value;
+  //   final List<DiaModel> diasUltimaSemana = dias.sublist(dias.length - 7);
+
+  //   if (index >= dias.length - 7 &&
+  //       dia <= ultimoDiaMes &&
+  //       diasUltimaSemana.any((diaModel) => diaModel.value == dia)) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  void hayDiasSiguientes(List<DiaModel> dias) {
+    siguientes =
+        false; // Reiniciamos el valor a falso antes de iniciar la verificación
+
     final List<DiaModel> diasUltimaSemana = dias.sublist(dias.length - 7);
 
-    // print(
-    //   "${diasUltimaSemana[0].value}  ${diasUltimaSemana[diasUltimaSemana.length - 1].value} ",
-    // );
-
-    if (index >= dias.length - 7 &&
-        dia <= ultimoDiaMes &&
-        diasUltimaSemana.any((diaModel) => diaModel.value == dia)) {
-      return true;
+    final int diaMayor = diasUltimaSemana
+        .reduce((maxDia, dia) => dia.value > maxDia.value ? dia : maxDia)
+        .value;
+    print(diaMayor);
+    for (var dia in diasUltimaSemana) {
+      if (dia.value < diaMayor) {
+        siguientes = true;
+        break; // Salimos del bucle tan pronto como encontramos un día del siguiente mes
+      }
     }
-    return false;
+    notifyListeners(); // Notificamos a los oyentes después de que se haya completado la verificación
   }
 
   regresarHoy() async {
@@ -460,7 +529,7 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   //Dividir el mes por semanas (en semanas de 0..6)
-  Future<List<List<DiaModel>>> addWeeks(List<DiaModel> diasDelMes) async {
+  List<List<DiaModel>> addWeeks(List<DiaModel> diasDelMes) {
     //lista con sublistas de semanas
     List<List<DiaModel>> semanas = [];
     semanas.clear();
@@ -478,16 +547,22 @@ class CalendarioViewModel extends ChangeNotifier {
     return semanas;
   }
 
-  verrr() async {
-    List<List<DiaModel>> semanass = await addWeeks(mesCompleto);
-    for (int i = 0; i < semanass.length; i++) {
-      print("Semana ${i + 1}:");
-      for (int j = 0; j < semanass[i].length; j++) {
-        print("Día ${semanass[i][j].value}: ${semanass[i][j].name}");
-        // Asegúrate de reemplazar 'nombreDelDia' con el nombre de tu atributo que contiene el nombre del día
-      }
-      print(""); // Para separar las semanas
+  verrr() {
+    for (var dia in mesCompleto) {
+      print(
+        "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
+      );
     }
+
+    // List<List<DiaModel>> semanass = addWeeks(mesCompleto);
+    // for (int i = 0; i < semanass.length; i++) {
+    //   print("Semana ${i + 1}:");
+    //   for (int j = 0; j < semanass[i].length; j++) {
+    //     print("Día ${semanass[i][j].value}: ${semanass[i][j].name}");
+    //     // Asegúrate de reemplazar 'nombreDelDia' con el nombre de tu atributo que contiene el nombre del día
+    //   }
+    //   print(""); // Para separar las semanas
+    // }
   }
 
   semanaAnterior() {
@@ -498,63 +573,5 @@ class CalendarioViewModel extends ChangeNotifier {
   semanaSiguiente() {
     indexWeekActive = indexWeekActive + 1;
     notifyListeners();
-  }
-
-
-  //armar el mes
-
-  List<DiaModel> nuevoMes(int mes, int anio) {
-    mesCompleto.clear();
-    int mesAnterior = month - 1;
-    List<DiaModel> diasMesAnterior = obtenerDiasDelMes(mesAnterior, anio);
-
-    diasDelMes = obtenerDiasDelMes(monthSelectView, yearSelect);
-
-    primerDiaIndex = diasDelMes.first.indexWeek;
-    ultimoDiaIndex = diasDelMes.last.indexWeek;
-
-    if (primerDiaIndex == 6 || ultimoDiaIndex == 0) {
-      numSemanas = 6;
-      notifyListeners();
-    } else {
-      numSemanas = 5;
-      notifyListeners();
-    }
-
-    // Limpiar la lista mesCompleto
-    mesCompleto.clear();
-
-    // Agregar los días del mes anterior a la lista
-    for (int i = primerDiaIndex - 1; i >= 0; i--) {
-      mesCompleto.insert(
-        0,
-        DiaModel(
-          name: diasSemana[i],
-          value: diasMesAnterior.length,
-          indexWeek: i,
-        ),
-      );
-      diasMesAnterior.length--;
-    }
-
-    mesCompleto.addAll(diasDelMes);
-    notifyListeners();
-
-    // Calcular cuántos días faltan para completar la última semana
-    int diasFaltantesFin = 7 - (mesCompleto.length % 7);
-
-    // Agregar los primeros días del mes siguiente a la última semana
-    for (int i = 0; i < diasFaltantesFin; i++) {
-      mesCompleto.add(
-        DiaModel(
-          name: diasSemana[(ultimoDiaIndex + i) % 7],
-          value: i + 1,
-          indexWeek: (ultimoDiaIndex + i) % 7,
-        ),
-      );
-    }
-    notifyListeners();
-
-    return mesCompleto;
   }
 }
