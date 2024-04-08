@@ -23,6 +23,7 @@ class _CalendarioViewState extends State<CalendarioView> {
 
   loadData(BuildContext context) async {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    vm.fechaHoy = DateTime.now();
     vm.loadData(context);
   }
 
@@ -438,10 +439,10 @@ class _TablaDiasMes extends StatelessWidget {
                   : 0;
               final backgroundColor =
                   vm.diaHoy(dia, index) ? Colors.blue.shade300 : null;
-              final dias = vm.diasAnteriores(dia, index)
-                  || vm.diasSiguientes(dia, index)
-                  ? AppTheme.diasFueraMes
-                  : AppTheme.normalBoldStyle;
+              final dias =
+                  vm.diasAnteriores(dia, index) || vm.diasSiguientes(dia, index)
+                      ? AppTheme.diasFueraMes
+                      : AppTheme.normalBoldStyle;
               return Container(
                 height: 100,
                 width: 50,
@@ -494,145 +495,6 @@ class _TablaDiasMes extends StatelessWidget {
                           },
                         ),
                       ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TablaDiasMesOriginal extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-    final List<DiaModel> dias = vm.obtenerDiasDelMes(
-      2,
-      // DateTime.now().month,
-      DateTime.now().year,
-    );
-
-    // Encontrar el índice del primer día del mes
-    int primerDiaIndex = dias.indexWhere((dia) => dia.value == 1);
-
-    return Table(
-      border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
-      children: List.generate(
-        5,
-        (rowIndex) => TableRow(
-          children: List.generate(
-            7,
-            (columnIndex) {
-              final index = (rowIndex * 7 + columnIndex) - primerDiaIndex;
-              final dia = index >= 0 && index < dias.length
-                  ? '${dias[index].value}'
-                  : '';
-              final backgroundColor =
-                  dia == '2' ? Colors.lightBlueAccent : null;
-              return Container(
-                height: 100,
-                width: 50,
-                padding: const EdgeInsets.only(
-                  left: 0,
-                  right: 0,
-                  bottom: 10,
-                  top: 0,
-                ),
-                alignment: Alignment.topCenter,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: backgroundColor,
-                        border: const Border(
-                          bottom: BorderSide(
-                            color: Color.fromRGBO(0, 0, 0, 0.12),
-                          ),
-                        ), // Agregar borde inferior
-                      ),
-                      child: Center(
-                        child: Text(
-                          dia,
-                          style: AppTheme.normalStyle,
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Text(
-                        "Tarea 450 ",
-                        style: AppTheme.tareaStyle,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TablaDiasSemana extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-    final List<int> dias = vm.diasMes;
-
-    return Table(
-      border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
-      children: List.generate(
-        1,
-        (rowIndex) => TableRow(
-          children: List.generate(
-            7,
-            (columnIndex) {
-              final index = rowIndex * 7 + columnIndex;
-              final dia = index < dias.length ? '${dias[index]}' : '';
-              final backgroundColor =
-                  dia == '14' ? Colors.lightBlueAccent : null;
-              return Container(
-                height: 100,
-                width: 50,
-                padding: const EdgeInsets.only(
-                  left: 0,
-                  right: 0,
-                  bottom: 10,
-                  top: 0,
-                ),
-                alignment: Alignment.topCenter,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: backgroundColor,
-                        border: const Border(
-                          bottom: BorderSide(
-                            color: Color.fromRGBO(0, 0, 0, 0.12),
-                          ),
-                        ), // Agregar borde inferior
-                      ),
-                      child: Center(
-                        child: Text(
-                          dia,
-                          style: AppTheme.normalStyle,
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Text(
-                        "Tarea 450 ",
-                        style: AppTheme.tareaStyle,
-                      ),
-                    ),
                   ],
                 ),
               );
