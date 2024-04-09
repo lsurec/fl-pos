@@ -94,8 +94,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
     semanasDelMes = addWeeks(mesCompleto);
 
-    indexWeekActive = 0;
-
     obtenerTareasCalendario(context);
 
     mostrarVistaMes();
@@ -488,12 +486,27 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   semanaAnterior() {
-    indexWeekActive = indexWeekActive - 1;
-    notifyListeners();
+    // indexWeekActive = indexWeekActive - 1;
+
+    // // if (indexWeekActive == 0) {
+    // //   monthSelectView--;
+    // //   nombreMes(monthSelectView, yearSelect);
+    // //   indexWeekActive = 4;
+    // //   notifyListeners();
+    // // }
+    // notifyListeners();
   }
 
   semanaSiguiente() {
     indexWeekActive = indexWeekActive + 1;
+    if (indexWeekActive >= 5) {
+      monthSelectView++;
+
+      nombreMes(monthSelectView, yearSelect);
+      indexWeekActive = 0;
+      notifyListeners();
+    }
+    print("indice de la semana $indexWeekActive");
     notifyListeners();
   }
 
@@ -539,5 +552,11 @@ class CalendarioViewModel extends ChangeNotifier {
     vistaSemana = false;
     vistaMes = false;
     notifyListeners();
+  }
+
+  verSemanaAnterior() {
+    if (indexWeekActive >= 5) {
+      monthSelectView++;
+    }
   }
 }

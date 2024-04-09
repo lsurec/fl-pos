@@ -40,7 +40,7 @@ class _CalendarioViewState extends State<CalendarioView> {
               style: AppTheme.titleStyle,
             ),
             leading: IconButton(
-              onPressed: () => vm.mesSiguiente(),
+              onPressed: () {},
               icon: const Icon(Icons.calendar_today_outlined),
             ),
           ),
@@ -82,7 +82,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                       Row(
                         children: [
                           TextButton(
-                            onPressed: () => vm.mesAnterior(),
+                            onPressed: () => vm.semanaAnterior(),
                             child: const Text(
                               "Anterior",
                               style: AppTheme.normalBoldStyle,
@@ -90,7 +90,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                           ),
                           const Spacer(),
                           TextButton(
-                            onPressed: () => vm.mesSiguiente(),
+                            onPressed: () => vm.semanaSiguiente(),
                             child: const Text(
                               "Siguiente",
                               style: AppTheme.normalBoldStyle,
@@ -281,7 +281,11 @@ class _Semanasss extends StatelessWidget {
                     Container(
                       height: 20,
                       decoration: BoxDecoration(
-                        color: dia.value == 5 ? Colors.amber[400] : null,
+                        color: dia.value == vm.today &&
+                                vm.monthSelectView == vm.month &&
+                                vm.yearSelect == vm.year
+                            ? Colors.amber[400]
+                            : null,
                         border: const Border(
                           bottom: BorderSide(
                             color: Color.fromRGBO(0, 0, 0, 0.12),
