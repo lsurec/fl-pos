@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
@@ -62,25 +64,22 @@ class CalendarioViewModel extends ChangeNotifier {
   String mesNombre = "";
 
   Future<void> loadData(BuildContext context) async {
-    diasDelMes = obtenerDiasDelMes(month, year);
-
     fechaHoy = DateTime.now();
 
     today = fechaHoy.day;
     month = fechaHoy.month;
     year = fechaHoy.year;
 
-    //print("$month mes $year de hoy xd");
+    diasDelMes = obtenerDiasDelMes(month, year);
 
     mesCompleto = await armarMes(month, year);
 
     monthSelectView = month; //mes
     yearSelect = year; //año
     daySelect = today; //hoy
-    // diasFueraMes = true;
 
-    buscarHoy(mesCompleto);
     diasSiguientes(mesCompleto);
+    semanasDelMes = addWeeks(mesCompleto);
 
     primerDiaIndex = diasDelMes.first.indexWeek;
     ultimoDiaIndex = diasDelMes.last.indexWeek;
@@ -94,9 +93,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
     nombreMes(monthSelectView, yearSelect);
 
-    // obtenerTareasCalendario(context);
-
-    semanasDelMes = await addWeeks(mesCompleto);
+    semanasDelMes = addWeeks(mesCompleto);
 
     indexWeekActive = 0;
 
@@ -344,7 +341,6 @@ class CalendarioViewModel extends ChangeNotifier {
   bool siguientes = false;
 
   buscarHoy(List<DiaModel> dias) {
-    print(today);
     for (var i = 0; i < dias.length; i++) {
       DiaModel diaRecorrido = dias[i];
       if (today == diaRecorrido.value &&
@@ -364,8 +360,31 @@ class CalendarioViewModel extends ChangeNotifier {
       siEsHoy = false;
       notifyListeners();
     }
-    print("hoy $siEsHoy");
   }
+
+  // buscarHoy(List<DiaModel> dias) {
+  //   print(today);
+  //   for (var i = 0; i < dias.length; i++) {
+  //     DiaModel diaRecorrido = dias[i];
+  //     if (today == diaRecorrido.value &&
+  //         monthSelectView == month &&
+  //         yearSelect == year) {
+  //       // Verifica si el día está dentro del rango de días del mes
+  //       if ((diaRecorrido.value >= mesCompleto[0].value &&
+  //               diaRecorrido.value <= mesCompleto[6].value) &&
+  //           (diaRecorrido.indexWeek >= 0 && diaRecorrido.indexWeek <= 6)) {
+  //         siEsHoy = true;
+  //         notifyListeners();
+  //         // Sale del bucle una vez que se encuentra el día de hoy
+  //         break;
+  //       }
+  //     } else {
+  //       siEsHoy = false;
+  //       notifyListeners();
+  //     }
+  //   }
+  //   print("hoy $siEsHoy");
+  // }
 
   bool diasAnteriores(int dia, int index) {
     List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
@@ -525,12 +544,6 @@ class CalendarioViewModel extends ChangeNotifier {
       // print(" indiece $i dia $date");
       return false;
     }
-
-    //para no mostrra en la ultima semana
-    // if (i >= dias[dias.length - 5].indexWeek) {
-    //   return false;
-    // }
-
     return true;
   }
 
@@ -554,21 +567,21 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   verrr() {
-    for (var dia in mesCompleto) {
-      print(
-        "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
-      );
-    }
-
-    // List<List<DiaModel>> semanass = addWeeks(mesCompleto);
-    // for (int i = 0; i < semanass.length; i++) {
-    //   print("Semana ${i + 1}:");
-    //   for (int j = 0; j < semanass[i].length; j++) {
-    //     print("Día ${semanass[i][j].value}: ${semanass[i][j].name}");
-    //     // Asegúrate de reemplazar 'nombreDelDia' con el nombre de tu atributo que contiene el nombre del día
-    //   }
-    //   print(""); // Para separar las semanas
+    // for (var dia in mesCompleto) {
+    //   print(
+    //     "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
+    //   );
     // }
+
+    List<List<DiaModel>> semanass = addWeeks(mesCompleto);
+    for (int i = 0; i < semanass.length; i++) {
+      print("Semana ${i + 1}:");
+      for (int j = 0; j < semanass[i].length; j++) {
+        print("Día ${semanass[i][j].value}: ${semanass[i][j].name}");
+        // Asegúrate de reemplazar 'nombreDelDia' con el nombre de tu atributo que contiene el nombre del día
+      }
+      print(""); // Para separar las semanas
+    }
   }
 
   semanaAnterior() {
@@ -579,5 +592,22 @@ class CalendarioViewModel extends ChangeNotifier {
   semanaSiguiente() {
     indexWeekActive = indexWeekActive + 1;
     notifyListeners();
+  }
+
+  //verificar si un dia es del mes
+  bool isToday(int date, int i) {
+    //verificar mes y año de la fecha de hpy
+    if (today == date && monthSelectView == month && yearSelect == year) {
+      if (i >= 0 && i < 7 && date > semanasDelMes[0][6].value) {
+        return false;
+      }
+      if (i >= mesCompleto.length - 6 &&
+          i < mesCompleto.length &&
+          date < semanasDelMes[semanasDelMes.length - 1][0].value) {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 }

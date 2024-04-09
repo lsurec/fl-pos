@@ -59,6 +59,13 @@ class _CalendarioViewState extends State<CalendarioView> {
                         "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
                         style: AppTheme.normalBoldStyle,
                       ),
+                      TextButton(
+                        onPressed: () => vm.verrr(),
+                        child: const Text(
+                          "Ver consola",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                      ),
                       Row(
                         children: [
                           TextButton(
@@ -437,11 +444,14 @@ class _TablaDiasMes extends StatelessWidget {
               final dia = index > 0 && index <= vm.mesCompleto.length
                   ? vm.mesCompleto[index - 1].value
                   : 0;
-              final backgroundColor = vm.siEsHoy ? Colors.blue.shade300 : null;
-              final dias =
-                  vm.diasAnteriores(dia, index) || vm.siguientes
-                      ? AppTheme.diasFueraMes
-                      : AppTheme.normalBoldStyle;
+              final backgroundColor = vm.yearSelect == vm.year &&
+                      vm.monthSelectView == vm.month &&
+                      vm.today == dia && vm.isToday(dia, index)
+                  ? Colors.blue.shade300
+                  : null;
+              final dias = vm.diasAnteriores(dia, index) || vm.siguientes
+                  ? AppTheme.diasFueraMes
+                  : AppTheme.normalBoldStyle;
               return Container(
                 height: 100,
                 width: 50,
@@ -455,7 +465,7 @@ class _TablaDiasMes extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 20,
+                      height: 30,
                       decoration: BoxDecoration(
                         color: backgroundColor,
                         border: const Border(
