@@ -72,7 +72,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     diasDelMes = obtenerDiasDelMes(month, year);
 
-    mesCompleto = await armarMes(month, year);
+    mesCompleto = armarMes(month, year);
 
     monthSelectView = month; //mes
     yearSelect = year; //año
@@ -92,6 +92,11 @@ class CalendarioViewModel extends ChangeNotifier {
       notifyListeners();
     }
     nombreMes(monthSelectView, yearSelect);
+
+    primerDiaIndex = diasDelMes.first.indexWeek;
+    ultimoDiaIndex = diasDelMes.last.indexWeek;
+
+    calcularSemanas(monthSelectView, primerDiaIndex, ultimoDiaIndex);
 
     semanasDelMes = addWeeks(mesCompleto);
 
@@ -238,7 +243,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
   List<DiaModel> mesCompleto = [];
 
-  Future<List<DiaModel>> armarMes(int mes, int anio) async {
+  List<DiaModel> armarMes(int mes, int anio) {
     print("$mes mes, $anio año ");
     List<DiaModel> completarMes = [];
     int mesAnterior = mes - 1;
@@ -248,24 +253,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
     primerDiaIndex = diasDelMes.first.indexWeek;
     ultimoDiaIndex = diasDelMes.last.indexWeek;
-
-    if (primerDiaIndex == 6 || ultimoDiaIndex == 0) {
-      numSemanas = 6;
-      notifyListeners();
-    } else {
-      numSemanas = 5;
-      notifyListeners();
-    }
-
-    if (mes == 2 && primerDiaIndex == 6 && ultimoDiaIndex <= 6) {
-      numSemanas = 5;
-      notifyListeners();
-    }
-
-    if (mes == 2 && primerDiaIndex == 0 && ultimoDiaIndex == 6) {
-      numSemanas = 4;
-      notifyListeners();
-    }
 
     // Limpiar la lista mesCompleto
     completarMes.clear();
@@ -284,7 +271,6 @@ class CalendarioViewModel extends ChangeNotifier {
     }
 
     completarMes.addAll(diasDelMes);
-    notifyListeners();
 
     // Calcular cuántos días faltan para completar la última semana
     int diasFaltantesFin = 7 - (completarMes.length % 7);
@@ -301,6 +287,26 @@ class CalendarioViewModel extends ChangeNotifier {
       );
     }
     return completarMes;
+  }
+
+  calcularSemanas(int mes, int indexPrimerDia, int indexUktimoDia) {
+    if (primerDiaIndex == 6 || ultimoDiaIndex == 0) {
+      numSemanas = 6;
+      notifyListeners();
+    } else {
+      numSemanas = 5;
+      notifyListeners();
+    }
+
+    if (mes == 2 && primerDiaIndex == 6 && ultimoDiaIndex <= 6) {
+      numSemanas = 5;
+      notifyListeners();
+    }
+
+    if (mes == 2 && primerDiaIndex == 0 && ultimoDiaIndex == 6) {
+      numSemanas = 4;
+      notifyListeners();
+    }
   }
 
   mesSiguiente() async {
@@ -596,14 +602,20 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //verificar si un dia es del mes
   bool isToday(int date, int i) {
+    List<DiaModel> diasMesHoy = [];
+    List<List<DiaModel>> semanas = [];
+    diasMesHoy = armarMes(month, year);
+
+    semanas = addWeeks(diasMesHoy);
+
     //verificar mes y año de la fecha de hpy
     if (today == date && monthSelectView == month && yearSelect == year) {
-      if (i >= 0 && i < 7 && date > semanasDelMes[0][6].value) {
+      if (i >= 0 && i < 7 && date > semanas[0][6].value) {
         return false;
       }
       if (i >= mesCompleto.length - 6 &&
           i < mesCompleto.length &&
-          date < semanasDelMes[semanasDelMes.length - 1][0].value) {
+          date < semanas[semanas.length - 1][0].value) {
         return false;
       }
       return true;

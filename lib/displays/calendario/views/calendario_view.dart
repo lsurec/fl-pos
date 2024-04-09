@@ -444,9 +444,7 @@ class _TablaDiasMes extends StatelessWidget {
               final dia = index > 0 && index <= vm.mesCompleto.length
                   ? vm.mesCompleto[index - 1].value
                   : 0;
-              final backgroundColor = vm.yearSelect == vm.year &&
-                      vm.monthSelectView == vm.month &&
-                      vm.today == dia && vm.isToday(dia, index)
+              final backgroundColor =  vm.isToday(dia, index)
                   ? Colors.blue.shade300
                   : null;
               final dias = vm.diasAnteriores(dia, index) || vm.siguientes
