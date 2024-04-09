@@ -47,7 +47,6 @@ class _CalendarioViewState extends State<CalendarioView> {
           body: RefreshIndicator(
             onRefresh: () async {
               vm.loadData(context);
-              // print("Volver a ceagar");
             },
             child: ListView(
               children: [
@@ -60,9 +59,23 @@ class _CalendarioViewState extends State<CalendarioView> {
                         style: AppTheme.normalBoldStyle,
                       ),
                       TextButton(
-                        onPressed: () => vm.verrr(),
+                        onPressed: () => vm.mostrarVistaMes(),
                         child: const Text(
-                          "Ver consola",
+                          "VER MES",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => vm.mostrarVistaSemana(),
+                        child: const Text(
+                          "VER SEMANA",
+                          style: AppTheme.normalBoldStyle,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => vm.mostrarVistaDia(),
+                        child: const Text(
+                          "VER DÍA",
                           style: AppTheme.normalBoldStyle,
                         ),
                       ),
@@ -86,9 +99,11 @@ class _CalendarioViewState extends State<CalendarioView> {
                         ],
                       ),
                       const SizedBox(height: 10),
+                      //  _NombreDias(),
+                      // _TablaDiasMes(),
+                      //Semana
                       _NombreDias(),
-                      // _Semanasss(),
-                      _TablaDiasMes(),
+                      _Semanasss(),
                       // ListView.builder(
                       //   physics: const NeverScrollableScrollPhysics(),
                       //   scrollDirection: Axis.vertical,
@@ -222,6 +237,9 @@ class _Semanasss extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
+    List<List<DiaModel>> semanas =
+        vm.agregarSemanas(vm.monthSelectView, vm.yearSelect);
+
     return Table(
       border: const TableBorder(
         top: BorderSide(
@@ -246,7 +264,7 @@ class _Semanasss extends StatelessWidget {
       children: List.generate(
         1,
         (index) => TableRow(
-          children: vm.semanasDelMes[vm.indexWeekActive].map((dia) {
+          children: semanas[vm.indexWeekActive].map((dia) {
             return TableCell(
               child: Container(
                 height: 400,
@@ -294,53 +312,6 @@ class _Semanasss extends StatelessWidget {
     );
   }
 }
-
-// class _NombreDiasSemana extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-//     return Table(
-//       border: const TableBorder(
-//         top: BorderSide(
-//           color: Color.fromRGBO(0, 0, 0, 0.12),
-//         ), // Borde arriba
-//         left: BorderSide(
-//           color: Color.fromRGBO(0, 0, 0, 0.12),
-//         ), // Borde izquierdo
-//         right: BorderSide(
-//           color: Color.fromRGBO(0, 0, 0, 0.12),
-//         ), // Borde derecho
-//         bottom: BorderSide.none, // Sin borde abajo
-//         horizontalInside: BorderSide(
-//           color: Color.fromRGBO(0, 0, 0, 0.12),
-//         ), // Borde horizontal dentro de la tabla
-//         verticalInside: BorderSide(
-//           color: Color.fromRGBO(0, 0, 0, 0.12),
-//         ), // Borde vertical dentro de la tabla
-//       ),
-//       children: [
-//         for (final dia in vm.diasSemana)
-//           TableRow(
-//             children: [
-//               TableCell(
-//                 child: Container(
-//                   height: 25,
-//                   width: 50,
-//                   alignment: Alignment.topCenter,
-//                   child: Text(
-//                     // Para obtener solo las tres primeras letras del día
-//                     dia.substring(0, 3),
-//                     style: AppTheme.normalBoldStyle,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//       ],
-//     );
-//   }
-// }
 
 class _NombreDiasSemana extends StatelessWidget {
   @override
@@ -401,31 +372,31 @@ class _NombreDiasSemana extends StatelessWidget {
   }
 }
 
-class _SemanasCalendario extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+// class _SemanasCalendario extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: vm.semanasDelMes.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Row(
-          children: vm.semanasDelMes[index].map((dia) {
-            return Container(
-              margin: EdgeInsets.all(5.0),
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                border: Border.all(),
-              ),
-              child: Text("${dia.value}"),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
-}
+//     return ListView.builder(
+//       scrollDirection: Axis.horizontal,
+//       itemCount: vm.semanasDelMes.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         return Row(
+//           children: vm.semanasDelMes[index].map((dia) {
+//             return Container(
+//               margin: EdgeInsets.all(5.0),
+//               padding: EdgeInsets.all(10.0),
+//               decoration: BoxDecoration(
+//                 border: Border.all(),
+//               ),
+//               child: Text("${dia.value}"),
+//             );
+//           }).toList(),
+//         );
+//       },
+//     );
+//   }
+// }
 
 class _TablaDiasMes extends StatelessWidget {
   @override
@@ -444,12 +415,12 @@ class _TablaDiasMes extends StatelessWidget {
               final dia = index > 0 && index <= vm.mesCompleto.length
                   ? vm.mesCompleto[index - 1].value
                   : 0;
-              final backgroundColor =  vm.isToday(dia, index)
-                  ? Colors.blue.shade300
-                  : null;
-              final dias = vm.diasAnteriores(dia, index) || vm.diasSiguientes(dia, index)
-                  ? AppTheme.diasFueraMes
-                  : AppTheme.normalBoldStyle;
+              final backgroundColor =
+                  vm.isToday(dia, index) ? Colors.blue.shade300 : null;
+              final dias =
+                  vm.diasAnteriores(dia, index) || vm.diasSiguientes(dia, index)
+                      ? AppTheme.diasFueraMes
+                      : AppTheme.normalBoldStyle;
               return Container(
                 height: 100,
                 width: 50,

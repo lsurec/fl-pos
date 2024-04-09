@@ -7,7 +7,6 @@ import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:quiver/time.dart'; // Importa esta línea
 
 class CalendarioViewModel extends ChangeNotifier {
   //cargar pantalla
@@ -98,6 +97,8 @@ class CalendarioViewModel extends ChangeNotifier {
     indexWeekActive = 0;
 
     obtenerTareasCalendario(context);
+
+    mostrarVistaMes();
 
     notifyListeners();
   }
@@ -387,7 +388,6 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   String convertDateFormat(String inputDate) {
-
     // Parse the input date string
     DateTime parsedDate =
         DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(inputDate);
@@ -434,6 +434,30 @@ class CalendarioViewModel extends ChangeNotifier {
 
     for (int i = 0; i < diasDelMes.length; i += 7) {
       List<DiaModel> sublista = diasDelMes.sublist(i, i + 7);
+      semanas.add(sublista);
+    }
+
+    for (int i = 0; i < semanas.length; i++) {
+      for (int j = 0; j < semanas[i].length; j++) {
+        semanas[i][j].indexWeek = j;
+      }
+    }
+    return semanas;
+  }
+
+  //Dividir el mes por semanas (en semanas de 0..6)
+  List<List<DiaModel>> agregarSemanas(int mes, int anio) {
+    List<DiaModel> dias = [];
+    dias.clear();
+
+    dias = armarMes(mes, anio);
+
+    //lista con sublistas de semanas
+    List<List<DiaModel>> semanas = [];
+    semanas.clear();
+
+    for (int i = 0; i < dias.length; i += 7) {
+      List<DiaModel> sublista = dias.sublist(i, i + 7);
       semanas.add(sublista);
     }
 
@@ -494,5 +518,26 @@ class CalendarioViewModel extends ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  mostrarVistaMes() {
+    vistaMes = true;
+    vistaDia = false;
+    vistaSemana = false;
+    notifyListeners();
+  }
+
+  mostrarVistaSemana() {
+    vistaSemana = true;
+    vistaMes = false;
+    vistaDia = false;
+    notifyListeners();
+  }
+
+  mostrarVistaDia() {
+    vistaDia = true;
+    vistaSemana = false;
+    vistaMes = false;
+    notifyListeners();
   }
 }
