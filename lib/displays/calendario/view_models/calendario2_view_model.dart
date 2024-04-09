@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/dia_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:quiver/time.dart';
 
 class Calendario2ViewModel extends ChangeNotifier {
   //cargar pantalla
@@ -132,7 +133,7 @@ class Calendario2ViewModel extends ChangeNotifier {
       completarMes.insert(
         0,
         DiaModel(
-          name: diasSemana[primerDiaIndex -1],
+          name: diasSemana[primerDiaIndex - 1],
           value: diasMesAnterior.length,
           indexWeek: i,
         ),
@@ -186,5 +187,66 @@ class Calendario2ViewModel extends ChangeNotifier {
     //nombre del mes infresado
     mesNombre = DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
     notifyListeners();
+  }
+
+  dias() async {
+    // Inicializa el formato para español (España)
+    await initializeDateFormatting('es_ES', null);
+
+    const year = 2024; //año
+    const month = 5; // mes
+
+    //primer dia del mes
+    final primerDiaMes = DateTime(year, month, 1);
+
+    //nombre del dia lun, mar... o dom.
+    final nomDia = DateFormat('EEEE', 'es_ES').format(primerDiaMes);
+
+    //nombre del mes infresado
+    final nombreMes = DateFormat.MMMM('es_ES').format(DateTime(2024, month));
+
+    // print('El primer dia del mes de $nombreMes del año $year fue el $nomDia');
+
+    final int weekIndex = indiceEnSemanaPrimerDiaMes(nomDia);
+    final int weekIndexFinal = indiceEnSemanaUltimoDiaMes(year, month);
+
+    print(
+      '$weekIndex es el indice de la semana del primer dia del mes $nombreMes.',
+    );
+
+    print(
+      '$weekIndexFinal es el indice de la semana del ultomo dia del mes $nombreMes.',
+    );
+
+    final diasMes = daysInMonth(year, month);
+    print('El mes de $nombreMes tiene $diasMes dias.');
+  }
+
+  int indiceEnSemanaPrimerDiaMes(String primerDiaSemana) {
+    // Días de la semana en orden (0 = domingo, 6 = sábado)
+    final List<String> daysOfWeek = [
+      'domingo',
+      'lunes',
+      'martes',
+      'miércoles',
+      'jueves',
+      'viernes',
+      'sábado'
+    ];
+
+    // Encuentra el índice del primer día de la semana
+    final int firstDayIndex = daysOfWeek.indexOf(primerDiaSemana.toLowerCase());
+
+    return firstDayIndex;
+  }
+
+  int indiceEnSemanaUltimoDiaMes(int year, int month) {
+    // Calcula la fecha del último día del mes
+    final DateTime lastDayOfMonth = DateTime(year, month + 1, 0);
+
+    // Obtiene el día de la semana (0 = domingo, 6 = sábado)
+    final int lastDayOfWeek = lastDayOfMonth.weekday;
+
+    return lastDayOfWeek;
   }
 }

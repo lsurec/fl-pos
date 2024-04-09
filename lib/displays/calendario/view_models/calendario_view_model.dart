@@ -1,16 +1,12 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
-import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:provider/provider.dart';
 import 'package:quiver/time.dart'; // Importa esta línea
 
 class CalendarioViewModel extends ChangeNotifier {
@@ -141,67 +137,6 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  dias() async {
-    // Inicializa el formato para español (España)
-    await initializeDateFormatting('es_ES', null);
-
-    const year = 2024; //año
-    const month = 5; // mes
-
-    //primer dia del mes
-    final primerDiaMes = DateTime(year, month, 1);
-
-    //nombre del dia lun, mar... o dom.
-    final nomDia = DateFormat('EEEE', 'es_ES').format(primerDiaMes);
-
-    //nombre del mes infresado
-    final nombreMes = DateFormat.MMMM('es_ES').format(DateTime(2024, month));
-
-    // print('El primer dia del mes de $nombreMes del año $year fue el $nomDia');
-
-    final int weekIndex = indiceEnSemanaPrimerDiaMes(nomDia);
-    final int weekIndexFinal = indiceEnSemanaUltimoDiaMes(year, month);
-
-    print(
-      '$weekIndex es el indice de la semana del primer dia del mes $nombreMes.',
-    );
-
-    print(
-      '$weekIndexFinal es el indice de la semana del ultomo dia del mes $nombreMes.',
-    );
-
-    final diasMes = daysInMonth(year, month);
-    print('El mes de $nombreMes tiene $diasMes dias.');
-  }
-
-  int indiceEnSemanaPrimerDiaMes(String primerDiaSemana) {
-    // Días de la semana en orden (0 = domingo, 6 = sábado)
-    final List<String> daysOfWeek = [
-      'domingo',
-      'lunes',
-      'martes',
-      'miércoles',
-      'jueves',
-      'viernes',
-      'sábado'
-    ];
-
-    // Encuentra el índice del primer día de la semana
-    final int firstDayIndex = daysOfWeek.indexOf(primerDiaSemana.toLowerCase());
-
-    return firstDayIndex;
-  }
-
-  int indiceEnSemanaUltimoDiaMes(int year, int month) {
-    // Calcula la fecha del último día del mes
-    final DateTime lastDayOfMonth = DateTime(year, month + 1, 0);
-
-    // Obtiene el día de la semana (0 = domingo, 6 = sábado)
-    final int lastDayOfWeek = lastDayOfMonth.weekday;
-
-    return lastDayOfWeek;
-  }
-
   armarSemanas(int mes, int anio) {
     List<DiaModel> dias = obtenerDiasDelMes(mes, anio);
 
@@ -314,7 +249,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
     monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
-    mesCompleto = await armarMes(monthSelectView, yearSelect);
+    mesCompleto = armarMes(monthSelectView, yearSelect);
     nombreMes(monthSelectView, yearSelect);
 
     notifyListeners();
@@ -326,7 +261,7 @@ class CalendarioViewModel extends ChangeNotifier {
     yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
     monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
 
-    mesCompleto = await armarMes(monthSelectView, yearSelect);
+    mesCompleto = armarMes(monthSelectView, yearSelect);
     notifyListeners();
 
     nombreMes(monthSelectView, yearSelect);
@@ -368,30 +303,6 @@ class CalendarioViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
-  // buscarHoy(List<DiaModel> dias) {
-  //   print(today);
-  //   for (var i = 0; i < dias.length; i++) {
-  //     DiaModel diaRecorrido = dias[i];
-  //     if (today == diaRecorrido.value &&
-  //         monthSelectView == month &&
-  //         yearSelect == year) {
-  //       // Verifica si el día está dentro del rango de días del mes
-  //       if ((diaRecorrido.value >= mesCompleto[0].value &&
-  //               diaRecorrido.value <= mesCompleto[6].value) &&
-  //           (diaRecorrido.indexWeek >= 0 && diaRecorrido.indexWeek <= 6)) {
-  //         siEsHoy = true;
-  //         notifyListeners();
-  //         // Sale del bucle una vez que se encuentra el día de hoy
-  //         break;
-  //       }
-  //     } else {
-  //       siEsHoy = false;
-  //       notifyListeners();
-  //     }
-  //   }
-  //   print("hoy $siEsHoy");
-  // }
 
   bool diasAnteriores(int dia, int index) {
     List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
@@ -472,14 +383,10 @@ class CalendarioViewModel extends ChangeNotifier {
 
     print("tareas asigandas al usuario ${tareas.length}");
 
-    // String nuevaFecha = convertDateFormat(tareas[0].fechaIni);
-    // print(nuevaFecha);
-
     isLoading = false; //detener carga
   }
 
   String convertDateFormat(String inputDate) {
-    print(inputDate);
 
     // Parse the input date string
     DateTime parsedDate =
