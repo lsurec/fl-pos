@@ -79,12 +79,31 @@ class _CalendarioViewState extends State<CalendarioView> {
                           style: AppTheme.normalBoldStyle,
                         ),
                       ),
+                      // Row(
+                      //   children: [
+                      //     TextButton(
+                      //       onPressed: () => vm.mesAnterior(),
+                      //       child: const Text(
+                      //         "Mes Anterior",
+                      //         style: AppTheme.normalBoldStyle,
+                      //       ),
+                      //     ),
+                      //     const Spacer(),
+                      //     TextButton(
+                      //       onPressed: () => vm.mesSiguiente(),
+                      //       child: const Text(
+                      //         "Mes Siguiente",
+                      //         style: AppTheme.normalBoldStyle,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         children: [
                           TextButton(
                             onPressed: () => vm.semanaAnterior(),
                             child: const Text(
-                              "Anterior",
+                              "Semana Anterior",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ),
@@ -92,38 +111,16 @@ class _CalendarioViewState extends State<CalendarioView> {
                           TextButton(
                             onPressed: () => vm.semanaSiguiente(),
                             child: const Text(
-                              "Siguiente",
+                              "Semana Siguiente",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 10),
-                      //  _NombreDias(),
-                      // _TablaDiasMes(),
-                      //Semana
                       _NombreDias(),
-                      _Semanasss(),
-                      // ListView.builder(
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   scrollDirection: Axis.vertical,
-                      //   shrinkWrap: true,
-                      //   itemCount: vm.semanasDelMes.length,
-                      //   itemBuilder: (BuildContext context, int index) {
-                      //     final List<List<DiaModel>> dia = vm.semanasDelMes;
-
-                      //     return Text(
-                      //       " ${dia[index][0].value}",
-                      //       style: AppTheme.normalBoldStyle,
-                      //     );
-                      //   },
-                      // )
-                      // _SemanasCalendario(),
-
-                      // _TablaDiasMes(),
-                      // _NombreDiasSemana(),
-                      // _TablaDiasSemana(),
-                      // _Horas()
+                      _Semanasss()
+                      // _VistaMes(),
                     ],
                   ),
                 ),
@@ -376,31 +373,92 @@ class _NombreDiasSemana extends StatelessWidget {
   }
 }
 
-// class _SemanasCalendario extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+class _VistaMes extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-//     return ListView.builder(
-//       scrollDirection: Axis.horizontal,
-//       itemCount: vm.semanasDelMes.length,
-//       itemBuilder: (BuildContext context, int index) {
-//         return Row(
-//           children: vm.semanasDelMes[index].map((dia) {
-//             return Container(
-//               margin: EdgeInsets.all(5.0),
-//               padding: EdgeInsets.all(10.0),
-//               decoration: BoxDecoration(
-//                 border: Border.all(),
-//               ),
-//               child: Text("${dia.value}"),
-//             );
-//           }).toList(),
-//         );
-//       },
-//     );
-//   }
-// }
+    List<DiaModel> diasMesSeleccionado =
+        vm.armarMes(vm.monthSelectView, vm.yearSelect);
+    //Calcular numero de semanas correctamente
+    int semanasNum = (diasMesSeleccionado.length / 7).ceil();
+
+    return Table(
+      border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
+      children: List.generate(
+        semanasNum,
+        (rowIndex) => TableRow(
+          children: List.generate(
+            7,
+            (columnIndex) {
+              final index = rowIndex * 7 + columnIndex;
+              DiaModel dia = diasMesSeleccionado[index];
+              final backgroundColor = vm.nuevaIsToday(dia.value, index)
+                  ? Colors.blue.shade300
+                  : null;
+              final dias = vm.diasOtroMes(dia, index, diasMesSeleccionado)
+                  ? AppTheme.diasFueraMes
+                  : AppTheme.normalBoldStyle;
+              return Container(
+                height: 100,
+                width: 50,
+                padding: const EdgeInsets.only(
+                  left: 0,
+                  right: 0,
+                  bottom: 10,
+                  top: 0,
+                ),
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(0, 0, 0, 0.12),
+                          ),
+                        ), // Agregar borde inferior
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${dia.value}",
+                          style: dias,
+                        ),
+                      ),
+                    ),
+                    if (vm.monthCurrent(dia.value, dia.indexWeek))
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vm
+                              .tareaDia(
+                                  dia.value, vm.monthSelectView, vm.yearSelect)
+                              .length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final List<TareaCalendarioModel> tareasDia =
+                                vm.tareaDia(dia.value, vm.monthSelectView,
+                                    vm.yearSelect);
+                            if (tareasDia.isNotEmpty) {
+                              return Text(tareasDia[index].tarea.toString());
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class _TablaDiasMes extends StatelessWidget {
   @override
@@ -445,7 +503,7 @@ class _TablaDiasMes extends StatelessWidget {
                           bottom: BorderSide(
                             color: Color.fromRGBO(0, 0, 0, 0.12),
                           ),
-                        ), // Agregar borde inferior
+                        ),
                       ),
                       child: Center(
                         child: Text(
