@@ -58,27 +58,27 @@ class _CalendarioViewState extends State<CalendarioView> {
                         "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      TextButton(
-                        onPressed: () => vm.mostrarVistaMes(),
-                        child: const Text(
-                          "VER MES",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => vm.mostrarVistaSemana(),
-                        child: const Text(
-                          "VER SEMANA",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () => vm.mostrarVistaDia(),
-                        child: const Text(
-                          "VER DÍA",
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                      ),
+                      // TextButton(
+                      //   onPressed: () => vm.mostrarVistaMes(),
+                      //   child: const Text(
+                      //     "VER MES",
+                      //     style: AppTheme.normalBoldStyle,
+                      //   ),
+                      // ),
+                      // TextButton(
+                      //   onPressed: () => vm.mostrarVistaSemana(),
+                      //   child: const Text(
+                      //     "VER SEMANA",
+                      //     style: AppTheme.normalBoldStyle,
+                      //   ),
+                      // ),
+                      // TextButton(
+                      //   onPressed: () => vm.mostrarVistaDia(),
+                      //   child: const Text(
+                      //     "VER DÍA",
+                      //     style: AppTheme.normalBoldStyle,
+                      //   ),
+                      // ),
                       // Row(
                       //   children: [
                       //     TextButton(
@@ -296,11 +296,24 @@ class _Semanasss extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Text(
-                        "Tarea 450 ",
-                        style: AppTheme.tareaStyle,
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm
+                            .tareaDia(
+                                dia.value, vm.monthSelectView, vm.yearSelect)
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final List<TareaCalendarioModel> tareasDia =
+                              vm.tareaDia(
+                                  dia.value, vm.monthSelectView, vm.yearSelect);
+                          if (tareasDia.isNotEmpty) {
+                            return Text(tareasDia[index].tarea.toString());
+                          }
+                          return null;
+                        },
                       ),
                     ),
                   ],
