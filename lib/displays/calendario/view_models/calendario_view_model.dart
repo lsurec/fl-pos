@@ -77,9 +77,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     nombreMes(monthSelectView, yearSelect);
 
-    semanasDelMes = addWeeks(mesCompleto);
-
-    obtenerTareasCalendario(context);
+    // obtenerTareasCalendario(context);
 
     mostrarVistaMes();
 
@@ -437,20 +435,24 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   semanaAnterior() {
-    // indexWeekActive = indexWeekActive - 1;
+    if (indexWeekActive == 0) {
+      yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
+      monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
+      nombreMes(monthSelectView, yearSelect);
 
-    // // if (indexWeekActive == 0) {
-    // //   monthSelectView--;
-    // //   nombreMes(monthSelectView, yearSelect);
-    // //   indexWeekActive = 4;
-    // //   notifyListeners();
-    // // }
-    // notifyListeners();
+      indexWeekActive = semanasDelMes.length - 1;
+      notifyListeners();
+    }
+
+    indexWeekActive = indexWeekActive - 1;
+
+    notifyListeners();
+    print("indice de la semana $indexWeekActive");
   }
 
   semanaSiguiente() {
     indexWeekActive = indexWeekActive + 1;
-    if (indexWeekActive >= 5) {
+    if (indexWeekActive >= semanasDelMes.length - 1) {
       yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
       monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
       nombreMes(monthSelectView, yearSelect);
@@ -461,27 +463,12 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //verificar si un dia es del mes
-  bool isToday(int date, int i) {
-    List<DiaModel> diasMesHoy = [];
-    List<List<DiaModel>> semanas = [];
-    diasMesHoy = armarMes(month, year);
+  irSiguienteSemana() {
+    indexWeekActive = indexWeekActive + 1;
 
-    semanas = addWeeks(diasMesHoy);
-
-    //verificar mes y año de la fecha de hpy
-    if (today == date && monthSelectView == month && yearSelect == year) {
-      if (i >= 0 && i < 7 && date > semanas[0][6].value) {
-        return false;
-      }
-      if (i >= mesCompleto.length - 6 &&
-          i < mesCompleto.length &&
-          date < semanas[semanas.length - 1][0].value) {
-        return false;
-      }
-      return true;
+    if (semanasDelMes.length < indexWeekActive) {
+      print("${semanasDelMes.length} indice semana activa $indexWeekActive ");
     }
-    return false;
   }
 
   mostrarVistaMes() {
