@@ -101,7 +101,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                       Row(
                         children: [
                           TextButton(
-                            onPressed: () => vm.semanaAnterior(),
+                            onPressed: () => vm.cambiosss(),
                             child: const Text(
                               "Semana Anterior",
                               style: AppTheme.normalBoldStyle,

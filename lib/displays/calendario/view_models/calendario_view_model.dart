@@ -578,4 +578,95 @@ class CalendarioViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  int obtenerIndiceSemanaAnterior(
+    int indiceSemanaActual,
+    int mesActual,
+    int anioActual,
+  ) {
+    // Verificar si la semana actual es la primera del mes
+    bool esPrimeraSemanaDelMes = indiceSemanaActual == 0;
+
+    if (esPrimeraSemanaDelMes) {
+      // Obtener las semanas del mes anterior
+      int mesAnterior = mesActual - 1;
+      int anioAnterior = anioActual;
+      if (mesAnterior == 0) {
+        mesAnterior = 12;
+        anioAnterior--;
+      }
+
+      List<List<DiaModel>> semanasDelMesAnterior =
+          agregarSemanas(mesAnterior, anioAnterior);
+
+      // Obtener el índice de la última semana del mes anterior
+      int indiceUltimaSemana = semanasDelMesAnterior.length - 1;
+
+      // Devolver el índice de la última semana del mes anterior
+      return indiceUltimaSemana;
+    }
+
+    // Si no es la primera semana del mes, retroceder al índice de la semana anterior
+    return indiceSemanaActual - 1;
+  }
+
+  void semanaAnteriorx() {
+    if (indexWeekActive == 0) {
+      // Si estamos en la primera semana del mes actual
+      int mesAnterior = monthSelectView - 1;
+      int anioAnterior = yearSelect;
+      if (mesAnterior == 0) {
+        mesAnterior = 12;
+        anioAnterior--;
+      }
+
+      // Obtener las semanas del mes anterior
+      List<List<DiaModel>> semanasDelMesAnterior =
+          agregarSemanas(mesAnterior, anioAnterior);
+
+      // Verificar si la última semana del mes anterior es igual a la primera semana del mes actual
+      bool esPrimeraSemanaDelMesActual =
+          semanasDelMesAnterior.last == semanasDelMes[0];
+
+      if (esPrimeraSemanaDelMesActual) {
+        // Si son iguales, retroceder al índice de la última semana del mes anterior
+        indexWeekActive = semanasDelMesAnterior.length - 1;
+        notifyListeners();
+        return;
+      }
+    }
+
+    // Si no estamos en la primera semana del mes actual, simplemente retroceder a la semana anterior
+    indexWeekActive--;
+    notifyListeners();
+  }
+
+  cambiosss() {
+    if (indexWeekActive == 0) {
+      yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
+      monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
+      nombreMes(monthSelectView, yearSelect);
+
+      // Obtener todas las semanas del mes anterior
+      List<List<DiaModel>> semanasDelMesAnterior =
+          agregarSemanas(monthSelectView, yearSelect);
+
+      // Encontrar la última semana del mes anterior
+      int indexUltimaSemana = semanasDelMesAnterior.length - 1;
+
+      if (semanasDelMesAnterior[indexUltimaSemana][0].value ==
+          semanasDelMes[indexWeekActive][0].value) {
+        indexWeekActive = indexUltimaSemana - 1;
+        notifyListeners();
+        return;
+      }
+      // Establecer el índice de la semana activa como la última semana del mes anterior
+      indexWeekActive = indexUltimaSemana;
+      notifyListeners();
+    } else {
+      indexWeekActive--;
+      notifyListeners();
+    }
+    print("$indexWeekActive - indice");
+  }
 }
