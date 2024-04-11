@@ -74,10 +74,11 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = today; //hoy
 
     semanasDelMes = agregarSemanas(month, year);
+    indexWeekActive = 0;
 
     nombreMes(monthSelectView, yearSelect);
 
-    obtenerTareasCalendario(context);
+    // obtenerTareasCalendario(context);
 
     mostrarVistaMes();
 
@@ -416,27 +417,7 @@ class CalendarioViewModel extends ChangeNotifier {
     return semanas;
   }
 
-  verrr() {
-    // for (var dia in mesCompleto) {
-    //   print(
-    //     "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
-    //   );
-    // }
-
-    List<List<DiaModel>> semanass = addWeeks(mesCompleto);
-    for (int i = 0; i < semanass.length; i++) {
-      print("Semana ${i + 1}:");
-      for (int j = 0; j < semanass[i].length; j++) {
-        print("Día ${semanass[i][j].value}: ${semanass[i][j].name}");
-        // Asegúrate de reemplazar 'nombreDelDia' con el nombre de tu atributo que contiene el nombre del día
-      }
-      print(""); // Para separar las semanas
-    }
-  }
-
   semanaAnterior() {
-    // cambiarSemana(monthSelectView, yearSelect);
-
     if (indexWeekActive == 0) {
       yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
       monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
@@ -449,46 +430,6 @@ class CalendarioViewModel extends ChangeNotifier {
     indexWeekActive = indexWeekActive - 1;
 
     notifyListeners();
-    // print("indice de la semana $indexWeekActive");
-    // cambiarSemanaSiguiente();
-  }
-
-  semanaSiguiente() {
-    // cambiarSemana(monthSelectView, yearSelect);
-
-    // indexWeekActive = indexWeekActive + 1;
-    print(
-        "indice de la semana $indexWeekActive  semanas del mes ${semanasDelMes.length - 1}");
-
-    if (indexWeekActive >= semanasDelMes.length - 1) {
-      yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
-      monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
-      nombreMes(monthSelectView, yearSelect);
-      indexWeekActive = 0;
-      notifyListeners();
-    }
-
-    if (semanasDelMes.length >= 5 && indexWeekActive == 0) {
-      yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
-      monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
-      nombreMes(monthSelectView, yearSelect);
-      indexWeekActive = 0;
-      notifyListeners();
-    }
-
-    indexWeekActive = indexWeekActive + 1;
-    print("indice de la semana $indexWeekActive");
-
-    // cambiarSemana(monthSelectView, yearSelect);
-    notifyListeners();
-  }
-
-  irSiguienteSemana() {
-    indexWeekActive = indexWeekActive + 1;
-
-    if (semanasDelMes.length < indexWeekActive) {
-      print("${semanasDelMes.length} indice semana activa $indexWeekActive ");
-    }
   }
 
   mostrarVistaMes() {
@@ -510,11 +451,6 @@ class CalendarioViewModel extends ChangeNotifier {
     vistaSemana = false;
     vistaMes = false;
     notifyListeners();
-  }
-
-  verSemanaAnterior() {
-    print(
-        "En el mes $monthSelectView $yearSelect hay  ${semanasDelMes.length} semanas, indice; $indexWeekActive");
   }
 
   irAlDia(int verDia) {
@@ -574,96 +510,72 @@ class CalendarioViewModel extends ChangeNotifier {
     return semanas;
   }
 
-  cambiarSemanaSiguiente() {
-    List<List<DiaModel>> cuantasSemanas = [];
+  int obtenerIndiceSemanaSiguiente(
+    int indiceSemanaActual,
+    int mesActual,
+    int anioActual,
+  ) {
+    // Obtener las semanas del mes actual
+    List<List<DiaModel>> semanasDelMesActual =
+        agregarSemanas(mesActual, anioActual);
 
-    cuantasSemanas.clear();
+    // Verificar si la semana actual es la última del mes
+    bool esUltimaSemanaDelMes =
+        indiceSemanaActual == semanasDelMesActual.length - 1;
 
-    cuantasSemanas = agregarSemanas(monthSelectView, yearSelect);
+    if (esUltimaSemanaDelMes) {
+      // Obtener las semanas del mes siguiente
+      int mesSiguiente = mesActual + 1;
+      int anioSiguiente = anioActual;
+      if (mesSiguiente == 13) {
+        mesSiguiente = 1;
+        anioSiguiente++;
+      }
 
-    if (indexWeekActive < semanasDelMes.length) {
-      int semanasActuales = cuantasSemanas.length;
-      print(" semanitas $semanasActuales");
+      List<List<DiaModel>> semanasDelMesSiguiente =
+          agregarSemanas(mesSiguiente, anioSiguiente);
+
+      // Verificar si el primer día de la primera semana del mes siguiente es el día 1
+      bool esPrimeraSemanaDelMesSiguiente =
+          semanasDelMesSiguiente[0][0].value == 1 &&
+              semanasDelMesSiguiente[0][0].indexWeek ==
+                  0; // El primer día de la semana está en el índice 0
+
+      if (esPrimeraSemanaDelMesSiguiente) {
+        // Si la primera semana del mes siguiente comienza en el día 1, devolver el índice 0 para mostrar esta semana
+        return 0;
+      }
     }
-    // cuantasSemanas = agregarSemanas(monthSelectView - 1, yearSelect);
 
-    // if (cuantasSemanas[indexWeekActive][6].value > 0 &&
-    //     cuantasSemanas[indexWeekActive][6].value < 7) {
-    //   int indicePrimerDiaMayorUltimaSemana =
-    //       cuantasSemanas[indexWeekActive].first.indexWeek;
-    //   print(
-    //       "estamos en la ultima semana indice dia mayo ultima semana $indicePrimerDiaMayorUltimaSemana");
-    // }
+    // Si no se cumple ninguna condición especial, avanzar al índice de la semana siguiente
+    return indiceSemanaActual + 1;
   }
 
-  nextWeek() {
-    if (indexWeekActive == 0) {
-      //buscamos el indice de la fecha mas baja (inicio de mes (1)) en la semana (0,1,2...6 (semana))
-      int fechaMenorSemanaAnteriror = semanasDelMes[0].last.indexWeek;
+  semanaSiguiente() {
+    if (indexWeekActive == semanasDelMes.length - 1) {
+      yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
+      monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
+      nombreMes(monthSelectView, yearSelect);
 
-      //cambiar al mes siguiente
-      if (monthSelectView == 1) {
-        yearSelect--;
-        monthSelectView = 12;
+      semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
+
+      if (semanasDelMes[0][0].value == 1) {
+        // Cambiar a la primera semana del nuevo mes
+        indexWeekActive = 0;
         notifyListeners();
-      } else {
-        monthSelectView--;
-        notifyListeners();
+        return;
       }
 
-      //obtener dias del mes anterior
-      mesCompleto = armarMes(yearSelect, monthSelectView);
-      //asiganr semanas del mes siguiente
-      semanasDelMes = addWeeks(mesCompleto);
-      //Si la semna empieza en 0 esta completa (lunes:1, indice 0)
-      if (fechaMenorSemanaAnteriror > 0) {
-        //si la semana no esta completa
-        //para no mostrar la misma semana marcar la penultima semana (segunda desde atras)
-        indexWeekActive = semanasDelMes.length - 2;
-        notifyListeners();
-      } else {
-        //si la semna esta completa maracar ultima semana del mes anteririro (primera desder atras)
-        // maracar ultima semana
-        //Seleccionar fecha de la semana siguiente
-        indexWeekActive = semanasDelMes.length - 1;
-        notifyListeners();
-      }
-    } else {
-      //Si no estamos en la primer semana
-      //buscar si el dia a marcar en la semana anterior esta en el mismo mes
-      // int fechaMenorSemanaAnteriror =
-      //     semanasDelMes[indexWeekActive - 1].last.indexWeek;
+      // Obtener el índice de la semana siguiente del nuevo mes
+      // Cambiar a la primera semana del nuevo mes
+      indexWeekActive =
+          obtenerIndiceSemanaSiguiente(0, monthSelectView, yearSelect);
 
-      if (monthSelectView == 1) {
-        yearSelect--;
-        monthSelectView = 12;
-      } else {
-        monthSelectView--;
-      }
-
-      //obtener dias del mes anterior
-      mesCompleto = armarMes(monthSelectView, yearSelect);
-      //asiganr semanas del mes anterior
-      semanasDelMes = addWeeks(mesCompleto);
-      //Seleccionar fecha de la semana anteriror
-      indexWeekActive = semanasDelMes.length - 1;
       notifyListeners();
-    }
-    notifyListeners();
-  }
-
-  cambiarSemana(int mes, int anio) {
-    int mesActual = mes;
-
-    List<List<DiaModel>> semanasDeEsteMes = agregarSemanas(mesActual, anio);
-    List<List<DiaModel>> semanasMesSiguiente =
-        agregarSemanas(mesActual + 1, anio);
-
-    if (semanasMesSiguiente[0] ==
-        semanasDeEsteMes[semanasDeEsteMes.length - 1]) {
-      print("semanas iguales");
     } else {
-      print("no son iguales");
+      // Si no es la última semana del mes, simplemente avanzar a la siguiente semana
+      indexWeekActive++;
+      notifyListeners();
     }
   }
 }

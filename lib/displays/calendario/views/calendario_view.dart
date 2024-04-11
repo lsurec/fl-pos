@@ -40,7 +40,7 @@ class _CalendarioViewState extends State<CalendarioView> {
               style: AppTheme.titleStyle,
             ),
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () => vm.loadData(context),
               icon: const Icon(Icons.calendar_today_outlined),
             ),
           ),
@@ -234,8 +234,8 @@ class _Semanasss extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-    List<List<DiaModel>> semanas =
-        vm.agregarSemanas(vm.monthSelectView, vm.yearSelect);
+    vm.semanasDelMes = vm.agregarSemanas(vm.monthSelectView, vm.yearSelect);
+    List<List<DiaModel>> semanas = vm.semanasDelMes;
 
     return Table(
       border: const TableBorder(
@@ -472,92 +472,6 @@ class _VistaMes extends StatelessWidget {
     );
   }
 }
-
-// class _TablaDiasMes extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-//     return Table(
-//       border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
-//       children: List.generate(
-//         vm.numSemanas,
-//         (rowIndex) => TableRow(
-//           children: List.generate(
-//             7,
-//             (columnIndex) {
-//               final index = (rowIndex * 7 + columnIndex) + 1;
-//               final dia = index > 0 && index <= vm.mesCompleto.length
-//                   ? vm.mesCompleto[index - 1].value
-//                   : 0;
-//               final backgroundColor =
-//                   vm.nuevaIsToday(dia, index) ? Colors.blue.shade300 : null;
-//               final dias =
-//                   vm.diasAnteriores(dia, index) || vm.diasSiguientes(dia, index)
-//                       ? AppTheme.diasFueraMes
-//                       : AppTheme.normalBoldStyle;
-//               return Container(
-//                 height: 100,
-//                 width: 50,
-//                 padding: const EdgeInsets.only(
-//                   left: 0,
-//                   right: 0,
-//                   bottom: 10,
-//                   top: 0,
-//                 ),
-//                 alignment: Alignment.topCenter,
-//                 child: Column(
-//                   children: [
-//                     Container(
-//                       height: 30,
-//                       decoration: BoxDecoration(
-//                         color: backgroundColor,
-//                         border: const Border(
-//                           bottom: BorderSide(
-//                             color: Color.fromRGBO(0, 0, 0, 0.12),
-//                           ),
-//                         ),
-//                       ),
-//                       child: Center(
-//                         child: Text(
-//                           "$dia",
-//                           style: dias,
-//                         ),
-//                       ),
-//                     ),
-//                     if (vm.monthCurrent(dia, index))
-//                       Padding(
-//                         padding: const EdgeInsets.all(5.0),
-//                         child: ListView.builder(
-//                           scrollDirection: Axis.vertical,
-//                           shrinkWrap: true,
-//                           itemCount: vm
-//                               .tareaDia(dia, vm.monthSelectView, vm.yearSelect)
-//                               .length,
-//                           itemBuilder: (BuildContext context, int index) {
-//                             final List<TareaCalendarioModel> tareasDia =
-//                                 vm.tareaDia(
-//                               dia,
-//                               vm.monthSelectView,
-//                               vm.yearSelect,
-//                             );
-//                             if (tareasDia.isNotEmpty) {
-//                               return Text(tareasDia[index].tarea.toString());
-//                             }
-//                             return null;
-//                           },
-//                         ),
-//                       ),
-//                   ],
-//                 ),
-//               );
-//             },
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 
 class _Horas extends StatelessWidget {
   @override
