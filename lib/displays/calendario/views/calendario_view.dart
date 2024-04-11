@@ -58,46 +58,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                         "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      // TextButton(
-                      //   onPressed: () => vm.mostrarVistaMes(),
-                      //   child: const Text(
-                      //     "VER MES",
-                      //     style: AppTheme.normalBoldStyle,
-                      //   ),
-                      // ),
-                      // TextButton(
-                      //   onPressed: () => vm.mostrarVistaSemana(),
-                      //   child: const Text(
-                      //     "VER SEMANA",
-                      //     style: AppTheme.normalBoldStyle,
-                      //   ),
-                      // ),
-                      // TextButton(
-                      //   onPressed: () => vm.mostrarVistaDia(),
-                      //   child: const Text(
-                      //     "VER DÍA",
-                      //     style: AppTheme.normalBoldStyle,
-                      //   ),
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     TextButton(
-                      //       onPressed: () => vm.mesAnterior(),
-                      //       child: const Text(
-                      //         "Mes Anterior",
-                      //         style: AppTheme.normalBoldStyle,
-                      //       ),
-                      //     ),
-                      //     const Spacer(),
-                      //     TextButton(
-                      //       onPressed: () => vm.mesSiguiente(),
-                      //       child: const Text(
-                      //         "Mes Siguiente",
-                      //         style: AppTheme.normalBoldStyle,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       Row(
                         children: [
                           TextButton(
@@ -137,47 +97,6 @@ class _CalendarioViewState extends State<CalendarioView> {
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
-    );
-  }
-}
-
-class _Dias extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-    // final List<int> dias = vm.obtenerDiasDelMes(2024, 3);
-
-    return Table(
-      border: TableBorder.all(),
-      children: List.generate(
-        5,
-        (index) => TableRow(
-          children: List.generate(
-            7,
-            (index2) => TableCell(
-              child: Container(
-                height: 50,
-                width: 50,
-                alignment: Alignment.topCenter,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${index * 7 + index2 + 1}',
-                          style: AppTheme.normalBoldStyle,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -276,12 +195,12 @@ class _Semanasss extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 20,
+                      height: 25,
                       decoration: BoxDecoration(
                         color: dia.value == vm.today &&
                                 vm.monthSelectView == vm.month &&
                                 vm.yearSelect == vm.year
-                            ? Colors.amber[400]
+                            ? Colors.blue.shade300
                             : null,
                         border: const Border(
                           bottom: BorderSide(
@@ -292,7 +211,7 @@ class _Semanasss extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "${dia.value}",
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.normalBoldStyle,
                         ),
                       ),
                     ),
