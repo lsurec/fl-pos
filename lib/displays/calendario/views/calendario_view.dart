@@ -308,7 +308,10 @@ class _Semanasss extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final List<TareaCalendarioModel> tareasDia =
                               vm.tareaDia(
-                                  dia.value, vm.monthSelectView, vm.yearSelect);
+                            dia.value,
+                            vm.resolveMonth(index),
+                            vm.resolveYear(index),
+                          );
                           if (tareasDia.isNotEmpty) {
                             return Text(tareasDia[index].tarea.toString());
                           }

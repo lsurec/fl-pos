@@ -476,6 +476,16 @@ class CalendarioViewModel extends ChangeNotifier {
     return false;
   }
 
+  diasOtraSemana() {
+    if (indexWeekActive == 0) {
+      //Es la primera semana del mes
+    }
+
+    if (indexWeekActive == semanasDelMes.length - 1) {
+      //Es la ultima semana del mes
+    }
+  }
+
   //Dividir el mes por semanas (en semanas de 0..6)
   List<List<DiaModel>> nuevaAgregarSemanas(List<DiaModel> dias) {
     //lista con sublistas de semanas
@@ -589,6 +599,58 @@ class CalendarioViewModel extends ChangeNotifier {
     } else {
       indexWeekActive--;
       notifyListeners();
+    }
+  }
+
+  //Devuelve un mes dependiedo de las semanas
+  //si hay dias en una semana que pertenecen a un mes distinto
+  int resolveMonth(int indexDay) {
+    //si la semnaa seleccionada es 0 es la primer semana
+    // los dias anterirores son del mes anterrior
+    if (indexWeekActive == 0) {
+      int inicioMes = semanasDelMes[indexWeekActive].first.value;
+      if (indexDay < inicioMes) {
+        return monthSelectView == 1 ? 12 : monthSelectView - 1;
+      } else {
+        return monthSelectView;
+      }
+    } else if (indexWeekActive == semanasDelMes.length - 1) {
+      //si la semana seleccionada es la utima
+      // los dias siguientes son del mes siguienete
+      int finMes = semanasDelMes[indexWeekActive].last.value;
+      if (indexDay > finMes) {
+        return monthSelectView == 12 ? 1 : monthSelectView + 1;
+      } else {
+        return monthSelectView;
+      }
+    } else {
+      return monthSelectView;
+    }
+  }
+
+  //Devuelve un año dependiedo de las semanas
+  //si hay dias en una semana que pertenecen a un año distinto
+  int resolveYear(int indexDay) {
+    if (indexWeekActive == 0) {
+      int inicioMes = semanasDelMes[indexWeekActive].first.value;
+      if (indexDay < inicioMes) {
+        return monthSelectView == 1 ? yearSelect - 1 : yearSelect;
+      } else {
+        return yearSelect;
+      }
+    } else if (indexWeekActive == semanasDelMes.length - 1) {
+      //si la semana seleccionada es la utima
+      // los dias siguientes son del mes siguienete
+
+      int finMes = semanasDelMes[indexWeekActive].last.value;
+
+      if (indexDay > finMes) {
+        return monthSelectView == 12 ? yearSelect + 1 : yearSelect;
+      } else {
+        return yearSelect;
+      }
+    } else {
+      return yearSelect;
     }
   }
 }
