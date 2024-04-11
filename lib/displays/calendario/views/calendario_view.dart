@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
@@ -55,31 +57,37 @@ class _CalendarioViewState extends State<CalendarioView> {
                   child: Column(
                     children: [
                       Text(
-                        "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
+                        " ${vm.daySelect} de ${vm.mesNombre} de ${vm.yearSelect}",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      Row(
-                        children: [
-                          TextButton(
-                            onPressed: () => vm.semanaAnterior(),
-                            child: const Text(
-                              "Semana Anterior",
-                              style: AppTheme.normalBoldStyle,
-                            ),
-                          ),
-                          const Spacer(),
-                          TextButton(
-                            onPressed: () => vm.semanaSiguiente(),
-                            child: const Text(
-                              "Semana Siguiente",
-                              style: AppTheme.normalBoldStyle,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Text(
+                      //   "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
+                      //   style: AppTheme.normalBoldStyle,
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     TextButton(
+                      //       onPressed: () => vm.semanaAnterior(),
+                      //       child: const Text(
+                      //         "Semana Anterior",
+                      //         style: AppTheme.normalBoldStyle,
+                      //       ),
+                      //     ),
+                      //     const Spacer(),
+                      //     TextButton(
+                      //       onPressed: () => vm.semanaSiguiente(),
+                      //       child: const Text(
+                      //         "Semana Siguiente",
+                      //         style: AppTheme.normalBoldStyle,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 10),
-                      _NombreDias(),
-                      _Semanasss()
+                      const _TableExample(),
+                      // _HourTableWidget(),
+                      // _NombreDias(),
+                      // _Semanasss()
                       // _VistaMes(),
                     ],
                   ),
@@ -465,6 +473,226 @@ class _TareasDelDia extends StatelessWidget {
           title: Text(tarea.tarea.toString()),
         );
       },
+    );
+  }
+}
+
+class _HourTableWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    return SizedBox(
+      width: double.infinity, // Ocupa todo el ancho disponible
+      child: DataTable(
+        columns: [
+          DataColumn(
+            label: Container(
+              color: Colors.pink[50],
+              width: 75,
+              child: const Text(
+                'Hora',
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ),
+          const DataColumn(
+            label: Text('Tareas del día'),
+          ),
+        ],
+        rows: List.generate(
+          vm.horasDelDia.length,
+          (index) {
+            final hour = vm.horasDelDia[index];
+            return DataRow(
+              cells: [
+                DataCell(
+                  Container(
+                    color: Colors.pink[50],
+                    width: 75, // Ancho fijo para la columna de las horas
+                    child: Text(
+                      hour.hora12,
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
+                    color: const Color.fromARGB(255, 240, 115, 69),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Tareas de esta hora ${hour.hora12} Tareas de esta hora Tareas,  de esta hora Tareas de esta horaTareas de esta hora',
+                            maxLines: 7,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _HourTableWidgetss extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    return Container(
+      width: double.infinity, // Ocupa todo el ancho disponible
+      child: DataTable(
+        columns: [
+          DataColumn(
+            label: Container(
+              color: Colors.pink[50],
+              width: 75,
+              child: const Text(
+                'Hora',
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ),
+          const DataColumn(
+            label: Text('Tareas del día'),
+          ),
+        ],
+        rows: List.generate(
+          vm.horasDelDia.length,
+          (index) {
+            final hour = vm.horasDelDia[index];
+            return DataRow(
+              cells: [
+                DataCell(
+                  Container(
+                    color: Colors.pink[50],
+                    width: 75, // Ancho fijo para la columna de las horas
+                    child: Text(
+                      hour.hora12,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(5),
+                    color: const Color.fromARGB(255, 240, 115, 69),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            'Tareas de esta hora ${hour.hora12} Tareas de esta hora Tareas,  de esta hora Tareas de esta horaTareas de esta hora',
+                            maxLines: 7,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// class _HourTableWidget extends StatelessWidget {
+//   const _HourTableWidget();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+//     return DataTable(
+//       columns: const [
+//         DataColumn(label: Text('Hora')),
+//         DataColumn(label: Text('Tareas del dia')),
+//       ],
+//       rows: List.generate(
+//         vm.horasDelDia.length,
+//         (index) {
+//           final hour = vm.horasDelDia[index];
+//           return DataRow(
+//             cells: [
+//               DataCell(Text(hour.hora12)),
+//               DataCell(Text('Tareas de esta hora ${hour.hora12}')),
+//             ],
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+class _TableExample extends StatelessWidget {
+  const _TableExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Table(
+      border: TableBorder.all(),
+      columnWidths: const <int, TableColumnWidth>{
+        0: IntrinsicColumnWidth(),
+        1: FlexColumnWidth(),
+        2: FixedColumnWidth(64),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: <TableRow>[
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              height: 45,
+              child: const Text(
+                "Horario",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+            TableCell(
+              verticalAlignment: TableCellVerticalAlignment.top,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                width: 32,
+                child: const Text(
+                  "Tareas",
+                  style: AppTheme.normalBoldStyle,
+                ),
+              ),
+            ),
+          ],
+        ),
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: 128,
+              child: const Text(
+                "12:00 am",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              color: Colors.yellow,
+              child: const Text(
+                "12:00 am 12:00 am 12:00 am 12:00 am 12:00 am 12:00 am",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
