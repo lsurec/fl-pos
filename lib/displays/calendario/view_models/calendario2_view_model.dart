@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/calendario/models/calendario_tarea_model.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/dia_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +12,7 @@ class Calendario2ViewModel extends ChangeNotifier {
   //manejar flujo del procesp
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+  List<TareaCalendarioModel> tareasHoraActual = [];
 
   set isLoading(bool value) {
     _isLoading = value;

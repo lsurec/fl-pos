@@ -51,6 +51,8 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //semanas del mes actual
   List<List<DiaModel>> semanasDelMes = [];
+  //Tareas de la hora actual
+  List<TareaCalendarioModel> tareasHoraActual = [];
 
   // Encontrar el índice del primer día del mes
   int primerDiaIndex = 0;
@@ -83,6 +85,7 @@ class CalendarioViewModel extends ChangeNotifier {
     semanasDelMes = agregarSemanas(month, year);
     indexWeekActive = 0;
 
+    cargar(27, 9, 2023);
     obtenerTareasCalendario(context);
 
     mostrarVistaMes();
@@ -633,6 +636,8 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   diaSiguiente() {
+    print("${tareasHoraActual.length} tareas horas");
+    tareasHoraActual.clear(); //Limpiar lista
     //ontener ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
     // cambiar el mes y anio cuando sea el ultimo dia del mes 12
@@ -645,6 +650,8 @@ class CalendarioViewModel extends ChangeNotifier {
       //obtner dias del mes y semanas
       mesCompleto = armarMes(yearSelect, monthSelectView);
       semanasDelMes = addWeeks(mesCompleto);
+      // cargar(daySelect, monthSelectView, yearSelect);
+
       notifyListeners();
     } else {
       if (daySelect == ultimodia) {
@@ -654,17 +661,23 @@ class CalendarioViewModel extends ChangeNotifier {
         //obtner dias del mes y semanas
         mesCompleto = armarMes(yearSelect, monthSelectView);
         semanasDelMes = addWeeks(mesCompleto);
+        // cargar(daySelect, monthSelectView, yearSelect);
+
         notifyListeners();
       } else {
         //sumar un doa al dia seleccionado
         daySelect++;
+        // cargar(daySelect, monthSelectView, yearSelect);
+
         notifyListeners();
       }
     }
     print(" $daySelect siguiente");
+    // cargar(daySelect, monthSelectView, yearSelect);
   }
 
   diaAnterior() {
+    tareasHoraActual.clear(); //Limpiar lista
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
 
@@ -677,6 +690,8 @@ class CalendarioViewModel extends ChangeNotifier {
       mesCompleto = armarMes(yearSelect, monthSelectView);
       //cambiar el indice de las semanas del mes correspondiente
       semanasDelMes = addWeeks(mesCompleto);
+      // cargar(daySelect, monthSelectView, yearSelect);
+
       notifyListeners();
     } else {
       if (daySelect == 1) {
@@ -685,14 +700,18 @@ class CalendarioViewModel extends ChangeNotifier {
         mesCompleto = armarMes(yearSelect, monthSelectView);
         //cambiar el indeice de las semanas del mes que corresponda
         semanasDelMes = addWeeks(mesCompleto);
+        // cargar(daySelect, monthSelectView, yearSelect);
+
         notifyListeners();
       } else {
         //restar un dia al dia seleccionado
         daySelect--;
+        // cargar(daySelect, monthSelectView, yearSelect);
         notifyListeners();
       }
     }
     print(" $daySelect regresando");
+    // cargar(daySelect, monthSelectView, yearSelect);
   }
 
   int obtenerUltimoDiaMes(int anio, int mes) {
@@ -804,5 +823,44 @@ class CalendarioViewModel extends ChangeNotifier {
     int hora = dateTime.hour;
 
     return hora;
+  }
+
+  // cargar(int day, int mont, int year) {
+  //   List<TareaCalendarioModel> tareasDia = []; //lista local de tareas del dia
+  //   tareasDia.clear(); //Limpiar lista
+  //   tareasHoraActual.clear(); //Limpiar lista
+  //   tareasDia = tareaDia(day, mont, year); //obtener las tareas del dia
+
+  //   //recorrer la lista de las horas del dia
+  //   for (var i = 0; i < Utilities.horasDelDia.length; i++) {
+  //     //Encontrar la hora de la lista
+  //     int hora = Utilities.horasDelDia[i].hora24;
+  //     //Agregar a la lista de tareas de la hora actual las tareas que pertenezcan a la hora recorrida
+  //     tareasHoraActual.addAll(tareaHora(hora, tareasDia));
+  //   }
+  //   notifyListeners();
+  //   print(tareasHoraActual.length);
+  // }
+
+  cargar(int day, int mont, int year) {
+    // Obtener las tareas del día
+    List<TareaCalendarioModel> tareasDia = [];
+    tareasDia.clear();
+
+    tareasDia = tareaDia(day, mont, year);
+
+    // Limpiar lista de tareas de la hora actual
+    tareasHoraActual.clear();
+
+    // Filtrar las tareas del día por hora y agregarlas a la lista de tareas de la hora actual
+    for (var tarea in tareasDia) {
+      int hora = obtenerHora(tarea.fechaIni);
+      if (Utilities.horasDelDia
+          .any((horaDelDia) => horaDelDia.hora24 == hora)) {
+        tareasHoraActual.add(tarea);
+      }
+    }
+
+    print(tareasHoraActual.length);
   }
 }

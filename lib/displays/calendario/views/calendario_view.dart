@@ -651,8 +651,6 @@ class _TableExample extends StatelessWidget {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
     List<HorasModel> horas = vm.horasDelDia;
-    // List<TareaCalendarioModel> tareasDia =
-    //     vm.tareaDia(vm.daySelect, vm.monthSelectView, vm.yearSelect);
 
     // Lista de TableRow que contendrá las filas de la tabla
     List<TableRow> horasDia = [];
