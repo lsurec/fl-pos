@@ -62,15 +62,15 @@ class CalendarioViewModel extends ChangeNotifier {
   Future<void> loadData(BuildContext context) async {
     fechaHoy = DateTime.now();
 
-    // today = fechaHoy.day;
-    // month = fechaHoy.month;
-    // year = fechaHoy.year;
+    today = fechaHoy.day;
+    month = fechaHoy.month;
+    year = fechaHoy.year;
 
-    today = 27;
-    month = 9;
-    year = 2023;
+    // today = 27;
+    // month = 9;
+    // year = 2023;
 
-    print("${tareaHora(10, tareaDia(today, month, year)).length}");
+    // print("${tareaHora(10, tareaDia(today, month, year)).length}");
 
     diasDelMes = obtenerDiasDelMes(month, year);
 
@@ -787,11 +787,22 @@ class CalendarioViewModel extends ChangeNotifier {
     int hora,
     List<TareaCalendarioModel> tareas,
   ) {
+    int horaTarea;
     // Filtrar la lista de tareas
-    return tareas.where((objeto) {
-      DateTime fechaObjeto = convertirStringADateTime(objeto.fechaIni);
-      int horaObjeto = fechaObjeto.hour;
-      return horaObjeto == hora;
+    return tareas.where((tarea) {
+      String fecha = tarea.fechaIni;
+      horaTarea = obtenerHora(fecha);
+      return hora == horaTarea;
     }).toList();
+  }
+
+  int obtenerHora(String fechaHora) {
+    // Parsear la cadena de fecha y hora a un objeto DateTime
+    DateTime dateTime = DateTime.parse(fechaHora);
+
+    // Obtener la hora de la fecha y hora analizadas
+    int hora = dateTime.hour;
+
+    return hora;
   }
 }
