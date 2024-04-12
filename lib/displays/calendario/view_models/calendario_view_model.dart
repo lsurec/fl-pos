@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/calendario/models/models.d
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -76,9 +77,7 @@ class CalendarioViewModel extends ChangeNotifier {
     semanasDelMes = agregarSemanas(month, year);
     indexWeekActive = 0;
 
-    nombreMes(monthSelectView, yearSelect);
-
-    obtenerTareasCalendario(context);
+    // obtenerTareasCalendario(context);
 
     mostrarVistaMes();
 
@@ -100,147 +99,17 @@ class CalendarioViewModel extends ChangeNotifier {
     "12"
   ];
 
-  List<HorasModel> horasDelDia = [
-    HorasModel(
-      hora24: 0,
-      hora12: "12:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 1,
-      hora12: "1:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 2,
-      hora12: "2:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 3,
-      hora12: "3:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 4,
-      hora12: "4:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 5,
-      hora12: "5:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 6,
-      hora12: "6:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 7,
-      hora12: "7:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 8,
-      hora12: "8:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 9,
-      hora12: "9:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 10,
-      hora12: "10:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 11,
-      hora12: "11:00 am",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 12,
-      hora12: "12:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 13,
-      hora12: "1:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 14,
-      hora12: "2:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 15,
-      hora12: "3:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 16,
-      hora12: "4:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 17,
-      hora12: "5:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 18,
-      hora12: "6:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 19,
-      hora12: "7:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 20,
-      hora12: "8:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 21,
-      hora12: "9:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 22,
-      hora12: "10:00 pm",
-      visible: true,
-    ),
-    HorasModel(
-      hora24: 23,
-      hora12: "11:00 pm",
-      visible: true,
-    )
-  ];
+  List<HorasModel> horasDelDia = Utilities.horasDelDia;
 
-  List<String> diasSemana = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-  ];
+  List<String> diasSemana = Utilities.diasSemana;
 
   //Nuevooooooooo
 
-  Future<void> nombreMes(int mes, int anio) async {
+  Future<String> nombreDelMes(int mes, int anio) async {
     // Inicializa el formato para español (España)
     await initializeDateFormatting('es_ES', null);
     //nombre del mes infresado
-    mesNombre = DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
-    notifyListeners();
+    return DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
   }
 
   armarSemanas(int mes, int anio) {
@@ -334,7 +203,6 @@ class CalendarioViewModel extends ChangeNotifier {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
     monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
-    nombreMes(monthSelectView, yearSelect);
     notifyListeners();
   }
 
@@ -342,7 +210,6 @@ class CalendarioViewModel extends ChangeNotifier {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
     monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
-    nombreMes(monthSelectView, yearSelect);
     notifyListeners();
   }
 
@@ -421,7 +288,6 @@ class CalendarioViewModel extends ChangeNotifier {
     primerDiaIndex = diasDelMes.first.indexWeek;
     ultimoDiaIndex = diasDelMes.last.indexWeek;
 
-    nombreMes(monthSelectView, yearSelect);
     notifyListeners();
   }
 
@@ -673,7 +539,6 @@ class CalendarioViewModel extends ChangeNotifier {
     if (indexWeekActive == semanasDelMes.length - 1) {
       yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
       monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
-      nombreMes(monthSelectView, yearSelect);
 
       semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
 
@@ -701,7 +566,6 @@ class CalendarioViewModel extends ChangeNotifier {
     if (indexWeekActive == 0) {
       yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
       monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
-      nombreMes(monthSelectView, yearSelect);
 
       // Obtener todas las semanas del mes anterior
       List<List<DiaModel>> semanasDelMesAnterior =
@@ -774,6 +638,135 @@ class CalendarioViewModel extends ChangeNotifier {
       }
     } else {
       return yearSelect;
+    }
+  }
+
+  diaSiguiente() {
+    //ontener ultimo dia del mes
+    int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
+    // cambiar el mes y anio cuando sea el ultimo dia del mes 12
+    if (monthSelectView == 12 && daySelect == ultimodia) {
+      //cambio de fechas por nuvas
+      monthSelectView = 1;
+      yearSelect++;
+      daySelect = 1;
+
+      //obtner dias del mes y semanas
+      mesCompleto = armarMes(yearSelect, monthSelectView);
+      semanasDelMes = addWeeks(mesCompleto);
+      notifyListeners();
+    } else {
+      if (daySelect == ultimodia) {
+        //cambio de fechas por nuvas
+        daySelect = 1;
+        monthSelectView++;
+        //obtner dias del mes y semanas
+        mesCompleto = armarMes(yearSelect, monthSelectView);
+        semanasDelMes = addWeeks(mesCompleto);
+        notifyListeners();
+      } else {
+        //sumar un doa al dia seleccionado
+        daySelect++;
+        notifyListeners();
+      }
+    }
+  }
+
+  diaAnterior() {
+    //buscar el ultimo dia del mes
+    int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
+
+    //cambiar mes y anio si es necesario en el cambio de dia
+    if (monthSelectView == 1 && daySelect == 1) {
+      monthSelectView = 12;
+      yearSelect--;
+      daySelect = ultimodia;
+
+      mesCompleto = armarMes(yearSelect, monthSelectView);
+      //cambiar el indice de las semanas del mes correspondiente
+      semanasDelMes = addWeeks(mesCompleto);
+      notifyListeners();
+    } else {
+      if (daySelect == 1) {
+        daySelect = ultimodia;
+        monthSelectView--;
+        mesCompleto = armarMes(yearSelect, monthSelectView);
+        //cambiar el indeice de las semanas del mes que corresponda
+        semanasDelMes = addWeeks(mesCompleto);
+        notifyListeners();
+      } else {
+        //restar un dia al dia seleccionado
+        daySelect--;
+        notifyListeners();
+      }
+    }
+  }
+
+  int obtenerUltimoDiaMes(int anio, int mes) {
+    // Crear un objeto DateTime para el primer día del siguiente mes
+    DateTime primerDiaMesSiguiente = DateTime(anio, mes + 1, 1);
+    // Restar 1 día al primer día del siguiente mes para obtener el último día del mes actual
+    DateTime ultimoDiaMes =
+        primerDiaMesSiguiente.subtract(const Duration(days: 1));
+    // Retornar el número del día del último día del mes
+    return ultimoDiaMes.day;
+  }
+
+  //crear nombre de la semanas por rango
+  String generateNameWeeck() {
+    semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
+    //año seleccionado
+    yearSelect;
+    //dias
+    int dayStart = semanasDelMes[indexWeekActive][0].value; //dia inicio
+    int dayEnd = semanasDelMes[indexWeekActive][6].value; //dia fin
+    //mes inicio
+    int monthStart = indexWeekActive == 0 &&
+            semanasDelMes[indexWeekActive][0].value >
+                semanasDelMes[indexWeekActive][6].value
+        ? monthSelectView == 1
+            ? 12
+            : monthSelectView - 1
+        : monthSelectView;
+
+    //mes fin
+    int monthEnd = indexWeekActive == semanasDelMes.length - 1 &&
+            semanasDelMes[indexWeekActive][6].value <
+                semanasDelMes[indexWeekActive][0].value
+        ? monthSelectView == 12
+            ? 1
+            : monthSelectView + 1
+        : monthSelectView;
+
+    //año seleccionado
+    int yearStart = yearSelect; //año inicio
+    int yearEnd = yearSelect; //año fin
+
+    //solo en el mes 12 (diciembre) solo en la ultima semana
+    if (monthSelectView == 12 && indexWeekActive == semanasDelMes.length - 1) {
+      //si el ultimo dia es menor al primero
+      if (semanasDelMes[indexWeekActive][6].value <
+          semanasDelMes[indexWeekActive][0].value) {
+        yearEnd = yearEnd + 1;
+      }
+    }
+
+    //solo en el mes 1 (enero) solo en la primer semana
+    if (monthSelectView == 1 && indexWeekActive == 0) {
+      if (semanasDelMes[indexWeekActive][0].value >
+          semanasDelMes[indexWeekActive][6].value) {
+        yearStart = yearStart - 1;
+      }
+    }
+
+    if (monthStart > monthEnd && yearStart < yearEnd) {
+      return "${Utilities.nombreMes(monthStart).substring(0, 3)} de $yearStart - ${Utilities.nombreMes(monthEnd).substring(0, 3)} de $yearEnd";
+    }
+    if (indexWeekActive == 0 && dayStart > dayEnd ||
+        indexWeekActive == semanasDelMes.length - 1 && dayStart > dayEnd) {
+      return "${Utilities.nombreMes(monthStart).substring(0, 3)} - ${Utilities.nombreMes(monthEnd).substring(0, 3)}  $yearEnd";
+    } else {
+      return "${Utilities.nombreMes(monthSelectView).substring(0, 3)} - $yearStart";
     }
   }
 }

@@ -1,11 +1,9 @@
 // ignore_for_file: avoid_print
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/load_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -56,33 +54,88 @@ class _CalendarioViewState extends State<CalendarioView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Text(
-                        " ${vm.daySelect} de ${vm.mesNombre} de ${vm.yearSelect}",
-                        style: AppTheme.normalBoldStyle,
+                      Column(
+                        children: [
+                          Text(
+                            " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () => vm.diaAnterior(),
+                                child: const Text(
+                                  "Dia Anterior",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              const Spacer(),
+                              TextButton(
+                                onPressed: () => vm.diaSiguiente(),
+                                child: const Text(
+                                  "Dia Siguiente",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      // Text(
-                      //   "${vm.mesNombre.toUpperCase()} ${vm.yearSelect}",
-                      //   style: AppTheme.normalBoldStyle,
-                      // ),
-                      // Row(
-                      //   children: [
-                      //     TextButton(
-                      //       onPressed: () => vm.semanaAnterior(),
-                      //       child: const Text(
-                      //         "Semana Anterior",
-                      //         style: AppTheme.normalBoldStyle,
-                      //       ),
-                      //     ),
-                      //     const Spacer(),
-                      //     TextButton(
-                      //       onPressed: () => vm.semanaSiguiente(),
-                      //       child: const Text(
-                      //         "Semana Siguiente",
-                      //         style: AppTheme.normalBoldStyle,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      Column(
+                        children: [
+                          Text(
+                            "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () => vm.mesAnterior(),
+                                child: const Text(
+                                  "Mes Anterior",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              const Spacer(),
+                              TextButton(
+                                onPressed: () => vm.mesSiguiente(),
+                                child: const Text(
+                                  "Mes Siguiente",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            vm.generateNameWeeck(),
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () => vm.semanaAnterior(),
+                                child: const Text(
+                                  "Semana Anterior",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                              const Spacer(),
+                              TextButton(
+                                onPressed: () => vm.semanaSiguiente(),
+                                child: const Text(
+                                  "Semana Siguiente",
+                                  style: AppTheme.normalBoldStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+
                       const SizedBox(height: 10),
                       const _TableExample(),
                       // _HourTableWidget(),
@@ -607,92 +660,147 @@ class _HourTableWidgetss extends StatelessWidget {
   }
 }
 
-// class _HourTableWidget extends StatelessWidget {
-//   const _HourTableWidget();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-//     return DataTable(
-//       columns: const [
-//         DataColumn(label: Text('Hora')),
-//         DataColumn(label: Text('Tareas del dia')),
-//       ],
-//       rows: List.generate(
-//         vm.horasDelDia.length,
-//         (index) {
-//           final hour = vm.horasDelDia[index];
-//           return DataRow(
-//             cells: [
-//               DataCell(Text(hour.hora12)),
-//               DataCell(Text('Tareas de esta hora ${hour.hora12}')),
-//             ],
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
 class _TableExample extends StatelessWidget {
-  const _TableExample({super.key});
+  const _TableExample();
 
   @override
   Widget build(BuildContext context) {
-    return Table(
-      border: TableBorder.all(),
-      columnWidths: const <int, TableColumnWidth>{
-        0: IntrinsicColumnWidth(),
-        1: FlexColumnWidth(),
-        2: FixedColumnWidth(64),
-      },
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: <TableRow>[
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    List<HorasModel> horas = vm.horasDelDia;
+
+    // Lista de TableRow que contendrá las filas de la tabla
+    List<TableRow> horasDia = [];
+
+    // Agregar la fila de encabezado
+    horasDia.add(
+      TableRow(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 45,
+            child: const Text(
+              "Horario",
+              style: AppTheme.normalBoldStyle,
+            ),
+          ),
+          TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 32,
+              child: const Text(
+                "Tareas",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // Iterar sobre la lista de horas y agregar filas para cada hora
+    for (HorasModel hora in horas) {
+      horasDia.add(
         TableRow(
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(10),
-              height: 45,
-              child: const Text(
-                "Horario",
+              width: 100,
+              child: Text(
+                hora.hora12,
                 style: AppTheme.normalBoldStyle,
+                textAlign: TextAlign.end,
               ),
             ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.top,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                width: 32,
-                child: const Text(
-                  "Tareas",
-                  style: AppTheme.normalBoldStyle,
-                ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              color: Colors.yellow[200],
+              child: const Text(
+                "TEXTO, TEXTO TEXTO",
+                style: AppTheme.normalBoldStyle,
               ),
             ),
           ],
         ),
-        TableRow(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(10),
-              width: 128,
-              child: const Text(
-                "12:00 am",
-                style: AppTheme.normalBoldStyle,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              child: const Text(
-                "12:00 am 12:00 am 12:00 am 12:00 am 12:00 am 12:00 am",
-                style: AppTheme.normalBoldStyle,
-              ),
-            ),
-          ],
+      );
+    }
+
+    return Column(
+      children: [
+        Table(
+          border: TableBorder.all(),
+          columnWidths: const <int, TableColumnWidth>{
+            0: IntrinsicColumnWidth(),
+            1: FlexColumnWidth(),
+            2: FixedColumnWidth(64),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: horasDia,
         ),
       ],
     );
   }
 }
+
+// class _TableExamples extends StatelessWidget {
+//   const _TableExamples();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Table(
+//       border: TableBorder.all(),
+//       columnWidths: const <int, TableColumnWidth>{
+//         0: IntrinsicColumnWidth(),
+//         1: FlexColumnWidth(),
+//         2: FixedColumnWidth(64),
+//       },
+//       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+//       children: <TableRow>[
+//         TableRow(
+//           children: <Widget>[
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               height: 45,
+//               child: const Text(
+//                 "Horario",
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//             TableCell(
+//               verticalAlignment: TableCellVerticalAlignment.top,
+//               child: Container(
+//                 padding: const EdgeInsets.all(10),
+//                 width: 32,
+//                 child: const Text(
+//                   "Tareas",
+//                   style: AppTheme.normalBoldStyle,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         TableRow(
+//           children: <Widget>[
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               width: 128,
+//               child: const Text(
+//                 "12:00 am",
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               color: Colors.yellow,
+//               child: const Text(
+//                 "TEXTO, TEXTO TEXTO",
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }
