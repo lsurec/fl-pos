@@ -62,9 +62,15 @@ class CalendarioViewModel extends ChangeNotifier {
   Future<void> loadData(BuildContext context) async {
     fechaHoy = DateTime.now();
 
-    today = fechaHoy.day;
-    month = fechaHoy.month;
-    year = fechaHoy.year;
+    // today = fechaHoy.day;
+    // month = fechaHoy.month;
+    // year = fechaHoy.year;
+
+    today = 27;
+    month = 9;
+    year = 2023;
+
+    print("${tareaHora(10, tareaDia(today, month, year)).length}");
 
     diasDelMes = obtenerDiasDelMes(month, year);
 
@@ -77,27 +83,12 @@ class CalendarioViewModel extends ChangeNotifier {
     semanasDelMes = agregarSemanas(month, year);
     indexWeekActive = 0;
 
-    // obtenerTareasCalendario(context);
+    obtenerTareasCalendario(context);
 
     mostrarVistaMes();
 
     notifyListeners();
   }
-
-  List<String> horas = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12"
-  ];
 
   List<HorasModel> horasDelDia = Utilities.horasDelDia;
 
@@ -670,6 +661,7 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+    print(" $daySelect siguiente");
   }
 
   diaAnterior() {
@@ -700,6 +692,7 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+    print(" $daySelect regresando");
   }
 
   int obtenerUltimoDiaMes(int anio, int mes) {
@@ -768,5 +761,37 @@ class CalendarioViewModel extends ChangeNotifier {
     } else {
       return "${Utilities.nombreMes(monthSelectView).substring(0, 3)} - $yearStart";
     }
+  }
+
+  //Filtro de tareas por hora
+  List<TareaCalendarioModel> tareaHorax(
+      int hora, List<TareaCalendarioModel> tareas) {
+    return tareas.where((objeto) {
+      DateTime fechaObjeto = DateTime.parse(objeto.fechaIni);
+      print(fechaObjeto);
+      int horaObjeto = fechaObjeto.hour;
+      return horaObjeto == hora;
+    }).toList();
+  }
+
+  DateTime convertirStringADateTime(String fechaString) {
+    // Formato de la fecha
+    DateFormat formato = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+    // Convertir el string a DateTime
+    return formato.parse(fechaString);
+  }
+
+  // Filtro de tareas por hora
+  List<TareaCalendarioModel> tareaHora(
+    int hora,
+    List<TareaCalendarioModel> tareas,
+  ) {
+    // Filtrar la lista de tareas
+    return tareas.where((objeto) {
+      DateTime fechaObjeto = convertirStringADateTime(objeto.fechaIni);
+      int horaObjeto = fechaObjeto.hour;
+      return horaObjeto == hora;
+    }).toList();
   }
 }

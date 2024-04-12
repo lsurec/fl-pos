@@ -23,7 +23,6 @@ class _CalendarioViewState extends State<CalendarioView> {
 
   loadData(BuildContext context) async {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-    vm.fechaHoy = DateTime.now();
     vm.loadData(context);
   }
 
@@ -456,56 +455,6 @@ class _VistaMes extends StatelessWidget {
   }
 }
 
-class _Horas extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-    final List<String> hora = vm.horas;
-
-    return Table(
-      border: const TableBorder(
-        top: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde arriba
-        left: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde izquierdo
-        right: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde derecho
-        bottom: BorderSide.none, // Sin borde abajo
-        horizontalInside: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde horizontal dentro de la tabla
-        verticalInside: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde vertical dentro de la tabla
-      ),
-      children: List.generate(
-        12,
-        (index) => TableRow(
-          children: List.generate(
-            1,
-            (index2) => TableCell(
-              child: Container(
-                height: 25,
-                width: 50,
-                alignment: Alignment.topCenter,
-                // Accediendo a la inicial del día correspondiente
-                child: Text(
-                  hora[index],
-                  style: AppTheme.normalBoldStyle,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _TareasDelDia extends StatelessWidget {
   final int dia;
 
@@ -576,9 +525,43 @@ class _HourTableWidget extends StatelessWidget {
                     child: Column(
                       children: [
                         Expanded(
-                          child: Text(
-                            'Tareas de esta hora ${hour.hora12} Tareas de esta hora Tareas,  de esta hora Tareas de esta horaTareas de esta hora',
-                            maxLines: 7,
+                          child: Column(
+                            children: [
+                              ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: vm
+                                    .tareaHora(
+                                      hour.hora24,
+                                      vm.tareaDia(
+                                        vm.daySelect,
+                                        vm.monthSelectView,
+                                        vm.yearSelect,
+                                      ),
+                                    )
+                                    .length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final List<TareaCalendarioModel> tareasDia =
+                                      vm.tareaHora(
+                                    hour.hora24,
+                                    vm.tareaDia(
+                                      vm.daySelect,
+                                      vm.resolveMonth(index),
+                                      vm.resolveYear(index),
+                                    ),
+                                  );
+                                  if (tareasDia.isNotEmpty) {
+                                    return Text(
+                                        tareasDia[index].tarea.toString());
+                                  }
+                                  return null;
+                                },
+                              ),
+                              // Text(
+                              //   'Tareas de esta hora ${hour.hora12} Tareas de esta hora Tareas,  de esta hora Tareas de esta horaTareas de esta hora',
+                              //   maxLines: 7,
+                              // ),
+                            ],
                           ),
                         )
                       ],
@@ -698,7 +681,6 @@ class _TableExample extends StatelessWidget {
         ],
       ),
     );
-
     // Iterar sobre la lista de horas y agregar filas para cada hora
     for (HorasModel hora in horas) {
       horasDia.add(
@@ -715,10 +697,49 @@ class _TableExample extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(10),
-              color: Colors.yellow[200],
-              child: const Text(
-                "TEXTO, TEXTO TEXTO",
-                style: AppTheme.normalBoldStyle,
+              child: Column(
+                children: [
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: vm
+                        .tareaHora(
+                          hora.hora24,
+                          vm.tareaDia(
+                            vm.daySelect,
+                            vm.monthSelectView,
+                            vm.yearSelect,
+                          ),
+                        )
+                        .length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // Obtener la lista de tareas para la hora específica
+                      List<TareaCalendarioModel> tareasHora = vm.tareaHora(
+                        hora.hora24,
+                        vm.tareaDia(
+                          vm.daySelect,
+                          vm.monthSelectView,
+                          vm.yearSelect,
+                        ),
+                      );
+
+                      // Si hay tareas para esta hora
+                      if (tareasHora.isNotEmpty) {
+                        print(" tareas ${tareasHora.length}");
+                        // Retornar un ListTile para cada tarea
+                        return ListTile(
+                          title: Text("${tareasHora[index].tarea}"),
+                          // Puedes agregar más información de la tarea aquí
+                        );
+                      } else {
+                        print(" tareas ${tareasHora.length}");
+
+                        // Si no hay tareas para esta hora, puedes retornar un widget vacío o null
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
           ],
