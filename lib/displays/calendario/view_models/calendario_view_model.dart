@@ -301,8 +301,8 @@ class CalendarioViewModel extends ChangeNotifier {
     isLoading = true; //cargar pantalla
 
     //consumo de api
-    final ApiResModel res = await tareaService.getTareaCalendario("desa026",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDAxIiwibmJmIjoxNzEwODg2NDMwLCJleHAiOjE3NDE5OTA0MzAsImlhdCI6MTcxMDg4NjQzMH0.dpsc7-kj0Lsxm9QAPVJLTM7IGdjvrG6NOBYtnIgprwM");
+    final ApiResModel res = await tareaService.getTareaCalendario("desa029",
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDI5IiwibmJmIjoxNzEzMjA0OTY0LCJleHAiOjE3NDQzMDg5NjQsImlhdCI6MTcxMzIwNDk2NH0.N0-ioXGBJ485Waco_0mPwWXP-A_JZk0Uu5Un77yhJJE");
 
     //si el consumo salió mal
     if (!res.succes) {
@@ -636,8 +636,6 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   diaSiguiente() {
-    print("${tareasHoraActual.length} tareas horas");
-    tareasHoraActual.clear(); //Limpiar lista
     //ontener ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
     // cambiar el mes y anio cuando sea el ultimo dia del mes 12
@@ -673,7 +671,6 @@ class CalendarioViewModel extends ChangeNotifier {
       }
     }
     print("$daySelect $monthSelectView $yearSelect siguiente");
-    // cargar(daySelect, monthSelectView, yearSelect);
   }
 
   diaAnterior() {
@@ -906,8 +903,18 @@ class CalendarioViewModel extends ChangeNotifier {
     print(" $daySelect $monthSelectView $yearSelect regresando");
   }
 
-  void limpiarTareas() {
-    tareasDia.clear();
-    notifyListeners();
+// Función para convertir un color hexadecimal en formato RGB
+  List<int> hexToRgb(String hexColor) {
+    // Elimina el carácter '#'
+    if (hexColor[0] == '#') {
+      hexColor = hexColor.substring(1);
+    }
+
+    // Divide el color en componentes r, g y b
+    int r = int.parse(hexColor.substring(0, 2), radix: 16);
+    int g = int.parse(hexColor.substring(2, 4), radix: 16);
+    int b = int.parse(hexColor.substring(4, 6), radix: 16);
+
+    return [r, g, b];
   }
 }

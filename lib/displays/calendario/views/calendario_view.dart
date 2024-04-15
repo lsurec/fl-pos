@@ -137,6 +137,8 @@ class _CalendarioViewState extends State<CalendarioView> {
 
                       const SizedBox(height: 10),
                       // const HorasTareaDia(),
+                      //si lleva const no cambia los dias
+                      // ignore: prefer_const_constructors
                       TablaTareasHora(),
                       // _HourTableWidget(),
                       // _NombreDias(),
@@ -504,10 +506,12 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(10),
-              width: 128,
-              child: Text(
-                horasDia[indexHora].hora12,
-                style: AppTheme.normalBoldStyle,
+              width: 100,
+              child: Center(
+                child: Text(
+                  horasDia[indexHora].hora12,
+                  style: AppTheme.normalBoldStyle,
+                ),
               ),
             ),
             Container(
@@ -538,10 +542,17 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
                         horasDia[indexHora].hora24,
                         tareasDia,
                       );
-                      if (tareasHoraDia.isNotEmpty) {
-                        return Text(tareasHoraDia[index].tarea.toString());
-                      }
-                      return null;
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        color: Colors.blueAccent,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            tareasHoraDia[index].tarea.toString(),
+                            style: AppTheme.normalBoldStyle,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -553,7 +564,26 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
     }
 
     return Table(
-      border: TableBorder.all(),
+      border: const TableBorder(
+        top: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde arriba
+        left: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde izquierdo
+        right: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde derecho
+        bottom: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Bo, // Sin borde abajo
+        horizontalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde horizontal dentro de la tabla
+        verticalInside: BorderSide(
+          color: Color.fromRGBO(0, 0, 0, 0.12),
+        ), // Borde vertical dentro de la tabla
+      ),
       columnWidths: const <int, TableColumnWidth>{
         0: IntrinsicColumnWidth(),
         1: FlexColumnWidth(),
