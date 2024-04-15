@@ -1022,7 +1022,6 @@ class TablaTareasHora extends StatefulWidget {
 }
 
 class _TablaTareasHoraState extends State<TablaTareasHora> {
-
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
@@ -1057,7 +1056,7 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
     );
 
     // Iterar sobre las horas del día y agregar filas correspondientes
-    for (int i = 0; i < horasDia.length; i++) {
+    for (int indexHora = 0; indexHora < horasDia.length; indexHora++) {
       filasTabla.add(
         TableRow(
           children: <Widget>[
@@ -1065,16 +1064,42 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
               padding: const EdgeInsets.all(10),
               width: 128,
               child: Text(
-                horasDia[i].hora12,
+                horasDia[indexHora].hora12,
                 style: AppTheme.normalBoldStyle,
               ),
             ),
             Container(
               padding: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              child: Text(
-                "Tareas que corresponden a esta hora ${horasDia[i].hora12} y día ${vm.daySelect}",
-                style: AppTheme.normalBoldStyle,
+              child: Column(
+                children: [
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: vm
+                        .tareaDia(
+                          vm.daySelect,
+                          vm.monthSelectView,
+                          vm.yearSelect,
+                        )
+                        .length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final List<TareaCalendarioModel> tareasDia = vm.tareaDia(
+                        vm.daySelect,
+                        vm.monthSelectView,
+                        vm.yearSelect,
+                      );
+                      final List<TareaCalendarioModel> tareasHoraDia =
+                          vm.tareaHora(
+                        horasDia[indexHora].hora24,
+                        tareasDia,
+                      );
+                      if (tareasHoraDia.isNotEmpty) {
+                        return Text(tareasHoraDia[index].tarea.toString());
+                      }
+                      return null;
+                    },
+                  ),
+                ],
               ),
             ),
           ],
