@@ -62,7 +62,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                           Row(
                             children: [
                               TextButton(
-                                onPressed: () => vm.diaAnterior(),
+                                onPressed: () => vm.diaAnteriorTareas(),
                                 child: const Text(
                                   "Dia Anterior",
                                   style: AppTheme.normalBoldStyle,
@@ -80,63 +80,64 @@ class _CalendarioViewState extends State<CalendarioView> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          Text(
-                            "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
-                            style: AppTheme.normalBoldStyle,
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: () => vm.mesAnterior(),
-                                child: const Text(
-                                  "Mes Anterior",
-                                  style: AppTheme.normalBoldStyle,
-                                ),
-                              ),
-                              const Spacer(),
-                              TextButton(
-                                onPressed: () => vm.mesSiguiente(),
-                                child: const Text(
-                                  "Mes Siguiente",
-                                  style: AppTheme.normalBoldStyle,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            vm.generateNameWeeck(),
-                            style: AppTheme.normalBoldStyle,
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: () => vm.semanaAnterior(),
-                                child: const Text(
-                                  "Semana Anterior",
-                                  style: AppTheme.normalBoldStyle,
-                                ),
-                              ),
-                              const Spacer(),
-                              TextButton(
-                                onPressed: () => vm.semanaSiguiente(),
-                                child: const Text(
-                                  "Semana Siguiente",
-                                  style: AppTheme.normalBoldStyle,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   children: [
+                      //     Text(
+                      //       "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
+                      //       style: AppTheme.normalBoldStyle,
+                      //     ),
+                      //     Row(
+                      //       children: [
+                      //         TextButton(
+                      //           onPressed: () => vm.mesAnterior(),
+                      //           child: const Text(
+                      //             "Mes Anterior",
+                      //             style: AppTheme.normalBoldStyle,
+                      //           ),
+                      //         ),
+                      //         const Spacer(),
+                      //         TextButton(
+                      //           onPressed: () => vm.mesSiguiente(),
+                      //           child: const Text(
+                      //             "Mes Siguiente",
+                      //             style: AppTheme.normalBoldStyle,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
+                      // Column(
+                      //   children: [
+                      //     Text(
+                      //       vm.generateNameWeeck(),
+                      //       style: AppTheme.normalBoldStyle,
+                      //     ),
+                      //     Row(
+                      //       children: [
+                      //         TextButton(
+                      //           onPressed: () => vm.semanaAnterior(),
+                      //           child: const Text(
+                      //             "Semana Anterior",
+                      //             style: AppTheme.normalBoldStyle,
+                      //           ),
+                      //         ),
+                      //         const Spacer(),
+                      //         TextButton(
+                      //           onPressed: () => vm.semanaSiguiente(),
+                      //           child: const Text(
+                      //             "Semana Siguiente",
+                      //             style: AppTheme.normalBoldStyle,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
 
                       const SizedBox(height: 10),
-                      const _TableExample(),
+                      // const HorasTareaDia(),
+                      const TablaTareasHora(),
                       // _HourTableWidget(),
                       // _NombreDias(),
                       // _Semanasss()
@@ -748,67 +749,69 @@ class _HourTableWidgetss extends StatelessWidget {
 //   }
 // }
 
-// class _TableExamples extends StatelessWidget {
-//   const _TableExamples();
+class TablaTareasHora extends StatelessWidget {
+  const TablaTareasHora({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Table(
-//       border: TableBorder.all(),
-//       columnWidths: const <int, TableColumnWidth>{
-//         0: IntrinsicColumnWidth(),
-//         1: FlexColumnWidth(),
-//         2: FixedColumnWidth(64),
-//       },
-//       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-//       children: <TableRow>[
-//         TableRow(
-//           children: <Widget>[
-//             Container(
-//               padding: const EdgeInsets.all(10),
-//               height: 45,
-//               child: const Text(
-//                 "Horario",
-//                 style: AppTheme.normalBoldStyle,
-//               ),
-//             ),
-//             TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.top,
-//               child: Container(
-//                 padding: const EdgeInsets.all(10),
-//                 width: 32,
-//                 child: const Text(
-//                   "Tareas",
-//                   style: AppTheme.normalBoldStyle,
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//         TableRow(
-//           children: <Widget>[
-//             Container(
-//               padding: const EdgeInsets.all(10),
-//               width: 128,
-//               child: const Text(
-//                 "12:00 am",
-//                 style: AppTheme.normalBoldStyle,
-//               ),
-//             ),
-//             Container(
-//               padding: const EdgeInsets.all(10),
-//               color: Colors.yellow,
-//               child: const Text(
-//                 "TEXTO, TEXTO TEXTO",
-//                 style: AppTheme.normalBoldStyle,
-//               ),
-//             ),
-//           ],
-//         ),
-//       ],
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    List<HorasModel> horasDia = Utilities.horasDelDia;
+    return Table(
+      border: TableBorder.all(),
+      columnWidths: const <int, TableColumnWidth>{
+        0: IntrinsicColumnWidth(),
+        1: FlexColumnWidth(),
+        2: FixedColumnWidth(64),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: <TableRow>[
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              height: 45,
+              child: const Text(
+                "Horario",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+            TableCell(
+              verticalAlignment: TableCellVerticalAlignment.top,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                width: 32,
+                child: const Text(
+                  "Tareas",
+                  style: AppTheme.normalBoldStyle,
+                ),
+              ),
+            ),
+          ],
+        ),
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: 128,
+              child: Text(
+                horasDia[0].hora12,
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              color: Colors.yellow,
+              child: Text(
+                "Tareas que corresponden a esta hora ${horasDia[0].hora12} y dia ${vm.daySelect}",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
 
 class _TableExample extends StatelessWidget {
   const _TableExample();
@@ -875,6 +878,100 @@ class _TableExample extends StatelessWidget {
           ),
         );
       }
+
+      horasDia.add(
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: 100,
+              child: Text(
+                hora.hora12,
+                style: AppTheme.normalBoldStyle,
+                textAlign: TextAlign.end,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: listaTareasWidgets,
+                // Agregar la lista de tareas como hijos de la columna
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Table(
+          border: TableBorder.all(),
+          columnWidths: const <int, TableColumnWidth>{
+            0: IntrinsicColumnWidth(),
+            1: FlexColumnWidth(),
+            2: FixedColumnWidth(64),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: horasDia,
+        ),
+      ],
+    );
+  }
+}
+
+class HorasTareaDia extends StatelessWidget {
+  const HorasTareaDia({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    List<HorasModel> horas = vm.horasDelDia;
+
+    // Lista de TableRow que contendrá las filas de la tabla
+    List<TableRow> horasDia = [];
+
+    // Agregar la fila de encabezado
+    horasDia.add(
+      TableRow(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 45,
+            child: const Text(
+              "Horario",
+              style: AppTheme.normalBoldStyle,
+            ),
+          ),
+          TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 32,
+              child: const Text(
+                "Tareas",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // Iterar sobre la lista de horas y agregar filas para cada hora
+    for (HorasModel hora in horas) {
+      vm.tareasHoraActual = vm.tareaHora(
+        hora.hora24,
+        vm.tareaDia(
+          vm.daySelect,
+          vm.monthSelectView,
+          vm.yearSelect,
+        ),
+      );
+
+      // Crear una lista de widgets para las tareas de esta hora
+      List<Widget> listaTareasWidgets = [];
 
       horasDia.add(
         TableRow(
