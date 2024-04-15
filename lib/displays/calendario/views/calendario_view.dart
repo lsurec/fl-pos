@@ -643,126 +643,110 @@ class _HourTableWidgetss extends StatelessWidget {
   }
 }
 
-class _TableExample extends StatelessWidget {
-  const _TableExample();
+// class _TableExample extends StatelessWidget {
+//   const _TableExample();
 
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
 
-    List<HorasModel> horas = vm.horasDelDia;
+//     List<HorasModel> horas = vm.horasDelDia;
 
-    // Lista de TableRow que contendrá las filas de la tabla
-    List<TableRow> horasDia = [];
+//     // Lista de TableRow que contendrá las filas de la tabla
+//     List<TableRow> horasDia = [];
 
-    // Agregar la fila de encabezado
-    horasDia.add(
-      TableRow(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(10),
-            height: 45,
-            child: const Text(
-              "Horario",
-              style: AppTheme.normalBoldStyle,
-            ),
-          ),
-          TableCell(
-            verticalAlignment: TableCellVerticalAlignment.top,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              width: 32,
-              child: const Text(
-                "Tareas",
-                style: AppTheme.normalBoldStyle,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    // Iterar sobre la lista de horas y agregar filas para cada hora
-    for (HorasModel hora in horas) {
-      horasDia.add(
-        TableRow(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(10),
-              width: 100,
-              child: Text(
-                hora.hora12,
-                style: AppTheme.normalBoldStyle,
-                textAlign: TextAlign.end,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: vm
-                        .tareaHora(
-                          hora.hora24,
-                          vm.tareaDia(
-                            vm.daySelect,
-                            vm.monthSelectView,
-                            vm.yearSelect,
-                          ),
-                        )
-                        .length,
-                    itemBuilder: (BuildContext context, int index) {
-                      // Obtener la lista de tareas para la hora específica
-                      List<TareaCalendarioModel> tareasHora = vm.tareaHora(
-                        hora.hora24,
-                        vm.tareaDia(
-                          vm.daySelect,
-                          vm.monthSelectView,
-                          vm.yearSelect,
-                        ),
-                      );
+//     // Agregar la fila de encabezado
+//     horasDia.add(
+//       TableRow(
+//         children: <Widget>[
+//           Container(
+//             padding: const EdgeInsets.all(10),
+//             height: 45,
+//             child: const Text(
+//               "Horario",
+//               style: AppTheme.normalBoldStyle,
+//             ),
+//           ),
+//           TableCell(
+//             verticalAlignment: TableCellVerticalAlignment.top,
+//             child: Container(
+//               padding: const EdgeInsets.all(10),
+//               width: 32,
+//               child: const Text(
+//                 "Tareas",
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//     // Iterar sobre la lista de horas y agregar filas para cada hora
+//     for (HorasModel hora in horas) {
+//       List<TareaCalendarioModel> tareasHora = [];
 
-                      // Si hay tareas para esta hora
-                      if (tareasHora.isNotEmpty) {
-                        print(" tareas ${tareasHora.length}");
-                        // Retornar un ListTile para cada tarea
-                        return ListTile(
-                          title: Text("${tareasHora[index].tarea}"),
-                          // Puedes agregar más información de la tarea aquí
-                        );
-                      } else {
-                        print(" tareas ${tareasHora.length}");
+//       tareasHora = vm.tareaHora(
+//         hora.hora24,
+//         vm.tareaDia(
+//           vm.daySelect,
+//           vm.monthSelectView,
+//           vm.yearSelect,
+//         ),
+//       );
 
-                        // Si no hay tareas para esta hora, puedes retornar un widget vacío o null
-                        return const SizedBox.shrink();
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+//       // Crear una lista de widgets para las tareas de esta hora
+//       List<Widget> listaTareasWidgets = [];
 
-    return Column(
-      children: [
-        Table(
-          border: TableBorder.all(),
-          columnWidths: const <int, TableColumnWidth>{
-            0: IntrinsicColumnWidth(),
-            1: FlexColumnWidth(),
-            2: FixedColumnWidth(64),
-          },
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: horasDia,
-        ),
-      ],
-    );
-  }
-}
+//       // Iterar sobre las tareas de esta hora y agregarlas a la lista de widgets
+//       for (TareaCalendarioModel tarea in tareasHora) {
+//         listaTareasWidgets.add(
+//           ListTile(
+//             title: Text("${tarea.tarea}"),
+//             // Puedes agregar más información de la tarea aquí
+//           ),
+//         );
+//       }
+
+//       horasDia.add(
+//         TableRow(
+//           children: <Widget>[
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               width: 100,
+//               child: Text(
+//                 hora.hora12,
+//                 style: AppTheme.normalBoldStyle,
+//                 textAlign: TextAlign.end,
+//               ),
+//             ),
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               child: Column(
+//                 children: listaTareasWidgets,
+//                 // Agregar la lista de tareas como hijos de la columna
+//               ),
+//             ),
+//           ],
+//         ),
+//       );
+//     }
+
+//     return Column(
+//       children: [
+//         Table(
+//           border: TableBorder.all(),
+//           columnWidths: const <int, TableColumnWidth>{
+//             0: IntrinsicColumnWidth(),
+//             1: FlexColumnWidth(),
+//             2: FixedColumnWidth(64),
+//           },
+//           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+//           children: horasDia,
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 // class _TableExamples extends StatelessWidget {
 //   const _TableExamples();
@@ -825,3 +809,110 @@ class _TableExample extends StatelessWidget {
 //     );
 //   }
 // }
+
+class _TableExample extends StatelessWidget {
+  const _TableExample();
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    List<HorasModel> horas = vm.horasDelDia;
+
+    // Limpiar la lista de tareas por hora antes de cargar nuevas tareas
+    vm.tareasHoraActual.clear();
+
+    // Lista de TableRow que contendrá las filas de la tabla
+    List<TableRow> horasDia = [];
+
+    // Agregar la fila de encabezado
+    horasDia.add(
+      TableRow(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 45,
+            child: const Text(
+              "Horario",
+              style: AppTheme.normalBoldStyle,
+            ),
+          ),
+          TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 32,
+              child: const Text(
+                "Tareas",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // Iterar sobre la lista de horas y agregar filas para cada hora
+    for (HorasModel hora in horas) {
+      vm.tareasHoraActual = vm.tareaHora(
+        hora.hora24,
+        vm.tareaDia(
+          vm.daySelect,
+          vm.monthSelectView,
+          vm.yearSelect,
+        ),
+      );
+
+      // Crear una lista de widgets para las tareas de esta hora
+      List<Widget> listaTareasWidgets = [];
+
+      // Iterar sobre las tareas de esta hora y agregarlas a la lista de widgets
+      for (TareaCalendarioModel tarea in vm.tareasHoraActual) {
+        listaTareasWidgets.add(
+          ListTile(
+            title: Text("${tarea.tarea}"),
+            // Puedes agregar más información de la tarea aquí
+          ),
+        );
+      }
+
+      horasDia.add(
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: 100,
+              child: Text(
+                hora.hora12,
+                style: AppTheme.normalBoldStyle,
+                textAlign: TextAlign.end,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: listaTareasWidgets,
+                // Agregar la lista de tareas como hijos de la columna
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Table(
+          border: TableBorder.all(),
+          columnWidths: const <int, TableColumnWidth>{
+            0: IntrinsicColumnWidth(),
+            1: FlexColumnWidth(),
+            2: FixedColumnWidth(64),
+          },
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: horasDia,
+        ),
+      ],
+    );
+  }
+}

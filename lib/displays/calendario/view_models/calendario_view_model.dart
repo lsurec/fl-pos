@@ -85,7 +85,7 @@ class CalendarioViewModel extends ChangeNotifier {
     semanasDelMes = agregarSemanas(month, year);
     indexWeekActive = 0;
 
-    cargar(27, 9, 2023);
+    //cargar(27, 9, 2023);
     obtenerTareasCalendario(context);
 
     mostrarVistaMes();
@@ -313,7 +313,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //agregar tareas encontradas a la lista de tareas
     tareas.addAll(res.message);
 
-    // print("tareas asigandas al usuario ${tareas.length}");
+    print("tareas asigandas al usuario ${tareas.length}");
 
     isLoading = false; //detener carga
   }
@@ -672,12 +672,12 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-    print(" $daySelect siguiente");
+    print("$daySelect $monthSelectView $yearSelect siguiente");
     // cargar(daySelect, monthSelectView, yearSelect);
   }
 
   diaAnterior() {
-    tareasHoraActual.clear(); //Limpiar lista
+    tareasDia.clear();
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
 
@@ -690,7 +690,6 @@ class CalendarioViewModel extends ChangeNotifier {
       mesCompleto = armarMes(yearSelect, monthSelectView);
       //cambiar el indice de las semanas del mes correspondiente
       semanasDelMes = addWeeks(mesCompleto);
-      // cargar(daySelect, monthSelectView, yearSelect);
 
       notifyListeners();
     } else {
@@ -700,18 +699,24 @@ class CalendarioViewModel extends ChangeNotifier {
         mesCompleto = armarMes(yearSelect, monthSelectView);
         //cambiar el indeice de las semanas del mes que corresponda
         semanasDelMes = addWeeks(mesCompleto);
-        // cargar(daySelect, monthSelectView, yearSelect);
-
         notifyListeners();
       } else {
         //restar un dia al dia seleccionado
         daySelect--;
-        // cargar(daySelect, monthSelectView, yearSelect);
         notifyListeners();
       }
     }
-    print(" $daySelect regresando");
-    // cargar(daySelect, monthSelectView, yearSelect);
+
+    // Carga las nuevas tareas del día seleccionado
+    tareasDia = tareaDia(
+      daySelect,
+      monthSelectView,
+      yearSelect,
+    );
+
+    // Notifica a los listeners que los datos han cambiado
+    notifyListeners();
+    print(" $daySelect $monthSelectView $yearSelect regresando");
   }
 
   int obtenerUltimoDiaMes(int anio, int mes) {
@@ -842,25 +847,78 @@ class CalendarioViewModel extends ChangeNotifier {
   //   print(tareasHoraActual.length);
   // }
 
-  cargar(int day, int mont, int year) {
+  List<TareaCalendarioModel> cargar(int day, int mont, int year) {
+    List<TareaCalendarioModel> tareasHora = [];
     // Obtener las tareas del día
     List<TareaCalendarioModel> tareasDia = [];
+    // Limpiar lista de tareas de la hora actual
     tareasDia.clear();
+    tareasHora.clear();
 
     tareasDia = tareaDia(day, mont, year);
-
-    // Limpiar lista de tareas de la hora actual
-    tareasHoraActual.clear();
 
     // Filtrar las tareas del día por hora y agregarlas a la lista de tareas de la hora actual
     for (var tarea in tareasDia) {
       int hora = obtenerHora(tarea.fechaIni);
       if (Utilities.horasDelDia
           .any((horaDelDia) => horaDelDia.hora24 == hora)) {
-        tareasHoraActual.add(tarea);
+        tareasHora.add(tarea);
+        notifyListeners();
+      }
+    }
+    notifyListeners();
+
+    print(" tareas hora del dia ${tareasHora.length}");
+    return tareasHora;
+  }
+
+  //dia anterior
+
+  List<TareaCalendarioModel> tareasDia = [];
+
+  diaAnteriorTareas() {
+    tareasDia.clear(); //Limpiar lista
+    //buscar el ultimo dia del mes
+    int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
+
+    //cambiar mes y anio si es necesario en el cambio de dia
+    if (monthSelectView == 1 && daySelect == 1) {
+      monthSelectView = 12;
+      yearSelect--;
+      daySelect = ultimodia;
+
+      mesCompleto = armarMes(yearSelect, monthSelectView);
+      //cambiar el indice de las semanas del mes correspondiente
+      semanasDelMes = addWeeks(mesCompleto);
+      // cargar(daySelect, monthSelectView, yearSelect);
+
+      notifyListeners();
+    } else {
+      if (daySelect == 1) {
+        daySelect = ultimodia;
+        monthSelectView--;
+        mesCompleto = armarMes(yearSelect, monthSelectView);
+        //cambiar el indeice de las semanas del mes que corresponda
+        semanasDelMes = addWeeks(mesCompleto);
+        // cargar(daySelect, monthSelectView, yearSelect);
+
+        notifyListeners();
+      } else {
+        //restar un dia al dia seleccionado
+        daySelect--;
+        // cargar(daySelect, monthSelectView, yearSelect);
+        notifyListeners();
       }
     }
 
-    print(tareasHoraActual.length);
+    tareasDia.addAll(cargar(daySelect, monthSelectView, yearSelect));
+
+    print(" $daySelect $monthSelectView $yearSelect regresando");
   }
+
+  void limpiarTareas() {
+    tareasDia.clear();
+    notifyListeners();
+  }
+  
 }
