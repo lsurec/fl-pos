@@ -3,12 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
 
 class CalendarioViewModel extends ChangeNotifier {
   //cargar pantalla
@@ -919,7 +923,124 @@ class CalendarioViewModel extends ChangeNotifier {
     return [r, g, b];
   }
 
-  detallesTarea(BuildContext context) {
+  //Consumo de servicios para navegar a los detalles de la tarea
+  detalleTarea(
+    BuildContext context,
+    TareaCalendarioModel tarea,
+  ) async {
+    isLoading = true; //cargar pantalla
+    //view model de Detalle
+    final vmDetalle = Provider.of<DetalleTareaCalendarioViewModel>(
+      context,
+      listen: false,
+    );
+
+    vmDetalle.tarea = tarea; //guardar la tarea
+    final ApiResModel succesResponsables = await vmDetalle.obtenerResponsable(
+      context,
+      tarea.tarea,
+    ); //obtener responsable activo de la tarea
+
+    if (!succesResponsables.succes) {
+      isLoading = false;
+      return;
+    }
+
+    final ApiResModel succesInvitados = await vmDetalle.obtenerInvitados(
+      context,
+      tarea.tarea,
+    ); //obtener invitados de la tarea
+
+    if (!succesInvitados.succes) {
+      isLoading = false;
+      return;
+    }
+
+    //viwe model de Crear tarea
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    final bool succesEstados = await vmCrear.obtenerEstados(
+      context,
+    ); //obtener estados de tarea
+
+    if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
+    final bool succesPrioridades = await vmCrear.obtenerPrioridades(
+      context,
+    ); //obtener prioridades de la tarea
+
+    if (!succesPrioridades) {
+      isLoading = false;
+      return;
+    }
+
+    //Mostrar estado actual de la tarea en ls lista de estados
+    for (var i = 0; i < vmCrear.estados.length; i++) {
+      EstadoModel estado = vmCrear.estados[i];
+      if (estado.estado == tarea.estado) {
+        vmDetalle.estadoAtual = estado;
+        break;
+      }
+    }
+    //Mostrar prioridad actual de la tarea en ls lista de prioridades
+    for (var i = 0; i < vmCrear.prioridades.length; i++) {
+      PrioridadModel prioridad = vmCrear.prioridades[i];
+      if (prioridad.nivelPrioridad == tarea.nivelPrioridad) {
+        vmDetalle.prioridadActual = prioridad;
+        break;
+      }
+    }
+
+    //validar resppuesta de los comentarios
+    final bool succesComentarios = await armarComentario(context);
+
+    //sino se realizo el consumo correctamente retornar
+    if (!succesComentarios) {
+      isLoading = false;
+      return;
+    }
+
+    //Navegar a detalles
     Navigator.pushNamed(context, AppRoutes.detailsTaskCalendar);
+    isLoading = false; //detener carga
+  }
+
+  //Armar comentarios con objetos adjuntos
+  Future<bool> armarComentario(BuildContext context) async {
+    final vmComentario =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+    vmComentario.comentarioDetalle.clear(); //limpiar lista de detalleComentario
+
+    //View model de Detalle tarea para obtener el id de la tarea
+    final vmTarea = Provider.of<DetalleTareaCalendarioViewModel>(context, listen: false);
+
+    //Obtener comentarios de la tarea
+    ApiResModel comentarios =
+        await vmTarea.obtenerComentario(context, vmTarea.tarea!.tarea);
+
+    //Sino encontró comentarios retornar false
+    if (!comentarios.succes) return false;
+
+    //Recorrer lista de comentarios para obtener los objetos de los comentarios
+    for (var i = 0; i < comentarios.message.length; i++) {
+      final ComentarioModel coment = comentarios.message[i];
+
+      //Obtener los objetos del comentario
+      ApiResModel objeto = await vmTarea.obtenerObjetoComentario(
+        context,
+        vmTarea.tarea!.tarea,
+        coment.tareaComentario,
+      );
+
+      //comentario completo (comentario y objetos)
+      vmComentario.comentarioDetalle.add(ComentarioDetalleModel(
+        comentario: comentarios.message[i],
+        objetos: objeto.message,
+      ));
+    }
+
+    //si todo está bien retornar true
+    return true;
   }
 }

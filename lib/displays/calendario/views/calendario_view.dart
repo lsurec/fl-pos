@@ -558,7 +558,7 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
                               "ver detalles tarea ${tarea.tarea}",
                             );
 
-                            vm.detallesTarea(context);
+                            vm.detalleTarea(context, tarea);
                           },
                           child: ListTile(
                             title: Text(
