@@ -562,7 +562,7 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
                           },
                           child: ListTile(
                             title: Text(
-                              tarea.texto,
+                              tarea.texto.substring(7),
                               style: AppTheme.normalBoldStyle,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
