@@ -4,7 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/models/models.d
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
-import 'package:flutter_post_printer_example/widgets/load_widget.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class CalendarioView extends StatefulWidget {
@@ -532,24 +532,41 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
                         )
                         .length,
                     itemBuilder: (BuildContext context, int index) {
+                      //Lista de Tareas del dia
                       final List<TareaCalendarioModel> tareasDia = vm.tareaDia(
                         vm.daySelect,
                         vm.monthSelectView,
                         vm.yearSelect,
                       );
+                      //Lista de Tareas por hora
                       final List<TareaCalendarioModel> tareasHoraDia =
                           vm.tareaHora(
                         horasDia[indexHora].hora24,
                         tareasDia,
                       );
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        color: Colors.blueAccent,
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            tareasHoraDia[index].tarea.toString(),
-                            style: AppTheme.normalBoldStyle,
+                      //Tarea completa
+                      final TareaCalendarioModel tarea = tareasHoraDia[index];
+                      return CardWidget(
+                        margin: const EdgeInsets.only(bottom: 5),
+                        elevation: 0.3,
+                        borderWidth: 1.5,
+                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        raidus: 10,
+                        child: GestureDetector(
+                          onTap: () {
+                            print(
+                              "ver detalles tarea ${tarea.tarea}",
+                            );
+
+                            vm.detallesTarea(context);
+                          },
+                          child: ListTile(
+                            title: Text(
+                              tarea.texto,
+                              style: AppTheme.normalBoldStyle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       );

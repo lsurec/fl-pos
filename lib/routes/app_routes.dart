@@ -36,13 +36,14 @@ class AppRoutes {
   static const pendingDocs = 'pendingDocs';
   static const convertDocs = 'convertDocs';
   static const detailsDestinationDoc = 'detailsDestinationDoc';
-  static const detailsTask = 'detalleTarea';
+  static const detailsTask = 'detailsTask';
   static const viewComments = 'viewComments';
   static const createTask = 'createTask';
   static const selectReferenceId = 'selectReferenceId';
   static const selectResponsibleUser = 'selectResponsibleUser';
   static const tareas = 'Tareas';
   static const calendario = 'Calenadario Tareas';
+  static const detailsTaskCalendar = 'detailsTaskCalendar';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -84,6 +85,8 @@ class AppRoutes {
     selectReferenceId: (BuildContext context) => const IdReferenciaView(),
     selectResponsibleUser: (BuildContext context) => const UsuariosView(),
     calendario: (BuildContext context) => const CalendarioView(),
+    detailsTaskCalendar: (BuildContext context) => const DetalleTareaCalendariaView(),
+
   };
 
   //en caso de ruta incorrecta

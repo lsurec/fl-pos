@@ -65,6 +65,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UsuariosViewModel()),
         ChangeNotifierProvider(create: (_) => CalendarioViewModel()),
         ChangeNotifierProvider(create: (_) => Calendario2ViewModel()),
+        ChangeNotifierProvider(create: (_) => DetalleTareaCalendarioViewModel()),
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
       ],

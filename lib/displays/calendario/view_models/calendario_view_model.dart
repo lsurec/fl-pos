@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:intl/intl.dart';
@@ -916,5 +917,9 @@ class CalendarioViewModel extends ChangeNotifier {
     int b = int.parse(hexColor.substring(4, 6), radix: 16);
 
     return [r, g, b];
+  }
+
+  detallesTarea(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.detailsTaskCalendar);
   }
 }
