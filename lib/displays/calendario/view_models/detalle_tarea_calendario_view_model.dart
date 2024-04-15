@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +95,33 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
-  comentariosTarea(BuildContext context) {}
+  //Cargar comentarios
+  comentariosTarea(BuildContext context) async {
+    isLoading = true; //cargar pantalla
+    //View model de tareas
+    final vmTarea = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    //validar resppuesta de los comentarios
+    final bool succesComentarios = await vmTarea.armarComentario(context);
+
+    //sino se realizo el consumo correctamente retornar
+    if (!succesComentarios) {
+      isLoading = false;
+      return;
+    }
+
+    //View model de tareas
+    final vmComentarios =
+        Provider.of<ComentariosViewModel>(context, listen: false);
+    //limpiar lista de archivos seleccionados
+    vmComentarios.files.clear();
+
+    //navegar a comentarios
+    vmComentarios.vistaTarea = 2;
+    notifyListeners();
+    Navigator.pushNamed(context, AppRoutes.viewComments);
+    isLoading = false; //detener carga
+  }
 
   //Ver y ocultar historial de responsables
   verHistorial() {

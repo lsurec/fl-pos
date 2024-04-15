@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
 import '../../../widgets/widgets.dart';
@@ -16,12 +17,17 @@ class ComentariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
     final vmTarea = Provider.of<DetalleTareaViewModel>(context);
+    final vmTareaCalendario =
+        Provider.of<DetalleTareaCalendarioViewModel>(context);
+
     return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
             title: Text(
-              'Comentarios Tarea: ${vmTarea.tarea!.iDTarea.toString()}',
+              vm.vistaTarea == 1
+                  ? 'Comentarios Tarea: ${vmTarea.tarea!.iDTarea}'
+                  : 'Comentarios Tarea: ${vmTareaCalendario.tarea!.tarea}',
               style: AppTheme.titleStyle,
             ),
           ),
@@ -39,7 +45,10 @@ class ComentariosView extends StatelessWidget {
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
-                        vmTarea.tarea!.tareaObservacion1 ?? "No disponible.",
+                        vm.vistaTarea == 1
+                            ? vmTarea.tarea!.tareaObservacion1 ??
+                                "No disponible."
+                            : vmTareaCalendario.tarea!.texto,
                         style: AppTheme.normalStyle,
                         textAlign: TextAlign.justify,
                       ),

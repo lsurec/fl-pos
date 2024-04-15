@@ -4,6 +4,32 @@ import 'package:flutter_post_printer_example/displays/calendario/models/models.d
 import 'package:intl/intl.dart';
 
 class Utilities {
+  //Nombre Dias Semana
+  static List<String> diasSemana = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+
+  //Nombre de los meses del año
+  static List<String> nombreMeses = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
   //Lista de horas
   static List<HorasModel> horasDelDia = [
     HorasModel(
@@ -128,17 +154,6 @@ class Utilities {
     )
   ];
 
-  //Nombre Dias Semana
-  static List<String> diasSemana = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-  ];
-
   //Formatear fecha
   static String formatearFecha(DateTime fecha) {
     // Asegurarse de que la fecha esté en la zona horaria local
@@ -150,8 +165,8 @@ class Utilities {
     return fechaFormateada;
   }
 
-  static //Formatear hora
-      String formatearHora(DateTime fecha) {
+  //Formatear hora
+  static String formatearHora(DateTime fecha) {
     // Asegurarse de que la fecha esté en la zona horaria local
     fecha = fecha.toLocal();
 
@@ -161,20 +176,25 @@ class Utilities {
     return horaFormateada;
   }
 
-  static List<String> nombreMeses = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
+  static String formatearFechaString(String fecha) {
+    // Parsear la cadena de fecha
+    DateTime fechaParseada = DateTime.parse(fecha);
+
+    // Formatear la fecha según el formato deseado
+    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fechaParseada);
+
+    return fechaFormateada;
+  }
+
+  static String formatearHoraString(String fecha) {
+    // Parsear la cadena de fecha
+    DateTime fechaParseada = DateTime.parse(fecha);
+
+    // Formatear la hora en formato de 12 horas (AM/PM)
+    String horaAMPM = DateFormat('h:mm a').format(fechaParseada);
+
+    return horaAMPM;
+  }
 
   //Nombre mes
   static String nombreMes(int mes) {

@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -89,14 +90,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                               const Icon(Icons.date_range),
                               const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                vm.tarea!.fechaIni,
+                                Utilities.formatearFechaString(
+                                  vm.tarea!.fechaIni,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
                               const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                vm.tarea!.fechaIni,
+                                Utilities.formatearHoraString(
+                                  vm.tarea!.fechaIni,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
@@ -119,14 +124,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                               const Icon(Icons.date_range),
                               const Padding(padding: EdgeInsets.only(left: 15)),
                               Text(
-                                vm.tarea!.fechaFin,
+                                Utilities.formatearFechaString(
+                                  vm.tarea!.fechaFin,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
                               const Padding(padding: EdgeInsets.only(left: 10)),
                               Text(
-                                vm.tarea!.fechaFin,
+                                Utilities.formatearHoraString(
+                                  vm.tarea!.fechaFin,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
