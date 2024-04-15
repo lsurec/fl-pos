@@ -62,7 +62,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                           Row(
                             children: [
                               TextButton(
-                                onPressed: () => vm.diaAnteriorTareas(),
+                                onPressed: () => vm.diaAnterior(),
                                 child: const Text(
                                   "Dia Anterior",
                                   style: AppTheme.normalBoldStyle,
@@ -137,7 +137,7 @@ class _CalendarioViewState extends State<CalendarioView> {
 
                       const SizedBox(height: 10),
                       // const HorasTareaDia(),
-                      const TablaTareasHora(),
+                      TablaTareasHora(),
                       // _HourTableWidget(),
                       // _NombreDias(),
                       // _Semanasss()
@@ -749,69 +749,69 @@ class _HourTableWidgetss extends StatelessWidget {
 //   }
 // }
 
-class TablaTareasHora extends StatelessWidget {
-  const TablaTareasHora({super.key});
+// class TablaTareasHora extends StatelessWidget {
+//   const TablaTareasHora({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-    List<HorasModel> horasDia = Utilities.horasDelDia;
-    return Table(
-      border: TableBorder.all(),
-      columnWidths: const <int, TableColumnWidth>{
-        0: IntrinsicColumnWidth(),
-        1: FlexColumnWidth(),
-        2: FixedColumnWidth(64),
-      },
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: <TableRow>[
-        TableRow(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(10),
-              height: 45,
-              child: const Text(
-                "Horario",
-                style: AppTheme.normalBoldStyle,
-              ),
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.top,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                width: 32,
-                child: const Text(
-                  "Tareas",
-                  style: AppTheme.normalBoldStyle,
-                ),
-              ),
-            ),
-          ],
-        ),
-        TableRow(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(10),
-              width: 128,
-              child: Text(
-                horasDia[0].hora12,
-                style: AppTheme.normalBoldStyle,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              color: Colors.yellow,
-              child: Text(
-                "Tareas que corresponden a esta hora ${horasDia[0].hora12} y dia ${vm.daySelect}",
-                style: AppTheme.normalBoldStyle,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+//     List<HorasModel> horasDia = Utilities.horasDelDia;
+//     return Table(
+//       border: TableBorder.all(),
+//       columnWidths: const <int, TableColumnWidth>{
+//         0: IntrinsicColumnWidth(),
+//         1: FlexColumnWidth(),
+//         2: FixedColumnWidth(64),
+//       },
+//       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+//       children: <TableRow>[
+//         TableRow(
+//           children: <Widget>[
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               height: 45,
+//               child: const Text(
+//                 "Horario",
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//             TableCell(
+//               verticalAlignment: TableCellVerticalAlignment.top,
+//               child: Container(
+//                 padding: const EdgeInsets.all(10),
+//                 width: 32,
+//                 child: const Text(
+//                   "Tareas",
+//                   style: AppTheme.normalBoldStyle,
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//         TableRow(
+//           children: <Widget>[
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               width: 128,
+//               child: Text(
+//                 horasDia[0].hora12,
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//             Container(
+//               padding: const EdgeInsets.all(10),
+//               color: Colors.yellow,
+//               child: Text(
+//                 "Tareas que corresponden a esta hora ${horasDia[0].hora12} y dia ${vm.daySelect}",
+//                 style: AppTheme.normalBoldStyle,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class _TableExample extends StatelessWidget {
   const _TableExample();
@@ -1010,6 +1010,87 @@ class HorasTareaDia extends StatelessWidget {
           children: horasDia,
         ),
       ],
+    );
+  }
+}
+
+class TablaTareasHora extends StatefulWidget {
+  const TablaTareasHora({super.key});
+
+  @override
+  State<TablaTareasHora> createState() => _TablaTareasHoraState();
+}
+
+class _TablaTareasHoraState extends State<TablaTareasHora> {
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    List<HorasModel> horasDia = Utilities.horasDelDia;
+    List<TableRow> filasTabla = [];
+
+    // Añadir fila de encabezado
+    filasTabla.add(
+      TableRow(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 45,
+            child: const Text(
+              "Horario",
+              style: AppTheme.normalBoldStyle,
+            ),
+          ),
+          TableCell(
+            verticalAlignment: TableCellVerticalAlignment.top,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 32,
+              child: const Text(
+                "Tareas",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // Iterar sobre las horas del día y agregar filas correspondientes
+    for (int i = 0; i < horasDia.length; i++) {
+      filasTabla.add(
+        TableRow(
+          children: <Widget>[
+            Container(
+              padding: const EdgeInsets.all(10),
+              width: 128,
+              child: Text(
+                horasDia[i].hora12,
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              color: Colors.yellow,
+              child: Text(
+                "Tareas que corresponden a esta hora ${horasDia[i].hora12} y día ${vm.daySelect}",
+                style: AppTheme.normalBoldStyle,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Table(
+      border: TableBorder.all(),
+      columnWidths: const <int, TableColumnWidth>{
+        0: IntrinsicColumnWidth(),
+        1: FlexColumnWidth(),
+        2: FixedColumnWidth(64),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: filasTabla,
     );
   }
 }

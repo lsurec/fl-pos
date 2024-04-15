@@ -677,7 +677,6 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   diaAnterior() {
-    tareasDia.clear();
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
 
@@ -707,15 +706,6 @@ class CalendarioViewModel extends ChangeNotifier {
       }
     }
 
-    // Carga las nuevas tareas del día seleccionado
-    tareasDia = tareaDia(
-      daySelect,
-      monthSelectView,
-      yearSelect,
-    );
-
-    // Notifica a los listeners que los datos han cambiado
-    notifyListeners();
     print(" $daySelect $monthSelectView $yearSelect regresando");
   }
 
@@ -920,5 +910,4 @@ class CalendarioViewModel extends ChangeNotifier {
     tareasDia.clear();
     notifyListeners();
   }
-  
 }
