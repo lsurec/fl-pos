@@ -336,6 +336,9 @@ class CalendarioViewModel extends ChangeNotifier {
     return formattedDate;
   }
 
+  int masTareas = 0;
+  int totalTareas = 0;
+
   List<TareaCalendarioModel> tareaDia(int day, int month, int year) {
     final fechaBusqueda = DateTime(year, month, day);
     final fechaBusquedaFormateada =
@@ -1013,7 +1016,8 @@ class CalendarioViewModel extends ChangeNotifier {
     vmComentario.comentarioDetalle.clear(); //limpiar lista de detalleComentario
 
     //View model de Detalle tarea para obtener el id de la tarea
-    final vmTarea = Provider.of<DetalleTareaCalendarioViewModel>(context, listen: false);
+    final vmTarea =
+        Provider.of<DetalleTareaCalendarioViewModel>(context, listen: false);
 
     //Obtener comentarios de la tarea
     ApiResModel comentarios =

@@ -53,93 +53,103 @@ class _CalendarioViewState extends State<CalendarioView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Column(
-                        children: [
-                          Text(
-                            " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
-                            style: AppTheme.normalBoldStyle,
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                onPressed: () => vm.diaAnterior(),
-                                child: const Text(
-                                  "Dia Anterior",
-                                  style: AppTheme.normalBoldStyle,
+                      if (vm.vistaDia)
+                        Column(
+                          children: [
+                            Text(
+                              " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () => vm.diaAnterior(),
+                                  child: const Text(
+                                    "Dia Anterior",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
                                 ),
-                              ),
-                              const Spacer(),
-                              TextButton(
-                                onPressed: () => vm.diaSiguiente(),
-                                child: const Text(
-                                  "Dia Siguiente",
-                                  style: AppTheme.normalBoldStyle,
+                                const Spacer(),
+                                TextButton(
+                                  onPressed: () => vm.diaSiguiente(),
+                                  child: const Text(
+                                    "Dia Siguiente",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // Column(
-                      //   children: [
-                      //     Text(
-                      //       "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
-                      //       style: AppTheme.normalBoldStyle,
-                      //     ),
-                      //     Row(
-                      //       children: [
-                      //         TextButton(
-                      //           onPressed: () => vm.mesAnterior(),
-                      //           child: const Text(
-                      //             "Mes Anterior",
-                      //             style: AppTheme.normalBoldStyle,
-                      //           ),
-                      //         ),
-                      //         const Spacer(),
-                      //         TextButton(
-                      //           onPressed: () => vm.mesSiguiente(),
-                      //           child: const Text(
-                      //             "Mes Siguiente",
-                      //             style: AppTheme.normalBoldStyle,
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
-                      // Column(
-                      //   children: [
-                      //     Text(
-                      //       vm.generateNameWeeck(),
-                      //       style: AppTheme.normalBoldStyle,
-                      //     ),
-                      //     Row(
-                      //       children: [
-                      //         TextButton(
-                      //           onPressed: () => vm.semanaAnterior(),
-                      //           child: const Text(
-                      //             "Semana Anterior",
-                      //             style: AppTheme.normalBoldStyle,
-                      //           ),
-                      //         ),
-                      //         const Spacer(),
-                      //         TextButton(
-                      //           onPressed: () => vm.semanaSiguiente(),
-                      //           child: const Text(
-                      //             "Semana Siguiente",
-                      //             style: AppTheme.normalBoldStyle,
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      if (vm.vistaMes)
+                        Column(
+                          children: [
+                            Text(
+                              "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () => vm.mesAnterior(),
+                                  child: const Text(
+                                    "Mes Anterior",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                                ),
+                                const Spacer(),
+                                TextButton(
+                                  onPressed: () => vm.mesSiguiente(),
+                                  child: const Text(
+                                    "Mes Siguiente",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      if (vm.vistaSemana)
+                        Column(
+                          children: [
+                            Text(
+                              vm.generateNameWeeck(),
+                              style: AppTheme.normalBoldStyle,
+                            ),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () => vm.semanaAnterior(),
+                                  child: const Text(
+                                    "Semana Anterior",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                                ),
+                                const Spacer(),
+                                TextButton(
+                                  onPressed: () => vm.semanaSiguiente(),
+                                  child: const Text(
+                                    "Semana Siguiente",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
 
                       const SizedBox(height: 10),
+                      if (vm.vistaMes || vm.vistaSemana) _NombreDias(),
+                      if (vm.vistaMes)
+                        // ignore: prefer_const_constructors
+                        _VistaMes(),
+
+                      if (vm.vistaSemana) _Semanasss(),
                       // const HorasTareaDia(),
                       //si lleva const no cambia los dias
-                      // ignore: prefer_const_constructors
-                      TablaTareasHora(),
+                      if (vm.vistaDia)
+                        // ignore: prefer_const_constructors
+                        TablaTareasHora(),
                       // _HourTableWidget(),
                       // _NombreDias(),
                       // _Semanasss()
@@ -398,14 +408,8 @@ class _VistaMes extends StatelessWidget {
                   ? AppTheme.diasFueraMes
                   : AppTheme.normalBoldStyle;
               return Container(
-                height: 100,
+                height: 175,
                 width: 50,
-                padding: const EdgeInsets.only(
-                  left: 0,
-                  right: 0,
-                  bottom: 10,
-                  top: 0,
-                ),
                 alignment: Alignment.topCenter,
                 child: Column(
                   children: [
@@ -426,27 +430,70 @@ class _VistaMes extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (vm.monthCurrent(dia.value, dia.indexWeek))
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: vm
-                              .tareaDia(
-                                  dia.value, vm.monthSelectView, vm.yearSelect)
-                              .length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final List<TareaCalendarioModel> tareasDia =
-                                vm.tareaDia(dia.value, vm.monthSelectView,
-                                    vm.yearSelect);
-                            if (tareasDia.isNotEmpty) {
-                              return Text(tareasDia[index].tarea.toString());
-                            }
-                            return null;
-                          },
-                        ),
+                    // if (vm.monthCurrent(dia.value, dia.indexWeek))
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: vm
+                                        .tareaDia(
+                                          dia.value,
+                                          vm.monthSelectView,
+                                          vm.yearSelect,
+                                        )
+                                        .length >=
+                                    5
+                                ? 4
+                                : vm
+                                    .tareaDia(
+                                      dia.value,
+                                      vm.monthSelectView,
+                                      vm.yearSelect,
+                                    )
+                                    .length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final List<TareaCalendarioModel> tareasDia =
+                                  vm.tareaDia(
+                                dia.value,
+                                vm.monthSelectView,
+                                vm.yearSelect,
+                              );
+                              return Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(bottom: 2),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      tareasDia[index].tarea.toString(),
+                                      style: AppTheme.taskStyle,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          if (vm
+                                  .tareaDia(
+                                    dia.value,
+                                    vm.monthSelectView,
+                                    vm.yearSelect,
+                                  )
+                                  .length >
+                              4)
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                "Ver (+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
+                                textAlign: TextAlign.end,
+                                style: AppTheme.tareaStyle,
+                              ),
+                            )
+                        ],
                       ),
+                    ),
                   ],
                 ),
               );
