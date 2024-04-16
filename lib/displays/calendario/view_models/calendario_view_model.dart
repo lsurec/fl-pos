@@ -72,13 +72,6 @@ class CalendarioViewModel extends ChangeNotifier {
     today = fechaHoy.day;
     month = fechaHoy.month;
     year = fechaHoy.year;
-
-    // today = 27;
-    // month = 9;
-    // year = 2023;
-
-    // print("${tareaHora(10, tareaDia(today, month, year)).length}");
-
     diasDelMes = obtenerDiasDelMes(month, year);
 
     mesCompleto = armarMes(month, year);
@@ -318,7 +311,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //agregar tareas encontradas a la lista de tareas
     tareas.addAll(res.message);
 
-    print("tareas asigandas al usuario ${tareas.length}");
+    // print("tareas asigandas al usuario ${tareas.length}");
 
     isLoading = false; //detener carga
   }
@@ -443,7 +436,22 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   irAlDia(int verDia) {
-    print("IR A VER AL DIA $verDia");
+    daySelect = verDia;
+    mostrarVistaDia();
+    print("IR AL DIA $verDia DEL MES $monthSelectView");
+  }
+
+  irAlDiaCorrecto(DiaModel dia, int month) {
+    daySelect = dia.value;
+
+    int indiceDiaMayor = semanasDelMes[0][dia.indexWeek].indexWeek;
+    int diaMayor = semanasDelMes[0][dia.indexWeek].value;
+
+
+    print("IR A VER AL DIA $indiceDiaMayor $diaMayor");
+
+    // print(
+    //     "IR A VER AL DIA ${dia.name} dia ${semanasDelMes[0][dia.indexWeek].value}");
   }
 
   //verificar si un dia es del mes
