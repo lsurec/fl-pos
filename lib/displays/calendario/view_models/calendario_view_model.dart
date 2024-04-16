@@ -6,7 +6,6 @@ import 'package:flutter_post_printer_example/displays/calendario/serivices/servi
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -25,6 +24,7 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<String> list = <String>['One', 'Two', 'Three', 'Four'];
   DateTime? hoy;
 
   //Variables a utlizar en e calendario

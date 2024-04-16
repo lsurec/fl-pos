@@ -53,6 +53,31 @@ class _CalendarioViewState extends State<CalendarioView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              vm.mostrarVistaMes();
+                            },
+                            child: Text('Vista Mes'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              vm.mostrarVistaSemana();
+                            },
+                            child: Text('Vista Semana'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              vm.mostrarVistaDia();
+                            },
+                            child: Text('Vista Día'),
+                          ),
+                        ],
+                      ),
+
                       if (vm.vistaDia)
                         Column(
                           children: [
@@ -318,65 +343,6 @@ class _Semanasss extends StatelessWidget {
           }).toList(),
         ),
       ),
-    );
-  }
-}
-
-class _NombreDiasSemana extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
-
-    return Table(
-      border: const TableBorder(
-        top: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde arriba
-        left: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde izquierdo
-        right: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde derecho
-        bottom: BorderSide.none, // Sin borde abajo
-        horizontalInside: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde horizontal dentro de la tabla
-        verticalInside: BorderSide(
-          color: Color.fromRGBO(0, 0, 0, 0.12),
-        ), // Borde vertical dentro de la tabla
-      ),
-      children: [
-        for (int i = 0; i < vm.diasSemana.length; i++)
-          TableRow(
-            children: [
-              TableCell(
-                child: Container(
-                  height: 25,
-                  width: 30, // Ancho corto para la primera columna
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    // Para obtener solo las tres primeras letras del día
-                    vm.diasSemana[i].substring(0, 3),
-                    style: AppTheme.normalBoldStyle,
-                  ),
-                ),
-              ),
-              // _SemanasCalendario(vm: vm),
-              TableCell(
-                child: Container(
-                  height: 25,
-                  width: 50,
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    '${i + 1}tareas que corresponden al dia',
-                    style: AppTheme.normalStyle,
-                  ),
-                ),
-              ),
-            ],
-          ),
-      ],
     );
   }
 }
@@ -655,6 +621,82 @@ class _TablaTareasHoraState extends State<TablaTareasHora> {
       },
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       children: filasTabla,
+    );
+  }
+}
+
+void mostrarMenu(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+      return Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              title: Text('Vista Mes'),
+              onTap: () {
+                Navigator.pop(context);
+                vm.mostrarVistaMes();
+              },
+            ),
+            ListTile(
+              title: Text('Vista Semana'),
+              onTap: () {
+                Navigator.pop(context);
+                vm.mostrarVistaSemana();
+              },
+            ),
+            ListTile(
+              title: Text('Vista Día'),
+              onTap: () {
+                Navigator.pop(context);
+                vm.mostrarVistaDia();
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+class DropdownButtonExample extends StatefulWidget {
+  const DropdownButtonExample({super.key});
+
+  @override
+  State<DropdownButtonExample> createState() => _DropdownButtonExampleState();
+}
+
+class _DropdownButtonExampleState extends State<DropdownButtonExample> {
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    String dropdownValue = vm.list.first;
+
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: vm.list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
