@@ -42,6 +42,36 @@ class _CalendarioViewState extends State<CalendarioView> {
               onPressed: () => vm.loadData(context),
               icon: const Icon(Icons.calendar_today_outlined),
             ),
+            actions: <Widget>[
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => vm.mostrarVistaMes(),
+                    icon: const Icon(
+                      Icons.calendar_view_month_outlined,
+                      size: 40,
+                    ),
+                    tooltip: "Vista Mes",
+                  ),
+                  IconButton(
+                    onPressed: () => vm.mostrarVistaSemana(),
+                    icon: const Icon(
+                      Icons.calendar_view_week_outlined,
+                      size: 40,
+                    ),
+                    tooltip: "Vista Semana",
+                  ),
+                  IconButton(
+                    onPressed: () => vm.mostrarVistaDia(),
+                    icon: const Icon(
+                      Icons.calendar_view_day_outlined,
+                      size: 40,
+                    ),
+                    tooltip: "Vista Día",
+                  ),
+                ],
+              )
+            ],
           ),
           body: RefreshIndicator(
             onRefresh: () async {
@@ -53,31 +83,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              vm.mostrarVistaMes();
-                            },
-                            child: Text('Vista Mes'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              vm.mostrarVistaSemana();
-                            },
-                            child: Text('Vista Semana'),
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              vm.mostrarVistaDia();
-                            },
-                            child: Text('Vista Día'),
-                          ),
-                        ],
-                      ),
-
                       if (vm.vistaDia)
                         Column(
                           children: [
@@ -283,12 +288,6 @@ class _Semanasss extends StatelessWidget {
               child: Container(
                 height: 400,
                 width: 50,
-                padding: const EdgeInsets.only(
-                  left: 0,
-                  right: 0,
-                  bottom: 10,
-                  top: 0,
-                ),
                 alignment: Alignment.topCenter,
                 child: Column(
                   children: [
@@ -329,10 +328,19 @@ class _Semanasss extends StatelessWidget {
                             vm.resolveMonth(index),
                             vm.resolveYear(index),
                           );
-                          if (tareasDia.isNotEmpty) {
-                            return Text(tareasDia[index].tarea.toString());
-                          }
-                          return null;
+                          return Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(bottom: 2),
+                            child: Column(
+                              children: [
+                                Text(
+                                  tareasDia[index].tarea.toString(),
+                                  style: AppTheme.taskStyle,
+                                ),
+                                const Divider(),
+                              ],
+                            ),
+                          );
                         },
                       ),
                     ),

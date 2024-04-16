@@ -416,6 +416,19 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   mostrarVistaSemana() {
+    //Buscar la semana que tiene el día de hoy
+    for (var i = 0; i < semanasDelMes.length; i++) {
+      List<DiaModel> semana = semanasDelMes[i];
+      for (var j = 0; j < semana.length; j++) {
+        if (semana[j].value == today) {
+          indexWeekActive = i;
+          notifyListeners();
+          break;
+        }
+      }
+    }
+
+    //mostrar la vista y ocultar las demás
     vistaSemana = true;
     vistaMes = false;
     vistaDia = false;
