@@ -382,7 +382,7 @@ class _VistaMes extends StatelessWidget {
                   : AppTheme.normalBoldStyle;
               return GestureDetector(
                 onTap: () =>
-                    vm.diaCorrecto(dia, vm.monthSelectView, vm.yearSelect),
+                    vm.diaCorrectoMes(dia, index, vm.monthSelectView, vm.yearSelect),
                 child: Column(
                   children: [
                     Container(

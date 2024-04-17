@@ -531,6 +531,66 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
+  diaCorrectoMes(DiaModel dia, int indexDay, int mes, int anio) {
+    List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
+
+    List<DiaModel> primeraSemana = semanas[0];
+    List<DiaModel> ultimaSemana = semanas[semanas.length - 1];
+
+    //Para almacenar el dia numero 1 del mes
+    DiaModel? inicoMes;
+
+    //obtener el ultimo dia mayor de la ultima semana
+    DiaModel finMes = ultimaSemana.reduce(
+      (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax,
+    );
+
+    //recorrer semana para encontrar el primer dia del mes (dia 1)
+    for (int i = 0; i < primeraSemana.length; i++) {
+      DiaModel dia = primeraSemana[i];
+      if (dia.value == 1) {
+        inicoMes = dia;
+      }
+    }
+
+    if (indexDay >= 0 && indexDay <= 6) {
+      if (dia.indexWeek > inicoMes!.indexWeek) {
+        anio = mes == 1 ? anio - 1 : anio; //año
+        mes = mes == 1 ? 12 : mes - 1; //mes
+
+        //asignar valores a la fecha del dia que se visualizará
+        daySelect = dia.value;
+        monthSelectView = mes;
+        yearSelect = anio;
+        mostrarVistaDia();
+      }
+    }
+
+    //si la semana seleccionada es la utima
+    if (indexDay >= (diasDelMes.length - 8) &&
+        indexDay >= semanas[semanas.length - 1].length - 1) {
+      // los dias siguientes son del mes siguienete
+
+      if (dia.indexWeek > finMes.indexWeek) {
+        //cambiar año y mes si es necesario
+        anio = monthSelectView == 12 ? anio + 1 : anio; //año
+        mes = mes == 12 ? 1 : mes + 1; //mes
+
+        //asignar valores a la fecha del dia que se visualizará
+        daySelect = dia.value;
+        monthSelectView = mes;
+        yearSelect = anio;
+        mostrarVistaDia();
+      }
+    }
+
+    //asignar valores a la fecha del dia que se visualizará
+    daySelect = dia.value;
+    monthSelectView = mes;
+    yearSelect = anio;
+    mostrarVistaDia();
+  }
+
   diaCorrectoSemana(DiaModel dia, int mes, int anio) {
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
