@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
-import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
@@ -9,8 +8,8 @@ import 'package:flutter_post_printer_example/displays/tareas/view_models/view_mo
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 class CalendarioViewModel extends ChangeNotifier {
@@ -31,11 +30,6 @@ class CalendarioViewModel extends ChangeNotifier {
   bool vistaDia = false;
 
   List<DiaModel> diasDelMes = [];
-  bool diasFueraMes = false;
-
-  // List<DiaModel> monthSelect = []; //dias del mes seleccionado
-  List<String> diasSemanaEspaniol = []; //Nombres de los dias de la semana
-  int primerDiaSemana = 0; // 0 = domingo, 1 = lunes, ..., 6 = sábado
 
   //fecha de hoy (fecha de la maquina)
   DateTime fechaHoy = DateTime.now(); //fecha completa DateNow
@@ -55,13 +49,19 @@ class CalendarioViewModel extends ChangeNotifier {
   List<List<DiaModel>> semanasDelMes = [];
   //Tareas de la hora actual
   List<TareaCalendarioModel> tareasHoraActual = [];
+  //Lista que tiene las horas del dia
+  List<HorasModel> horasDelDia = Utilities.horasDelDia;
+  //Lista que tiene los nombres de los dias
+  List<String> diasSemana = Utilities.diasSemana;
+  //Contiene los dias del mes con semanas completas
+  List<DiaModel> mesCompleto = [];
+  //Contiene las tareas del usuario
+  List<TareaCalendarioModel> tareas = [];
 
   // Encontrar el índice del primer día del mes
   int primerDiaIndex = 0;
   int ultimoDiaIndex = 0;
   int numSemanas = 0;
-
-  String mesNombre = "";
 
   Future<void> loadData(BuildContext context) async {
     fechaHoy = DateTime.now();
@@ -80,36 +80,11 @@ class CalendarioViewModel extends ChangeNotifier {
     semanasDelMes = agregarSemanas(month, year);
     indexWeekActive = 0;
 
-    //cargar(27, 9, 2023);
     obtenerTareasCalendario(context);
 
     mostrarVistaMes();
 
     notifyListeners();
-  }
-
-  List<HorasModel> horasDelDia = Utilities.horasDelDia;
-
-  List<String> diasSemana = Utilities.diasSemana;
-
-  //Nuevooooooooo
-
-  Future<String> nombreDelMes(int mes, int anio) async {
-    // Inicializa el formato para español (España)
-    await initializeDateFormatting('es_ES', null);
-    //nombre del mes infresado
-    return DateFormat.MMMM('es_ES').format(DateTime(anio, mes));
-  }
-
-  armarSemanas(int mes, int anio) {
-    List<DiaModel> dias = obtenerDiasDelMes(mes, anio);
-
-    // Imprimir los días del mes
-    for (var dia in dias) {
-      print(
-        "Nombre: ${dia.name}, Valor: ${dia.value}, Índice de la semana: ${dia.indexWeek}",
-      );
-    }
   }
 
   // Función para obtener los días de un mes dado el año y el mes
@@ -140,8 +115,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
     return diasDelMes;
   }
-
-  List<DiaModel> mesCompleto = [];
 
   List<DiaModel> armarMes(int mes, int anio) {
     List<DiaModel> completarMes = [];
@@ -239,49 +212,6 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
-  bool diasAnteriores(int dia, int index) {
-    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
-
-    if (index >= 0 && index < 7 && dia > dias[6].value) {
-      return true;
-    }
-    return false;
-  }
-
-  bool diasSiguientes(int dia, int index) {
-    List<DiaModel> diasMesHoy = [];
-    diasMesHoy.clear();
-    diasMesHoy = armarMes(month, year);
-
-    final int ultimoDiaMes = diasMesHoy.last.value;
-    final List<DiaModel> diasUltimaSemana =
-        diasMesHoy.sublist(diasMesHoy.length - 7);
-
-    if (index >= diasMesHoy.length - 7 &&
-        dia <= ultimoDiaMes &&
-        diasUltimaSemana.any((diaModel) => diaModel.value == dia)) {
-      return true;
-    }
-    return false;
-  }
-
-  regresarHoy() async {
-    diasDelMes = obtenerDiasDelMes(month, year);
-
-    monthSelectView = month; //mes
-    yearSelect = year; //año
-    daySelect = today; //hoy
-
-    mesCompleto = armarMes(monthSelectView, yearSelect);
-
-    primerDiaIndex = diasDelMes.first.indexWeek;
-    ultimoDiaIndex = diasDelMes.last.indexWeek;
-
-    notifyListeners();
-  }
-
-  List<TareaCalendarioModel> tareas = [];
-
   obtenerTareasCalendario(BuildContext context) async {
     tareas.clear(); //limpiar lista
 
@@ -312,22 +242,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
   }
-
-  String convertDateFormat(String inputDate) {
-    // Parse the input date string
-    DateTime parsedDate =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").parse(inputDate);
-
-    // Format the parsed date to the desired output format
-    String formattedDate =
-        DateFormat('EEE MMM dd yyyy HH:mm:ss \'GMT\'Z (zzzz)')
-            .format(parsedDate);
-
-    return formattedDate;
-  }
-
-  int masTareas = 0;
-  int totalTareas = 0;
 
   List<TareaCalendarioModel> tareaDia(int day, int month, int year) {
     final fechaBusqueda = DateTime(year, month, day);
@@ -432,106 +346,8 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  irAlDia(int verDia) {
-    daySelect = verDia;
-    mostrarVistaDia();
-    print("IR AL DIA $verDia DEL MES $monthSelectView");
-  }
-
-  void diaMayorSem1() {
-    List<DiaModel> primeraSemana = semanasDelMes[0];
-    DiaModel diaMayor = primeraSemana.reduce(
-        (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax);
-    print(
-        'El día mayor de la semana es: ${diaMayor.name} ${diaMayor.value} index ${diaMayor.indexWeek} mes $monthSelectView');
-  }
-
-  diaCorrecto(DiaModel dia, int mes, int anio) {
-    List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
-
-    List<DiaModel> primeraSemana = semanas[0];
-    List<DiaModel> ultimaSemana = semanas[semanas.length - 1];
-
-    //obtener el ultimo dia mayor de la ultima semana
-    DiaModel diaMayor = ultimaSemana.reduce(
-      (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax,
-    );
-
-    //Para almacenar el dia numero 1 del mes
-    DiaModel? primerDia1;
-
-    //recorrer semana para encontrar el primer dia del mes (dia 1)
-    for (int i = 0; i < primeraSemana.length; i++) {
-      DiaModel dia = primeraSemana[i];
-      if (dia.value == 1) {
-        primerDia1 = dia;
-      }
-    }
-
-    //si el indice del dia seleccionado es mayor al indice del primer dia del mes (1)
-    //sigue siendo el mismo mes
-    if (dia.value >= primerDia1!.value && dia.value <= diaMayor.value) {
-      print("Aqui entro 1 mes $mes");
-      //asignar valores a la fecha del dia que se visualizará
-      daySelect = dia.value;
-      monthSelectView = mes;
-      yearSelect = anio;
-      mostrarVistaDia();
-      print("Aqui temino 1 mes $mes");
-    }
-
-    //si el indice el dia seleccionado es menor al indice del primer dia del mes (1)
-    //restarle -1 al mes porque son dias del mes anterior
-    if (dia.indexWeek < primerDia1.indexWeek) {
-      print("Aqui entro 2");
-      anio = mes == 1 ? anio - 1 : anio; //año
-      mes = mes == 1 ? 12 : mes - 1; //mes
-
-      //asignar valores a la fecha del dia que se visualizará
-      daySelect = dia.value;
-      monthSelectView = mes;
-      yearSelect = anio;
-      mostrarVistaDia();
-    }
-
-    // print("${dia.value} dia seleccionado");
-    // print("${dia.indexWeek} indexdia seleccionado");
-
-    // print("${diaMayor.value} dia mayor");
-    // print("${diaMayor.indexWeek} indexdia mayor");
-
-    //si el indiece del dia seleccionado es mayor al indice del dia mayor del mes (28, 29, 20, 31)
-    //sumarle +1 al mes porque son días que le pertenecen al siguiente mes
-
-    // print("${ultimaSemana[diaMayor.indexWeek].indexWeek} indexdia seleccionado");
-
-    // if (ultimaSemana[diaMayor.indexWeek].indexWeek < dia.indexWeek &&
-    //     ultimaSemana[diaMayor.indexWeek].value > dia.value) {
-    //   //cambiar año y mes si es necesario
-    //   anio = monthSelectView == 12 ? anio + 1 : anio; //año
-    //   mes = mes == 12 ? 1 : mes + 1; //mes
-
-    //   //asignar valores a la fecha del dia que se visualizará
-    //   daySelect = dia.value;
-    //   monthSelectView = mes;
-    //   yearSelect = anio;
-    //   mostrarVistaDia();
-    // }
-    if (dia.indexWeek > diaMayor.indexWeek && dia.value < diaMayor.indexWeek) {
-      print("Aqui entro 3");
-      //cambiar año y mes si es necesario
-      anio = monthSelectView == 12 ? anio + 1 : anio; //año
-      mes = mes == 12 ? 1 : mes + 1; //mes
-
-      //asignar valores a la fecha del dia que se visualizará
-      daySelect = dia.value;
-      monthSelectView = mes;
-      yearSelect = anio;
-      mostrarVistaDia();
-    }
-  }
-
-  diaCorrectoMes(DiaModel dia, int indexDay, int mes, int anio) {
+  //Navegar a vista Dia desde la vista del mes de manera correcta
+  diaCorrectoMes(DiaModel diaSeleccionado, int indexDay, int mes, int anio) {
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
     List<DiaModel> primeraSemana = semanas[0];
@@ -554,12 +370,12 @@ class CalendarioViewModel extends ChangeNotifier {
     }
 
     if (indexDay >= 0 && indexDay <= 6) {
-      if (dia.indexWeek > inicoMes!.indexWeek) {
+      if (diaSeleccionado.indexWeek > inicoMes!.indexWeek) {
         anio = mes == 1 ? anio - 1 : anio; //año
         mes = mes == 1 ? 12 : mes - 1; //mes
 
         //asignar valores a la fecha del dia que se visualizará
-        daySelect = dia.value;
+        daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
         mostrarVistaDia();
@@ -571,13 +387,13 @@ class CalendarioViewModel extends ChangeNotifier {
         indexDay >= semanas[semanas.length - 1].length - 1) {
       // los dias siguientes son del mes siguienete
 
-      if (dia.indexWeek > finMes.indexWeek) {
+      if (diaSeleccionado.indexWeek > finMes.indexWeek) {
         //cambiar año y mes si es necesario
         anio = monthSelectView == 12 ? anio + 1 : anio; //año
         mes = mes == 12 ? 1 : mes + 1; //mes
 
         //asignar valores a la fecha del dia que se visualizará
-        daySelect = dia.value;
+        daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
         mostrarVistaDia();
@@ -585,62 +401,65 @@ class CalendarioViewModel extends ChangeNotifier {
     }
 
     //asignar valores a la fecha del dia que se visualizará
-    daySelect = dia.value;
+    daySelect = diaSeleccionado.value;
     monthSelectView = mes;
     yearSelect = anio;
     mostrarVistaDia();
   }
 
-  diaCorrectoSemana(DiaModel dia, int mes, int anio) {
+  diaCorrectoSemana(DiaModel diaSeleccionado, int mes, int anio) {
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
     List<DiaModel> primeraSemana = semanas[0];
     List<DiaModel> ultimaSemana = semanas[semanas.length - 1];
 
     //obtener el ultimo dia mayor de la ultima semana
-    DiaModel diaMayor = ultimaSemana.reduce(
+    DiaModel finMes = ultimaSemana.reduce(
       (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax,
     );
 
     //Para almacenar el dia numero 1 del mes
-    DiaModel? primerDia1;
+    DiaModel? inicioMes;
 
     //recorrer semana para encontrar el primer dia del mes (dia 1)
     for (int i = 0; i < primeraSemana.length; i++) {
       DiaModel dia = primeraSemana[i];
       if (dia.value == 1) {
-        primerDia1 = dia;
+        inicioMes = dia;
       }
     }
 
+    //Si estamos en la primera semana
     if (indexWeekActive == 0) {
-      if (dia.indexWeek < primerDia1!.indexWeek) {
+      if (diaSeleccionado.indexWeek < inicioMes!.indexWeek) {
         anio = mes == 1 ? anio - 1 : anio; //año
         mes = mes == 1 ? 12 : mes - 1; //mes
 
         //asignar valores a la fecha del dia que se visualizará
-        daySelect = dia.value;
+        daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
         mostrarVistaDia();
       }
     }
 
+    //si estamos en la ultima semana
     if (indexWeekActive == semanas.length - 1) {
-      if (dia.indexWeek > diaMayor.indexWeek) {
+      if (diaSeleccionado.indexWeek > finMes.indexWeek) {
         //cambiar año y mes si es necesario
         anio = monthSelectView == 12 ? anio + 1 : anio; //año
         mes = mes == 12 ? 1 : mes + 1; //mes
 
         //asignar valores a la fecha del dia que se visualizará
-        daySelect = dia.value;
+        daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
         mostrarVistaDia();
       }
     }
 
-    daySelect = dia.value;
+    //si estamos en los dias del mes:
+    daySelect = diaSeleccionado.value;
     monthSelectView = mes;
     yearSelect = anio;
 
@@ -679,16 +498,6 @@ class CalendarioViewModel extends ChangeNotifier {
       return true;
     }
     return false;
-  }
-
-  diasOtraSemana() {
-    if (indexWeekActive == 0) {
-      //Es la primera semana del mes
-    }
-
-    if (indexWeekActive == semanasDelMes.length - 1) {
-      //Es la ultima semana del mes
-    }
   }
 
   //Dividir el mes por semanas (en semanas de 0..6)
@@ -870,7 +679,6 @@ class CalendarioViewModel extends ChangeNotifier {
       //obtner dias del mes y semanas
       mesCompleto = armarMes(yearSelect, monthSelectView);
       semanasDelMes = addWeeks(mesCompleto);
-      // cargar(daySelect, monthSelectView, yearSelect);
 
       notifyListeners();
     } else {
@@ -881,13 +689,11 @@ class CalendarioViewModel extends ChangeNotifier {
         //obtner dias del mes y semanas
         mesCompleto = armarMes(yearSelect, monthSelectView);
         semanasDelMes = addWeeks(mesCompleto);
-        // cargar(daySelect, monthSelectView, yearSelect);
 
         notifyListeners();
       } else {
         //sumar un doa al dia seleccionado
         daySelect++;
-        // cargar(daySelect, monthSelectView, yearSelect);
 
         notifyListeners();
       }
@@ -996,25 +802,6 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
-  //Filtro de tareas por hora
-  List<TareaCalendarioModel> tareaHorax(
-      int hora, List<TareaCalendarioModel> tareas) {
-    return tareas.where((objeto) {
-      DateTime fechaObjeto = DateTime.parse(objeto.fechaIni);
-      print(fechaObjeto);
-      int horaObjeto = fechaObjeto.hour;
-      return horaObjeto == hora;
-    }).toList();
-  }
-
-  DateTime convertirStringADateTime(String fechaString) {
-    // Formato de la fecha
-    DateFormat formato = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-
-    // Convertir el string a DateTime
-    return formato.parse(fechaString);
-  }
-
   // Filtro de tareas por hora
   List<TareaCalendarioModel> tareaHora(
     int hora,
@@ -1037,92 +824,6 @@ class CalendarioViewModel extends ChangeNotifier {
     int hora = dateTime.hour;
 
     return hora;
-  }
-
-  // cargar(int day, int mont, int year) {
-  //   List<TareaCalendarioModel> tareasDia = []; //lista local de tareas del dia
-  //   tareasDia.clear(); //Limpiar lista
-  //   tareasHoraActual.clear(); //Limpiar lista
-  //   tareasDia = tareaDia(day, mont, year); //obtener las tareas del dia
-
-  //   //recorrer la lista de las horas del dia
-  //   for (var i = 0; i < Utilities.horasDelDia.length; i++) {
-  //     //Encontrar la hora de la lista
-  //     int hora = Utilities.horasDelDia[i].hora24;
-  //     //Agregar a la lista de tareas de la hora actual las tareas que pertenezcan a la hora recorrida
-  //     tareasHoraActual.addAll(tareaHora(hora, tareasDia));
-  //   }
-  //   notifyListeners();
-  //   print(tareasHoraActual.length);
-  // }
-
-  List<TareaCalendarioModel> cargar(int day, int mont, int year) {
-    List<TareaCalendarioModel> tareasHora = [];
-    // Obtener las tareas del día
-    List<TareaCalendarioModel> tareasDia = [];
-    // Limpiar lista de tareas de la hora actual
-    tareasDia.clear();
-    tareasHora.clear();
-
-    tareasDia = tareaDia(day, mont, year);
-
-    // Filtrar las tareas del día por hora y agregarlas a la lista de tareas de la hora actual
-    for (var tarea in tareasDia) {
-      int hora = obtenerHora(tarea.fechaIni);
-      if (Utilities.horasDelDia
-          .any((horaDelDia) => horaDelDia.hora24 == hora)) {
-        tareasHora.add(tarea);
-        notifyListeners();
-      }
-    }
-    notifyListeners();
-
-    print(" tareas hora del dia ${tareasHora.length}");
-    return tareasHora;
-  }
-
-  //dia anterior
-
-  List<TareaCalendarioModel> tareasDia = [];
-
-  diaAnteriorTareas() {
-    tareasDia.clear(); //Limpiar lista
-    //buscar el ultimo dia del mes
-    int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
-
-    //cambiar mes y anio si es necesario en el cambio de dia
-    if (monthSelectView == 1 && daySelect == 1) {
-      monthSelectView = 12;
-      yearSelect--;
-      daySelect = ultimodia;
-
-      mesCompleto = armarMes(yearSelect, monthSelectView);
-      //cambiar el indice de las semanas del mes correspondiente
-      semanasDelMes = addWeeks(mesCompleto);
-      // cargar(daySelect, monthSelectView, yearSelect);
-
-      notifyListeners();
-    } else {
-      if (daySelect == 1) {
-        daySelect = ultimodia;
-        monthSelectView--;
-        mesCompleto = armarMes(yearSelect, monthSelectView);
-        //cambiar el indeice de las semanas del mes que corresponda
-        semanasDelMes = addWeeks(mesCompleto);
-        // cargar(daySelect, monthSelectView, yearSelect);
-
-        notifyListeners();
-      } else {
-        //restar un dia al dia seleccionado
-        daySelect--;
-        // cargar(daySelect, monthSelectView, yearSelect);
-        notifyListeners();
-      }
-    }
-
-    tareasDia.addAll(cargar(daySelect, monthSelectView, yearSelect));
-
-    print(" $daySelect $monthSelectView $yearSelect regresando");
   }
 
 // Función para convertir un color hexadecimal en formato RGB
