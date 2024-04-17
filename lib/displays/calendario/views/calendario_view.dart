@@ -381,8 +381,12 @@ class _VistaMes extends StatelessWidget {
                   ? AppTheme.diasFueraMes
                   : AppTheme.normalBoldStyle;
               return GestureDetector(
-                onTap: () =>
-                    vm.diaCorrectoMes(dia, index, vm.monthSelectView, vm.yearSelect),
+                onTap: () => vm.diaCorrectoMes(
+                  dia,
+                  index,
+                  vm.monthSelectView,
+                  vm.yearSelect,
+                ),
                 child: Column(
                   children: [
                     Container(
@@ -460,6 +464,7 @@ class _VistaMes extends StatelessWidget {
                                 .length >
                             4)
                           Container(
+                            padding: const EdgeInsets.all(5),
                             alignment: Alignment.centerRight,
                             child: Text(
                               "Ver (+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
@@ -515,6 +520,15 @@ class _VistaDiaState extends State<_VistaDia> {
                 "Tareas",
                 style: AppTheme.normalBoldStyle,
               ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            height: 45,
+            alignment: Alignment.center,
+            child: const Text(
+              "Nueva",
+              style: AppTheme.tareaStyle,
             ),
           ),
         ],
@@ -597,6 +611,10 @@ class _VistaDiaState extends State<_VistaDia> {
                 ],
               ),
             ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add),
+            )
           ],
         ),
       );
