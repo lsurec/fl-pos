@@ -403,11 +403,13 @@ class _VistaMes extends StatelessWidget {
                       ),
                     ),
                     // if (vm.monthCurrent(dia.value, dia.indexWeek))
-                    SizedBox(
-                      height: 150,
-                      child: Column(
-                        children: [
-                          ListView.builder(
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.topCenter,
+                          height: 135,
+                          color: Colors.transparent,
+                          child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: vm
@@ -448,21 +450,24 @@ class _VistaMes extends StatelessWidget {
                               );
                             },
                           ),
-                          if (vm
-                                  .tareaDia(
-                                    dia.value,
-                                    vm.monthSelectView,
-                                    vm.yearSelect,
-                                  )
-                                  .length >
-                              4)
-                            Text(
+                        ),
+                        if (vm
+                                .tareaDia(
+                                  dia.value,
+                                  vm.monthSelectView,
+                                  vm.yearSelect,
+                                )
+                                .length >
+                            4)
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: Text(
                               "Ver (+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
                               textAlign: TextAlign.end,
                               style: AppTheme.tareaStyle,
-                            )
-                        ],
-                      ),
+                            ),
+                          )
+                      ],
                     ),
                   ],
                 ),
