@@ -286,7 +286,7 @@ class _VistaSemana extends StatelessWidget {
                 width: 50,
                 alignment: Alignment.topCenter,
                 child: GestureDetector(
-                onTap: () => vm.irAlDia(dia.value),
+                  onTap: () => vm.irAlDia(dia.value),
                   child: Column(
                     children: [
                       Container(
@@ -381,7 +381,8 @@ class _VistaMes extends StatelessWidget {
                   ? AppTheme.diasFueraMes
                   : AppTheme.normalBoldStyle;
               return GestureDetector(
-                onTap: () => vm.irAlDia(dia.value),
+                onTap: () =>
+                    vm.diaCorrecto(dia, vm.monthSelectView, vm.yearSelect),
                 child: Column(
                   children: [
                     Container(
@@ -407,7 +408,8 @@ class _VistaMes extends StatelessWidget {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: () => vm.irAlDia(dia.value),
+                            onTap: () => vm.diaCorrecto(
+                                dia, vm.monthSelectView, vm.yearSelect),
                             child: Container(
                               alignment: Alignment.topCenter,
                               height: 130,

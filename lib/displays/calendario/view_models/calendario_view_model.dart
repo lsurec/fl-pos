@@ -441,17 +441,63 @@ class CalendarioViewModel extends ChangeNotifier {
     print("IR AL DIA $verDia DEL MES $monthSelectView");
   }
 
-  irAlDiaCorrecto(DiaModel dia, int month) {
-    daySelect = dia.value;
+  void diaMayorSem1() {
+    List<DiaModel> primeraSemana = semanasDelMes[0];
+    DiaModel diaMayor = primeraSemana.reduce(
+        (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax);
+    print(
+        'El día mayor de la semana es: ${diaMayor.name} ${diaMayor.value} index ${diaMayor.indexWeek} mes $monthSelectView');
+  }
 
-    int indiceDiaMayor = semanasDelMes[0][dia.indexWeek].indexWeek;
-    int diaMayor = semanasDelMes[0][dia.indexWeek].value;
+  diaCorrecto(DiaModel dia, int mes, int anio) {
+    print("$mes mes recibido -- ${dia.value} dia recibido");
+    List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
+    List<DiaModel> primeraSemana = semanas[0];
+    DiaModel diaMayor = primeraSemana.reduce(
+        (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax);
 
-    print("IR A VER AL DIA $indiceDiaMayor $diaMayor");
+    //Para almacenar el dia numero 1 del mes
+    DiaModel? primerDia1;
+
+    //recorrer semana para encontrar el primer dia del mes (dia 1)
+    for (int i = 0; i < primeraSemana.length; i++) {
+      DiaModel dia = primeraSemana[i];
+      if (dia.value == 1) {
+        primerDia1 = dia;
+      }
+    }
 
     // print(
-    //     "IR A VER AL DIA ${dia.name} dia ${semanasDelMes[0][dia.indexWeek].value}");
+    //   "dia ${diaMayor.value} menor ${dia.value} e indice ${diaMayor.indexWeek} menor ${dia.indexWeek}",
+    // );
+    // print("dia seleccionado semana ${dia.name} ${dia.value} ${dia.indexWeek} ");
+    // print(
+    //   "dia mayor de la semana ${diaMayor.name} ${diaMayor.value} ${diaMayor.indexWeek} ",
+    // );
+    // print(
+    //   "primer dia de la semana ${primerDia1!.name} ${primerDia1.value} ${primerDia1.indexWeek} ",
+    // );
+
+    if (dia.indexWeek >= primerDia1!.indexWeek) {
+      print("es dia del mes $monthSelectView");
+
+      daySelect = dia.value;
+      monthSelectView = mes;
+      yearSelect = anio;
+      mostrarVistaDia();
+    }
+
+    if (dia.indexWeek < primerDia1.indexWeek) {
+      anio = mes == 1 ? anio - 1 : anio; //año
+      mes = mes == 1 ? 12 : mes - 1; //mes
+      print("es dia del mes $mes");
+
+      daySelect = dia.value;
+      monthSelectView = mes;
+      yearSelect = anio;
+      mostrarVistaDia();
+    }
   }
 
   //verificar si un dia es del mes
