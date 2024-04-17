@@ -612,7 +612,13 @@ class _VistaDiaState extends State<_VistaDia> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () => vm.crearTarea(
+                context,
+                horasDia[indexHora],
+                vm.daySelect,
+                vm.monthSelectView,
+                vm.yearSelect,
+              ),
               icon: const Icon(Icons.add),
             )
           ],

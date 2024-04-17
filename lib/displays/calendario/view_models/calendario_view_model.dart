@@ -962,4 +962,65 @@ class CalendarioViewModel extends ChangeNotifier {
     //si todo está bien retornar true
     return true;
   }
+
+  //Realizar consumos y navegar a crear tarea
+  crearTarea(
+    BuildContext context,
+    HorasModel hora,
+    int dia,
+    int mes,
+    int anio,
+  ) async {
+    //Armar fecha para la tarea con los parametros recibidos
+    DateTime fehcaHoraSeleccionadas = DateTime(
+      anio,
+      mes,
+      dia,
+      hora.hora24,
+      fechaHoy.minute,
+    );
+
+    //view models Crear Tarea
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+    isLoading = true; //cargar pantalla
+    //consumos
+    final bool succesTipos =
+        await vmCrear.obtenerTiposTarea(context); //tipos de tarea
+
+    if (!succesTipos) {
+      isLoading = false;
+      return;
+    }
+
+    final bool succesEstados =
+        await vmCrear.obtenerEstados(context); //estados de tarea
+    if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
+    final bool succesPrioridades =
+        await vmCrear.obtenerPrioridades(context); //prioridades de tarea
+    if (!succesPrioridades) {
+      isLoading = false;
+      return;
+    }
+
+    final bool succesPeriodicidades =
+        await vmCrear.obtenerPeriodicidad(context); //periodicidades
+    if (!succesPeriodicidades) {
+      isLoading = false;
+      return;
+    }
+
+    vmCrear.fechaInicial = fehcaHoraSeleccionadas;
+    vmCrear.fechaFinal = vmCrear.addDate10Min(vmCrear.fechaInicial);
+
+    vmCrear.files.clear();
+
+    //Navegar a la vista de crear tareas
+    Navigator.pushNamed(context, AppRoutes.createTask);
+
+    isLoading = false; //Detener carga
+  }
 }
