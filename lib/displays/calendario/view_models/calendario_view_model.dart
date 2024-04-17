@@ -24,9 +24,6 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<String> list = <String>['One', 'Two', 'Three', 'Four'];
-  DateTime? hoy;
-
   //Variables a utlizar en e calendario
 
   bool vistaMes = true;
@@ -507,6 +504,62 @@ class CalendarioViewModel extends ChangeNotifier {
       yearSelect = anio;
       mostrarVistaDia();
     }
+  }
+
+  diaCorrectoSemana(DiaModel dia, int mes, int anio) {
+    List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
+
+    List<DiaModel> primeraSemana = semanas[0];
+    List<DiaModel> ultimaSemana = semanas[semanas.length - 1];
+
+    //obtener el ultimo dia mayor de la ultima semana
+    DiaModel diaMayor = ultimaSemana.reduce(
+      (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax,
+    );
+
+    //Para almacenar el dia numero 1 del mes
+    DiaModel? primerDia1;
+
+    //recorrer semana para encontrar el primer dia del mes (dia 1)
+    for (int i = 0; i < primeraSemana.length; i++) {
+      DiaModel dia = primeraSemana[i];
+      if (dia.value == 1) {
+        primerDia1 = dia;
+      }
+    }
+
+    if (indexWeekActive == 0) {
+      if (dia.indexWeek < primerDia1!.indexWeek) {
+        anio = mes == 1 ? anio - 1 : anio; //año
+        mes = mes == 1 ? 12 : mes - 1; //mes
+
+        //asignar valores a la fecha del dia que se visualizará
+        daySelect = dia.value;
+        monthSelectView = mes;
+        yearSelect = anio;
+        mostrarVistaDia();
+      }
+    }
+
+    if (indexWeekActive == semanas.length - 1) {
+      if (dia.indexWeek > diaMayor.indexWeek) {
+        //cambiar año y mes si es necesario
+        anio = monthSelectView == 12 ? anio + 1 : anio; //año
+        mes = mes == 12 ? 1 : mes + 1; //mes
+
+        //asignar valores a la fecha del dia que se visualizará
+        daySelect = dia.value;
+        monthSelectView = mes;
+        yearSelect = anio;
+        mostrarVistaDia();
+      }
+    }
+
+    daySelect = dia.value;
+    monthSelectView = mes;
+    yearSelect = anio;
+
+    mostrarVistaDia();
   }
 
   //verificar si un dia es del mes

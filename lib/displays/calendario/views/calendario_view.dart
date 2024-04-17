@@ -281,69 +281,69 @@ class _VistaSemana extends StatelessWidget {
         (index) => TableRow(
           children: semanas[vm.indexWeekActive].map((dia) {
             return TableCell(
-              child: Container(
-                height: 850,
-                width: 50,
-                alignment: Alignment.topCenter,
-                child: GestureDetector(
-                  onTap: () => vm.irAlDia(dia.value),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: dia.value == vm.today &&
-                                  vm.monthSelectView == vm.month &&
-                                  vm.yearSelect == vm.year
-                              ? Colors.blue.shade300
-                              : null,
-                          border: const Border(
-                            bottom: BorderSide(
-                              color: Color.fromRGBO(0, 0, 0, 0.12),
-                            ),
-                          ), // Agregar borde inferior
-                        ),
-                        child: Center(
-                          child: Text(
-                            "${dia.value}",
-                            style: AppTheme.normalBoldStyle,
+              child: GestureDetector(
+                onTap: () => vm.diaCorrectoSemana(
+                  dia,
+                  vm.monthSelectView,
+                  vm.yearSelect,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: dia.value == vm.today &&
+                                vm.monthSelectView == vm.month &&
+                                vm.yearSelect == vm.year
+                            ? Colors.blue.shade300
+                            : null,
+                        border: const Border(
+                          bottom: BorderSide(
+                            color: Color.fromRGBO(0, 0, 0, 0.12),
                           ),
+                        ), // Agregar borde inferior
+                      ),
+                      child: Center(
+                        child: Text(
+                          "${dia.value}",
+                          style: AppTheme.normalBoldStyle,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: vm
-                              .tareaDia(
-                                  dia.value, vm.monthSelectView, vm.yearSelect)
-                              .length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final List<TareaCalendarioModel> tareasDia =
-                                vm.tareaDia(
-                              dia.value,
-                              vm.resolveMonth(index),
-                              vm.resolveYear(index),
-                            );
-                            return Container(
-                              alignment: Alignment.center,
-                              margin: const EdgeInsets.only(bottom: 2),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    tareasDia[index].tarea.toString(),
-                                    style: AppTheme.taskStyle,
-                                  ),
-                                  const Divider(),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                    ),
+                    Container(
+                      height: 850,
+                      padding: const EdgeInsets.all(5),
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm
+                            .tareaDia(
+                                dia.value, vm.monthSelectView, vm.yearSelect)
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final List<TareaCalendarioModel> tareasDia =
+                              vm.tareaDia(
+                            dia.value,
+                            vm.resolveMonth(index),
+                            vm.resolveYear(index),
+                          );
+                          return Container(
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(bottom: 2),
+                            child: Column(
+                              children: [
+                                Text(
+                                  tareasDia[index].tarea.toString(),
+                                  style: AppTheme.taskStyle,
+                                ),
+                                const Divider(),
+                              ],
+                            ),
+                          );
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );
@@ -403,59 +403,50 @@ class _VistaMes extends StatelessWidget {
                       ),
                     ),
                     // if (vm.monthCurrent(dia.value, dia.indexWeek))
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
+                    SizedBox(
+                      height: 150,
                       child: Column(
                         children: [
-                          GestureDetector(
-                            onTap: () => vm.diaCorrecto(
-                                dia, vm.monthSelectView, vm.yearSelect),
-                            child: Container(
-                              alignment: Alignment.topCenter,
-                              height: 130,
-                              color: Colors.transparent,
-                              child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: vm
-                                            .tareaDia(
-                                              dia.value,
-                                              vm.monthSelectView,
-                                              vm.yearSelect,
-                                            )
-                                            .length >=
-                                        5
-                                    ? 4
-                                    : vm
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: vm
                                         .tareaDia(
                                           dia.value,
                                           vm.monthSelectView,
                                           vm.yearSelect,
                                         )
-                                        .length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final List<TareaCalendarioModel> tareasDia =
-                                      vm.tareaDia(
-                                    dia.value,
-                                    vm.monthSelectView,
-                                    vm.yearSelect,
-                                  );
-                                  return Container(
-                                    alignment: Alignment.center,
-                                    margin: const EdgeInsets.only(bottom: 2),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          tareasDia[index].tarea.toString(),
-                                          style: AppTheme.taskStyle,
-                                        ),
-                                        const Divider(height: 5),
-                                      ],
+                                        .length >=
+                                    5
+                                ? 4
+                                : vm
+                                    .tareaDia(
+                                      dia.value,
+                                      vm.monthSelectView,
+                                      vm.yearSelect,
+                                    )
+                                    .length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final List<TareaCalendarioModel> tareasDia =
+                                  vm.tareaDia(
+                                dia.value,
+                                vm.monthSelectView,
+                                vm.yearSelect,
+                              );
+                              return Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(bottom: 2),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      tareasDia[index].tarea.toString(),
+                                      style: AppTheme.taskStyle,
                                     ),
-                                  );
-                                },
-                              ),
-                            ),
+                                    const Divider(height: 5),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
                           if (vm
                                   .tareaDia(
@@ -465,13 +456,10 @@ class _VistaMes extends StatelessWidget {
                                   )
                                   .length >
                               4)
-                            Container(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "Ver (+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
-                                textAlign: TextAlign.end,
-                                style: AppTheme.tareaStyle,
-                              ),
+                            Text(
+                              "Ver (+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
+                              textAlign: TextAlign.end,
+                              style: AppTheme.tareaStyle,
                             )
                         ],
                       ),
