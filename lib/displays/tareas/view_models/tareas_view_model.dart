@@ -159,6 +159,7 @@ class TareasViewModel extends ChangeNotifier {
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
     isLoading = true; //cargar pantalla
+    vmCrear.idPantalla = 1; //desde tareas
     //consumos
     final bool succesTipos =
         await vmCrear.obtenerTiposTarea(context); //tipos de tarea

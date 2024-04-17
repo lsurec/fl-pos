@@ -982,6 +982,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     //view models Crear Tarea
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+    vmCrear.idPantalla = 2; //desde calendario
 
     isLoading = true; //cargar pantalla
     //consumos

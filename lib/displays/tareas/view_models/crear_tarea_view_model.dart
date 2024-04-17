@@ -48,6 +48,7 @@ class CrearTareaViewModel extends ChangeNotifier {
   IdReferenciaModel? idReferencia; //id referencia
   UsuarioModel? responsable; //responsable activo de la tarea
   PeriodicidadModel? periodicidad; //peroodicidad tarea
+  int idPantalla = 1;
 
   //Guardar usuarios seleccionados para ser invitados de la tarea
   List<UsuarioModel> invitados = [];
