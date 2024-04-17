@@ -450,10 +450,15 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   diaCorrecto(DiaModel dia, int mes, int anio) {
-    print("$mes mes recibido -- ${dia.value} dia recibido");
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
-    List<DiaModel> primeraSemana = semanas[semanas.length - 1];
+    List<DiaModel> primeraSemana = semanas[0];
+    List<DiaModel> ultimaSemana = semanas[semanas.length - 1];
+
+    //obtener el ultimo dia mayor de la ultima semana
+    DiaModel diaMayor = ultimaSemana.reduce(
+      (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax,
+    );
 
     //Para almacenar el dia numero 1 del mes
     DiaModel? primerDia1;
@@ -481,6 +486,20 @@ class CalendarioViewModel extends ChangeNotifier {
     if (dia.indexWeek < primerDia1.indexWeek) {
       anio = mes == 1 ? anio - 1 : anio; //año
       mes = mes == 1 ? 12 : mes - 1; //mes
+
+      //asignar valores a la fecha del dia que se visualizará
+      daySelect = dia.value;
+      monthSelectView = mes;
+      yearSelect = anio;
+      mostrarVistaDia();
+    }
+
+    //si el indiece del dia seleccionado es mayor al indice del dia mayor del mes (28, 29, 20, 31)
+    //sumarle +1 al mes porque son días que le pertenecen al siguiente mes
+    if (dia.indexWeek > diaMayor.indexWeek) {
+      //cambiar año y mes si es necesario
+      anio = monthSelectView == 12 ? anio + 1 : anio; //año
+      mes = mes == 12 ? 1 : mes + 1; //mes
 
       //asignar valores a la fecha del dia que se visualizará
       daySelect = dia.value;
