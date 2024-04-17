@@ -470,17 +470,20 @@ class CalendarioViewModel extends ChangeNotifier {
 
     //si el indice del dia seleccionado es mayor al indice del primer dia del mes (1)
     //sigue siendo el mismo mes
-    if (dia.indexWeek >= primerDia1!.indexWeek) {
+    if (dia.value >= primerDia1!.value && dia.value <= diaMayor.value) {
+      print("Aqui entro 1 mes $mes");
       //asignar valores a la fecha del dia que se visualizará
       daySelect = dia.value;
       monthSelectView = mes;
       yearSelect = anio;
       mostrarVistaDia();
+      print("Aqui temino 1 mes $mes");
     }
 
     //si el indice el dia seleccionado es menor al indice del primer dia del mes (1)
     //restarle -1 al mes porque son dias del mes anterior
     if (dia.indexWeek < primerDia1.indexWeek) {
+      print("Aqui entro 2");
       anio = mes == 1 ? anio - 1 : anio; //año
       mes = mes == 1 ? 12 : mes - 1; //mes
 
@@ -491,9 +494,31 @@ class CalendarioViewModel extends ChangeNotifier {
       mostrarVistaDia();
     }
 
+    // print("${dia.value} dia seleccionado");
+    // print("${dia.indexWeek} indexdia seleccionado");
+
+    // print("${diaMayor.value} dia mayor");
+    // print("${diaMayor.indexWeek} indexdia mayor");
+
     //si el indiece del dia seleccionado es mayor al indice del dia mayor del mes (28, 29, 20, 31)
     //sumarle +1 al mes porque son días que le pertenecen al siguiente mes
-    if (dia.indexWeek > diaMayor.indexWeek) {
+
+    // print("${ultimaSemana[diaMayor.indexWeek].indexWeek} indexdia seleccionado");
+
+    // if (ultimaSemana[diaMayor.indexWeek].indexWeek < dia.indexWeek &&
+    //     ultimaSemana[diaMayor.indexWeek].value > dia.value) {
+    //   //cambiar año y mes si es necesario
+    //   anio = monthSelectView == 12 ? anio + 1 : anio; //año
+    //   mes = mes == 12 ? 1 : mes + 1; //mes
+
+    //   //asignar valores a la fecha del dia que se visualizará
+    //   daySelect = dia.value;
+    //   monthSelectView = mes;
+    //   yearSelect = anio;
+    //   mostrarVistaDia();
+    // }
+    if (dia.indexWeek > diaMayor.indexWeek && dia.value < diaMayor.indexWeek) {
+      print("Aqui entro 3");
       //cambiar año y mes si es necesario
       anio = monthSelectView == 12 ? anio + 1 : anio; //año
       mes = mes == 12 ? 1 : mes + 1; //mes
