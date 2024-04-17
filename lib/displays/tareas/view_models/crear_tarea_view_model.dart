@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -230,6 +231,44 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Obtener respuesta correcta del api
     NuevaTareaModel creada = res.message[0];
 
+    //Si se está creando desde busqueda de tareas
+    if (idPantalla == 1) {
+      //objeto de la vista de tareas
+    }
+
+    //Si se está creando desde el calendario
+    if (idPantalla == 2) {
+      //objeto de la vista calendario
+
+      TareaCalendarioModel(
+        rUserName: user,
+        tarea: creada.tarea,
+        descripcion: tituloController.text,
+        fechaIni: fechaInicial.toIso8601String(),
+        fechaFin: fechaFinal.toIso8601String(),
+        referencia: idReferencia!.referencia,
+        userName: user,
+        observacion1: observacionController.text,
+        nomUser: user,
+        nomCuentaCorrentista: "",
+        desTipoTarea: tipoTarea!.descripcion,
+        cuentaCorrentista: null,
+        cuentaCta: null,
+        contacto1: "",
+        direccionEmpresa: "",
+        weekNumber: 0,
+        cantidadContacto: null,
+        nombreContacto: null,
+        descripcionTarea: tituloController.text,
+        texto: observacionController.text,
+        backColor: "#000",
+        estado: estado!.estado,
+        desTarea: estado!.descripcion,
+        usuarioResponsable: responsable!.name,
+        nivelPrioridad: prioridad!.nivelPrioridad,
+        nomNivelPrioridad: prioridad!.nombre,
+      );
+    }
     //Crear modelo de Tarea para agregarla a la lista de tareas
     TareaModel resCreada = TareaModel(
       tarea: tarea,
