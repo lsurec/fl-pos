@@ -99,47 +99,66 @@ class ComentariosViewModel extends ChangeNotifier {
 
     final List<ObjetoComentarioModel> archivos = [];
 
-    for (var i = 0; i < files.length; i++) {
-      File file = files[i];
-      ObjetoComentarioModel archivo = ObjetoComentarioModel(
-        tareaComentarioObjeto: 1,
-        objetoNombre: obtenerNombreArchivo(file),
-        objetoSize: "",
-        objetoUrl: "",
+    if (archivos.isNotEmpty) {
+      for (var i = 0; i < files.length; i++) {
+        File file = files[i];
+        ObjetoComentarioModel archivo = ObjetoComentarioModel(
+          tareaComentarioObjeto: 1,
+          objetoNombre: obtenerNombreArchivo(file),
+          objetoSize: "",
+          objetoUrl: "",
+        );
+
+        archivos.add(archivo);
+      }
+
+      FilesService filesService = FilesService();
+
+      bool resFiles = await filesService.posFilesComent(
+        token,
+        user,
+        files,
+        comentarioCreado.tarea,
+        comentarioCreado.tareaComentario,
       );
 
-      archivos.add(archivo);
-    }
+      //si el consumo salió mal
+      if (!resFiles) {
+        isLoading = false;
 
-    FilesService filesService = FilesService();
+        ApiResModel error = ApiResModel(
+          succes: false,
+          message:
+              "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
+          url: "",
+          storeProcedure: null,
+        );
 
-    bool resFiles = await filesService.posFilesComent(
-      token,
-      user,
-      files,
-      comentarioCreado.tarea,
-      comentarioCreado.tareaComentario,
-    );
+        NotificationService.showErrorView(context, error);
 
-    //si el consumo salió mal
-    if (!resFiles) {
+        //Respuesta incorrecta
+        return;
+      }
+
       isLoading = false;
 
-      ApiResModel error = ApiResModel(
-        succes: false,
-        message:
-            "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
-        url: "",
-        storeProcedure: null,
+      //Crear modelo de comentario detalle, (comentario y objetos)
+      comentarioDetalle.add(
+        ComentarioDetalleModel(
+          comentario: comentarioCreado,
+          objetos: archivos,
+        ),
       );
 
-      NotificationService.showErrorView(context, error);
+      notifyListeners();
+      comentarioController.text = ""; //limpiar input
+      files.clear(); //limpiar lista de archivos
 
-      //Respuesta incorrecta
+      isLoading = false; //detener carga
+
+      //Retornar respuesta correcta
       return;
     }
-
-    isLoading = false;
 
     //Crear modelo de comentario detalle, (comentario y objetos)
     comentarioDetalle.add(
