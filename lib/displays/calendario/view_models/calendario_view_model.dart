@@ -827,23 +827,8 @@ class CalendarioViewModel extends ChangeNotifier {
     return hora;
   }
 
-// Función para convertir un color hexadecimal en formato RGB
-  List<int> hexToRgb(String hexColor) {
-    // Elimina el carácter '#'
-    if (hexColor[0] == '#') {
-      hexColor = hexColor.substring(1);
-    }
-
-    // Divide el color en componentes r, g y b
-    int r = int.parse(hexColor.substring(0, 2), radix: 16);
-    int g = int.parse(hexColor.substring(2, 4), radix: 16);
-    int b = int.parse(hexColor.substring(4, 6), radix: 16);
-
-    return [r, g, b];
-  }
-
   //Consumo de servicios para navegar a los detalles de la tarea
-  detalleTarea(
+  navegarDetalleTarea(
     BuildContext context,
     TareaCalendarioModel tarea,
   ) async {
@@ -965,7 +950,7 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   //Realizar consumos y navegar a crear tarea
-  crearTarea(
+  navegarCrearTarea(
     BuildContext context,
     HorasModel hora,
     int dia,

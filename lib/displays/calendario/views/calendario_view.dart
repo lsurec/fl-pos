@@ -486,7 +486,7 @@ class _VistaMes extends StatelessWidget {
 }
 
 class _VistaDia extends StatefulWidget {
-  const _VistaDia({super.key});
+  const _VistaDia();
 
   @override
   State<_VistaDia> createState() => _VistaDiaState();
@@ -582,6 +582,9 @@ class _VistaDiaState extends State<_VistaDia> {
                       );
                       //Tarea completa
                       final TareaCalendarioModel tarea = tareasHoraDia[index];
+                      final List<int> colorTarea = Utilities.hexToRgb(
+                        tarea.backColor,
+                      );
                       return CardWidget(
                         margin: const EdgeInsets.only(bottom: 5),
                         elevation: 0.3,
@@ -594,7 +597,7 @@ class _VistaDiaState extends State<_VistaDia> {
                               "ver detalles tarea ${tarea.tarea}",
                             );
 
-                            vm.detalleTarea(context, tarea);
+                            vm.navegarDetalleTarea(context, tarea);
                           },
                           child: ListTile(
                             title: Text(
@@ -602,6 +605,15 @@ class _VistaDiaState extends State<_VistaDia> {
                               style: AppTheme.normalBoldStyle,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
+                            ),
+                            trailing: Icon(
+                              Icons.circle,
+                              color: Color.fromRGBO(
+                                colorTarea[0],
+                                colorTarea[1],
+                                colorTarea[2],
+                                1,
+                              ),
                             ),
                           ),
                         ),
@@ -612,7 +624,7 @@ class _VistaDiaState extends State<_VistaDia> {
               ),
             ),
             IconButton(
-              onPressed: () => vm.crearTarea(
+              onPressed: () => vm.navegarCrearTarea(
                 context,
                 horasDia[indexHora],
                 vm.daySelect,
