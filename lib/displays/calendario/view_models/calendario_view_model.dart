@@ -361,16 +361,17 @@ class CalendarioViewModel extends ChangeNotifier {
       (currentMax, dia) => dia.value > currentMax.value ? dia : currentMax,
     );
 
-    //recorrer semana para encontrar el primer dia del mes (dia 1)
+    // Recorrer la primera semana para encontrar el primer día del mes (día 1)
     for (int i = 0; i < primeraSemana.length; i++) {
       DiaModel dia = primeraSemana[i];
       if (dia.value == 1) {
-        inicoMes = dia;
+        inicoMes = dia; // Asignar el día encontrado a la variable inicioMes
+        break; // Salir del bucle una vez encontrado el primer día del mes
       }
     }
 
     if (indexDay >= 0 && indexDay <= 6) {
-      if (diaSeleccionado.indexWeek > inicoMes!.indexWeek) {
+      if (diaSeleccionado.indexWeek < inicoMes!.indexWeek) {
         anio = mes == 1 ? anio - 1 : anio; //año
         mes = mes == 1 ? 12 : mes - 1; //mes
 
@@ -383,7 +384,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
 
     //si la semana seleccionada es la utima
-    if (indexDay >= (diasDelMes.length - 8) &&
+    if (indexDay >= (mesCompleto.length - 7) &&
         indexDay >= semanas[semanas.length - 1].length - 1) {
       // los dias siguientes son del mes siguienete
 
