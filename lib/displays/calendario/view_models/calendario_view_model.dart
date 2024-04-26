@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +81,9 @@ class CalendarioViewModel extends ChangeNotifier {
     semanasDelMes = agregarSemanas(month, year);
     indexWeekActive = 0;
 
-    obtenerTareasCalendario(context);
+    // obtenerTareasCalendario(context);
+
+    obtenerTareasRango(context, monthSelectView, yearSelect);
 
     mostrarVistaMes();
 
@@ -161,17 +164,21 @@ class CalendarioViewModel extends ChangeNotifier {
     return completarMes;
   }
 
-  mesSiguiente() async {
+  mesSiguiente(BuildContext context) async {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
     monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
+
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
     notifyListeners();
   }
 
-  mesAnterior() async {
+  mesAnterior(BuildContext context) async {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
     monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
+
     notifyListeners();
   }
 
@@ -229,6 +236,56 @@ class CalendarioViewModel extends ChangeNotifier {
     final ApiResModel res = await tareaService.getTareaCalendario("desa029",
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDI5IiwibmJmIjoxNzEzMjA0OTY0LCJleHAiOjE3NDQzMDg5NjQsImlhdCI6MTcxMzIwNDk2NH0.N0-ioXGBJ485Waco_0mPwWXP-A_JZk0Uu5Un77yhJJE");
 
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, res);
+      return;
+    }
+    //agregar tareas encontradas a la lista de tareas
+    tareas.addAll(res.message);
+
+    // print("tareas asigandas al usuario ${tareas.length}");
+
+    isLoading = false; //detener carga
+  }
+
+  obtenerTareasRango(BuildContext context, int mes, int anio) async {
+    int anioInicial = mes == 1 ? anio - 1 : anio;
+    int mesInicial = mes == 1 ? 12 : mes - 1;
+
+    int anioFinal = mes == 12 ? anio + 1 : anio;
+    int mesFinal = mes == 12 ? 1 : mes + 1;
+
+    // Agregamos un cero delante si el número del mes es menor que 10
+    String mesIniCero =
+        mesInicial < 10 ? '0$mesInicial' : mesInicial.toString();
+    String mesFinCero = mesFinal < 10 ? '0$mesFinal' : mesFinal.toString();
+
+    int ultimoDia = obtenerUltimoDiaMes(anioFinal, mesFinal);
+
+    String mesAnterior = '$anioInicial$mesIniCero${"01"} 00:00:00';
+    String mesSiguiente = '$anioFinal$mesFinCero$ultimoDia 23:59:59';
+
+    tareas.clear(); //limpiar lista
+
+    //obtener token y usuario
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia del servicio
+    final CalendarioTareaService tareaService = CalendarioTareaService();
+
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel res = await tareaService.getRangoTareasCalendario(
+      user,
+      token,
+      mesAnterior,
+      mesSiguiente,
+    );
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
@@ -561,7 +618,7 @@ class CalendarioViewModel extends ChangeNotifier {
     return indiceSemanaActual + 1;
   }
 
-  semanaSiguiente() {
+  semanaSiguiente(BuildContext context) async {
     if (indexWeekActive == semanasDelMes.length - 1) {
       yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
       monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
@@ -586,9 +643,11 @@ class CalendarioViewModel extends ChangeNotifier {
       indexWeekActive++;
       notifyListeners();
     }
+
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
-  semanaAnterior() {
+  semanaAnterior(BuildContext context) async {
     if (indexWeekActive == 0) {
       yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
       monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
@@ -613,6 +672,7 @@ class CalendarioViewModel extends ChangeNotifier {
       indexWeekActive--;
       notifyListeners();
     }
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
   //Devuelve un mes dependiedo de las semanas

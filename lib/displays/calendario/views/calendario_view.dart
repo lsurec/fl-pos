@@ -121,7 +121,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             Row(
                               children: [
                                 TextButton(
-                                  onPressed: () => vm.mesAnterior(),
+                                  onPressed: () => vm.mesAnterior(context),
                                   child: const Text(
                                     "Mes Anterior",
                                     style: AppTheme.normalBoldStyle,
@@ -129,7 +129,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                 ),
                                 const Spacer(),
                                 TextButton(
-                                  onPressed: () => vm.mesSiguiente(),
+                                  onPressed: () => vm.mesSiguiente(context),
                                   child: const Text(
                                     "Mes Siguiente",
                                     style: AppTheme.normalBoldStyle,
@@ -149,7 +149,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             Row(
                               children: [
                                 TextButton(
-                                  onPressed: () => vm.semanaAnterior(),
+                                  onPressed: () => vm.semanaAnterior(context),
                                   child: const Text(
                                     "Semana Anterior",
                                     style: AppTheme.normalBoldStyle,
@@ -157,7 +157,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                 ),
                                 const Spacer(),
                                 TextButton(
-                                  onPressed: () => vm.semanaSiguiente(),
+                                  onPressed: () => vm.semanaSiguiente(context),
                                   child: const Text(
                                     "Semana Siguiente",
                                     style: AppTheme.normalBoldStyle,
