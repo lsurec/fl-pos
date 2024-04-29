@@ -492,9 +492,8 @@ class CrearTareaViewModel extends ChangeNotifier {
       initialTime: initialTime, //hora inicial
     );
 
+    //si la fecha inicial es mayor a la fecha actual.
     if (compararFechas(fechaInicial, fechaHoraActual)) {
-      print("la inicial es mayor");
-
       initialTime = const TimeOfDay(hour: 0, minute: 0);
 
       //si la hora seleccionada es null, no hacer nada.
@@ -517,11 +516,6 @@ class CrearTareaViewModel extends ChangeNotifier {
       notifyListeners();
       return;
     }
-
-    //TODO: verificar con los minutos de la misma hora
-    // Verifica si se seleccionó una hora y si es anterior a la hora actual
-
-    //euuu
 
     if (pickedTime != null) {
       if (pickedTime.hour < fechaHoraActual.hour ||

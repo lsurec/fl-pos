@@ -245,8 +245,6 @@ class CalendarioViewModel extends ChangeNotifier {
     //agregar tareas encontradas a la lista de tareas
     tareas.addAll(res.message);
 
-    // print("tareas asigandas al usuario ${tareas.length}");
-
     isLoading = false; //detener carga
   }
 
@@ -294,9 +292,6 @@ class CalendarioViewModel extends ChangeNotifier {
     }
     //agregar tareas encontradas a la lista de tareas
     tareas.addAll(res.message);
-
-    // print("tareas asigandas al usuario ${tareas.length}");
-
     isLoading = false; //detener carga
   }
 
@@ -320,7 +315,6 @@ class CalendarioViewModel extends ChangeNotifier {
     if (i >= dias.length - 6 &&
         i < dias.length &&
         date < dias[dias.length - 1].value) {
-      // print(" indiece $i dia $date");
       return false;
     }
     return true;
@@ -759,7 +753,6 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-    print("$daySelect $monthSelectView $yearSelect siguiente");
   }
 
   diaAnterior() {
@@ -791,8 +784,6 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-
-    print(" $daySelect $monthSelectView $yearSelect regresando");
   }
 
   int obtenerUltimoDiaMes(int anio, int mes) {
