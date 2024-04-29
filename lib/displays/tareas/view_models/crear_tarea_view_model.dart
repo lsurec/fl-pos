@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/displays/tareas/services/services.d
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -422,11 +423,13 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
+    DateTime fechaHoraActual = DateTime.now();
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaInicial,
-      firstDate: DateTime(1950),
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
     );
 
@@ -478,9 +481,11 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
+    DateTime fechaHoraActual = DateTime.now();
+
     TimeOfDay? initialTime = TimeOfDay(
-      hour: fechaInicial.hour,
-      minute: fechaInicial.minute,
+      hour: fechaHoraActual.hour,
+      minute: fechaHoraActual.minute,
     );
 
     //abre el time picker con la hora inicial
@@ -489,6 +494,50 @@ class CrearTareaViewModel extends ChangeNotifier {
       initialTime: initialTime, //hora inicial
     );
 
+    if (compararFechas(fechaInicial, fechaHoraActual)) {
+      print("la inicial es mayor");
+
+      initialTime = const TimeOfDay(hour: 0, minute: 0);
+
+      //si la hora seleccionada es null, no hacer nada.
+      if (pickedTime == null) return;
+      //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+      fechaInicial = DateTime(
+        fechaInicial.year,
+        fechaInicial.month,
+        fechaInicial.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+
+      //si la fecha inicial es despues de la final
+      if (fechaInicial.isAfter(fechaFinal)) {
+        //fecha final será igual a la fecha inicial + 10 minutos
+        fechaFinal = addDate10Min(fechaInicial);
+      }
+
+      notifyListeners();
+      return;
+    }
+
+    // Verifica si se seleccionó una hora y si es anterior a la hora actual
+    if (pickedTime != null && pickedTime.hour < fechaHoraActual.hour) {
+      // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
+      NotificationService.showSnackbar(
+        "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaHoraActual)}",
+      );
+
+      fechaInicial = DateTime(
+        fechaInicial.year,
+        fechaInicial.month,
+        fechaInicial.day,
+        fechaHoraActual.hour,
+        fechaHoraActual.minute,
+      );
+
+      notifyListeners();
+      return;
+    }
     //si la hora seleccionada es null, no hacer nada.
     if (pickedTime == null) return;
 
@@ -508,6 +557,13 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  bool compararFechas(
+    DateTime fechaInicial,
+    DateTime fechaFinal,
+  ) {
+    return fechaInicial.isAfter(fechaFinal);
   }
 
   //Abrir picker de la fecha final
@@ -557,13 +613,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
-  }
-
-  //Verifica si las fechas son iguales en día mes y año (iguales = true) (diferentes = false)
-  bool compararFechas(DateTime fechaInicio, DateTime fechaFinal) {
-    return fechaInicio.year == fechaFinal.year &&
-        fechaInicio.month == fechaFinal.month &&
-        fechaInicio.day == fechaFinal.day;
   }
 
   //Obtener Tipos
