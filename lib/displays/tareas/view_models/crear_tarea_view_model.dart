@@ -2,7 +2,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -174,6 +174,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     //view model de Tareas para insertar la nueva tarea en la lista de tareas
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
+    //view model del calendario
+    final vmCalendario =
+        Provider.of<CalendarioViewModel>(context, listen: false);
+
     //Instancia del servicio
     final TareaService tareaService = TareaService();
 
@@ -181,15 +185,12 @@ class CrearTareaViewModel extends ChangeNotifier {
     NuevaTareaModel tarea = NuevaTareaModel(
       tarea: 0,
       descripcion: tituloController.text,
-      // fechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
       fechaIni: fechaInicial,
-      // fechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
       fechaFin: fechaFinal,
       referencia: idReferencia!.referencia,
       userName: user,
       observacion1: observacionController.text,
       tipoTarea: tipoTarea!.tipoTarea,
-
       estado: estado!.estado,
       empresa: empresa,
       nivelPrioridad: prioridad!.nivelPrioridad,
@@ -215,41 +216,29 @@ class CrearTareaViewModel extends ChangeNotifier {
     NuevaTareaModel creada = res.message[0];
 
     //Si se está creando desde busqueda de tareas
-    if (idPantalla == 1) {
+
+    if (idPantalla == 1 && res.succes) {
       //objeto de la vista de tareas
+      vmTarea.loadData(context);
+      //mostrra mensaje
+      NotificationService.showSnackbar(
+        "Tarea creada correctamente.",
+      );
     }
 
-    //Si se está creando desde el calendario
-    if (idPantalla == 2) {
-      //objeto de la vista calendario
+    DateTime hoyFecha = DateTime.now();
 
-      TareaCalendarioModel(
-        rUserName: user,
-        tarea: creada.tarea,
-        descripcion: tituloController.text,
-        fechaIni: fechaInicial.toIso8601String(),
-        fechaFin: fechaFinal.toIso8601String(),
-        referencia: idReferencia!.referencia,
-        userName: user,
-        observacion1: observacionController.text,
-        nomUser: user,
-        nomCuentaCorrentista: "",
-        desTipoTarea: tipoTarea!.descripcion,
-        cuentaCorrentista: null,
-        cuentaCta: null,
-        contacto1: "",
-        direccionEmpresa: "",
-        weekNumber: 0,
-        cantidadContacto: null,
-        nombreContacto: null,
-        descripcionTarea: tituloController.text,
-        texto: observacionController.text,
-        backColor: "#000",
-        estado: estado!.estado,
-        desTarea: estado!.descripcion,
-        usuarioResponsable: responsable!.name,
-        nivelPrioridad: prioridad!.nivelPrioridad,
-        nomNivelPrioridad: prioridad!.nombre,
+    //Si se está creando desde el calendario
+    if (idPantalla == 2 && res.succes) {
+      //objeto de la vista calendario
+      vmCalendario.obtenerTareasRango(
+        context,
+        hoyFecha.month,
+        hoyFecha.year,
+      );
+      //mostrra mensaje
+      NotificationService.showSnackbar(
+        "Tarea creada correctamente.",
       );
     }
     //Crear modelo de Tarea para agregarla a la lista de tareas
@@ -421,12 +410,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    //insertar tarea al inicio de la lista de tareas
-    vmTarea.insertarTarea(resCreada);
-    //mostrra mensaje
-    NotificationService.showSnackbar(
-      "Tarea creada correctamente.",
-    );
+    // //mostrra mensaje
+    // NotificationService.showSnackbar(
+    //   "Tarea creada correctamente.",
+    // );
 
     isLoading = false; //detener carga
 
