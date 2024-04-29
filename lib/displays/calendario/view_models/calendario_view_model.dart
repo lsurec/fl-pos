@@ -66,6 +66,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
   Future<void> loadData(BuildContext context) async {
     fechaHoy = DateTime.now();
+    fechaPicker = DateTime.now();
 
     today = fechaHoy.day;
     month = fechaHoy.month;
@@ -391,11 +392,14 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  mostrarVistaDia(BuildContext context) {
+  mostrarVistaDia(BuildContext context, int navegar) {
     vistaDia = true;
     vistaSemana = false;
     vistaMes = false;
-    Navigator.pop(context);
+
+    if (navegar == 0) {
+      Navigator.pop(context);
+    }
     notifyListeners();
   }
 
@@ -433,7 +437,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia(context);
+        mostrarVistaDia(context, 1);
       }
     }
 
@@ -451,7 +455,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia(context);
+        mostrarVistaDia(context, 1);
       }
     }
 
@@ -459,7 +463,10 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = diaSeleccionado.value;
     monthSelectView = mes;
     yearSelect = anio;
-    mostrarVistaDia(context);
+
+    //fecha picker
+    fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
+    mostrarVistaDia(context, 1);
   }
 
   diaCorrectoSemana(
@@ -495,7 +502,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia(context);
+        mostrarVistaDia(context, 1);
       }
     }
 
@@ -510,7 +517,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia(context);
+        mostrarVistaDia(context, 1);
       }
     }
 
@@ -518,8 +525,9 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = diaSeleccionado.value;
     monthSelectView = mes;
     yearSelect = anio;
-
-    mostrarVistaDia(context);
+    //fecha picker
+    fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
+    mostrarVistaDia(context, 1);
   }
 
   //verificar si un dia es del mes
@@ -1096,5 +1104,64 @@ class CalendarioViewModel extends ChangeNotifier {
     }
 
     return false;
+  }
+
+  DateTime fechaPicker = DateTime.now();
+
+  Future<void> abrirFechaInicial(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaPicker,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    if (vistaMes) {
+      yearSelect = pickedDate.year;
+      monthSelectView = pickedDate.month;
+      daySelect = pickedDate.day;
+      fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
+      notifyListeners();
+    }
+
+    List<List<DiaModel>> nuevasSemanas = agregarSemanas(
+      pickedDate.month,
+      pickedDate.year,
+    );
+
+    if (vistaSemana) {
+      //Buscar la semana que tiene el día de hoy
+      for (var i = 0; i < nuevasSemanas.length; i++) {
+        List<DiaModel> semana = nuevasSemanas[i];
+        for (var j = 0; j < semana.length; j++) {
+          if (semana[j].value == pickedDate.day) {
+            indexWeekActive = i;
+            notifyListeners();
+            break;
+          }
+        }
+      }
+
+      yearSelect = pickedDate.year;
+      monthSelectView = pickedDate.month;
+      daySelect = pickedDate.day;
+      fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
+
+      notifyListeners();
+    }
+
+    if (vistaDia) {
+      yearSelect = pickedDate.year;
+      monthSelectView = pickedDate.month;
+      daySelect = pickedDate.day;
+      fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
+      notifyListeners();
+    }
+
+    notifyListeners();
   }
 }

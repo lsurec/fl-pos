@@ -36,9 +36,17 @@ class _CalendarioViewState extends State<CalendarioView> {
           length: 3,
           child: Scaffold(
             appBar: AppBar(
-              title: const Text(
-                'Calendario',
-                style: AppTheme.titleStyle,
+              title: Row(
+                children: [
+                  const Text(
+                    'Calendario',
+                    style: AppTheme.titleStyle,
+                  ),
+                  IconButton(
+                    onPressed: () => vm.abrirFechaInicial(context),
+                    icon: const Icon(Icons.calendar_month),
+                  ),
+                ],
               ),
               actions: <Widget>[
                 const Text(
@@ -202,10 +210,14 @@ class _DrawerCalendar extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ListTile(
-                title: Text(
+              ListTile(
+                title: const Text(
                   "VISTAS",
                   style: AppTheme.normalBoldStyle,
+                ),
+                trailing: IconButton(
+                  onPressed: () => vm.abrirFechaInicial(context),
+                  icon: const Icon(Icons.calendar_month),
                 ),
               ),
               const Divider(),
@@ -233,7 +245,7 @@ class _DrawerCalendar extends StatelessWidget {
                   style: AppTheme.normalBoldStyle,
                 ),
                 leading: const Icon(Icons.today),
-                onTap: () => vm.mostrarVistaDia(context),
+                onTap: () => vm.mostrarVistaDia(context, 0),
               ),
               const Divider(),
             ],
