@@ -41,41 +41,21 @@ class _CalendarioViewState extends State<CalendarioView> {
                 style: AppTheme.titleStyle,
               ),
               actions: <Widget>[
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => vm.loadData(context),
-                      icon: const Icon(Icons.calendar_today_outlined),
-                    ),
-                    IconButton(
-                      onPressed: () => vm.mostrarVistaMes(),
-                      icon: const Icon(
-                        Icons.calendar_month,
-                        size: 40,
-                      ),
-                      tooltip: "Vista Mes",
-                    ),
-                    IconButton(
-                      onPressed: () => vm.mostrarVistaSemana(),
-                      icon: const Icon(
-                        Icons.date_range,
-                        size: 40,
-                      ),
-                      tooltip: "Vista Semana",
-                    ),
-                    IconButton(
-                      onPressed: () => vm.mostrarVistaDia(),
-                      icon: const Icon(
-                        Icons.today,
-                        size: 40,
-                      ),
-                      tooltip: "Vista Día",
-                    ),
-                  ],
+                const Text(
+                  "Hoy",
+                  style: AppTheme.normalBoldStyle,
+                ),
+                IconButton(
+                  onPressed: () => vm.loadData(context),
+                  icon: const Icon(Icons.today),
+                  tooltip: "Nueva Tarea",
+                ),
+                const SizedBox(
+                  width: 15,
                 )
               ],
             ),
-            drawer: Padding(padding: EdgeInsets.all(10)),
+            drawer: const _DrawerCalendar(),
             body: RefreshIndicator(
               onRefresh: () async {
                 vm.loadData(context);
@@ -205,6 +185,65 @@ class _CalendarioViewState extends State<CalendarioView> {
   }
 }
 
+class _DrawerCalendar extends StatelessWidget {
+  const _DrawerCalendar();
+
+  @override
+  Widget build(BuildContext context) {
+    final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+
+    final screenSize = MediaQuery.of(context).size;
+    return Drawer(
+      width: screenSize.width * 0.8,
+      backgroundColor: AppTheme.backroundColor,
+      child: Column(
+        children: [
+          const SizedBox(height: 30.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ListTile(
+                title: Text(
+                  "VISTAS",
+                  style: AppTheme.normalBoldStyle,
+                ),
+              ),
+              const Divider(),
+              ListTile(
+                title: const Text(
+                  "Mes",
+                  style: AppTheme.normalBoldStyle,
+                ),
+                leading: const Icon(Icons.calendar_month),
+                onTap: () => vm.mostrarVistaMes(context),
+              ),
+              const Divider(),
+              ListTile(
+                title: const Text(
+                  "Semana",
+                  style: AppTheme.normalBoldStyle,
+                ),
+                leading: const Icon(Icons.date_range),
+                onTap: () => vm.mostrarVistaSemana(context),
+              ),
+              const Divider(),
+              ListTile(
+                title: const Text(
+                  "Día",
+                  style: AppTheme.normalBoldStyle,
+                ),
+                leading: const Icon(Icons.today),
+                onTap: () => vm.mostrarVistaDia(context),
+              ),
+              const Divider(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _NombreDias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -288,6 +327,7 @@ class _VistaSemana extends StatelessWidget {
             return TableCell(
               child: GestureDetector(
                 onTap: () => vm.diaCorrectoSemana(
+                  context,
                   dia,
                   vm.monthSelectView,
                   vm.yearSelect,
@@ -387,6 +427,7 @@ class _VistaMes extends StatelessWidget {
                   : AppTheme.normalBoldStyle;
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
+                  context,
                   dia,
                   index,
                   vm.monthSelectView,

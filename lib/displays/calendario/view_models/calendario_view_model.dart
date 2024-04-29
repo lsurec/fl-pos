@@ -85,8 +85,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
     obtenerTareasRango(context, monthSelectView, yearSelect);
 
-    mostrarVistaMes();
-
     notifyListeners();
   }
 
@@ -363,14 +361,15 @@ class CalendarioViewModel extends ChangeNotifier {
     return semanas;
   }
 
-  mostrarVistaMes() {
+  mostrarVistaMes(BuildContext context) {
     vistaMes = true;
     vistaDia = false;
     vistaSemana = false;
+    Navigator.pop(context);
     notifyListeners();
   }
 
-  mostrarVistaSemana() {
+  mostrarVistaSemana(BuildContext context) {
     //Buscar la semana que tiene el día de hoy
     for (var i = 0; i < semanasDelMes.length; i++) {
       List<DiaModel> semana = semanasDelMes[i];
@@ -387,18 +386,22 @@ class CalendarioViewModel extends ChangeNotifier {
     vistaSemana = true;
     vistaMes = false;
     vistaDia = false;
+
+    Navigator.pop(context);
     notifyListeners();
   }
 
-  mostrarVistaDia() {
+  mostrarVistaDia(BuildContext context) {
     vistaDia = true;
     vistaSemana = false;
     vistaMes = false;
+    Navigator.pop(context);
     notifyListeners();
   }
 
   //Navegar a vista Dia desde la vista del mes de manera correcta
-  diaCorrectoMes(DiaModel diaSeleccionado, int indexDay, int mes, int anio) {
+  diaCorrectoMes(BuildContext context, DiaModel diaSeleccionado, int indexDay,
+      int mes, int anio) {
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
     List<DiaModel> primeraSemana = semanas[0];
@@ -430,7 +433,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia();
+        mostrarVistaDia(context);
       }
     }
 
@@ -448,7 +451,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia();
+        mostrarVistaDia(context);
       }
     }
 
@@ -456,10 +459,11 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = diaSeleccionado.value;
     monthSelectView = mes;
     yearSelect = anio;
-    mostrarVistaDia();
+    mostrarVistaDia(context);
   }
 
-  diaCorrectoSemana(DiaModel diaSeleccionado, int mes, int anio) {
+  diaCorrectoSemana(
+      BuildContext context, DiaModel diaSeleccionado, int mes, int anio) {
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
     List<DiaModel> primeraSemana = semanas[0];
@@ -491,7 +495,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia();
+        mostrarVistaDia(context);
       }
     }
 
@@ -506,7 +510,7 @@ class CalendarioViewModel extends ChangeNotifier {
         daySelect = diaSeleccionado.value;
         monthSelectView = mes;
         yearSelect = anio;
-        mostrarVistaDia();
+        mostrarVistaDia(context);
       }
     }
 
@@ -515,7 +519,7 @@ class CalendarioViewModel extends ChangeNotifier {
     monthSelectView = mes;
     yearSelect = anio;
 
-    mostrarVistaDia();
+    mostrarVistaDia(context);
   }
 
   //verificar si un dia es del mes
