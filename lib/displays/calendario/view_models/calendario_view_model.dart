@@ -80,9 +80,22 @@ class CalendarioViewModel extends ChangeNotifier {
     daySelect = today; //hoy
 
     semanasDelMes = agregarSemanas(month, year);
-    indexWeekActive = 0;
 
-    // obtenerTareasCalendario(context);
+    if (vistaSemana) {
+      //Buscar la semana que tiene el día de hoy
+      for (var i = 0; i < semanasDelMes.length; i++) {
+        List<DiaModel> semana = semanasDelMes[i];
+        for (var j = 0; j < semana.length; j++) {
+          if (semana[j].value == today) {
+            indexWeekActive = i;
+            notifyListeners();
+            break;
+          }
+        }
+      }
+    } else {
+      indexWeekActive = 0;
+    }
 
     obtenerTareasRango(context, monthSelectView, yearSelect);
 
