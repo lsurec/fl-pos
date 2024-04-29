@@ -52,6 +52,8 @@ dependencies:
   share: ^2.0.2
   shared_preferences: ^2.0.15
   quiver: ^3.2.1
+  flutter_localizations:
+    sdk: flutter
   # permission_handler: ^11.3.0
   # open_file: ^3.3.2
 

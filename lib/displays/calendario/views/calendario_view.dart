@@ -32,158 +32,163 @@ class _CalendarioViewState extends State<CalendarioView> {
 
     return Stack(
       children: [
-        Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'Calendario',
-              style: AppTheme.titleStyle,
+        DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                'Calendario',
+                style: AppTheme.titleStyle,
+              ),
+              actions: <Widget>[
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => vm.loadData(context),
+                      icon: const Icon(Icons.calendar_today_outlined),
+                    ),
+                    IconButton(
+                      onPressed: () => vm.mostrarVistaMes(),
+                      icon: const Icon(
+                        Icons.calendar_month,
+                        size: 40,
+                      ),
+                      tooltip: "Vista Mes",
+                    ),
+                    IconButton(
+                      onPressed: () => vm.mostrarVistaSemana(),
+                      icon: const Icon(
+                        Icons.date_range,
+                        size: 40,
+                      ),
+                      tooltip: "Vista Semana",
+                    ),
+                    IconButton(
+                      onPressed: () => vm.mostrarVistaDia(),
+                      icon: const Icon(
+                        Icons.today,
+                        size: 40,
+                      ),
+                      tooltip: "Vista Día",
+                    ),
+                  ],
+                )
+              ],
             ),
-            leading: IconButton(
-              onPressed: () => vm.loadData(context),
-              icon: const Icon(Icons.calendar_today_outlined),
-            ),
-            actions: <Widget>[
-              Row(
+            drawer: Padding(padding: EdgeInsets.all(10)),
+            body: RefreshIndicator(
+              onRefresh: () async {
+                vm.loadData(context);
+              },
+              child: ListView(
                 children: [
-                  IconButton(
-                    onPressed: () => vm.mostrarVistaMes(),
-                    icon: const Icon(
-                      Icons.calendar_month,
-                      size: 40,
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        if (vm.vistaDia)
+                          Column(
+                            children: [
+                              Text(
+                                " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () => vm.diaAnterior(),
+                                    child: const Text(
+                                      "Dia Anterior",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  TextButton(
+                                    onPressed: () => vm.diaSiguiente(),
+                                    child: const Text(
+                                      "Dia Siguiente",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        if (vm.vistaMes)
+                          Column(
+                            children: [
+                              Text(
+                                "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () => vm.mesAnterior(context),
+                                    child: const Text(
+                                      "Mes Anterior",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  TextButton(
+                                    onPressed: () => vm.mesSiguiente(context),
+                                    child: const Text(
+                                      "Mes Siguiente",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        if (vm.vistaSemana)
+                          Column(
+                            children: [
+                              Text(
+                                vm.generateNameWeeck(),
+                                style: AppTheme.normalBoldStyle,
+                              ),
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () => vm.semanaAnterior(context),
+                                    child: const Text(
+                                      "Semana Anterior",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  TextButton(
+                                    onPressed: () =>
+                                        vm.semanaSiguiente(context),
+                                    child: const Text(
+                                      "Semana Siguiente",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
+                        const SizedBox(height: 10),
+                        if (vm.vistaMes || vm.vistaSemana) _NombreDias(),
+                        if (vm.vistaMes)
+                          // ignore: prefer_const_constructors
+                          _VistaMes(),
+
+                        if (vm.vistaSemana) _VistaSemana(),
+                        // const HorasTareaDia(),
+                        //si lleva const no cambia los dias
+                        if (vm.vistaDia)
+                          // ignore: prefer_const_constructors
+                          _VistaDia(),
+                      ],
                     ),
-                    tooltip: "Vista Mes",
-                  ),
-                  IconButton(
-                    onPressed: () => vm.mostrarVistaSemana(),
-                    icon: const Icon(
-                      Icons.date_range,
-                      size: 40,
-                    ),
-                    tooltip: "Vista Semana",
-                  ),
-                  IconButton(
-                    onPressed: () => vm.mostrarVistaDia(),
-                    icon: const Icon(
-                      Icons.today,
-                      size: 40,
-                    ),
-                    tooltip: "Vista Día",
                   ),
                 ],
-              )
-            ],
-          ),
-          body: RefreshIndicator(
-            onRefresh: () async {
-              vm.loadData(context);
-            },
-            child: ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      if (vm.vistaDia)
-                        Column(
-                          children: [
-                            Text(
-                              " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
-                              style: AppTheme.normalBoldStyle,
-                            ),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () => vm.diaAnterior(),
-                                  child: const Text(
-                                    "Dia Anterior",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () => vm.diaSiguiente(),
-                                  child: const Text(
-                                    "Dia Siguiente",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      if (vm.vistaMes)
-                        Column(
-                          children: [
-                            Text(
-                              "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
-                              style: AppTheme.normalBoldStyle,
-                            ),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () => vm.mesAnterior(context),
-                                  child: const Text(
-                                    "Mes Anterior",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () => vm.mesSiguiente(context),
-                                  child: const Text(
-                                    "Mes Siguiente",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      if (vm.vistaSemana)
-                        Column(
-                          children: [
-                            Text(
-                              vm.generateNameWeeck(),
-                              style: AppTheme.normalBoldStyle,
-                            ),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () => vm.semanaAnterior(context),
-                                  child: const Text(
-                                    "Semana Anterior",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ),
-                                const Spacer(),
-                                TextButton(
-                                  onPressed: () => vm.semanaSiguiente(context),
-                                  child: const Text(
-                                    "Semana Siguiente",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-
-                      const SizedBox(height: 10),
-                      if (vm.vistaMes || vm.vistaSemana) _NombreDias(),
-                      if (vm.vistaMes)
-                        // ignore: prefer_const_constructors
-                        _VistaMes(),
-
-                      if (vm.vistaSemana) _VistaSemana(),
-                      // const HorasTareaDia(),
-                      //si lleva const no cambia los dias
-                      if (vm.vistaDia)
-                        // ignore: prefer_const_constructors
-                        _VistaDia(),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),

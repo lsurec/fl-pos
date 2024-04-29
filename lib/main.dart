@@ -16,6 +16,8 @@ import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 void main() async {
   //inicializar shared preferences (preferencias de usuario)
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +67,8 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UsuariosViewModel()),
         ChangeNotifierProvider(create: (_) => CalendarioViewModel()),
         ChangeNotifierProvider(create: (_) => Calendario2ViewModel()),
-        ChangeNotifierProvider(create: (_) => DetalleTareaCalendarioViewModel()),
+        ChangeNotifierProvider(
+            create: (_) => DetalleTareaCalendarioViewModel()),
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
       ],
@@ -87,6 +90,12 @@ class MyApp extends StatelessWidget {
     //app_business
 
     return MaterialApp(
+      // localizationsDelegates: const [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      // supportedLocales: const [Locale('es')],
       //snackbar global
       scaffoldMessengerKey: NotificationService.messengerKey,
       title: "Business",
