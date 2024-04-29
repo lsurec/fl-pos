@@ -26,9 +26,9 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //Variables a utlizar en e calendario
 
-  bool vistaMes = false;
+  bool vistaMes = true;
   bool vistaSemana = false;
-  bool vistaDia = true;
+  bool vistaDia = false;
 
   List<DiaModel> diasDelMes = [];
 
@@ -85,7 +85,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     obtenerTareasRango(context, monthSelectView, yearSelect);
 
-    mostrarVistaDia();
+    mostrarVistaMes();
 
     notifyListeners();
   }
