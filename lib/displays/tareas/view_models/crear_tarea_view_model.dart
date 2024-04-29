@@ -423,13 +423,11 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
-    DateTime fechaHoraActual = DateTime.now();
-
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaInicial,
-      firstDate: fechaHoraActual,
+      firstDate: fechaInicial,
       lastDate: DateTime(2100),
     );
 
@@ -520,23 +518,31 @@ class CrearTareaViewModel extends ChangeNotifier {
       return;
     }
 
+    //TODO: verificar con los minutos de la misma hora
     // Verifica si se seleccionó una hora y si es anterior a la hora actual
-    if (pickedTime != null && pickedTime.hour < fechaHoraActual.hour) {
-      // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
-      NotificationService.showSnackbar(
-        "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaHoraActual)}",
-      );
 
-      fechaInicial = DateTime(
-        fechaInicial.year,
-        fechaInicial.month,
-        fechaInicial.day,
-        fechaHoraActual.hour,
-        fechaHoraActual.minute,
-      );
+    //euuu
 
-      notifyListeners();
-      return;
+    if (pickedTime != null) {
+      if (pickedTime.hour < fechaHoraActual.hour ||
+          (pickedTime.hour == fechaHoraActual.hour &&
+              pickedTime.minute < fechaHoraActual.minute)) {
+        // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
+        NotificationService.showSnackbar(
+          "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaHoraActual)}",
+        );
+
+        fechaInicial = DateTime(
+          fechaInicial.year,
+          fechaInicial.month,
+          fechaInicial.day,
+          fechaHoraActual.hour,
+          fechaHoraActual.minute,
+        );
+
+        notifyListeners();
+        return;
+      }
     }
     //si la hora seleccionada es null, no hacer nada.
     if (pickedTime == null) return;

@@ -522,15 +522,18 @@ class _VistaDiaState extends State<_VistaDia> {
               ),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            height: 45,
-            alignment: Alignment.center,
-            child: const Text(
-              "Nueva",
-              style: AppTheme.tareaStyle,
+          if (vm.daySelect >= vm.today && vm.monthSelectView >= vm.month ||
+              vm.monthSelectView > vm.month && vm.yearSelect >= vm.year ||
+              vm.yearSelect > vm.year)
+            Container(
+              padding: const EdgeInsets.all(10),
+              height: 45,
+              alignment: Alignment.center,
+              child: const Text(
+                "Nueva",
+                style: AppTheme.tareaStyle,
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -623,16 +626,46 @@ class _VistaDiaState extends State<_VistaDia> {
                 ],
               ),
             ),
-            IconButton(
-              onPressed: () => vm.navegarCrearTarea(
-                context,
-                horasDia[indexHora],
-                vm.daySelect,
-                vm.monthSelectView,
-                vm.yearSelect,
-              ),
-              icon: const Icon(Icons.add),
-            )
+            if (vm.daySelect >= vm.today && vm.monthSelectView >= vm.month ||
+                vm.monthSelectView > vm.month && vm.yearSelect >= vm.year ||
+                vm.yearSelect > vm.year)
+              Column(
+                children: [
+                  if (vm.daySelect == vm.today &&
+                      horasDia[indexHora].hora24 < vm.fechaHoy.hour)
+                    const SizedBox(),
+                  if (vm.mostrarIconoHora(vm.daySelect, horasDia[indexHora]) &&
+                          vm.daySelect >= vm.today &&
+                          vm.monthSelectView >= vm.month ||
+                      vm.monthSelectView > vm.month &&
+                          vm.yearSelect >= vm.year ||
+                      vm.yearSelect > vm.year)
+                    IconButton(
+                      onPressed: () => vm.navegarCrearTarea(
+                        context,
+                        horasDia[indexHora],
+                        vm.daySelect,
+                        vm.monthSelectView,
+                        vm.yearSelect,
+                      ),
+                      icon: const Icon(Icons.add),
+                    ),
+                ],
+              )
+
+            //   if (horasDia[indexHora].hora24 < vm.fechaHoy.hour)
+            //     const SizedBox(),
+            // if (horasDia[indexHora].hora24 >= vm.fechaHoy.hour)
+            // IconButton(
+            //   onPressed: () => vm.navegarCrearTarea(
+            //     context,
+            //     horasDia[indexHora],
+            //     vm.daySelect,
+            //     vm.monthSelectView,
+            //     vm.yearSelect,
+            //   ),
+            //   icon: const Icon(Icons.add),
+            // ),
           ],
         ),
       );

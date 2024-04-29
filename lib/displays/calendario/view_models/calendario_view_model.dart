@@ -26,9 +26,9 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //Variables a utlizar en e calendario
 
-  bool vistaMes = true;
+  bool vistaMes = false;
   bool vistaSemana = false;
-  bool vistaDia = false;
+  bool vistaDia = true;
 
   List<DiaModel> diasDelMes = [];
 
@@ -85,7 +85,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     obtenerTareasRango(context, monthSelectView, yearSelect);
 
-    mostrarVistaMes();
+    mostrarVistaDia();
 
     notifyListeners();
   }
@@ -1017,14 +1017,32 @@ class CalendarioViewModel extends ChangeNotifier {
     int mes,
     int anio,
   ) async {
-    //Armar fecha para la tarea con los parametros recibidos
-    DateTime fehcaHoraSeleccionadas = DateTime(
-      anio,
-      mes,
-      dia,
-      hora.hora24,
-      fechaHoy.minute,
-    );
+    DateTime fechaHoraActual = DateTime.now();
+
+    DateTime fechaEnviar;
+
+    if (anio == yearSelect &&
+        mes == monthSelectView &&
+        dia == today &&
+        hora.hora24 == fechaHoraActual.hour) {
+      //si es la misma hora dia mes y anio enviar los minutos actuales
+      fechaEnviar = DateTime(
+        anio,
+        mes,
+        dia,
+        hora.hora24,
+        fechaHoy.minute,
+      );
+    } else {
+      //Armar fecha para la tarea con los parametros recibidos y minutos en cero :00
+      fechaEnviar = DateTime(
+        anio,
+        mes,
+        dia,
+        hora.hora24,
+        0,
+      );
+    }
 
     //view models Crear Tarea
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
@@ -1060,7 +1078,7 @@ class CalendarioViewModel extends ChangeNotifier {
       return;
     }
 
-    vmCrear.fechaInicial = fehcaHoraSeleccionadas;
+    vmCrear.fechaInicial = fechaEnviar;
     vmCrear.fechaFinal = vmCrear.addDate10Min(vmCrear.fechaInicial);
 
     vmCrear.files.clear();
@@ -1069,5 +1087,19 @@ class CalendarioViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, AppRoutes.createTask);
 
     isLoading = false; //Detener carga
+  }
+
+  //mostrra icono en la vista del dia en las horas correspondientes
+  mostrarIconoHora(int dia, HorasModel hora) {
+    //en el dia de hoy solo mostrar el icono en las horas posteriores a la hora actual del dia de hoy
+    if (today == dia && hora.hora24 >= fechaHoy.hour) {
+      return true;
+    }
+    //sino es el dia de hoy mostrar el icono en todas las horas
+    if (dia > today) {
+      return true;
+    }
+
+    return false;
   }
 }
