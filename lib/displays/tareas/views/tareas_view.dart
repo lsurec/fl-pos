@@ -111,7 +111,8 @@ class _CardTask extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TareasViewModel>(context);
-
+    //color de la tarea
+    final List<int> colorTarea = Utilities.hexToRgb(tarea.backColor!);
     return GestureDetector(
       onTap: () => vm.detalleTarea(context, tarea),
       child: Column(
@@ -122,9 +123,20 @@ class _CardTask extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextsWidget(title: "Tarea no: ", text: "${tarea.iDTarea}"),
+                const Spacer(),
                 Text(
                   tarea.tareaEstado ?? "",
                   style: AppTheme.normalStyle,
+                ),
+                const SizedBox(width: 20),
+                Icon(
+                  Icons.circle,
+                  color: Color.fromRGBO(
+                    colorTarea[0],
+                    colorTarea[1],
+                    colorTarea[2],
+                    1,
+                  ),
                 ),
               ],
             ),

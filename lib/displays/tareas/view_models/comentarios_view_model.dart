@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -16,6 +17,7 @@ class ComentariosViewModel extends ChangeNotifier {
   final List<ComentarioDetalleModel> comentarioDetalle = [];
   //almacenar archivos seleccionados
   List<File> files = [];
+  int vistaTarea = 1;
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -29,6 +31,8 @@ class ComentariosViewModel extends ChangeNotifier {
   //comentario
   final TextEditingController comentarioController = TextEditingController();
 
+  //ID TAREA PARA COMENTAR
+  int? idTarea;
   //Nuevo comentario
   Future<void> comentar(
     BuildContext context,
@@ -42,9 +46,18 @@ class ComentariosViewModel extends ChangeNotifier {
     String user = loginVM.user;
     String token = loginVM.token;
 
-    //View model de detalla de tarea
+    //View model de detalla de tarea tareas
     final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
-    int idTarea = vmTarea.tarea!.iDTarea; //Id de la tarea
+    final vmTareaCalendario =
+        Provider.of<DetalleTareaCalendarioViewModel>(context, listen: false);
+
+    if (vistaTarea == 1) {
+      //Id de la tarea
+      idTarea = vmTarea.tarea!.iDTarea;
+    } else {
+      //Id de la tarea desde calendario
+      idTarea = vmTareaCalendario.tarea!.tarea;
+    }
 
     //Instancia del servicio
     ComentarService comentarService = ComentarService();
@@ -52,7 +65,7 @@ class ComentariosViewModel extends ChangeNotifier {
     //Crear modelo de nuevo comentario
     ComentarModel comentario = ComentarModel(
       comentario: comentarioController.text,
-      tarea: idTarea,
+      tarea: idTarea!,
       userName: user,
     );
 
@@ -80,53 +93,72 @@ class ComentariosViewModel extends ChangeNotifier {
       fechaHora: DateTime.now(),
       nameUser: user,
       userName: user,
-      tarea: idTarea,
+      tarea: idTarea!,
       tareaComentario: res.message.res,
     );
 
     final List<ObjetoComentarioModel> archivos = [];
 
-    for (var i = 0; i < files.length; i++) {
-      File file = files[i];
-      ObjetoComentarioModel archivo = ObjetoComentarioModel(
-        tareaComentarioObjeto: 1,
-        objetoNombre: obtenerNombreArchivo(file),
-        objetoSize: "",
-        objetoUrl: "",
+    if (archivos.isNotEmpty) {
+      for (var i = 0; i < files.length; i++) {
+        File file = files[i];
+        ObjetoComentarioModel archivo = ObjetoComentarioModel(
+          tareaComentarioObjeto: 1,
+          objetoNombre: obtenerNombreArchivo(file),
+          objetoSize: "",
+          objetoUrl: "",
+        );
+
+        archivos.add(archivo);
+      }
+
+      FilesService filesService = FilesService();
+
+      bool resFiles = await filesService.posFilesComent(
+        token,
+        user,
+        files,
+        comentarioCreado.tarea,
+        comentarioCreado.tareaComentario,
       );
 
-      archivos.add(archivo);
-    }
+      //si el consumo salió mal
+      if (!resFiles) {
+        isLoading = false;
 
-    FilesService filesService = FilesService();
+        ApiResModel error = ApiResModel(
+          succes: false,
+          message:
+              "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
+          url: "",
+          storeProcedure: null,
+        );
 
-    bool resFiles = await filesService.posFilesComent(
-      token,
-      user,
-      files,
-      comentarioCreado.tarea,
-      comentarioCreado.tareaComentario,
-    );
+        NotificationService.showErrorView(context, error);
 
-    //si el consumo salió mal
-    if (!resFiles) {
+        //Respuesta incorrecta
+        return;
+      }
+
       isLoading = false;
 
-      ApiResModel error = ApiResModel(
-        succes: false,
-        message:
-            "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
-        url: "",
-        storeProcedure: null,
+      //Crear modelo de comentario detalle, (comentario y objetos)
+      comentarioDetalle.add(
+        ComentarioDetalleModel(
+          comentario: comentarioCreado,
+          objetos: archivos,
+        ),
       );
 
-      NotificationService.showErrorView(context, error);
+      notifyListeners();
+      comentarioController.text = ""; //limpiar input
+      files.clear(); //limpiar lista de archivos
 
-      //Respuesta incorrecta
+      isLoading = false; //detener carga
+
+      //Retornar respuesta correcta
       return;
     }
-
-    isLoading = false;
 
     //Crear modelo de comentario detalle, (comentario y objetos)
     comentarioDetalle.add(
@@ -150,9 +182,16 @@ class ComentariosViewModel extends ChangeNotifier {
     isLoading = true; //cargar pantalla
     //View model de comentarios
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
+    final vmTareaCalendario =
+        Provider.of<CalendarioViewModel>(context, listen: false);
 
     //validar resppuesta de los comentarios
-    final bool succesComentarios = await vmTarea.armarComentario(context);
+    final bool succesComentarios;
+    if (vistaTarea == 1) {
+      succesComentarios = await vmTarea.armarComentario(context);
+    } else {
+      succesComentarios = await vmTareaCalendario.armarComentario(context);
+    }
 
     //sino se realizo el consumo correctamente retornar
     if (!succesComentarios) {
@@ -204,6 +243,6 @@ class ComentariosViewModel extends ChangeNotifier {
   //   await OpenFile.open(filePath);
   //   print(filePath);
   //   notifyListeners();
-    
+
   // }
 }

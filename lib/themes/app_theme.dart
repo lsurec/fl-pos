@@ -36,14 +36,28 @@ class AppTheme {
   );
 
   static const tareaStyle = TextStyle(
-    fontSize: 10,
-    color: Colors.black,
+    fontSize: 14,
+    color: Color.fromARGB(255, 78, 77, 77),
+    fontWeight: FontWeight.w500,
   );
 
   static const inactivoStyle = TextStyle(
     fontSize: 17,
     color: Colors.grey,
   );
+
+  static const diasFueraMes = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 111, 111, 111),
+    fontWeight: FontWeight.bold,
+  );
+
+  static const taskStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,

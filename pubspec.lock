@@ -222,6 +222,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -238,6 +243,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flutter_swipe_detector:
+    dependency: "direct main"
+    description:
+      name: flutter_swipe_detector
+      sha256: ae6fe331de414632c0122a7047d64dfe2332c95b3f06a05118a7ea538ff19eda
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -289,7 +302,7 @@ packages:
     source: hosted
     version: "4.0.2"
   image:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image
       sha256: "8e9d133755c3e84c73288363e6343157c383a0c6c56fc51afcc5d4d7180306d6"
@@ -472,54 +485,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.3"
-  permission_handler:
-    dependency: "direct main"
-    description:
-      name: permission_handler
-      sha256: "74e962b7fad7ff75959161bb2c0ad8fe7f2568ee82621c9c2660b751146bfe44"
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.3.0"
-  permission_handler_android:
-    dependency: transitive
-    description:
-      name: permission_handler_android
-      sha256: "1acac6bae58144b442f11e66621c062aead9c99841093c38f5bcdcc24c1c3474"
-      url: "https://pub.dev"
-    source: hosted
-    version: "12.0.5"
-  permission_handler_apple:
-    dependency: transitive
-    description:
-      name: permission_handler_apple
-      sha256: "92861b0f0c2443dd8898398c2baa4f1ae925109b5909ae4a17d0108a6a788932"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.4.2"
-  permission_handler_html:
-    dependency: transitive
-    description:
-      name: permission_handler_html
-      sha256: "54bf176b90f6eddd4ece307e2c06cf977fb3973719c35a93b85cc7093eb6070d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      sha256: "23dfba8447c076ab5be3dee9ceb66aad345c4a648f0cac292c77b1eb0e800b78"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
-  permission_handler_windows:
-    dependency: transitive
-    description:
-      name: permission_handler_windows
-      sha256: "1a790728016f79a41216d88672dbc5df30e686e811ad4e698bfc51f76ad91f1e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1"
   petitparser:
     dependency: transitive
     description:
@@ -584,6 +549,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
+  quiver:
+    dependency: "direct main"
+    description:
+      name: quiver
+      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   rxdart:
     dependency: transitive
     description:
@@ -759,4 +732,4 @@ packages:
     version: "6.1.0"
 sdks:
   dart: ">=3.2.0 <3.3.10"
-  flutter: ">=3.16.0"
+  flutter: ">=3.7.0"

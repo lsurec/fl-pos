@@ -2,12 +2,14 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +50,7 @@ class CrearTareaViewModel extends ChangeNotifier {
   IdReferenciaModel? idReferencia; //id referencia
   UsuarioModel? responsable; //responsable activo de la tarea
   PeriodicidadModel? periodicidad; //peroodicidad tarea
+  int idPantalla = 1;
 
   //Guardar usuarios seleccionados para ser invitados de la tarea
   List<UsuarioModel> invitados = [];
@@ -172,6 +175,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     //view model de Tareas para insertar la nueva tarea en la lista de tareas
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
+    //view model del calendario
+    final vmCalendario =
+        Provider.of<CalendarioViewModel>(context, listen: false);
+
     //Instancia del servicio
     final TareaService tareaService = TareaService();
 
@@ -179,37 +186,17 @@ class CrearTareaViewModel extends ChangeNotifier {
     NuevaTareaModel tarea = NuevaTareaModel(
       tarea: 0,
       descripcion: tituloController.text,
-      // fechaIni: construirFechaCompleta(nuevaFechaInicial!, _horaInicial!),
       fechaIni: fechaInicial,
-      // fechaFin: construirFechaCompleta(nuevaFechaFinal!, _horaFinal!),
       fechaFin: fechaFinal,
       referencia: idReferencia!.referencia,
       userName: user,
       observacion1: observacionController.text,
       tipoTarea: tipoTarea!.tipoTarea,
-      cuentaCorrentista: 1110,
-      cuentaCta: null,
-      cantidadContacto: null,
-      nombreContacto: null,
-      tipoDocumento: null,
-      idDocumento: null,
-      refSerie: null,
-      fechaDocumento: null,
-      elementoAsignado: null,
-      actividadPaso: null,
-      ejecutado: null,
-      ejecutadoPor: null,
-      ejecutadoFecha: null,
-      ejecutadoFechaHora: null,
-      producto: null,
       estado: estado!.estado,
       empresa: empresa,
       nivelPrioridad: prioridad!.nivelPrioridad,
-      tareaPadre: null,
       tiempoEstimadoTipoPeriocidad: periodicidad!.tipoPeriodicidad,
       tiempoEstimado: tiempoController.text,
-      mUserName: null,
-      observacion2: null,
     );
 
     isLoading = true; //cargar pantalla
@@ -229,6 +216,32 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Obtener respuesta correcta del api
     NuevaTareaModel creada = res.message[0];
 
+    //Si se está creando desde busqueda de tareas
+
+    if (idPantalla == 1 && res.succes) {
+      //objeto de la vista de tareas
+      vmTarea.loadData(context);
+      //mostrra mensaje
+      NotificationService.showSnackbar(
+        "Tarea creada correctamente.",
+      );
+    }
+
+    DateTime hoyFecha = DateTime.now();
+
+    //Si se está creando desde el calendario
+    if (idPantalla == 2 && res.succes) {
+      //objeto de la vista calendario
+      vmCalendario.obtenerTareasRango(
+        context,
+        hoyFecha.month,
+        hoyFecha.year,
+      );
+      //mostrra mensaje
+      NotificationService.showSnackbar(
+        "Tarea creada correctamente.",
+      );
+    }
     //Crear modelo de Tarea para agregarla a la lista de tareas
     TareaModel resCreada = TareaModel(
       tarea: tarea,
@@ -253,7 +266,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       estadoObjeto: estado!.estado,
       tareaEstado: estado!.descripcion,
       usuarioTarea: user,
-      backColor: "#000",
+      backColor: "#F4FA58",
       nivelPrioridad: prioridad!.nivelPrioridad,
       nomNivelPrioridad: prioridad!.nombre,
     );
@@ -398,12 +411,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    //insertar tarea al inicio de la lista de tareas
-    vmTarea.insertarTarea(resCreada);
-    //mostrra mensaje
-    NotificationService.showSnackbar(
-      "Tarea creada correctamente.",
-    );
+    // //mostrra mensaje
+    // NotificationService.showSnackbar(
+    //   "Tarea creada correctamente.",
+    // );
 
     isLoading = false; //detener carga
 
@@ -416,7 +427,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaInicial,
-      firstDate: DateTime(1950),
+      firstDate: fechaInicial,
       lastDate: DateTime(2100),
     );
 
@@ -468,6 +479,10 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
+    print(Utilities.formatearHora(fechaInicial));
+    DateTime fechaHoraActual = DateTime.now();
+
+    //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaInicial.hour,
       minute: fechaInicial.minute,
@@ -479,6 +494,74 @@ class CrearTareaViewModel extends ChangeNotifier {
       initialTime: initialTime, //hora inicial
     );
 
+    //Estando en la vista del calendario cuando ingrese al formulario desde cualquier hora
+    //Esa hora será la hora minima solo cuando esté en el calendario
+    if (pickedTime != null) {
+      if (idPantalla == 2 && pickedTime.hour < initialTime.hour) {
+        print("no puede ser menor");
+        // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
+        NotificationService.showSnackbar(
+          "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaInicial)}",
+        );
+
+        fechaInicial = DateTime(
+          fechaInicial.year,
+          fechaInicial.month,
+          fechaInicial.day,
+          initialTime.hour,
+          initialTime.minute,
+        );
+
+        notifyListeners();
+        return;
+      }
+    }
+    //si la fecha inicial es mayor a la fecha actual.
+    if (compararFechas(fechaInicial, fechaHoraActual)) {
+      initialTime = const TimeOfDay(hour: 0, minute: 0);
+
+      //si la hora seleccionada es null, no hacer nada.
+      if (pickedTime == null) return;
+      //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+      fechaInicial = DateTime(
+        fechaInicial.year,
+        fechaInicial.month,
+        fechaInicial.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+
+      //si la fecha inicial es despues de la final
+      if (fechaInicial.isAfter(fechaFinal)) {
+        //fecha final será igual a la fecha inicial + 10 minutos
+        fechaFinal = addDate10Min(fechaInicial);
+      }
+
+      notifyListeners();
+      return;
+    }
+
+    if (pickedTime != null) {
+      if (pickedTime.hour < fechaHoraActual.hour ||
+          (pickedTime.hour == fechaHoraActual.hour &&
+              pickedTime.minute < fechaHoraActual.minute)) {
+        // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
+        NotificationService.showSnackbar(
+          "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaHoraActual)}",
+        );
+
+        fechaInicial = DateTime(
+          fechaInicial.year,
+          fechaInicial.month,
+          fechaInicial.day,
+          fechaHoraActual.hour,
+          fechaHoraActual.minute,
+        );
+
+        notifyListeners();
+        return;
+      }
+    }
     //si la hora seleccionada es null, no hacer nada.
     if (pickedTime == null) return;
 
@@ -498,6 +581,13 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  bool compararFechas(
+    DateTime fechaInicial,
+    DateTime fechaFinal,
+  ) {
+    return fechaInicial.isAfter(fechaFinal);
   }
 
   //Abrir picker de la fecha final
@@ -547,13 +637,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
-  }
-
-  //Verifica si las fechas son iguales en día mes y año (iguales = true) (diferentes = false)
-  bool compararFechas(DateTime fechaInicio, DateTime fechaFinal) {
-    return fechaInicio.year == fechaFinal.year &&
-        fechaInicio.month == fechaFinal.month &&
-        fechaInicio.day == fechaFinal.day;
   }
 
   //Obtener Tipos

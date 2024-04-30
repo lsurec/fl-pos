@@ -50,6 +50,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
     vmComentarios.files.clear();
 
     //navegar a comentarios
+    vmComentarios.vistaTarea = 1;
+    notifyListeners();
     Navigator.pushNamed(context, AppRoutes.viewComments);
     isLoading = false; //detener carga
   }
