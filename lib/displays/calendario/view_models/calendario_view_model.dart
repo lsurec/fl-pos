@@ -789,8 +789,6 @@ class CalendarioViewModel extends ChangeNotifier {
       }
     }
 
-    //Cargar laas tareas en la vista por dia
-    await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
   diaAnterior(BuildContext context) async {
@@ -822,8 +820,6 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-    //Cargar laas tareas en la vista por dia
-    await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
   int obtenerUltimoDiaMes(int anio, int mes) {
