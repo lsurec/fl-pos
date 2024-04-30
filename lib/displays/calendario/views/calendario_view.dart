@@ -171,49 +171,37 @@ class _CalendarioViewState extends State<CalendarioView> {
                         if (vm.vistaMes || vm.vistaSemana) _NombreDias(),
                         if (vm.vistaMes)
                           // ignore: prefer_const_constructors
-                          Column(
-                            children: <Widget>[
-                              SwipeDetector(
-                                onSwipeLeft: (offset) => vm.mesSiguiente(
-                                  context,
-                                ),
-                                onSwipeRight: (offset) => vm.mesAnterior(
-                                  context,
-                                ),
-                                child: _VistaMes(),
-                              ),
-                            ],
+                          SwipeDetector(
+                            onSwipeLeft: (offset) => vm.mesSiguiente(
+                              context,
+                            ),
+                            onSwipeRight: (offset) => vm.mesAnterior(
+                              context,
+                            ),
+                            child: _VistaMes(),
                           ),
 
                         if (vm.vistaSemana)
-                          Column(
-                            children: <Widget>[
-                              SwipeDetector(
-                                //anterior
-                                onSwipeRight: (offset) => vm.semanaAnterior(
-                                  context,
-                                ),
-                                //siguiente
-                                onSwipeLeft: (offset) => vm.semanaSiguiente(
-                                  context,
-                                ),
-                                child: _VistaSemana(),
-                              ),
-                            ],
+                          SwipeDetector(
+                            //anterior
+                            onSwipeRight: (offset) => vm.semanaAnterior(
+                              context,
+                            ),
+                            //siguiente
+                            onSwipeLeft: (offset) => vm.semanaSiguiente(
+                              context,
+                            ),
+                            child: _VistaSemana(),
                           ),
                         //si lleva const no cambia los dias
                         if (vm.vistaDia)
-                          Column(
-                            children: <Widget>[
-                              SwipeDetector(
-                                //anterior
-                                onSwipeRight: (offset) => vm.diaAnterior(),
-                                //siguiente
-                                onSwipeLeft: (offset) => vm.diaSiguiente(),
-                                // ignore: prefer_const_constructors
-                                child: _VistaDia(),
-                              )
-                            ],
+                          SwipeDetector(
+                            //anterior
+                            onSwipeRight: (offset) => vm.diaAnterior(),
+                            //siguiente
+                            onSwipeLeft: (offset) => vm.diaSiguiente(),
+                            // ignore: prefer_const_constructors
+                            child: _VistaDia(),
                           ),
                       ],
                     ),
