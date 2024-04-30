@@ -37,17 +37,9 @@ class _CalendarioViewState extends State<CalendarioView> {
           length: 3,
           child: Scaffold(
             appBar: AppBar(
-              title: Row(
-                children: [
-                  const Text(
-                    'Calendario',
-                    style: AppTheme.titleStyle,
-                  ),
-                  IconButton(
-                    onPressed: () => vm.abrirPickerCalendario(context),
-                    icon: const Icon(Icons.calendar_month),
-                  ),
-                ],
+              title: const Text(
+                'Calendario',
+                style: AppTheme.titleStyle,
               ),
               actions: <Widget>[
                 const Text(
@@ -78,9 +70,34 @@ class _CalendarioViewState extends State<CalendarioView> {
                         if (vm.vistaDia)
                           Column(
                             children: [
-                              Text(
-                                " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
-                                style: AppTheme.normalBoldStyle,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // TextButton.icon(
+                                  //   onPressed: () => vm.abrirPickerCalendario(
+                                  //     context,
+                                  //   ),
+                                  //   icon: const Icon(
+                                  //     Icons.arrow_drop_down,
+                                  //   ),
+                                  //   label: Text(
+                                  //     " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                                  //     style: AppTheme.normalBoldStyle,
+                                  //   ),
+                                  // ),
+                                  Text(
+                                    " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                                    style: AppTheme.normalBoldStyle,
+                                  ),
+                                  IconButton(
+                                    onPressed: () => vm.abrirPickerCalendario(
+                                      context,
+                                    ),
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down,
+                                    ),
+                                  ),
+                                ],
                               ),
                               Row(
                                 children: [
