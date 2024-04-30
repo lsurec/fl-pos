@@ -85,7 +85,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                               Row(
                                 children: [
                                   TextButton(
-                                    onPressed: () => vm.diaAnterior(),
+                                    onPressed: () => vm.diaAnterior(context),
                                     child: const Text(
                                       "Dia Anterior",
                                       style: AppTheme.normalBoldStyle,
@@ -93,7 +93,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () => vm.diaSiguiente(),
+                                    onPressed: () => vm.diaSiguiente(context),
                                     child: const Text(
                                       "Dia Siguiente",
                                       style: AppTheme.normalBoldStyle,
@@ -197,9 +197,9 @@ class _CalendarioViewState extends State<CalendarioView> {
                         if (vm.vistaDia)
                           SwipeDetector(
                             //anterior
-                            onSwipeRight: (offset) => vm.diaAnterior(),
+                            onSwipeRight: (offset) => vm.diaAnterior(context),
                             //siguiente
-                            onSwipeLeft: (offset) => vm.diaSiguiente(),
+                            onSwipeLeft: (offset) => vm.diaSiguiente(context),
                             // ignore: prefer_const_constructors
                             child: _VistaDia(),
                           ),

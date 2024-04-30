@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/serivices/services.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
@@ -754,7 +756,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
-  diaSiguiente() {
+  diaSiguiente(BuildContext context) async {
     //ontener ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
     // cambiar el mes y anio cuando sea el ultimo dia del mes 12
@@ -786,11 +788,12 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+
+    //Cargar laas tareas en la vista por dia
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
-  diaAnterior(
-      // SwipeDirection direction,
-      ) {
+  diaAnterior(BuildContext context) async {
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
 
@@ -819,6 +822,8 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+    //Cargar laas tareas en la vista por dia
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
   int obtenerUltimoDiaMes(int anio, int mes) {
@@ -1186,5 +1191,16 @@ class CalendarioViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Timer? timer; // Temporizador
+
+  void buscarRefTemp(BuildContext context) {
+    timer?.cancel(); // Cancelar el temporizador existente si existe
+    timer = Timer(const Duration(milliseconds: 1000), () {
+      // Función de filtrado que consume el servicio
+      FocusScope.of(context).unfocus(); //ocultar teclado
+      diaAnterior(context);
+    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }
