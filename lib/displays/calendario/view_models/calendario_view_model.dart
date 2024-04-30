@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/services/notification_service.dart'
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -176,7 +177,10 @@ class CalendarioViewModel extends ChangeNotifier {
     return completarMes;
   }
 
-  mesSiguiente(BuildContext context) async {
+  mesSiguiente(
+    BuildContext context,
+    SwipeDirection direction,
+  ) async {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
     monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
@@ -185,7 +189,10 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  mesAnterior(BuildContext context) async {
+  mesAnterior(
+    BuildContext context,
+    SwipeDirection direction,
+  ) async {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
     monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
@@ -637,7 +644,10 @@ class CalendarioViewModel extends ChangeNotifier {
     return indiceSemanaActual + 1;
   }
 
-  semanaSiguiente(BuildContext context) async {
+  semanaSiguiente(
+    BuildContext context,
+    SwipeDirection direction,
+  ) async {
     if (indexWeekActive == semanasDelMes.length - 1) {
       yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
       monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
@@ -666,7 +676,10 @@ class CalendarioViewModel extends ChangeNotifier {
     await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
-  semanaAnterior(BuildContext context) async {
+  semanaAnterior(
+    BuildContext context,
+    SwipeDirection direction,
+  ) async {
     if (indexWeekActive == 0) {
       yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
       monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
@@ -746,7 +759,9 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
-  diaSiguiente() {
+  diaSiguiente(
+    SwipeDirection direction,
+  ) {
     //ontener ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
     // cambiar el mes y anio cuando sea el ultimo dia del mes 12
@@ -780,7 +795,9 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
-  diaAnterior() {
+  diaAnterior(
+    SwipeDirection direction,
+  ) {
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
 
@@ -1121,7 +1138,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
   DateTime fechaPicker = DateTime.now();
 
-  Future<void> abrirFechaInicial(BuildContext context) async {
+  Future<void> abrirPickerCalendario(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,

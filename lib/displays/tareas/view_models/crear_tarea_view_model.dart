@@ -479,11 +479,13 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
+    print(Utilities.formatearHora(fechaInicial));
     DateTime fechaHoraActual = DateTime.now();
 
+    //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
-      hour: fechaHoraActual.hour,
-      minute: fechaHoraActual.minute,
+      hour: fechaInicial.hour,
+      minute: fechaInicial.minute,
     );
 
     //abre el time picker con la hora inicial
@@ -492,6 +494,28 @@ class CrearTareaViewModel extends ChangeNotifier {
       initialTime: initialTime, //hora inicial
     );
 
+    //Estando en la vista del calendario cuando ingrese al formulario desde cualquier hora
+    //Esa hora será la hora minima solo cuando esté en el calendario
+    if (pickedTime != null) {
+      if (idPantalla == 2 && pickedTime.hour < initialTime.hour) {
+        print("no puede ser menor");
+        // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
+        NotificationService.showSnackbar(
+          "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaInicial)}",
+        );
+
+        fechaInicial = DateTime(
+          fechaInicial.year,
+          fechaInicial.month,
+          fechaInicial.day,
+          initialTime.hour,
+          initialTime.minute,
+        );
+
+        notifyListeners();
+        return;
+      }
+    }
     //si la fecha inicial es mayor a la fecha actual.
     if (compararFechas(fechaInicial, fechaHoraActual)) {
       initialTime = const TimeOfDay(hour: 0, minute: 0);

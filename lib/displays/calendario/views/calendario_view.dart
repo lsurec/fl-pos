@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:provider/provider.dart';
 
 class CalendarioView extends StatefulWidget {
@@ -43,7 +44,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                     style: AppTheme.titleStyle,
                   ),
                   IconButton(
-                    onPressed: () => vm.abrirFechaInicial(context),
+                    onPressed: () => vm.abrirPickerCalendario(context),
                     icon: const Icon(Icons.calendar_month),
                   ),
                 ],
@@ -84,7 +85,9 @@ class _CalendarioViewState extends State<CalendarioView> {
                               Row(
                                 children: [
                                   TextButton(
-                                    onPressed: () => vm.diaAnterior(),
+                                    onPressed: () => vm.diaAnterior(
+                                      SwipeDirection.right,
+                                    ),
                                     child: const Text(
                                       "Dia Anterior",
                                       style: AppTheme.normalBoldStyle,
@@ -92,7 +95,9 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () => vm.diaSiguiente(),
+                                    onPressed: () => vm.diaSiguiente(
+                                      SwipeDirection.left,
+                                    ),
                                     child: const Text(
                                       "Dia Siguiente",
                                       style: AppTheme.normalBoldStyle,
@@ -112,7 +117,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                               Row(
                                 children: [
                                   TextButton(
-                                    onPressed: () => vm.mesAnterior(context),
+                                    onPressed: () => vm.mesAnterior(
+                                      context,
+                                      SwipeDirection.right,
+                                    ),
                                     child: const Text(
                                       "Mes Anterior",
                                       style: AppTheme.normalBoldStyle,
@@ -120,7 +128,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () => vm.mesSiguiente(context),
+                                    onPressed: () => vm.mesSiguiente(
+                                      context,
+                                      SwipeDirection.left,
+                                    ),
                                     child: const Text(
                                       "Mes Siguiente",
                                       style: AppTheme.normalBoldStyle,
@@ -140,7 +151,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                               Row(
                                 children: [
                                   TextButton(
-                                    onPressed: () => vm.semanaAnterior(context),
+                                    onPressed: () => vm.semanaAnterior(
+                                      context,
+                                      SwipeDirection.right,
+                                    ),
                                     child: const Text(
                                       "Semana Anterior",
                                       style: AppTheme.normalBoldStyle,
@@ -148,8 +162,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () =>
-                                        vm.semanaSiguiente(context),
+                                    onPressed: () => vm.semanaSiguiente(
+                                      context,
+                                      SwipeDirection.left,
+                                    ),
                                     child: const Text(
                                       "Semana Siguiente",
                                       style: AppTheme.normalBoldStyle,
@@ -159,19 +175,62 @@ class _CalendarioViewState extends State<CalendarioView> {
                               ),
                             ],
                           ),
-
                         const SizedBox(height: 10),
                         if (vm.vistaMes || vm.vistaSemana) _NombreDias(),
                         if (vm.vistaMes)
                           // ignore: prefer_const_constructors
-                          _VistaMes(),
+                          Column(
+                            children: <Widget>[
+                              SwipeDetector(
+                                onSwipeLeft: (offset) => vm.mesSiguiente(
+                                  context,
+                                  SwipeDirection.left,
+                                ),
+                                onSwipeRight: (offset) => vm.mesAnterior(
+                                  context,
+                                  SwipeDirection.right,
+                                ),
+                                child: _VistaMes(),
+                              ),
+                            ],
+                          ),
 
-                        if (vm.vistaSemana) _VistaSemana(),
-                        // const HorasTareaDia(),
+                        if (vm.vistaSemana)
+                          Column(
+                            children: <Widget>[
+                              SwipeDetector(
+                                //anterior
+                                onSwipeRight: (offset) => vm.semanaAnterior(
+                                  context,
+                                  SwipeDirection.right,
+                                ),
+                                //siguiente
+                                onSwipeLeft: (offset) => vm.semanaSiguiente(
+                                  context,
+                                  SwipeDirection.left,
+                                ),
+                                child: _VistaSemana(),
+                              ),
+                            ],
+                          ),
                         //si lleva const no cambia los dias
                         if (vm.vistaDia)
-                          // ignore: prefer_const_constructors
-                          _VistaDia(),
+                          Column(
+                            children: <Widget>[
+                              SwipeDetector(
+                                //anterior
+                                onSwipeRight: (offset) => vm.diaAnterior(
+                                  SwipeDirection.right,
+                                ),
+                                //siguiente
+                                onSwipeLeft: (offset) => vm.diaSiguiente(
+                                  SwipeDirection.left,
+                                ),
+                                // ignore: prefer_const_constructors
+                                child: _VistaDia(),
+                              )
+                            ],
+                          ),
                       ],
                     ),
                   ),
@@ -216,7 +275,7 @@ class _DrawerCalendar extends StatelessWidget {
                   style: AppTheme.normalBoldStyle,
                 ),
                 trailing: IconButton(
-                  onPressed: () => vm.abrirFechaInicial(context),
+                  onPressed: () => vm.abrirPickerCalendario(context),
                   icon: const Icon(Icons.calendar_month),
                 ),
               ),
