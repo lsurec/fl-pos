@@ -399,9 +399,10 @@ class _VistaSemana extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      height: 850,
+                      height: 800,
                       padding: const EdgeInsets.all(5),
                       child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemCount: vm
@@ -507,6 +508,7 @@ class _VistaMes extends StatelessWidget {
                           height: 135,
                           color: Colors.transparent,
                           child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
                             itemCount: vm
@@ -652,6 +654,7 @@ class _VistaDiaState extends State<_VistaDia> {
               child: Column(
                 children: [
                   ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: vm
