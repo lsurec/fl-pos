@@ -10,7 +10,6 @@ import 'package:flutter_post_printer_example/services/notification_service.dart'
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -179,7 +178,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
   mesSiguiente(
     BuildContext context,
-    SwipeDirection direction,
   ) async {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
@@ -191,7 +189,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
   mesAnterior(
     BuildContext context,
-    SwipeDirection direction,
   ) async {
     //cambiar año y mes si es necesario
     yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
@@ -646,7 +643,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
   semanaSiguiente(
     BuildContext context,
-    SwipeDirection direction,
   ) async {
     if (indexWeekActive == semanasDelMes.length - 1) {
       yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
@@ -678,7 +674,6 @@ class CalendarioViewModel extends ChangeNotifier {
 
   semanaAnterior(
     BuildContext context,
-    SwipeDirection direction,
   ) async {
     if (indexWeekActive == 0) {
       yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
@@ -759,9 +754,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
-  diaSiguiente(
-    SwipeDirection direction,
-  ) {
+  diaSiguiente() {
     //ontener ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
     // cambiar el mes y anio cuando sea el ultimo dia del mes 12
@@ -796,8 +789,8 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   diaAnterior(
-    SwipeDirection direction,
-  ) {
+      // SwipeDirection direction,
+      ) {
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
 

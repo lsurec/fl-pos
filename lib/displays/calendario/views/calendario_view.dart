@@ -85,9 +85,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                               Row(
                                 children: [
                                   TextButton(
-                                    onPressed: () => vm.diaAnterior(
-                                      SwipeDirection.right,
-                                    ),
+                                    onPressed: () => vm.diaAnterior(),
                                     child: const Text(
                                       "Dia Anterior",
                                       style: AppTheme.normalBoldStyle,
@@ -95,9 +93,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   ),
                                   const Spacer(),
                                   TextButton(
-                                    onPressed: () => vm.diaSiguiente(
-                                      SwipeDirection.left,
-                                    ),
+                                    onPressed: () => vm.diaSiguiente(),
                                     child: const Text(
                                       "Dia Siguiente",
                                       style: AppTheme.normalBoldStyle,
@@ -119,7 +115,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   TextButton(
                                     onPressed: () => vm.mesAnterior(
                                       context,
-                                      SwipeDirection.right,
                                     ),
                                     child: const Text(
                                       "Mes Anterior",
@@ -130,7 +125,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   TextButton(
                                     onPressed: () => vm.mesSiguiente(
                                       context,
-                                      SwipeDirection.left,
                                     ),
                                     child: const Text(
                                       "Mes Siguiente",
@@ -153,7 +147,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   TextButton(
                                     onPressed: () => vm.semanaAnterior(
                                       context,
-                                      SwipeDirection.right,
                                     ),
                                     child: const Text(
                                       "Semana Anterior",
@@ -164,7 +157,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   TextButton(
                                     onPressed: () => vm.semanaSiguiente(
                                       context,
-                                      SwipeDirection.left,
                                     ),
                                     child: const Text(
                                       "Semana Siguiente",
@@ -184,11 +176,9 @@ class _CalendarioViewState extends State<CalendarioView> {
                               SwipeDetector(
                                 onSwipeLeft: (offset) => vm.mesSiguiente(
                                   context,
-                                  SwipeDirection.left,
                                 ),
                                 onSwipeRight: (offset) => vm.mesAnterior(
                                   context,
-                                  SwipeDirection.right,
                                 ),
                                 child: _VistaMes(),
                               ),
@@ -202,12 +192,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                                 //anterior
                                 onSwipeRight: (offset) => vm.semanaAnterior(
                                   context,
-                                  SwipeDirection.right,
                                 ),
                                 //siguiente
                                 onSwipeLeft: (offset) => vm.semanaSiguiente(
                                   context,
-                                  SwipeDirection.left,
                                 ),
                                 child: _VistaSemana(),
                               ),
@@ -219,13 +207,9 @@ class _CalendarioViewState extends State<CalendarioView> {
                             children: <Widget>[
                               SwipeDetector(
                                 //anterior
-                                onSwipeRight: (offset) => vm.diaAnterior(
-                                  SwipeDirection.right,
-                                ),
+                                onSwipeRight: (offset) => vm.diaAnterior(),
                                 //siguiente
-                                onSwipeLeft: (offset) => vm.diaSiguiente(
-                                  SwipeDirection.left,
-                                ),
+                                onSwipeLeft: (offset) => vm.diaSiguiente(),
                                 // ignore: prefer_const_constructors
                                 child: _VistaDia(),
                               )
@@ -434,9 +418,12 @@ class _VistaSemana extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: vm
                             .tareaDia(
-                                dia.value, vm.monthSelectView, vm.yearSelect)
+                              dia.value,
+                              vm.monthSelectView,
+                              vm.yearSelect,
+                            )
                             .length,
-                        itemBuilder: (BuildContext context, int index) {
+                        itemBuilder: (BuildContext context, int indexTarea) {
                           final List<TareaCalendarioModel> tareasDia =
                               vm.tareaDia(
                             dia.value,
@@ -448,10 +435,11 @@ class _VistaSemana extends StatelessWidget {
                             margin: const EdgeInsets.only(bottom: 2),
                             child: Column(
                               children: [
-                                Text(
-                                  tareasDia[index].tarea.toString(),
-                                  style: AppTheme.taskStyle,
-                                ),
+                                if (tareasDia.isNotEmpty)
+                                  Text(
+                                    tareasDia[indexTarea].tarea.toString(),
+                                    style: AppTheme.taskStyle,
+                                  ),
                                 const Divider(),
                               ],
                             ),
@@ -549,7 +537,8 @@ class _VistaMes extends StatelessWidget {
                                       vm.yearSelect,
                                     )
                                     .length,
-                            itemBuilder: (BuildContext context, int index) {
+                            itemBuilder:
+                                (BuildContext context, int indexTarea) {
                               final List<TareaCalendarioModel> tareasDia =
                                   vm.tareaDia(
                                 dia.value,
@@ -562,7 +551,7 @@ class _VistaMes extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      tareasDia[index].tarea.toString(),
+                                      tareasDia[indexTarea].tarea.toString(),
                                       style: AppTheme.taskStyle,
                                     ),
                                     const Divider(height: 5),
