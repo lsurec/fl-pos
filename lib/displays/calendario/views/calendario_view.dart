@@ -70,34 +70,23 @@ class _CalendarioViewState extends State<CalendarioView> {
                         if (vm.vistaDia)
                           Column(
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // TextButton.icon(
-                                  //   onPressed: () => vm.abrirPickerCalendario(
-                                  //     context,
-                                  //   ),
-                                  //   icon: const Icon(
-                                  //     Icons.arrow_drop_down,
-                                  //   ),
-                                  //   label: Text(
-                                  //     " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
-                                  //     style: AppTheme.normalBoldStyle,
-                                  //   ),
-                                  // ),
-                                  Text(
-                                    " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
-                                    style: AppTheme.normalBoldStyle,
-                                  ),
-                                  IconButton(
-                                    onPressed: () => vm.abrirPickerCalendario(
-                                      context,
+                              ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                                      style: AppTheme.normalBoldStyle,
                                     ),
-                                    icon: const Icon(
+                                    const SizedBox(width: 5),
+                                    const Icon(
                                       Icons.arrow_drop_down,
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                                onTap: () => vm.abrirPickerCalendario(
+                                  context,
+                                ),
                               ),
                               Row(
                                 children: [
@@ -123,9 +112,23 @@ class _CalendarioViewState extends State<CalendarioView> {
                         if (vm.vistaMes)
                           Column(
                             children: [
-                              Text(
-                                "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
-                                style: AppTheme.normalBoldStyle,
+                              ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Icon(
+                                      Icons.arrow_drop_down,
+                                    ),
+                                  ],
+                                ),
+                                onTap: () => vm.abrirPickerCalendario(
+                                  context,
+                                ),
                               ),
                               Row(
                                 children: [
@@ -155,9 +158,23 @@ class _CalendarioViewState extends State<CalendarioView> {
                         if (vm.vistaSemana)
                           Column(
                             children: [
-                              Text(
-                                vm.generateNameWeeck(),
-                                style: AppTheme.normalBoldStyle,
+                              ListTile(
+                                title: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      vm.generateNameWeeck(),
+                                      style: AppTheme.normalBoldStyle,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const Icon(
+                                      Icons.arrow_drop_down,
+                                    ),
+                                  ],
+                                ),
+                                onTap: () => vm.abrirPickerCalendario(
+                                  context,
+                                ),
                               ),
                               Row(
                                 children: [
