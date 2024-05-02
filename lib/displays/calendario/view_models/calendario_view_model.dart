@@ -325,16 +325,23 @@ class CalendarioViewModel extends ChangeNotifier {
     }).toList();
   }
 
-  //Verificar si una fecha es del mes seleccionado
+  //Verificar si una fecha es del mes seleccionado del (1 al 31 o fin de mes)
   bool monthCurrent(int date, int i) {
-    List<DiaModel> dias = obtenerDiasDelMes(monthSelectView, yearSelect);
-
-    if (i >= 0 && i < 7 && date > dias[6].value) return false;
-    if (i >= dias.length - 6 &&
-        i < dias.length &&
-        date < dias[dias.length - 1].value) {
+    //lista de los dias del mes completo semanas completas
+    List<DiaModel> dias = armarMes(monthSelectView, yearSelect);
+    semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
+    //evaluar primera semana
+    if (i >= 0 && i < 7 && date > semanasDelMes[0][6].value) {
       return false;
     }
+    //evaluar ultima semana
+    if (i >= dias.length - 6 &&
+        i < dias.length &&
+        date < semanasDelMes[semanasDelMes.length - 1][0].value) {
+      return false;
+    }
+
+    //son dias del mes
     return true;
   }
 
@@ -788,7 +795,6 @@ class CalendarioViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
-
   }
 
   diaAnterior(BuildContext context) async {
