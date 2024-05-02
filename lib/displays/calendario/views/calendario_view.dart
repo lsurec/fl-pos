@@ -547,6 +547,7 @@ class _VistaMes extends StatelessWidget {
                           Column(
                             children: [
                               Container(
+                                height: 135,
                                 alignment: Alignment.topCenter,
                                 color: Colors.transparent,
                                 child: ListView.builder(
@@ -600,7 +601,15 @@ class _VistaMes extends StatelessWidget {
                                                 .toString(),
                                             style: AppTheme.taskStyle,
                                           ),
-                                          const Divider(height: 5),
+                                          const Divider(
+                                            height: 5,
+                                            color: Color.fromRGBO(
+                                              0,
+                                              0,
+                                              0,
+                                              0.12,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );
@@ -633,7 +642,7 @@ class _VistaMes extends StatelessWidget {
                                               : vm.yearSelect,
                                         ).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.tareaStyle,
+                                    style: AppTheme.verMas,
                                   ),
                                 )
                             ],
@@ -685,7 +694,15 @@ class _VistaMes extends StatelessWidget {
                                                 .toString(),
                                             style: AppTheme.taskStyle,
                                           ),
-                                          const Divider(height: 5),
+                                          const Divider(
+                                            height: 5,
+                                            color: Color.fromRGBO(
+                                              0,
+                                              0,
+                                              0,
+                                              0.12,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );
@@ -706,7 +723,7 @@ class _VistaMes extends StatelessWidget {
                                   child: Text(
                                     "(+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.tareaStyle,
+                                    style: AppTheme.verMas,
                                   ),
                                 ),
                             ],
@@ -718,6 +735,7 @@ class _VistaMes extends StatelessWidget {
                           Column(
                             children: [
                               Container(
+                                height: 135,
                                 alignment: Alignment.topCenter,
                                 color: Colors.transparent,
                                 child: ListView.builder(
@@ -771,7 +789,15 @@ class _VistaMes extends StatelessWidget {
                                                 .toString(),
                                             style: AppTheme.taskStyle,
                                           ),
-                                          const Divider(height: 5),
+                                          const Divider(
+                                            height: 5,
+                                            color: Color.fromRGBO(
+                                              0,
+                                              0,
+                                              0,
+                                              0.12,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     );
@@ -804,7 +830,7 @@ class _VistaMes extends StatelessWidget {
                                               : vm.yearSelect,
                                         ).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.tareaStyle,
+                                    style: AppTheme.verMas,
                                   ),
                                 ),
                             ],

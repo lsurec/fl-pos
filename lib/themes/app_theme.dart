@@ -41,6 +41,12 @@ class AppTheme {
     fontWeight: FontWeight.w500,
   );
 
+  static const verMas = TextStyle(
+    fontSize: 12,
+    color: Color.fromARGB(255, 111, 111, 111),
+    fontWeight: FontWeight.w500,
+  );
+
   static const inactivoStyle = TextStyle(
     fontSize: 17,
     color: Colors.grey,
