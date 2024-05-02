@@ -908,11 +908,10 @@ class _VistaDiaState extends State<_VistaDia> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(10),
-              width: 100,
               child: Center(
                 child: Text(
                   horasDia[indexHora].hora12,
-                  style: AppTheme.normalBoldStyle,
+                  style: AppTheme.horaBoldStyle,
                 ),
               ),
             ),
