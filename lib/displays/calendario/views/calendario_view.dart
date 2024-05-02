@@ -414,9 +414,10 @@ class _VistaSemana extends StatelessWidget {
                     Container(
                       height: 30,
                       decoration: BoxDecoration(
+                        //si el dia no está correcto corregirlo eliminando resolveMonth por monthselectview
                         color: dia.value == vm.today &&
-                                vm.monthSelectView == vm.month &&
-                                vm.yearSelect == vm.year
+                                vm.resolveMonth(dia.indexWeek) == vm.month &&
+                                vm.resolveYear(dia.indexWeek) == vm.year
                             ? Colors.blue.shade300
                             : null,
                         border: const Border(
@@ -442,15 +443,15 @@ class _VistaSemana extends StatelessWidget {
                         itemCount: vm
                             .tareaDia(
                               dia.value,
-                              vm.monthSelectView,
-                              vm.yearSelect,
+                              vm.resolveMonth(dia.indexWeek),
+                              vm.resolveYear(index),
                             )
                             .length,
                         itemBuilder: (BuildContext context, int indexTarea) {
                           final List<TareaCalendarioModel> tareasDia =
                               vm.tareaDia(
                             dia.value,
-                            vm.resolveMonth(index),
+                            vm.resolveMonth(dia.indexWeek),
                             vm.resolveYear(index),
                           );
                           return Container(

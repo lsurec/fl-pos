@@ -396,7 +396,7 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  mostrarVistaSemana(BuildContext context) {
+  mostrarVistaSemana(BuildContext context) async {
     //Buscar la semana que tiene el día de hoy
     for (var i = 0; i < semanasDelMes.length; i++) {
       List<DiaModel> semana = semanasDelMes[i];
@@ -414,6 +414,8 @@ class CalendarioViewModel extends ChangeNotifier {
     vistaMes = false;
     vistaDia = false;
 
+    //cargar las tareas cuando se selecciona la vista por semana
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
     Navigator.pop(context);
     notifyListeners();
   }
@@ -717,7 +719,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //si la semnaa seleccionada es 0 es la primer semana
     // los dias anterirores son del mes anterrior
     if (indexWeekActive == 0) {
-      int inicioMes = semanasDelMes[indexWeekActive].first.value;
+      int inicioMes = indicediaMenor(semanasDelMes[0]);
       if (indexDay < inicioMes) {
         return monthSelectView == 1 ? 12 : monthSelectView - 1;
       } else {
@@ -726,7 +728,7 @@ class CalendarioViewModel extends ChangeNotifier {
     } else if (indexWeekActive == semanasDelMes.length - 1) {
       //si la semana seleccionada es la utima
       // los dias siguientes son del mes siguienete
-      int finMes = semanasDelMes[indexWeekActive].last.value;
+      int finMes = indicediaMayor(semanasDelMes[semanasDelMes.length - 1]);
       if (indexDay > finMes) {
         return monthSelectView == 12 ? 1 : monthSelectView + 1;
       } else {
@@ -737,11 +739,35 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
+  int indicediaMenor(List<DiaModel> primeraSemana) {
+    int indexPrimerDia = 0;
+    for (var i = 0; i < primeraSemana.length; i++) {
+      DiaModel primerDia = primeraSemana[i];
+      if (primerDia.value == 1) {
+        indexPrimerDia = primerDia.indexWeek;
+        return indexPrimerDia;
+      }
+    }
+    return indexPrimerDia;
+  }
+
+  int indicediaMayor(List<DiaModel> ultimaSemana) {
+    int indexUltimoDia = 0;
+    for (var i = 0; i < ultimaSemana.length; i++) {
+      DiaModel ultimoDia = ultimaSemana[i];
+      if (ultimoDia.value == obtenerUltimoDiaMes(yearSelect, monthSelectView)) {
+        indexUltimoDia = ultimoDia.indexWeek;
+        return indexUltimoDia;
+      }
+    }
+    return indexUltimoDia;
+  }
+
   //Devuelve un año dependiedo de las semanas
   //si hay dias en una semana que pertenecen a un año distinto
   int resolveYear(int indexDay) {
     if (indexWeekActive == 0) {
-      int inicioMes = semanasDelMes[indexWeekActive].first.value;
+      int inicioMes = indicediaMenor(semanasDelMes[0]);
       if (indexDay < inicioMes) {
         return monthSelectView == 1 ? yearSelect - 1 : yearSelect;
       } else {
@@ -750,9 +776,7 @@ class CalendarioViewModel extends ChangeNotifier {
     } else if (indexWeekActive == semanasDelMes.length - 1) {
       //si la semana seleccionada es la utima
       // los dias siguientes son del mes siguienete
-
-      int finMes = semanasDelMes[indexWeekActive].last.value;
-
+      int finMes = indicediaMayor(semanasDelMes[semanasDelMes.length - 1]);
       if (indexDay > finMes) {
         return monthSelectView == 12 ? yearSelect + 1 : yearSelect;
       } else {
