@@ -23,6 +23,13 @@ class AppTheme {
     fontWeight: FontWeight.bold,
   );
 
+    static const horaBoldStyle = TextStyle(
+    fontSize: 12,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+
+
   static const titleStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -38,6 +45,12 @@ class AppTheme {
   static const tareaStyle = TextStyle(
     fontSize: 14,
     color: Color.fromARGB(255, 78, 77, 77),
+    fontWeight: FontWeight.w500,
+  );
+
+  static const verMas = TextStyle(
+    fontSize: 12,
+    color: Color.fromARGB(255, 111, 111, 111),
     fontWeight: FontWeight.w500,
   );
 

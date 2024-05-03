@@ -414,9 +414,10 @@ class _VistaSemana extends StatelessWidget {
                     Container(
                       height: 30,
                       decoration: BoxDecoration(
+                        //si el dia no está correcto corregirlo eliminando resolveMonth por monthselectview
                         color: dia.value == vm.today &&
-                                vm.monthSelectView == vm.month &&
-                                vm.yearSelect == vm.year
+                                vm.resolveMonth(dia.indexWeek) == vm.month &&
+                                vm.resolveYear(dia.indexWeek) == vm.year
                             ? Colors.blue.shade300
                             : null,
                         border: const Border(
@@ -442,15 +443,15 @@ class _VistaSemana extends StatelessWidget {
                         itemCount: vm
                             .tareaDia(
                               dia.value,
-                              vm.monthSelectView,
-                              vm.yearSelect,
+                              vm.resolveMonth(dia.indexWeek),
+                              vm.resolveYear(index),
                             )
                             .length,
                         itemBuilder: (BuildContext context, int indexTarea) {
                           final List<TareaCalendarioModel> tareasDia =
                               vm.tareaDia(
                             dia.value,
-                            vm.resolveMonth(index),
+                            vm.resolveMonth(dia.indexWeek),
                             vm.resolveYear(index),
                           );
                           return Container(
@@ -490,6 +491,9 @@ class _VistaMes extends StatelessWidget {
         vm.armarMes(vm.monthSelectView, vm.yearSelect);
     //Calcular numero de semanas correctamente
     int semanasNum = (diasMesSeleccionado.length / 7).ceil();
+
+    vm.semanasDelMes = vm.agregarSemanas(vm.monthSelectView, vm.yearSelect);
+    List<List<DiaModel>> semanas = vm.semanasDelMes;
 
     return Table(
       border: TableBorder.all(color: const Color.fromRGBO(0, 0, 0, 0.12)),
@@ -534,74 +538,304 @@ class _VistaMes extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // if (vm.monthCurrent(dia.value, dia.indexWeek))
+                    // if para slo mostrar las tareas de los dias del mes
                     Column(
                       children: [
-                        Container(
-                          alignment: Alignment.topCenter,
-                          height: 135,
-                          color: Colors.transparent,
-                          child: ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: vm
-                                        .tareaDia(
+//primera semana
+                        if (index >= 0 &&
+                            index < 7 &&
+                            dia.value > semanas[0][6].value)
+                          Column(
+                            children: [
+                              Container(
+                                height: 135,
+                                alignment: Alignment.topCenter,
+                                color: Colors.transparent,
+                                child: ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: vm
+                                              .tareaDia(
+                                                dia.value,
+                                                vm.monthSelectView == 1
+                                                    ? 12
+                                                    : vm.monthSelectView - 1,
+                                                vm.monthSelectView == 1
+                                                    ? vm.yearSelect - 1
+                                                    : vm.yearSelect,
+                                              )
+                                              .length >=
+                                          5
+                                      ? 4
+                                      : vm
+                                          .tareaDia(
+                                            dia.value,
+                                            vm.monthSelectView == 1
+                                                ? 12
+                                                : vm.monthSelectView - 1,
+                                            vm.monthSelectView == 1
+                                                ? vm.yearSelect - 1
+                                                : vm.yearSelect,
+                                          )
+                                          .length,
+                                  itemBuilder:
+                                      (BuildContext context, int indexTarea) {
+                                    final List<TareaCalendarioModel> tareasDia =
+                                        vm.tareaDia(
+                                      dia.value,
+                                      vm.monthSelectView == 1
+                                          ? 12
+                                          : vm.monthSelectView - 1,
+                                      vm.monthSelectView == 1
+                                          ? vm.yearSelect - 1
+                                          : vm.yearSelect,
+                                    );
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.only(bottom: 2),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            tareasDia[indexTarea]
+                                                .tarea
+                                                .toString(),
+                                            style: AppTheme.taskStyle,
+                                          ),
+                                          const Divider(
+                                            height: 5,
+                                            color: Color.fromRGBO(
+                                              0,
+                                              0,
+                                              0,
+                                              0.12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              if (vm
+                                      .tareaDia(
+                                        dia.value,
+                                        vm.monthSelectView == 1
+                                            ? 12
+                                            : vm.monthSelectView - 1,
+                                        vm.monthSelectView == 1
+                                            ? vm.yearSelect - 1
+                                            : vm.yearSelect,
+                                      )
+                                      .length >
+                                  4)
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    "(+ ${vm.tareaDia(
                                           dia.value,
-                                          vm.monthSelectView,
-                                          vm.yearSelect,
-                                        )
-                                        .length >=
-                                    5
-                                ? 4
-                                : vm
-                                    .tareaDia(
+                                          vm.monthSelectView == 1
+                                              ? 12
+                                              : vm.monthSelectView - 1,
+                                          vm.monthSelectView == 1
+                                              ? vm.yearSelect - 1
+                                              : vm.yearSelect,
+                                        ).length - 4})",
+                                    textAlign: TextAlign.end,
+                                    style: AppTheme.verMas,
+                                  ),
+                                )
+                            ],
+                          ),
+//Mostrar tareas solo en los dias que pertenecen al mes (1 al 31 dependiendo del mes)
+                        if (vm.monthCurrent(dia.value, index))
+                          Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.topCenter,
+                                height: 135,
+                                color: Colors.transparent,
+                                child: ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: vm
+                                              .tareaDia(
+                                                dia.value,
+                                                vm.monthSelectView,
+                                                vm.yearSelect,
+                                              )
+                                              .length >=
+                                          5
+                                      ? 4
+                                      : vm
+                                          .tareaDia(
+                                            dia.value,
+                                            vm.monthSelectView,
+                                            vm.yearSelect,
+                                          )
+                                          .length,
+                                  itemBuilder:
+                                      (BuildContext context, int indexTarea) {
+                                    final List<TareaCalendarioModel> tareasDia =
+                                        vm.tareaDia(
                                       dia.value,
                                       vm.monthSelectView,
                                       vm.yearSelect,
-                                    )
-                                    .length,
-                            itemBuilder:
-                                (BuildContext context, int indexTarea) {
-                              final List<TareaCalendarioModel> tareasDia =
-                                  vm.tareaDia(
-                                dia.value,
-                                vm.monthSelectView,
-                                vm.yearSelect,
-                              );
-                              return Container(
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(bottom: 2),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      tareasDia[indexTarea].tarea.toString(),
-                                      style: AppTheme.taskStyle,
-                                    ),
-                                    const Divider(height: 5),
-                                  ],
+                                    );
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.only(bottom: 2),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            tareasDia[indexTarea]
+                                                .tarea
+                                                .toString(),
+                                            style: AppTheme.taskStyle,
+                                          ),
+                                          const Divider(
+                                            height: 5,
+                                            color: Color.fromRGBO(
+                                              0,
+                                              0,
+                                              0,
+                                              0.12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                              if (vm
+                                      .tareaDia(
+                                        dia.value,
+                                        vm.monthSelectView,
+                                        vm.yearSelect,
+                                      )
+                                      .length >
+                                  4)
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    "(+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
+                                    textAlign: TextAlign.end,
+                                    style: AppTheme.verMas,
+                                  ),
+                                ),
+                            ],
                           ),
-                        ),
-                        if (vm
-                                .tareaDia(
-                                  dia.value,
-                                  vm.monthSelectView,
-                                  vm.yearSelect,
-                                )
-                                .length >
-                            4)
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "Ver (+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
-                              textAlign: TextAlign.end,
-                              style: AppTheme.tareaStyle,
-                            ),
-                          )
+//Mostrar las tareas de la ultima semana
+                        if (index >= diasMesSeleccionado.length - 6 &&
+                            index < diasMesSeleccionado.length &&
+                            dia.value < semanas[semanas.length - 1][0].value)
+                          Column(
+                            children: [
+                              Container(
+                                height: 135,
+                                alignment: Alignment.topCenter,
+                                color: Colors.transparent,
+                                child: ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: vm
+                                              .tareaDia(
+                                                dia.value,
+                                                vm.monthSelectView == 12
+                                                    ? 1
+                                                    : vm.monthSelectView + 1,
+                                                vm.monthSelectView == 12
+                                                    ? vm.yearSelect + 1
+                                                    : vm.yearSelect,
+                                              )
+                                              .length >=
+                                          5
+                                      ? 4
+                                      : vm
+                                          .tareaDia(
+                                            dia.value,
+                                            vm.monthSelectView == 12
+                                                ? 1
+                                                : vm.monthSelectView + 1,
+                                            vm.monthSelectView == 12
+                                                ? vm.yearSelect + 1
+                                                : vm.yearSelect,
+                                          )
+                                          .length,
+                                  itemBuilder:
+                                      (BuildContext context, int indexTarea) {
+                                    final List<TareaCalendarioModel> tareasDia =
+                                        vm.tareaDia(
+                                      dia.value,
+                                      vm.monthSelectView == 12
+                                          ? 1
+                                          : vm.monthSelectView + 1,
+                                      vm.monthSelectView == 12
+                                          ? vm.yearSelect + 1
+                                          : vm.yearSelect,
+                                    );
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      margin: const EdgeInsets.only(bottom: 2),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            tareasDia[indexTarea]
+                                                .tarea
+                                                .toString(),
+                                            style: AppTheme.taskStyle,
+                                          ),
+                                          const Divider(
+                                            height: 5,
+                                            color: Color.fromRGBO(
+                                              0,
+                                              0,
+                                              0,
+                                              0.12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              if (vm
+                                      .tareaDia(
+                                        dia.value,
+                                        vm.monthSelectView == 12
+                                            ? 1
+                                            : vm.monthSelectView + 1,
+                                        vm.monthSelectView == 12
+                                            ? vm.yearSelect + 1
+                                            : vm.yearSelect,
+                                      )
+                                      .length >
+                                  4)
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    "(+ ${vm.tareaDia(
+                                          dia.value,
+                                          vm.monthSelectView == 12
+                                              ? 1
+                                              : vm.monthSelectView + 1,
+                                          vm.monthSelectView == 12
+                                              ? vm.yearSelect + 1
+                                              : vm.yearSelect,
+                                        ).length - 4})",
+                                    textAlign: TextAlign.end,
+                                    style: AppTheme.verMas,
+                                  ),
+                                ),
+                            ],
+                          ),
                       ],
                     ),
                   ],
@@ -675,11 +909,10 @@ class _VistaDiaState extends State<_VistaDia> {
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(10),
-              width: 100,
               child: Center(
                 child: Text(
                   horasDia[indexHora].hora12,
-                  style: AppTheme.normalBoldStyle,
+                  style: AppTheme.horaBoldStyle,
                 ),
               ),
             ),

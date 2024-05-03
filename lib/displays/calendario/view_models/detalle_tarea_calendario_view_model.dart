@@ -22,15 +22,17 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  TareaCalendarioModel? tarea;
+  TareaCalendarioModel? tarea; //tarea del calendario
   EstadoModel? estadoAtual; //nuevo estado
   PrioridadModel? prioridadActual; //nueva prioridad
 
+  //historial de los responsables
   List<ResponsableModel> responsablesHistorial = [];
   final List<InvitadoModel> invitados = []; //alamcenar invitados
 
   bool historialResposables = false; //mostrra y ocultar historial
-//Volver a cargar detalles
+  
+  //Volver a cargar detalles
   loadData(BuildContext context) async {
     isLoading = true; //cargar pantalla
     estadoAtual = null;

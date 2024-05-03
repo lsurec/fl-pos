@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:intl/intl.dart';
 
@@ -217,5 +219,15 @@ class Utilities {
     int b = int.parse(hexColor.substring(4, 6), radix: 16);
 
     return [r, g, b];
+  }
+
+    static String nombreArchivo(File archivo) {
+    // Obtener el path del archivo
+    String path = archivo.path;
+
+    // Utilizar la función basename para obtener solo el nombre del archivo
+    String nombreArchivo = File(path).path.split('/').last;
+
+    return nombreArchivo;
   }
 }

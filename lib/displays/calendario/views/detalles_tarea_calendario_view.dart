@@ -165,18 +165,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         "ID REFERENCIA: ",
                         style: AppTheme.normalBoldStyle,
                       ),
-                      CardWidget(
+                      const CardWidget(
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            "Id referncia de la tarea ${vm.tarea!.tarea} No disponible.",
+                            "No disponible.",
                             style: AppTheme.normalStyle,
                           ),
                           leading:
-                              const Icon(Icons.arrow_circle_right_outlined),
+                              Icon(Icons.arrow_circle_right_outlined),
                         ),
                       ),
                       const Text(
