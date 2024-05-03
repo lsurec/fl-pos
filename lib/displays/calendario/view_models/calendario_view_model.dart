@@ -28,10 +28,11 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //Variables a utlizar en e calendario
 
-  bool vistaMes = true;
-  bool vistaSemana = false;
-  bool vistaDia = false;
+  bool vistaMes = true; //vista por mes
+  bool vistaSemana = false; //vista por semana
+  bool vistaDia = false; //vista por día
 
+  //almacenar los días del mes (1 al ultimo día 31)
   List<DiaModel> diasDelMes = [];
 
   //fecha de hoy (fecha de la maquina)
@@ -64,25 +65,36 @@ class CalendarioViewModel extends ChangeNotifier {
   // Encontrar el índice del primer día del mes
   int primerDiaIndex = 0;
   int ultimoDiaIndex = 0;
-  int numSemanas = 0;
+
+  //para estilos de los días
+  bool siEsHoy = false;
+  bool siguientes = false;
 
   Future<void> loadData(BuildContext context) async {
+    //fecha del dia de hoy y la del picker inicializarlas con a fecha actual
     fechaHoy = DateTime.now();
     fechaPicker = DateTime.now();
 
+    //asignar fechas del dia de hoy a variable de dia de hoy, mes y año.
     today = fechaHoy.day;
     month = fechaHoy.month;
     year = fechaHoy.year;
+
+    //obtener los dias del mes (1..31)
     diasDelMes = obtenerDiasDelMes(month, year);
 
+    //armamos el mes con las semanas completas
     mesCompleto = armarMes(month, year);
 
+    //asignar valores a dia, mes y año seleccionados con las fechas de hoy
     monthSelectView = month; //mes
     yearSelect = year; //año
     daySelect = today; //hoy
 
+    //armar las semanas con el mes y año actual
     semanasDelMes = agregarSemanas(month, year);
 
+    //si la vista activa es semana inicializara con la semana del dia actual
     if (vistaSemana) {
       //Buscar la semana que tiene el día de hoy
       for (var i = 0; i < semanasDelMes.length; i++) {
@@ -99,6 +111,7 @@ class CalendarioViewModel extends ChangeNotifier {
       indexWeekActive = 0;
     }
 
+    //obtener las tareas del usuario con por rango de fecha
     obtenerTareasRango(context, monthSelectView, yearSelect);
 
     notifyListeners();
@@ -178,6 +191,7 @@ class CalendarioViewModel extends ChangeNotifier {
     return completarMes;
   }
 
+  //cambiar al mes siguiente
   mesSiguiente(
     BuildContext context,
   ) async {
@@ -189,6 +203,7 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //cambiar al mes anterior
   mesAnterior(
     BuildContext context,
   ) async {
@@ -200,76 +215,13 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //encontrar el dia de hoy
-  bool diaHoy(int dia, int index) {
-    if (today == dia && monthSelectView == month && yearSelect == year) {
-      if (dia == today && dia >= mesCompleto[0].value ||
-          dia <= mesCompleto[6].value && index >= 0 && index <= 7) {
-        return true;
-      }
-      return false;
-    }
-    return false;
-  }
-
-  bool siEsHoy = false;
-  bool siguientes = false;
-
-  buscarHoy(List<DiaModel> dias) {
-    for (var i = 0; i < dias.length; i++) {
-      DiaModel diaRecorrido = dias[i];
-      if (today == diaRecorrido.value &&
-          monthSelectView == month &&
-          yearSelect == year) {
-        if (diaRecorrido.value == today &&
-                diaRecorrido.value >= mesCompleto[0].value ||
-            diaRecorrido.value <= mesCompleto[6].value &&
-                diaRecorrido.indexWeek >= 0 &&
-                diaRecorrido.indexWeek <= 7) {
-          siEsHoy = true;
-          notifyListeners();
-        }
-        siEsHoy = false;
-        notifyListeners();
-      }
-      siEsHoy = false;
-      notifyListeners();
-    }
-  }
-
-  obtenerTareasCalendario(BuildContext context) async {
-    tareas.clear(); //limpiar lista
-
-    //obtener token y usuario
-    // final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    // String token = vmLogin.token;
-    // String user = vmLogin.user;
-
-    //instancia del servicio
-    final CalendarioTareaService tareaService = CalendarioTareaService();
-
-    isLoading = true; //cargar pantalla
-
-    //consumo de api
-    final ApiResModel res = await tareaService.getTareaCalendario("desa029",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZXNhMDI5IiwibmJmIjoxNzEzMjA0OTY0LCJleHAiOjE3NDQzMDg5NjQsImlhdCI6MTcxMzIwNDk2NH0.N0-ioXGBJ485Waco_0mPwWXP-A_JZk0Uu5Un77yhJJE");
-
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, res);
-      return;
-    }
-    //agregar tareas encontradas a la lista de tareas
-    tareas.addAll(res.message);
-
-    isLoading = false; //detener carga
-  }
-
+  //obtener las tareas del usuario por rango para mostrarlas en el calendario
   obtenerTareasRango(BuildContext context, int mes, int anio) async {
+    //obtener el mes y año inicial del rango
     int anioInicial = mes == 1 ? anio - 1 : anio;
     int mesInicial = mes == 1 ? 12 : mes - 1;
 
+    //obtener el mes y año final del rango
     int anioFinal = mes == 12 ? anio + 1 : anio;
     int mesFinal = mes == 12 ? 1 : mes + 1;
 
@@ -278,8 +230,10 @@ class CalendarioViewModel extends ChangeNotifier {
         mesInicial < 10 ? '0$mesInicial' : mesInicial.toString();
     String mesFinCero = mesFinal < 10 ? '0$mesFinal' : mesFinal.toString();
 
+    //ontenemos el ultimo día del mes final del rango
     int ultimoDia = obtenerUltimoDiaMes(anioFinal, mesFinal);
 
+    //armar rango inicial y final para obtener las tareas.
     String mesAnterior = '$anioInicial$mesIniCero${"01"} 00:00:00';
     String mesSiguiente = '$anioFinal$mesFinCero$ultimoDia 23:59:59';
 
@@ -313,8 +267,11 @@ class CalendarioViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
+  //obtener las tareas que corresponden a cada día
   List<TareaCalendarioModel> tareaDia(int day, int month, int year) {
+    //crear una nueva fecha apartir de la fecha de los parametros recibidos
     final fechaBusqueda = DateTime(year, month, day);
+    //formatear fecha
     final fechaBusquedaFormateada =
         DateFormat('yyyy-MM-dd').format(fechaBusqueda);
 
@@ -351,11 +308,13 @@ class CalendarioViewModel extends ChangeNotifier {
     List<List<DiaModel>> semanas = [];
     semanas.clear();
 
+    // Dividir los días del mes en sublistas de 7 días (semanas)
     for (int i = 0; i < diasDelMes.length; i += 7) {
       List<DiaModel> sublista = diasDelMes.sublist(i, i + 7);
       semanas.add(sublista);
     }
 
+    // Asignar el índice de la semana a cada día en cada semana
     for (int i = 0; i < semanas.length; i++) {
       for (int j = 0; j < semanas[i].length; j++) {
         semanas[i][j].indexWeek = j;
@@ -375,11 +334,13 @@ class CalendarioViewModel extends ChangeNotifier {
     List<List<DiaModel>> semanas = [];
     semanas.clear();
 
+    // Dividir los días del mes en sublistas de 7 días (semanas)
     for (int i = 0; i < dias.length; i += 7) {
       List<DiaModel> sublista = dias.sublist(i, i + 7);
       semanas.add(sublista);
     }
 
+    // Asignar el índice de la semana a cada día en cada semana
     for (int i = 0; i < semanas.length; i++) {
       for (int j = 0; j < semanas[i].length; j++) {
         semanas[i][j].indexWeek = j;
@@ -388,6 +349,7 @@ class CalendarioViewModel extends ChangeNotifier {
     return semanas;
   }
 
+  //mostrar vista del mes
   mostrarVistaMes(BuildContext context) {
     vistaMes = true;
     vistaDia = false;
@@ -396,6 +358,7 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //mostrar la vista por semana
   mostrarVistaSemana(BuildContext context) async {
     //Buscar la semana que tiene el día de hoy
     for (var i = 0; i < semanasDelMes.length; i++) {
@@ -420,11 +383,13 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //mostrar la vista del dia seleccionado o el dia actual
   mostrarVistaDia(BuildContext context, int navegar) {
     vistaDia = true;
     vistaSemana = false;
     vistaMes = false;
 
+    //si navegar es cero regresa al contenido anterior
     if (navegar == 0) {
       Navigator.pop(context);
     }
@@ -497,11 +462,19 @@ class CalendarioViewModel extends ChangeNotifier {
     mostrarVistaDia(context, 1);
   }
 
+  //navegar a la vista de en semana al dia correcto
   diaCorrectoSemana(
-      BuildContext context, DiaModel diaSeleccionado, int mes, int anio) {
+    BuildContext context,
+    DiaModel diaSeleccionado,
+    int mes,
+    int anio,
+  ) {
+    //obtenemos las semanas del mes y año que estamos visualizando
     List<List<DiaModel>> semanas = agregarSemanas(mes, anio);
 
+    //primera semana
     List<DiaModel> primeraSemana = semanas[0];
+    //ultima semana
     List<DiaModel> ultimaSemana = semanas[semanas.length - 1];
 
     //obtener el ultimo dia mayor de la ultima semana
@@ -562,9 +535,12 @@ class CalendarioViewModel extends ChangeNotifier {
   bool nuevaIsToday(int date, int i) {
     //verificar mes y año de la fecha de hoy
     if (today == date && monthSelectView == month && yearSelect == year) {
+      //si no está en la primera semana
       if (i >= 0 && i < 7 && date > semanasDelMes[0][6].value) {
         return false;
       }
+
+      //sino es el ultima semana
       if (i >= mesCompleto.length - 6 &&
           i < mesCompleto.length &&
           date < semanasDelMes[semanasDelMes.length - 1][0].value) {
@@ -575,7 +551,9 @@ class CalendarioViewModel extends ChangeNotifier {
     return false;
   }
 
+  //estilo diferente par los dias del mes anterior y siguiente.
   bool diasOtroMes(DiaModel dia, int index, List<DiaModel> diasMes) {
+    //obtener las semanas del mes y año recibidos
     List<List<DiaModel>> semanas = [];
 
     semanas = nuevaAgregarSemanas(diasMes);
@@ -598,19 +576,24 @@ class CalendarioViewModel extends ChangeNotifier {
     List<List<DiaModel>> semanas = [];
     semanas.clear();
 
+    // Dividir los días del mes en sublistas de 7 días (semanas)
     for (int i = 0; i < dias.length; i += 7) {
       List<DiaModel> sublista = dias.sublist(i, i + 7);
       semanas.add(sublista);
     }
 
+    // Asignar el índice de la semana a cada día en cada semana
     for (int i = 0; i < semanas.length; i++) {
       for (int j = 0; j < semanas[i].length; j++) {
         semanas[i][j].indexWeek = j;
       }
     }
+
+    //retornar semanas
     return semanas;
   }
 
+  //obtener el indice de la semana siguiente
   int obtenerIndiceSemanaSiguiente(
     int indiceSemanaActual,
     int mesActual,
@@ -633,6 +616,7 @@ class CalendarioViewModel extends ChangeNotifier {
         anioSiguiente++;
       }
 
+      //obtener las semanas del mes siguiente
       List<List<DiaModel>> semanasDelMesSiguiente =
           agregarSemanas(mesSiguiente, anioSiguiente);
 
@@ -652,15 +636,20 @@ class CalendarioViewModel extends ChangeNotifier {
     return indiceSemanaActual + 1;
   }
 
+  //cambiar a la semana siguiente
   semanaSiguiente(
     BuildContext context,
   ) async {
+    //estanto en ña ultima semana
     if (indexWeekActive == semanasDelMes.length - 1) {
+      //condicionar mes y año para que cambien segun corresponda
       yearSelect = monthSelectView == 12 ? yearSelect + 1 : yearSelect; //año
       monthSelectView = monthSelectView == 12 ? 1 : monthSelectView + 1; //mes
 
+      //asignar nuevas semanas con el mes y año
       semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
 
+      //si el primer dia de la primera semana del mes es igual a 1
       if (semanasDelMes[0][0].value == 1) {
         // Cambiar a la primera semana del nuevo mes
         indexWeekActive = 0;
@@ -680,13 +669,17 @@ class CalendarioViewModel extends ChangeNotifier {
       notifyListeners();
     }
 
+    //obtener las tareas por el rango de fechas
     await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
+  //cambiar a la semana anterior
   semanaAnterior(
     BuildContext context,
   ) async {
+    //si estamos en la primera semana
     if (indexWeekActive == 0) {
+      //condicionar mes y año para que cambien segun corresponda
       yearSelect = monthSelectView == 1 ? yearSelect - 1 : yearSelect; //año
       monthSelectView = monthSelectView == 1 ? 12 : monthSelectView - 1; //mes
 
@@ -697,6 +690,8 @@ class CalendarioViewModel extends ChangeNotifier {
       // Encontrar la última semana del mes anterior
       int indexUltimaSemana = semanasDelMesAnterior.length - 1;
 
+      //si la ultima semana del mes anterior es igual a la primera semana del mes actual
+      //al regresar restar 1 para que no se dupliquen
       if (semanasDelMesAnterior[indexUltimaSemana][0].value ==
           semanasDelMes[indexWeekActive][0].value) {
         indexWeekActive = indexUltimaSemana - 1;
@@ -707,9 +702,12 @@ class CalendarioViewModel extends ChangeNotifier {
       indexWeekActive = indexUltimaSemana;
       notifyListeners();
     } else {
+      //sino restar uno al indice activo
       indexWeekActive--;
       notifyListeners();
     }
+
+    //obtener las semanas pore el rango de fechas
     await obtenerTareasRango(context, monthSelectView, yearSelect);
   }
 
@@ -739,6 +737,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
+  //obtener el indice del dia menor de una semana
   int indicediaMenor(List<DiaModel> primeraSemana) {
     int indexPrimerDia = 0;
     for (var i = 0; i < primeraSemana.length; i++) {
@@ -751,6 +750,7 @@ class CalendarioViewModel extends ChangeNotifier {
     return indexPrimerDia;
   }
 
+  //obtener el indice del dia mayor de una semana
   int indicediaMayor(List<DiaModel> ultimaSemana) {
     int indexUltimoDia = 0;
     for (var i = 0; i < ultimaSemana.length; i++) {
@@ -787,6 +787,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
+  //cambiar al dia siguiente
   diaSiguiente(BuildContext context) async {
     //ontener ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView);
@@ -821,6 +822,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
+  //regresar al dia anterior
   diaAnterior(BuildContext context) async {
     //buscar el ultimo dia del mes
     int ultimodia = obtenerUltimoDiaMes(yearSelect, monthSelectView - 1);
@@ -852,6 +854,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }
   }
 
+  //obtener el ultimo dia del mes y año ingresados en los parametros
   int obtenerUltimoDiaMes(int anio, int mes) {
     // Crear un objeto DateTime para el primer día del siguiente mes
     DateTime primerDiaMesSiguiente = DateTime(anio, mes + 1, 1);
@@ -864,13 +867,16 @@ class CalendarioViewModel extends ChangeNotifier {
 
   //crear nombre de la semanas por rango
   String generateNameWeeck() {
+    // Obtener las semanas del mes seleccionado
     semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
     //año seleccionado
     yearSelect;
-    //dias
+
+    // Obtener el día de inicio y fin de la semana activa
     int dayStart = semanasDelMes[indexWeekActive][0].value; //dia inicio
     int dayEnd = semanasDelMes[indexWeekActive][6].value; //dia fin
-    //mes inicio
+
+    // Obtener el mes de inicio
     int monthStart = indexWeekActive == 0 &&
             semanasDelMes[indexWeekActive][0].value >
                 semanasDelMes[indexWeekActive][6].value
@@ -879,7 +885,7 @@ class CalendarioViewModel extends ChangeNotifier {
             : monthSelectView - 1
         : monthSelectView;
 
-    //mes fin
+    // Obtener el mes de fin
     int monthEnd = indexWeekActive == semanasDelMes.length - 1 &&
             semanasDelMes[indexWeekActive][6].value <
                 semanasDelMes[indexWeekActive][0].value
@@ -888,9 +894,9 @@ class CalendarioViewModel extends ChangeNotifier {
             : monthSelectView + 1
         : monthSelectView;
 
-    //año seleccionado
-    int yearStart = yearSelect; //año inicio
-    int yearEnd = yearSelect; //año fin
+    // Obtener el año de inicio y fin
+    int yearStart = yearSelect; // Año de inicio
+    int yearEnd = yearSelect; // Año de fin
 
     //solo en el mes 12 (diciembre) solo en la ultima semana
     if (monthSelectView == 12 && indexWeekActive == semanasDelMes.length - 1) {
@@ -909,6 +915,7 @@ class CalendarioViewModel extends ChangeNotifier {
       }
     }
 
+    // Construir el nombre de la semana según las condiciones
     if (monthStart > monthEnd && yearStart < yearEnd) {
       return "${Utilities.nombreMes(monthStart).substring(0, 3)} de $yearStart - ${Utilities.nombreMes(monthEnd).substring(0, 3)} de $yearEnd";
     }
@@ -934,6 +941,7 @@ class CalendarioViewModel extends ChangeNotifier {
     }).toList();
   }
 
+  //retornar el texto de la hora de la fecha en int
   int obtenerHora(String fechaHora) {
     // Parsear la cadena de fecha y hora a un objeto DateTime
     DateTime dateTime = DateTime.parse(fechaHora);
@@ -1135,9 +1143,11 @@ class CalendarioViewModel extends ChangeNotifier {
       return;
     }
 
+    //enviar la fecha correcta al formulario de crear tareas
     vmCrear.fechaInicial = fechaEnviar;
     vmCrear.fechaFinal = vmCrear.addDate10Min(vmCrear.fechaInicial);
 
+    //limpiar lista de archivos
     vmCrear.files.clear();
 
     //Navegar a la vista de crear tareas
@@ -1160,8 +1170,10 @@ class CalendarioViewModel extends ChangeNotifier {
     return false;
   }
 
+  //fecha del picker del calendario
   DateTime fechaPicker = DateTime.now();
 
+  //abrir el picker del calendario
   Future<void> abrirPickerCalendario(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
@@ -1174,19 +1186,25 @@ class CalendarioViewModel extends ChangeNotifier {
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
 
+    //si la vista por mes está activa mostrar el mes con la fecha seleccionada en el picker
     if (vistaMes) {
+      //asignar fecha seleccionada en el picker a variables de dia, mes y año
       yearSelect = pickedDate.year;
       monthSelectView = pickedDate.month;
       daySelect = pickedDate.day;
+
+      //asignar a la fecha del picker la fecha seleccionada
       fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
       notifyListeners();
     }
 
+    //armar semanas con la fecha y año seleccionados
     List<List<DiaModel>> nuevasSemanas = agregarSemanas(
       pickedDate.month,
       pickedDate.year,
     );
 
+    //si la vista por semana está activa mostrar la semana con la fecha seleccionada en el picker
     if (vistaSemana) {
       //Buscar la semana que tiene el día de hoy
       for (var i = 0; i < nuevasSemanas.length; i++) {
@@ -1200,33 +1218,28 @@ class CalendarioViewModel extends ChangeNotifier {
         }
       }
 
+      //asignar fecha seleccionada en el picker a variables de dia, mes y año
       yearSelect = pickedDate.year;
       monthSelectView = pickedDate.month;
       daySelect = pickedDate.day;
-      fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
 
+      //asignar a la fecha del picker la fecha seleccionada
+      fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
       notifyListeners();
     }
 
+    //si la vista por dia está activa mostrar el dia de la fecha seleccionada en el picker
     if (vistaDia) {
+      //asignar fecha seleccionada en el picker a variables de dia, mes y año
       yearSelect = pickedDate.year;
       monthSelectView = pickedDate.month;
       daySelect = pickedDate.day;
+
+      //asignar a la fecha del picker la fecha seleccionada
       fechaPicker = DateTime(yearSelect, monthSelectView, daySelect);
       notifyListeners();
     }
 
     notifyListeners();
-  }
-
-  Timer? timer; // Temporizador
-
-  void buscarRefTemp(BuildContext context) {
-    timer?.cancel(); // Cancelar el temporizador existente si existe
-    timer = Timer(const Duration(milliseconds: 1000), () {
-      // Función de filtrado que consume el servicio
-      FocusScope.of(context).unfocus(); //ocultar teclado
-      diaAnterior(context);
-    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }

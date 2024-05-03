@@ -903,6 +903,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //seleccionar archivos para adjuntalos a la tarea
   Future<void> selectFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -915,13 +916,4 @@ class CrearTareaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String obtenerNombreArchivo(File archivo) {
-    // Obtener el path del archivo
-    String path = archivo.path;
-
-    // Utilizar la función basename para obtener solo el nombre del archivo
-    String nombreArchivo = File(path).path.split('/').last;
-
-    return nombreArchivo;
-  }
 }

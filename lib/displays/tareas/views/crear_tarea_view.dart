@@ -261,7 +261,7 @@ class CrearTareaView extends StatelessWidget {
                               children: [
                                 ListTile(
                                   title: Text(
-                                    vm.obtenerNombreArchivo(archivo),
+                                    Utilities.nombreArchivo(archivo),
                                     style: AppTheme.normalStyle,
                                   ),
                                   leading: const Icon(Icons.attachment),

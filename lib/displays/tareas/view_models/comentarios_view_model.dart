@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -104,7 +105,7 @@ class ComentariosViewModel extends ChangeNotifier {
         File file = files[i];
         ObjetoComentarioModel archivo = ObjetoComentarioModel(
           tareaComentarioObjeto: 1,
-          objetoNombre: obtenerNombreArchivo(file),
+          objetoNombre: Utilities.nombreArchivo(file),
           objetoSize: "",
           objetoUrl: "",
         );
@@ -202,6 +203,7 @@ class ComentariosViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
+  //seleccionar archivos para adjuntarlos al comentario
   Future<void> selectFiles() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -213,36 +215,9 @@ class ComentariosViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String obtenerNombreArchivo(File archivo) {
-    // Obtener el path del archivo
-    String path = archivo.path;
-
-    // Utilizar la función basename para obtener solo el nombre del archivo
-    String nombreArchivo = File(path).path.split('/').last;
-
-    return nombreArchivo;
-  }
-
   //Eliminar archivos de la lista de inivtados
   void eliminarArchivos(int index) {
     files.removeAt(index);
     notifyListeners();
   }
-
-  // //para abrir archivos, recibe el archivo completo y envia la url del archivo
-  // verArchivos(ObjetoComentarioModel archivo) async {
-  //   await OpenFile.open(archivo.objetoUrl);
-  //   notifyListeners();
-  //   print(archivo.objetoUrl);
-
-  // }
-
-  // //Recibe la url del archivo
-  // void openFile(String filePath) async {
-  //   // Abre el archivo con la aplicación predeterminada asociada a su extensión.
-  //   await OpenFile.open(filePath);
-  //   print(filePath);
-  //   notifyListeners();
-
-  // }
 }
