@@ -79,6 +79,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // limpiar preferencias
     // Preferences.clearLang();
+    // Preferences.clearUrl();
     // Preferences.clearToken();
     // Preferences.clearDocument();
 
@@ -92,9 +93,7 @@ class MyApp extends StatelessWidget {
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
-      // home: const MonthDays(year: 2024,month: 6,), // Muestra el SplashScreen durante el inicio
-      // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
-      home: const LangView(), // Muestra el SplashScreen durante el inicio
+      home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
       localizationsDelegates: const [
@@ -103,12 +102,13 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('es'), // Spanish
-        Locale('en'), // English
+        Locale('es'), // Español
+        Locale('en'), // Ingles
         Locale('fr'), // Frances
         Locale('de'), // Aleman
-
       ],
+      //inicializar la aplicacion con el ultimo idioma guardado
+      //sino se ha seleccionado inicializa con el idioma Español
       locale: AppLocalizations.idioma,
     );
   }

@@ -80,8 +80,24 @@ class SplashViewModel extends ChangeNotifier {
     //   }
     // }
 
-    //si no hay una url para las apis configurada
-    if (Preferences.urlApi.isEmpty) {
+    //si no hay una url para las apis configurada y si no hay idioma seleccionado
+    //mostrar pantalla de idiomas
+    if (Preferences.urlApi.isEmpty && Preferences.language.isEmpty) {
+      // Simula una carga de datos
+      await Future.delayed(const Duration(seconds: 1));
+
+      //mostrar pantallaconfiguracion de apis
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LangView(),
+        ), // Cambiar a la pantalla principal después de cargar los datos
+      );
+      return;
+
+      //entrar a pantalla de la url de las apis si no hay url guardada y ya existe un idioma guardado
+    } else if (Preferences.language.isNotEmpty && Preferences.urlApi.isEmpty) {
+      //si hay un idioma guardado asignarlo a la variable global del idioma
+      AppLocalizations.idioma = Locale(Preferences.language);
       // Simula una carga de datos
       await Future.delayed(const Duration(seconds: 1));
 
@@ -93,6 +109,22 @@ class SplashViewModel extends ChangeNotifier {
       );
       return;
     }
+
+    // //si no hay una url para las apis configurada
+    // if (Preferences.urlApi.isEmpty && Preferences.language.isNotEmpty) {
+    //   print("aqui pasoooooooooo");
+    //   print("lang ${Preferences.language}");
+    //   // Simula una carga de datos
+    //   await Future.delayed(const Duration(seconds: 1));
+
+    //   //mostrar pantallaconfiguracion de apis
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (context) => const ApiView(),
+    //     ), // Cambiar a la pantalla principal después de cargar los datos
+    //   );
+    //   return;
+    // }
 
     // si no hay una sesion de usuario guradada
     if (Preferences.token.isEmpty) {
@@ -172,7 +204,7 @@ class SplashViewModel extends ChangeNotifier {
     }
 
     //si solo hay una estacion y una empresa mostrar home
-    if (localVM.estaciones.length == 1 && localVM.empresas.length == 1 && Preferences.language.isNotEmpty) {
+    if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {
       //view model externo
       final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
@@ -247,23 +279,5 @@ class SplashViewModel extends ChangeNotifier {
       (Route<dynamic> route) =>
           false, // Condición para eliminar todas las rutas anteriores
     );
-
-    //si no hay un idioma seleccionado mostrar LangView()
-    if (Preferences.language.isEmpty) {
-      print("no hay idioma ${Preferences.language}");
-      // Simula una carga de datos
-      await Future.delayed(const Duration(seconds: 1));
-
-      //mostrar pantallaconfiguracion de apis
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const LangView(),
-        ), // Cambiar a la pantalla principal después de cargar los datos
-      );
-      return;
-    } else {
-      print("si hay idioma ${Preferences.language}");
-      AppLocalizations.idioma = Locale(Preferences.language);
-    }
   }
 }
