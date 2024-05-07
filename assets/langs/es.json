@@ -1,7 +1,10 @@
 {
-    "Message": "Hola Mundo",
     "seleccionado": "El idioma seleccionado es el español.",
-    "fechaIni": "FECHA INICIAL",
-    "fechaFin": "FECHA FINAL",
-    "creador": "CREADOR"
+    "fechaIni": "Fecha Inicio: ",
+    "fechaFin": "Fecha Fin: ",
+    "idDoc": "Id documento: ",
+    "usuario": "Usuario: ",
+    "fechaHora": "Fecha hora: ",
+    "fechaDoc": "Fecha documento: ",
+    "serieDoc": "Serie documento: "
 }

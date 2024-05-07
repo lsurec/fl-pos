@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 import 'package:flutter_post_printer_example/widgets/load_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,10 @@ class LangView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text("Titulo"),
+            title: const Text(
+              "IDIOMA DE LA APLICACION",
+              style: AppTheme.titleStyle,
+            ),
           ),
           body: RefreshIndicator(
             onRefresh: () async {},
@@ -25,22 +29,106 @@ class LangView extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: () => vm.cambiarIdioma(const Locale('en')),
-                      child: const Text(
-                        'English',
-                        style: AppTheme.whiteBoldStyle,
+                    const SizedBox(
+                      height: 40,
+                      child: Text(
+                        "Seleccione el idioma de su preferencia.",
+                        style: AppTheme.normalBoldStyle,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => vm.cambiarIdioma(const Locale('es')),
-                      child: const Text(
-                        'Español',
-                        style: AppTheme.whiteBoldStyle,
+                    CardWidget(
+                      width: 400,
+                      margin: const EdgeInsets.only(bottom: 25),
+                      child: ListTile(
+                        title: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.language_outlined),
+                            SizedBox(width: 10),
+                            Text(
+                              "Ingles (Estados Unidos)",
+                              style: AppTheme.normalBoldStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
                       ),
                     ),
+                    CardWidget(
+                      width: 400,
+                      margin: const EdgeInsets.only(bottom: 25),
+                      child: ListTile(
+                        title: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.language_outlined),
+                            SizedBox(width: 10),
+                            Text(
+                              "Español (Guatemala)",
+                              style: AppTheme.normalBoldStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    CardWidget(
+                      width: 400,
+                      margin: const EdgeInsets.only(bottom: 25),
+                      child: ListTile(
+                        title: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.language_outlined),
+                            SizedBox(width: 10),
+                            Text(
+                              "Francés (Francia)",
+                              style: AppTheme.normalBoldStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    CardWidget(
+                      width: 400,
+                      margin: const EdgeInsets.only(bottom: 25),
+                      child: ListTile(
+                        title: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.language_outlined),
+                            SizedBox(width: 10),
+                            Text(
+                              "Alemán (Alemania)",
+                              style: AppTheme.normalBoldStyle,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
+                    // ElevatedButton(
+                    //   onPressed: () => vm.cambiarIdioma(const Locale('en')),
+                    //   child: const Text(
+                    //     'English',
+                    //     style: AppTheme.whiteBoldStyle,
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 20),
+                    // ElevatedButton(
+                    //   onPressed: () => vm.cambiarIdioma(const Locale('es')),
+                    //   child: const Text(
+                    //     'Español',
+                    //     style: AppTheme.whiteBoldStyle,
+                    //   ),
+                    // ),
                     const SizedBox(height: 20),
                     Text(
                       AppLocalizations.of(context)!.translate('seleccionado'),
@@ -61,18 +149,24 @@ class LangView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!.translate('creador'),
+                      AppLocalizations.of(context)!.translate('idDoc'),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () => vm.reiniciarTemp(context),
-                      child: const Text(
-                        'Reiniciar',
-                        style: AppTheme.whiteBoldStyle,
+                    Text(
+                      AppLocalizations.of(context)!.translate('usuario'),
+                      style: const TextStyle(
+                        fontSize: 20,
                       ),
                     ),
+                    // ElevatedButton(
+                    //   onPressed: () => vm.reiniciarTemp(context),
+                    //   child: const Text(
+                    //     'Reiniciar',
+                    //     style: AppTheme.whiteBoldStyle,
+                    //   ),
+                    // ),
                     if (Preferences.language.isNotEmpty)
                       Text(
                         "${Preferences.language}, Idioma",
