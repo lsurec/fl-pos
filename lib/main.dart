@@ -11,7 +11,7 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   //inicializar shared preferences (preferencias de usuario)
@@ -66,6 +66,7 @@ class AppState extends StatelessWidget {
             create: (_) => DetalleTareaCalendarioViewModel()),
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
+        ChangeNotifierProvider(create: (_) => LangViewModel()),
       ],
       child: const MyApp(),
     );
@@ -93,19 +94,19 @@ class MyApp extends StatelessWidget {
       //configurar ruta inicial
       // home: const MonthDays(year: 2024,month: 6,), // Muestra el SplashScreen durante el inicio
       // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: const LangView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
-      // localizationsDelegates: const [
-      //   AppLocalizations.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      // ],
-      // supportedLocales: const [
-      //   Locale('es'), // Spanish
-      //   Locale('en'), // English
-      // ],
-      // locale: const Locale("en"),
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es'), // Spanish
+        Locale('en'), // English
+      ],
+      locale: Locale(Preferences.language),
     );
   }
 }
