@@ -23,12 +23,17 @@ class AppTheme {
     fontWeight: FontWeight.bold,
   );
 
-    static const horaBoldStyle = TextStyle(
+  static const horaBoldStyle = TextStyle(
     fontSize: 12,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
 
+  static const whiteBoldStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 
   static const titleStyle = TextStyle(
     fontSize: 20,

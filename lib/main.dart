@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // limpiar preferencias
-    // Preferences.clearUrl();
+    // Preferences.clearLang();
     // Preferences.clearToken();
     // Preferences.clearDocument();
 
@@ -94,7 +94,7 @@ class MyApp extends StatelessWidget {
       //configurar ruta inicial
       // home: const MonthDays(year: 2024,month: 6,), // Muestra el SplashScreen durante el inicio
       // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
-      home: const LangView(), // Muestra el SplashScreen durante el inicio
+      home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
       localizationsDelegates: const [
@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
         Locale('es'), // Spanish
         Locale('en'), // English
       ],
-      locale: Locale(Preferences.language),
+      locale: AppLocalizations.idioma,
     );
   }
 }

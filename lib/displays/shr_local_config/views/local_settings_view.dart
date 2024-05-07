@@ -1,6 +1,7 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -55,6 +56,16 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (Preferences.language.isNotEmpty)
+                        Text(
+                          Preferences.language,
+                          style: AppTheme.titleStyle,
+                        ),
+                      if (Preferences.language.isEmpty)
+                        const Text(
+                          "no se ha seleccionado",
+                          style: AppTheme.titleStyle,
+                        ),
                       const Center(
                         child: Text(
                           "Configuracion local",

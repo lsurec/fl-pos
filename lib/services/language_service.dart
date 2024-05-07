@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppLocalizations extends ChangeNotifier {
+  static Locale idioma = const Locale("es");
   final Locale locale;
 
   // Constructor que toma un Locale como argumento.
@@ -24,8 +25,8 @@ class AppLocalizations extends ChangeNotifier {
 
   // Método asincrónico que carga las cadenas de texto traducidas desde un archivo JSON.
   Future<bool> load() async {
-    String jsonString = await rootBundle
-        .loadString('assets/langs/${locale.languageCode}.json');
+    String jsonString =
+        await rootBundle.loadString('assets/langs/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
     _localizedStrings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());

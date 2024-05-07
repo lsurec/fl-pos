@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -172,7 +172,7 @@ class SplashViewModel extends ChangeNotifier {
     }
 
     //si solo hay una estacion y una empresa mostrar home
-    if (localVM.estaciones.length == 1 && localVM.empresas.length == 1) {
+    if (localVM.estaciones.length == 1 && localVM.empresas.length == 1 && Preferences.language.isNotEmpty) {
       //view model externo
       final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
@@ -247,5 +247,23 @@ class SplashViewModel extends ChangeNotifier {
       (Route<dynamic> route) =>
           false, // Condición para eliminar todas las rutas anteriores
     );
+
+    //si no hay un idioma seleccionado mostrar LangView()
+    if (Preferences.language.isEmpty) {
+      print("no hay idioma ${Preferences.language}");
+      // Simula una carga de datos
+      await Future.delayed(const Duration(seconds: 1));
+
+      //mostrar pantallaconfiguracion de apis
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LangView(),
+        ), // Cambiar a la pantalla principal después de cargar los datos
+      );
+      return;
+    } else {
+      print("si hay idioma ${Preferences.language}");
+      AppLocalizations.idioma = Locale(Preferences.language);
+    }
   }
 }

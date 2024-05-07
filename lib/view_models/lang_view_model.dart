@@ -3,24 +3,19 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:restart_app/restart_app.dart';
 
 class LangViewModel extends ChangeNotifier {
   // cambiar el valor del idioma
   void cambiarIdioma(Locale nuevoIdioma) {
-    guardarIdioma(nuevoIdioma);
+    Preferences.language = nuevoIdioma.languageCode;
+
+    AppLocalizations.idioma = Locale(Preferences.language);
 
     notifyListeners();
     print(Preferences.language);
-
-    /// Fill webOrigin only when your new origin is different than the app's origin
-    // Restart.restartApp(webOrigin: '[your main route]');
-  }
-
-  guardarIdioma(Locale newLocale) {
-    print("desde aqui ${newLocale.languageCode}");
-    Preferences.language = newLocale.languageCode;
   }
 
   Timer? timer; // Temporizador

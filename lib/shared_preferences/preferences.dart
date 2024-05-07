@@ -78,6 +78,10 @@ class Preferences {
     _prefs.remove(_urlKey);
   }
 
+    static void clearLang() {
+    _prefs.remove(_langKey);
+  }
+
   //limpiar pedido
   static void clearDocument() {
     _prefs.remove(_docKey);

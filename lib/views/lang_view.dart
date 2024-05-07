@@ -28,12 +28,18 @@ class LangView extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () => vm.cambiarIdioma(const Locale('en')),
-                      child: const Text('English'),
+                      child: const Text(
+                        'English',
+                        style: AppTheme.whiteBoldStyle,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () => vm.cambiarIdioma(const Locale('es')),
-                      child: const Text('Español'),
+                      child: const Text(
+                        'Español',
+                        style: AppTheme.whiteBoldStyle,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Text(
@@ -62,7 +68,10 @@ class LangView extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () => vm.reiniciarTemp(context),
-                      child: const Text('Reiniciar'),
+                      child: const Text(
+                        'Reiniciar',
+                        style: AppTheme.whiteBoldStyle,
+                      ),
                     ),
                     if (Preferences.language.isNotEmpty)
                       Text(
