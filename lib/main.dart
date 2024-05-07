@@ -105,6 +105,9 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('es'), // Spanish
         Locale('en'), // English
+        Locale('fr'), // Frances
+        Locale('de'), // Aleman
+
       ],
       locale: AppLocalizations.idioma,
     );

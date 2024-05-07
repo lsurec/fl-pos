@@ -32,7 +32,7 @@ class LangView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(
-                      height: 40,
+                      height: 50,
                       child: Text(
                         "Seleccione el idioma de su preferencia.",
                         style: AppTheme.normalBoldStyle,
@@ -54,7 +54,7 @@ class LangView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
+                        onTap: () => vm.cambiarIdioma(const Locale("en")),
                       ),
                     ),
                     CardWidget(
@@ -73,7 +73,7 @@ class LangView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
+                        onTap: () => vm.cambiarIdioma(const Locale("es")),
                       ),
                     ),
                     CardWidget(
@@ -92,7 +92,7 @@ class LangView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
+                        onTap: () => vm.cambiarIdioma(const Locale("fr")),
                       ),
                     ),
                     CardWidget(
@@ -111,24 +111,20 @@ class LangView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        onTap: () {},
+                        onTap: () => vm.cambiarIdioma(const Locale("de")),
                       ),
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () => vm.cambiarIdioma(const Locale('en')),
-                    //   child: const Text(
-                    //     'English',
-                    //     style: AppTheme.whiteBoldStyle,
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 20),
-                    // ElevatedButton(
-                    //   onPressed: () => vm.cambiarIdioma(const Locale('es')),
-                    //   child: const Text(
-                    //     'Español',
-                    //     style: AppTheme.whiteBoldStyle,
-                    //   ),
-                    // ),
+                    Text(
+                      "IDIOMA SELECCIONADO : ${AppLocalizations.idioma}",
+                      style: AppTheme.normalBoldStyle,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => vm.guardarReiniciar(context),
+                      child: const Text(
+                        'Guardar',
+                        style: AppTheme.whiteBoldStyle,
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     Text(
                       AppLocalizations.of(context)!.translate('seleccionado'),
@@ -160,13 +156,6 @@ class LangView extends StatelessWidget {
                         fontSize: 20,
                       ),
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () => vm.reiniciarTemp(context),
-                    //   child: const Text(
-                    //     'Reiniciar',
-                    //     style: AppTheme.whiteBoldStyle,
-                    //   ),
-                    // ),
                     if (Preferences.language.isNotEmpty)
                       Text(
                         "${Preferences.language}, Idioma",

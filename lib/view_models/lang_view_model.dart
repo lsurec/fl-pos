@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/widgets/alert_widget.dart';
 import 'package:restart_app/restart_app.dart';
 
 class LangViewModel extends ChangeNotifier {
@@ -27,7 +28,7 @@ class LangViewModel extends ChangeNotifier {
       // Función de filtrado que consume el servicio
       FocusScope.of(context).unfocus(); //ocultar teclado
       isLoading = false;
-      reiniciarApp();
+      // reiniciarApp();
     }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 
@@ -43,5 +44,26 @@ class LangViewModel extends ChangeNotifier {
   set isLoading(bool value) {
     _isLoading = value;
     notifyListeners();
+  }
+
+  guardarReiniciar(BuildContext context) async {
+    //mostrar dialogo de confirmacion
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            title: "Idioma seleccionado.",
+            description:
+                "Para visualizar los cambios, primero reinicie la aplicación.",
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    if (!result) return;
+
+    //reiniciar la aplicacion
+    // ignore: use_build_context_synchronously
+    reiniciarTemp(context);
   }
 }

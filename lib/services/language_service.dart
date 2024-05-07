@@ -49,7 +49,7 @@ class _AppLocalizationsDelegate
   // Método que verifica si el idioma es compatible con la aplicación.
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'es'].contains(locale.languageCode);
+    return ['en', 'es', 'fr', 'de'].contains(locale.languageCode);
   }
 
   // Método asincrónico que carga las traducciones para un idioma específico.
