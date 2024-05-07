@@ -1,22 +1,17 @@
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/calendario/views/calendario2_view.dart';
-import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/views/file_view.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   //inicializar shared preferences (preferencias de usuario)
@@ -79,7 +74,6 @@ class AppState extends StatelessWidget {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     // limpiar preferencias
@@ -90,12 +84,6 @@ class MyApp extends StatelessWidget {
     //app_business
 
     return MaterialApp(
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // supportedLocales: const [Locale('es')],
       //snackbar global
       scaffoldMessengerKey: NotificationService.messengerKey,
       title: "Business",
@@ -108,6 +96,16 @@ class MyApp extends StatelessWidget {
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
+      // localizationsDelegates: const [
+      //   AppLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      // ],
+      // supportedLocales: const [
+      //   Locale('es'), // Spanish
+      //   Locale('en'), // English
+      // ],
+      // locale: const Locale("en"),
     );
   }
 }

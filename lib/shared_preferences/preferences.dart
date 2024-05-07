@@ -12,6 +12,7 @@ class Preferences {
   static const String _userKey = "userKey";
   static const String _urlKey = "urlKey";
   static const String _docKey = "docKey";
+  static const String _langKey = "printKey";
 
   //iniciar shared preferences
   static Future init() async {
@@ -80,5 +81,14 @@ class Preferences {
   //limpiar pedido
   static void clearDocument() {
     _prefs.remove(_docKey);
+  }
+
+  //Idioma de la applicacion
+  static String get language {
+    return _prefs.getString(_langKey) ?? "";
+  }
+
+  static set language(String value) {
+    _prefs.setString(_langKey, value);
   }
 }
