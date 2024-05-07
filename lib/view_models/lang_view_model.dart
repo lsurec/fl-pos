@@ -28,7 +28,7 @@ class LangViewModel extends ChangeNotifier {
       // Función de filtrado que consume el servicio
       FocusScope.of(context).unfocus(); //ocultar teclado
       isLoading = false;
-      // reiniciarApp();
+      reiniciarApp();
     }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 

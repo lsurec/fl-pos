@@ -1,4 +1,6 @@
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/language_service.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -28,7 +30,50 @@ class HomeView extends StatelessWidget {
             drawer: _MyDrawer(),
             body: RefreshIndicator(
               onRefresh: () => menuVM.refreshData(context),
-              child: ListView(),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: ListView(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.translate('seleccionado'),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.translate('fechaIni'),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.translate('fechaFin'),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.translate('idDoc'),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.translate('usuario'),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    if (Preferences.language.isNotEmpty)
+                      Text(
+                        "${Preferences.language}, Idioma",
+                        style: const TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
