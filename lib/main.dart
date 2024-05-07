@@ -109,7 +109,7 @@ class MyApp extends StatelessWidget {
       ],
       //inicializar la aplicacion con el ultimo idioma guardado
       //sino se ha seleccionado inicializa con el idioma Español
-      locale: AppLocalizations.idioma,
+      locale: Preferences.language.isEmpty ? AppLocalizations.idioma : Locale(Preferences.language),
     );
   }
 }

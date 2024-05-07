@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
@@ -115,9 +114,10 @@ class LangView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "IDIOMA SELECCIONADO : ${AppLocalizations.idioma}",
+                      "IDIOMA ACTUAL : ${AppLocalizations.idioma}",
                       style: AppTheme.normalBoldStyle,
                     ),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () => vm.guardarReiniciar(context),
                       child: const Text(
@@ -125,44 +125,6 @@ class LangView extends StatelessWidget {
                         style: AppTheme.whiteBoldStyle,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Text(
-                      AppLocalizations.of(context)!.translate('seleccionado'),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.translate('fechaIni'),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.translate('fechaFin'),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.translate('idDoc'),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.translate('usuario'),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    if (Preferences.language.isNotEmpty)
-                      Text(
-                        "${Preferences.language}, Idioma",
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
                   ],
                 ),
               ),

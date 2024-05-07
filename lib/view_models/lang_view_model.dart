@@ -24,10 +24,9 @@ class LangViewModel extends ChangeNotifier {
   void reiniciarTemp(BuildContext context) {
     isLoading = true;
     // timer?.cancel(); // Cancelar el temporizador existente si existe
-    timer = Timer(const Duration(milliseconds: 3000), () {
+    timer = Timer(const Duration(milliseconds: 2000), () {
       // Función de filtrado que consume el servicio
       FocusScope.of(context).unfocus(); //ocultar teclado
-      isLoading = false;
       reiniciarApp();
     }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
@@ -49,8 +48,11 @@ class LangViewModel extends ChangeNotifier {
   guardarReiniciar(BuildContext context) async {
     //mostrar dialogo de confirmacion
     bool result = await showDialog(
+
           context: context,
           builder: (context) => AlertWidget(
+            textOk: "Reiniciar ahora.",
+            textCancel: "Aceptar",
             title: "Idioma seleccionado.",
             description:
                 "Para visualizar los cambios, primero reinicie la aplicación.",

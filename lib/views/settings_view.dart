@@ -46,6 +46,13 @@ class SettingsView extends StatelessWidget {
                 title: const Text("Versión actual"),
                 subtitle: Text(vmSplash.versionLocal),
               ),
+              ListTile(
+                leading: const Icon(Icons.language),
+                title: const Text("Idioma Actual"),
+                subtitle: Text(Preferences.language),
+                trailing: const Icon(Icons.arrow_right),
+                onTap: () => vm.navigateLang(context),
+              ),
             ],
           ),
         ),

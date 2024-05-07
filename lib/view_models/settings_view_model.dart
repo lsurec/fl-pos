@@ -10,4 +10,12 @@ class SettingsViewModel extends ChangeNotifier {
       arguments: PrintDocSettingsModel(opcion: 1),
     );
   }
+
+  navigateLang(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      AppRoutes.lang,
+      // arguments: PrintDocSettingsModel(opcion: 1),
+    );
+  }
 }
