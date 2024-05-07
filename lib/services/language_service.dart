@@ -3,9 +3,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/utilities/languages_utilities.dart';
 
 class AppLocalizations extends ChangeNotifier {
   static Locale idioma = const Locale("es");
+
+  static LanguageModel langSelect = LanguagesProvider().languagesProvider[0];
+
   final Locale locale;
 
   // Constructor que toma un Locale como argumento.

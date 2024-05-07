@@ -10,3 +10,4 @@ export 'package:flutter_post_printer_example/models/application_model.dart';
 export 'package:flutter_post_printer_example/models/display_model.dart';
 export 'package:flutter_post_printer_example/models/login_model.dart';
 export 'package:flutter_post_printer_example/models/menu_model.dart';
+export 'package:flutter_post_printer_example/models/language_model.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -37,84 +38,117 @@ class LangView extends StatelessWidget {
                         style: AppTheme.normalBoldStyle,
                       ),
                     ),
-                    CardWidget(
-                      width: 400,
-                      margin: const EdgeInsets.only(bottom: 25),
-                      child: ListTile(
-                        title: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: vm.languages.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final LanguageModel lang = vm.languages[index];
+                        return Column(
                           children: [
-                            Icon(Icons.language_outlined),
-                            SizedBox(width: 10),
-                            Text(
-                              "Ingles (Estados Unidos)",
-                              style: AppTheme.normalBoldStyle,
-                              textAlign: TextAlign.center,
+                            CardWidget(
+                              color: index == vm.indexLangSelect
+                                  ? AppTheme.primary
+                                  : AppTheme.backroundColorSecondary,
+                              width: 400,
+                              margin: const EdgeInsets.only(bottom: 25),
+                              child: ListTile(
+                                title: Text(
+                                  lang.names[index].name,
+                                  style: index == vm.indexLangSelect
+                                      ? AppTheme.whiteBoldStyle
+                                      : AppTheme.normalBoldStyle,
+                                  textAlign: TextAlign.center,
+                                ),
+                                onTap: () => vm.cambiarIdioma(
+                                  Locale(lang.lang),
+                                  index,
+                                ),
+                              ),
                             ),
                           ],
-                        ),
-                        onTap: () => vm.cambiarIdioma(const Locale("en")),
-                      ),
+                        );
+                      },
                     ),
-                    CardWidget(
-                      width: 400,
-                      margin: const EdgeInsets.only(bottom: 25),
-                      child: ListTile(
-                        title: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.language_outlined),
-                            SizedBox(width: 10),
-                            Text(
-                              "Español (Guatemala)",
-                              style: AppTheme.normalBoldStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                        onTap: () => vm.cambiarIdioma(const Locale("es")),
-                      ),
-                    ),
-                    CardWidget(
-                      width: 400,
-                      margin: const EdgeInsets.only(bottom: 25),
-                      child: ListTile(
-                        title: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.language_outlined),
-                            SizedBox(width: 10),
-                            Text(
-                              "Francés (Francia)",
-                              style: AppTheme.normalBoldStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                        onTap: () => vm.cambiarIdioma(const Locale("fr")),
-                      ),
-                    ),
-                    CardWidget(
-                      width: 400,
-                      margin: const EdgeInsets.only(bottom: 25),
-                      child: ListTile(
-                        title: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.language_outlined),
-                            SizedBox(width: 10),
-                            Text(
-                              "Alemán (Alemania)",
-                              style: AppTheme.normalBoldStyle,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                        onTap: () => vm.cambiarIdioma(const Locale("de")),
-                      ),
-                    ),
+                    // CardWidget(
+                    //   width: 400,
+                    //   margin: const EdgeInsets.only(bottom: 25),
+                    //   child: ListTile(
+                    //     title: const Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Icon(Icons.language_outlined),
+                    //         SizedBox(width: 10),
+                    //         Text(
+                    //           "Ingles (Estados Unidos)",
+                    //           style: AppTheme.normalBoldStyle,
+                    //           textAlign: TextAlign.center,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     onTap: () => vm.cambiarIdioma(const Locale("en")),
+                    //   ),
+                    // ),
+                    // CardWidget(
+                    //   width: 400,
+                    //   margin: const EdgeInsets.only(bottom: 25),
+                    //   child: ListTile(
+                    //     title: const Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Icon(Icons.language_outlined),
+                    //         SizedBox(width: 10),
+                    //         Text(
+                    //           "Español (Guatemala)",
+                    //           style: AppTheme.normalBoldStyle,
+                    //           textAlign: TextAlign.center,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     onTap: () => vm.cambiarIdioma(const Locale("es")),
+                    //   ),
+                    // ),
+                    // CardWidget(
+                    //   width: 400,
+                    //   margin: const EdgeInsets.only(bottom: 25),
+                    //   child: ListTile(
+                    //     title: const Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Icon(Icons.language_outlined),
+                    //         SizedBox(width: 10),
+                    //         Text(
+                    //           "Francés (Francia)",
+                    //           style: AppTheme.normalBoldStyle,
+                    //           textAlign: TextAlign.center,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     onTap: () => vm.cambiarIdioma(const Locale("fr")),
+                    //   ),
+                    // ),
+                    // CardWidget(
+                    //   width: 400,
+                    //   margin: const EdgeInsets.only(bottom: 25),
+                    //   child: ListTile(
+                    //     title: const Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Icon(Icons.language_outlined),
+                    //         SizedBox(width: 10),
+                    //         Text(
+                    //           "Alemán (Alemania)",
+                    //           style: AppTheme.normalBoldStyle,
+                    //           textAlign: TextAlign.center,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     onTap: () => vm.cambiarIdioma(const Locale("de")),
+                    //   ),
+                    // ),
                     Text(
-                      "IDIOMA ACTUAL : ${AppLocalizations.idioma}",
+                      "IDIOMA ACTUAL : ${AppLocalizations.langSelect.names[0].name}",
                       style: AppTheme.normalBoldStyle,
                     ),
                     const SizedBox(height: 20),

@@ -3,20 +3,29 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/languages_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/alert_widget.dart';
 import 'package:restart_app/restart_app.dart';
 
 class LangViewModel extends ChangeNotifier {
+  List<LanguageModel> languages = LanguagesProvider().languagesProvider;
+
+  int indexLangSelect = 0;
+
   // cambiar el valor del idioma
-  void cambiarIdioma(Locale nuevoIdioma) {
+  void cambiarIdioma(Locale nuevoIdioma, int indexLang) {
     Preferences.language = nuevoIdioma.languageCode;
 
     AppLocalizations.idioma = Locale(Preferences.language);
 
+    AppLocalizations.langSelect = languages[indexLang];
+
+    indexLangSelect = indexLang;
+
     notifyListeners();
-    print(Preferences.language);
   }
 
   Timer? timer; // Temporizador
@@ -48,7 +57,6 @@ class LangViewModel extends ChangeNotifier {
   guardarReiniciar(BuildContext context) async {
     //mostrar dialogo de confirmacion
     bool result = await showDialog(
-
           context: context,
           builder: (context) => AlertWidget(
             textOk: "Reiniciar ahora.",
@@ -68,4 +76,12 @@ class LangViewModel extends ChangeNotifier {
     // ignore: use_build_context_synchronously
     reiniciarTemp(context);
   }
+
+  // String? getNameByLanguageRegion(LanguageModel data) {
+  //   final names = data.names;
+  //   final languageRegion = names.firstWhereOrNull(
+  //       (item) => item.lrCode == '${activeLang.lang}-${activeLang.reg}');
+  //   return languageRegion != null ? languageRegion.name : null;
+  // }
+
 }
