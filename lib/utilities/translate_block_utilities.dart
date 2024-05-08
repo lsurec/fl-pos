@@ -7,4 +7,5 @@ class BlockTranslate {
   static String notificacion = "notificaciones";
   static String fecha = "fechas";
   static String preferencias = "preferencias";
+  static String error = "error";
 }

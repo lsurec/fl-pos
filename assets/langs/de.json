@@ -1,26 +1,103 @@
 {
+    "url": {
+        "url": "URL APIs",
+        "ingresar": "Um unsere Dienste nutzen zu können, geben Sie bitte eine gültige URL ein.",
+        "invalida": "Ungültige URL.",
+        "actual": "Aktuelle URL",
+        "copiar": "URL kopieren",
+        "copiada": "URL in die Zwischenablage kopiert.",
+        "agregada": "URL erfolgreich hinzugefügt.",
+        "version": "Version"
+    },
     "home": {
-        "seleccionado": "El idioma seleccionado es el aleman.",
+        "seleccionado": "Die ausgewählte Sprache ist Spanisch.",
         "fechaIni": "Startdatum: ",
         "fechaFin": "Enddatum: ",
         "idDoc": "Dokument-ID: ",
-        "usuario": "Benutzer: ",
         "fechaHora": "Datum und Uhrzeit: ",
         "fechaDoc": "Dokumentdatum: ",
         "serieDoc": "Dokumentserie: "
     },
     "login": {
-        "correo": "Benutzer",
+        "correo": "Benutzername",
         "contrasena": "Passwort",
         "ver": "Passwort anzeigen",
         "ocultar": "Passwort verbergen",
-        "recordar": "Meine Daten merken",
+        "recordar": "Meine Daten speichern",
         "iniciar": "ANMELDEN"
     },
     "configuracionLocal": {
         "titulo": "LOKALE EINSTELLUNGEN",
+        "configuracion": "Lokale Einstellungen",
+        "empresa": "Unternehmen",
+        "estacion": "Station",
         "empresas": "Unternehmen",
-        "estaciones": "Arbeitsstationen",
-        "registros": "Einträge"
+        "estaciones": "Arbeitsstation"
+    },
+    "botones": {
+        "aceptar": "Akzeptieren",
+        "cancelar": "Abbrechen",
+        "regresar": "Zurück",
+        "continuar": "Fortfahren",
+        "ajustes": "Einstellungen",
+        "cerrar": "Schließen",
+        "cambiar": "Ändern",
+        "guardar": "Speichern",
+        "informe": "Bericht anzeigen",
+        "salir": "Abmelden",
+        "reintentar": "Erneut versuchen",
+        "resumen": "Zusammenfassung",
+        "nuevo": "Neu",
+        "actualizar": "Aktualisieren",
+        "reciente": "Neueste",
+        "agregar": "Hinzufügen",
+        "imprimir": "Drucken",
+        "nuevoDoc": "Neues Dokument",
+        "confirmar": "Bestätigen",
+        "inicio": "Start",
+        "listo": "Fertig",
+        "reiniciar": "Jetzt neu starten."
+    },
+    "fechas": {
+        "fecha": "Datum",
+        "fechaIni": "Startdatum: ",
+        "fechaFin": "Enddatum: ",
+        "fechaHora": "Datum und Uhrzeit: ",
+        "fechaDoc": "Dokumentdatum: "
+    },
+    "notificaciones": {
+        "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung bitte neu.",
+        "ok": "OK",
+        "tituloCerrar": "Abmelden",
+        "borraranDatos": "Nicht gespeicherte Daten gehen verloren und Sie müssen sich erneut anmelden. Sind Sie sicher?",
+        "salioMal": "Etwas ist schiefgelaufen, bitte versuchen Sie es erneut.",
+        "completar": "Bitte füllen Sie alle Felder aus, um fortzufahren.",
+        "debeSeleccionar": "Um fortzufahren, wählen Sie bitte ein Unternehmen und eine Arbeitsstation aus.",
+        "incorrecto": "Falscher Benutzername oder falsches Passwort",
+        "error": "Der Verbindungsvorgang mit dem Dienst konnte nicht abgeschlossen werden. Bitte versuchen Sie es später erneut.",
+        "configuracion": "Es wurden keine Unternehmen oder Arbeitsstationen für den Benutzer gefunden: ",
+        "banco": "Wählen Sie ein Bankkonto aus, um fortzufahren.",
+        "tipoPago": "Zahlungsart erfolgreich hinzugefügt",
+        "eliminar": "Sind Sie sicher?"
+    },
+    "preferencias": {
+        "idiomaT": "ANWENDUNGSSPRACHE",
+        "idioma": "Wählen Sie Ihre bevorzugte Sprache aus.",
+        "seleccionado": "Ausgewählte Sprache."
+    },
+    "error": {
+        "informeT": "FEHLERBERICHT",
+        "informe": "Fehlerbericht",
+        "documento": "Dokument",
+        "serie": "Dokumentserie",
+        "empresa": "Unternehmen",
+        "estacion": "Arbeitsstation",
+        "servicio": "Ursprungsdienst",
+        "origen": "DB Ursprung",
+        "descripcion": "Beschreibung",
+        "errorDesc": "Fehlerbeschreibung",
+        "indefinido": "Nicht definiert",
+        "noAplica": "Nicht zutreffend.",
+        "noDisponible": "Nicht verfügbar"
     }
 }

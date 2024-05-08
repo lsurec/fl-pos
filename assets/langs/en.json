@@ -1,26 +1,103 @@
 {
+    "url": {
+        "url": "APIs URL",
+        "ingresar": "To use our services, please enter a valid URL.",
+        "invalida": "Invalid URL.",
+        "actual": "Current Url",
+        "copiar": "Copy url",
+        "copiada": "Url copied to clipboard.",
+        "agregada": "Url added successfully.",
+        "version": "Version"
+    },
     "home": {
-        "seleccionado": "The selected language is English.",
+        "seleccionado": "The selected language is Spanish.",
         "fechaIni": "Start Date: ",
         "fechaFin": "End Date: ",
-        "idDoc": "Document ID: ",
-        "usuario": "User: ",
-        "fechaHora": "Date and Time: ",
+        "idDoc": "Document Id: ",
+        "fechaHora": "Date Time: ",
         "fechaDoc": "Document Date: ",
         "serieDoc": "Document Series: "
     },
     "login": {
-        "correo": "Username",
+        "correo": "Email",
         "contrasena": "Password",
-        "ver": "Show Password",
-        "ocultar": "Hide Password",
+        "ver": "Show password",
+        "ocultar": "Hide password",
         "recordar": "Remember me",
-        "iniciar": "LOG IN"
+        "iniciar": "LOGIN"
     },
-    "configuracionLocal": {
+    "localConfiguration": {
         "titulo": "LOCAL CONFIGURATION",
+        "configuracion": "Local Configuration",
+        "empresa": "Company",
+        "estacion": "Station",
         "empresas": "Companies",
-        "estaciones": "Workstations",
-        "registros": "Records"
+        "estaciones": "Workstation"
+    },
+    "buttons": {
+        "aceptar": "Accept",
+        "cancelar": "Cancel",
+        "regresar": "Back",
+        "continuar": "Continue",
+        "ajustes": "Settings",
+        "cerrar": "Close",
+        "cambiar": "Change",
+        "guardar": "Save",
+        "informe": "View report",
+        "salir": "Logout",
+        "reintentar": "Retry",
+        "resumen": "Summary",
+        "nuevo": "New",
+        "actualizar": "Update",
+        "reciente": "Recent",
+        "agregar": "Add",
+        "imprimir": "Print",
+        "nuevoDoc": "New document",
+        "confirmar": "Confirm",
+        "inicio": "Home",
+        "listo": "Ready",
+        "reiniciar": "Restart now."
+    },
+    "dates": {
+        "fecha": "Date",
+        "fechaIni": "Start Date: ",
+        "fechaFin": "End Date: ",
+        "fechaHora": "Date Time: ",
+        "fechaDoc": "Document Date: "
+    },
+    "notifications": {
+        "reiniciar": "To see the changes, please restart the application first.",
+        "ok": "OK",
+        "tituloCerrar": "Logout",
+        "borraranDatos": "Unsaved data will be lost, and you'll need to log in again. Are you sure?",
+        "salioMal": "Something went wrong, please try again.",
+        "completar": "Please fill out all fields to continue.",
+        "debeSeleccionar": "To continue, select a company and a workstation.",
+        "incorrecto": "Incorrect username or password",
+        "error": "The connection process to the service couldn't be completed. Please try again later.",
+        "configuracion": "No companies or workstations found for the user: ",
+        "banco": "Select a bank account to continue.",
+        "tipoPago": "Payment type added successfully",
+        "eliminar": "Are you sure?"
+    },
+    "preferences": {
+        "idiomaT": "APPLICATION LANGUAGE",
+        "idioma": "Select your preferred language.",
+        "seleccionado": "Language selected."
+    },
+    "error": {
+        "informeT": "ERROR REPORT",
+        "informe": "Error report",
+        "documento": "Document",
+        "serie": "Document Series",
+        "empresa": "Company",
+        "estacion": "Workstation",
+        "servicio": "Source Service",
+        "origen": "Origin DB",
+        "descripcion": "Description",
+        "errorDesc": "Error description",
+        "indefinido": "Undefined",
+        "noAplica": "Not applicable.",
+        "noDisponible": "Not Available"
     }
 }

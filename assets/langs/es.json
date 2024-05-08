@@ -14,7 +14,6 @@
         "fechaIni": "Fecha Inicio: ",
         "fechaFin": "Fecha Fin: ",
         "idDoc": "Id documento: ",
-        "usuario": "Usuario: ",
         "fechaHora": "Fecha hora: ",
         "fechaDoc": "Fecha documento: ",
         "serieDoc": "Serie documento: "
@@ -29,6 +28,9 @@
     },
     "configuracionLocal": {
         "titulo": "CONFIGURACIÓN LOCAL",
+        "configuracion": "Configuracion Local",
+        "empresa": "Empresa",
+        "estacion": "Estación",
         "empresas": "Empresas",
         "estaciones": "Estación de Trabajo"
     },
@@ -57,6 +59,7 @@
         "reiniciar": "Reiniciar ahora."
     },
     "fechas": {
+        "fecha": "Fecha",
         "fechaIni": "Fecha Inicio: ",
         "fechaFin": "Fecha Fin: ",
         "fechaHora": "Fecha hora: ",
@@ -80,6 +83,21 @@
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
         "idioma": "Selecciona el idioma de tu preferencia.",
-        "seleccionado" : "Idioma seleccionado."
+        "seleccionado": "Idioma seleccionado."
+    },
+    "error": {
+        "informeT": "INFORME DE ERRORES",
+        "informe": "Informe de error",
+        "documento": "Documento",
+        "serie": "Serie de documento",
+        "empresa": "Empresa",
+        "estacion": "Estación de trabajo",
+        "servicio": "Servicio origen",
+        "origen": "DB Origen",
+        "descripcion": "Descripción",
+        "errorDesc": "Descripción del error",
+        "indefinido": "No definido",
+        "noAplica": "No aplica.",
+        "noDisponible" : "No disponible."
     }
 }

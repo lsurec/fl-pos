@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -25,8 +27,11 @@ class ErrorView extends StatelessWidget {
         child: const Icon(Icons.share),
       ),
       appBar: AppBar(
-        title: const Text(
-          "Informe de error",
+        title: Text(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.error,
+            "informe",
+          ),
           style: AppTheme.titleStyle,
         ),
       ),
@@ -36,10 +41,16 @@ class ErrorView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Usuario: ${vmLogin.user}"),
+              Text("${AppLocalizations.of(context)!.translate(
+                BlockTranslate.login,
+                "usuario",
+              )}: ${vmLogin.user}"),
               const SizedBox(height: 10),
               Text(
-                "Fecha: ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.fecha,
+                  "fecha",
+                )}: ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",
               ),
 
               const SizedBox(height: 10),
@@ -64,20 +75,52 @@ class ErrorView extends StatelessWidget {
               // ),
               // const SizedBox(height: 20),
               Text(
-                "Empresa: ${vmLocal.selectedEmpresa?.empresaNombre} (${vmLocal.selectedEmpresa?.empresa})",
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.localConfig,
+                  "empresa",
+                )}: ${vmLocal.selectedEmpresa?.empresaNombre} (${vmLocal.selectedEmpresa?.empresa})",
+              ),
+              const SizedBox(height: 10),
+              Text("${AppLocalizations.of(context)!.translate(
+                BlockTranslate.localConfig,
+                "estacion",
+              )}: ${vmLocal.selectedEstacion?.descripcion} (${vmLocal.selectedEstacion?.estacionTrabajo})"),
+
+              const SizedBox(height: 10),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.error,
+                  "servicio",
+                ),
+              ),
+              Text(
+                error.url ??
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.error,
+                      "indefinido",
+                    ),
               ),
               const SizedBox(height: 10),
               Text(
-                  "Estacion de trabajo: ${vmLocal.selectedEstacion?.descripcion} (${vmLocal.selectedEstacion?.estacionTrabajo})"),
-
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.error,
+                  "origen",
+                ),
+              ),
+              Text(
+                error.storeProcedure ??
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.error,
+                      "noAplica",
+                    ),
+              ),
               const SizedBox(height: 10),
-              const Text("Servicio origen:"),
-              Text(error.url ?? "No definido"),
-              const SizedBox(height: 10),
-              const Text("DB Origen:"),
-              Text(error.storeProcedure ?? "No Aplica."),
-              const SizedBox(height: 10),
-              const Text("Descripcion:"),
+              Text(
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.error,
+                  "descripcion",
+                )}:",
+              ),
               Text(error.description),
             ],
           ),

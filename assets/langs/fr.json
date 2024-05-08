@@ -1,10 +1,19 @@
 {
+    "url": {
+        "url": "URL des APIs",
+        "ingresar": "Pour utiliser nos services, veuillez entrer une URL valide.",
+        "invalida": "URL invalide.",
+        "actual": "URL actuelle",
+        "copiar": "Copier l'URL",
+        "copiada": "URL copiée dans le presse-papiers.",
+        "agregada": "URL ajoutée avec succès.",
+        "version": "Version"
+    },
     "home": {
-        "seleccionado": "El idioma seleccionado es el frances.",
+        "seleccionado": "La langue sélectionnée est l'espagnol.",
         "fechaIni": "Date de début : ",
         "fechaFin": "Date de fin : ",
         "idDoc": "ID du document : ",
-        "usuario": "Utilisateur : ",
         "fechaHora": "Date et heure : ",
         "fechaDoc": "Date du document : ",
         "serieDoc": "Série du document : "
@@ -13,14 +22,82 @@
         "correo": "Utilisateur",
         "contrasena": "Mot de passe",
         "ver": "Voir le mot de passe",
-        "ocultar": "Cacher le mot de passe",
+        "ocultar": "Masquer le mot de passe",
         "recordar": "Se souvenir de mes informations",
-        "iniciar": "CONNEXION"
+        "iniciar": "SE CONNECTER"
     },
     "configuracionLocal": {
         "titulo": "CONFIGURATION LOCALE",
+        "configuracion": "Configuration Locale",
+        "empresa": "Entreprise",
+        "estacion": "Station",
         "empresas": "Entreprises",
-        "estaciones": "Postes de Travail",
-        "registros": "Enregistrements"
+        "estaciones": "Stations de travail"
+    },
+    "botones": {
+        "aceptar": "Accepter",
+        "cancelar": "Annuler",
+        "regresar": "Retour",
+        "continuar": "Continuer",
+        "ajustes": "Paramètres",
+        "cerrar": "Fermer",
+        "cambiar": "Changer",
+        "guardar": "Enregistrer",
+        "informe": "Voir le rapport",
+        "salir": "Se déconnecter",
+        "reintentar": "Réessayer",
+        "resumen": "Résumé",
+        "nuevo": "Nouveau",
+        "actualizar": "Actualiser",
+        "reciente": "Récent",
+        "agregar": "Ajouter",
+        "imprimir": "Imprimer",
+        "nuevoDoc": "Nouveau document",
+        "confirmar": "Confirmer",
+        "inicio": "Début",
+        "listo": "Prêt",
+        "reiniciar": "Redémarrer maintenant."
+    },
+    "fechas": {
+        "fecha": "Date",
+        "fechaIni": "Date de début : ",
+        "fechaFin": "Date de fin : ",
+        "fechaHora": "Date et heure : ",
+        "fechaDoc": "Date du document : "
+    },
+    "notificaciones": {
+        "reiniciar": "Pour visualiser les changements, veuillez d'abord redémarrer l'application.",
+        "ok": "OK",
+        "tituloCerrar": "Se déconnecter",
+        "borraranDatos": "Les données non sauvegardées seront perdues et vous devrez vous reconnecter. Êtes-vous sûr ?",
+        "salioMal": "Quelque chose s'est mal passé, veuillez réessayer.",
+        "completar": "Veuillez remplir tous les champs pour continuer.",
+        "debeSeleccionar": "Pour continuer, veuillez sélectionner une entreprise et une station de travail",
+        "incorrecto": "Nom d'utilisateur ou mot de passe incorrect",
+        "error": "Le processus de connexion au service n'a pas pu être complété. Veuillez réessayer plus tard.",
+        "configuracion": "Aucune entreprise ou station de travail trouvée pour l'utilisateur : ",
+        "banco": "Veuillez sélectionner un compte bancaire pour continuer.",
+        "tipoPago": "Type de paiement ajouté avec succès",
+        "eliminar": "Êtes-vous sûr ?"
+    },
+    "preferencias": {
+        "idiomaT": "LANGUE DE L'APPLICATION",
+        "idioma": "Sélectionnez la langue de votre choix.",
+        "seleccionado": "Langue sélectionnée."
+    },
+    "error": {
+        "informeT": "RAPPORT D'ERREURS",
+        "informe": "Rapport d'erreur",
+        "documento": "Document",
+        "serie": "Série de document",
+        "empresa": "Entreprise",
+        "estacion": "Station de travail",
+        "servicio": "Service d'origine",
+        "origen": "DB Origine",
+        "descripcion": "Description",
+        "errorDesc": "Description de l'erreur",
+        "indefinido": "Non défini",
+        "noAplica": "Non applicable.",
+        "noDisponible": "Non Disponible"
     }
 }
