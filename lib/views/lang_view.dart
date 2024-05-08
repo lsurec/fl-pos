@@ -5,7 +5,6 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
-import 'package:flutter_post_printer_example/widgets/load_widget.dart';
 import 'package:provider/provider.dart';
 
 class LangView extends StatelessWidget {
@@ -98,7 +97,13 @@ class LangView extends StatelessWidget {
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.backroundColor,
           ),
-        if (vm.isLoading) const LoadWidget(),
+        if (vm.isLoading)
+          Center(
+            child: Image.asset(
+              'assets/logo_demosoft.png',
+              height: 275,
+            ),
+          ),
       ],
     );
   }
