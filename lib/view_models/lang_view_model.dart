@@ -23,7 +23,7 @@ class LangViewModel extends ChangeNotifier {
     notifyListeners();
 
     if (AppLocalizations.cambiarIdioma == 1) {
-      guardarReiniciar(context);
+      // guardarReiniciar(context);
     }
   }
 
@@ -85,4 +85,16 @@ class LangViewModel extends ChangeNotifier {
     }
     return null;
   }
+
+  void miFuncion(Map<String, dynamic> miMapa) {
+    // Aquí dentro puedes utilizar el mapa como necesites
+    // Por ejemplo, acceder a sus valores usando claves específicas
+    print(AppLocalizations.idioma);
+  }
+
+  // Definimos un mapa
+  Map<String, dynamic> miMapa = {
+    'clave': 'valor',
+    'otraClave': 42,
+  };
 }

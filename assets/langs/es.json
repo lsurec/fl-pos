@@ -1,10 +1,25 @@
 {
-    "seleccionado": "El idioma seleccionado es el español.",
-    "fechaIni": "Fecha Inicio: ",
-    "fechaFin": "Fecha Fin: ",
-    "idDoc": "Id documento: ",
-    "usuario": "Usuario: ",
-    "fechaHora": "Fecha hora: ",
-    "fechaDoc": "Fecha documento: ",
-    "serieDoc": "Serie documento: "
+    "home": {
+        "seleccionado": "El idioma seleccionado es el español.",
+        "fechaIni": "Fecha Inicio: ",
+        "fechaFin": "Fecha Fin: ",
+        "idDoc": "Id documento: ",
+        "usuario": "Usuario: ",
+        "fechaHora": "Fecha hora: ",
+        "fechaDoc": "Fecha documento: ",
+        "serieDoc": "Serie documento: "
+    },
+    "login": {
+        "correo": "Usuario",
+        "contrasena": "Contraseña",
+        "ver": "Ver contraseña",
+        "ocultar": "Ocultar contraseña",
+        "recordar": "Recordar mis datos",
+        "iniciar": "INICIAR SESIÓN"
+    },
+    "configuracionLocal": {
+        "titulo": "CONFIGURACIÓN LOCAL",
+        "empresas": "Empresas",
+        "estaciones": "Estación de Trabajo"
+    }
 }

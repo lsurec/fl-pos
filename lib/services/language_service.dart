@@ -1,11 +1,17 @@
 // Esta clase maneja la carga y traducción de cadenas de texto según el idioma seleccionado.
-import 'dart:convert';
+// ignore_for_file: avoid_print
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 
 class AppLocalizations extends ChangeNotifier {
-  static Locale idioma = const Locale("es");
+  // static Locale idioma = const Locale("es");
+  static Locale idioma = Preferences.language.isEmpty
+      ? AppLocalizations.idioma
+      : Locale(Preferences.language);
+
   static int cambiarIdioma = 0;
 
   final Locale locale;
@@ -22,24 +28,30 @@ class AppLocalizations extends ChangeNotifier {
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationsDelegate();
 
-  // Mapa para almacenar las cadenas traducidas.
-  Map<String, String>? _localizedStrings;
+  late Map<String, Map<String, String>> _localizedStrings;
 
-  // Método asincrónico que carga las cadenas de texto traducidas desde un archivo JSON.
-  Future<bool> load() async {
+  Future<bool> load(String languageCode) async {
     String jsonString =
-        await rootBundle.loadString('assets/langs/${locale.languageCode}.json');
+        await rootBundle.loadString('assets/langs/$languageCode.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+    // Convertimos el mapa de bloques en un mapa de mapa de cadenas
     _localizedStrings = jsonMap.map((key, value) {
-      return MapEntry(key, value.toString());
+      Map<String, String> innerMap = Map<String, String>.from(value);
+      return MapEntry(key, innerMap);
     });
+
     return true;
   }
 
-  // Método para traducir una cadena de texto según la clave proporcionada.
-  String translate(String key) {
-    // print(_localizedStrings![key]);
-    return _localizedStrings![key] ?? key;
+  String translate(String block, String key) {
+    // Verificar si el bloque y la clave existen
+    if (_localizedStrings.containsKey(block) &&
+        _localizedStrings[block]!.containsKey(key)) {
+      return _localizedStrings[block]![key]!;
+    }
+    // Devolver la llave si no se encuentra la traducción
+    return "$block.$key";
   }
 }
 
@@ -58,7 +70,7 @@ class _AppLocalizationsDelegate
   @override
   Future<AppLocalizations> load(Locale locale) async {
     AppLocalizations localizations = AppLocalizations(locale);
-    await localizations.load();
+    await localizations.load(locale.languageCode);
     return localizations;
   }
 

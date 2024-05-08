@@ -1,10 +1,26 @@
 {
-    "seleccionado": "El idioma seleccionado es el aleman.",
-    "fechaIni": "Startdatum: ",
-    "fechaFin": "Enddatum: ",
-    "idDoc": "Dokument-ID: ",
-    "usuario": "Benutzer: ",
-    "fechaHora": "Datum und Uhrzeit: ",
-    "fechaDoc": "Dokumentdatum: ",
-    "serieDoc": "Dokumentserie: "
+    "home": {
+        "seleccionado": "El idioma seleccionado es el aleman.",
+        "fechaIni": "Startdatum: ",
+        "fechaFin": "Enddatum: ",
+        "idDoc": "Dokument-ID: ",
+        "usuario": "Benutzer: ",
+        "fechaHora": "Datum und Uhrzeit: ",
+        "fechaDoc": "Dokumentdatum: ",
+        "serieDoc": "Dokumentserie: "
+    },
+    "login": {
+        "correo": "Benutzer",
+        "contrasena": "Passwort",
+        "ver": "Passwort anzeigen",
+        "ocultar": "Passwort verbergen",
+        "recordar": "Meine Daten merken",
+        "iniciar": "ANMELDEN"
+    },
+    "configuracionLocal": {
+        "titulo": "LOKALE EINSTELLUNGEN",
+        "empresas": "Unternehmen",
+        "estaciones": "Arbeitsstationen",
+        "registros": "Einträge"
+    }
 }

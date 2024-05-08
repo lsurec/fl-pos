@@ -35,31 +35,28 @@ class HomeView extends StatelessWidget {
                 child: ListView(
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.translate('seleccionado'),
+                      AppLocalizations.of(context)!
+                          .translate("login", "correo"),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!.translate('fechaIni'),
+                      AppLocalizations.of(context)!
+                          .translate("home", "fechaIni"),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!.translate('fechaFin'),
+                      AppLocalizations.of(context)!
+                          .translate('configuracionLocal', "titulo"),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!.translate('idDoc'),
-                      style: const TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      AppLocalizations.of(context)!.translate('usuario'),
+                      AppLocalizations.of(context)!.translate('home', "idDocs"),
                       style: const TextStyle(
                         fontSize: 20,
                       ),

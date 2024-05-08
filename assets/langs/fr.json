@@ -1,10 +1,26 @@
 {
-    "seleccionado": "El idioma seleccionado es el frances.",
-    "fechaIni": "Date de début : ",
-    "fechaFin": "Date de fin : ",
-    "idDoc": "ID du document : ",
-    "usuario": "Utilisateur : ",
-    "fechaHora": "Date et heure : ",
-    "fechaDoc": "Date du document : ",
-    "serieDoc": "Série du document : "
+    "home": {
+        "seleccionado": "El idioma seleccionado es el frances.",
+        "fechaIni": "Date de début : ",
+        "fechaFin": "Date de fin : ",
+        "idDoc": "ID du document : ",
+        "usuario": "Utilisateur : ",
+        "fechaHora": "Date et heure : ",
+        "fechaDoc": "Date du document : ",
+        "serieDoc": "Série du document : "
+    },
+    "login": {
+        "correo": "Utilisateur",
+        "contrasena": "Mot de passe",
+        "ver": "Voir le mot de passe",
+        "ocultar": "Cacher le mot de passe",
+        "recordar": "Se souvenir de mes informations",
+        "iniciar": "CONNEXION"
+    },
+    "configuracionLocal": {
+        "titulo": "CONFIGURATION LOCALE",
+        "empresas": "Entreprises",
+        "estaciones": "Postes de Travail",
+        "registros": "Enregistrements"
+    }
 }

@@ -79,7 +79,8 @@ class LangView extends StatelessWidget {
                     const SizedBox(height: 20),
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
-                        onPressed: () => vm.reiniciarTemp(context),
+                        // onPressed: () => vm.reiniciarTemp(context),
+                        onPressed: () => vm.miFuncion(vm.miMapa),
                         child: const Text(
                           'Continuar',
                           style: AppTheme.whiteBoldStyle,

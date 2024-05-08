@@ -1,10 +1,26 @@
 {
-    "seleccionado": "The selected language is English.",
-    "fechaIni": "Start Date: ",
-    "fechaFin": "End Date: ",
-    "idDoc": "Document ID: ",
-    "usuario": "User: ",
-    "fechaHora": "Date and Time: ",
-    "fechaDoc": "Document Date: ",
-    "serieDoc": "Document Series: "
+    "home": {
+        "seleccionado": "The selected language is English.",
+        "fechaIni": "Start Date: ",
+        "fechaFin": "End Date: ",
+        "idDoc": "Document ID: ",
+        "usuario": "User: ",
+        "fechaHora": "Date and Time: ",
+        "fechaDoc": "Document Date: ",
+        "serieDoc": "Document Series: "
+    },
+    "login": {
+        "correo": "Username",
+        "contrasena": "Password",
+        "ver": "Show Password",
+        "ocultar": "Hide Password",
+        "recordar": "Remember me",
+        "iniciar": "LOG IN"
+    },
+    "configuracionLocal": {
+        "titulo": "LOCAL CONFIGURATION",
+        "empresas": "Companies",
+        "estaciones": "Workstations",
+        "registros": "Records"
+    }
 }
