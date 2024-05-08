@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -35,28 +36,37 @@ class HomeView extends StatelessWidget {
                 child: ListView(
                   children: [
                     Text(
-                      AppLocalizations.of(context)!
-                          .translate("login", "correo"),
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.login,
+                        "correo",
+                      ),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!
-                          .translate("home", "fechaIni"),
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.home,
+                        "fechaIni",
+                      ),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!
-                          .translate('configuracionLocal', "titulo"),
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.localConfig,
+                        "titulo",
+                      ),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context)!.translate('home', "idDocs"),
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.home,
+                        "idDoc",
+                      ),
                       style: const TextStyle(
                         fontSize: 20,
                       ),
