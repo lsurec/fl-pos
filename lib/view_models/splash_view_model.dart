@@ -83,6 +83,7 @@ class SplashViewModel extends ChangeNotifier {
     //si no hay una url para las apis configurada y si no hay idioma seleccionado
     //mostrar pantalla de idiomas
     if (Preferences.urlApi.isEmpty && Preferences.language.isEmpty) {
+      Preferences.idLanguage = 0;
       // Simula una carga de datos
       await Future.delayed(const Duration(seconds: 1));
 

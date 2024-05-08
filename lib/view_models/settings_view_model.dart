@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/language_service.dart';
 
 class SettingsViewModel extends ChangeNotifier {
   navigatePrint(BuildContext context) {
@@ -12,6 +13,8 @@ class SettingsViewModel extends ChangeNotifier {
   }
 
   navigateLang(BuildContext context) {
+    AppLocalizations.cambiarIdioma = 1;
+    notifyListeners();
     Navigator.pushNamed(
       context,
       AppRoutes.lang,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
@@ -48,20 +49,21 @@ class LangView extends StatelessWidget {
                         return Column(
                           children: [
                             CardWidget(
-                              color: index == vm.indexLangSelect
+                              color: index == Preferences.idLanguage
                                   ? AppTheme.primary
                                   : AppTheme.backroundColorSecondary,
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(
                                 title: Text(
-                                  lang.names[index].name,
-                                  style: index == vm.indexLangSelect
+                                  vm.getNameLang(lang)!,
+                                  style: index == Preferences.idLanguage
                                       ? AppTheme.whiteBoldStyle
                                       : AppTheme.normalBoldStyle,
                                   textAlign: TextAlign.center,
                                 ),
                                 onTap: () => vm.cambiarIdioma(
+                                  context,
                                   Locale(lang.lang),
                                   index,
                                 ),
@@ -71,94 +73,19 @@ class LangView extends StatelessWidget {
                         );
                       },
                     ),
-                    // CardWidget(
-                    //   width: 400,
-                    //   margin: const EdgeInsets.only(bottom: 25),
-                    //   child: ListTile(
-                    //     title: const Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(Icons.language_outlined),
-                    //         SizedBox(width: 10),
-                    //         Text(
-                    //           "Ingles (Estados Unidos)",
-                    //           style: AppTheme.normalBoldStyle,
-                    //           textAlign: TextAlign.center,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     onTap: () => vm.cambiarIdioma(const Locale("en")),
-                    //   ),
-                    // ),
-                    // CardWidget(
-                    //   width: 400,
-                    //   margin: const EdgeInsets.only(bottom: 25),
-                    //   child: ListTile(
-                    //     title: const Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(Icons.language_outlined),
-                    //         SizedBox(width: 10),
-                    //         Text(
-                    //           "Español (Guatemala)",
-                    //           style: AppTheme.normalBoldStyle,
-                    //           textAlign: TextAlign.center,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     onTap: () => vm.cambiarIdioma(const Locale("es")),
-                    //   ),
-                    // ),
-                    // CardWidget(
-                    //   width: 400,
-                    //   margin: const EdgeInsets.only(bottom: 25),
-                    //   child: ListTile(
-                    //     title: const Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(Icons.language_outlined),
-                    //         SizedBox(width: 10),
-                    //         Text(
-                    //           "Francés (Francia)",
-                    //           style: AppTheme.normalBoldStyle,
-                    //           textAlign: TextAlign.center,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     onTap: () => vm.cambiarIdioma(const Locale("fr")),
-                    //   ),
-                    // ),
-                    // CardWidget(
-                    //   width: 400,
-                    //   margin: const EdgeInsets.only(bottom: 25),
-                    //   child: ListTile(
-                    //     title: const Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         Icon(Icons.language_outlined),
-                    //         SizedBox(width: 10),
-                    //         Text(
-                    //           "Alemán (Alemania)",
-                    //           style: AppTheme.normalBoldStyle,
-                    //           textAlign: TextAlign.center,
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     onTap: () => vm.cambiarIdioma(const Locale("de")),
-                    //   ),
-                    // ),
                     Text(
-                      "IDIOMA ACTUAL : ${AppLocalizations.langSelect.names[0].name}",
+                      "IDIOMA ACTUAL : ${vm.languages[Preferences.idLanguage].names[0].name}",
                       style: AppTheme.normalBoldStyle,
                     ),
                     const SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () => vm.guardarReiniciar(context),
-                      child: const Text(
-                        'Guardar',
-                        style: AppTheme.whiteBoldStyle,
+                    if (AppLocalizations.cambiarIdioma == 0)
+                      ElevatedButton(
+                        onPressed: () => vm.reiniciarTemp(context),
+                        child: const Text(
+                          'Continuar',
+                          style: AppTheme.whiteBoldStyle,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

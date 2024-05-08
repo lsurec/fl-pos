@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
@@ -13,19 +12,19 @@ import 'package:restart_app/restart_app.dart';
 class LangViewModel extends ChangeNotifier {
   List<LanguageModel> languages = LanguagesProvider().languagesProvider;
 
-  int indexLangSelect = 0;
-
   // cambiar el valor del idioma
-  void cambiarIdioma(Locale nuevoIdioma, int indexLang) {
+  void cambiarIdioma(BuildContext context, Locale nuevoIdioma, int indexLang) {
     Preferences.language = nuevoIdioma.languageCode;
 
     AppLocalizations.idioma = Locale(Preferences.language);
 
-    AppLocalizations.langSelect = languages[indexLang];
-
-    indexLangSelect = indexLang;
+    Preferences.idLanguage = indexLang;
 
     notifyListeners();
+
+    if (AppLocalizations.cambiarIdioma == 1) {
+      guardarReiniciar(context);
+    }
   }
 
   Timer? timer; // Temporizador
@@ -77,11 +76,13 @@ class LangViewModel extends ChangeNotifier {
     reiniciarTemp(context);
   }
 
-  // String? getNameByLanguageRegion(LanguageModel data) {
-  //   final names = data.names;
-  //   final languageRegion = names.firstWhereOrNull(
-  //       (item) => item.lrCode == '${activeLang.lang}-${activeLang.reg}');
-  //   return languageRegion != null ? languageRegion.name : null;
-  // }
-
+  String? getNameLang(LanguageModel lang) {
+    final names = lang.names;
+    for (var item in names) {
+      if (item.lrCode.startsWith(Preferences.language)) {
+        return item.name;
+      }
+    }
+    return null;
+  }
 }
