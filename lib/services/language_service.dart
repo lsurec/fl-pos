@@ -9,7 +9,7 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 class AppLocalizations extends ChangeNotifier {
   // static Locale idioma = const Locale("es");
   static Locale idioma = Preferences.language.isEmpty
-      ? AppLocalizations.idioma
+      ? const Locale("es")
       : Locale(Preferences.language);
 
   static int cambiarIdioma = 0;

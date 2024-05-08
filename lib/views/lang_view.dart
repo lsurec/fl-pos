@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +19,11 @@ class LangView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text(
-              "IDIOMA DE LA APLICACION",
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.preferencias,
+                "idiomaT",
+              ),
               style: AppTheme.titleStyle,
             ),
           ),
@@ -31,10 +35,13 @@ class LangView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 50,
                       child: Text(
-                        "Seleccione el idioma de su preferencia.",
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.preferencias,
+                          "idioma",
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                     ),
@@ -72,17 +79,15 @@ class LangView extends StatelessWidget {
                         );
                       },
                     ),
-                    Text(
-                      "IDIOMA ACTUAL : ${vm.languages[Preferences.idLanguage].names[0].name}",
-                      style: AppTheme.normalBoldStyle,
-                    ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
-                        // onPressed: () => vm.reiniciarTemp(context),
-                        onPressed: () => vm.miFuncion(vm.miMapa),
-                        child: const Text(
-                          'Continuar',
+                        onPressed: () => vm.reiniciarTemp(context),
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.botones,
+                            "continuar",
+                          ),
                           style: AppTheme.whiteBoldStyle,
                         ),
                       ),

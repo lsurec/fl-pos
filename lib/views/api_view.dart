@@ -1,4 +1,6 @@
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +34,12 @@ class ApiView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (Preferences.urlApi.isEmpty)
-                          const Text(
-                            "Url Apis",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.url,
+                              "url",
+                            ),
+                            style: const TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -42,9 +47,12 @@ class ApiView extends StatelessWidget {
                         if (Preferences.urlApi.isEmpty)
                           const SizedBox(height: 10),
                         if (Preferences.urlApi.isEmpty)
-                          const Text(
-                            "Para poder utilizar nuestros servicios, por favor, introduce una URL válida. ",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.url,
+                              "ingresar",
+                            ),
+                            style: const TextStyle(
                               fontSize: 20,
                             ),
                           ),
@@ -54,16 +62,23 @@ class ApiView extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Url Actual",
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.url,
+                                  "actual",
+                                ),
+                                style: const TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               IconButton(
-                                tooltip: "Copiar url",
-                                onPressed: () => vm.copyToClipboard(),
+                                tooltip:
+                                    AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.url,
+                                  "copiar",
+                                ),
+                                onPressed: () => vm.copyToClipboard(context),
                                 icon: const Icon(Icons.copy_outlined),
                               )
                             ],
@@ -108,7 +123,10 @@ class ApiView extends StatelessWidget {
 
                                 return regExp.hasMatch(value ?? '')
                                     ? null
-                                    : 'Url invalida';
+                                    : AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.url,
+                                        "invalida",
+                                      );
                               },
                             ),
                           ),
@@ -120,11 +138,17 @@ class ApiView extends StatelessWidget {
                                   child: ElevatedButton(
                                     onPressed: () => Navigator.pop(context),
                                     // onPressed: () => Preferences.clearUrl(),
-
-                                    child: const SizedBox(
+                                    child: SizedBox(
                                       width: double.infinity,
                                       child: Center(
-                                        child: Text("Cancelar"),
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            BlockTranslate.botones,
+                                            "cancelar",
+                                          ),
+                                          style: AppTheme.whiteBoldStyle,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -133,10 +157,17 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => vm.connectService(context),
-                                    child: const SizedBox(
+                                    child: SizedBox(
                                       width: double.infinity,
                                       child: Center(
-                                        child: Text("Cambiar"),
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            BlockTranslate.botones,
+                                            "cambiar",
+                                          ),
+                                          style: AppTheme.whiteBoldStyle,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -146,10 +177,16 @@ class ApiView extends StatelessWidget {
                           if (Preferences.urlApi.isEmpty)
                             ElevatedButton(
                               onPressed: () => vm.connectService(context),
-                              child: const SizedBox(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: Center(
-                                  child: Text("Aceptar"),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.botones,
+                                      "aceptar",
+                                    ),
+                                    style: AppTheme.whiteBoldStyle,
+                                  ),
                                 ),
                               ),
                             )
@@ -162,7 +199,10 @@ class ApiView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Versión: ${vmSplash.versionLocal}",
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.url,
+                          "version",
+                        )}: ${vmSplash.versionLocal}",
                         style: const TextStyle(
                           color: Colors.black54,
                         ),

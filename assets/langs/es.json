@@ -1,4 +1,14 @@
 {
+    "url": {
+        "url": "Url Apis",
+        "ingresar": "Para poder utilizar nuestros servicios, por favor introduce una URL válida.",
+        "invalida": "URL inválida.",
+        "actual": "Url Actual",
+        "copiar": "Copiar url",
+        "copiada": "Url copiada al portapapeles.",
+        "agregada": "Url agregada correctamente.",
+        "version": "Versión"
+    },
     "home": {
         "seleccionado": "El idioma seleccionado es el español.",
         "fechaIni": "Fecha Inicio: ",
@@ -21,5 +31,55 @@
         "titulo": "CONFIGURACIÓN LOCAL",
         "empresas": "Empresas",
         "estaciones": "Estación de Trabajo"
+    },
+    "botones": {
+        "aceptar": "Aceptar",
+        "cancelar": "Cancelar",
+        "regresar": "Regresar",
+        "continuar": "Continuar",
+        "ajustes": "Ajustes",
+        "cerrar": "Cerrar",
+        "cambiar": "Cambiar",
+        "guardar": "Guardar",
+        "informe": "Ver informe",
+        "salir": "Cerrar sesión",
+        "reintentar": "Reintentar",
+        "resumen": "Resumen",
+        "nuevo": "Nuevo",
+        "actualizar": "Actualizar",
+        "reciente": "Recientes",
+        "agregar": "Agregar",
+        "imprimir": "Imprimir",
+        "nuevoDoc": "Nuevo documento",
+        "confirmar": "Confirmar",
+        "inicio": "Inicio",
+        "listo": "Listo",
+        "reiniciar": "Reiniciar ahora."
+    },
+    "fechas": {
+        "fechaIni": "Fecha Inicio: ",
+        "fechaFin": "Fecha Fin: ",
+        "fechaHora": "Fecha hora: ",
+        "fechaDoc": "Fecha documento: "
+    },
+    "notificaciones": {
+        "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
+        "ok": "Aceptar",
+        "tituloCerrar": "Cerrar sesión",
+        "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
+        "salioMal": "Algo salió mal, inténtelo de nuevo.",
+        "completar": "Por favor, completa todos los campos para continuar.",
+        "debeSeleccionar": "Para continuar, selecciona una empresa y una estación de trabajo",
+        "incorrecto": "Usuario o contraseña incorrectos",
+        "error": "No se pudo completar el proceso de conexión al servicio. Por favor, inténtalo de nuevo más tarde.",
+        "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: ",
+        "banco": "Selecciona una cuenta de banco para continuar.",
+        "tipoPago": "Tipo de pago agregado correctamente",
+        "eliminar": "¿Estás seguro?"
+    },
+    "preferencias": {
+        "idiomaT": "IDIOMA DE LA APLICACIÓN",
+        "idioma": "Selecciona el idioma de tu preferencia.",
+        "seleccionado" : "Idioma seleccionado."
     }
 }

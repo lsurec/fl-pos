@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class ApiViewModel extends ChangeNotifier {
   //controlar prcesos
@@ -46,7 +47,10 @@ class ApiViewModel extends ChangeNotifier {
 
     //si es falso mostrar mensaje
     if (!containsApi) {
-      NotificationService.showSnackbar("Url invalida");
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.url,
+        "invalida",
+      ));
       return;
     }
 
@@ -88,15 +92,21 @@ class ApiViewModel extends ChangeNotifier {
     Preferences.urlApi = result;
 
     //Mostrar mensaje correcto
-    NotificationService.showSnackbar(
-      "Url agregada correctamente.",
-    );
+    NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+      BlockTranslate.url,
+      "agregada",
+    ));
   }
 
-  copyToClipboard() {
+  copyToClipboard(BuildContext context) {
     FlutterClipboard.copy(Preferences.urlApi).then(
       (value) {
-        NotificationService.showSnackbar("Url copiada al portapapeles.");
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.url,
+            "copiada",
+          ),
+        );
       },
     );
   }

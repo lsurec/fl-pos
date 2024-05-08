@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/languages_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/alert_widget.dart';
 import 'package:restart_app/restart_app.dart';
 
@@ -23,7 +24,7 @@ class LangViewModel extends ChangeNotifier {
     notifyListeners();
 
     if (AppLocalizations.cambiarIdioma == 1) {
-      // guardarReiniciar(context);
+      guardarReiniciar(context);
     }
   }
 
@@ -58,11 +59,22 @@ class LangViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            textOk: "Reiniciar ahora.",
-            textCancel: "Aceptar",
-            title: "Idioma seleccionado.",
-            description:
-                "Para visualizar los cambios, primero reinicie la aplicación.",
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "reiniciar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.preferencias,
+              "seleccionado",
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              "reiniciar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),
@@ -85,16 +97,4 @@ class LangViewModel extends ChangeNotifier {
     }
     return null;
   }
-
-  void miFuncion(Map<String, dynamic> miMapa) {
-    // Aquí dentro puedes utilizar el mapa como necesites
-    // Por ejemplo, acceder a sus valores usando claves específicas
-    print(AppLocalizations.idioma);
-  }
-
-  // Definimos un mapa
-  Map<String, dynamic> miMapa = {
-    'clave': 'valor',
-    'otraClave': 42,
-  };
 }
