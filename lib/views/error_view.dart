@@ -43,7 +43,7 @@ class ErrorView extends StatelessWidget {
             children: [
               Text("${AppLocalizations.of(context)!.translate(
                 BlockTranslate.login,
-                "usuario",
+                "correo",
               )}: ${vmLogin.user}"),
               const SizedBox(height: 10),
               Text(
