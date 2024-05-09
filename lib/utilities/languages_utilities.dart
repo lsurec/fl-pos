@@ -1,7 +1,7 @@
 import 'package:flutter_post_printer_example/models/language_model.dart';
 
 class LanguagesProvider {
-  List<LanguageModel> languagesProvider = [
+  static List<LanguageModel> languagesProvider = [
     LanguageModel(
       names: [
         Name(

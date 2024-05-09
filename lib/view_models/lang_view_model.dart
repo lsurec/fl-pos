@@ -11,7 +11,7 @@ import 'package:flutter_post_printer_example/widgets/alert_widget.dart';
 import 'package:restart_app/restart_app.dart';
 
 class LangViewModel extends ChangeNotifier {
-  List<LanguageModel> languages = LanguagesProvider().languagesProvider;
+  List<LanguageModel> languages = LanguagesProvider.languagesProvider;
 
   // cambiar el valor del idioma
   void cambiarIdioma(BuildContext context, Locale nuevoIdioma, int indexLang) {

@@ -17,7 +17,10 @@
         "fechaHora": "Fecha hora: ",
         "fechaDoc": "Fecha documento: ",
         "serieDoc": "Serie documento: ",
-        "pagNoDisponible": "La página que buscas no está disponible."
+        "pagNoDisponible": "La página que buscas no está disponible",
+        "origen": "Origen de datos",
+        "versionActual": "Versión actual",
+        "idioma": "Idioma de la aplicación"
     },
     "login": {
         "usuario": "Usuario",
@@ -85,7 +88,9 @@
         "confirmar": "¿Estás seguro?",
         "perder": "Si no se han guardado los cambios, los perderás para siempre.",
         "sinDatos": "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.",
-        "sinEncabezados": "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado."
+        "sinEncabezados": "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
+        "sinDocumento": "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.",
+        "sinTipoCambio":  "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -118,6 +123,7 @@
         "soporte": "Si necesitas asistencia adicional, no dudes en contactar a nuestro servicio de soporte."
     },
     "impresora": {
+        "impresora": "Impresora",
         "sinImprimir": "Configuré mi impresora pero no logro imprimir.",
         "noVinculada": "Esto podría deberse a que tu impresora no opera en modo ESC/POS o no está vinculada en la lista de dispositivos Bluetooth.",
         "problema": "Problema de Impresora",

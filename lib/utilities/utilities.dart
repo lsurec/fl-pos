@@ -221,7 +221,7 @@ class Utilities {
     return [r, g, b];
   }
 
-    static String nombreArchivo(File archivo) {
+  static String nombreArchivo(File archivo) {
     // Obtener el path del archivo
     String path = archivo.path;
 
