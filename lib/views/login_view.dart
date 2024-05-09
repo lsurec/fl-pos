@@ -1,3 +1,5 @@
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +59,16 @@ class LoginView extends StatelessWidget {
                                   formValues: vm.formValues,
                                   maxLines: 1,
                                   initialValue: '',
-                                  hintText: 'Usuario',
-                                  labelText: 'Usuario',
+                                  hintText:
+                                      AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.login,
+                                    "usuario",
+                                  ),
+                                  labelText:
+                                      AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.login,
+                                    "usuario",
+                                  ),
                                   suffixIcon: Icons.person,
                                 ),
                                 Padding(
@@ -68,8 +78,18 @@ class LoginView extends StatelessWidget {
                                     children: [
                                       TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: 'Contraseña',
-                                            labelText: 'Contraseña',
+                                            hintText:
+                                                AppLocalizations.of(context)!
+                                                    .translate(
+                                              BlockTranslate.login,
+                                              "contrasena",
+                                            ),
+                                            labelText:
+                                                AppLocalizations.of(context)!
+                                                    .translate(
+                                              BlockTranslate.login,
+                                              "contrasena",
+                                            ),
                                             suffixIcon: IconButton(
                                               onPressed: vm.toggle,
                                               icon: Icon(
@@ -84,7 +104,11 @@ class LoginView extends StatelessWidget {
                                         },
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Campo requerido.';
+                                            return AppLocalizations.of(context)!
+                                                .translate(
+                                              BlockTranslate.notificacion,
+                                              "requerido",
+                                            );
                                           }
                                           return null;
                                         },
@@ -100,9 +124,12 @@ class LoginView extends StatelessWidget {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 0),
                             activeColor: AppTheme.primary,
-                            title: const Text(
-                              'Mantener sesión iniciada',
-                              style: TextStyle(
+                            title: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.login,
+                                "recordar",
+                              ),
+                              style: const TextStyle(
                                 color: AppTheme.primary,
                               ),
                               textAlign: TextAlign.right,
@@ -112,10 +139,16 @@ class LoginView extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () => vm.login(context),
-                            child: const SizedBox(
+                            child: SizedBox(
                               width: double.infinity,
                               child: Center(
-                                child: Text("Iniciar sesión"),
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.login,
+                                    "iniciar",
+                                  ),
+                                  style: AppTheme.whiteBoldStyle,
+                                ),
                               ),
                             ),
                           ),
@@ -127,7 +160,10 @@ class LoginView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "Versión: ${vmSplash.versionLocal}",
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.url,
+                          "version",
+                        )}  : ${vmSplash.versionLocal}",
                         style: const TextStyle(
                           color: Colors.black54,
                         ),

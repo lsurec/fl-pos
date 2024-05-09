@@ -19,12 +19,12 @@
         "serieDoc": "Serie documento: "
     },
     "login": {
-        "correo": "Usuario",
+        "usuario": "Usuario",
         "contrasena": "Contraseña",
         "ver": "Ver contraseña",
         "ocultar": "Ocultar contraseña",
-        "recordar": "Recordar mis datos",
-        "iniciar": "INICIAR SESIÓN"
+        "recordar": "Mantener sesión iniciada.",
+        "iniciar": "Iniciar Sesión."
     },
     "configuracionLocal": {
         "titulo": "CONFIGURACIÓN LOCAL",
@@ -68,6 +68,7 @@
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
+        "requerido": "Campo requedido.",
         "ok": "Aceptar",
         "tituloCerrar": "Cerrar sesión",
         "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
