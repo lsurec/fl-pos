@@ -10,4 +10,6 @@ class BlockTranslate {
   static String error = "error";
   static String cliente = "cliente";
   static String impresora = "impresora";
+  static String tiket = "imprimir";
+  
 }

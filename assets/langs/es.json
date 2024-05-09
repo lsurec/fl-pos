@@ -83,7 +83,9 @@
         "banco": "Selecciona una cuenta de banco para continuar.",
         "tipoPago": "Tipo de pago agregado correctamente",
         "confirmar": "¿Estás seguro?",
-        "perder": "Si no se han guardado los cambios, los perderás para siempre."
+        "perder": "Si no se han guardado los cambios, los perderás para siempre.",
+        "sinDatos": "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.",
+        "sinEncabezados": "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -136,5 +138,27 @@
         "impresion": "Impresión",
         "conectado": "Dispositivo conectado.",
         "disponibles": "Dispositivos disponibles."
+    },
+    "imprimir": {
+        "tiketPrueba": "PRUEBA TICKET",
+        "generico": "DOCUMENTO GENERICO",
+        "sinCambios": "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
+        "interno": "No. Interno:",
+        "cliente": "Cliente:",
+        "nombre": "Nombre:",
+        "direccion": "Direccion:",
+        "tel": "Tel:",
+        "cantidad": "Cant.",
+        "precioU": "Precio U",
+        "monto": "Monto",
+        "subTotal": "Sub-Total",
+        "cargos": "Cargos",
+        "descuentos": "Descuentos",
+        "totalT": "TOTAL",
+        "vendedor": "Vendedor:",
+        "fel": "FEL DOCUMENTO TRIBUTARIO ELECTRONICO",
+        "detallePago": "Detalle Pago:",
+        "recibido": "Recibido",
+        "cambio": "Cambio"
     }
 }

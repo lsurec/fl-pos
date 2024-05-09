@@ -201,7 +201,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                               case 1:
                                 //1: prueba
                                 PrintModel print =
-                                    await printVM.printReceiveTest(
+                                    await printVM.printReceiveTest(context,
                                   paperDefault,
                                 );
 
