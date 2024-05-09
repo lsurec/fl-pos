@@ -8,4 +8,6 @@ class BlockTranslate {
   static String fecha = "fechas";
   static String preferencias = "preferencias";
   static String error = "error";
+  static String cliente = "cliente";
+  static String impresora = "impresora";
 }

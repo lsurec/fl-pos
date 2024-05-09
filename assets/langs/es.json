@@ -56,7 +56,8 @@
         "confirmar": "Confirmar",
         "inicio": "Inicio",
         "listo": "Listo",
-        "reiniciar": "Reiniciar ahora."
+        "reiniciar": "Reiniciar ahora.",
+        "ayuda": "Ayuda"
     },
     "fechas": {
         "fecha": "Fecha",
@@ -98,6 +99,31 @@
         "errorDesc": "Descripción del error",
         "indefinido": "No definido",
         "noAplica": "No aplica.",
-        "noDisponible" : "No disponible."
+        "noDisponible": "No disponible."
+    },
+    "cliente": {
+        "noEncontrado": "No encuentro el cliente que busco.",
+        "noRegistrado": "Es posible que el cliente que buscas no está registrado. Ve al mantenimiento de cuentas y crea un nuevo cliente, o intenta hacer una búsqueda por otros parámetros. Recuerda que puedes buscar por nombre o NIT.",
+        "informacion": "Información Adicional",
+        "pasos": "Si no encuentras al cliente que buscas, sigue estos pasos:",
+        "verificar": "1. Verifica que el cliente esté registrado en la aplicación.",
+        "crear": "2. Ve al mantenimiento de cuentas y crea un nuevo cliente si es necesario.",
+        "buscar": "3. Intenta hacer una búsqueda por otros parámetros como nombre o NIT.",
+        "soporte": "Si necesitas asistencia adicional, no dudes en contactar a nuestro servicio de soporte."
+    },
+    "impresora": {
+        "sinImprimir": "Configuré mi impresora pero no logro imprimir.",
+        "noVinculada": "Esto podría deberse a que tu impresora no opera en modo ESC/POS o no está vinculada en la lista de dispositivos Bluetooth.",
+        "problema": "Problema de Impresora",
+        "pasos": "Si configuraste tu impresora pero no imprime, sigue estos pasos:",
+        "encendida": "1. Verifica que tu impresora esté encendida.",
+        "modo": "2. Asegúrate de que la impresora esté en modo ESC/POS.",
+        "vinculada": "3. Comprueba que la impresora esté vinculada en la lista de dispositivos Bluetooth de tu dispositivo.",
+        "papel": "4. Asegúrate de que la impresora tenga papel disponible para imprimir.",
+        "salidaPapel": "5. Comprueba que no se esté obstruyendo la salida del papel al momento de imprimir.",
+        "usarCorrecta": "6. Verifica que otro dispositvo no esté usando la impresora a la que intentas imprimir.",
+        "correcta": "7. Asegurate que la impresora que intentas usar es la correcta.",
+        "dispositivo": "8. Verifica que el dispositivo vinculado sea la impresora que intentas usar.",
+        "soporte": "Si el problema persiste, comunícate con nuestro soporte técnico para obtener ayuda adicional."
     }
 }

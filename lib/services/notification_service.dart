@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 
 class NotificationService {
@@ -31,32 +33,80 @@ class NotificationService {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Problema de Impresora'),
-          content: const Column(
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.impresora,
+              "problema",
+            ),
+          ),
+          content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                  'Si configuraste tu impresora pero no imprime, sigue estos pasos:'),
-              SizedBox(height: 8),
-              Text('1. Verifica que tu impresora esté encendida.'),
-              Text('2. Asegúrate de que la impresora esté en modo ESC/POS.'),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "pasos",
+                ),
+              ),
+              const SizedBox(height: 8),
               Text(
-                  '3. Comprueba que la impresora esté vinculada en la lista de dispositivos Bluetooth de tu dispositivo.'),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "encendida",
+                ),
+              ),
               Text(
-                  '4. Asegúrate de que la impresora tenga papel disponible para imprimir.'),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "modo",
+                ),
+              ),
               Text(
-                  '5. Comprueba que no se esté obstruyendo la salida del papel al momento de imprimir.'),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "vinculada",
+                ),
+              ),
               Text(
-                  '6. Verifica que otro dispositvo no esté usando la impresora a la que intentas imprimir.'),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "papel",
+                ),
+              ),
               Text(
-                  '7. Asegurate que la impresora que intentas usar es la correcta.'),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "salidaPapel",
+                ),
+              ),
               Text(
-                  '8. Verifica que el dispositivo vinculado sea la impresora que intentas usar.'),
-              SizedBox(height: 16),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "usarCorrecta",
+                ),
+              ),
               Text(
-                'Si el problema persiste, comunícate con nuestro soporte técnico para obtener ayuda adicional.',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "correcta",
+                ),
+              ),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "dispositivo",
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  "soporte",
+                ),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -65,7 +115,12 @@ class NotificationService {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cerrar'),
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  "cerrar",
+                ),
+              ),
             ),
             // TextButton(
             //   onPressed: () {

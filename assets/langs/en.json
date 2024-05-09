@@ -26,7 +26,7 @@
         "recordar": "Remember me",
         "iniciar": "LOGIN"
     },
-    "localConfiguration": {
+    "configuracionLocal": {
         "titulo": "LOCAL CONFIGURATION",
         "configuracion": "Local Configuration",
         "empresa": "Company",
@@ -34,7 +34,7 @@
         "empresas": "Companies",
         "estaciones": "Workstation"
     },
-    "buttons": {
+    "botones": {
         "aceptar": "Accept",
         "cancelar": "Cancel",
         "regresar": "Back",
@@ -58,14 +58,14 @@
         "listo": "Ready",
         "reiniciar": "Restart now."
     },
-    "dates": {
+    "fechas": {
         "fecha": "Date",
         "fechaIni": "Start Date: ",
         "fechaFin": "End Date: ",
         "fechaHora": "Date Time: ",
         "fechaDoc": "Document Date: "
     },
-    "notifications": {
+    "notificaciones": {
         "reiniciar": "To see the changes, please restart the application first.",
         "ok": "OK",
         "tituloCerrar": "Logout",
@@ -80,7 +80,7 @@
         "tipoPago": "Payment type added successfully",
         "eliminar": "Are you sure?"
     },
-    "preferences": {
+    "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
         "idioma": "Select your preferred language.",
         "seleccionado": "Language selected."
