@@ -201,7 +201,8 @@ class _SettingsFromState extends State<SettingsFrom> {
                               case 1:
                                 //1: prueba
                                 PrintModel print =
-                                    await printVM.printReceiveTest(context,
+                                    await printVM.printReceiveTest(
+                                  context,
                                   paperDefault,
                                 );
 
@@ -459,6 +460,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               BlockTranslate.botones,
               "cancelar",
             ),
+            style: AppTheme.whiteBoldStyle,
           ),
         ),
         ElevatedButton(
@@ -473,6 +475,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               BlockTranslate.botones,
               "conectar",
             ),
+            style: AppTheme.whiteBoldStyle,
           ),
         ),
       ],
