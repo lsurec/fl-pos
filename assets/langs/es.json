@@ -16,7 +16,8 @@
         "idDoc": "Id documento: ",
         "fechaHora": "Fecha hora: ",
         "fechaDoc": "Fecha documento: ",
-        "serieDoc": "Serie documento: "
+        "serieDoc": "Serie documento: ",
+        "pagNoDisponible": "La página que buscas no está disponible."
     },
     "login": {
         "usuario": "Usuario",

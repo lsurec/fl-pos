@@ -1,4 +1,6 @@
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,15 +25,23 @@ class NotFoundView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Image.asset("assets/pagenotfound.png"),
-            const Text(
-              'La página que buscas no está disponible.',
+            Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.home,
+                "pagNoDisponible",
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Regresar'),
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  "regresar",
+                ),
+              ),
             ),
           ],
         ),
