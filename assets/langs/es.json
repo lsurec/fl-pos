@@ -79,7 +79,8 @@
         "configuracion": "No se encontraron empresas o estaciones de trabajo para el usuario: ",
         "banco": "Selecciona una cuenta de banco para continuar.",
         "tipoPago": "Tipo de pago agregado correctamente",
-        "eliminar": "¿Estás seguro?"
+        "confirmar": "¿Estás seguro?",
+        "perder": "Si no se han guardado los cambios, los perderás para siempre."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
