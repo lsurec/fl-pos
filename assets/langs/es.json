@@ -58,7 +58,8 @@
         "inicio": "Inicio",
         "listo": "Listo",
         "reiniciar": "Reiniciar ahora.",
-        "ayuda": "Ayuda"
+        "ayuda": "Ayuda",
+        "conectar": "Conectar"
     },
     "fechas": {
         "fecha": "Fecha",
@@ -127,6 +128,13 @@
         "usarCorrecta": "6. Verifica que otro dispositvo no esté usando la impresora a la que intentas imprimir.",
         "correcta": "7. Asegurate que la impresora que intentas usar es la correcta.",
         "dispositivo": "8. Verifica que el dispositivo vinculado sea la impresora que intentas usar.",
-        "soporte": "Si el problema persiste, comunícate con nuestro soporte técnico para obtener ayuda adicional."
+        "soporte": "Si el problema persiste, comunícate con nuestro soporte técnico para obtener ayuda adicional.",
+        "selecPapel": "Selecciona papel",
+        "papelT": "Papel",
+        "prueba": "Impirmir prueba",
+        "documento": "Impirmir documento",
+        "impresion": "Impresión",
+        "conectado": "Dispositivo conectado.",
+        "disponibles": "Dispositivos disponibles."
     }
 }
