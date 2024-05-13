@@ -20,7 +20,11 @@
         "pagNoDisponible": "La página que buscas no está disponible",
         "origen": "Origen de datos",
         "versionActual": "Versión actual",
-        "idioma": "Idioma de la aplicación"
+        "idioma": "Idioma de la aplicación",
+        "aplicacion": "Aplicaciones",
+        "configuracion": "Configuraciones",
+        "nuevaVersion": "Nueva version disponble.",
+        "continuar": "Actualiza para continuar."
     },
     "login": {
         "usuario": "Usuario",

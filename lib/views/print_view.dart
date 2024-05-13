@@ -374,6 +374,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           BlockTranslate.botones,
                                           "agregar",
                                         ),
+                                        style: AppTheme.whiteBoldStyle,
                                       ),
                                     )
                                   : null,

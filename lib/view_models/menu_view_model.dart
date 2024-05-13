@@ -303,7 +303,11 @@ class MenuViewModel extends ChangeNotifier {
     if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
       if (documento == null) {
         NotificationService.showSnackbar(
-            "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinDocumento',
+          ),
+        );
         return;
       }
 
@@ -464,8 +468,10 @@ class MenuViewModel extends ChangeNotifier {
     if (cambios.isNotEmpty) {
       tipoCambio = cambios[0].tipoCambio;
     } else {
-      resCambio.message =
-          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+      resCambio.message = AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinTipoCambio',
+      );
 
       homeVM.isLoading = false;
       NotificationService.showErrorView(context, resCambio);
@@ -574,7 +580,10 @@ class MenuViewModel extends ChangeNotifier {
       menu,
       MenuModel(
         display: null,
-        name: "Aplicaciones",
+        name: AppLocalizations.of(context)!.translate(
+          BlockTranslate.home,
+          'aplicacion',
+        ),
         route: '',
         children: menu,
       ),

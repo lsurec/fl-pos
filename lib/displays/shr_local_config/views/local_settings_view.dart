@@ -142,9 +142,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             child: Center(
                               child: Text(
                                 "Continuar",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                ),
+                                style: AppTheme.whiteBoldStyle,
                               ),
                             ),
                           ),

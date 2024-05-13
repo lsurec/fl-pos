@@ -41,6 +41,7 @@ class NotFoundView extends StatelessWidget {
                   BlockTranslate.botones,
                   "regresar",
                 ),
+                style: AppTheme.whiteBoldStyle,
               ),
             ),
           ],

@@ -16,8 +16,11 @@ class SettingsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Configuraciones",
+        title: Text(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.home,
+            'configuracion',
+          ),
           style: AppTheme.titleStyle,
         ),
       ),
