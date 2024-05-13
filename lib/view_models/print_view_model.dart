@@ -329,7 +329,7 @@ class PrintViewModel extends ChangeNotifier {
         ), // Ancho 2
         PosColumn(
           text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.error,
+            BlockTranslate.general,
             'descripcion',
           ),
           width: 4,

@@ -11,5 +11,6 @@ class BlockTranslate {
   static String cliente = "cliente";
   static String impresora = "impresora";
   static String tiket = "imprimir";
+  static String general = "generales";
   
 }

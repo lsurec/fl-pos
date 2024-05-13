@@ -51,7 +51,7 @@ class ErrorViewModel extends ChangeNotifier {
                     pw.SizedBox(height: 5),
                     pw.Text(
                       "${AppLocalizations.of(contextP)!.translate(
-                        BlockTranslate.error,
+                        BlockTranslate.general,
                         "descripcion",
                       )} - ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",
                       style: pw.TextStyle(

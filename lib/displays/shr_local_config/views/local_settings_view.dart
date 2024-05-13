@@ -1,7 +1,8 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +56,12 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Center(
+                      Center(
                         child: Text(
-                          "Configuracion local",
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.localConfig,
+                            'configuracion',
+                          ),
                           style: AppTheme.titleStyle,
                         ),
                       ),
@@ -65,12 +69,18 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Empresa ",
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.localConfig,
+                              'empresa',
+                            ),
                             style: AppTheme.normalBoldStyle,
                           ),
                           Text(
-                            'Registros (${vm.empresas.length})',
+                            '${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${vm.empresas.length})',
                             style: AppTheme.normalStyle,
                           ),
                         ],
@@ -99,12 +109,18 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Estación de trabajo",
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.localConfig,
+                              'estaciones',
+                            ),
                             style: AppTheme.normalBoldStyle,
                           ),
                           Text(
-                            'Registros (${vm.estaciones.length})',
+                            '${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${vm.estaciones.length})',
                             style: AppTheme.normalStyle,
                           ),
                         ],
@@ -137,11 +153,14 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               vm.estaciones.isEmpty || vm.empresas.isEmpty
                                   ? null
                                   : () => vm.navigateHome(context),
-                          child: const SizedBox(
+                          child: SizedBox(
                             width: double.infinity,
                             child: Center(
                               child: Text(
-                                "Continuar",
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.botones,
+                                  'continuar',
+                                ),
                                 style: AppTheme.whiteBoldStyle,
                               ),
                             ),

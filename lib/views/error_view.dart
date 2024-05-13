@@ -117,7 +117,7 @@ class ErrorView extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 "${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.error,
+                  BlockTranslate.general,
                   "descripcion",
                 )}:",
               ),

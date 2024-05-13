@@ -429,7 +429,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               width: PdfPageFormat.letter.width * 0.40,
                               child: pw.Text(
                                 AppLocalizations.of(contextP)!.translate(
-                                  BlockTranslate.error,
+                                  BlockTranslate.general,
                                   'descipcion',
                                 ),
                                 style: font8BoldWhite,

@@ -75,7 +75,6 @@
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
         "requerido": "Campo requedido.",
-        "ok": "Aceptar",
         "tituloCerrar": "Cerrar sesión",
         "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
         "salioMal": "Algo salió mal.",
@@ -94,7 +93,8 @@
         "sinDocumento": "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.",
         "sinTipoCambio": "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.",
         "sinDatosImprimir": "No hay datos para imprimir, intente más tarde.",
-        "metodos": "Solo se permiten los metodos POST, PUT, GET y DELETE"
+        "metodos": "Solo se permiten los metodos POST, PUT, GET y DELETE",
+        "seleccioneConfiguracion": "Para continuar, selecciona una empresa y estación de trabajo"
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -110,7 +110,6 @@
         "estacion": "Estación de trabajo",
         "servicio": "Servicio origen",
         "origen": "DB Origen",
-        "descripcion": "Descripción",
         "errorDesc": "Descripción del error",
         "indefinido": "No definido",
         "noAplica": "No aplica.",
@@ -181,5 +180,8 @@
         "firma": "Firma electrónica:",
         "certificador": "Datos del ceritificador:"
     },
-    "share": {}
+    "generales": {
+        "registro": "Registros",
+        "descripcion": "Descripción"
+    }
 }
