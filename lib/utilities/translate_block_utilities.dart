@@ -12,5 +12,5 @@ class BlockTranslate {
   static String impresora = "impresora";
   static String tiket = "imprimir";
   static String general = "generales";
-  
+  static String cuenta = "cuenta";
 }

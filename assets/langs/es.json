@@ -183,5 +183,16 @@
     "generales": {
         "registro": "Registros",
         "descripcion": "Descripción"
+    },
+    "cuenta": {
+        "nueva": "Nueva Cuenta",
+        "nombre": "Nombres",
+        "direccion": "Dirección",
+        "telefono": "Teléfono",
+        "correo": "Correo",
+        "invalido": "Correo inválido."
+    },
+    "factura": {
+        
     }
 }
