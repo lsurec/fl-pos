@@ -1,5 +1,7 @@
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class AlertWidget extends StatelessWidget {
   const AlertWidget({
@@ -27,11 +29,19 @@ class AlertWidget extends StatelessWidget {
       content: Text(description),
       actions: [
         TextButton(
-          child: Text(textCancel ?? "Cancelar"),
+          child: Text(textCancel ??
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                'cancelar',
+              )),
           onPressed: () => onCancel(),
         ),
         TextButton(
-          child: Text(textOk ?? "Aceptar"),
+          child: Text(textOk ??
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                'aceptar',
+              )),
           onPressed: () => onOk(),
         ),
       ],

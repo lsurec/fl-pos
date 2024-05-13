@@ -1,5 +1,7 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -105,8 +107,11 @@ void _showUserInfoModal(
                       ),
                       const Divider(),
                       ListTile(
-                        title: const Text(
-                          "Empresa",
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.localConfig,
+                            'empresa',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         subtitle: Text(
@@ -115,8 +120,11 @@ void _showUserInfoModal(
                         ),
                       ),
                       ListTile(
-                        title: const Text(
-                          "Estacion de trabajo",
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.localConfig,
+                            'estaciones',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         subtitle: Text(
@@ -126,8 +134,11 @@ void _showUserInfoModal(
                       ),
                       if (vmMenu.tipoCambio != 0)
                         ListTile(
-                          title: const Text(
-                            "Tipo cambio",
+                          title: Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.localConfig,
+                              'cambioTipo',
+                            ),
                             style: AppTheme.normalBoldStyle,
                           ),
                           subtitle: Text(

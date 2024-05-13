@@ -149,13 +149,24 @@ class NotificationService {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "Algo salió mal",
-            description:
-                "No se pudo completar el proceso de conexión al servicio. Por favor, inténtalo de nuevo más tarde.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'salioMal',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'error',
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
-            textCancel: "Ver informe",
-            textOk: "Aceptar",
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              'informe',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              'aceptar',
+            ),
           ),
         ) ??
         true;

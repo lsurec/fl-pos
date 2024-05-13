@@ -35,7 +35,8 @@
         "empresa": "Empresa",
         "estacion": "Estación",
         "empresas": "Empresas",
-        "estaciones": "Estación de Trabajo"
+        "estaciones": "Estación de Trabajo",
+        "cambioTipo": "Tipo cambio"
     },
     "botones": {
         "aceptar": "Aceptar",
@@ -77,7 +78,8 @@
         "ok": "Aceptar",
         "tituloCerrar": "Cerrar sesión",
         "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
-        "salioMal": "Algo salió mal, inténtelo de nuevo.",
+        "salioMal": "Algo salió mal.",
+        "intentarDespues": "Algo salió mal, inténtelo de nuevo.",
         "completar": "Por favor, completa todos los campos para continuar.",
         "debeSeleccionar": "Para continuar, selecciona una empresa y una estación de trabajo",
         "incorrecto": "Usuario o contraseña incorrectos",

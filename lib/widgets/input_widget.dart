@@ -1,5 +1,7 @@
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class InputWidget extends StatelessWidget {
   const InputWidget({
@@ -48,7 +50,10 @@ class InputWidget extends StatelessWidget {
         validator: (value) {
           if (validator == true) {
             if (value == null || value.isEmpty) {
-              return 'Campo requerido.';
+              return AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'requerido',
+              );
             }
           }
           return null;

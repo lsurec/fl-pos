@@ -35,7 +35,8 @@ class StoragePrinter {
 
   Future<String> getName() async {
     final pref = await SharedPreferences.getInstance();
-    return pref.getString(AppData.KEY_NAME) ?? "No hay impresora";
+    //no hay impresora "No hay impresora."
+    return pref.getString(AppData.KEY_NAME) ?? "There is no printer.";
   }
 
   Future<String> getAddress() async {
