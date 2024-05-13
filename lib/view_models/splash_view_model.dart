@@ -111,22 +111,6 @@ class SplashViewModel extends ChangeNotifier {
       return;
     }
 
-    // //si no hay una url para las apis configurada
-    // if (Preferences.urlApi.isEmpty && Preferences.language.isNotEmpty) {
-    //   print("aqui pasoooooooooo");
-    //   print("lang ${Preferences.language}");
-    //   // Simula una carga de datos
-    //   await Future.delayed(const Duration(seconds: 1));
-
-    //   //mostrar pantallaconfiguracion de apis
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(
-    //       builder: (context) => const ApiView(),
-    //     ), // Cambiar a la pantalla principal después de cargar los datos
-    //   );
-    //   return;
-    // }
-
     // si no hay una sesion de usuario guradada
     if (Preferences.token.isEmpty) {
       await Future.delayed(const Duration(seconds: 1));
