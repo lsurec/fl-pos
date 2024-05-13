@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/models/print_data_comanda_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/fel/models/models.dart';

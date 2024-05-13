@@ -293,7 +293,7 @@ class _Observacion extends StatelessWidget {
 class _Print extends StatelessWidget {
   final int screen;
 
-  const _Print({super.key, required this.screen});
+  const _Print({required this.screen});
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
@@ -474,7 +474,7 @@ class _OptionsErrorAll extends StatelessWidget {
 class _Options extends StatelessWidget {
   final int screen;
 
-  const _Options({super.key, required this.screen});
+  const _Options({required this.screen});
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
