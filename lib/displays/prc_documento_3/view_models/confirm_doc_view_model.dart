@@ -408,7 +408,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //Volver a certificar
-  Future<void> reloadCert() async {
+  Future<void> reloadCert(
+    BuildContext context,
+  ) async {
     //cargar paso en pantalla d carga
     steps[1].isLoading = true;
     steps[1].status = 1;
@@ -416,7 +418,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     notifyListeners();
 
     //iniciar proceso
-    ApiResModel felProcces = await certDTE();
+    ApiResModel felProcces = await certDTE(context);
 
     //No se completo el proceso fel
     if (!felProcces.succes) {
@@ -470,7 +472,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     if (docVM.printFel()) {
-      processDocument();
+      processDocument(context);
     } else {
       isLoading = true;
       ApiResModel sendProcess = await sendDocument();
@@ -498,7 +500,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> processDocument() async {
+  Future<void> processDocument(
+    BuildContext context,
+  ) async {
     //iniciar cargas (steps)
     stepsSucces = 0;
 
@@ -565,7 +569,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     consecutivoDoc = sendProcess.message["data"];
 
     //Certificar documento, certificador (SAT)
-    ApiResModel felProcces = await certDTE();
+    ApiResModel felProcces = await certDTE(context);
 
     if (!felProcces.succes) {
       //No se completo el proceso fel
@@ -608,7 +612,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //certificar DTE (Servicios del certificador)
-  Future<ApiResModel> certDTE() async {
+  Future<ApiResModel> certDTE(
+    BuildContext context,
+  ) async {
     //Proveedor de datos externo
     final loginVM = Provider.of<LoginViewModel>(
       scaffoldKey.currentContext!,
@@ -884,6 +890,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //Consumir api para certificar o anular documentos
     ApiResModel resApi = await resolveApisService.resolveMethod(
+      context,
       urlApi,
       headers,
       api.tipoMetodo,

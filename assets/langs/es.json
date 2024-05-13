@@ -93,7 +93,8 @@
         "sinEncabezados": "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
         "sinDocumento": "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.",
         "sinTipoCambio": "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.",
-        "sinDatosImprimir": "No hay datos para imprimir, intente más tarde."
+        "sinDatosImprimir": "No hay datos para imprimir, intente más tarde.",
+        "metodos": "Solo se permiten los metodos POST, PUT, GET y DELETE"
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

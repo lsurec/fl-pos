@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:http/http.dart' as http;
 
 class ResolveApisService {
   //Mettodo generico para resolver peticiones GET
   Future<ApiResModel> resolveMethod(
+    BuildContext context,
     String url, //url del api que se va a usar
     Map<String, String> headers, //tooken pra las apis si se necesita
     int method, //metodo http que se va a usar
@@ -52,7 +56,10 @@ class ResolveApisService {
           return ApiResModel(
             url: url.toString(),
             succes: false,
-            message: "Solo se permiten los metodos POST, PUT, GET y DELETE",
+            message: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'metodos',
+            ),
             storeProcedure: null,
           );
       }

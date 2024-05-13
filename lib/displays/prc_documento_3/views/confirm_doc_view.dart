@@ -386,7 +386,7 @@ class _OptionsError extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.reloadCert(),
+              onTap: () => vm.reloadCert(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,
@@ -445,7 +445,7 @@ class _OptionsErrorAll extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.processDocument(),
+              onTap: () => vm.processDocument(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,
