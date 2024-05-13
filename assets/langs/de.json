@@ -99,5 +99,8 @@
         "indefinido": "Nicht definiert",
         "noAplica": "Nicht zutreffend.",
         "noDisponible": "Nicht verfügbar"
+    },
+    "imprimir": {
+        "u_m": "ME"
     }
 }

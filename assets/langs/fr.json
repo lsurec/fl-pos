@@ -99,5 +99,8 @@
         "indefinido": "Non défini",
         "noAplica": "Non applicable.",
         "noDisponible": "Non Disponible"
+    },
+    "imprimir": {
+        "u_m": "UM"
     }
 }

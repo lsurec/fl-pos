@@ -11,13 +11,8 @@
     },
     "home": {
         "seleccionado": "El idioma seleccionado es el español.",
-        "fechaIni": "Fecha Inicio: ",
-        "fechaFin": "Fecha Fin: ",
         "idDoc": "Id documento: ",
-        "fechaHora": "Fecha hora: ",
-        "fechaDoc": "Fecha documento: ",
-        "serieDoc": "Serie documento: ",
-        "pagNoDisponible": "La página que buscas no está disponible",
+        "pagNoDisponible": "La página que buscas no está disponible.",
         "origen": "Origen de datos",
         "versionActual": "Versión actual",
         "idioma": "Idioma de la aplicación",
@@ -69,11 +64,12 @@
         "conectar": "Conectar"
     },
     "fechas": {
-        "fecha": "Fecha",
-        "fechaIni": "Fecha Inicio: ",
-        "fechaFin": "Fecha Fin: ",
+        "fecha": "Fecha:",
+        "inicio": "Fecha Inicio: ",
+        "fin": "Fecha Fin: ",
         "fechaHora": "Fecha hora: ",
-        "fechaDoc": "Fecha documento: "
+        "fechaDoc": "Fecha documento: ",
+        "certificacion": "Fecha de certificacion:"
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -94,7 +90,8 @@
         "sinDatos": "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.",
         "sinEncabezados": "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
         "sinDocumento": "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.",
-        "sinTipoCambio":  "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado."
+        "sinTipoCambio": "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.",
+        "sinDatosImprimir": "No hay datos para imprimir, intente más tarde."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -166,9 +163,20 @@
         "descuentos": "Descuentos",
         "totalT": "TOTAL",
         "vendedor": "Vendedor:",
-        "fel": "FEL DOCUMENTO TRIBUTARIO ELECTRONICO",
         "detallePago": "Detalle Pago:",
         "recibido": "Recibido",
-        "cambio": "Cambio"
-    }
+        "cambio": "Cambio",
+        "docTributario": "DOCUMENTO TRIBUTARIO ELECTRONICO",
+        "codigo": "CÓDIGO",
+        "cantidadT": "CANTIDAD",
+        "uniMedida": "UM",
+        "unitario": "UNITARIO",
+        "letrasTotal": "TOTAL EN LETRAS:",
+        "pdf": "Aquí está su archivo PDF.",
+        "serie": "Serie:",
+        "numero": "Número:",
+        "firma": "Firma electrónica:",
+        "certificador": "Datos del ceritificador:"
+    },
+    "share": {}
 }

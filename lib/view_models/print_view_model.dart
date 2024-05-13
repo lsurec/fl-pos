@@ -672,7 +672,7 @@ class PrintViewModel extends ChangeNotifier {
       titulo: encabezado.tipoDocumento!,
       descripcion: AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
-        'fel',
+        'docTributario',
       ),
       fechaCert: encabezado.feLFechaCertificacion ?? "",
       serie: encabezado.feLSerie ?? "",

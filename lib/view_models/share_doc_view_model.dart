@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,7 +21,7 @@ import '../displays/prc_documento_3/services/services.dart';
 class ShareDocViewModel extends ChangeNotifier {
   //generar formato pdf para compartir
   Future<void> sheredDoc(
-    BuildContext context,
+    BuildContext contextP,
     int consecutivoDoc,
     String? vendedorDoc,
     ClientModel clientDoc,
@@ -29,7 +30,7 @@ class ShareDocViewModel extends ChangeNotifier {
     //instancia del servicio
     DocumentService documentService = DocumentService();
     //Proveedores externos
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(contextP, listen: false);
 
     //usario y token
     String user = loginVM.user;
@@ -45,7 +46,7 @@ class ShareDocViewModel extends ChangeNotifier {
     //valid succes response
     //Si el api falló
     if (!resEncabezado.succes) {
-      await NotificationService.showErrorView(context, resEncabezado);
+      await NotificationService.showErrorView(contextP, resEncabezado);
 
       return;
     }
@@ -65,7 +66,7 @@ class ShareDocViewModel extends ChangeNotifier {
       //finalozar el proceso
 
       //mostrar alerta
-      await NotificationService.showErrorView(context, resDetalle);
+      await NotificationService.showErrorView(contextP, resDetalle);
 
       return;
     }
@@ -75,9 +76,10 @@ class ShareDocViewModel extends ChangeNotifier {
 
     //validar que haya datos para imprimir
     if (encabezadoTemplate.isEmpty || detallesTemplate.isEmpty) {
-      NotificationService.showSnackbar(
-        "No hay datos para imprimir, intente más tarde.",
-      );
+      NotificationService.showSnackbar(AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.notificacion,
+        'sinDatosImprimir',
+      ));
 
       return;
     }
@@ -97,7 +99,10 @@ class ShareDocViewModel extends ChangeNotifier {
     //TODO: Remplazar datos de certificacion
     Documento documento = Documento(
       titulo: encabezado.tipoDocumento!,
-      descripcion: "DOCUMENTO TRIBUTARIO ELECTRONICO", //Documenyo generico
+      descripcion: AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.tiket,
+        'docTributario',
+      ), //Documenyo generico
       fechaCert: encabezado.feLFechaCertificacion ?? "",
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
@@ -180,11 +185,18 @@ class ShareDocViewModel extends ChangeNotifier {
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
                     pw.Text(
-                      'No.Interno: ${documento.noInterno}',
+                      '${AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.tiket,
+                        'interno',
+                      )} ${documento.noInterno}',
                       style: font8,
                     ),
                     pw.Text(
-                      'Vendedor: $vendedorDoc ?? ' '',
+                      '${AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.tiket,
+                        'vendedor',
+                      )} $vendedorDoc ?? '
+                      '',
                       style: font8,
                     ),
                   ],
@@ -221,7 +233,10 @@ class ShareDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Nombre:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.tiket,
+                                    'nombre',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -235,7 +250,10 @@ class ShareDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Direccion:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.tiket,
+                                    'direccion',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -273,7 +291,10 @@ class ShareDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Fecha:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.fecha,
+                                    'fecha',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -287,7 +308,10 @@ class ShareDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Tel:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.tiket,
+                                    'tel',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -344,7 +368,10 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "CODIGO",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'codigo',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -361,7 +388,10 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "CANTIDAD",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'cantidadT',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -378,7 +408,10 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "UM",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'uniMedida',
+                                ),
                                 textAlign: pw.TextAlign.center,
                                 style: font8BoldWhite,
                               ),
@@ -395,7 +428,10 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.40,
                               child: pw.Text(
-                                "Descripcion",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.error,
+                                  'descipcion',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -412,7 +448,10 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "UNITARIO",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'unitario',
+                                ),
                                 textAlign: pw.TextAlign.center,
                                 style: font8BoldWhite,
                               ),
@@ -421,7 +460,10 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "TOTAL",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'totalT',
+                                ),
                                 textAlign: pw.TextAlign.center,
                                 style: font8BoldWhite,
                               ),
@@ -554,7 +596,10 @@ class ShareDocViewModel extends ChangeNotifier {
                           ),
                         ),
                         child: pw.Text(
-                          "TOTAL EN LETRAS: ${encabezado.montoLetras}."
+                          "${AppLocalizations.of(contextP)!.translate(
+                            BlockTranslate.tiket,
+                            'letrasTotal',
+                          )} ${encabezado.montoLetras}."
                               .toUpperCase(),
                           style: font8Bold,
                         ),
@@ -576,7 +621,10 @@ class ShareDocViewModel extends ChangeNotifier {
                 pw.SizedBox(height: 5),
                 pw.Center(
                   child: pw.Text(
-                    "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*",
+                    AppLocalizations.of(contextP)!.translate(
+                      BlockTranslate.tiket,
+                      'sinCambios',
+                    ),
                     style: pw.TextStyle(
                       fontSize: 9,
                       fontWeight: pw.FontWeight.bold,
@@ -589,6 +637,7 @@ class ShareDocViewModel extends ChangeNotifier {
         },
         //encabezado
         header: (pw.Context context) => buildHeader(
+          contextP,
           logoData,
           empresa,
           documento,
@@ -596,6 +645,7 @@ class ShareDocViewModel extends ChangeNotifier {
         ),
         //pie de pagina
         footer: (pw.Context context) => buildFooter(
+          contextP,
           logoDemo,
           logoFel,
           encabezado,
@@ -612,11 +662,18 @@ class ShareDocViewModel extends ChangeNotifier {
 
     //Detener proceso de carag
     //compartir documento
-    Share.shareFiles([filePath], text: 'Here is your PDF file');
+    Share.shareFiles(
+      [filePath],
+      text: AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.tiket,
+        'pdf',
+      ),
+    );
   }
 
   //encabezado del pdf
   pw.Widget buildHeader(
+    BuildContext context,
     Uint8List logo,
     Empresa empresa,
     Documento documento,
@@ -674,7 +731,10 @@ class ShareDocViewModel extends ChangeNotifier {
                   textAlign: pw.TextAlign.center,
                 ),
                 pw.Text(
-                  "TEL: ${empresa.tel}",
+                  "${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.tiket,
+                    'tel',
+                  )} ${empresa.tel}",
                   style: const pw.TextStyle(
                     fontSize: 9,
                   ),
@@ -708,25 +768,37 @@ class ShareDocViewModel extends ChangeNotifier {
                         ),
                       ),
                       pw.Text(
-                        'Serie: ${documento.serie}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'serie',
+                        )} ${documento.serie}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
                       ),
                       pw.Text(
-                        'Numero: ${documento.no}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'numero',
+                        )} ${documento.no}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
                       ),
                       pw.Text(
-                        'Fecha de certificacion: ${documento.fechaCert}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'certificacion',
+                        )} ${documento.fechaCert}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
                       ),
                       pw.Text(
-                        'Firma electronica:',
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'firma',
+                        ),
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
@@ -743,7 +815,10 @@ class ShareDocViewModel extends ChangeNotifier {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Text(
-                        "DOCUMENTO GENERICO",
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'generico',
+                        ),
                         style: pw.TextStyle(
                           fontSize: 8,
                           fontWeight: pw.FontWeight.bold,
@@ -765,6 +840,7 @@ class ShareDocViewModel extends ChangeNotifier {
   }
 
   pw.Widget buildFooter(
+    BuildContext context,
     Uint8List logoDemo,
     Uint8List logoFel,
     EncabezadoModel encabezado,
@@ -795,13 +871,16 @@ class ShareDocViewModel extends ChangeNotifier {
                     crossAxisAlignment: pw.CrossAxisAlignment.center,
                     children: [
                       pw.Text(
-                        "Datos del ceritificador",
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'certificador',
+                        ),
                         style: const pw.TextStyle(
                             fontSize: 8, color: PdfColors.grey),
                         textAlign: pw.TextAlign.center,
                       ),
                       pw.Text(
-                        "Nit: ${encabezado.certificadorDteNit}",
+                        "NIT: ${encabezado.certificadorDteNit}",
                         style: const pw.TextStyle(
                           fontSize: 8,
                           color: PdfColors.grey,
@@ -809,7 +888,10 @@ class ShareDocViewModel extends ChangeNotifier {
                         textAlign: pw.TextAlign.center,
                       ),
                       pw.Text(
-                        "Nombre: ${encabezado.certificadorDteNombre}",
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'nombre',
+                        )} ${encabezado.certificadorDteNombre}",
                         style: const pw.TextStyle(
                           fontSize: 8,
                           color: PdfColors.grey,

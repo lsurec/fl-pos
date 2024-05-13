@@ -47,7 +47,7 @@ class HomeView extends StatelessWidget {
                     Text(
                       AppLocalizations.of(context)!.translate(
                         BlockTranslate.home,
-                        "fechaIni",
+                        "inicio",
                       ),
                       style: const TextStyle(
                         fontSize: 20,
