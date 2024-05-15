@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,12 @@ class ConfirmDocView extends StatelessWidget {
         Scaffold(
           key: vm.scaffoldKey,
           appBar: AppBar(
-            title: const Text("Resumen Documento", style: AppTheme.titleStyle),
+            title: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.factura,
+                  'resumenDoc',
+                ),
+                style: AppTheme.titleStyle),
             actions: [
               if (vm.showPrint)
                 IconButton(
@@ -39,7 +46,10 @@ class ConfirmDocView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _DataUser(
-                    title: "Cliente",
+                    title: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.cuenta,
+                      'cliente',
+                    ),
                     user: DataUserModel(
                       name: docVM.clienteSelect!.facturaNombre,
                       nit: docVM.clienteSelect!.facturaNit,
@@ -53,8 +63,11 @@ class ConfirmDocView extends StatelessWidget {
                         const SizedBox(height: 5),
                         const Divider(),
                         const SizedBox(height: 5),
-                        const Text(
-                          "Vendedor",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'vendedor',
+                          ),
                           style: AppTheme.titleStyle,
                         ),
                         const SizedBox(height: 5),
@@ -67,8 +80,11 @@ class ConfirmDocView extends StatelessWidget {
                   const SizedBox(height: 5),
                   const Divider(),
                   const SizedBox(height: 5),
-                  const Text(
-                    "Productos",
+                  Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.factura,
+                      'productos',
+                    ),
                     style: AppTheme.titleStyle,
                   ),
                   const SizedBox(height: 5),
@@ -76,8 +92,11 @@ class ConfirmDocView extends StatelessWidget {
                   const SizedBox(height: 5),
                   const Divider(),
                   const SizedBox(height: 5),
-                  const Text(
-                    "Forma de pago",
+                  Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.factura,
+                      'formasPago',
+                    ),
                     style: AppTheme.titleStyle,
                   ),
                   const SizedBox(height: 5),
@@ -95,8 +114,11 @@ class ConfirmDocView extends StatelessWidget {
                     activeColor: AppTheme.primary,
                     value: vm.directPrint,
                     onChanged: (value) => vm.directPrint = value,
-                    title: const Text(
-                      "Imprimir documento después de confirmar",
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tiket,
+                        'imprimir',
+                      ),
                       style: AppTheme.normalStyle,
                     ),
                   ),
@@ -137,7 +159,10 @@ class ConfirmDocView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Tareas completadas ${vm.stepsSucces}/${vm.steps.length}",
+                          "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.general,
+                            'tareasCompletas',
+                          )} ${vm.stepsSucces}/${vm.steps.length}",
                           style: const TextStyle(
                             color: Colors.black45,
                           ),
@@ -207,9 +232,12 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                       ),
                     if (vm.viewSucces)
-                      const Text(
-                        "Documento procesado correctamente.",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.notificacion,
+                          'docProcesado',
+                        ),
+                        style: const TextStyle(
                           fontSize: 17,
                           color: Colors.green,
                         ),
@@ -219,9 +247,12 @@ class ConfirmDocView extends StatelessWidget {
                         width: double.infinity,
                         child: TextButton(
                           onPressed: () => vm.navigateError(),
-                          child: const Text(
-                            "Ver informe de errores",
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'verError',
+                            ),
+                            style: const TextStyle(
                               color: AppTheme.primary,
                               decoration: TextDecoration.underline,
                             ),
@@ -249,10 +280,13 @@ class ConfirmDocView extends StatelessWidget {
                                     right: 10,
                                   ),
                                   color: AppTheme.primary,
-                                  child: const Center(
+                                  child: Center(
                                     child: Text(
-                                      "Aceptar",
-                                      style: TextStyle(
+                                      AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.botones,
+                                        'aceptar',
+                                      ),
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 17,
                                       ),
@@ -282,9 +316,15 @@ class _Observacion extends StatelessWidget {
     return TextField(
       controller: vm.observacion,
       maxLines: 3,
-      decoration: const InputDecoration(
-        labelText: 'Observación',
-        hintText: "Observación",
+      decoration: InputDecoration(
+        labelText: AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'observacion',
+        ),
+        hintText: AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'observacion',
+        ),
       ),
     );
   }
@@ -312,10 +352,13 @@ class _Print extends StatelessWidget {
                   right: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Listo",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'listo',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -335,10 +378,13 @@ class _Print extends StatelessWidget {
                   left: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Imprimir",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'imprimir',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -372,10 +418,13 @@ class _OptionsError extends StatelessWidget {
                   right: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Continuar sin firma",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'sinFirma',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -394,10 +443,13 @@ class _OptionsError extends StatelessWidget {
                   left: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Reintentar",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'reintentar',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -431,10 +483,13 @@ class _OptionsErrorAll extends StatelessWidget {
                   right: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Aceptar",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'aceptar',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -453,10 +508,13 @@ class _OptionsErrorAll extends StatelessWidget {
                   left: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Reintentar",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'reintentar',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -493,10 +551,13 @@ class _Options extends StatelessWidget {
                   right: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Cancelar",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'cancelar',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -519,10 +580,13 @@ class _Options extends StatelessWidget {
                   left: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Confirmar",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'confirmar',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -569,26 +633,41 @@ class _Pyments extends StatelessWidget {
               children: [
                 if (amount.authorization != "")
                   Text(
-                    'Autorización: ${amount.authorization}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.factura,
+                      'autorizar',
+                    )}: ${amount.authorization}',
                     style: AppTheme.normalStyle,
                   ),
                 if (amount.reference != "")
                   Text(
-                    'Referencia: ${amount.reference}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.factura,
+                      'referencia',
+                    )}: ${amount.reference}',
                     style: AppTheme.normalStyle,
                   ),
                 if (amount.payment.banco)
                   Text(
-                    'Banco: ${amount.bank?.nombre}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.factura,
+                      'banco',
+                    )}: ${amount.bank?.nombre}',
                     style: AppTheme.normalStyle,
                   ),
                 if (amount.account != null)
                   Text(
-                    'Cuenta: ${amount.account!.descripcion}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.factura,
+                      'cuenta',
+                    )}: ${amount.account!.descripcion}',
                     style: AppTheme.normalStyle,
                   ),
                 Text(
-                  'Monto: ${amount.amount.toStringAsFixed(2)}',
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'monto',
+                  )}: ${amount.amount.toStringAsFixed(2)}',
                   style: AppTheme.normalStyle,
                 ),
                 // Text('Detalles: ${transaction.detalles}'),
@@ -621,11 +700,17 @@ class _TotalsPayment extends StatelessWidget {
         child: Column(
           children: [
             RowTotalWidget(
-              title: "Contado",
+              title: AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'contado',
+              ),
               value: paymentsVM.pagado,
             ),
             RowTotalWidget(
-              title: "Cambio",
+              title: AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'cambio',
+              ),
               value: paymentsVM.cambio,
             ),
           ],
@@ -655,20 +740,32 @@ class _Totals extends StatelessWidget {
         child: Column(
           children: [
             RowTotalWidget(
-              title: "Subtotal",
+              title: AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'subTotal',
+              ),
               value: detailsVM.subtotal,
             ),
             RowTotalWidget(
-              title: "(+) Cargo",
+              title: "(+) ${AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'cargo',
+              )}",
               value: detailsVM.cargo,
             ),
             RowTotalWidget(
-              title: "(-) Descuento",
+              title: "(-) ${AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'descuento',
+              )}",
               value: detailsVM.descuento,
             ),
             const Divider(),
             RowTotalWidget(
-              title: "Total",
+              title: AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'total',
+              ),
               value: detailsVM.total,
             ),
           ],
@@ -729,23 +826,35 @@ class _Transaction extends StatelessWidget {
               children: [
                 if (transaction.precio != null)
                   Text(
-                    'Precio Unitario: ${currencyFormat.format(transaction.precio!.precioU)}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'precioU',
+                    )} ${currencyFormat.format(transaction.precio!.precioU)}',
                     style: AppTheme.normalStyle,
                   ),
 
                 Text(
-                  'Total: ${transaction.total.toStringAsFixed(2)}',
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'total',
+                  )}: ${transaction.total.toStringAsFixed(2)}',
                   style: AppTheme.normalStyle,
                 ),
                 if (transaction.cargo != 0)
                   Text(
-                    'Cargo: ${transaction.cargo.toStringAsFixed(2)}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'cargo',
+                    )}: ${transaction.cargo.toStringAsFixed(2)}',
                     style: AppTheme.normalStyle,
                   ),
 
                 if (transaction.descuento != 0)
                   Text(
-                    'Descuento: ${transaction.descuento.toStringAsFixed(2)}',
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'descuento',
+                    )}: ${transaction.descuento.toStringAsFixed(2)}',
                     style: AppTheme.normalStyle,
                   ),
                 // Text('Detalles: ${transaction.detalles}'),
@@ -782,11 +891,17 @@ class _DataUser extends StatelessWidget {
           style: AppTheme.normalStyle,
         ),
         Text(
-          "Nombre: ${user.name}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.general,
+            'nombre',
+          )}: ${user.name}",
           style: AppTheme.normalStyle,
         ),
         Text(
-          "Dirección: ${user.adress}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.general,
+            'direccion',
+          )}: ${user.adress}",
           style: AppTheme.normalStyle,
         )
       ],

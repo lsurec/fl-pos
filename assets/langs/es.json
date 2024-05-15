@@ -61,7 +61,9 @@
         "listo": "Listo",
         "reiniciar": "Reiniciar ahora.",
         "ayuda": "Ayuda",
-        "conectar": "Conectar"
+        "conectar": "Conectar",
+        "verError": "Ver informe de errores",
+        "sinFirma": "Continuar sin firma"
     },
     "fechas": {
         "fecha": "Fecha:",
@@ -101,7 +103,8 @@
         "mayorDeCero": "El monto debe ser mayor a 0.",
         "seleccionarBanco": "Seleccione un banco",
         "seleccionarCuenta": "Seleccione una cuenta.",
-        "pagoAgregado": "Pago agregado."
+        "pagoAgregado": "Pago agregado.",
+        "docProcesado":  "Documento procesado correctamente."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -185,12 +188,17 @@
         "serie": "Serie:",
         "numero": "Número:",
         "firma": "Firma electrónica:",
-        "certificador": "Datos del ceritificador:"
+        "certificador": "Datos del ceritificador:",
+        "imprimir": "Imprimir documento después de confirmar."
     },
     "generales": {
         "registro": "Registros",
         "descripcion": "Descripción",
-        "usuario": "Usuario"
+        "usuario": "Usuario",
+        "tareasCompletas": "Tareas completadas:",
+        "observacion": "Observación",
+        "nombre": "Nombre",
+        "direccion": "Dirección"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -198,14 +206,23 @@
         "direccion": "Dirección",
         "telefono": "Teléfono",
         "correo": "Correo",
-        "invalido": "Correo inválido."
+        "invalido": "Correo inválido.",
+        "cliente": "Cliente"
     },
     "factura": {
         "bancos": "Bancos",
         "autorizar": "Autorización",
         "referencia": "Referencia",
         "cuentas": "Cuentas",
-        "agregarPago": "Agregar Pago"
+        "formasPago": "Forma de pago",
+        "agregarPago": "Agregar Pago",
+        "resumenDoc": "Resumen Documento",
+        "vendedor": "Vendedor",
+        "productos": "Productos",
+        "banco" : "Banco",
+        "cuenta": "Cuenta",
+        "creandoDoc": "Creando documento...",
+        "generandoFirma": "Generando firma electrónica..."
     },
     "calculos": {
         "calcular": "Calcular",
@@ -220,6 +237,7 @@
         "precioT": "Precio Total:",
         "cargo": "Cargo",
         "descuento": "Descuento",
-        "cargoDecuento": "Cargos y descuentos"
+        "cargoDecuento": "Cargos y descuentos",
+        "contado": "Contado"
     }
 }

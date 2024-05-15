@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, library_prefixes
 import 'dart:convert';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
@@ -34,6 +34,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //1. Cargando 2. Exitoso 3. Error
+  //TODO:Pendiente de traducir por la lista
   List<LoadStepModel> steps = [
     LoadStepModel(
       text: "Creando documento...",
