@@ -92,5 +92,5 @@ class LanguagesProvider {
     ),
   ];
 
-  int indexDefaultLang = 0;
+  static int indexDefaultLang = 0;
 }

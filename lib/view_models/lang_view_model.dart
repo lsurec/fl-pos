@@ -12,6 +12,8 @@ import 'package:restart_app/restart_app.dart';
 
 class LangViewModel extends ChangeNotifier {
   List<LanguageModel> languages = LanguagesProvider.languagesProvider;
+  LanguageModel activeLang =
+      LanguagesProvider.languagesProvider[LanguagesProvider.indexDefaultLang];
 
   // cambiar el valor del idioma
   void cambiarIdioma(BuildContext context, Locale nuevoIdioma, int indexLang) {
@@ -20,6 +22,8 @@ class LangViewModel extends ChangeNotifier {
     AppLocalizations.idioma = Locale(Preferences.language);
 
     Preferences.idLanguage = indexLang;
+
+    activeLang = languages[indexLang];
 
     notifyListeners();
 

@@ -42,8 +42,8 @@ class ErrorView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("${AppLocalizations.of(context)!.translate(
-                BlockTranslate.login,
-                "correo",
+                BlockTranslate.general,
+                "usuario",
               )}: ${vmLogin.user}"),
               const SizedBox(height: 10),
               Text(

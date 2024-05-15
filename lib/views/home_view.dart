@@ -37,8 +37,8 @@ class HomeView extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.translate(
-                        BlockTranslate.login,
-                        "correo",
+                        BlockTranslate.general,
+                        "usuario",
                       ),
                       style: const TextStyle(
                         fontSize: 20,

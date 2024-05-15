@@ -22,7 +22,6 @@
         "continuar": "Actualiza para continuar."
     },
     "login": {
-        "usuario": "Usuario",
         "contrasena": "Contraseña",
         "ver": "Ver contraseña",
         "ocultar": "Ocultar contraseña",
@@ -182,7 +181,8 @@
     },
     "generales": {
         "registro": "Registros",
-        "descripcion": "Descripción"
+        "descripcion": "Descripción",
+        "usuario": "Usuario"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -192,7 +192,5 @@
         "correo": "Correo",
         "invalido": "Correo inválido."
     },
-    "factura": {
-        
-    }
+    "factura": {}
 }

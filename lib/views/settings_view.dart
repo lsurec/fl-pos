@@ -13,6 +13,7 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<SettingsViewModel>(context);
     final vmSplash = Provider.of<SplashViewModel>(context);
+    final vmLang = Provider.of<LangViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -57,11 +58,15 @@ class SettingsView extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.language),
-                title: Text(AppLocalizations.of(context)!.translate(
-                  BlockTranslate.home,
-                  'idioma',
-                )),
-                subtitle: Text(Preferences.language),
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.home,
+                    'idioma',
+                  ),
+                ),
+                //Nombre del idioma seleccionado en el idioma seleccionado
+                subtitle: Text(vmLang
+                    .getNameLang(vmLang.languages[Preferences.idLanguage])!),
                 trailing: const Icon(Icons.arrow_right),
                 onTap: () => vm.navigateLang(context),
               ),
