@@ -215,6 +215,11 @@
         "cargos": "Cargos",
         "descuentos": "Descuentos",
         "totalT": "TOTAL",
-        "cambio": "Cambio"
+        "cambio": "Cambio",
+        "precioU": "Precio Unitario:",
+        "precioT": "Precio Total:",
+        "cargo": "Cargo",
+        "descuento": "Descuento",
+        "cargoDecuento": "Cargos y descuentos"
     }
 }

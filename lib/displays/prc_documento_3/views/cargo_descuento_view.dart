@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -46,22 +48,34 @@ class CargoDescuentoView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Precio Unitario: ${currencyFormat.format(transaction.precio!.precioU)}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.calcular,
+                          'precioU',
+                        )} ${currencyFormat.format(transaction.precio!.precioU)}',
                         style: AppTheme.normalStyle,
                       ),
                       Text(
-                        'Precio Total: ${currencyFormat.format(transaction.total)}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.calcular,
+                          'precioT',
+                        )} ${currencyFormat.format(transaction.total)}',
                         style: AppTheme.normalStyle,
                       ),
                       if (transaction.cargo != 0)
                         Text(
-                          'Cargo: ${currencyFormat.format(transaction.cargo)}',
+                          '${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.calcular,
+                            'cargo',
+                          )}: ${currencyFormat.format(transaction.cargo)}',
                           style: AppTheme.normalStyle,
                         ),
 
                       if (transaction.descuento != 0)
                         Text(
-                          'Descuento: ${currencyFormat.format(transaction.descuento)}',
+                          '${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.calcular,
+                            'descuento',
+                          )}: ${currencyFormat.format(transaction.descuento)}',
                           style: AppTheme.normalStyle,
                         ),
                       // Text('Detalles: ${transaction.detalles}'),
@@ -77,8 +91,11 @@ class CargoDescuentoView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          "Cargos y descuentos",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.calcular,
+                            'cargoDescuento',
+                          ),
                           style: AppTheme.titleStyle,
                         ),
                         IconButton(
@@ -100,13 +117,19 @@ class CargoDescuentoView extends StatelessWidget {
                           onChanged: (value) =>
                               vm.selectAllMonto(value, indexDocument),
                         ),
-                        const Text(
-                          "Descripcion",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.general,
+                            'descripcion',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         const Spacer(),
-                        const Text(
-                          "Monto",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.calcular,
+                            'monto',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                       ],
@@ -122,43 +145,52 @@ class CargoDescuentoView extends StatelessWidget {
                   final TraInternaModel operacion =
                       transaction.operaciones[index];
                   return Card(
-                      color: AppTheme.grayAppBar,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              activeColor: AppTheme.primary,
-                              value: operacion.isChecked,
-                              onChanged: (value) => vm.changeCheckedMonto(
-                                value,
-                                indexDocument,
-                                index,
-                              ),
+                    color: AppTheme.grayAppBar,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            activeColor: AppTheme.primary,
+                            value: operacion.isChecked,
+                            onChanged: (value) => vm.changeCheckedMonto(
+                              value,
+                              indexDocument,
+                              index,
                             ),
-                            Text(
-                              operacion.cargo == 0 ? "Descuento" : "Cargo",
-                              style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey),
-                            ),
-                            const Spacer(),
-                            Text(
-                              operacion.cargo == 0
-                                  ? currencyFormat.format(operacion.descuento)
-                                  : currencyFormat.format(operacion.cargo),
-                              style: TextStyle(
+                          ),
+                          Text(
+                            operacion.cargo == 0
+                                ? AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.calcular,
+                                    'descuento',
+                                  )
+                                : AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.calcular,
+                                    'cargo',
+                                  ),
+                            style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
-                                color: operacion.cargo == 0
-                                    ? Colors.red
-                                    : Colors.green,
-                              ),
-                            )
-                          ],
-                        ),
-                      ));
+                                color: Colors.grey),
+                          ),
+                          const Spacer(),
+                          Text(
+                            operacion.cargo == 0
+                                ? currencyFormat.format(operacion.descuento)
+                                : currencyFormat.format(operacion.cargo),
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: operacion.cargo == 0
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
               ),
             ],
