@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -111,7 +112,10 @@ class AddClientViewModel extends ChangeNotifier {
       );
 
       NotificationService.showSnackbar(
-        "Se creo la cuenta, pero hubo en error al seleccionarla.",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cuentaCreadaNoSelec',
+        ),
       );
       return;
     }
@@ -121,8 +125,14 @@ class AddClientViewModel extends ChangeNotifier {
     if (clients.isEmpty) {
       NotificationService.showSnackbar(
         idCuenta == 0
-            ? "Se creo la cuenta, pero hubo en error al seleccionarla."
-            : "Se actualizó la cuenta, pero hubo en error al seleccionarla",
+            ? AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'cuentaCreadaNoSelec',
+              )
+            : AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'cuentaActualizadaNoSelec',
+              ),
       );
       return;
     }
@@ -131,8 +141,14 @@ class AddClientViewModel extends ChangeNotifier {
       documentVM.selectClient(clients.first, context);
       NotificationService.showSnackbar(
         idCuenta == 0
-            ? "Cuenta creada y seleccionada correctamente."
-            : "Cuenta actualizada y seleccionada correctamente.",
+            ? AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'cuentaCreadaSelec',
+              )
+            : AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'cuentaActualizadaSelec',
+              ),
       );
 
       return;
@@ -151,8 +167,14 @@ class AddClientViewModel extends ChangeNotifier {
     //mapear respuesta servicio
     NotificationService.showSnackbar(
       idCuenta == 0
-          ? " Cuenta creada y seleccionada correctamente."
-          : " Cuenta actualizada y seleccionada correctamente.",
+          ? AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'cuentaCreadaSelec',
+            )
+          : AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'cuentaActualizadaSelec',
+            ),
     );
   }
 }

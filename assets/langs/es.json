@@ -93,7 +93,11 @@
         "sinTipoCambio": "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.",
         "sinDatosImprimir": "No hay datos para imprimir, intente más tarde.",
         "metodos": "Solo se permiten los metodos POST, PUT, GET y DELETE",
-        "seleccioneConfiguracion": "Para continuar, selecciona una empresa y estación de trabajo"
+        "seleccioneConfiguracion": "Para continuar, selecciona una empresa y estación de trabajo",
+        "cuentaCreadaNoSelec": "Se creo la cuenta, pero hubo en error al seleccionarla.",
+        "cuentaActualizadaNoSelec": "Se actualizó la cuenta, pero hubo en error al seleccionarla",
+        "cuentaCreadaSelec": "Cuenta creada y seleccionada correctamente.",
+        "cuentaActualizadaSelec": "Cuenta actualizada y seleccionada correctamente."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

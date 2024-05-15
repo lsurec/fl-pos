@@ -12,6 +12,7 @@ class AppTheme {
   static const Color disableStepLine = Color(0xFFDADADA);
   static Color backroundColor = Colors.orange.shade50;
   static const Color backroundColorSecondary = Color(0xffFEF5E7);
+  static const Color white = Colors.white;
 
   static const normalStyle = TextStyle(
     fontSize: 17,

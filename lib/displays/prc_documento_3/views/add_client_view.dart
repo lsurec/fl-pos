@@ -21,7 +21,10 @@ class AddClientView extends StatelessWidget {
               context,
               0,
             ),
-            child: const Icon(Icons.save_outlined),
+            child: const Icon(
+              Icons.save_outlined,
+              color: AppTheme.white,
+            ),
           ),
           appBar: AppBar(
             title: Text(
