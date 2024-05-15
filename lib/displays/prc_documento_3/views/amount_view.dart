@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -79,7 +81,10 @@ class _Body extends StatelessWidget {
                       onChanged: (value) => vm.formValues["monto"] = value,
                       decoration: InputDecoration(
                         //counter: const Text('Caracteres'),
-                        labelText: "Monto",
+                        labelText: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'monto',
+                        ),
                         hintText: "00.00",
                         suffixIcon: IconButton(
                           onPressed: () => vm.montoController.clear(),
@@ -91,10 +96,16 @@ class _Body extends StatelessWidget {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Campo requerido.';
+                          return AppLocalizations.of(context)!.translate(
+                            BlockTranslate.notificacion,
+                            'requerido',
+                          );
                         }
                         if ((double.tryParse(value) ?? 0) == 0) {
-                          return 'El monto debe ser mayor a 0';
+                          return AppLocalizations.of(context)!.translate(
+                            BlockTranslate.notificacion,
+                            'mayorDeCero',
+                          );
                         }
                         return null;
                       },
@@ -106,8 +117,14 @@ class _Body extends StatelessWidget {
                         formProperty: 'autorizacion',
                         formValues: vm.formValues,
                         maxLines: 1,
-                        hintText: 'Autorizacion',
-                        labelText: 'Autorizacion',
+                        hintText: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'autorizar',
+                        ),
+                        labelText: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'autorizar',
+                        ),
                       ),
                     if (payment.referencia) const SizedBox(height: 5),
                     if (payment.referencia)
@@ -116,13 +133,22 @@ class _Body extends StatelessWidget {
                         formProperty: 'referencia',
                         formValues: vm.formValues,
                         maxLines: 1,
-                        hintText: 'Referencia',
-                        labelText: 'Referencia',
+                        hintText: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'referencia',
+                        ),
+                        labelText: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'referencia',
+                        ),
                       ),
                     if (payment.banco) const SizedBox(height: 10),
                     if (payment.banco)
-                      const Text(
-                        "Bancos",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'banco',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                     if (payment.banco) const SizedBox(height: 10),
@@ -156,8 +182,11 @@ class _Body extends StatelessWidget {
                     if (vmPayment.accounts.isNotEmpty)
                       const SizedBox(height: 10),
                     if (vmPayment.accounts.isNotEmpty)
-                      const Text(
-                        "Cuentas",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'cuentas',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                     if (vmPayment.accounts.isNotEmpty)
@@ -220,10 +249,13 @@ class _ButtonConfirm extends StatelessWidget {
         onTap: () => vm.addAmount(payment, context),
         child: Container(
           color: AppTheme.primary,
-          child: const Center(
+          child: Center(
             child: Text(
-              "Agregar Pago",
-              style: TextStyle(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.factura,
+                'agregarPago',
+              ),
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 17,
               ),
@@ -246,17 +278,26 @@ class _Footer extends StatelessWidget {
       children: [
         const SizedBox(height: 15),
         RowTotalWidget(
-          title: "Total",
+          title: AppLocalizations.of(context)!.translate(
+            BlockTranslate.calcular,
+            'total',
+          ),
           value: vmDetails.total,
           color: AppTheme.primary,
         ),
         RowTotalWidget(
-          title: "Saldo",
+          title: AppLocalizations.of(context)!.translate(
+            BlockTranslate.calcular,
+            'saldo',
+          ),
           value: vmPayment.saldo,
           color: AppTheme.primary,
         ),
         RowTotalWidget(
-          title: "Cambio",
+          title: AppLocalizations.of(context)!.translate(
+            BlockTranslate.calcular,
+            'cambio',
+          ),
           value: vmPayment.cambio,
           color: AppTheme.primary,
         ),

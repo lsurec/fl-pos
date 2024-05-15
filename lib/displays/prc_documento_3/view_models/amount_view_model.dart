@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
 
 class AmountViewModel extends ChangeNotifier {
@@ -44,7 +45,12 @@ class AmountViewModel extends ChangeNotifier {
 
       //si no hay bancos seleccionados mostrar mmensaje
       if (counter == 0) {
-        NotificationService.showSnackbar("Seleccione un banco");
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'seleccionarBanco',
+          ),
+        );
         return;
       }
 
@@ -58,7 +64,12 @@ class AmountViewModel extends ChangeNotifier {
 
         //si no hay cuenta bancaria seleccionada mostrar mensaje
         if (counter == 0) {
-          NotificationService.showSnackbar("Seleccione una cuenta");
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'seleccionarCuenta',
+            ),
+          );
           return;
         }
       }
@@ -94,7 +105,12 @@ class AmountViewModel extends ChangeNotifier {
     vmPayment.addAmount(amount, context);
 
     //mensaje usuario
-    NotificationService.showSnackbar("Pago agregado.");
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'pagoAgregado',
+      ),
+    );
 
     //regresar pantalla anterior
     Navigator.pop(context);

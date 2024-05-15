@@ -13,4 +13,7 @@ class BlockTranslate {
   static String tiket = "imprimir";
   static String general = "generales";
   static String cuenta = "cuenta";
+  static String factura = "factura";
+  static String calcular = "calculos";
+  
 }

@@ -97,7 +97,11 @@
         "cuentaCreadaNoSelec": "Se creo la cuenta, pero hubo en error al seleccionarla.",
         "cuentaActualizadaNoSelec": "Se actualizó la cuenta, pero hubo en error al seleccionarla",
         "cuentaCreadaSelec": "Cuenta creada y seleccionada correctamente.",
-        "cuentaActualizadaSelec": "Cuenta actualizada y seleccionada correctamente."
+        "cuentaActualizadaSelec": "Cuenta actualizada y seleccionada correctamente.",
+        "mayorDeCero": "El monto debe ser mayor a 0.",
+        "seleccionarBanco": "Seleccione un banco",
+        "seleccionarCuenta": "Seleccione una cuenta.",
+        "pagoAgregado": "Pago agregado."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -196,5 +200,21 @@
         "correo": "Correo",
         "invalido": "Correo inválido."
     },
-    "factura": {}
+    "factura": {
+        "bancos": "Bancos",
+        "autorizar": "Autorización",
+        "referencia": "Referencia",
+        "cuentas": "Cuentas",
+        "agregarPago": "Agregar Pago"
+    },
+    "calculos": {
+        "calcular": "Calcular",
+        "total": "Total",
+        "monto": "Monto",
+        "subTotal": "Sub-Total",
+        "cargos": "Cargos",
+        "descuentos": "Descuentos",
+        "totalT": "TOTAL",
+        "cambio": "Cambio"
+    }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/views/add_client_view.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -94,7 +93,7 @@ class MyApp extends StatelessWidget {
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
-      home: const AddClientView(), // Muestra el SplashScreen durante el inicio
+      home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
       localizationsDelegates: const [
