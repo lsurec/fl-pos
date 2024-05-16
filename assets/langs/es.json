@@ -277,7 +277,8 @@
         "existencia": "Existencia",
         "tipoPrecio": "Tipo precio",
         "presentaciones": "Presentaciones.",
-        "cantidad": "Cantidad"
+        "cantidad": "Cantidad",
+        "docRecientes": "Documentos recientes"
     },
     "calculos": {
         "calcular": "Calcular",
