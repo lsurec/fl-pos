@@ -63,7 +63,11 @@
         "ayuda": "Ayuda",
         "conectar": "Conectar",
         "verError": "Ver informe de errores",
-        "sinFirma": "Continuar sin firma"
+        "sinFirma": "Continuar sin firma",
+        "compartir": "Compartir",
+        "anular": "Anular",
+        "bloquearDoc": "Bloquear documento",
+        "desbloquearDoc": "Desbloquear documento"
     },
     "fechas": {
         "fecha": "Fecha:",
@@ -208,7 +212,9 @@
         "tareasCompletas": "Tareas completadas:",
         "observacion": "Observación",
         "nombre": "Nombre",
-        "direccion": "Dirección"
+        "direccion": "Dirección",
+        "noDisponible": "No disponible.",
+        "detalles": "Detalles"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -232,7 +238,9 @@
         "banco": "Banco",
         "cuenta": "Cuenta",
         "creandoDoc": "Creando documento...",
-        "generandoFirma": "Generando firma electrónica..."
+        "generandoFirma": "Generando firma electrónica...",
+        "tipoDoc": "Tipo documento",
+        "serieDoc": "Serie de documento"
     },
     "calculos": {
         "calcular": "Calcular",
@@ -243,11 +251,13 @@
         "descuentos": "Descuentos",
         "totalT": "TOTAL",
         "cambio": "Cambio",
-        "precioU": "Precio Unitario:",
-        "precioT": "Precio Total:",
+        "precioU": "Precio Unitario",
+        "precioT": "Precio Total",
         "cargo": "Cargo",
         "descuento": "Descuento",
         "cargoDecuento": "Cargos y descuentos",
-        "contado": "Contado"
+        "contado": "Contado",
+        "diferencia": "Diferencia",
+        "pagoTotal": "Pago total"
     }
 }

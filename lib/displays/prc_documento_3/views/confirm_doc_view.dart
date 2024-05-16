@@ -830,7 +830,7 @@ class _Transaction extends StatelessWidget {
                     '${AppLocalizations.of(context)!.translate(
                       BlockTranslate.calcular,
                       'precioU',
-                    )} ${currencyFormat.format(transaction.precio!.precioU)}',
+                    )}: ${currencyFormat.format(transaction.precio!.precioU)}',
                     style: AppTheme.normalStyle,
                   ),
 

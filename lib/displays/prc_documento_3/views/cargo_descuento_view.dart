@@ -51,14 +51,14 @@ class CargoDescuentoView extends StatelessWidget {
                         '${AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioU',
-                        )} ${currencyFormat.format(transaction.precio!.precioU)}',
+                        )}: ${currencyFormat.format(transaction.precio!.precioU)}',
                         style: AppTheme.normalStyle,
                       ),
                       Text(
                         '${AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioT',
-                        )} ${currencyFormat.format(transaction.total)}',
+                        )}: ${currencyFormat.format(transaction.total)}',
                         style: AppTheme.normalStyle,
                       ),
                       if (transaction.cargo != 0)
