@@ -1,5 +1,7 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/row_total_widget.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,11 @@ class DetailsView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Text(
-                        "Filtros",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'filtros',
+                        ),
                         style: AppTheme.normalStyle,
                       ),
                       const Spacer(),
@@ -47,7 +52,10 @@ class DetailsView extends StatelessWidget {
                             controller: vm.searchController,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Campo requerido.';
+                                return AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.notificacion,
+                                  'requerido',
+                                );
                               }
                               return null;
                             },
@@ -78,7 +86,13 @@ class DetailsView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   MyExpansionTile(
-                    title: "Cargo/Descuento",
+                    title: "${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'cargo',
+                    )}/${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'descuento',
+                    )}",
                     content: Column(
                       children: [
                         _RadioCargo(),
@@ -92,20 +106,36 @@ class DetailsView extends StatelessWidget {
                                   onChanged: (value) => vm.changeMonto(value),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.allow(
-                                        RegExp(r'^(\d+)?\.?\d{0,2}'))
+                                      RegExp(r'^(\d+)?\.?\d{0,2}'),
+                                    )
                                   ],
                                   keyboardType: TextInputType.number,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Campo requerido.';
+                                      return AppLocalizations.of(context)!
+                                          .translate(
+                                        BlockTranslate.notificacion,
+                                        'requerido',
+                                      );
                                     } else if (double.tryParse(value) == 0) {
-                                      return 'El valor no puede ser 0';
+                                      return AppLocalizations.of(context)!
+                                          .translate(
+                                        BlockTranslate.notificacion,
+                                        'noCero',
+                                      );
                                     }
                                     return null;
                                   },
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     hintText: '00.00',
-                                    labelText: 'Cargo/Descuento',
+                                    labelText:
+                                        "${AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calcular,
+                                      'cargo',
+                                    )}/${AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calcular,
+                                      'descuento',
+                                    )}",
                                   ),
                                 ),
                               ),
@@ -142,7 +172,10 @@ class DetailsView extends StatelessWidget {
                         ),
                       if (vm.traInternas.isNotEmpty) const SizedBox(width: 20),
                       Text(
-                        "No. Transacciones: ${vm.traInternas.length}",
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'numTransacciones',
+                        )}: ${vm.traInternas.length}",
                         style: AppTheme.normalBoldStyle,
                       ),
                       const Spacer(),
@@ -190,23 +223,35 @@ class DetailsView extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           RowTotalWidget(
-            title: "Subtotal",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'subTotal',
+            ),
             value: vm.subtotal,
             color: AppTheme.primary,
           ),
           RowTotalWidget(
-            title: "Cargo",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'cargo',
+            ),
             value: vm.cargo,
             color: AppTheme.primary,
           ),
           RowTotalWidget(
-            title: "Descuento",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'descuento',
+            ),
             value: vm.descuento,
             color: AppTheme.primary,
           ),
           const Divider(),
           RowTotalWidget(
-            title: "Total",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'total',
+            ),
             value: vm.total,
             color: AppTheme.primary,
           ),
@@ -260,23 +305,35 @@ class _TransactionCard extends StatelessWidget {
           children: [
             if (transaction.precio != null)
               Text(
-                'Precio Unitario: ${currencyFormat.format(transaction.precio!.precioU)}',
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'precioU',
+                )}: ${currencyFormat.format(transaction.precio!.precioU)}',
                 style: AppTheme.normalStyle,
               ),
 
             Text(
-              'Precio Total: ${currencyFormat.format(transaction.total)}',
+              '${AppLocalizations.of(context)!.translate(
+                BlockTranslate.calcular,
+                'precioT',
+              )}: ${currencyFormat.format(transaction.total)}',
               style: AppTheme.normalStyle,
             ),
             if (transaction.cargo != 0)
               Text(
-                'Cargo: ${currencyFormat.format(transaction.cargo)}',
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'cargo',
+                )}: ${currencyFormat.format(transaction.cargo)}',
                 style: AppTheme.normalStyle,
               ),
 
             if (transaction.descuento != 0)
               Text(
-                'Descuento: ${currencyFormat.format(transaction.descuento)}',
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'descuento',
+                )}: ${currencyFormat.format(transaction.descuento)}',
                 style: AppTheme.normalStyle,
               ),
             // Text('Detalles: ${transaction.detalles}'),
@@ -310,8 +367,11 @@ class _RadioCargo extends StatelessWidget {
                 groupValue: vm.selectedOption,
                 onChanged: (value) => vm.changeOption(value),
               ),
-              const Text(
-                'Porcentaje',
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'porcentaje',
+                ),
                 style: AppTheme.normalStyle,
               ),
             ],
@@ -327,8 +387,11 @@ class _RadioCargo extends StatelessWidget {
                 groupValue: vm.selectedOption,
                 onChanged: (value) => vm.changeOption(value),
               ),
-              const Text(
-                'Monto',
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'monto',
+                ),
                 style: AppTheme.normalStyle,
               ),
             ],
@@ -374,8 +437,11 @@ class _RadioFilter extends StatelessWidget {
                 groupValue: vm.filterOption,
                 onChanged: (value) => vm.changeOptionFilter(value),
               ),
-              const Text(
-                'Descripcion',
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.general,
+                  'descripcion',
+                ),
                 style: AppTheme.normalStyle,
               ),
             ],

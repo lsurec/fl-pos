@@ -67,7 +67,8 @@
         "compartir": "Compartir",
         "anular": "Anular",
         "bloquearDoc": "Bloquear documento",
-        "desbloquearDoc": "Desbloquear documento"
+        "desbloquearDoc": "Desbloquear documento",
+        "deshacer": "Deshacer"
     },
     "fechas": {
         "fecha": "Fecha:",
@@ -116,7 +117,16 @@
         "autoNoDispo": "Autorización no disponible.",
         "sinTokenAutoriza": "No se encontró el token de autorización.",
         "docCertificado": "Documento certficado correctamente.",
-        "resIncorrecta": "El tipo de respuesta del servicio es incorrecto."
+        "resIncorrecta": "El tipo de respuesta del servicio es incorrecto.",
+        "noCero": "El valor no puede ser 0.",
+        "sinCoincidencias": "No se encontraron coincidencias.",
+        "sinBodegaP": "No hay bodegas para este producto.",
+        "sinPrecioP": "No hay precios para este producto",
+        "eliminaFormaPago": "Elimina primero las formas de pago o crea un nuevo documento.",
+        "seleccionaTrans": "Seleccione por lo menos una transacción.",
+        "seleccionaMonto": "Seleccione por lo menos un monto.",
+        "sinCargDesc": "No hay cargos o descuentos agregados",
+        "sinPagoONuevoDoc": "Elimina primero las formas de pago o crea un nuevo documento."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -214,7 +224,9 @@
         "nombre": "Nombre",
         "direccion": "Dirección",
         "noDisponible": "No disponible.",
-        "detalles": "Detalles"
+        "detalles": "Detalles",
+        "filtros": "Filtros",
+        "numTransacciones": "No. Transacciones"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -258,6 +270,9 @@
         "cargoDecuento": "Cargos y descuentos",
         "contado": "Contado",
         "diferencia": "Diferencia",
-        "pagoTotal": "Pago total"
+        "pagoTotal": "Pago total",
+        "porcentaje": "Porcentaje",
+        "cargAgregado": "Cargo agregado.",
+        "descAgregado": "Descuento agregado."
     }
 }
