@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, library_prefixes
+// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, library_prefixes, avoid_print
 import 'dart:convert';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
@@ -12,6 +12,7 @@ import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -126,7 +127,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
     return 0;
   }
 
-  printNetwork() async {
+  printNetwork(
+    BuildContext context,
+  ) async {
     //Proveedor de datos externo
     final loginVM = Provider.of<LoginViewModel>(
       scaffoldKey.currentContext!,
@@ -229,7 +232,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         );
 
         bytes += generator.text(
-          "Mesa: ${element.detalles[0].desMesa.toUpperCase()}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'mesa',
+          )}: ${element.detalles[0].desMesa.toUpperCase()}",
           styles: center,
         );
 
@@ -248,7 +254,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         bytes += generator.row(
           [
             PosColumn(
-              text: 'Cant.',
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'cantidad',
+              ),
               width: 2,
               styles: const PosStyles(
                 align: PosAlign.right,
@@ -262,7 +271,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
               ),
             ),
             PosColumn(
-              text: 'Descripción',
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.general,
+                'descripcion',
+              ),
               width: 9,
               styles: const PosStyles(
                 align: PosAlign.left,
@@ -301,7 +313,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         bytes += generator.emptyLines(1);
 
         bytes += generator.text(
-          "Le atendió: ${element.detalles[0].userName.toUpperCase()}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'atencion',
+          )}: ${element.detalles[0].userName.toUpperCase()}",
           styles: center,
         );
 
@@ -349,7 +364,11 @@ class ConfirmDocViewModel extends ChangeNotifier {
       } catch (e) {
         print(e.toString());
         isLoading = false;
-        NotificationService.showSnackbar("No se pudo imprimir.");
+        NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noImprimio',
+        ));
         return;
       }
     }
@@ -493,7 +512,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
         if (screen == 1) {
           navigatePrint(context);
         } else {
-          printNetwork();
+          printNetwork(context);
         }
       }
 
@@ -650,7 +669,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
       return ApiResModel(
         typeError: 1,
         succes: false,
-        message: "El documento para certificar no está disponible",
+        message: AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noDispoDocCert',
+        ),
         url: "",
         storeProcedure: null,
       );
@@ -701,7 +723,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
       return ApiResModel(
         typeError: 1,
         succes: false,
-        message: "Los servicios para procesar documentos no están disponibles.",
+        message: AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noDispoServiProceDoc',
+        ),
         url: "",
         storeProcedure: null,
       );
@@ -728,8 +753,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
       return ApiResModel(
         typeError: 1,
         succes: false,
-        message:
-            "No se encontraron los datos necesarios, verifique que el catalogo de apis esté diponible.",
+        message: AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'verifiqueCatalogoApis',
+        ),
         storeProcedure: null,
         url: "",
       );
@@ -754,7 +781,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         return ApiResModel(
           typeError: 1,
           succes: false,
-          message: "Autorizacion no disponible",
+          message: AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'autoNoDispo',
+          ),
           url: "",
           storeProcedure: null,
         );
@@ -794,7 +824,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         return ApiResModel(
           typeError: 1,
           succes: false,
-          message: "No se encontró el token de autorización.",
+          message: AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinTokenAutoriza',
+          ),
           url: "",
           storeProcedure: null,
         );
@@ -924,7 +957,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
       return ApiResModel(
         typeError: 1,
         succes: true,
-        message: "Documento certficado correctamente",
+        message: AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'docCertificado',
+        ),
         url: "",
         storeProcedure: null,
       );
@@ -958,7 +994,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         return ApiResModel(
           typeError: 1,
           succes: true,
-          message: "Documento certficado correctamente",
+          message: AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'docCertificado',
+          ),
           storeProcedure: null,
           url: "",
         );
@@ -1000,7 +1039,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         return ApiResModel(
           typeError: 1,
           succes: true,
-          message: "Documento certficado correctamente",
+          message: AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'docCertificado',
+          ),
           storeProcedure: null,
           url: "",
         );
@@ -1011,7 +1053,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
         return ApiResModel(
           typeError: 1,
           succes: false,
-          message: "El tipo de respuesta del servicio es incorrecto.",
+          message: AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'resIncorrecta',
+          ),
           storeProcedure: null,
           url: "",
         );

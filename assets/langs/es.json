@@ -104,7 +104,15 @@
         "seleccionarBanco": "Seleccione un banco",
         "seleccionarCuenta": "Seleccione una cuenta.",
         "pagoAgregado": "Pago agregado.",
-        "docProcesado":  "Documento procesado correctamente."
+        "docProcesado": "Documento procesado correctamente.",
+        "noImprimio": "No se pudo imprimir.",
+        "noDispoDocCert": "El documento para certificar no está disponible",
+        "noDispoServiProceDoc": "Los servicios para procesar documentos no están disponibles.",
+        "verifiqueCatalogoApis": "No se encontraron los datos necesarios, verifique que el catalogo de apis esté diponible.",
+        "autoNoDispo": "Autorización no disponible.",
+        "sinTokenAutoriza": "No se encontró el token de autorización.",
+        "docCertificado": "Documento certficado correctamente.",
+        "resIncorrecta": "El tipo de respuesta del servicio es incorrecto."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -189,7 +197,9 @@
         "numero": "Número:",
         "firma": "Firma electrónica:",
         "certificador": "Datos del ceritificador:",
-        "imprimir": "Imprimir documento después de confirmar."
+        "imprimir": "Imprimir documento después de confirmar.",
+        "mesa": "Mesa",
+        "atencion": "Le atendió"
     },
     "generales": {
         "registro": "Registros",
@@ -219,7 +229,7 @@
         "resumenDoc": "Resumen Documento",
         "vendedor": "Vendedor",
         "productos": "Productos",
-        "banco" : "Banco",
+        "banco": "Banco",
         "cuenta": "Cuenta",
         "creandoDoc": "Creando documento...",
         "generandoFirma": "Generando firma electrónica..."

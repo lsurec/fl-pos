@@ -369,8 +369,9 @@ class _Print extends StatelessWidget {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () =>
-                  screen == 1 ? vm.navigatePrint(context) : vm.printNetwork(),
+              onTap: () => screen == 1
+                  ? vm.navigatePrint(context)
+                  : vm.printNetwork(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,
