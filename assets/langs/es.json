@@ -323,6 +323,8 @@
         "producto": "Producto",
         "disponible": "Disponible.",
         "autorizar": "Autorizar",
-        "destinoDoc": "Documento Destino"
+        "destinoDoc": "Documento Destino",
+        "procesadoDoc": "Documento Procesado",
+        "transacciones": "Transacciones"
     }
 }
