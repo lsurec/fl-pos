@@ -28,7 +28,7 @@ class SelectClientView extends StatelessWidget {
                 Text(
                   "${AppLocalizations.of(context)!.translate(
                     BlockTranslate.general,
-                    'registros',
+                    'registro',
                   )} (${clients.length})",
                   style: AppTheme.normalBoldStyle,
                 ),

@@ -31,7 +31,7 @@ class SelectProductView extends StatelessWidget {
                     Text(
                       "${AppLocalizations.of(context)!.translate(
                         BlockTranslate.general,
-                        'registros',
+                        'registro',
                       )} (${products.length})",
                       style: AppTheme.normalBoldStyle,
                     ),

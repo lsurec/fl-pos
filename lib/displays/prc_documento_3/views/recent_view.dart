@@ -63,7 +63,7 @@ class _RecentViewState extends State<RecentView> {
                     Text(
                       "${AppLocalizations.of(context)!.translate(
                         BlockTranslate.general,
-                        'registros',
+                        'registro',
                       )} (${vm.documents.length})",
                       style: AppTheme.normalBoldStyle,
                     ),
