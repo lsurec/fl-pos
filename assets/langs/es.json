@@ -68,7 +68,8 @@
         "anular": "Anular",
         "bloquearDoc": "Bloquear documento",
         "desbloquearDoc": "Desbloquear documento",
-        "deshacer": "Deshacer"
+        "deshacer": "Deshacer",
+        "cargarDoc": "Cargar documento"
     },
     "fechas": {
         "fecha": "Fecha:",
@@ -149,7 +150,9 @@
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
         "idioma": "Selecciona el idioma de tu preferencia.",
-        "seleccionado": "Idioma seleccionado."
+        "seleccionado": "Idioma seleccionado.",
+        "continuarDoc": "¿Continuar documento?",
+        "docSinConfirmar": "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?."
     },
     "error": {
         "informeT": "INFORME DE ERRORES",
