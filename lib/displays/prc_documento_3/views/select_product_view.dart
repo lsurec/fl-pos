@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +29,10 @@ class SelectProductView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      "Registros (${products.length})",
+                      "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'registros',
+                      )} (${products.length})",
                       style: AppTheme.normalBoldStyle,
                     ),
                   ],

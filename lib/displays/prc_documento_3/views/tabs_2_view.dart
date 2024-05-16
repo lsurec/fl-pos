@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -59,12 +61,18 @@ class _Tabs2ViewState extends State<Tabs2View>
               ),
               actions: [
                 IconButton(
-                  tooltip: "Documentos recientes",
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.factura,
+                    'docRecientes',
+                  ),
                   onPressed: () => Navigator.pushNamed(context, "recent"),
                   icon: const Icon(Icons.schedule),
                 ),
                 IconButton(
-                  tooltip: "Nuevo documento",
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'nuevoDoc',
+                  ),
                   onPressed: () => vm.newDocument(context, _goToFirstTab),
                   icon: const Icon(Icons.note_add_outlined),
                 ),
@@ -79,7 +87,10 @@ class _Tabs2ViewState extends State<Tabs2View>
                     ),
                   ),
                 IconButton(
-                  tooltip: "Imprimir",
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'imprimir',
+                  ),
                   onPressed: () => vm.sendDocumnet(
                     context,
                     1,
@@ -91,8 +102,11 @@ class _Tabs2ViewState extends State<Tabs2View>
                     children: [
                       if (vmMenu.documento != null)
                         ListTile(
-                          title: const Text(
-                            "Tipo documento",
+                          title: Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'tipoDoc',
+                            ),
                             style: AppTheme.normalBoldStyle,
                           ),
                           subtitle: Text(
@@ -102,8 +116,11 @@ class _Tabs2ViewState extends State<Tabs2View>
                         ),
                       if (vmDoc.serieSelect != null)
                         ListTile(
-                          title: const Text(
-                            "Serie",
+                          title: Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'serie',
+                            ),
                             style: AppTheme.normalBoldStyle,
                           ),
                           subtitle: Text(
@@ -119,9 +136,19 @@ class _Tabs2ViewState extends State<Tabs2View>
                 controller: _tabController,
                 labelColor: Colors.black,
                 indicatorColor: AppTheme.primary,
-                tabs: const [
-                  Tab(text: 'Documento'),
-                  Tab(text: 'Detalle'),
+                tabs: [
+                  Tab(
+                    text: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.general,
+                      'documento',
+                    ),
+                  ),
+                  Tab(
+                    text: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.general,
+                      'detalle',
+                    ),
+                  ),
                 ],
               ),
             ),

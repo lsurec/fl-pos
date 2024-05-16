@@ -244,7 +244,10 @@
         "detalles": "Detalles",
         "filtros": "Filtros",
         "numTransacciones": "No. Transacciones",
-        "serie": "Serie"
+        "serie": "Serie",
+        "documento": "Documento",
+        "detalle": "Detalle",
+        "pago": "Pago"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -254,7 +257,8 @@
         "correo": "Correo",
         "invalido": "Correo inválido.",
         "cliente": "Cliente",
-        "editar": "Editar Cuenta"
+        "editar": "Editar Cuenta",
+        "actualizar": "Actualizar Cuenta"
     },
     "factura": {
         "bancos": "Bancos",
