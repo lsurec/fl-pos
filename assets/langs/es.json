@@ -126,7 +126,10 @@
         "seleccionaTrans": "Seleccione por lo menos una transacción.",
         "seleccionaMonto": "Seleccione por lo menos un monto.",
         "sinCargDesc": "No hay cargos o descuentos agregados",
-        "sinPagoONuevoDoc": "Elimina primero las formas de pago o crea un nuevo documento."
+        "sinPagoONuevoDoc": "Elimina primero las formas de pago o crea un nuevo documento.",
+        "clienteSelec": "Cliente seleccionado.",
+        "sinRegistros": "No se encontró ningún registro.",
+        "sinElementos": "No hay elementos."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -207,7 +210,6 @@
         "unitario": "UNITARIO",
         "letrasTotal": "TOTAL EN LETRAS:",
         "pdf": "Aquí está su archivo PDF.",
-        "serie": "Serie:",
         "numero": "Número:",
         "firma": "Firma electrónica:",
         "certificador": "Datos del ceritificador:",
@@ -226,7 +228,8 @@
         "noDisponible": "No disponible.",
         "detalles": "Detalles",
         "filtros": "Filtros",
-        "numTransacciones": "No. Transacciones"
+        "numTransacciones": "No. Transacciones",
+        "serie": "Serie"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -235,7 +238,8 @@
         "telefono": "Teléfono",
         "correo": "Correo",
         "invalido": "Correo inválido.",
-        "cliente": "Cliente"
+        "cliente": "Cliente",
+        "editar": "Editar Cuenta"
     },
     "factura": {
         "bancos": "Bancos",

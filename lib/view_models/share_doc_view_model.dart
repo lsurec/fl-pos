@@ -769,9 +769,9 @@ class ShareDocViewModel extends ChangeNotifier {
                       ),
                       pw.Text(
                         '${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.tiket,
+                          BlockTranslate.general,
                           'serie',
-                        )} ${documento.serie}',
+                        )}: ${documento.serie}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),

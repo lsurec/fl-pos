@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,14 +24,20 @@ class DocumentView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Serie",
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.general,
+                    'serie',
+                  ),
                   style: AppTheme.titleStyle,
                 ),
                 if (vm.series.isEmpty)
-                  const NotFoundWidget(
-                    text: "No hay elementos",
-                    icon: Icon(
+                  NotFoundWidget(
+                    text: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.notificacion,
+                      'sinElementos',
+                    ),
+                    icon: const Icon(
                       Icons.browser_not_supported_outlined,
                       size: 50,
                     ),
@@ -40,12 +48,14 @@ class DocumentView extends StatelessWidget {
                     dropdownColor: AppTheme.backroundColor,
                     value: vm.serieSelect,
                     onChanged: (value) => vm.changeSerie(value, context),
-                    items: vm.series.map((serie) {
-                      return DropdownMenuItem<SerieModel>(
-                        value: serie,
-                        child: Text(serie.descripcion!),
-                      );
-                    }).toList(),
+                    items: vm.series.map(
+                      (serie) {
+                        return DropdownMenuItem<SerieModel>(
+                          value: serie,
+                          child: Text(serie.descripcion!),
+                        );
+                      },
+                    ).toList(),
                   ),
                 const SizedBox(height: 20),
                 Row(
@@ -63,7 +73,10 @@ class DocumentView extends StatelessWidget {
                       icon: const Icon(
                         Icons.person_add_outlined,
                       ),
-                      tooltip: "Nueva Cuenta",
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'nueva',
+                      ),
                     )
                   ],
                 ),
@@ -86,7 +99,10 @@ class DocumentView extends StatelessWidget {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Campo requerido.';
+                        return AppLocalizations.of(context)!.translate(
+                          BlockTranslate.notificacion,
+                          'requerido',
+                        );
                       }
                       return null;
                     },
@@ -97,7 +113,10 @@ class DocumentView extends StatelessWidget {
                   activeColor: AppTheme.primary,
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
-                  onChanged: (value) => vm.changeCF(value),
+                  onChanged: (value) => vm.changeCF(
+                    context,
+                    value,
+                  ),
                   title: const Text(
                     "C/F",
                     style: AppTheme.titleStyle,
@@ -128,7 +147,10 @@ class DocumentView extends StatelessWidget {
                                 Icons.edit_outlined,
                                 color: Colors.grey[500],
                               ),
-                              tooltip: "Editar cuenta",
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.cuenta,
+                                'editar',
+                              ),
                             )
                         ],
                       ),
@@ -156,8 +178,11 @@ class DocumentView extends StatelessWidget {
                       const SizedBox(height: 10),
                       const Divider(),
                       const SizedBox(height: 10),
-                      const Text(
-                        "Vendedor",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'vendedor',
+                        ),
                         style: AppTheme.titleStyle,
                       ),
                       DropdownButton<SellerModel>(
@@ -165,12 +190,14 @@ class DocumentView extends StatelessWidget {
                         dropdownColor: AppTheme.backroundColor,
                         value: vm.vendedorSelect,
                         onChanged: (value) => vm.changeSeller(value),
-                        items: vm.cuentasCorrentistasRef.map((seller) {
-                          return DropdownMenuItem<SellerModel>(
-                            value: seller,
-                            child: Text(seller.nomCuentaCorrentista),
-                          );
-                        }).toList(),
+                        items: vm.cuentasCorrentistasRef.map(
+                          (seller) {
+                            return DropdownMenuItem<SellerModel>(
+                              value: seller,
+                              child: Text(seller.nomCuentaCorrentista),
+                            );
+                          },
+                        ).toList(),
                       ),
                     ],
                   ),
