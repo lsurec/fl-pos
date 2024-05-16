@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -23,9 +24,13 @@ class ConvertDocView extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
+          key: vm.scaffoldKey,
           appBar: AppBar(
-            title: const Text(
-              'Convertir Documento',
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.cotizacion,
+                'convertirDoc',
+              ),
               style: AppTheme.titleStyle,
             ),
             // actions: const [_Actions()],
@@ -48,7 +53,10 @@ class ConvertDocView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextsWidget(
-                        title: "Id del Documento: ",
+                        title: "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'idDoc',
+                        )}: ",
                         text: "${docOrigen.iDDocumento}",
                       ),
                       const SizedBox(height: 10),
@@ -56,13 +64,17 @@ class ConvertDocView extends StatelessWidget {
                       const SizedBox(height: 10),
                       ColorTextCardWidget(
                         color: Colors.green,
-                        text:
-                            "ORIGEN - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
+                        text: "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'origenT',
+                        )} - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
                       ColorTextCardWidget(
                         color: Colors.red,
-                        text:
-                            "DESTINO - (${docDestino.fTipoDocumento}) ${docDestino.documento} - (${docDestino.fSerieDocumento}) ${docDestino.serie}.",
+                        text: "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'destinoT',
+                        )} - (${docDestino.fTipoDocumento}) ${docDestino.documento} - (${docDestino.fSerieDocumento}) ${docDestino.serie}.",
                       ),
                       const SizedBox(height: 10),
                       const Divider(),
@@ -79,7 +91,10 @@ class ConvertDocView extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Registros (${vm.detalles.length})",
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${vm.detalles.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
@@ -117,10 +132,9 @@ class ConvertDocView extends StatelessWidget {
   }
 }
 
+// ignore: unused_element
 class _Actions extends StatelessWidget {
-  const _Actions({
-    super.key,
-  });
+  const _Actions();
 
   @override
   Widget build(BuildContext context) {
@@ -132,24 +146,33 @@ class _Actions extends StatelessWidget {
             return Container(
               color: AppTheme.backroundColor,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              child: const SingleChildScrollView(
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     TextsWidget(
-                      title: "Id. del Documento: ",
+                      title: "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cotizacion,
+                        'idDoc',
+                      )}:",
                       text: "10",
                     ),
-                    SizedBox(height: 10),
-                    TextsWidget(
+                    const SizedBox(height: 10),
+                    const TextsWidget(
                       title: "NIT: ",
                       text: "10151515",
                     ),
                     TextsWidget(
-                      title: "Nombre: ",
+                      title: "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'nombre',
+                      )}: ",
                       text: "Nombre del cliente",
                     ),
                     TextsWidget(
-                      title: "Direccion: ",
+                      title: "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'direccion',
+                      )}: ",
                       text: "Ciudad",
                     ),
                   ],
@@ -181,7 +204,11 @@ class _CardDetalle extends StatelessWidget {
       onTap: () {
         if (vm.detalles[index].disponible == 0) {
           NotificationService.showSnackbar(
-              "No puede marcarse una transaccion con disponibilidad 0");
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notiCotizacion,
+              'noMarcarSiEsCero',
+            ),
+          );
           return;
         }
 
@@ -190,24 +217,44 @@ class _CardDetalle extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               backgroundColor: AppTheme.backroundColor,
-              title: const Text('Autorizar'),
+              title: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.cotizacion,
+                  'autorizar',
+                ),
+              ),
               content: TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Cantidad",
-                  hintText: "Cantidad",
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.factura,
+                    'cantidad',
+                  ),
+                  hintText: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.factura,
+                    'cantidad',
+                  ),
                 ),
                 initialValue: "${detalle.disponibleMod}",
                 onChanged: (value) => vm.textoInput = value,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(r'^(\d+)?\.?\d{0,2}'))
+                    RegExp(
+                      r'^(\d+)?\.?\d{0,2}',
+                    ),
+                  )
                 ],
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Campo requerido.';
+                    return AppLocalizations.of(context)!.translate(
+                      BlockTranslate.notificacion,
+                      'requerido',
+                    );
                   } else if (double.tryParse(value) == 0) {
-                    return 'El valor no puede ser 0';
+                    return AppLocalizations.of(context)!.translate(
+                      BlockTranslate.notificacion,
+                      'noCero',
+                    );
                   }
                   return null;
                 },
@@ -215,11 +262,21 @@ class _CardDetalle extends StatelessWidget {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancelar'),
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'cancelar',
+                    ),
+                  ),
                 ),
                 TextButton(
                   onPressed: () => vm.modificarDisponible(context, index),
-                  child: const Text('Aceptar'),
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'aceptar',
+                    ),
+                  ),
                 ),
               ],
             );
@@ -231,29 +288,53 @@ class _CardDetalle extends StatelessWidget {
         child: ListTile(
           leading: Checkbox(
             value: detalle.checked,
-            onChanged: (value) => vm.selectTra(index, value!),
+            onChanged: (value) => vm.selectTra(
+              context,
+              index,
+              value!,
+            ),
             activeColor: AppTheme.primary,
           ),
           contentPadding: const EdgeInsets.all(10),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextsWidget(title: "Id: ", text: detalle.id),
-              // const SizedBox(height: 5),
-              // TextsWidget(title: "Clase: ", text: detalle.clase),
-              // const SizedBox(height: 5),
-              // TextsWidget(title: "Marca: ", text: detalle.marca ?? "SIN MARCA"),
-              // const SizedBox(height: 5),
-              // TextsWidget(title: "Bodega: ", text: detalle.bodega),
-              const SizedBox(height: 5),
-              TextsWidget(title: "Producto: ", text: detalle.producto),
-              const SizedBox(height: 5),
-              TextsWidget(title: "Cantidad: ", text: "${detalle.cantidad}"),
-              const SizedBox(height: 5),
-              TextsWidget(title: "Disponible: ", text: "${detalle.disponible}"),
+              TextsWidget(
+                title: "Id: ",
+                text: detalle.id,
+              ),
               const SizedBox(height: 5),
               TextsWidget(
-                  title: "Autorizar: ", text: "${detalle.disponibleMod}"),
+                title: "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.cotizacion,
+                  'producto',
+                )}: ",
+                text: detalle.producto,
+              ),
+              const SizedBox(height: 5),
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.factura,
+                  'cantidad',
+                )}: ",
+                text: "${detalle.cantidad}",
+              ),
+              const SizedBox(height: 5),
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.cotizacion,
+                  'disponible',
+                )}: ",
+                text: "${detalle.disponible}",
+              ),
+              const SizedBox(height: 5),
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.cotizacion,
+                  'autorizar',
+                )}: ",
+                text: "${detalle.disponibleMod}",
+              ),
             ],
           ),
         ),

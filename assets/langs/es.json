@@ -308,5 +308,20 @@
         "cargAgregado": "Cargo agregado.",
         "descAgregado": "Descuento agregado.",
         "saldo": "Saldo"
+    },
+    "cotizaNotificacion": {
+        "enCeroNoSelec": "Las transacciones con disponibilidad 0 no serán seleccionadas.",
+        "noMarcarSiEsCero": "No puede marcarse una transaccion con disponibilidad 0.",
+        "noMayorADisponible": "El valor no debe ser mayor al valor disponible.",
+        "confirmarTransaccion": "Confirmar transacción."
+    },
+    "cotizacion": {
+        "convertirDoc": "Convertir Documento",
+        "idDoc": "Id del Documento",
+        "origenT": "ORIGEN",
+        "destinoT": "DESTINO",
+        "producto": "Producto",
+        "disponible": "Disponible.",
+        "autorizar": "Autorizar"
     }
 }

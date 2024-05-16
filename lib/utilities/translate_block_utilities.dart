@@ -15,5 +15,6 @@ class BlockTranslate {
   static String cuenta = "cuenta";
   static String factura = "factura";
   static String calcular = "calculos";
-  
+  static String notiCotizacion = "cotizaNotificacion";
+  static String cotizacion = "cotizacion";
 }
