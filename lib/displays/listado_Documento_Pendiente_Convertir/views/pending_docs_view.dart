@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +21,10 @@ class PendingDocsView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: Text(
-              "${tipoDoc.fDesTipoDocumento} (Origen)",
+              "${tipoDoc.fDesTipoDocumento} (${AppLocalizations.of(context)!.translate(
+                BlockTranslate.cotizacion,
+                'origen',
+              )})",
               style: AppTheme.titleStyle,
             ),
           ),
@@ -37,10 +42,13 @@ class PendingDocsView extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Text(
-                                  "Fecha Ini:",
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.fecha,
+                                    'inicio',
+                                  ),
                                   style: AppTheme.normalBoldStyle,
                                 ),
                               ),
@@ -57,10 +65,13 @@ class PendingDocsView extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.only(left: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Text(
-                                  "Fecha Fin:",
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.fecha,
+                                    'fin',
+                                  ),
                                   style: AppTheme.normalBoldStyle,
                                 ),
                               ),
@@ -89,15 +100,17 @@ class PendingDocsView extends StatelessWidget {
                               dropdownColor: AppTheme.backroundColor,
                               value: vm.selectFilter,
                               onChanged: (value) => vm.changeFilter(value!),
-                              items: vm.filters.map((filter) {
-                                return DropdownMenuItem<String>(
-                                  value: filter,
-                                  child: Text(
-                                    filter,
-                                    style: AppTheme.normalStyle,
-                                  ),
-                                );
-                              }).toList(),
+                              items: vm.filters.map(
+                                (filter) {
+                                  return DropdownMenuItem<String>(
+                                    value: filter,
+                                    child: Text(
+                                      filter,
+                                      style: AppTheme.normalStyle,
+                                    ),
+                                  );
+                                },
+                              ).toList(),
                             ),
                           ),
                           IconButton(
@@ -110,7 +123,10 @@ class PendingDocsView extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            "Registros(${vm.documents.length})",
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${vm.documents.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
@@ -149,7 +165,6 @@ class PendingDocsView extends StatelessWidget {
 
 class _CardDoc extends StatelessWidget {
   const _CardDoc({
-    super.key,
     required this.document,
   });
 
@@ -170,11 +185,17 @@ class _CardDoc extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Id documento: ${document.iDDocumento}",
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.home,
+                  'idDoc',
+                )} ${document.iDDocumento}",
                 style: AppTheme.normalBoldStyle,
               ),
               Text(
-                "Usuario: ${document.usuario}",
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.general,
+                  'usuario',
+                )}: ${document.usuario}",
                 style: AppTheme.normalBoldStyle,
               ),
             ],
@@ -192,8 +213,11 @@ class _CardDoc extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Fecha hora:",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'fechaHora',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
@@ -206,8 +230,11 @@ class _CardDoc extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        "Fecha documento:",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'fechaDoc',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
@@ -217,31 +244,21 @@ class _CardDoc extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-
                   TextsWidget(
-                      title: "Serie documento: ",
+                      title: "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'serieDoc',
+                      )}: ",
                       text: "${document.serie} (${document.serieDocumento})"),
                   const SizedBox(height: 5),
                   if (document.observacion.isNotEmpty)
                     TextsWidget(
-                        title: "Observacion: ", text: document.observacion),
-                  // Text(
-                  //   "Bodega origen:",
-                  //   style: AppTheme.normalBoldStyle,
-                  // ),
-                  // Text(
-                  //   "Dolore irure eiusmod laboris quis.",
-                  //   style: AppTheme.normalStyle,
-                  // ),
-                  // SizedBox(height: 5),
-                  // Text(
-                  //   "Bodega destino:",
-                  //   style: AppTheme.normalBoldStyle,
-                  // ),
-                  // Text(
-                  //   "Anim cupidatat adipisicing adipisicing.",
-                  //   style: AppTheme.normalStyle,
-                  // ),
+                      title: "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'observacion',
+                      )}: ",
+                      text: document.observacion,
+                    ),
                 ],
               ),
             ),

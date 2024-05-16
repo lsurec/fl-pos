@@ -325,6 +325,8 @@
         "autorizar": "Autorizar",
         "destinoDoc": "Documento Destino",
         "procesadoDoc": "Documento Procesado",
-        "transacciones": "Transacciones"
+        "transacciones": "Transacciones",
+        "origen": "Origen",
+        "destino": "Destino"
     }
 }
