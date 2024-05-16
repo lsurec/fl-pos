@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +21,11 @@ class DestinationDocView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text(
-              "Documento Destino",
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.cotizacion,
+                'destinoDoc',
+              ),
               style: AppTheme.titleStyle,
             ),
           ),
@@ -36,7 +41,10 @@ class DestinationDocView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "Registros(${vm.documents.length})",
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${vm.documents.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
@@ -59,8 +67,11 @@ class DestinationDocView extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      "Documento:",
+                                    Text(
+                                      "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.general,
+                                        'documento',
+                                      )}:",
                                       style: AppTheme.normalBoldStyle,
                                     ),
                                     Text(
@@ -68,8 +79,11 @@ class DestinationDocView extends StatelessWidget {
                                       style: AppTheme.normalStyle,
                                     ),
                                     const SizedBox(height: 5),
-                                    const Text(
-                                      "Serie:",
+                                    Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.general,
+                                        'serie',
+                                      ),
                                       style: AppTheme.normalBoldStyle,
                                     ),
                                     Text(

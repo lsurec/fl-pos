@@ -322,6 +322,7 @@
         "destinoT": "DESTINO",
         "producto": "Producto",
         "disponible": "Disponible.",
-        "autorizar": "Autorizar"
+        "autorizar": "Autorizar",
+        "destinoDoc": "Documento Destino"
     }
 }
