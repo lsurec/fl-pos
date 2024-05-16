@@ -39,7 +39,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
           BlockTranslate.localConfig,
-          'seleccioneConfiguracion',
+          'seleccionaConfiguracion',
         ),
       );
       return;

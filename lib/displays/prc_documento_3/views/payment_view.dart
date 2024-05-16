@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -34,15 +36,22 @@ class PaymentView extends StatelessWidget {
               child: ListView(
                 children: [
                   if (vm.paymentList.isEmpty)
-                    const NotFoundWidget(
-                        text: "No hay elementos",
-                        icon: Icon(
-                          Icons.browser_not_supported_outlined,
-                          size: 250,
-                        )),
+                    NotFoundWidget(
+                      text: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.notificacion,
+                        'sinElementos',
+                      ),
+                      icon: const Icon(
+                        Icons.browser_not_supported_outlined,
+                        size: 250,
+                      ),
+                    ),
                   if (vm.paymentList.isNotEmpty)
-                    const Text(
-                      "Agregar pago",
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'agregarPago',
+                      ),
                       style: AppTheme.titleStyle,
                     ),
                   const SizedBox(height: 10),
@@ -75,7 +84,10 @@ class PaymentView extends StatelessWidget {
                           onChanged: (value) => vm.selectAllMounts(value),
                         ),
                         Text(
-                          "Pagos agregados (${vm.amounts.length})",
+                          "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'pagosAgregados',
+                          )} (${vm.amounts.length})",
                           style: AppTheme.normalBoldStyle,
                         ),
                         const Spacer(),
@@ -111,34 +123,60 @@ class PaymentView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               if (amount.payment.autorizacion)
-                                Text('Autorización: ${amount.authorization}',
-                                    style: AppTheme.normalStyle),
+                                Text(
+                                  '${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.factura,
+                                    'autorizar',
+                                  )}: ${amount.authorization}',
+                                  style: AppTheme.normalStyle,
+                                ),
                               if (amount.payment.referencia)
                                 Text(
-                                  'Referencia: ${amount.reference}',
+                                  '${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.factura,
+                                    'referencia',
+                                  )}: ${amount.reference}',
                                   style: AppTheme.normalStyle,
                                 ),
                               if (amount.payment.banco)
                                 Text(
-                                  'Banco: ${amount.bank?.nombre}',
+                                  '${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.factura,
+                                    'banco',
+                                  )}: ${amount.bank?.nombre}',
                                   style: AppTheme.normalStyle,
                                 ),
                               if (amount.account != null)
                                 Text(
-                                  'Cuenta: ${amount.account!.descripcion}',
+                                  '${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.factura,
+                                    'cuenta',
+                                  )}: ${amount.account!.descripcion}',
                                   style: AppTheme.normalStyle,
                                 ),
                               Text(
-                                  'Monto: ${currencyFormat.format(amount.amount)}',
-                                  style: AppTheme.normalStyle),
+                                '${AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.calcular,
+                                  'monto',
+                                )}: ${currencyFormat.format(amount.amount)}',
+                                style: AppTheme.normalStyle,
+                              ),
                               if (amount.diference > 0)
                                 Text(
-                                    'Diferencia: ${currencyFormat.format(amount.diference)}',
-                                    style: AppTheme.normalStyle),
+                                  '${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.calcular,
+                                    'diferencia',
+                                  )}: ${currencyFormat.format(amount.diference)}',
+                                  style: AppTheme.normalStyle,
+                                ),
                               if (amount.diference > 0)
                                 Text(
-                                    'Pago total: ${currencyFormat.format(amount.diference + amount.amount)}',
-                                    style: AppTheme.normalStyle),
+                                  '${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.calcular,
+                                    'precioT',
+                                  )}: ${currencyFormat.format(amount.diference + amount.amount)}',
+                                  style: AppTheme.normalStyle,
+                                ),
                             ],
                           ),
                         ),
@@ -151,17 +189,26 @@ class PaymentView extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           RowTotalWidget(
-            title: "Total",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'total',
+            ),
             value: vmDetails.total,
             color: AppTheme.primary,
           ),
           RowTotalWidget(
-            title: "Saldo",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'saldo',
+            ),
             value: vm.saldo,
             color: AppTheme.primary,
           ),
           RowTotalWidget(
-            title: "Cambio",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'cambio',
+            ),
             value: vm.cambio,
             color: AppTheme.primary,
           ),

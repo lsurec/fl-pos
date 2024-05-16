@@ -439,7 +439,7 @@ class _Pyments extends StatelessWidget {
                   Text(
                     '${AppLocalizations.of(context)!.translate(
                       BlockTranslate.factura,
-                      'autorizacion',
+                      'autorizar',
                     )}: ${amount.authorization}',
                     style: AppTheme.normalStyle,
                   ),

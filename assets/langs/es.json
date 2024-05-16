@@ -98,16 +98,16 @@
         "sinEncabezados": "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.",
         "sinDocumento": "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.",
         "sinTipoCambio": "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.",
-        "sinDatosImprimir": "No hay datos para imprimir, intente más tarde.",
+        "sinDatosImprimir": "No hay datos para imprimir, intenta más tarde.",
         "metodos": "Solo se permiten los metodos POST, PUT, GET y DELETE",
-        "seleccioneConfiguracion": "Para continuar, selecciona una empresa y estación de trabajo",
+        "seleccionaConfiguracion": "Para continuar, selecciona una empresa y estación de trabajo",
         "cuentaCreadaNoSelec": "Se creo la cuenta, pero hubo en error al seleccionarla.",
         "cuentaActualizadaNoSelec": "Se actualizó la cuenta, pero hubo en error al seleccionarla",
         "cuentaCreadaSelec": "Cuenta creada y seleccionada correctamente.",
         "cuentaActualizadaSelec": "Cuenta actualizada y seleccionada correctamente.",
         "mayorDeCero": "El monto debe ser mayor a 0.",
-        "seleccionarBanco": "Seleccione un banco",
-        "seleccionarCuenta": "Seleccione una cuenta.",
+        "seleccionarBanco": "Selecciona un banco",
+        "seleccionarCuenta": "Selecciona una cuenta.",
         "pagoAgregado": "Pago agregado.",
         "docProcesado": "Documento procesado correctamente.",
         "noImprimio": "No se pudo imprimir.",
@@ -123,13 +123,19 @@
         "sinBodegaP": "No hay bodegas para este producto.",
         "sinPrecioP": "No hay precios para este producto",
         "eliminaFormaPago": "Elimina primero las formas de pago o crea un nuevo documento.",
-        "seleccionaTrans": "Seleccione por lo menos una transacción.",
-        "seleccionaMonto": "Seleccione por lo menos un monto.",
+        "seleccionaTrans": "Selecciona por lo menos una transacción.",
+        "seleccionaMonto": "Selecciona por lo menos un monto.",
         "sinCargDesc": "No hay cargos o descuentos agregados",
         "sinPagoONuevoDoc": "Elimina primero las formas de pago o crea un nuevo documento.",
         "clienteSelec": "Cliente seleccionado.",
         "sinRegistros": "No se encontró ningún registro.",
-        "sinElementos": "No hay elementos."
+        "sinElementos": "No hay elementos.",
+        "seleccionaSerie": "Selecciona una serie",
+        "eliminaTransConDife": "Elimina las transacciones con diferencia.",
+        "cuentaAntesPago": "Selecciona una cuenta antes de agregar pagos.",
+        "sinPermisoCuentaPCobrar": "La cuenta asignada al documento no tiene permitido cuentas por cobrar.",
+        "superaLimiteCredito": "El total del documento supera el limmite de credito de la cuenta asignada al documento.",
+        "pagarCero": "El total a pagar es 0."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -256,7 +262,8 @@
         "creandoDoc": "Creando documento...",
         "generandoFirma": "Generando firma electrónica...",
         "tipoDoc": "Tipo documento",
-        "serieDoc": "Serie de documento"
+        "serieDoc": "Serie de documento",
+        "pagosAgregados": "Pagos agregados."
     },
     "calculos": {
         "calcular": "Calcular",
@@ -277,6 +284,7 @@
         "pagoTotal": "Pago total",
         "porcentaje": "Porcentaje",
         "cargAgregado": "Cargo agregado.",
-        "descAgregado": "Descuento agregado."
+        "descAgregado": "Descuento agregado.",
+        "saldo": "Saldo"
     }
 }
