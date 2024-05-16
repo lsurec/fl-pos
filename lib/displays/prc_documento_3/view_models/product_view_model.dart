@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -91,7 +92,12 @@ class ProductViewModel extends ChangeNotifier {
     // si no hay bodegas mostrar mensaje
     if (bodegas.isEmpty) {
       isLoading = false;
-      NotificationService.showSnackbar("No hay bodegas para este producto");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
       return;
     }
 
@@ -119,7 +125,12 @@ class ProductViewModel extends ChangeNotifier {
       prices = precios.message;
 
       if (prices.isEmpty) {
-        NotificationService.showSnackbar("No hay precios para este producto");
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinPrecioP',
+          ),
+        );
         return;
       }
     }
@@ -407,7 +418,12 @@ class ProductViewModel extends ChangeNotifier {
 
     if (prices.isEmpty) {
       calculateTotal();
-      NotificationService.showSnackbar("No hay precios para este producto.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinPrecioP',
+        ),
+      );
     }
   }
 
@@ -423,38 +439,65 @@ class ProductViewModel extends ChangeNotifier {
 
     //Si hay formas de pago mostrar mensaje
     if (paymentVM.amounts.isNotEmpty) {
-      NotificationService.showSnackbar("Elimina primero las formas de pago.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'eliminaFormaPago',
+        ),
+      );
       return;
     }
 
     //si no hay bodega seleccionada
     if (selectedBodega == null) {
-      NotificationService.showSnackbar("Selecciona una bodega");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaBodega',
+        ),
+      );
       return;
     }
 
     // si no hay precios seleccionados
     if (prices.isNotEmpty && selectedPrice == null) {
-      NotificationService.showSnackbar("Selecciona un tipo precio");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaTipoPrecio',
+        ),
+      );
       return;
     }
 
     //si el monto es 0 o menor a 0 mostar menaje
     if ((int.tryParse(controllerNum.text) ?? 0) == 0) {
-      NotificationService.showSnackbar("La cantidad debe ser mayor a 0");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cantidadMayorCero',
+        ),
+      );
       return;
     }
 
     if ((double.tryParse(controllerPrice.text) ?? 0) < price) {
       NotificationService.showSnackbar(
-        "El precio no puede ser menor al precio autorizado. Comuniquese con el encargo de inventarios.",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'precioNoMenorAutorizado',
+        ),
       );
       return;
     }
 
     if (selectedBodega!.existencia == 0) {
       NotificationService.showSnackbar(
-          "No es posible agregar la transaccion porque la existencia es insuficiente.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'existenciaInsuficiente',
+        ),
+      );
       return;
     }
 
@@ -470,7 +513,11 @@ class ProductViewModel extends ChangeNotifier {
 
       if (monedaDoc != monedaTra) {
         NotificationService.showSnackbar(
-            "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'monedaDistinta',
+          ),
+        );
         return;
       }
     }
@@ -492,7 +539,12 @@ class ProductViewModel extends ChangeNotifier {
     );
 
     //mensaje de confirmacion
-    NotificationService.showSnackbar("Transaccion agregada");
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'transaccionAgregada',
+      ),
+    );
 
     //regresar a pantallas anteriroeres
     if (back == 2) {

@@ -135,7 +135,16 @@
         "cuentaAntesPago": "Selecciona una cuenta antes de agregar pagos.",
         "sinPermisoCuentaPCobrar": "La cuenta asignada al documento no tiene permitido cuentas por cobrar.",
         "superaLimiteCredito": "El total del documento supera el limmite de credito de la cuenta asignada al documento.",
-        "pagarCero": "El total a pagar es 0."
+        "pagarCero": "El total a pagar es 0.",
+        "preciosNoEncontrados": "No se encontraron precios,",
+        "presioneCancelar": "Presione nuevamente para cancelar",
+        "seleccionaBodega": "Selecciona una bodega.",
+        "seleccionaTipoPrecio": "Selecciona un tipo precio.",
+        "cantidadMayorCero": "La cantidad debe ser mayor a 0.",
+        "precioNoMenorAutorizado": "El precio no puede ser menor al precio autorizado. Comuníquese con el encargado de inventarios.",
+        "existenciaInsuficiente": "No es posible agregar la transacción porque la existencia es insuficiente.",
+        "monedaDistinta": "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.",
+        "transaccionAgregada": "Transaccion agregada."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -263,7 +272,12 @@
         "generandoFirma": "Generando firma electrónica...",
         "tipoDoc": "Tipo documento",
         "serieDoc": "Serie de documento",
-        "pagosAgregados": "Pagos agregados."
+        "pagosAgregados": "Pagos agregados.",
+        "bodega": "Bodega",
+        "existencia": "Existencia",
+        "tipoPrecio": "Tipo precio",
+        "presentaciones": "Presentaciones.",
+        "cantidad": "Cantidad"
     },
     "calculos": {
         "calcular": "Calcular",
