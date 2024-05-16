@@ -72,12 +72,12 @@
         "cargarDoc": "Cargar documento"
     },
     "fechas": {
-        "fecha": "Fecha:",
+        "fecha": "Fecha: ",
         "inicio": "Fecha Inicio: ",
         "fin": "Fecha Fin: ",
         "fechaHora": "Fecha hora: ",
         "fechaDoc": "Fecha documento: ",
-        "certificacion": "Fecha de certificacion:"
+        "certificacion": "Fecha de certificacion: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -145,14 +145,14 @@
         "precioNoMenorAutorizado": "El precio no puede ser menor al precio autorizado. Comuníquese con el encargado de inventarios.",
         "existenciaInsuficiente": "No es posible agregar la transacción porque la existencia es insuficiente.",
         "monedaDistinta": "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.",
-        "transaccionAgregada": "Transaccion agregada."
+        "transaccionAgregada": "Transaccion agregada.",
+        "continuarDoc": "¿Continuar documento?",
+        "docSinConfirmar": "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
         "idioma": "Selecciona el idioma de tu preferencia.",
-        "seleccionado": "Idioma seleccionado.",
-        "continuarDoc": "¿Continuar documento?",
-        "docSinConfirmar": "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?."
+        "seleccionado": "Idioma seleccionado."
     },
     "error": {
         "informeT": "INFORME DE ERRORES",
