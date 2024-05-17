@@ -358,7 +358,19 @@
         "comentariosTarea": "Comentarios Tarea",
         "archivosSelec": "Archivos seleccionados.",
         "nuevoComentario": "Nuevo comentario",
-        "buscarIdRef": "Buscar ID Referencia"
+        "buscarIdRef": "Buscar ID Referencia",
+        "titulo": "Titulo ",
+        "agregaTitulo": "Añade un titulo para la tarea.",
+        "tiempoEstimado": "Tiempo estimado",
+        "notaObservacion": "Escribe una descripción o agrega notas aquí.",
+        "seleccionaPrioridad": "Selecciona el nivel de prioridad para continuar.",
+        "seleccionaEstado": "Selecciona un estado para continuar.",
+        "seleccionaTipo": "Seleccione un tipo tarea para continuar.",
+        "tipoTarea": "Tipo",
+        "estadoTarea": "Estado",
+        "prioridadTarea": "Prioridad",
+        "agregarResponsable": "Añadir Responsable",
+        "agregarInvitados": "Añadir Invitados"
     },
     "botonesTareas": {
         "nueva": "Nueva Tarea",
@@ -379,10 +391,19 @@
         "usuarioEliminado": "Usuario eliminado correctamente.",
         "listaInviActualizada": "Se actualizó la lista de invitados a la tarea.",
         "yaEsInvitado": "Uno o más usuarios seleccionados ya son invitados de la tarea.",
-        "ingreseCaracter": "Ingrese un caracter para realizar una búsqueda."
+        "ingreseCaracter": "Ingresa un caracter para realizar una búsqueda.",
+        "completarFormulario": "Completa todos los campos obligatorios para continuar.",
+        "seleccioneIdRef": "Añada Id Referencia para continuar.",
+        "seleccioneRespo": "Añada un responsable para continuar.",
+        "tareaCreada": "Tarea creada correctamente.",
+        "horaPosterior": "Selecciona una hora a partir de las: ",
+        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final."
     },
     "fechasTarea": {
         "feHoInicio": "FECHA Y HORA INICIAL: ",
-        "feHoFin": "FECHA Y HORA FINAL: "
+        "feHoFin": "FECHA Y HORA FINAL: ",
+        "fechaHoraInicio": "Fecha y hora inicial",
+        "fechaHoraFin": "Fecha y hora final",
+        "hora": "Hora: "
     }
 }

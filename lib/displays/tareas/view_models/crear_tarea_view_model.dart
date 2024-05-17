@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/displays/tareas/services/services.d
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -147,19 +148,31 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Validar el formulario
     if (!isValidForm()) {
       NotificationService.showSnackbar(
-          "Complete todos loa campos obligarorios para continuar");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.mensajes,
+          'completarFormulario',
+        ),
+      );
       return;
     }
 
     //sino ha seleccionado la referencia
     if (idReferencia == null) {
-      NotificationService.showSnackbar("Añada Id Referencia para continuar.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.mensajes,
+          'seleccioneIdRef',
+        ),
+      );
       return;
     }
 
     //sino hay resoinsable
     if (responsable == null) {
-      NotificationService.showSnackbar("Añada un responsable para continuar.");
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.mensajes,
+        'seleccioneRespo',
+      ));
       return;
     }
 
@@ -223,7 +236,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       vmTarea.loadData(context);
       //mostrra mensaje
       NotificationService.showSnackbar(
-        "Tarea creada correctamente.",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.mensajes,
+          'tareaCreada',
+        ),
       );
     }
 
@@ -239,7 +255,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       );
       //mostrra mensaje
       NotificationService.showSnackbar(
-        "Tarea creada correctamente.",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.mensajes,
+          'tareaCreada',
+        ),
       );
     }
     //Crear modelo de Tarea para agregarla a la lista de tareas
@@ -333,7 +352,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         return;
       }
 
-      print(resComent.message.res);
+      // print(resComent.message.res);
 
       //Crear modelo de comentario
       ComentarioModel comentarioCreado = ComentarioModel(
@@ -387,8 +406,6 @@ class CrearTareaViewModel extends ChangeNotifier {
           userResInvi: usuario.userName,
           user: user,
         );
-
-        print(usuarioInvitado.userResInvi);
 
         isLoading = true; //cargar pantalla
 
@@ -479,7 +496,6 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
-    print(Utilities.formatearHora(fechaInicial));
     DateTime fechaHoraActual = DateTime.now();
 
     //inicializar picker de la hora con la hora recibida
@@ -498,10 +514,12 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Esa hora será la hora minima solo cuando esté en el calendario
     if (pickedTime != null) {
       if (idPantalla == 2 && pickedTime.hour < initialTime.hour) {
-        print("no puede ser menor");
         // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
         NotificationService.showSnackbar(
-          "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaInicial)}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.mensajes,
+            'horaPosterior',
+          )} ${Utilities.formatearHora(fechaInicial)}",
         );
 
         fechaInicial = DateTime(
@@ -547,7 +565,10 @@ class CrearTareaViewModel extends ChangeNotifier {
               pickedTime.minute < fechaHoraActual.minute)) {
         // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
         NotificationService.showSnackbar(
-          "Selecciona una hora a partir de las ${Utilities.formatearHora(fechaHoraActual)}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.mensajes,
+            'horaPosterior',
+          )} ${Utilities.formatearHora(fechaHoraActual)}",
         );
 
         fechaInicial = DateTime(
@@ -621,7 +642,10 @@ class CrearTareaViewModel extends ChangeNotifier {
       if (fechaTemp.isBefore(fechaInicial)) {
         //mostrar mensaje de la hora de la fecha final no es valida
         NotificationService.showSnackbar(
-          'La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.',
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.mensajes,
+            'modifiqueFeHofinal',
+          ),
         );
         return;
       }
@@ -915,5 +939,4 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
-
 }

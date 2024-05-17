@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
 import '../view_models/view_models.dart';
@@ -24,8 +26,11 @@ class CrearTareaView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Nueva Tarea',
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.tooltip,
+                'nueva',
+              ),
               style: AppTheme.titleStyle,
             ),
             actions: <Widget>[
@@ -34,17 +39,26 @@ class CrearTareaView extends StatelessWidget {
                   IconButton(
                     onPressed: () => vm.crearTarea(context),
                     icon: const Icon(Icons.save_outlined),
-                    tooltip: "Nuevo",
+                    tooltip: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'guardar',
+                    ),
                   ),
                   IconButton(
                     onPressed: () => vm.limpiar(),
                     icon: const Icon(Icons.note_add_outlined),
-                    tooltip: "Crear Tarea",
+                    tooltip: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'nuevo',
+                    ),
                   ),
                   IconButton(
                     onPressed: () => vm.selectFiles(),
                     icon: const Icon(Icons.attach_file_outlined),
-                    tooltip: "Adjuntar Archivos",
+                    tooltip: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.tooltip,
+                      'adjuntarArchivos',
+                    ),
                   ),
                 ],
               ),
@@ -62,13 +76,16 @@ class CrearTareaView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              "Titulo",
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.tareas,
+                                'titulo',
+                              ),
                               style: AppTheme.normalBoldStyle,
                             ),
-                            Text(
+                            const Text(
                               "*",
                               style: AppTheme.obligatoryBoldStyle,
                             ),
@@ -78,19 +95,29 @@ class CrearTareaView extends StatelessWidget {
                         TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Campo requerido.';
+                              return AppLocalizations.of(context)!.translate(
+                                BlockTranslate.notificacion,
+                                'requerido',
+                              );
                             }
                             return null;
                           },
                           controller: vm.tituloController,
                           onChanged: (value) =>
                               vm.tituloController.text = value,
-                          decoration: const InputDecoration(
-                              labelText: "Añada un titulo para la tarea."),
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'agregaTitulo',
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          "Fecha y hora inicial",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.fecha,
+                            'fechaHoraInicio',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         Row(
@@ -100,7 +127,10 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaInicial(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${Utilities.formatearFecha(vm.fechaInicial)}",
+                                "${AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.fecha,
+                                  'fecha',
+                                )} ${Utilities.formatearFecha(vm.fechaInicial)}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
@@ -108,7 +138,10 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraInicial(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${Utilities.formatearHora(vm.fechaInicial)}",
+                                "${AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.fecha,
+                                  'hora',
+                                )} ${Utilities.formatearHora(vm.fechaInicial)}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
@@ -117,8 +150,11 @@ class CrearTareaView extends StatelessWidget {
                         const SizedBox(height: 5),
                         const Divider(),
                         const SizedBox(height: 5),
-                        const Text(
-                          "Fecha y hora final",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.fecha,
+                            'fechaHoraFin',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         Row(
@@ -128,7 +164,10 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaFinal(context),
                               icon: const Icon(Icons.calendar_today_outlined),
                               label: Text(
-                                "Fecha: ${Utilities.formatearFecha(vm.fechaFinal)}",
+                                "${AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.fecha,
+                                  'fecha',
+                                )} ${Utilities.formatearFecha(vm.fechaFinal)}",
                                 style: AppTheme.normalStyle,
                               ),
                             ),
@@ -136,7 +175,10 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraFinal(context),
                               icon: const Icon(Icons.schedule_outlined),
                               label: Text(
-                                "Hora: ${Utilities.formatearHora(vm.fechaFinal)}",
+                                "${AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.fecha,
+                                  'hora',
+                                )} ${Utilities.formatearHora(vm.fechaFinal)}",
                                 style: AppTheme.normalStyle,
                               ),
                             )
@@ -145,8 +187,11 @@ class CrearTareaView extends StatelessWidget {
                         const SizedBox(height: 5),
                         const Divider(),
                         const SizedBox(height: 5),
-                        const Text(
-                          "Tiempo estimado: ",
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tareas,
+                            'tiempoEstimado',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         const SizedBox(height: 10),
@@ -169,20 +214,24 @@ class CrearTareaView extends StatelessWidget {
                             ),
                             SizedBox(
                               width: 175,
-                              child:
-                                  _TiempoEstimado(tiempos: vm.periodicidades),
+                              child: _TiempoEstimado(
+                                tiempos: vm.periodicidades,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 10),
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              "Tipo",
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.tareas,
+                                'tipoTarea',
+                              ),
                               style: AppTheme.normalBoldStyle,
                             ),
-                            Padding(padding: EdgeInsets.only(left: 5)),
-                            Text(
+                            const Padding(padding: EdgeInsets.only(left: 5)),
+                            const Text(
                               "*",
                               style: AppTheme.obligatoryBoldStyle,
                             ),
@@ -191,16 +240,20 @@ class CrearTareaView extends StatelessWidget {
                         const SizedBox(height: 10),
                         _TipoTarea(tipos: vm.tiposTarea),
                         const SizedBox(height: 10),
-                        const Row(
+                        Row(
                           children: [
                             Row(
                               children: [
                                 Text(
-                                  "Estado",
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.tareas,
+                                    'estadoTarea',
+                                  ),
                                   style: AppTheme.normalBoldStyle,
                                 ),
-                                Padding(padding: EdgeInsets.only(left: 5)),
-                                Text(
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 5)),
+                                const Text(
                                   "*",
                                   style: AppTheme.obligatoryBoldStyle,
                                 ),
@@ -209,32 +262,42 @@ class CrearTareaView extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        _EstadoTarea(estados: vm.estados),
+                        _EstadoTarea(
+                          estados: vm.estados,
+                        ),
                         const SizedBox(height: 10),
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              "Prioridad",
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.tareas,
+                                'prioridadTarea',
+                              ),
                               style: AppTheme.normalBoldStyle,
                             ),
-                            Padding(padding: EdgeInsets.only(left: 5)),
-                            Text(
+                            const Padding(padding: EdgeInsets.only(left: 5)),
+                            const Text(
                               "*",
                               style: AppTheme.obligatoryBoldStyle,
                             ),
                           ],
                         ),
                         const SizedBox(height: 10),
-                        _PrioridadTarea(prioridades: vm.prioridades),
+                        _PrioridadTarea(
+                          prioridades: vm.prioridades,
+                        ),
                         const SizedBox(height: 10),
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              "Observación",
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'observacion',
+                              ),
                               style: AppTheme.normalBoldStyle,
                             ),
-                            Padding(padding: EdgeInsets.only(left: 5)),
-                            Text(
+                            const Padding(padding: EdgeInsets.only(left: 5)),
+                            const Text(
                               "*",
                               style: AppTheme.obligatoryBoldStyle,
                             ),
@@ -245,7 +308,10 @@ class CrearTareaView extends StatelessWidget {
                         const SizedBox(height: 10),
                         if (vm.files.isNotEmpty)
                           Text(
-                            "Archivos seleccionados (${vm.files.length})",
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'archivosSelec',
+                            )} (${vm.files.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         const SizedBox(height: 5),
@@ -270,7 +336,8 @@ class CrearTareaView extends StatelessWidget {
                                     onTap: () => vm.eliminarArchivos(index),
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                    horizontal: 10,
+                                  ),
                                 ),
                                 const Divider(),
                               ],
@@ -283,8 +350,11 @@ class CrearTareaView extends StatelessWidget {
                           child: ListTile(
                             title: Row(
                               children: [
-                                const Text(
-                                  "Id referencia :",
+                                Text(
+                                  "${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.tareas,
+                                    'idRef',
+                                  )}: ",
                                   style: AppTheme.normalStyle,
                                 ),
                                 const Text(
@@ -306,21 +376,25 @@ class CrearTareaView extends StatelessWidget {
                         const Divider(),
                         TextButton(
                           onPressed: () => vm.irUsuarios(context, 1),
-                          child: const ListTile(
+                          child: ListTile(
                             title: Row(
                               children: [
                                 Text(
-                                  "Añadir responsable",
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.tareas,
+                                    'agregarResponsable',
+                                  ),
                                   style: AppTheme.normalStyle,
                                 ),
-                                Text(
+                                const Text(
                                   " * ",
                                   style: AppTheme.obligatoryBoldStyle,
                                 ),
                               ],
                             ),
-                            leading: Icon(Icons.person_add_alt_1_outlined),
-                            contentPadding: EdgeInsets.all(0),
+                            leading:
+                                const Icon(Icons.person_add_alt_1_outlined),
+                            contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
                         if (vm.responsable != null)
@@ -344,13 +418,18 @@ class CrearTareaView extends StatelessWidget {
                         const Divider(),
                         TextButton(
                           onPressed: () => vm.irUsuarios(context, 2),
-                          child: const ListTile(
+                          child: ListTile(
                             title: Text(
-                              "Añadir invitados",
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.tareas,
+                                'agregarInvitados',
+                              ),
                               style: AppTheme.normalStyle,
                             ),
-                            leading: Icon(Icons.person_add_alt_1_outlined),
-                            contentPadding: EdgeInsets.all(0),
+                            leading: const Icon(
+                              Icons.person_add_alt_1_outlined,
+                            ),
+                            contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
                         ListView.builder(
@@ -378,7 +457,8 @@ class CrearTareaView extends StatelessWidget {
                                     onTap: () => vm.eliminarInvitado(index),
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                    horizontal: 10,
+                                  ),
                                 ),
                                 const Divider(),
                               ],
@@ -429,20 +509,18 @@ class _TiempoEstimado extends StatelessWidget {
           ),
         ),
       ),
-      hint: const Text(
-        'Seleccione el tiempo de periodicidad de la tarea.',
-        style: TextStyle(fontSize: 14),
-      ),
       items: tiempos
-          .map((item) => DropdownMenuItem<PeriodicidadModel>(
-                value: item,
-                child: Text(
-                  item.descripcion,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+          .map(
+            (item) => DropdownMenuItem<PeriodicidadModel>(
+              value: item,
+              child: Text(
+                item.descripcion,
+                style: const TextStyle(
+                  fontSize: 14,
                 ),
-              ))
+              ),
+            ),
+          )
           .toList(),
       onChanged: (value) => vm.periodicidad = value!,
       buttonStyleData: const ButtonStyleData(
@@ -479,12 +557,18 @@ class _ObservacionTarea extends StatelessWidget {
       onChanged: (value) => vm.observacionController.text = value,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Campo requerido.';
+          return AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'requerido',
+          );
         }
         return null;
       },
-      decoration: const InputDecoration(
-        labelText: "Escriba una descripción o agregue notas aquí.",
+      decoration: InputDecoration(
+        labelText: AppLocalizations.of(context)!.translate(
+          BlockTranslate.tareas,
+          'traducirnotaObservacion',
+        ),
       ),
       maxLines: 5,
       minLines: 2,
@@ -515,24 +599,25 @@ class _PrioridadTarea extends StatelessWidget {
           ),
         ),
       ),
-      hint: const Text(
-        'Seleccione el nivel de prioridad de la tarea.',
-        style: TextStyle(fontSize: 14),
-      ),
       items: prioridades
-          .map((item) => DropdownMenuItem<PrioridadModel>(
-                value: item,
-                child: Text(
-                  item.nombre,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+          .map(
+            (item) => DropdownMenuItem<PrioridadModel>(
+              value: item,
+              child: Text(
+                item.nombre,
+                style: const TextStyle(
+                  fontSize: 14,
                 ),
-              ))
+              ),
+            ),
+          )
           .toList(),
       validator: (value) {
         if (value == null) {
-          return 'Seleccione el nivel de prioridad para continuar.';
+          return AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'seleccionePrioridad',
+          );
         }
         return null;
       },
@@ -582,24 +667,25 @@ class _EstadoTarea extends StatelessWidget {
           ),
         ),
       ),
-      hint: const Text(
-        'Seleccione el estado de la tarea.',
-        style: TextStyle(fontSize: 14),
-      ),
       items: estados
-          .map((item) => DropdownMenuItem<EstadoModel>(
-                value: item,
-                child: Text(
-                  item.descripcion,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+          .map(
+            (item) => DropdownMenuItem<EstadoModel>(
+              value: item,
+              child: Text(
+                item.descripcion,
+                style: const TextStyle(
+                  fontSize: 14,
                 ),
-              ))
+              ),
+            ),
+          )
           .toList(),
       validator: (value) {
         if (value == null) {
-          return 'Seleccione un estado para continuar.';
+          return AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'seleccionaEstado',
+          );
         }
         return null;
       },
@@ -650,24 +736,25 @@ class _TipoTarea extends StatelessWidget {
         ),
         // Add more decoration..
       ),
-      hint: const Text(
-        'Seleccione el tipo de tarea.',
-        style: TextStyle(fontSize: 14),
-      ),
       items: tipos
-          .map((item) => DropdownMenuItem<TipoTareaModel>(
-                value: item,
-                child: Text(
-                  item.descripcion,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
+          .map(
+            (item) => DropdownMenuItem<TipoTareaModel>(
+              value: item,
+              child: Text(
+                item.descripcion,
+                style: const TextStyle(
+                  fontSize: 14,
                 ),
-              ))
+              ),
+            ),
+          )
           .toList(),
       validator: (value) {
         if (value == null) {
-          return 'Seleccione un tipo tarea para continuar.';
+          return AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'seleccionaTipo',
+          );
         }
         return null;
       },
