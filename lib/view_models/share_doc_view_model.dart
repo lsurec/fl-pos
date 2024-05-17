@@ -195,7 +195,7 @@ class ShareDocViewModel extends ChangeNotifier {
                       '${AppLocalizations.of(contextP)!.translate(
                         BlockTranslate.tiket,
                         'vendedor',
-                      )} $vendedorDoc ?? '
+                      )} ${vendedorDoc ?? ""} '
                       '',
                       style: font8,
                     ),
@@ -430,7 +430,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               child: pw.Text(
                                 AppLocalizations.of(contextP)!.translate(
                                   BlockTranslate.general,
-                                  'descipcion',
+                                  'descripcion',
                                 ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,

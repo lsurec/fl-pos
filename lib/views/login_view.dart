@@ -61,12 +61,12 @@ class LoginView extends StatelessWidget {
                                   initialValue: '',
                                   hintText:
                                       AppLocalizations.of(context)!.translate(
-                                    BlockTranslate.login,
+                                    BlockTranslate.general,
                                     "usuario",
                                   ),
                                   labelText:
                                       AppLocalizations.of(context)!.translate(
-                                    BlockTranslate.login,
+                                    BlockTranslate.general,
                                     "usuario",
                                   ),
                                   suffixIcon: Icons.person,

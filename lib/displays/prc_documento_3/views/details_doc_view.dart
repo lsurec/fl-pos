@@ -187,10 +187,10 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const Divider(),
                   const SizedBox(height: 5),
                   Text(
-                    "${AppLocalizations.of(context)!.translate(
+                    AppLocalizations.of(context)!.translate(
                       BlockTranslate.factura,
                       'cuenta',
-                    )}: ",
+                    ),
                     style: AppTheme.titleStyle,
                   ),
                   const SizedBox(height: 5),
@@ -234,10 +234,10 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         const Divider(),
                         const SizedBox(height: 5),
                         Text(
-                          "${AppLocalizations.of(context)!.translate(
+                          AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
                             'vendedor',
-                          )}:",
+                          ),
                           style: AppTheme.titleStyle,
                         ),
                         const SizedBox(height: 5),
@@ -251,10 +251,10 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const Divider(),
                   const SizedBox(height: 5),
                   Text(
-                    "${AppLocalizations.of(context)!.translate(
+                    AppLocalizations.of(context)!.translate(
                       BlockTranslate.factura,
-                      'vendedor',
-                    )}:",
+                      'productos',
+                    ),
                     style: AppTheme.titleStyle,
                   ),
                   const SizedBox(height: 5),
