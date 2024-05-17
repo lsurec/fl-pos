@@ -17,6 +17,36 @@ class Utilities {
     "Sábado",
   ];
 
+  static List<String> diasIngles = [
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+  ];
+
+  static List<String> diasFrances = [
+    "DIMANCHE",
+    "LUNDI",
+    "MARDI",
+    "MERCREDI",
+    "JEUDI",
+    "VENDREDI",
+    "SAMEDI"
+  ];
+
+  static List<String> diasAleman = [
+    "SONNTAG",
+    "MONTAG",
+    "DIENSTAG",
+    "MITTWOCH",
+    "DONNERSTAG",
+    "FREITAG",
+    "SAMSTAG"
+  ];
+
   //Nombre de los meses del año
   static List<String> nombreMeses = [
     "Enero",
