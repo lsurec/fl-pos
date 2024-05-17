@@ -334,5 +334,18 @@
         "origen": "Origen",
         "destino": "Destino",
         "filtroDoc": "Id documento"
-    }
+    },
+    "tareas": {
+        "numTarea": "Tarea No: ",
+        "idRef": "ID Referencia",
+        "creador": "Creador: ",
+        "responsable": "Responsable: ",
+        "noAsignado": "No asignado",
+        "buscar": "Buscar"
+    },
+    "botonesTareas": {
+        "nueva": "Nueva Tarea"
+    },
+    "calendario": {},
+    "notiTareas": {}
 }
