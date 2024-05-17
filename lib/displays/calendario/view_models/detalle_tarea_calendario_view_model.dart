@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/tareas/services/services.d
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
   final List<InvitadoModel> invitados = []; //alamcenar invitados
 
   bool historialResposables = false; //mostrra y ocultar historial
-  
+
   //Volver a cargar detalles
   loadData(BuildContext context) async {
     isLoading = true; //cargar pantalla
@@ -379,13 +380,18 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     tarea!.desTarea = estado.descripcion; // asignar estado
 
     //Insertar comentario a la Lista de comentarios
-    vmComentarios.comentarioDetalle.add(ComentarioDetalleModel(
-      comentario: comentario,
-      objetos: [],
-    ));
+    vmComentarios.comentarioDetalle.add(
+      ComentarioDetalleModel(
+        comentario: comentario,
+        objetos: [],
+      ),
+    );
 
     NotificationService.showSnackbar(
-      "El Estado de la tarea se actualizó correctamente.",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.mensajes,
+        'estadoActualizado',
+      ),
     );
 
     isLoading = false; //detener carga
@@ -451,13 +457,18 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     tarea!.nomNivelPrioridad = prioridad.nombre; // asignar prioridad
 
     //Insertar nuevo comentario  ala lsiat de comentarios
-    vmComentarios.comentarioDetalle.add(ComentarioDetalleModel(
-      comentario: comentario,
-      objetos: [],
-    ));
+    vmComentarios.comentarioDetalle.add(
+      ComentarioDetalleModel(
+        comentario: comentario,
+        objetos: [],
+      ),
+    );
 
     NotificationService.showSnackbar(
-      "El Nivel de prioridad de la tarea se actualizó correctamente.",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.mensajes,
+        'prioridadActualizada',
+      ),
     );
 
     isLoading = false; //detener carga
