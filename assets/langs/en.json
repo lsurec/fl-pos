@@ -396,7 +396,7 @@
         "tipoTarea": "Type",
         "estadoTarea": "Status",
         "prioridadTarea": "Priority",
-        "agregarResponsable": "Add Responsible Party",
+        "agregarResponsable": "Add Responsible",
         "agregarInvitados": "Add Invited"
     },
     "calendario": {
