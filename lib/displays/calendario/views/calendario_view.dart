@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/models/models.d
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class _CalendarioViewState extends State<CalendarioView> {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context);
+    final vmMenu = Provider.of<MenuViewModel>(context);
 
     return Stack(
       children: [
@@ -37,8 +39,8 @@ class _CalendarioViewState extends State<CalendarioView> {
           length: 3,
           child: Scaffold(
             appBar: AppBar(
-              title: const Text(
-                'Calendario',
+              title: Text(
+                 vmMenu.name,
                 style: AppTheme.titleStyle,
               ),
               actions: <Widget>[

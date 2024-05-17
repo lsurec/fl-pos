@@ -38,7 +38,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
     if (selectedEmpresa == null || selectedEstacion == null) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.localConfig,
+          BlockTranslate.notificacion,
           'seleccionaConfiguracion',
         ),
       );
