@@ -8,7 +8,6 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -880,7 +879,7 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   //crear nombre de la semanas por rango
-  String generateNameWeeck() {
+  String generateNameWeeck(BuildContext context) {
     // Obtener las semanas del mes seleccionado
     semanasDelMes = agregarSemanas(monthSelectView, yearSelect);
     //año seleccionado
@@ -931,13 +930,13 @@ class CalendarioViewModel extends ChangeNotifier {
 
     // Construir el nombre de la semana según las condiciones
     if (monthStart > monthEnd && yearStart < yearEnd) {
-      return "${Utilities.nombreMes(monthStart).substring(0, 3)} $fraseDe $yearStart - ${Utilities.nombreMes(monthEnd).substring(0, 3)} $fraseDe $yearEnd";
+      return "${Utilities.nombreMes(context, monthStart).substring(0, 3)} $fraseDe $yearStart - ${Utilities.nombreMes(context, monthEnd).substring(0, 3)} $fraseDe $yearEnd";
     }
     if (indexWeekActive == 0 && dayStart > dayEnd ||
         indexWeekActive == semanasDelMes.length - 1 && dayStart > dayEnd) {
-      return "${Utilities.nombreMes(monthStart).substring(0, 3)} - ${Utilities.nombreMes(monthEnd).substring(0, 3)}  $yearEnd";
+      return "${Utilities.nombreMes(context, monthStart).substring(0, 3)} - ${Utilities.nombreMes(context, monthEnd).substring(0, 3)}  $yearEnd";
     } else {
-      return "${Utilities.nombreMes(monthSelectView).substring(0, 3)} - $yearStart";
+      return "${Utilities.nombreMes(context, monthSelectView).substring(0, 3)} - $yearStart";
     }
   }
 

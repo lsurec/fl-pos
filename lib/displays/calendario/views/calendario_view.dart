@@ -82,15 +82,15 @@ class _CalendarioViewState extends State<CalendarioView> {
                           Column(
                             children: [
                               ListTile(
-                                title: Row(
+                                title: const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      " ${vm.daySelect} ${vm.fraseDe} ${Utilities.nombreMes(vm.monthSelectView)} ${vm.fraseDe} ${vm.yearSelect}",
+                                      "a",
                                       style: AppTheme.normalBoldStyle,
                                     ),
-                                    const SizedBox(width: 5),
-                                    const Icon(
+                                    SizedBox(width: 5),
+                                    Icon(
                                       Icons.arrow_drop_down,
                                     ),
                                   ],
@@ -136,7 +136,10 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "${Utilities.nombreMes(vm.monthSelectView)} ${vm.yearSelect}",
+                                      "${Utilities.nombreMes(
+                                        context,
+                                        vm.monthSelectView,
+                                      )} ${vm.yearSelect}",
                                       style: AppTheme.normalBoldStyle,
                                     ),
                                     const SizedBox(width: 5),
@@ -186,7 +189,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      vm.generateNameWeeck(),
+                                      vm.generateNameWeeck(context),
                                       style: AppTheme.normalBoldStyle,
                                     ),
                                     const SizedBox(width: 5),
