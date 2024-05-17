@@ -77,7 +77,8 @@
         "fin": "End Date: ",
         "fechaHora": "Date time: ",
         "fechaDoc": "Document date: ",
-        "certificacion": "Certification date: "
+        "certificacion": "Certification date: ",
+        "filtroDoc": "Document Date"
     },
     "notificaciones": {
         "reiniciar": "To view the changes, first restart the application.",
@@ -333,6 +334,7 @@
         "procesadoDoc": "Processed Document",
         "transacciones": "Transactions",
         "origen": "Source",
-        "destino": "Destination"
+        "destino": "Destination",
+        "filtroDoc": "Document ID"
     }
 }

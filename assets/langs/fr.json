@@ -77,7 +77,8 @@
         "fin": "Date de fin:",
         "fechaHora": "Date et heure:",
         "fechaDoc": "Date du document:",
-        "certificacion": "Date de certification:"
+        "certificacion": "Date de certification:",
+        "filtroDoc": "Date du document"
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",
@@ -308,5 +309,32 @@
         "cargAgregado": "Frais ajouté.",
         "descAgregado": "Remise ajoutée.",
         "saldo": "Solde"
+    },
+    "cotizaNotificacion": {
+        "enCeroNoSelec": "Les transactions avec une disponibilité de 0 ne seront pas sélectionnées.",
+        "noMarcarSiEsCero": "Une transaction avec une disponibilité de 0 ne peut pas être marquée.",
+        "noMayorADisponible": "La valeur ne doit pas être supérieure à la valeur disponible.",
+        "confirmarTransaccion": "Confirmer la transaction.",
+        "sinSerie": "Aucune série sélectionnée.",
+        "sinCliente": "Aucun client sélectionné.",
+        "sinVendedor": "Aucun vendeur sélectionné.",
+        "sinTransacciones": "Aucune transaction ajoutée.",
+        "sinPago": "Aucun paiement ajouté.",
+        "saldoPendiente": "Vous avez un solde à payer."
+    },
+    "cotizacion": {
+        "convertirDoc": "Convertir le document",
+        "idDoc": "ID du document",
+        "origenT": "ORIGINE",
+        "destinoT": "DESTINATION",
+        "producto": "Produit",
+        "disponible": "Disponible.",
+        "autorizar": "Autoriser",
+        "destinoDoc": "Document de destination",
+        "procesadoDoc": "Document traité",
+        "transacciones": "Transactions",
+        "origen": "Origine",
+        "destino": "Destination",
+        "filtroDoc": "ID du document"
     }
 }
