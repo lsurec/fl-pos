@@ -17,7 +17,5 @@ class BlockTranslate {
   static String calcular = "calculos";
   static String cotizacion = "cotizacion";
   static String tareas = "tareas";
-  static String tooltip = "botonesTareas";
   static String calendario = "calendario";
-  static String mensajes = "notiTareas";
 }

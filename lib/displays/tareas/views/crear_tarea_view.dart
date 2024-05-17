@@ -28,7 +28,7 @@ class CrearTareaView extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               AppLocalizations.of(context)!.translate(
-                BlockTranslate.tooltip,
+                BlockTranslate.botones,
                 'nueva',
               ),
               style: AppTheme.titleStyle,
@@ -56,7 +56,7 @@ class CrearTareaView extends StatelessWidget {
                     onPressed: () => vm.selectFiles(),
                     icon: const Icon(Icons.attach_file_outlined),
                     tooltip: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.tooltip,
+                      BlockTranslate.botones,
                       'adjuntarArchivos',
                     ),
                   ),

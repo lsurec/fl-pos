@@ -177,7 +177,7 @@ class _NuevoComentario extends StatelessWidget {
             children: [
               IconButton(
                 tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.tooltip,
+                  BlockTranslate.botones,
                   'adjuntarArchivos',
                 ),
                 onPressed: () => vm.selectFiles(),
@@ -185,7 +185,7 @@ class _NuevoComentario extends StatelessWidget {
               ),
               IconButton(
                 tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.tooltip,
+                  BlockTranslate.botones,
                   'enviarComentario',
                 ),
                 onPressed: () => vm.comentar(

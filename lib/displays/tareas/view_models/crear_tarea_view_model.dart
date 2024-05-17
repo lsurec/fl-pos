@@ -149,7 +149,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (!isValidForm()) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'completarFormulario',
         ),
       );
@@ -160,7 +160,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     if (idReferencia == null) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'seleccioneIdRef',
         ),
       );
@@ -170,7 +170,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     //sino hay resoinsable
     if (responsable == null) {
       NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.mensajes,
+        BlockTranslate.notificacion,
         'seleccioneRespo',
       ));
       return;
@@ -237,7 +237,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       //mostrra mensaje
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'tareaCreada',
         ),
       );
@@ -256,7 +256,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       //mostrra mensaje
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'tareaCreada',
         ),
       );
@@ -517,7 +517,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
         NotificationService.showSnackbar(
           "${AppLocalizations.of(context)!.translate(
-            BlockTranslate.mensajes,
+            BlockTranslate.notificacion,
             'horaPosterior',
           )} ${Utilities.formatearHora(fechaInicial)}",
         );
@@ -566,7 +566,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         // Muestra un mensaje de error o realiza alguna acción para indicar que la hora seleccionada es inválida
         NotificationService.showSnackbar(
           "${AppLocalizations.of(context)!.translate(
-            BlockTranslate.mensajes,
+            BlockTranslate.notificacion,
             'horaPosterior',
           )} ${Utilities.formatearHora(fechaHoraActual)}",
         );
@@ -643,7 +643,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         //mostrar mensaje de la hora de la fecha final no es valida
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
-            BlockTranslate.mensajes,
+            BlockTranslate.notificacion,
             'modifiqueFeHofinal',
           ),
         );

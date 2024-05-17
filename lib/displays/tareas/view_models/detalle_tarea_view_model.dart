@@ -218,7 +218,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     NotificationService.showSnackbar(
       AppLocalizations.of(context)!.translate(
-        BlockTranslate.mensajes,
+        BlockTranslate.notificacion,
         'estadoActualizado',
       ),
     );
@@ -293,7 +293,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     NotificationService.showSnackbar(
       AppLocalizations.of(context)!.translate(
-        BlockTranslate.mensajes,
+        BlockTranslate.notificacion,
         'prioridadActualizada',
       ),
     );
@@ -327,7 +327,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
               'confirmar',
             ),
             description: AppLocalizations.of(context)!.translate(
-              BlockTranslate.mensajes,
+              BlockTranslate.notificacion,
               'eliminaraInvitado',
             ),
             textOk: AppLocalizations.of(context)!.translate(
@@ -385,7 +385,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
     NotificationService.showSnackbar(
       AppLocalizations.of(context)!.translate(
-        BlockTranslate.mensajes,
+        BlockTranslate.notificacion,
         'usuarioEliminado',
       ),
     );
@@ -496,7 +496,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'listaInviActualizada',
         ),
       );
@@ -510,7 +510,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'yaEsInvitado',
         ),
       );

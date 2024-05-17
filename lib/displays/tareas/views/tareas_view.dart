@@ -48,7 +48,7 @@ class _TareasViewState extends State<TareasView> {
                 onPressed: () => vm.crearTarea(context),
                 icon: const Icon(Icons.add),
                 tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.tooltip,
+                  BlockTranslate.botones,
                   'nueva',
                 ),
               ),

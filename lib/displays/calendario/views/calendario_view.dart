@@ -57,7 +57,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                   onPressed: () => vm.loadData(context),
                   icon: const Icon(Icons.today),
                   tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.tooltip,
+                    BlockTranslate.botones,
                     'nueva',
                   ),
                 ),

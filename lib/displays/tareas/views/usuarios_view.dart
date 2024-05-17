@@ -36,11 +36,11 @@ class UsuariosView extends StatelessWidget {
               title: Text(
                 vm.tipoBusqueda == 1
                     ? AppLocalizations.of(context)!.translate(
-                        BlockTranslate.tooltip,
+                        BlockTranslate.botones,
                         'agregarResponsable',
                       )
                     : AppLocalizations.of(context)!.translate(
-                        BlockTranslate.tooltip,
+                        BlockTranslate.botones,
                         'agregarInvitados',
                       ),
                 style: AppTheme.titleStyle,

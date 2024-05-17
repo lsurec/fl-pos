@@ -39,7 +39,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
       idReferencias.clear();
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.mensajes,
+          BlockTranslate.notificacion,
           'ingreseCaracter',
         ),
       );

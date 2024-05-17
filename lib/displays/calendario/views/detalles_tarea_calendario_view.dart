@@ -240,7 +240,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             onPressed: () => vm.verHistorial(),
                             icon: const Icon(Icons.history),
                             tooltip: AppLocalizations.of(context)!.translate(
-                              BlockTranslate.tooltip,
+                              BlockTranslate.botones,
                               'historial',
                             ),
                           ),
@@ -309,7 +309,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             Icons.person_add_alt_1_outlined,
                           ),
                           tooltip: AppLocalizations.of(context)!.translate(
-                            BlockTranslate.tooltip,
+                            BlockTranslate.botones,
                             'agregarInvitado',
                           ),
                         ),
@@ -341,7 +341,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 icon: const Icon(Icons.close),
                                 tooltip:
                                     AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.tooltip,
+                                  BlockTranslate.botones,
                                   'eliminarInvitado',
                                 ),
                               ),

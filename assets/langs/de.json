@@ -69,7 +69,16 @@
         "bloquearDoc": "Dokument sperren",
         "desbloquearDoc": "Dokument entsperren",
         "deshacer": "Rückgängig machen",
-        "cargarDoc": "Dokument laden"
+        "cargarDoc": "Dokument laden",
+        "nueva": "Neue Aufgabe",
+        "historial": "Historie anzeigen",
+        "eliminarInvitado": "Einladung löschen",
+        "agregarInvitado": "Einladung hinzufügen",
+        "agregarInvitados": "Einladungen hinzufügen",
+        "agregarResponsable": "Verantwortlichen hinzufügen",
+        "eliminar": "Löschen",
+        "adjuntarArchivos": "Dateien anhängen",
+        "enviarComentario": "Kommentar senden."
     },
     "fechas": {
         "fecha": "Datum:",
@@ -78,7 +87,12 @@
         "fechaHora": "Datum und Uhrzeit: ",
         "fechaDoc": "Dokumentdatum: ",
         "certificacion": "Zertifizierungsdatum: ",
-        "filtroDoc": "Dokumentdatum"
+        "filtroDoc": "Dokumentdatum",
+        "feHoInicio": "STARTDATUM UND -ZEIT: ",
+        "feHoFin": "ENDDATUM UND -ZEIT: ",
+        "fechaHoraInicio": "Startdatum und -zeit",
+        "fechaHoraFin": "Enddatum und -zeit",
+        "hora": "Uhrzeit: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
@@ -158,7 +172,20 @@
         "sinVendedor": "Es wurde kein Verkäufer ausgewählt.",
         "sinTransacciones": "Es wurden keine Transaktionen hinzugefügt.",
         "sinPago": "Es wurde keine Zahlung hinzugefügt.",
-        "saldoPendiente": "Du hast einen ausstehenden Saldo zu zahlen."
+        "saldoPendiente": "Du hast einen ausstehenden Saldo zu zahlen.",
+        "estadoActualizado": "Aufgabenstatus erfolgreich aktualisiert.",
+        "prioridadActualizada": "Aufgabenprioritätsstufe erfolgreich aktualisiert.",
+        "eliminaraInvitado": "Dieser Benutzer wird aus der Gästeliste dieser Aufgabe entfernt.",
+        "usuarioEliminado": "Benutzer erfolgreich entfernt.",
+        "listaInviActualizada": "Die Gästeliste für die Aufgabe wurde aktualisiert.",
+        "yaEsInvitado": "Ein oder mehrere ausgewählte Benutzer sind bereits zur Aufgabe eingeladen.",
+        "ingreseCaracter": "Geben Sie ein Zeichen ein, um eine Suche durchzuführen.",
+        "completarFormulario": "Füllen Sie alle Pflichtfelder aus, um fortzufahren.",
+        "seleccioneIdRef": "Fügen Sie die Referenz-ID hinzu, um fortzufahren.",
+        "seleccioneRespo": "Fügen Sie einen Verantwortlichen hinzu, um fortzufahren.",
+        "tareaCreada": "Aufgabe erfolgreich erstellt.",
+        "horaPosterior": "Wählen Sie eine Uhrzeit ab: ",
+        "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -372,50 +399,17 @@
         "agregarResponsable": "Verantwortlichen hinzufügen",
         "agregarInvitados": "Einladungen hinzufügen"
     },
-    "botonesTareas": {
-        "nueva": "Neue Aufgabe",
-        "historial": "Historie anzeigen",
-        "eliminarInvitado": "Einladung löschen",
-        "agregarInvitado": "Einladung hinzufügen",
-        "agregarInvitados": "Einladungen hinzufügen",
-        "agregarResponsable": "Verantwortlichen hinzufügen",
-        "eliminar": "Löschen",
-        "adjuntarArchivos": "Dateien anhängen",
-        "enviarComentario": "Kommentar senden."
-    },
     "calendario": {
         "hoy": "Heute",
         "de": "von",
         "anterior": "Vorherige",
         "siguiente": "Nächste",
-        "vistasT": "ANSICHTEN",
+        "vistas": "ANSICHTEN",
         "mes": "Monat",
         "semana": "Woche",
         "dia": "Tag",
         "horario": "Zeitplan",
         "tareas": "Aufgaben",
         "nueva": "Neu"
-    },
-    "notiTareas": {
-        "estadoActualizado": "Aufgabenstatus erfolgreich aktualisiert.",
-        "prioridadActualizada": "Aufgabenprioritätsstufe erfolgreich aktualisiert.",
-        "eliminaraInvitado": "Dieser Benutzer wird aus der Gästeliste dieser Aufgabe entfernt.",
-        "usuarioEliminado": "Benutzer erfolgreich entfernt.",
-        "listaInviActualizada": "Die Gästeliste für die Aufgabe wurde aktualisiert.",
-        "yaEsInvitado": "Ein oder mehrere ausgewählte Benutzer sind bereits zur Aufgabe eingeladen.",
-        "ingreseCaracter": "Geben Sie ein Zeichen ein, um eine Suche durchzuführen.",
-        "completarFormulario": "Füllen Sie alle Pflichtfelder aus, um fortzufahren.",
-        "seleccioneIdRef": "Fügen Sie die Referenz-ID hinzu, um fortzufahren.",
-        "seleccioneRespo": "Fügen Sie einen Verantwortlichen hinzu, um fortzufahren.",
-        "tareaCreada": "Aufgabe erfolgreich erstellt.",
-        "horaPosterior": "Wählen Sie eine Uhrzeit ab: ",
-        "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum."
-    },
-    "fechasTarea": {
-        "feHoInicio": "STARTDATUM UND -ZEIT: ",
-        "feHoFin": "ENDDATUM UND -ZEIT: ",
-        "fechaHoraInicio": "Startdatum und -zeit",
-        "fechaHoraFin": "Enddatum und -zeit",
-        "hora": "Uhrzeit: "
     }
 }

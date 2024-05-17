@@ -389,7 +389,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
 
     NotificationService.showSnackbar(
       AppLocalizations.of(context)!.translate(
-        BlockTranslate.mensajes,
+        BlockTranslate.notificacion,
         'estadoActualizado',
       ),
     );
@@ -466,7 +466,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
 
     NotificationService.showSnackbar(
       AppLocalizations.of(context)!.translate(
-        BlockTranslate.mensajes,
+        BlockTranslate.notificacion,
         'prioridadActualizada',
       ),
     );
