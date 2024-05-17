@@ -354,14 +354,19 @@
         "invitados": "INVITADOS",
         "creadorT": "CREADOR",
         "nuevoEstado": "Seleccione un nuevo estado.",
-        "nuevaPrioridad": "Seleccione una nueva prioridad."
+        "nuevaPrioridad": "Seleccione una nueva prioridad.",
+        "comentariosTarea": "Comentarios Tarea",
+        "archivosSelec": "Archivos seleccionados.",
+        "nuevoComentario": "Nuevo comentario"
     },
     "botonesTareas": {
         "nueva": "Nueva Tarea",
         "historial": "Ver historial",
         "eliminarInvitado": "Eliminar invitado",
         "agregarInvitado": "Agregar invitado",
-        "eliminar": "Eliminar"
+        "eliminar": "Eliminar",
+        "adjuntarArchivos": "Adjuntar Archivos",
+        "enviarComentario": "Enviar comentario."
     },
     "calendario": {},
     "notiTareas": {
