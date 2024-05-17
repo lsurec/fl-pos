@@ -567,7 +567,7 @@ class _ObservacionTarea extends StatelessWidget {
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context)!.translate(
           BlockTranslate.tareas,
-          'traducirnotaObservacion',
+          'notaObservacion',
         ),
       ),
       maxLines: 5,
