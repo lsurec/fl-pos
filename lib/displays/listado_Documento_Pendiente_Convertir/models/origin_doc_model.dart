@@ -8,13 +8,13 @@ class OriginDocModel {
   int localizacion;
   int estacionTrabajo;
   int fechaReg;
-  String fechaDocumento;
-  String fechaHora;
+  dynamic fechaDocumento;
+  dynamic fechaHora;
   String usuario;
   String documentoDecripcion;
   String serie;
   int iDDocumento;
-  String observacion;
+  dynamic observacion;
   dynamic fechaPedido;
 
   OriginDocModel({

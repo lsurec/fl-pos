@@ -77,7 +77,8 @@
         "fin": "Fecha Fin: ",
         "fechaHora": "Fecha hora: ",
         "fechaDoc": "Fecha documento: ",
-        "certificacion": "Fecha de certificacion: "
+        "certificacion": "Fecha de certificacion: ",
+        "filtroDoc": "Fecha documento"
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -333,6 +334,7 @@
         "procesadoDoc": "Documento Procesado",
         "transacciones": "Transacciones",
         "origen": "Origen",
-        "destino": "Destino"
+        "destino": "Destino",
+        "filtroDoc": "Id documento"
     }
 }

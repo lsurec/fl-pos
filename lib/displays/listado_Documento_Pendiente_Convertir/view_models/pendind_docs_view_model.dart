@@ -35,47 +35,53 @@ class PendingDocsViewModel extends ChangeNotifier {
   DateTime? fechaFin;
   int tipoDoc = 0;
 
-  String selectFilter = "Id documento";
-
-  List<String> filters = [
-    "Id documento",
-    "Fecha documento",
-  ];
+  //id para filtrar
+  int idSelectFilter = 1;
 
   //Doucumentos disponibles
   final List<OriginDocModel> documents = [];
 
+  changeFilter(int value) {
+    idSelectFilter = value;
+    orderList();
+  }
+
   orderList() {
-    switch (selectFilter) {
-      case "Id documento":
+    switch (idSelectFilter) {
+      case 1:
         if (_ascendente) {
-          documents.sort((a, b) => b.iDDocumento
-              .compareTo(a.iDDocumento)); // Orden descendente por ID
+          documents.sort(
+            (a, b) => b.iDDocumento.compareTo(
+              a.iDDocumento,
+            ),
+          ); // Orden descendente por ID
         } else {
-          documents.sort((a, b) => a.iDDocumento
-              .compareTo(b.iDDocumento)); // Orden ascendente por ID
+          documents.sort(
+            (a, b) => a.iDDocumento.compareTo(
+              b.iDDocumento,
+            ),
+          ); // Orden ascendente por ID
         }
-
         break;
-      case "Fecha documento":
+      case 2:
         if (_ascendente) {
-          documents.sort((a, b) => DateTime.parse(b.fechaHora).compareTo(
-              DateTime.parse(a.fechaHora))); // Orden descendente por ID
+          documents.sort(
+            (a, b) => DateTime.parse(b.fechaHora).compareTo(
+              DateTime.parse(a.fechaHora),
+            ),
+          ); // Orden descendente por ID
         } else {
-          documents.sort((a, b) => DateTime.parse(a.fechaHora).compareTo(
-              DateTime.parse(b.fechaHora))); // Orden ascendente por ID
+          documents.sort(
+            (a, b) => DateTime.parse(a.fechaHora).compareTo(
+              DateTime.parse(b.fechaHora),
+            ),
+          ); // Orden ascendente por ID
         }
-
         break;
       default:
     }
 
     notifyListeners();
-  }
-
-  changeFilter(String value) {
-    selectFilter = value;
-    orderList();
   }
 
   String _addLeadingZero(int number) {

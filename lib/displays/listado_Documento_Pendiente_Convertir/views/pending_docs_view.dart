@@ -95,22 +95,33 @@ class PendingDocsView extends StatelessWidget {
                         children: [
                           SizedBox(
                             width: 175,
-                            child: DropdownButton<String>(
+                            child: DropdownButton<int>(
                               isExpanded: true,
                               dropdownColor: AppTheme.backroundColor,
-                              value: vm.selectFilter,
+                              value: vm.idSelectFilter,
                               onChanged: (value) => vm.changeFilter(value!),
-                              items: vm.filters.map(
-                                (filter) {
-                                  return DropdownMenuItem<String>(
-                                    value: filter,
-                                    child: Text(
-                                      filter,
-                                      style: AppTheme.normalStyle,
+                              items: [
+                                DropdownMenuItem<int>(
+                                  value: 1,
+                                  child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.cotizacion,
+                                      'filtroDoc',
                                     ),
-                                  );
-                                },
-                              ).toList(),
+                                    style: AppTheme.normalStyle,
+                                  ),
+                                ),
+                                DropdownMenuItem<int>(
+                                  value: 2,
+                                  child: Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.fecha,
+                                      'filtroDoc',
+                                    ),
+                                    style: AppTheme.normalStyle,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           IconButton(
@@ -251,7 +262,7 @@ class _CardDoc extends StatelessWidget {
                       )}: ",
                       text: "${document.serie} (${document.serieDocumento})"),
                   const SizedBox(height: 5),
-                  if (document.observacion.isNotEmpty)
+                  if (document.observacion != null)
                     TextsWidget(
                       title: "${AppLocalizations.of(context)!.translate(
                         BlockTranslate.general,
