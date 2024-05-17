@@ -148,7 +148,17 @@
         "monedaDistinta": "No se puede agregar la transacción porque la moneda es distinta a las transacciones existentes.",
         "transaccionAgregada": "Transaccion agregada.",
         "continuarDoc": "¿Continuar documento?",
-        "docSinConfirmar": "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?."
+        "docSinConfirmar": "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?.",
+        "enCeroNoSelec": "Las transacciones con disponibilidad 0 no serán seleccionadas.",
+        "noMarcarSiEsCero": "No puede marcarse una transaccion con disponibilidad 0.",
+        "noMayorADisponible": "El valor no debe ser mayor al valor disponible.",
+        "confirmarTransaccion": "Confirmar transacción.",
+        "sinSerie": "No se ha seleccionado una serie.",
+        "sinCliente": "No se ha seleccionado un cliente.",
+        "sinVendedor": "No se ha seleccionado un vendedor.",
+        "sinTransacciones": "No se han agregado transacciones.",
+        "sinPago": "No se ha agregado ningún pago.",
+        "saldoPendiente": "Tienes un saldo pendiente de pagar."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -309,18 +319,6 @@
         "cargAgregado": "Cargo agregado.",
         "descAgregado": "Descuento agregado.",
         "saldo": "Saldo"
-    },
-    "cotizaNotificacion": {
-        "enCeroNoSelec": "Las transacciones con disponibilidad 0 no serán seleccionadas.",
-        "noMarcarSiEsCero": "No puede marcarse una transaccion con disponibilidad 0.",
-        "noMayorADisponible": "El valor no debe ser mayor al valor disponible.",
-        "confirmarTransaccion": "Confirmar transacción.",
-        "sinSerie": "No se ha seleccionado una serie.",
-        "sinCliente": "No se ha seleccionado un cliente.",
-        "sinVendedor": "No se ha seleccionado un vendedor.",
-        "sinTransacciones": "No se han agregado transacciones.",
-        "sinPago": "No se ha agregado ningún pago.",
-        "saldoPendiente": "Tienes un saldo pendiente de pagar."
     },
     "cotizacion": {
         "convertirDoc": "Convertir Documento",

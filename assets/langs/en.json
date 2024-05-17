@@ -148,7 +148,17 @@
         "monedaDistinta": "The transaction cannot be added because the currency is different from the existing transactions.",
         "transaccionAgregada": "Transaction added.",
         "continuarDoc": "Continue with document?",
-        "docSinConfirmar": "An unconfirmed document was detected, do you want to load the found document?"
+        "docSinConfirmar": "An unconfirmed document was detected, do you want to load the found document?",
+        "enCeroNoSelec": "Transactions with 0 availability will not be selected.",
+        "noMarcarSiEsCero": "A transaction with 0 availability cannot be marked.",
+        "noMayorADisponible": "The value must not be greater than the available value.",
+        "confirmarTransaccion": "Confirm transaction.",
+        "sinSerie": "No series has been selected.",
+        "sinCliente": "No client has been selected.",
+        "sinVendedor": "No seller has been selected.",
+        "sinTransacciones": "No transactions have been added.",
+        "sinPago": "No payment has been added.",
+        "saldoPendiente": "You have an outstanding balance to pay."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
@@ -309,18 +319,6 @@
         "cargAgregado": "Charge added.",
         "descAgregado": "Discount added.",
         "saldo": "Balance"
-    },
-    "cotizaNotificacion": {
-        "enCeroNoSelec": "Transactions with 0 availability will not be selected.",
-        "noMarcarSiEsCero": "A transaction with 0 availability cannot be marked.",
-        "noMayorADisponible": "The value must not be greater than the available value.",
-        "confirmarTransaccion": "Confirm transaction.",
-        "sinSerie": "No series has been selected.",
-        "sinCliente": "No client has been selected.",
-        "sinVendedor": "No seller has been selected.",
-        "sinTransacciones": "No transactions have been added.",
-        "sinPago": "No payment has been added.",
-        "saldoPendiente": "You have an outstanding balance to pay."
     },
     "cotizacion": {
         "convertirDoc": "Convert Document",

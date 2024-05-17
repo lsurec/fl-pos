@@ -148,7 +148,17 @@
         "monedaDistinta": "Impossible d'ajouter la transaction car la devise est différente des transactions existantes.",
         "transaccionAgregada": "Transaction ajoutée.",
         "continuarDoc": "Continuer le document ?",
-        "docSinConfirmar": "Un document non confirmé a été détecté, voulez-vous charger le document trouvé ?"
+        "docSinConfirmar": "Un document non confirmé a été détecté, voulez-vous charger le document trouvé ?",
+        "enCeroNoSelec": "Les transactions avec une disponibilité de 0 ne seront pas sélectionnées.",
+        "noMarcarSiEsCero": "Une transaction avec une disponibilité de 0 ne peut pas être marquée.",
+        "noMayorADisponible": "La valeur ne doit pas être supérieure à la valeur disponible.",
+        "confirmarTransaccion": "Confirmer la transaction.",
+        "sinSerie": "Aucune série sélectionnée.",
+        "sinCliente": "Aucun client sélectionné.",
+        "sinVendedor": "Aucun vendeur sélectionné.",
+        "sinTransacciones": "Aucune transaction ajoutée.",
+        "sinPago": "Aucun paiement ajouté.",
+        "saldoPendiente": "Vous avez un solde à payer."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
@@ -309,18 +319,6 @@
         "cargAgregado": "Frais ajouté.",
         "descAgregado": "Remise ajoutée.",
         "saldo": "Solde"
-    },
-    "cotizaNotificacion": {
-        "enCeroNoSelec": "Les transactions avec une disponibilité de 0 ne seront pas sélectionnées.",
-        "noMarcarSiEsCero": "Une transaction avec une disponibilité de 0 ne peut pas être marquée.",
-        "noMayorADisponible": "La valeur ne doit pas être supérieure à la valeur disponible.",
-        "confirmarTransaccion": "Confirmer la transaction.",
-        "sinSerie": "Aucune série sélectionnée.",
-        "sinCliente": "Aucun client sélectionné.",
-        "sinVendedor": "Aucun vendeur sélectionné.",
-        "sinTransacciones": "Aucune transaction ajoutée.",
-        "sinPago": "Aucun paiement ajouté.",
-        "saldoPendiente": "Vous avez un solde à payer."
     },
     "cotizacion": {
         "convertirDoc": "Convertir le document",

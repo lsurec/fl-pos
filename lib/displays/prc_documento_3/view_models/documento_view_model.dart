@@ -78,7 +78,7 @@ class DocumentoViewModel extends ChangeNotifier {
     if (documentVM.serieSelect == null) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notiCotizacion,
+          BlockTranslate.notificacion,
           'sinSerie',
         ),
       );
@@ -89,7 +89,7 @@ class DocumentoViewModel extends ChangeNotifier {
     if (documentVM.clienteSelect == null) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notiCotizacion,
+          BlockTranslate.notificacion,
           'sinCliente',
         ),
       );
@@ -102,7 +102,7 @@ class DocumentoViewModel extends ChangeNotifier {
       if (documentVM.vendedorSelect == null) {
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
-            BlockTranslate.notiCotizacion,
+            BlockTranslate.notificacion,
             'sinVendedor',
           ),
         );
@@ -114,7 +114,7 @@ class DocumentoViewModel extends ChangeNotifier {
     if (detailsVM.traInternas.isEmpty) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notiCotizacion,
+          BlockTranslate.notificacion,
           'sinTransacciones',
         ),
       );
@@ -128,7 +128,7 @@ class DocumentoViewModel extends ChangeNotifier {
       if (paymentVM.amounts.isEmpty) {
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
-            BlockTranslate.notiCotizacion,
+            BlockTranslate.notificacion,
             'sinPago',
           ),
         );
@@ -139,7 +139,7 @@ class DocumentoViewModel extends ChangeNotifier {
       if (paymentVM.saldo != 0) {
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
-            BlockTranslate.notiCotizacion,
+            BlockTranslate.notificacion,
             'saldoPendiente',
           ),
         );

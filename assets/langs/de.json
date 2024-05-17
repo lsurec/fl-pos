@@ -148,7 +148,17 @@
         "monedaDistinta": "Die Transaktion kann nicht hinzugefügt werden, da die Währung von den bestehenden Transaktionen abweicht.",
         "transaccionAgregada": "Transaktion hinzugefügt.",
         "continuarDoc": "Dokument fortsetzen?",
-        "docSinConfirmar": "Ein unbestätigtes Dokument wurde gefunden, möchten Sie das gefundene Dokument laden?"
+        "docSinConfirmar": "Ein unbestätigtes Dokument wurde gefunden, möchten Sie das gefundene Dokument laden?",
+        "enCeroNoSelec": "Transaktionen mit einer Verfügbarkeit von 0 werden nicht ausgewählt.",
+        "noMarcarSiEsCero": "Eine Transaktion mit einer Verfügbarkeit von 0 kann nicht markiert werden.",
+        "noMayorADisponible": "Der Wert darf nicht größer als der verfügbare Wert sein.",
+        "confirmarTransaccion": "Transaktion bestätigen.",
+        "sinSerie": "Es wurde keine Serie ausgewählt.",
+        "sinCliente": "Es wurde kein Kunde ausgewählt.",
+        "sinVendedor": "Es wurde kein Verkäufer ausgewählt.",
+        "sinTransacciones": "Es wurden keine Transaktionen hinzugefügt.",
+        "sinPago": "Es wurde keine Zahlung hinzugefügt.",
+        "saldoPendiente": "Du hast einen ausstehenden Saldo zu zahlen."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -309,18 +319,6 @@
         "cargAgregado": "Gebühr hinzugefügt.",
         "descAgregado": "Rabatt hinzugefügt.",
         "saldo": "Saldo"
-    },
-    "cotizaNotificacion": {
-        "enCeroNoSelec": "Transaktionen mit einer Verfügbarkeit von 0 werden nicht ausgewählt.",
-        "noMarcarSiEsCero": "Eine Transaktion mit einer Verfügbarkeit von 0 kann nicht markiert werden.",
-        "noMayorADisponible": "Der Wert darf nicht größer als der verfügbare Wert sein.",
-        "confirmarTransaccion": "Transaktion bestätigen.",
-        "sinSerie": "Es wurde keine Serie ausgewählt.",
-        "sinCliente": "Es wurde kein Kunde ausgewählt.",
-        "sinVendedor": "Es wurde kein Verkäufer ausgewählt.",
-        "sinTransacciones": "Es wurden keine Transaktionen hinzugefügt.",
-        "sinPago": "Es wurde keine Zahlung hinzugefügt.",
-        "saldoPendiente": "Du hast einen ausstehenden Saldo zu zahlen."
     },
     "cotizacion": {
         "convertirDoc": "Dokument konvertieren",

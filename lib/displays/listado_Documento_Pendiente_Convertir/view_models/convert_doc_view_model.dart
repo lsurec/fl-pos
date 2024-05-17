@@ -48,7 +48,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     if (cont != 0 && _selectAllTra) {
       NotificationService.showSnackbar(
         AppLocalizations.of(scaffoldKey.currentContext!)!.translate(
-          BlockTranslate.notiCotizacion,
+          BlockTranslate.notificacion,
           'enCeroNoSelec',
         ),
       );
@@ -143,7 +143,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     if (detalles[index].disponible == 0) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notiCotizacion,
+          BlockTranslate.notificacion,
           'noMarcarSiEsCero',
         ),
       );
@@ -190,7 +190,7 @@ class ConvertDocViewModel extends ChangeNotifier {
 
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notiCotizacion,
+          BlockTranslate.notificacion,
           'noMayorADisponible',
         ),
       );
@@ -237,7 +237,7 @@ class ConvertDocViewModel extends ChangeNotifier {
               'confirmar',
             ),
             description: AppLocalizations.of(context)!.translate(
-              BlockTranslate.notiCotizacion,
+              BlockTranslate.notificacion,
               'confirmarTransaccion',
             ),
             textOk: AppLocalizations.of(context)!.translate(

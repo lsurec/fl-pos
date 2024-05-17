@@ -205,7 +205,7 @@ class _CardDetalle extends StatelessWidget {
         if (vm.detalles[index].disponible == 0) {
           NotificationService.showSnackbar(
             AppLocalizations.of(context)!.translate(
-              BlockTranslate.notiCotizacion,
+              BlockTranslate.notificacion,
               'noMarcarSiEsCero',
             ),
           );
