@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -364,6 +365,11 @@ class _NombreDias extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmLang = Provider.of<LangViewModel>(context, listen: false);
+
+    List<String> diasSemana = vm.loadDiasView(
+      vmLang.languages[Preferences.idLanguage],
+    );
 
     return Table(
       border: const TableBorder(
@@ -387,7 +393,7 @@ class _NombreDias extends StatelessWidget {
       children: List.generate(
         1,
         (index) => TableRow(
-          children: vm.diasSemana.map((dia) {
+          children: diasSemana.map((dia) {
             return TableCell(
               child: Container(
                 height: 25,

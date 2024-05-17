@@ -73,6 +73,13 @@ class CalendarioViewModel extends ChangeNotifier {
   bool siguientes = false;
   String fraseDe = "de";
 
+  loadDiasView(LanguageModel lang) {
+    if (lang.lang == 'es') return Utilities.diasSemana;
+    if (lang.lang == 'en') return Utilities.diasIngles;
+    if (lang.lang == 'fr') return Utilities.diasFrances;
+    if (lang.lang == 'de') return Utilities.diasAleman;
+  }
+
   Future<void> loadData(BuildContext context) async {
     fraseDe = AppLocalizations.of(context)!.translate(
       BlockTranslate.calendario,
