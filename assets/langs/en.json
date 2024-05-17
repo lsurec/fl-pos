@@ -308,5 +308,31 @@
         "cargAgregado": "Charge added.",
         "descAgregado": "Discount added.",
         "saldo": "Balance"
+    },
+    "cotizaNotificacion": {
+        "enCeroNoSelec": "Transactions with 0 availability will not be selected.",
+        "noMarcarSiEsCero": "A transaction with 0 availability cannot be marked.",
+        "noMayorADisponible": "The value must not be greater than the available value.",
+        "confirmarTransaccion": "Confirm transaction.",
+        "sinSerie": "No series has been selected.",
+        "sinCliente": "No client has been selected.",
+        "sinVendedor": "No seller has been selected.",
+        "sinTransacciones": "No transactions have been added.",
+        "sinPago": "No payment has been added.",
+        "saldoPendiente": "You have an outstanding balance to pay."
+    },
+    "cotizacion": {
+        "convertirDoc": "Convert Document",
+        "idDoc": "Document ID",
+        "origenT": "SOURCE",
+        "destinoT": "DESTINATION",
+        "producto": "Product",
+        "disponible": "Available",
+        "autorizar": "Authorize",
+        "destinoDoc": "Destination Document",
+        "procesadoDoc": "Processed Document",
+        "transacciones": "Transactions",
+        "origen": "Source",
+        "destino": "Destination"
     }
 }

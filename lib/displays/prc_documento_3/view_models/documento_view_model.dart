@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +30,22 @@ class DocumentoViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Estás seguro?",
-            description:
-                "Los cambios que no hayan sido guardados, se perderán para siempre.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'perder',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),
@@ -62,13 +76,23 @@ class DocumentoViewModel extends ChangeNotifier {
 
     //Si no hay serie seleccionado mostrar mensaje
     if (documentVM.serieSelect == null) {
-      NotificationService.showSnackbar("No se ha seleccionado una serie.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notiCotizacion,
+          'sinSerie',
+        ),
+      );
       return;
     }
 
     //Si no hay cliente seleccioando mostrar mensaje
     if (documentVM.clienteSelect == null) {
-      NotificationService.showSnackbar("No se ha seleccionado un cliente.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notiCotizacion,
+          'sinCliente',
+        ),
+      );
       return;
     }
 
@@ -76,14 +100,24 @@ class DocumentoViewModel extends ChangeNotifier {
     if (documentVM.cuentasCorrentistasRef.isNotEmpty) {
       //si hay vendedor seleccionado mostrar mensaje
       if (documentVM.vendedorSelect == null) {
-        NotificationService.showSnackbar("No se ha seleccionado un vendedor.");
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notiCotizacion,
+            'sinVendedor',
+          ),
+        );
         return;
       }
     }
 
     //si no hay transacciones mostrar mensaje
     if (detailsVM.traInternas.isEmpty) {
-      NotificationService.showSnackbar("No se han agregado transacciones.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notiCotizacion,
+          'sinTransacciones',
+        ),
+      );
       return;
     }
 
@@ -92,13 +126,23 @@ class DocumentoViewModel extends ChangeNotifier {
     if (paymentVM.paymentList.isNotEmpty) {
       //si no hay pagos agregados mostar mensaje
       if (paymentVM.amounts.isEmpty) {
-        NotificationService.showSnackbar("No se ha agregado ningun pago.");
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notiCotizacion,
+            'sinPago',
+          ),
+        );
         return;
       }
 
       // si no se ha pagado el total mostrar mensaje
       if (paymentVM.saldo != 0) {
-        NotificationService.showSnackbar("Tinene un saldo pendiente de pagar.");
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notiCotizacion,
+            'saldoPendiente',
+          ),
+        );
         return;
       }
     }
