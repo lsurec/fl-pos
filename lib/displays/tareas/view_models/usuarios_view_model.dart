@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+
 import '../models/models.dart';
 import 'dart:async';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -50,7 +52,10 @@ class UsuariosViewModel extends ChangeNotifier {
       usuarios.clear();
       notifyListeners();
       NotificationService.showSnackbar(
-        'Ingrese un caracter para realizar una busqueda.',
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.mensajes,
+          'ingreseCaracter',
+        ),
       );
       return;
     }
@@ -80,7 +85,7 @@ class UsuariosViewModel extends ChangeNotifier {
 
     //agregar a lista usuarios la respuesta de api.
     usuarios.addAll(res.message);
-    
+
     isLoading = false; //Detener carga
   }
 

@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -33,15 +35,19 @@ class UsuariosView extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 vm.tipoBusqueda == 1
-                    ? 'Agregar responsable'
-                    : 'Agregar invitados',
+                    ? AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tooltip,
+                        'agregarResponsable',
+                      )
+                    : AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tooltip,
+                        'agregarInvitados',
+                      ),
                 style: AppTheme.titleStyle,
               ),
             ),
             body: RefreshIndicator(
-              onRefresh: () async {
-                print("Volver a ceagar");
-              },
+              onRefresh: () async {},
               child: ListView(
                 children: [
                   Padding(
@@ -52,9 +58,11 @@ class UsuariosView extends StatelessWidget {
                           controller: vm.buscar,
                           onChanged: (criterio) =>
                               vm.buscarUsuarioTemp(context),
-                          decoration: const InputDecoration(
-                            labelText:
-                                "Ingrese un caracter para iniciar la busqueda.",
+                          decoration: InputDecoration(
+                            labelText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'buscar',
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -62,7 +70,10 @@ class UsuariosView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Registros (${vm.usuarios.length})",
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'registro',
+                              )} (${vm.usuarios.length})",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ],
@@ -129,10 +140,17 @@ class _UsuariosEncontados extends StatelessWidget {
                       text: TextSpan(
                         style: AppTheme.normalStyle,
                         children: [
-                          const TextSpan(text: "Email: "),
                           TextSpan(
-                              text: usuario.email,
-                              style: AppTheme.normalBoldStyle),
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.cuenta,
+                              'correo',
+                            ),
+                          ),
+                          const TextSpan(text: " "),
+                          TextSpan(
+                            text: usuario.email,
+                            style: AppTheme.normalBoldStyle,
+                          ),
                         ],
                       ),
                     ),
@@ -145,7 +163,10 @@ class _UsuariosEncontados extends StatelessWidget {
                       Checkbox(
                         activeColor: AppTheme.primary,
                         value: usuario.select,
-                        onChanged: (value) => vm.changeChecked(value, index),
+                        onChanged: (value) => vm.changeChecked(
+                          value,
+                          index,
+                        ),
                       ),
                   ],
                 ),

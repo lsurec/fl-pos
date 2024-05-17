@@ -51,7 +51,7 @@ class IdReferenciaView extends StatelessWidget {
                         Text(
                           "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.general,
-                            'registros',
+                            'registro',
                           )} (${vm.idReferencias.length})",
                           style: AppTheme.normalBoldStyle,
                         ),

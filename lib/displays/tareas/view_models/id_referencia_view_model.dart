@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
-import '../../../services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'dart:async';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -36,6 +37,12 @@ class IdReferenciaViewModel extends ChangeNotifier {
     //si el campo de busqueda está vacio, limpiar lista.
     if (search.isEmpty) {
       idReferencias.clear();
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.mensajes,
+          'ingreseCaracter',
+        ),
+      );
       return;
     }
 
