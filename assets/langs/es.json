@@ -341,11 +341,39 @@
         "creador": "Creador: ",
         "responsable": "Responsable: ",
         "noAsignado": "No asignado",
-        "buscar": "Buscar"
+        "buscar": "Buscar",
+        "detalleTarea": "Detalles Tarea",
+        "comentarios": "Comentarios",
+        "estadoT": "ESTADO",
+        "prioridad": "PRIORIDAD",
+        "tipo": "TIPO TAREA",
+        "idRefT": "ID REFERENCIA",
+        "responsableT": "RESPONSABLE",
+        "sinHistorialResp": "No hay responsables en el historial.",
+        "historialResp": "HISTORIAL DE RESPONSABLES:",
+        "invitados": "INVITADOS",
+        "creadorT": "CREADOR",
+        "nuevoEstado": "Seleccione un nuevo estado.",
+        "nuevaPrioridad": "Seleccione una nueva prioridad."
     },
     "botonesTareas": {
-        "nueva": "Nueva Tarea"
+        "nueva": "Nueva Tarea",
+        "historial": "Ver historial",
+        "eliminarInvitado": "Eliminar invitado",
+        "agregarInvitado": "Agregar invitado",
+        "eliminar": "Eliminar"
     },
     "calendario": {},
-    "notiTareas": {}
+    "notiTareas": {
+        "estadoActualizado": "Estado de la tarea actualizado correctamente.",
+        "prioridadActualizada": "Nivel de prioridad de la tarea actualizado correctamente.",
+        "eliminaraInvitado": "Este usuario será eliminado de la lista de invitados de esta tarea.",
+        "usuarioEliminado": "Usuario eliminado correctamente.",
+        "listaInviActualizada": "Se actualizó la lista de invitados a la tarea.",
+        "yaEsInvitado": "Uno o más usuarios seleccionados ya son invitados de la tarea."
+    },
+    "fechasTarea": {
+        "feHoInicio": "FECHA Y HORA INICIAL: ",
+        "feHoFin": "FECHA Y HORA FINAL: "
+    }
 }
