@@ -383,7 +383,19 @@
         "adjuntarArchivos": "Adjuntar Archivos",
         "enviarComentario": "Enviar comentario."
     },
-    "calendario": {},
+    "calendario": {
+        "hoy": "Hoy",
+        "de": "de",
+        "anterior": "Anterior",
+        "siguiente": "Siguiente",
+        "vistasT": "VISTAS",
+        "mes": "Mes",
+        "semana": "Semana",
+        "dia": "Día",
+        "horario": "Horario",
+        "tareas": "Tareas",
+        "nueva": "Nueva"
+    },
     "notiTareas": {
         "estadoActualizado": "Estado de la tarea actualizado correctamente.",
         "prioridadActualizada": "Nivel de prioridad de la tarea actualizado correctamente.",

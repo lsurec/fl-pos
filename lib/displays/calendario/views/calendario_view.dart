@@ -8,6 +8,8 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class CalendarioView extends StatefulWidget {
   const CalendarioView({super.key});
@@ -40,18 +42,24 @@ class _CalendarioViewState extends State<CalendarioView> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(
-                 vmMenu.name,
+                vmMenu.name,
                 style: AppTheme.titleStyle,
               ),
               actions: <Widget>[
-                const Text(
-                  "Hoy",
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calendario,
+                    'hoy',
+                  ),
                   style: AppTheme.normalBoldStyle,
                 ),
                 IconButton(
                   onPressed: () => vm.loadData(context),
                   icon: const Icon(Icons.today),
-                  tooltip: "Nueva Tarea",
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.tooltip,
+                    'nueva',
+                  ),
                 ),
                 const SizedBox(
                   width: 15,
@@ -77,7 +85,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      " ${vm.daySelect} de ${Utilities.nombreMes(vm.monthSelectView)} de ${vm.yearSelect}",
+                                      " ${vm.daySelect} ${vm.fraseDe} ${Utilities.nombreMes(vm.monthSelectView)} ${vm.fraseDe} ${vm.yearSelect}",
                                       style: AppTheme.normalBoldStyle,
                                     ),
                                     const SizedBox(width: 5),
@@ -92,19 +100,27 @@ class _CalendarioViewState extends State<CalendarioView> {
                               ),
                               Row(
                                 children: [
-                                  TextButton(
+                                  IconButton(
                                     onPressed: () => vm.diaAnterior(context),
-                                    child: const Text(
-                                      "Dia Anterior",
-                                      style: AppTheme.normalBoldStyle,
+                                    icon: const Icon(
+                                      Icons.arrow_back,
+                                    ),
+                                    tooltip:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calendario,
+                                      'anterior',
                                     ),
                                   ),
                                   const Spacer(),
-                                  TextButton(
+                                  IconButton(
                                     onPressed: () => vm.diaSiguiente(context),
-                                    child: const Text(
-                                      "Dia Siguiente",
-                                      style: AppTheme.normalBoldStyle,
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
+                                    ),
+                                    tooltip:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calendario,
+                                      'siguiente',
                                     ),
                                   ),
                                 ],
@@ -134,23 +150,27 @@ class _CalendarioViewState extends State<CalendarioView> {
                               ),
                               Row(
                                 children: [
-                                  TextButton(
-                                    onPressed: () => vm.mesAnterior(
-                                      context,
+                                  IconButton(
+                                    onPressed: () => vm.mesAnterior(context),
+                                    icon: const Icon(
+                                      Icons.arrow_back,
                                     ),
-                                    child: const Text(
-                                      "Mes Anterior",
-                                      style: AppTheme.normalBoldStyle,
+                                    tooltip:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calendario,
+                                      'anterior',
                                     ),
                                   ),
                                   const Spacer(),
-                                  TextButton(
-                                    onPressed: () => vm.mesSiguiente(
-                                      context,
+                                  IconButton(
+                                    onPressed: () => vm.mesSiguiente(context),
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
                                     ),
-                                    child: const Text(
-                                      "Mes Siguiente",
-                                      style: AppTheme.normalBoldStyle,
+                                    tooltip:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calendario,
+                                      'siguiente',
                                     ),
                                   ),
                                 ],
@@ -180,23 +200,28 @@ class _CalendarioViewState extends State<CalendarioView> {
                               ),
                               Row(
                                 children: [
-                                  TextButton(
-                                    onPressed: () => vm.semanaAnterior(
-                                      context,
+                                  IconButton(
+                                    onPressed: () => vm.semanaAnterior(context),
+                                    icon: const Icon(
+                                      Icons.arrow_back,
                                     ),
-                                    child: const Text(
-                                      "Semana Anterior",
-                                      style: AppTheme.normalBoldStyle,
+                                    tooltip:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calendario,
+                                      'anterior',
                                     ),
                                   ),
                                   const Spacer(),
-                                  TextButton(
-                                    onPressed: () => vm.semanaSiguiente(
-                                      context,
+                                  IconButton(
+                                    onPressed: () =>
+                                        vm.semanaSiguiente(context),
+                                    icon: const Icon(
+                                      Icons.arrow_forward,
                                     ),
-                                    child: const Text(
-                                      "Semana Siguiente",
-                                      style: AppTheme.normalBoldStyle,
+                                    tooltip:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.calendario,
+                                      'siguiente',
                                     ),
                                   ),
                                 ],
@@ -278,8 +303,11 @@ class _DrawerCalendar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
-                title: const Text(
-                  "VISTAS",
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calendario,
+                    'vistas',
+                  ),
                   style: AppTheme.normalBoldStyle,
                 ),
                 trailing: IconButton(
@@ -289,8 +317,11 @@ class _DrawerCalendar extends StatelessWidget {
               ),
               const Divider(),
               ListTile(
-                title: const Text(
-                  "Mes",
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calendario,
+                    'mes',
+                  ),
                   style: AppTheme.normalBoldStyle,
                 ),
                 leading: const Icon(Icons.calendar_month),
@@ -298,8 +329,11 @@ class _DrawerCalendar extends StatelessWidget {
               ),
               const Divider(),
               ListTile(
-                title: const Text(
-                  "Semana",
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calendario,
+                    'semana',
+                  ),
                   style: AppTheme.normalBoldStyle,
                 ),
                 leading: const Icon(Icons.date_range),
@@ -307,8 +341,11 @@ class _DrawerCalendar extends StatelessWidget {
               ),
               const Divider(),
               ListTile(
-                title: const Text(
-                  "Día",
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calendario,
+                    'dia',
+                  ),
                   style: AppTheme.normalBoldStyle,
                 ),
                 leading: const Icon(Icons.today),
@@ -872,8 +909,11 @@ class _VistaDiaState extends State<_VistaDia> {
           Container(
             padding: const EdgeInsets.all(10),
             height: 45,
-            child: const Text(
-              "Horario",
+            child: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.calendario,
+                'horario',
+              ),
               style: AppTheme.normalBoldStyle,
             ),
           ),
@@ -882,8 +922,11 @@ class _VistaDiaState extends State<_VistaDia> {
             child: Container(
               padding: const EdgeInsets.all(10),
               width: 32,
-              child: const Text(
-                "Tareas",
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calendario,
+                  'tareas',
+                ),
                 style: AppTheme.normalBoldStyle,
               ),
             ),
@@ -895,8 +938,11 @@ class _VistaDiaState extends State<_VistaDia> {
               padding: const EdgeInsets.all(10),
               height: 45,
               alignment: Alignment.center,
-              child: const Text(
-                "Nueva",
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calendario,
+                  'nueva',
+                ),
                 style: AppTheme.tareaStyle,
               ),
             ),
@@ -961,13 +1007,10 @@ class _VistaDiaState extends State<_VistaDia> {
                         borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
                         raidus: 10,
                         child: GestureDetector(
-                          onTap: () {
-                            print(
-                              "ver detalles tarea ${tarea.tarea}",
-                            );
-
-                            vm.navegarDetalleTarea(context, tarea);
-                          },
+                          onTap: () => vm.navegarDetalleTarea(
+                            context,
+                            tarea,
+                          ),
                           child: ListTile(
                             title: Text(
                               tarea.texto.substring(7),
@@ -1018,20 +1061,6 @@ class _VistaDiaState extends State<_VistaDia> {
                     ),
                 ],
               )
-
-            //   if (horasDia[indexHora].hora24 < vm.fechaHoy.hour)
-            //     const SizedBox(),
-            // if (horasDia[indexHora].hora24 >= vm.fechaHoy.hour)
-            // IconButton(
-            //   onPressed: () => vm.navegarCrearTarea(
-            //     context,
-            //     horasDia[indexHora],
-            //     vm.daySelect,
-            //     vm.monthSelectView,
-            //     vm.yearSelect,
-            //   ),
-            //   icon: const Icon(Icons.add),
-            // ),
           ],
         ),
       );

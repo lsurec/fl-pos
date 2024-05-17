@@ -9,6 +9,8 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -69,8 +71,13 @@ class CalendarioViewModel extends ChangeNotifier {
   //para estilos de los días
   bool siEsHoy = false;
   bool siguientes = false;
+  String fraseDe = "de";
 
   Future<void> loadData(BuildContext context) async {
+    fraseDe = AppLocalizations.of(context)!.translate(
+      BlockTranslate.calendario,
+      'de',
+    );
     //fecha del dia de hoy y la del picker inicializarlas con a fecha actual
     fechaHoy = DateTime.now();
     fechaPicker = DateTime.now();
@@ -917,7 +924,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     // Construir el nombre de la semana según las condiciones
     if (monthStart > monthEnd && yearStart < yearEnd) {
-      return "${Utilities.nombreMes(monthStart).substring(0, 3)} de $yearStart - ${Utilities.nombreMes(monthEnd).substring(0, 3)} de $yearEnd";
+      return "${Utilities.nombreMes(monthStart).substring(0, 3)} $fraseDe $yearStart - ${Utilities.nombreMes(monthEnd).substring(0, 3)} $fraseDe $yearEnd";
     }
     if (indexWeekActive == 0 && dayStart > dayEnd ||
         indexWeekActive == semanasDelMes.length - 1 && dayStart > dayEnd) {
