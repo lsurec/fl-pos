@@ -82,15 +82,15 @@ class _CalendarioViewState extends State<CalendarioView> {
                           Column(
                             children: [
                               ListTile(
-                                title: const Row(
+                                title: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "a",
+                                      "${vm.daySelect} ${Utilities.nombreMes(context ,vm.monthSelectView,)} ${vm.yearSelect}",
                                       style: AppTheme.normalBoldStyle,
                                     ),
-                                    SizedBox(width: 5),
-                                    Icon(
+                                    const SizedBox(width: 5),
+                                    const Icon(
                                       Icons.arrow_drop_down,
                                     ),
                                   ],
