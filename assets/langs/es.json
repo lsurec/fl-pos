@@ -357,7 +357,8 @@
         "nuevaPrioridad": "Seleccione una nueva prioridad.",
         "comentariosTarea": "Comentarios Tarea",
         "archivosSelec": "Archivos seleccionados.",
-        "nuevoComentario": "Nuevo comentario"
+        "nuevoComentario": "Nuevo comentario",
+        "buscarIdRef": "Buscar ID Referencia"
     },
     "botonesTareas": {
         "nueva": "Nueva Tarea",
