@@ -442,11 +442,14 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<void> abrirFechaInicial(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: fechaInicial,
-      firstDate: fechaInicial,
-      lastDate: DateTime(2100),
-    );
+        context: context,
+        initialDate: fechaInicial,
+        firstDate: fechaInicial,
+        lastDate: DateTime(2100),
+        confirmText: AppLocalizations.of(context)!.translate(
+          BlockTranslate.botones,
+          'aceptar',
+        ));
 
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
@@ -472,12 +475,15 @@ class CrearTareaViewModel extends ChangeNotifier {
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: fechaFinal,
-      //fecha minima es la inicial
-      firstDate: fechaInicial,
-      lastDate: DateTime(2100),
-    );
+        context: context,
+        initialDate: fechaFinal,
+        //fecha minima es la inicial
+        firstDate: fechaInicial,
+        lastDate: DateTime(2100),
+        confirmText: AppLocalizations.of(context)!.translate(
+          BlockTranslate.botones,
+          'aceptar',
+        ));
 
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
@@ -508,6 +514,13 @@ class CrearTareaViewModel extends ChangeNotifier {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
     );
 
     //Estando en la vista del calendario cuando ingrese al formulario desde cualquier hora
@@ -622,6 +635,13 @@ class CrearTareaViewModel extends ChangeNotifier {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
     );
 
     //si la hora es null no hace nada
