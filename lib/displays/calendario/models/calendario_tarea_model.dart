@@ -23,7 +23,7 @@ class TareaCalendarioModel {
   String texto;
   String backColor;
   int estado;
-  String desTarea;
+  String? desTarea;
   String? usuarioResponsable;
   int nivelPrioridad;
   String nomNivelPrioridad;
