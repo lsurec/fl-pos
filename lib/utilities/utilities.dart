@@ -2,8 +2,13 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/view_models/lang_view_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class Utilities {
   //Nombre Dias Semana
@@ -15,6 +20,36 @@ class Utilities {
     "Jueves",
     "Viernes",
     "Sábado",
+  ];
+
+  static List<String> diasIngles = [
+    "SUNDAY",
+    "MONDAY",
+    "TUESDAY",
+    "WEDNESDAY",
+    "THURSDAY",
+    "FRIDAY",
+    "SATURDAY",
+  ];
+
+  static List<String> diasFrances = [
+    "DIMANCHE",
+    "LUNDI",
+    "MARDI",
+    "MERCREDI",
+    "JEUDI",
+    "VENDREDI",
+    "SAMEDI"
+  ];
+
+  static List<String> diasAleman = [
+    "SONNTAG",
+    "MONTAG",
+    "DIENSTAG",
+    "MITTWOCH",
+    "DONNERSTAG",
+    "FREITAG",
+    "SAMSTAG"
   ];
 
   //Nombre de los meses del año
@@ -32,6 +67,56 @@ class Utilities {
     "Noviembre",
     "Diciembre",
   ];
+
+  //meses ingles
+  static List<String> mesesIngles = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+//meses freances
+  static List<String> mesesFrances = [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
+  ];
+
+  //meses aleman
+
+  static List<String> mesesAleman = [
+    "Januar",
+    "Februar",
+    "März",
+    "April",
+    "Mai",
+    "Juni",
+    "Juli",
+    "August",
+    "September",
+    "Oktober",
+    "November",
+    "Dezember",
+  ];
+
   //Lista de horas
   static List<HorasModel> horasDelDia = [
     HorasModel(
@@ -199,11 +284,20 @@ class Utilities {
   }
 
   //Nombre mes
-  static String nombreMes(int mes) {
+  static String nombreMes(BuildContext context, int mes) {
+    final vmLang = Provider.of<LangViewModel>(context, listen: false);
+
     if (mes <= 0) {
-      return nombreMeses[0];
+      return loadMonthView(vmLang.languages[Preferences.idLanguage])[0];
     }
-    return nombreMeses[mes - 1];
+    return loadMonthView(vmLang.languages[Preferences.idLanguage])[mes - 1];
+  }
+
+  static loadMonthView(LanguageModel lang) {
+    if (lang.lang == 'es') return nombreMeses;
+    if (lang.lang == 'en') return mesesIngles;
+    if (lang.lang == 'fr') return mesesFrances;
+    if (lang.lang == 'de') return mesesAleman;
   }
 
   // Función para convertir un color hexadecimal en formato RGB
@@ -221,7 +315,7 @@ class Utilities {
     return [r, g, b];
   }
 
-    static String nombreArchivo(File archivo) {
+  static String nombreArchivo(File archivo) {
     // Obtener el path del archivo
     String path = archivo.path;
 

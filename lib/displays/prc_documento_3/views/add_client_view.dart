@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -19,11 +21,17 @@ class AddClientView extends StatelessWidget {
               context,
               0,
             ),
-            child: const Icon(Icons.save_outlined),
+            child: const Icon(
+              Icons.save_outlined,
+              color: AppTheme.white,
+            ),
           ),
           appBar: AppBar(
-            title: const Text(
-              "Nueva Cuenta",
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.cuenta,
+                'nueva',
+              ),
               style: AppTheme.titleStyle,
             ),
           ),
@@ -38,37 +46,61 @@ class AddClientView extends StatelessWidget {
                       maxLines: 1,
                       formProperty: "nombre",
                       formValues: vm.formValues,
-                      hintText: "Nombres",
-                      labelText: "Nombres",
+                      hintText: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'nombre',
+                      ),
+                      labelText: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'nombre',
+                      ),
                     ),
                     InputWidget(
                       maxLines: 1,
                       formProperty: "direccion",
                       formValues: vm.formValues,
-                      hintText: "Direccion",
-                      labelText: "Direccion",
+                      hintText: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'direccion',
+                      ),
+                      labelText: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'direccion',
+                      ),
                     ),
                     InputWidget(
                       maxLines: 1,
                       formProperty: "nit",
                       formValues: vm.formValues,
-                      hintText: "Nit",
-                      labelText: "Nit",
+                      hintText: "NIT",
+                      labelText: "NIT",
                     ),
                     InputWidget(
                       maxLines: 1,
                       formProperty: "telefono",
                       formValues: vm.formValues,
-                      hintText: "Telefono",
-                      labelText: "Telefono",
+                      hintText: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'telefono',
+                      ),
+                      labelText: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'telefono',
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: TextFormField(
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          hintText: "Correo",
-                          labelText: "Correo",
+                        decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cuenta,
+                            'correo',
+                          ),
+                          labelText: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cuenta,
+                            'correo',
+                          ),
                         ),
                         onChanged: (value) => vm.formValues["correo"] = value,
                         validator: (value) {
@@ -78,7 +110,10 @@ class AddClientView extends StatelessWidget {
 
                           return regExp.hasMatch(value ?? '')
                               ? null
-                              : 'Correo invalido.';
+                              : AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.cuenta,
+                                  'invalido',
+                                );
                         },
                       ),
                     ),

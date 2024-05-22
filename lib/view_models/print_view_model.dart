@@ -11,6 +11,7 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +26,17 @@ class PrintViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<PrintModel> printReceiveTest(int paperDefault) async {
+  Future<PrintModel> printReceiveTest(
+      BuildContext context, int paperDefault) async {
     List<int> bytes = [];
     final generator = Generator(
         AppData.paperSize[paperDefault], await CapabilityProfile.load());
     bytes += generator.setGlobalCodeTable('CP1252');
-    bytes += generator.text("PRUEBA TICKET",
+    bytes += generator.text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          "generico",
+        ),
         styles: PosStyles(
             align: AppData.posAlign["center"],
             width: AppData.posTextSize[2],
@@ -97,8 +103,10 @@ class PrintViewModel extends ChangeNotifier {
     final List<PrintConvertModel> data = res.message;
 
     if (data.isEmpty) {
-      res.message =
-          "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.";
+      res.message = AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        "sinDatos",
+      );
       NotificationService.showErrorView(context, res);
 
       return;
@@ -126,7 +134,10 @@ class PrintViewModel extends ChangeNotifier {
     //TODO: Certificar
     Documento documento = Documento(
       titulo: encabezado.tipoDocumento!,
-      descripcion: "DOCUMENTO GENERICO",
+      descripcion: AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        "generico",
+      ),
       fechaCert: "",
       serie: "",
       no: "",
@@ -174,7 +185,10 @@ class PrintViewModel extends ChangeNotifier {
     List<String> mensajes = [
       //TODO: Mostrar frase
       // "**Sujeto a pagos trimestrales**",
-      "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        "sinCambios",
+      ),
     ];
 
     PoweredBy poweredBy = PoweredBy(
@@ -233,7 +247,10 @@ class PrintViewModel extends ChangeNotifier {
     );
 
     bytes += generator.text(
-      "Tel: ${docPrintModel.empresa.tel}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        "noVinculada",
+      )} ${docPrintModel.empresa.tel}",
       styles: center,
     );
 
@@ -251,17 +268,26 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
     bytes += generator.text(
-      "No. Interno: ${docPrintModel.documento.noInterno}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'interno',
+      )} ${docPrintModel.documento.noInterno}",
       styles: center,
     );
     bytes += generator.emptyLines(1);
     bytes += generator.text(
-      "Cliente:",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'cliente',
+      ),
       styles: center,
     );
 
     bytes += generator.text(
-      "Nombre: ${docPrintModel.cliente.nombre}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'nombre',
+      )} ${docPrintModel.cliente.nombre}",
       styles: center,
     );
     bytes += generator.text(
@@ -269,15 +295,24 @@ class PrintViewModel extends ChangeNotifier {
       styles: center,
     );
     bytes += generator.text(
-      "Direccion: ${docPrintModel.cliente.direccion}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'direccion',
+      )} ${docPrintModel.cliente.direccion}",
       styles: center,
     );
     bytes += generator.text(
-      "Tel: ${docPrintModel.cliente.tel}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'tel',
+      )}: ${docPrintModel.cliente.tel}",
       styles: center,
     );
     bytes += generator.text(
-      "Fecha: ${docPrintModel.cliente.fecha}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.fecha,
+        'fecha',
+      )}: ${docPrintModel.cliente.fecha}",
       styles: center,
     );
 
@@ -285,17 +320,35 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.row(
       [
-        PosColumn(text: 'Cant.', width: 2), // Ancho 2
-        PosColumn(text: 'Descripcion', width: 4), // Ancho 6
         PosColumn(
-          text: 'Precio U',
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'cantidad',
+          ),
+          width: 2,
+        ), // Ancho 2
+        PosColumn(
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.general,
+            'descripcion',
+          ),
+          width: 4,
+        ), // Ancho 6
+        PosColumn(
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'precioU',
+          ),
           width: 3,
           styles: const PosStyles(
             align: PosAlign.right,
           ),
         ), // Ancho 4
         PosColumn(
-          text: 'Monto',
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'monto',
+          ),
           width: 3,
           styles: const PosStyles(
             align: PosAlign.right,
@@ -338,7 +391,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-          text: "Sub-Total",
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'subTotal',
+          ),
           width: 6,
           styles: const PosStyles(
             bold: true,
@@ -357,7 +413,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-          text: "Cargos",
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'cargos',
+          ),
           width: 6,
           styles: const PosStyles(
             bold: true,
@@ -376,7 +435,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-          text: "Descuentos",
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'descuentos',
+          ),
           width: 6,
           styles: const PosStyles(
             bold: true,
@@ -397,7 +459,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-            text: "TOTAL",
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'totalT',
+            ),
             styles: const PosStyles(
               bold: true,
               width: PosTextSize.size2,
@@ -426,7 +491,10 @@ class PrintViewModel extends ChangeNotifier {
 
     //Si la lista de vendedores no está vacia imprimir
     bytes += generator.text(
-      "Vendedor: ${docPrintModel.vendedor}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'vendedor',
+      )} ${docPrintModel.vendedor}",
       styles: center,
     );
 
@@ -566,8 +634,10 @@ class PrintViewModel extends ChangeNotifier {
     //validar que haya datos
 
     if (encabezadoTemplate.isEmpty) {
-      resEncabezado.message =
-          "No se han encontrado encabezados para la impresion del documento, verifique el procedimiento almacenado.";
+      resEncabezado.message = AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinEncabezados',
+      );
       NotificationService.showErrorView(context, resEncabezado);
 
       return;
@@ -600,7 +670,10 @@ class PrintViewModel extends ChangeNotifier {
     //TODO: Certificar
     Documento documento = Documento(
       titulo: encabezado.tipoDocumento!,
-      descripcion: "FEL DOCUMENTO TRIBUTARIO ELECTRONICO",
+      descripcion: AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'docTributario',
+      ),
       fechaCert: encabezado.feLFechaCertificacion ?? "",
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
@@ -696,7 +769,10 @@ class PrintViewModel extends ChangeNotifier {
     List<String> mensajes = [
       //TODO: Mostrar frase
       // "**Sujeto a pagos trimestrales**",
-      "*NO SE ACEPTAN CAMBIOS NI DEVOLUCIONES*"
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'sinCambios',
+      ),
     ];
 
     PoweredBy poweredBy = PoweredBy(
@@ -755,7 +831,10 @@ class PrintViewModel extends ChangeNotifier {
     );
 
     bytes += generator.text(
-      "Tel: ${docPrintModel.empresa.tel}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'tel',
+      )} ${docPrintModel.empresa.tel}",
       styles: center,
     );
 
@@ -836,17 +915,26 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
     bytes += generator.text(
-      "No. Interno: ${docPrintModel.documento.noInterno}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'interno',
+      )} ${docPrintModel.documento.noInterno}",
       styles: center,
     );
     bytes += generator.emptyLines(1);
     bytes += generator.text(
-      "Cliente:",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'cliente',
+      ),
       styles: center,
     );
 
     bytes += generator.text(
-      "Nombre: ${docPrintModel.cliente.nombre}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'nombre',
+      )} ${docPrintModel.cliente.nombre}",
       styles: center,
     );
     bytes += generator.text(
@@ -854,11 +942,17 @@ class PrintViewModel extends ChangeNotifier {
       styles: center,
     );
     bytes += generator.text(
-      "Direccion: ${docPrintModel.cliente.direccion}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'direccion',
+      )} ${docPrintModel.cliente.direccion}",
       styles: center,
     );
     bytes += generator.text(
-      "Fecha: ${docPrintModel.cliente.fecha}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.fecha,
+        'fecha',
+      )} ${docPrintModel.cliente.fecha}",
       styles: center,
     );
 
@@ -869,14 +963,20 @@ class PrintViewModel extends ChangeNotifier {
         PosColumn(text: 'Cant.', width: 2), // Ancho 2
         PosColumn(text: 'Descripcion', width: 4), // Ancho 6
         PosColumn(
-          text: 'Precio U',
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'precioU',
+          ),
           width: 3,
           styles: const PosStyles(
             align: PosAlign.right,
           ),
         ), // Ancho 4
         PosColumn(
-          text: 'Monto',
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'monto',
+          ),
           width: 3,
           styles: const PosStyles(
             align: PosAlign.right,
@@ -919,7 +1019,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-          text: "Sub-Total",
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'subTotal',
+          ),
           width: 6,
           styles: const PosStyles(
             bold: true,
@@ -938,7 +1041,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-          text: "Cargos",
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'cargos',
+          ),
           width: 6,
           styles: const PosStyles(
             bold: true,
@@ -957,7 +1063,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-          text: "Descuentos",
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'descuentos',
+          ),
           width: 6,
           styles: const PosStyles(
             bold: true,
@@ -978,7 +1087,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
-            text: "TOTAL",
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'totalT',
+            ),
             styles: const PosStyles(
               bold: true,
               width: PosTextSize.size2,
@@ -1006,7 +1118,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.emptyLines(1);
 
     bytes += generator.text(
-      "Detalle Pago:",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'detallePago',
+      ),
       styles: center,
     );
 
@@ -1029,7 +1144,10 @@ class PrintViewModel extends ChangeNotifier {
       bytes += generator.row(
         [
           PosColumn(
-            text: "Recibido",
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'recibido',
+            ),
             width: 6,
           ),
           PosColumn(
@@ -1044,7 +1162,10 @@ class PrintViewModel extends ChangeNotifier {
       bytes += generator.row(
         [
           PosColumn(
-            text: "Monto:",
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'monto',
+            ),
             width: 6,
           ),
           PosColumn(
@@ -1059,7 +1180,10 @@ class PrintViewModel extends ChangeNotifier {
       bytes += generator.row(
         [
           PosColumn(
-            text: "Cambio: ",
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'cambio',
+            ),
             width: 6,
           ),
           PosColumn(
@@ -1077,7 +1201,10 @@ class PrintViewModel extends ChangeNotifier {
 
     //Si la lista de vendedores no está vacia imprimir
     bytes += generator.text(
-      "Vendedor: ${docPrintModel.vendedor}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'vendedor',
+      )} ${docPrintModel.vendedor}",
       styles: center,
     );
 

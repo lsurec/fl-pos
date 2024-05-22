@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
-import '../../../services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'dart:async';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -36,6 +37,12 @@ class IdReferenciaViewModel extends ChangeNotifier {
     //si el campo de busqueda está vacio, limpiar lista.
     if (search.isEmpty) {
       idReferencias.clear();
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'ingreseCaracter',
+        ),
+      );
       return;
     }
 
@@ -54,8 +61,12 @@ class IdReferenciaViewModel extends ChangeNotifier {
     isLoading = true; //cargar pantalla
 
     //Consumo del api
-    final ApiResModel res =
-        await idReferenciaService.getIdReferencia(user, token, empresa, search);
+    final ApiResModel res = await idReferenciaService.getIdReferencia(
+      user,
+      token,
+      empresa,
+      search,
+    );
 
     //si el consumo salió mal
     if (!res.succes) {
@@ -72,10 +83,13 @@ class IdReferenciaViewModel extends ChangeNotifier {
 
   void buscarRefTemp(BuildContext context) {
     timer?.cancel(); // Cancelar el temporizador existente si existe
-    timer = Timer(const Duration(milliseconds: 1000), () {
-      // Función de filtrado que consume el servicio
-      FocusScope.of(context).unfocus(); //ocultar teclado
-      buscarIdRefencia(context, buscarIdReferencia.text);
-    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
+    timer = Timer(
+      const Duration(milliseconds: 1000),
+      () {
+        // Función de filtrado que consume el servicio
+        FocusScope.of(context).unfocus(); //ocultar teclado
+        buscarIdRefencia(context, buscarIdReferencia.text);
+      },
+    ); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,12 @@ class PaymentViewModel extends ChangeNotifier {
 
     //si no hay serie seleccionada mostrar error
     if (vmDoc.serieSelect == null) {
-      NotificationService.showSnackbar("Selecciona una serie");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaSerie',
+        ),
+      );
       return;
     }
 
@@ -255,7 +261,11 @@ class PaymentViewModel extends ChangeNotifier {
     //si no hay formas de pago seleccionadas mmostrar mensaje
     if (numSelected == 0) {
       NotificationService.showSnackbar(
-          "Seleccione por lo menos una transacción.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaTrans',
+        ),
+      );
       return;
     }
 
@@ -277,7 +287,10 @@ class PaymentViewModel extends ChangeNotifier {
       if (diferencesAmounts.length != diferencesChecked.length) {
         //mostar mensaje
         NotificationService.showSnackbar(
-            "Elimina las transacciones con diferencia.");
+            AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'eliminaTransConDife',
+        ));
         return;
       }
     }
@@ -286,9 +299,22 @@ class PaymentViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Estás seguro?",
-            description:
-                "Si no se han guardado los cambios, los perderás para siempre.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'perder',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),
@@ -342,13 +368,21 @@ class PaymentViewModel extends ChangeNotifier {
 
     if (vmDoc.clienteSelect == null) {
       NotificationService.showSnackbar(
-          "Sleccione una cuenta antes de agregar pagos.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cuentaAntesPago',
+        ),
+      );
       return;
     }
 
     if (payment.cuentaCorriente && !vmDoc.clienteSelect!.permitirCxC) {
       NotificationService.showSnackbar(
-          "La cuenta asignada al documento no tiene permitido cuentas por cobrar.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinPermisoCuentaPCobrar',
+        ),
+      );
       return;
     }
 
@@ -358,16 +392,30 @@ class PaymentViewModel extends ChangeNotifier {
       if (vmDetails.total > (vmDoc.clienteSelect?.limiteCredito ?? 0)) {
         //Mostrar alerta
         NotificationService.showSnackbar(
-            "El total del documento supera el limmite de credito de la cuenta asignada al documento.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'superaLimiteCredito',
+          ),
+        );
         return;
       }
     }
 
     //validaciones para poder navegar a la pantalla
     if (vmDetails.total == 0) {
-      NotificationService.showSnackbar("El total a pagar es 0");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'pagarCero',
+        ),
+      );
     } else if (saldo == 0) {
-      NotificationService.showSnackbar("El saldo a pagar es 0");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'pagarCero',
+        ),
+      );
     } else {
       if (payment.banco) await loadBancos(context);
 

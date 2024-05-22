@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/version_model.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -27,13 +29,19 @@ class UpdateView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                "Nueva version disponble.",
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.home,
+                  'nuevaVersion',
+                ),
                 style: AppTheme.titleStyle,
               ),
               const SizedBox(height: 10),
-              const Text(
-                "Actualiza para continuar.",
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.home,
+                  'continuar',
+                ),
                 style: AppTheme.normalStyle,
               ),
               const SizedBox(height: 20),
@@ -57,14 +65,17 @@ class UpdateView extends StatelessWidget {
               ElevatedButton(
                 // onPressed: () => vm.openLink(),
                 onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Actualizar",
-                      style: TextStyle(fontSize: 17),
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'actualizar',
+                      ),
+                      style: AppTheme.whiteBoldStyle,
                     ),
-                    Icon(
+                    const Icon(
                       Icons.upgrade,
                       size: 25,
                     ),

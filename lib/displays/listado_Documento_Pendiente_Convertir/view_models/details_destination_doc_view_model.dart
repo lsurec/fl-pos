@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -121,11 +122,11 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
   }
 
   Future shareDoc(
-    BuildContext context,
+    BuildContext contextP,
     DocDestinationModel document,
   ) async {
     //datos externos
-    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(contextP, listen: false);
     final String token = loginVM.token;
     final String user = loginVM.user;
 
@@ -151,7 +152,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
       isLoading = false;
 
       NotificationService.showErrorView(
-        context,
+        contextP,
         res,
       );
 
@@ -163,15 +164,17 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     if (data.isEmpty) {
       isLoading = false;
 
-      res.message =
-          "No se han encontrado datos para la impresion del documento, verifique el procedimiento almacenado.";
+      res.message = AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.notificacion,
+        'sinDatos',
+      );
 
-      NotificationService.showErrorView(context, res);
+      NotificationService.showErrorView(contextP, res);
 
       return;
     }
 
-    final vmHome = Provider.of<HomeViewModel>(context, listen: false);
+    final vmHome = Provider.of<HomeViewModel>(contextP, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -193,7 +196,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     //TODO: Certificar
     Documento documento = Documento(
       titulo: encabezado.tipoDocumento!,
-      descripcion: "DOCUMENTO GENERICO",
+      descripcion: AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.tiket,
+        'generico',
+      ),
       fechaCert: "",
       serie: "",
       no: "",
@@ -267,11 +273,17 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                   mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                   children: [
                     pw.Text(
-                      'No.Interno: ${documento.noInterno}',
+                      '${AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.tiket,
+                        'interno',
+                      )} ${documento.noInterno}',
                       style: font8,
                     ),
                     pw.Text(
-                      'Vendedor: $vendedor',
+                      '${AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.tiket,
+                        'vendedor',
+                      )} $vendedor',
                       style: font8,
                     ),
                   ],
@@ -308,7 +320,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Nombre:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.tiket,
+                                    'nombre',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -322,7 +337,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Direccion:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.tiket,
+                                    'direccion',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -360,7 +378,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Fecha:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.fecha,
+                                    'fecha',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -374,7 +395,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                             pw.Row(
                               children: [
                                 pw.Text(
-                                  "Tel:",
+                                  AppLocalizations.of(contextP)!.translate(
+                                    BlockTranslate.tiket,
+                                    'tel',
+                                  ),
                                   style: font8Bold,
                                 ),
                                 pw.SizedBox(width: 5),
@@ -431,7 +455,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "CODIGO",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'codigo',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -448,7 +475,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "CANTIDAD",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'cantidad',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -482,7 +512,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.40,
                               child: pw.Text(
-                                "Descripcion",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.general,
+                                  'descripcion',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -499,7 +532,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "UNITARIO",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'unitario',
+                                ),
                                 textAlign: pw.TextAlign.center,
                                 style: font8BoldWhite,
                               ),
@@ -508,7 +544,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                "TOTAL",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'totalT',
+                                ),
                                 textAlign: pw.TextAlign.center,
                                 style: font8BoldWhite,
                               ),
@@ -611,7 +650,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                               ),
                               width: PdfPageFormat.letter.width * 0.80,
                               child: pw.Text(
-                                "TOTAL:",
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'totalT',
+                                ),
                                 style: font8BoldWhite,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -643,7 +685,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                           ),
                         ),
                         child: pw.Text(
-                          "TOTAL EN LETRAS: ${encabezado.montoLetras}."
+                          "${AppLocalizations.of(contextP)!.translate(
+                            BlockTranslate.tiket,
+                            'letrasTotal',
+                          )} ${encabezado.montoLetras}."
                               .toUpperCase(),
                           style: font8Bold,
                         ),
@@ -678,6 +723,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
         },
         //encabezado
         header: (pw.Context context) => buildHeader(
+          contextP,
           logoData,
           empresa,
           documento,
@@ -685,6 +731,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
         ),
         //pie de pagina
         footer: (pw.Context context) => buildFooter(
+          contextP,
           logoDemo,
           logoFel,
           encabezado,
@@ -702,11 +749,18 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     //Detener proceso de carag
     isLoading = false;
     //compartir documento
-    Share.shareFiles([filePath], text: 'Here is your PDF file');
+    Share.shareFiles(
+      [filePath],
+      text: AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.tiket,
+        'pdf',
+      ),
+    );
   }
 
   //encabezado del pdf
   pw.Widget buildHeader(
+    BuildContext context,
     Uint8List logo,
     Empresa empresa,
     Documento documento,
@@ -798,25 +852,37 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                         ),
                       ),
                       pw.Text(
-                        'Serie: ${documento.serie}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'serie',
+                        )} ${documento.serie}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
                       ),
                       pw.Text(
-                        'Numero: ${documento.no}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'numero',
+                        )} ${documento.no}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
                       ),
                       pw.Text(
-                        'Fecha de certificacion: ${documento.fechaCert}',
+                        '${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'certificacion',
+                        )} ${documento.fechaCert}',
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
                       ),
                       pw.Text(
-                        'Firma electronica:',
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'firma',
+                        ),
                         style: const pw.TextStyle(
                           fontSize: 8,
                         ),
@@ -833,7 +899,10 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Text(
-                        "DOCUMENTO GENERICO",
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'generico',
+                        ),
                         style: pw.TextStyle(
                           fontSize: 8,
                           fontWeight: pw.FontWeight.bold,
@@ -855,6 +924,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
   }
 
   pw.Widget buildFooter(
+    BuildContext context,
     Uint8List logoDemo,
     Uint8List logoFel,
     PrintConvertModel encabezado,
@@ -866,11 +936,12 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
         children: [
           // Item 1 (50%)
           pw.Container(
-              width: PdfPageFormat.letter.width * 0.20,
-              height: 35,
-              child: pw.Image(
-                pw.MemoryImage(logoFel),
-              )),
+            width: PdfPageFormat.letter.width * 0.20,
+            height: 35,
+            child: pw.Image(
+              pw.MemoryImage(logoFel),
+            ),
+          ),
           // Item 2 (25%)
           pw.Container(
             margin: const pw.EdgeInsets.symmetric(horizontal: 15),
@@ -882,28 +953,36 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.center,
                     children: [
-                      //   pw.Text(
-                      //     "Datos del ceritificador",
-                      //     style: const pw.TextStyle(
-                      //         fontSize: 8, color: PdfColors.grey),
-                      //     textAlign: pw.TextAlign.center,
+                      // pw.Text(
+                      //   AppLocalizations.of(context)!.translate(
+                      //     BlockTranslate.tiket,
+                      //     'certificador',
                       //   ),
-                      //   pw.Text(
-                      //     "Nit: ${encabezado.certificadorDteNit}",
-                      //     style: const pw.TextStyle(
-                      //       fontSize: 8,
-                      //       color: PdfColors.grey,
-                      //     ),
-                      //     textAlign: pw.TextAlign.center,
+                      //   style: const pw.TextStyle(
+                      //     fontSize: 8,
+                      //     color: PdfColors.grey,
                       //   ),
-                      //   pw.Text(
-                      //     "Nombre: ${encabezado.certificadorDteNombre}",
-                      //     style: const pw.TextStyle(
-                      //       fontSize: 8,
-                      //       color: PdfColors.grey,
-                      //     ),
-                      //     textAlign: pw.TextAlign.center,
+                      //   textAlign: pw.TextAlign.center,
+                      // ),
+                      // pw.Text(
+                      //   "Nit: ${encabezado.certificadorDteNit}",
+                      //   style: const pw.TextStyle(
+                      //     fontSize: 8,
+                      //     color: PdfColors.grey,
                       //   ),
+                      //   textAlign: pw.TextAlign.center,
+                      // ),
+                      // pw.Text(
+                      //   "${AppLocalizations.of(context)!.translate(
+                      //     BlockTranslate.tiket,
+                      //     'nombre',
+                      //   )} ${encabezado.certificadorDteNombre}",
+                      //   style: const pw.TextStyle(
+                      //     fontSize: 8,
+                      //     color: PdfColors.grey,
+                      //   ),
+                      //   textAlign: pw.TextAlign.center,
+                      // ),
                     ],
                   ),
                 pw.Column(

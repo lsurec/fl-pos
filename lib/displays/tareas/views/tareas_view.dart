@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -45,7 +47,10 @@ class _TareasViewState extends State<TareasView> {
               IconButton(
                 onPressed: () => vm.crearTarea(context),
                 icon: const Icon(Icons.add),
-                tooltip: "Nueva Tarea",
+                tooltip: AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'nueva',
+                ),
               ),
             ],
           ),
@@ -66,7 +71,10 @@ class _TareasViewState extends State<TareasView> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "Registros (${tareas.length})",
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${tareas.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
@@ -122,10 +130,20 @@ class _CardTask extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextsWidget(title: "Tarea no: ", text: "${tarea.iDTarea}"),
+                TextsWidget(
+                  title: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.tareas,
+                    'numTarea',
+                  ),
+                  text: "${tarea.iDTarea}",
+                ),
                 const Spacer(),
                 Text(
-                  tarea.tareaEstado ?? "",
+                  tarea.tareaEstado ??
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'noDisponible',
+                      ),
                   style: AppTheme.normalStyle,
                 ),
                 const SizedBox(width: 20),
@@ -153,7 +171,11 @@ class _CardTask extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      tarea.descripcion ?? "",
+                      tarea.descripcion ??
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.general,
+                            'noDisponible',
+                          ),
                       style: AppTheme.normalBoldStyle,
                       textAlign: TextAlign.center,
                     ),
@@ -161,28 +183,60 @@ class _CardTask extends StatelessWidget {
                   const SizedBox(height: 5),
                   Row(
                     children: [
-                      const Text("ID Referencia: ",
-                          style: AppTheme.normalStyle),
-                      Text('${tarea.iDReferencia}',
-                          style: AppTheme.normalStyle),
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'idRef',
+                        )}: ",
+                        style: AppTheme.normalStyle,
+                      ),
+                      Text(
+                        '${tarea.iDReferencia}',
+                        style: AppTheme.normalStyle,
+                      ),
                       const Spacer(),
-                      Text(Utilities.formatearFecha(tarea.tareaFechaIni),
-                          style: AppTheme.normalStyle),
+                      Text(
+                        Utilities.formatearFecha(
+                          tarea.tareaFechaIni,
+                        ),
+                        style: AppTheme.normalStyle,
+                      ),
                     ],
                   ),
-                  Text("Creador: ${tarea.usuarioCreador}",
-                      style: AppTheme.normalStyle),
                   Text(
-                      "Responsable: ${tarea.usuarioResponsable ?? "No asignado"}",
-                      style: AppTheme.normalStyle),
+                    "${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.tareas,
+                      'creador',
+                    )} ${tarea.usuarioCreador}",
+                    style: AppTheme.normalStyle,
+                  ),
+                  Text(
+                    "${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.tareas,
+                      'responsable',
+                    )} ${tarea.usuarioResponsable ?? AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'noAsignado',
+                        )}",
+                    style: AppTheme.normalStyle,
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     alignment: Alignment.centerLeft,
-                    child:
-                        const Text("Observacion:", style: AppTheme.normalStyle),
+                    child: Text(
+                      "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'observacion',
+                      )}:",
+                      style: AppTheme.normalStyle,
+                    ),
                   ),
                   Text(
-                    tarea.tareaObservacion1 ?? "",
+                    tarea.tareaObservacion1 ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'noDisponible',
+                        ),
                     style: AppTheme.normalStyle,
                     textAlign: TextAlign.justify,
                     maxLines: 3,
@@ -217,19 +271,33 @@ class _InputSerach extends StatelessWidget {
         controller: vm.searchController,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Campo requerido.';
+            return AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'requerido',
+            );
           }
           return null;
         },
         decoration: InputDecoration(
-          hintText: 'Buscar',
+          hintText: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'buscar',
+          ),
+          labelText: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'buscar',
+          ),
           suffixIcon: IconButton(
-              icon: const Icon(
-                Icons.search,
-                color: AppTheme.primary,
-              ),
-              // onPressed: () => vm.performSearch(),
-              onPressed: () => vm.searchText(context)),
+            tooltip: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tareas,
+              'buscar',
+            ),
+            icon: const Icon(
+              Icons.search,
+              color: AppTheme.primary,
+            ),
+            onPressed: () => vm.searchText(context),
+          ),
         ),
       ),
     );
@@ -253,8 +321,11 @@ class _RadioFilter extends StatelessWidget {
                 groupValue: vm.filtro,
                 onChanged: (value) => vm.busqueda(value!),
               ),
-              const Text(
-                'Descripcion',
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.general,
+                  'descripcion',
+                ),
                 style: AppTheme.normalStyle,
               ),
             ],
@@ -269,8 +340,11 @@ class _RadioFilter extends StatelessWidget {
                 groupValue: vm.filtro,
                 onChanged: (value) => vm.busqueda(value!),
               ),
-              const Text(
-                "ID Referencia",
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.tareas,
+                  'idRef',
+                ),
                 style: AppTheme.normalStyle,
               ),
             ],

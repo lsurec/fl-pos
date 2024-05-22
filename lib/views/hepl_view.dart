@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class HelpView extends StatelessWidget {
   const HelpView({Key? key}) : super(key: key);
@@ -9,12 +10,15 @@ class HelpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Ayuda",
+        title: Text(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.botones,
+            "ayuda",
+          ),
           style: AppTheme.titleStyle,
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           children: [
             HelpSection(),
@@ -35,12 +39,18 @@ class HelpSection extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Card(
         child: ListTile(
-          title: const Text(
-            'Configuré mi impresora pero no logro imprimir',
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.impresora,
+              "sinImprimir",
+            ),
             style: AppTheme.normalBoldStyle,
           ),
-          subtitle: const Text(
-            'Esto podría deberse a que tu impresora no opera en modo ESC/POS o no está vinculada en la lista de dispositivos Bluetooth.',
+          subtitle: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.impresora,
+              "noVinculada",
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -56,18 +66,26 @@ class HelpSection extends StatelessWidget {
 }
 
 class ClientSection extends StatelessWidget {
+  const ClientSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
         child: ListTile(
-          title: const Text(
-            'No encuentro el cliente que busco',
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.cliente,
+              "noEncontrado",
+            ),
             style: AppTheme.normalBoldStyle,
           ),
-          subtitle: const Text(
-            'Es posible que el cliente que buscas no esté registrado. Ve al mantenimiento de cuentas y crea un nuevo cliente, o intenta hacer una búsqueda por otros parámetros. Recuerda que puedes buscar por nombre o NIT.',
+          subtitle: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.cliente,
+              "noRegistrado",
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -77,24 +95,50 @@ class ClientSection extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Información Adicional'),
-                  content: const Column(
+                  title: Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.cliente,
+                      "informacion",
+                    ),
+                  ),
+                  content: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                          'Si no encuentras al cliente que buscas, sigue estos pasos:'),
-                      SizedBox(height: 8),
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cliente,
+                          "pasos",
+                        ),
+                      ),
+                      const SizedBox(height: 8),
                       Text(
-                          '1. Verifica que el cliente esté registrado en la aplicación.'),
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cliente,
+                          "verificar",
+                        ),
+                      ),
                       Text(
-                          '2. Ve al mantenimiento de cuentas y crea un nuevo cliente si es necesario.'),
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cliente,
+                          "crear",
+                        ),
+                      ),
                       Text(
-                          '3. Intenta hacer una búsqueda por otros parámetros como nombre o NIT.'),
-                      SizedBox(height: 16),
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cliente,
+                          "buscar",
+                        ),
+                      ),
+                      const SizedBox(height: 16),
                       Text(
-                        'Si necesitas asistencia adicional, no dudes en contactar a nuestro servicio de soporte.',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cliente,
+                          "soporte",
+                        ),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -103,7 +147,12 @@ class ClientSection extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text('Cerrar'),
+                      child: Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.botones,
+                          "cerrar",
+                        ),
+                      ),
                     ),
                   ],
                 );

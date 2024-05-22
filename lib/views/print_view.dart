@@ -12,8 +12,9 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     // ignore: library_prefixes
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/print_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -201,6 +202,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 //1: prueba
                                 PrintModel print =
                                     await printVM.printReceiveTest(
+                                  context,
                                   paperDefault,
                                 );
 
@@ -241,8 +243,14 @@ class _SettingsFromState extends State<SettingsFrom> {
                       child: Center(
                         child: Text(
                           widget.settings.opcion == 1
-                              ? "Impirmir prueba"
-                              : "Impirmir documento",
+                              ? AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.impresora,
+                                  "prueba",
+                                )
+                              : AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.impresora,
+                                  "documento",
+                                ),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17,
@@ -253,8 +261,11 @@ class _SettingsFromState extends State<SettingsFrom> {
                   ),
                 ),
                 appBar: AppBar(
-                  title: const Text(
-                    "Impresión",
+                  title: Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.impresora,
+                      "impresion",
+                    ),
                     style: AppTheme.titleStyle,
                   ),
                   actions: [
@@ -277,15 +288,21 @@ class _SettingsFromState extends State<SettingsFrom> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Didpositivo conectado",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.impresora,
+                          "conectado",
+                        ),
                         style: AppTheme.titleStyle,
                       ),
                       const SizedBox(height: 10),
                       ListTile(
                         title: Text(printerDefault.name),
                         subtitle: Text(
-                            "${printerDefault.address!} | Papel: $paperDefault"),
+                            "${printerDefault.address!} | ${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.impresora,
+                          "papelT",
+                        )} $paperDefault"),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -318,25 +335,14 @@ class _SettingsFromState extends State<SettingsFrom> {
                       ),
                       const Divider(),
                       const SizedBox(height: 10),
-                      const Text(
-                        "Dispositivos disponibles",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.impresora,
+                          "disponibles",
+                        ),
                         style: AppTheme.titleStyle,
                       ),
                       const SizedBox(height: 10),
-
-                      // SwitchListTile(
-                      //   activeColor: AppTheme.primary,
-                      //   title: const Text("Lista de dispositivos encontrados"),
-                      //   subtitle: Text(
-                      //       !isPairedSelect ? "Emparejados" : "Encontrados"),
-                      //   value: isPairedSelect,
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       isPairedSelect = value;
-                      //     });
-                      //     scan();
-                      //   },
-                      // ),
                       Expanded(
                         child: ListView.builder(
                           shrinkWrap: true,
@@ -363,7 +369,14 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           ),
                                         );
                                       },
-                                      child: const Text("Agregar"))
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          "agregar",
+                                        ),
+                                        style: AppTheme.whiteBoldStyle,
+                                      ),
+                                    )
                                   : null,
                             );
                           },
@@ -416,9 +429,17 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: const Text("Selecciona papel"),
+      title: Text(AppLocalizations.of(context)!.translate(
+        BlockTranslate.impresora,
+        "selecPapel",
+      )),
       content: DropdownButtonFormField<int>(
-        decoration: const InputDecoration(labelText: "Papel"),
+        decoration: InputDecoration(
+          labelText: AppLocalizations.of(context)!.translate(
+            BlockTranslate.impresora,
+            "papelT",
+          ),
+        ),
         items: const [
           DropdownMenuItem(value: 58, child: Text("58mm")),
           DropdownMenuItem(value: 72, child: Text("72mm")),
@@ -435,7 +456,13 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const Text("Cancelar"),
+          child: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
+            style: AppTheme.whiteBoldStyle,
+          ),
         ),
         ElevatedButton(
           onPressed: (paper != null)
@@ -444,7 +471,13 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
                   Navigator.pop(context);
                 }
               : null,
-          child: const Text("Conectar"),
+          child: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "conectar",
+            ),
+            style: AppTheme.whiteBoldStyle,
+          ),
         ),
       ],
     );

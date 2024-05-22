@@ -28,7 +28,12 @@ class HomeView extends StatelessWidget {
             drawer: _MyDrawer(),
             body: RefreshIndicator(
               onRefresh: () => menuVM.refreshData(context),
-              child: ListView(),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: ListView(
+                  children: const [],
+                ),
+              ),
             ),
           ),
         ),

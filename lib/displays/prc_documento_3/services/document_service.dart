@@ -2,13 +2,14 @@
 
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/models/print_data_comanda_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/fel/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/providers/api_provider.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -557,13 +558,24 @@ class DocumentService {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Continuar documento?",
-            description:
-                "Se detectó un documento sin confimar, ¿Desea cargar el documento encontrado?.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'continuarDoc',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'docSinConfirmar',
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
-            textCancel: "Nuevo documento",
-            textOk: "Cargar documento",
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              'nuevoDoc',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              'cargarDoc',
+            ),
           ),
         ) ??
         false;

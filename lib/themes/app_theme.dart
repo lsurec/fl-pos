@@ -12,6 +12,7 @@ class AppTheme {
   static const Color disableStepLine = Color(0xFFDADADA);
   static Color backroundColor = Colors.orange.shade50;
   static const Color backroundColorSecondary = Color(0xffFEF5E7);
+  static const Color white = Colors.white;
 
   static const normalStyle = TextStyle(
     fontSize: 17,
@@ -23,12 +24,17 @@ class AppTheme {
     fontWeight: FontWeight.bold,
   );
 
-    static const horaBoldStyle = TextStyle(
+  static const horaBoldStyle = TextStyle(
     fontSize: 12,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
 
+  static const whiteBoldStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 
   static const titleStyle = TextStyle(
     fontSize: 20,

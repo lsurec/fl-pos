@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
 import '../../../widgets/widgets.dart';
@@ -26,8 +28,14 @@ class ComentariosView extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               vm.vistaTarea == 1
-                  ? 'Comentarios Tarea: ${vmTarea.tarea!.iDTarea}'
-                  : 'Comentarios Tarea: ${vmTareaCalendario.tarea!.tarea}',
+                  ? '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.tareas,
+                      'comentariosTarea',
+                    )}: ${vmTarea.tarea!.iDTarea}'
+                  : '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.tareas,
+                      'comentariosTarea',
+                    )}: ${vmTareaCalendario.tarea!.tarea}',
               style: AppTheme.titleStyle,
             ),
           ),
@@ -40,14 +48,20 @@ class ComentariosView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Observación",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'observacion',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
                         vm.vistaTarea == 1
                             ? vmTarea.tarea!.tareaObservacion1 ??
-                                "No disponible."
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'noDisponible',
+                                )
                             : vmTareaCalendario.tarea!.texto,
                         style: AppTheme.normalStyle,
                         textAlign: TextAlign.justify,
@@ -56,7 +70,10 @@ class ComentariosView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            "Comentarios (${vm.comentarioDetalle.length})",
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'comentarios',
+                            )} (${vm.comentarioDetalle.length})",
                             style: AppTheme.normalBoldStyle,
                           ),
                         ],
@@ -82,7 +99,10 @@ class ComentariosView extends StatelessWidget {
                       const SizedBox(height: 15),
                       if (vm.files.isNotEmpty)
                         Text(
-                          "Archivos seleccionados (${vm.files.length})",
+                          "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tareas,
+                            'archivosSelec',
+                          )} (${vm.files.length})",
                           style: AppTheme.normalBoldStyle,
                         ),
                       const SizedBox(height: 5),
@@ -106,8 +126,9 @@ class ComentariosView extends StatelessWidget {
                                   child: const Icon(Icons.close),
                                   onTap: () => vm.eliminarArchivos(index),
                                 ),
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                ),
                               ),
                               const Divider(),
                             ],
@@ -145,21 +166,32 @@ class _NuevoComentario extends StatelessWidget {
       controller: vm.comentarioController,
       onChanged: (value) => vm.comentarioController.text = value,
       decoration: InputDecoration(
-        labelText: 'Nuevo comentario',
+        labelText: AppLocalizations.of(context)!.translate(
+          BlockTranslate.tareas,
+          'nuevoComentario',
+        ),
         suffixIcon: SizedBox(
           width: 100,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                tooltip: "Adjuntar Archivos",
+                tooltip: AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'adjuntarArchivos',
+                ),
                 onPressed: () => vm.selectFiles(),
                 icon: const Icon(Icons.attach_file_outlined),
               ),
               IconButton(
-                tooltip: "Enviar comentario.",
-                onPressed: () =>
-                    vm.comentar(context, vm.comentarioController.text),
+                tooltip: AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'enviarComentario',
+                ),
+                onPressed: () => vm.comentar(
+                  context,
+                  vm.comentarioController.text,
+                ),
                 icon: const Icon(Icons.send),
               ),
             ],
@@ -187,7 +219,6 @@ class _Comentario extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // const SizedBox(height: 10),
         Container(
           padding: const EdgeInsets.all(10),
           decoration: const BoxDecoration(
@@ -196,10 +227,14 @@ class _Comentario extends StatelessWidget {
                 width: 1.5,
                 color: Color.fromRGBO(0, 0, 0, 0.12),
               ),
-              left:
-                  BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
-              right:
-                  BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+              left: BorderSide(
+                width: 1.5,
+                color: Color.fromRGBO(0, 0, 0, 0.12),
+              ),
+              right: BorderSide(
+                width: 1.5,
+                color: Color.fromRGBO(0, 0, 0, 0.12),
+              ),
             ),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
@@ -214,7 +249,9 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.normalBoldStyle,
               ),
               Text(
-                Utilities.formatearFecha(comentario.comentario.fechaHora),
+                Utilities.formatearFecha(
+                  comentario.comentario.fechaHora,
+                ),
                 style: AppTheme.normalStyle,
               ),
             ],
@@ -224,7 +261,9 @@ class _Comentario extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border.all(
-                width: 1.5, color: const Color.fromRGBO(0, 0, 0, 0.12)),
+              width: 1.5,
+              color: const Color.fromRGBO(0, 0, 0, 0.12),
+            ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
               bottomRight: Radius.circular(10),
@@ -257,22 +296,6 @@ class _Comentario extends StatelessWidget {
                   );
                 },
               ),
-              //PAra ver archivos
-              // TextButton(
-              //   onPressed: () => vm.openFile(
-              //     "https://img.freepik.com/vector-gratis/coleccion-nubes-dibujos-animados_23-2149016996.jpg?w=740&t=st=1712090936~exp=1712091536~hmac=9a41f6eea5ff605f25d77ec34a404ef416983e2166c5d8ac14a8a555718f9741"
-              //     // "/Almacenamiento interno/DCIM/Screenshots/Screenshot_20240321_102723.jpg"
-              //       // "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.es%2Ffotos-vectores-gratis%2Fnubes-dibujo&psig=AOvVaw3GydpjiHrk5UbiVhGfSgtB&ust=1712176733294000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCICvosGxpIUDFQAAAAAdAAAAABAE",
-              //       ),
-              //   child: const ListTile(
-              //     title: Text(
-              //       "nubess",
-              //       style: AppTheme.normalStyle,
-              //     ),
-              //     leading: Icon(Icons.insert_photo_outlined),
-              //     contentPadding: EdgeInsets.zero,
-              //   ),
-              // ),
             ],
           ),
         ),

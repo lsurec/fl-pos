@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -11,11 +13,15 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<SettingsViewModel>(context);
     final vmSplash = Provider.of<SplashViewModel>(context);
+    final vmLang = Provider.of<LangViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Configuraciones",
+        title: Text(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.home,
+            'configuracion',
+          ),
           style: AppTheme.titleStyle,
         ),
       ),
@@ -26,24 +32,50 @@ class SettingsView extends StatelessWidget {
             children: [
               ListTile(
                 leading: const Icon(Icons.print_outlined),
-                title: const Text("Impresora"),
+                title: Text(AppLocalizations.of(context)!.translate(
+                  BlockTranslate.impresora,
+                  'impresora',
+                )),
                 trailing: const Icon(Icons.arrow_right),
                 onTap: () => vm.navigatePrint(context),
               ),
               ListTile(
                 leading: const Icon(Icons.vpn_lock_outlined),
-                title: const Text("Origen de datos"),
+                title: Text(AppLocalizations.of(context)!.translate(
+                  BlockTranslate.home,
+                  'origen',
+                )),
                 subtitle: Text(Preferences.urlApi),
               ),
               ListTile(
                 leading: const Icon(Icons.help_outline),
-                title: const Text("Ayuda"),
+                title: Text(AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'ayuda',
+                )),
                 trailing: const Icon(Icons.arrow_right),
                 onTap: () => Navigator.pushNamed(context, "help"),
               ),
               ListTile(
+                leading: const Icon(Icons.language),
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.home,
+                    'idioma',
+                  ),
+                ),
+                //Nombre del idioma seleccionado en el idioma seleccionado
+                subtitle: Text(vmLang
+                    .getNameLang(vmLang.languages[Preferences.idLanguage])!),
+                trailing: const Icon(Icons.arrow_right),
+                onTap: () => vm.navigateLang(context),
+              ),
+              ListTile(
                 leading: const Icon(Icons.cloud_outlined),
-                title: const Text("Versión actual"),
+                title: Text(AppLocalizations.of(context)!.translate(
+                  BlockTranslate.home,
+                  'versionActual',
+                )),
                 subtitle: Text(vmSplash.versionLocal),
               ),
             ],

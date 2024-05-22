@@ -6,12 +6,15 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ConvertDocViewModel extends ChangeNotifier {
+  //llave global del scaffold
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   //controlar procesos
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -44,7 +47,11 @@ class ConvertDocViewModel extends ChangeNotifier {
     //mensaje si no se seleccioanron transacciones
     if (cont != 0 && _selectAllTra) {
       NotificationService.showSnackbar(
-          "Las transacciones con disponibilidad 0 no serán seleccionadas.");
+        AppLocalizations.of(scaffoldKey.currentContext!)!.translate(
+          BlockTranslate.notificacion,
+          'enCeroNoSelec',
+        ),
+      );
     }
 
     notifyListeners();
@@ -128,13 +135,18 @@ class ConvertDocViewModel extends ChangeNotifier {
 
   //seleccioanr una transaccion
   selectTra(
+    BuildContext context,
     int index, //indice seleccioando
     bool value, //valor asignado
   ) {
     //si la transaccion no tioene cantidad siponoble no se selecciona
     if (detalles[index].disponible == 0) {
       NotificationService.showSnackbar(
-          "No puede marcarse una transaccion con disponibilidad 0");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noMarcarSiEsCero',
+        ),
+      );
       return;
     }
 
@@ -163,7 +175,12 @@ class ConvertDocViewModel extends ChangeNotifier {
     if (monto <= 0) {
       Navigator.of(context).pop(); // Cierra el diálogo
 
-      NotificationService.showSnackbar("El valor debe ser mayor a 0");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noCero',
+        ),
+      );
       return;
     }
 
@@ -172,14 +189,18 @@ class ConvertDocViewModel extends ChangeNotifier {
       Navigator.of(context).pop(); // Cierra el diálogo
 
       NotificationService.showSnackbar(
-          "El valor no debe ser mayor al valor disponible.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noMayorADisponible',
+        ),
+      );
       return;
     }
 
     //Asiganr nuevo monto modificado
     detalles[index].disponibleMod = monto;
     //seleciconar transaccion
-    selectTra(index, true);
+    selectTra(context, index, true);
 
     Navigator.of(context).pop(); // Cierra el diálogo
 
@@ -199,7 +220,11 @@ class ConvertDocViewModel extends ChangeNotifier {
     //si no hay transacciones seleccionadas
     if (elementosCheckTrue.isEmpty) {
       NotificationService.showSnackbar(
-          "Selecciona por lo menos una transacción.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaTrans',
+        ),
+      );
       return;
     }
 
@@ -207,8 +232,22 @@ class ConvertDocViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Estás seguro?",
-            description: "Confirmar transacción.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmarTransaccion',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),

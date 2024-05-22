@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -14,10 +16,11 @@ import 'package:share/share.dart';
 class ErrorViewModel extends ChangeNotifier {
   Future<String> createAndSavePDF(
     ErrorModel error,
-    BuildContext context,
+    BuildContext contextP,
   ) async {
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    final vmLogin = Provider.of<LoginViewModel>(contextP, listen: false);
+    final vmLocal =
+        Provider.of<LocalSettingsViewModel>(contextP, listen: false);
 
     DateTime date = error.date;
 
@@ -47,7 +50,10 @@ class ErrorViewModel extends ChangeNotifier {
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text(
-                      "INFORME DE ERRORES - ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",
+                      "${AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.general,
+                        "descripcion",
+                      )} - ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                       ),
@@ -65,7 +71,10 @@ class ErrorViewModel extends ChangeNotifier {
                     ),
                     pw.SizedBox(height: 5),
                     pw.Text(
-                      "Usuario: ${vmLogin.user}",
+                      "${AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.login,
+                        "usuario",
+                      )}: ${vmLogin.user}",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
                       ),
@@ -76,7 +85,10 @@ class ErrorViewModel extends ChangeNotifier {
             ),
             pw.SizedBox(height: 20),
             pw.Text(
-              "Configuracion local",
+              AppLocalizations.of(contextP)!.translate(
+                BlockTranslate.localConfig,
+                "configuracion",
+              ),
               style: pw.TextStyle(
                 color: PdfColor.fromHex("#CF113C"),
                 fontWeight: pw.FontWeight.bold,
@@ -84,23 +96,41 @@ class ErrorViewModel extends ChangeNotifier {
             ),
             pw.Divider(color: PdfColor.fromHex("#1352F0")),
             pw.Text(
-              "Empresa:",
+              AppLocalizations.of(contextP)!.translate(
+                BlockTranslate.localConfig,
+                "empresa",
+              ),
               style: pw.TextStyle(
                 fontWeight: pw.FontWeight.bold,
               ),
             ),
             pw.Text(
-              "${vmLocal.selectedEmpresa!.empresaNombre} (${vmLocal.selectedEmpresa!.empresa})",
+              "${vmLocal.selectedEmpresa?.empresaNombre ?? AppLocalizations.of(contextP)!.translate(
+                    BlockTranslate.error,
+                    "noDisponible",
+                  )} (${vmLocal.selectedEmpresa?.empresa ?? AppLocalizations.of(contextP)!.translate(
+                    BlockTranslate.error,
+                    "noDisponible",
+                  )})",
             ),
             pw.SizedBox(height: 5),
             pw.Text(
-              "Estacion de trabajo:",
+              AppLocalizations.of(contextP)!.translate(
+                BlockTranslate.localConfig,
+                "estaciones",
+              ),
               style: pw.TextStyle(
                 fontWeight: pw.FontWeight.bold,
               ),
             ),
             pw.Text(
-              "${vmLocal.selectedEstacion!.descripcion} (${vmLocal.selectedEstacion!.estacionTrabajo})",
+              "${vmLocal.selectedEstacion?.descripcion ?? AppLocalizations.of(contextP)!.translate(
+                    BlockTranslate.error,
+                    "noDisponible",
+                  )} (${vmLocal.selectedEstacion?.estacionTrabajo ?? AppLocalizations.of(contextP)!.translate(
+                    BlockTranslate.error,
+                    "noDisponible",
+                  )})",
             ),
             // pw.SizedBox(height: 20),
             // pw.Text(
@@ -132,7 +162,10 @@ class ErrorViewModel extends ChangeNotifier {
             // ),
             pw.SizedBox(height: 20),
             pw.Text(
-              "Descripcion del error:",
+              AppLocalizations.of(contextP)!.translate(
+                BlockTranslate.error,
+                "errorDesc",
+              ),
               style: pw.TextStyle(
                 color: PdfColor.fromHex("#CF113C"),
                 fontWeight: pw.FontWeight.bold,

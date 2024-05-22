@@ -4,6 +4,8 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class DetailsDestinationDocView extends StatelessWidget {
   const DetailsDestinationDocView({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class DetailsDestinationDocView extends StatelessWidget {
     final DocDestinationModel document =
         ModalRoute.of(context)!.settings.arguments as DocDestinationModel;
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => vm.backPage(context),
       child: Stack(
@@ -23,8 +26,11 @@ class DetailsDestinationDocView extends StatelessWidget {
               document: document,
             ),
             appBar: AppBar(
-              title: const Text(
-                "Documento Procesado",
+              title: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.cotizacion,
+                  'procesadoDoc',
+                ),
                 style: AppTheme.titleStyle,
               ),
               actions: [
@@ -44,18 +50,27 @@ class DetailsDestinationDocView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextsWidget(
-                          title: "ID del Documento: ",
+                          title: "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cotizacion,
+                            'idDoc',
+                          )}: ",
                           text: "${document.data.documento}",
                         ),
                         const SizedBox(height: 3),
                         TextsWidget(
-                          title: "Tipo Documento: ",
+                          title: "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'tipoDoc',
+                          )}: ",
                           text:
                               "(${document.serie}) ${document.desTipoDocumento.toUpperCase()}",
                         ),
                         const SizedBox(height: 3),
                         TextsWidget(
-                          title: "Serie Documento: ",
+                          title: "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'serieDoc',
+                          )}: ",
                           text:
                               "(${document.serie}) ${document.desSerie.toUpperCase()}",
                         ),
@@ -66,7 +81,10 @@ class DetailsDestinationDocView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Transacciones (${vm.detalles.length})",
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.cotizacion,
+                                'transacciones',
+                              )} (${vm.detalles.length})",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ],
@@ -87,7 +105,11 @@ class DetailsDestinationDocView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TextsWidget(
-                                      title: "Cantidad: ",
+                                      title:
+                                          "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.factura,
+                                        'cantidad',
+                                      )}: ",
                                       text: "${detalle.cantidad}",
                                     ),
                                     const SizedBox(height: 5),
@@ -97,12 +119,20 @@ class DetailsDestinationDocView extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 5),
                                     TextsWidget(
-                                      title: "Producto: ",
+                                      title:
+                                          "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.cotizacion,
+                                        'producto',
+                                      )}: ",
                                       text: detalle.producto,
                                     ),
                                     const SizedBox(height: 5),
                                     TextsWidget(
-                                      title: "Bodega: ",
+                                      title:
+                                          "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.factura,
+                                        'bodega',
+                                      )}: ",
                                       text: detalle.bodega,
                                     ),
                                   ],
@@ -133,7 +163,6 @@ class DetailsDestinationDocView extends StatelessWidget {
 
 class _PrintActions extends StatelessWidget {
   const _PrintActions({
-    super.key,
     required this.document,
   });
 
@@ -158,10 +187,13 @@ class _PrintActions extends StatelessWidget {
                   right: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Listo",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'listo',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),
@@ -180,10 +212,13 @@ class _PrintActions extends StatelessWidget {
                   left: 10,
                 ),
                 color: AppTheme.primary,
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "Imprimir",
-                    style: TextStyle(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'imprimir',
+                    ),
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 17,
                     ),

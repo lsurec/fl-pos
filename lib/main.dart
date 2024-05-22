@@ -11,6 +11,7 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   //inicializar shared preferences (preferencias de usuario)
@@ -65,6 +66,7 @@ class AppState extends StatelessWidget {
             create: (_) => DetalleTareaCalendarioViewModel()),
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
+        ChangeNotifierProvider(create: (_) => LangViewModel()),
       ],
       child: const MyApp(),
     );
@@ -73,10 +75,10 @@ class AppState extends StatelessWidget {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     // limpiar preferencias
+    // Preferences.clearLang();
     // Preferences.clearUrl();
     // Preferences.clearToken();
     // Preferences.clearDocument();
@@ -84,12 +86,6 @@ class MyApp extends StatelessWidget {
     //app_business
 
     return MaterialApp(
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
-      // supportedLocales: const [Locale('es')],
       //snackbar global
       scaffoldMessengerKey: NotificationService.messengerKey,
       title: "Business",
@@ -97,11 +93,25 @@ class MyApp extends StatelessWidget {
       //Tema de la aplicacion
       theme: AppTheme.lightTheme,
       //configurar ruta inicial
-      // home: const MonthDays(year: 2024,month: 6,), // Muestra el SplashScreen durante el inicio
-      // home: const CalendarioView(), // Muestra el SplashScreen durante el inicio
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es'), // Español
+        Locale('en'), // Ingles
+        Locale('fr'), // Frances
+        Locale('de'), // Aleman
+      ],
+      //inicializar la aplicacion con el ultimo idioma guardado
+      //sino se ha seleccionado inicializa con el idioma Español
+      locale: Preferences.language.isEmpty
+          ? AppLocalizations.idioma
+          : Locale(Preferences.language),
     );
   }
 }

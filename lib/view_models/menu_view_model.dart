@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,11 @@ class MenuViewModel extends ChangeNotifier {
     if (route.toLowerCase() == "prcdocumento_3") {
       if (documento == null) {
         NotificationService.showSnackbar(
-            "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinDocumento',
+          ),
+        );
         return;
       }
 
@@ -105,9 +110,10 @@ class MenuViewModel extends ChangeNotifier {
       } else {
         vmHome.isLoading = false;
 
-        resCambio.message =
-            "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
-
+        resCambio.message = AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinTipoCambio',
+        );
         NotificationService.showErrorView(context, resCambio);
 
         return;
@@ -297,7 +303,11 @@ class MenuViewModel extends ChangeNotifier {
     if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
       if (documento == null) {
         NotificationService.showSnackbar(
-            "No hay un tipo de documento asignado al display, comunicate con el departamento de soporte.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinDocumento',
+          ),
+        );
         return;
       }
 
@@ -458,8 +468,10 @@ class MenuViewModel extends ChangeNotifier {
     if (cambios.isNotEmpty) {
       tipoCambio = cambios[0].tipoCambio;
     } else {
-      resCambio.message =
-          "No se encontraron registros para el tipo de cambio. Por favor verifique que tenga un valor asignado.";
+      resCambio.message = AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinTipoCambio',
+      );
 
       homeVM.isLoading = false;
       NotificationService.showErrorView(context, resCambio);
@@ -568,7 +580,10 @@ class MenuViewModel extends ChangeNotifier {
       menu,
       MenuModel(
         display: null,
-        name: "Aplicaciones",
+        name: AppLocalizations.of(context)!.translate(
+          BlockTranslate.home,
+          'aplicacion',
+        ),
         route: '',
         children: menu,
       ),

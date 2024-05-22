@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 import '../themes/app_theme.dart';
 
@@ -24,7 +26,11 @@ class AlertInfoWidget extends StatelessWidget {
       content: Text(description),
       actions: [
         TextButton(
-          child: Text(textOk ?? "Aceptar"),
+          child: Text(textOk ??
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                'aceptar',
+              )),
           onPressed: () => onOk(),
         ),
       ],

@@ -3,7 +3,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,10 @@ class DetalleTareaView extends StatelessWidget {
         Scaffold(
           appBar: AppBar(
             title: Text(
-              'Detalles Tarea: ${vm.tarea!.iDTarea}',
+              '${AppLocalizations.of(context)!.translate(
+                BlockTranslate.tareas,
+                'detalleTarea',
+              )}: ${vm.tarea!.iDTarea}',
               style: AppTheme.titleStyle,
             ),
           ),
@@ -36,12 +41,19 @@ class DetalleTareaView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Observación:",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'observacion',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       Text(
-                        vm.tarea!.tareaObservacion1 ?? "No disponible",
+                        vm.tarea!.tareaObservacion1 ??
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'noDisponible',
+                            ),
                         style: AppTheme.normalStyle,
                         textAlign: TextAlign.justify,
                       ),
@@ -51,7 +63,10 @@ class DetalleTareaView extends StatelessWidget {
                           TextButton(
                             onPressed: () => vm.comentariosTarea(context),
                             child: Text(
-                              "Comentarios (${vmComentarios.comentarioDetalle.length})",
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.tareas,
+                                'comentarios',
+                              )} (${vmComentarios.comentarioDetalle.length})",
                               style: AppTheme.normalBoldStyle,
                             ),
                           ),
@@ -62,21 +77,30 @@ class DetalleTareaView extends StatelessWidget {
                       const SizedBox(height: 10),
 
                       //ACTUALIZAR ESTADO DE LA TAREA
-                      const Text(
-                        "ESTADO: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'estadoT',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       const _ActualizarEstado(),
 
                       //ACTUALIZAR PRIORIDAD DE LA TAREA
-                      const Text(
-                        "PRIORIDAD: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'prioridadT',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       const _ActualizarPrioridad(),
 
-                      const Text(
-                        "FECHA Y HORA INICIAL: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'feHoInicio',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       CardWidget(
@@ -89,26 +113,35 @@ class DetalleTareaView extends StatelessWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.date_range),
-                              const Padding(padding: EdgeInsets.only(left: 15)),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 15),
+                              ),
                               Text(
                                 Utilities.formatearFecha(
-                                    vm.tarea!.tareaFechaIni),
+                                  vm.tarea!.tareaFechaIni,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                              ),
                               Text(
                                 Utilities.formatearHora(
-                                    vm.tarea!.tareaFechaIni),
+                                  vm.tarea!.tareaFechaIni,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
                           ),
                         ),
                       ),
-                      const Text(
-                        "FECHA Y HORA FINAL: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'feHoFin',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       CardWidget(
@@ -121,26 +154,35 @@ class DetalleTareaView extends StatelessWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.date_range),
-                              const Padding(padding: EdgeInsets.only(left: 15)),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 15),
+                              ),
                               Text(
                                 Utilities.formatearFecha(
-                                    vm.tarea!.tareaFechaFin),
+                                  vm.tarea!.tareaFechaFin,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                              ),
                               Text(
                                 Utilities.formatearHora(
-                                    vm.tarea!.tareaFechaFin),
+                                  vm.tarea!.tareaFechaFin,
+                                ),
                                 style: AppTheme.normalStyle,
                               ),
                             ],
                           ),
                         ),
                       ),
-                      const Text(
-                        "TIPO TAREA: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'tipo',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       CardWidget(
@@ -150,16 +192,24 @@ class DetalleTareaView extends StatelessWidget {
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            vm.tarea!.descripcionTipoTarea ?? "No disponible",
+                            vm.tarea!.descripcionTipoTarea ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'noDisponible',
+                                ),
                             style: AppTheme.normalStyle,
                           ),
-                          leading:
-                              const Icon(Icons.arrow_circle_right_outlined),
+                          leading: const Icon(
+                            Icons.arrow_circle_right_outlined,
+                          ),
                         ),
                       ),
 
-                      const Text(
-                        "ID REFERENCIA: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'idRefT',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       CardWidget(
@@ -169,15 +219,23 @@ class DetalleTareaView extends StatelessWidget {
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            vm.tarea!.iDReferencia ?? "No disponible.",
+                            vm.tarea!.iDReferencia ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'noDisponible',
+                                ),
                             style: AppTheme.normalStyle,
                           ),
-                          leading:
-                              const Icon(Icons.arrow_circle_right_outlined),
+                          leading: const Icon(
+                            Icons.arrow_circle_right_outlined,
+                          ),
                         ),
                       ),
-                      const Text(
-                        "RESPONSABLE: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'responsableT',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       CardWidget(
@@ -187,15 +245,23 @@ class DetalleTareaView extends StatelessWidget {
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            vm.tarea!.usuarioResponsable ?? "No asignado.",
+                            vm.tarea!.usuarioResponsable ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'noAsignado',
+                                ),
                             style: AppTheme.normalStyle,
                           ),
-                          leading:
-                              const Icon(Icons.arrow_circle_right_outlined),
+                          leading: const Icon(
+                            Icons.arrow_circle_right_outlined,
+                          ),
                           trailing: IconButton(
                             onPressed: () => vm.verHistorial(),
                             icon: const Icon(Icons.history),
-                            tooltip: "Ver historial",
+                            tooltip: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'historial',
+                            ),
                           ),
                         ),
                       ),
@@ -205,13 +271,19 @@ class DetalleTareaView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (vm.responsablesHistorial.isEmpty)
-                              const Text(
-                                "No hay responsables en el historial",
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tareas,
+                                  'sinHistorialResp',
+                                ),
                                 style: AppTheme.normalBoldStyle,
                               ),
                             if (vm.responsablesHistorial.isNotEmpty)
-                              const Text(
-                                "HISTORIAL DE RESPONSABLES:",
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tareas,
+                                  'historialResp',
+                                ),
                                 style: AppTheme.normalBoldStyle,
                               ),
                             CardWidget(
@@ -240,14 +312,23 @@ class DetalleTareaView extends StatelessWidget {
                           ],
                         ),
                       ListTile(
-                        title: const Text(
-                          "INVITADOS: ",
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tareas,
+                            'invitados',
+                          ),
                           style: AppTheme.normalBoldStyle,
                         ),
                         trailing: IconButton(
                           //tipoBusqueda = 4 para actualizar invitados
                           onPressed: () => vmUsuarios.irUsuarios(context, 4),
-                          icon: const Icon(Icons.person_add_alt_1_outlined),
+                          icon: const Icon(
+                            Icons.person_add_alt_1_outlined,
+                          ),
+                          tooltip: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.botones,
+                            'agregarInvitado',
+                          ),
                         ),
                       ),
                       CardWidget(
@@ -275,13 +356,21 @@ class DetalleTareaView extends StatelessWidget {
                                   index,
                                 ),
                                 icon: const Icon(Icons.close),
+                                tooltip:
+                                    AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.botones,
+                                  'eliminarInvitado',
+                                ),
                               ),
                             );
                           },
                         ),
                       ),
-                      const Text(
-                        "CREADOR: ",
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'creadorT',
+                        ),
                         style: AppTheme.normalBoldStyle,
                       ),
                       CardWidget(
@@ -291,11 +380,16 @@ class DetalleTareaView extends StatelessWidget {
                         raidus: 10,
                         child: ListTile(
                           title: Text(
-                            vm.tarea!.usuarioCreador ?? "No disponible.",
+                            vm.tarea!.usuarioCreador ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'noDisponible',
+                                ),
                             style: AppTheme.normalStyle,
                           ),
-                          leading:
-                              const Icon(Icons.arrow_circle_right_outlined),
+                          leading: const Icon(
+                            Icons.arrow_circle_right_outlined,
+                          ),
                         ),
                       ),
                     ],
@@ -341,19 +435,28 @@ class _ActualizarEstado extends StatelessWidget {
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 16),
           ),
-          hint: const Text(
-            'Seleccione un nuevo estado',
+          hint: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.tareas,
+              'nuevoEstado',
+            ),
             style: AppTheme.normalStyle,
           ),
           items: estados
               .map(
                 (item) => DropdownMenuItem<EstadoModel>(
                   value: item,
-                  child: Text(item.descripcion, style: AppTheme.normalStyle),
+                  child: Text(
+                    item.descripcion,
+                    style: AppTheme.normalStyle,
+                  ),
                 ),
               )
               .toList(),
-          onChanged: (value) => vm.actualizarEstado(context, value!),
+          onChanged: (value) => vm.actualizarEstado(
+            context,
+            value!,
+          ),
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
           ),
@@ -401,19 +504,28 @@ class _ActualizarPrioridad extends StatelessWidget {
           decoration: const InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 16),
           ),
-          hint: const Text(
-            'Seleccione una nueva prioridad',
+          hint: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.tareas,
+              'nuevaPrioridad',
+            ),
             style: AppTheme.normalStyle,
           ),
           items: prioridades
               .map(
                 (item) => DropdownMenuItem<PrioridadModel>(
                   value: item,
-                  child: Text(item.nombre, style: AppTheme.normalStyle),
+                  child: Text(
+                    item.nombre,
+                    style: AppTheme.normalStyle,
+                  ),
                 ),
               )
               .toList(),
-          onChanged: (value) => vm.actualizarPrioridad(context, value!),
+          onChanged: (value) => vm.actualizarPrioridad(
+            context,
+            value!,
+          ),
           buttonStyleData: const ButtonStyleData(
             padding: EdgeInsets.only(right: 15),
           ),

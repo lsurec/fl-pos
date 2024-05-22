@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -344,7 +345,10 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   //agregar consumidor final
-  changeCF(bool value) {
+  changeCF(
+    BuildContext context,
+    bool value,
+  ) {
     cf = value;
 
     //si cf es verdadero
@@ -365,7 +369,12 @@ class DocumentViewModel extends ChangeNotifier {
         permitirCxC: false,
       );
       //Mensaje de confirmacion
-      NotificationService.showSnackbar("Cliente seleccionado.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'clienteSelec',
+        ),
+      );
     } else {
       //no seleccionar
       clienteSelect = null;
@@ -432,7 +441,12 @@ class DocumentViewModel extends ChangeNotifier {
 
     // si no se encontró nada mostrar mensaje
     if (cuentasCorrentistas.isEmpty) {
-      NotificationService.showSnackbar('No se encontró ningún registro.');
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinRegistros',
+        ),
+      );
       return;
     }
 
@@ -444,12 +458,18 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //si son varias coicidencias navegar a pantalla seleccionar cliente
-    Navigator.pushNamed(context, "selectClient",
-        arguments: cuentasCorrentistas);
+    Navigator.pushNamed(
+      context,
+      "selectClient",
+      arguments: cuentasCorrentistas,
+    );
   }
 
   //Seleccionar clinte
-  void selectClient(ClientModel client, BuildContext context) {
+  void selectClient(
+    ClientModel client,
+    BuildContext context,
+  ) {
     clienteSelect = client;
     notifyListeners();
     Navigator.pop(context);

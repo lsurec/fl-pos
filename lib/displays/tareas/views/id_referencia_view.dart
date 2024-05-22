@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +20,11 @@ class IdReferenciaView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Buscar ID Referencia',
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.tareas,
+                'buscarIdRef',
+              ),
               style: AppTheme.titleStyle,
             ),
           ),
@@ -32,9 +37,11 @@ class IdReferenciaView extends StatelessWidget {
                     TextFormField(
                       controller: vm.buscarIdReferencia,
                       onChanged: (criterio) => vm.buscarRefTemp(context),
-                      decoration: const InputDecoration(
-                        labelText:
-                            "Ingrese un caracter para iniciar la busqueda.",
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'buscar',
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -42,7 +49,10 @@ class IdReferenciaView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Registros (${vm.idReferencias.length})",
+                          "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.general,
+                            'registro',
+                          )} (${vm.idReferencias.length})",
                           style: AppTheme.normalBoldStyle,
                         ),
                       ],
@@ -82,16 +92,24 @@ class _ReferenciasEncontradas extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final IdReferenciaModel referencia = vm.idReferencias[index];
         return GestureDetector(
-          onTap: () => vmCrear.seleccionarIdRef(context, referencia),
+          onTap: () => vmCrear.seleccionarIdRef(
+            context,
+            referencia,
+          ),
           child: Container(
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                    width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+                  width: 1.5,
+                  color: Color.fromRGBO(0, 0, 0, 0.12),
+                ),
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              padding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 15,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -102,8 +120,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      const Text(
-                        "ID Referencia: ",
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'idRef',
+                        )}: ",
                         style: AppTheme.normalStyle,
                       ),
                       Text(

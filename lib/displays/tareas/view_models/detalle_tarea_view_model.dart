@@ -1,4 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+
 import '../../../view_models/view_models.dart';
 import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -215,7 +217,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
     ));
 
     NotificationService.showSnackbar(
-      "El Estado de la tarea se actualizó correctamente.",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'estadoActualizado',
+      ),
     );
 
     isLoading = false; //detener carga
@@ -287,7 +292,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
     ));
 
     NotificationService.showSnackbar(
-      "El Nivel de prioridad de la tarea se actualizó correctamente.",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'prioridadActualizada',
+      ),
     );
 
     isLoading = false; //detener carga
@@ -314,9 +322,22 @@ class DetalleTareaViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Estás seguro?",
-            description:
-                "Este usuario será eliminado de la lista de invitados de esta tarea.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'eliminaraInvitado',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "eliminar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),
@@ -363,7 +384,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
     NotificationService.showSnackbar(
-      "Usuario eliminado correctamente.",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'usuarioEliminado',
+      ),
     );
 
     //Retornar respuesta correcta
@@ -471,7 +495,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       notifyListeners();
 
       NotificationService.showSnackbar(
-        "Se actualizó la lista de invitados a la tarea.",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'listaInviActualizada',
+        ),
       );
 
       //Limpiar lista de usuarios seleccionados y usuarios encontrados
@@ -482,7 +509,10 @@ class DetalleTareaViewModel extends ChangeNotifier {
       //Hay usuarios repetidos
 
       NotificationService.showSnackbar(
-        "Uno o más usuarios seleccionados ya son invitados de la tarea.",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'yaEsInvitado',
+        ),
       );
 
       ApiResModel nuevoInvitado = ApiResModel(

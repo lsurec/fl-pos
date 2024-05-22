@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -159,7 +160,10 @@ class DetailsViewModel extends ChangeNotifier {
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
       vmFactura.isLoading = false;
-      NotificationService.showSnackbar("No se encontraron coincidencias");
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinCoincidencias',
+      ));
       return;
     }
 
@@ -185,7 +189,11 @@ class DetailsViewModel extends ChangeNotifier {
       //si no se encontrarin bodegas mostrar mensaje
       if (productVM.bodegas.isEmpty) {
         vmFactura.isLoading = false;
-        NotificationService.showSnackbar("No hay bodegas para este producto.");
+        NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ));
         return;
       }
 
@@ -201,7 +209,7 @@ class DetailsViewModel extends ChangeNotifier {
         vmFactura.isLoading = false;
 
         if (!precios.succes) {
-          ErrorModel error = precios.message;
+          // ErrorModel error = precios.message;
 
           NotificationService.showErrorView(
             context,
@@ -212,7 +220,11 @@ class DetailsViewModel extends ChangeNotifier {
         productVM.prices = precios.message;
 
         if (productVM.prices.isEmpty) {
-          NotificationService.showSnackbar("No hay precios para este producto");
+          NotificationService.showSnackbar(
+              AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinPrecioP',
+          ));
           return;
         }
       }
@@ -245,7 +257,10 @@ class DetailsViewModel extends ChangeNotifier {
     //Escanear codigo de barras
     String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
       '#FF0000',
-      'Cancelar',
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'cancelar',
+      ),
       true,
       ScanMode.BARCODE,
     );
@@ -321,7 +336,11 @@ class DetailsViewModel extends ChangeNotifier {
     //si hay formas de pago agregadas mostrar mensaje
     if (vmPayment.amounts.isNotEmpty) {
       NotificationService.showSnackbar(
-          "Elimina primero las formas de pago o crea un nuevo documento.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'eliminaFormaPago',
+        ),
+      );
       return;
     }
 
@@ -338,7 +357,11 @@ class DetailsViewModel extends ChangeNotifier {
     //si no hay transacciones seleccionadas mostar mensaje
     if (numSelected == 0) {
       NotificationService.showSnackbar(
-          "Seleccione por lo menos una transacción.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaTrans',
+        ),
+      );
       return;
     }
 
@@ -346,9 +369,22 @@ class DetailsViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Estás seguro?",
-            description:
-                "Si no se han guardado los cambios, los perderás para siempre.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'perder',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),
@@ -379,13 +415,23 @@ class DetailsViewModel extends ChangeNotifier {
 
     //si no hay seleccioandas mostrar mensaje
     if (numSelected == 0) {
-      NotificationService.showSnackbar("Seleccione por lo menos un monto.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaMonto',
+        ),
+      );
       return;
     }
 
     //si hay formas de pago agregadas mostrar mensaje
     if (paymentVM.amounts.isNotEmpty) {
-      NotificationService.showSnackbar("Elimina primero las formas de pago");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'eliminaFormaPago',
+        ),
+      );
       return;
     }
 
@@ -393,9 +439,22 @@ class DetailsViewModel extends ChangeNotifier {
     bool result = await showDialog(
           context: context,
           builder: (context) => AlertWidget(
-            title: "¿Estás seguro?",
-            description:
-                "Si no se han guardado los cambios, los perderás para siempre.",
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'perder',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
             onOk: () => Navigator.of(context).pop(true),
             onCancel: () => Navigator.of(context).pop(false),
           ),
@@ -428,7 +487,12 @@ class DetailsViewModel extends ChangeNotifier {
 
     //si hay formas de pago agregadas mostrar mensaje
     if (paymentVM.amounts.isNotEmpty) {
-      NotificationService.showSnackbar("Elimina primero las formas de pago");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'eliminaFormaPago',
+        ),
+      );
       return;
     }
 
@@ -447,7 +511,11 @@ class DetailsViewModel extends ChangeNotifier {
     //si no hay items seleccionados mmostrar mensaje
     if (numSelected == 0) {
       NotificationService.showSnackbar(
-          "Seleccione por lo menos una transacción.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaTrans',
+        ),
+      );
       return;
     }
 
@@ -496,7 +564,16 @@ class DetailsViewModel extends ChangeNotifier {
 
     //mensaje de verificacion
     NotificationService.showSnackbar(
-        operacion == 1 ? "Cargo agregado." : "Descuento agregado.");
+      operacion == 1
+          ? AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'cargoAgregado',
+            )
+          : AppLocalizations.of(context)!.translate(
+              BlockTranslate.calcular,
+              'descAgregado',
+            ),
+    );
 
     //calcular totales
     calculateTotales(context);
@@ -555,7 +632,12 @@ class DetailsViewModel extends ChangeNotifier {
       );
     } else {
       //si la transaccion no tiene cargos o abonos mostrar mensaje
-      NotificationService.showSnackbar("No hay cargos o descuentos agregados");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinCargDesc',
+        ),
+      );
     }
   }
 
@@ -573,7 +655,11 @@ class DetailsViewModel extends ChangeNotifier {
     //si hay formas de pago agregadas mostrar mensaje
     if (vmPayment.amounts.isNotEmpty) {
       NotificationService.showSnackbar(
-          "Elimina primero las formas de pago o crea un nuevo documento.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinPagoONuevoDoc',
+        ),
+      );
 
       // Acción de deshacer: Restaurar el elemento eliminado
       traInternas.insert(index, deletedItem);
@@ -601,7 +687,10 @@ class DetailsViewModel extends ChangeNotifier {
         ],
       ),
       action: SnackBarAction(
-        label: 'Deshacer',
+        label: AppLocalizations.of(context)!.translate(
+          BlockTranslate.botones,
+          'deshacer',
+        ),
         textColor: Colors.white,
         onPressed: () {
           // Acción de deshacer: Restaurar el elemento eliminado

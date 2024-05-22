@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -80,8 +80,25 @@ class SplashViewModel extends ChangeNotifier {
     //   }
     // }
 
-    //si no hay una url para las apis configurada
-    if (Preferences.urlApi.isEmpty) {
+    //si no hay una url para las apis configurada y si no hay idioma seleccionado
+    //mostrar pantalla de idiomas
+    if (Preferences.urlApi.isEmpty && Preferences.language.isEmpty) {
+      Preferences.idLanguage = 0;
+      // Simula una carga de datos
+      await Future.delayed(const Duration(seconds: 1));
+
+      //mostrar pantallaconfiguracion de apis
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const LangView(),
+        ), // Cambiar a la pantalla principal después de cargar los datos
+      );
+      return;
+
+      //entrar a pantalla de la url de las apis si no hay url guardada y ya existe un idioma guardado
+    } else if (Preferences.language.isNotEmpty && Preferences.urlApi.isEmpty) {
+      //si hay un idioma guardado asignarlo a la variable global del idioma
+      AppLocalizations.idioma = Locale(Preferences.language);
       // Simula una carga de datos
       await Future.delayed(const Duration(seconds: 1));
 
