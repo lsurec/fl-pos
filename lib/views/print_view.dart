@@ -214,8 +214,9 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 PrintModel print = await printVM.printDocument(
                                   context, // context,
                                   paperDefault, // paperDefault,
-                                  settings.consecutivoDoc!, // consecutivoDoc,
-                                  settings.cuentaCorrentistaRef!,
+                                  settings
+                                      .consecutivoDoc!, // consecutivoDoc, //TODO: verificar eror
+                                  settings.cuentaCorrentistaRef ?? "",
                                   settings.client!, // cuentaCorrentistaRef,
                                 );
 
