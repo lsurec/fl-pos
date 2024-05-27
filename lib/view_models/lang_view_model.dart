@@ -35,6 +35,11 @@ class LangViewModel extends ChangeNotifier {
   Timer? timer; // Temporizador
 
   void reiniciarTemp(BuildContext context) {
+    if (Preferences.language.isEmpty) {
+      Preferences.language = languages[LanguagesProvider.indexDefaultLang].lang;
+      Preferences.idLanguage = LanguagesProvider.indexDefaultLang;
+      notifyListeners();
+    }
     isLoading = true;
     // timer?.cancel(); // Cancelar el temporizador existente si existe
     timer = Timer(const Duration(milliseconds: 2000), () {

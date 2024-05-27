@@ -18,15 +18,7 @@ class LangView extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            title: Text(
-              AppLocalizations.of(context)!.translate(
-                BlockTranslate.preferencias,
-                "idiomaT",
-              ),
-              style: AppTheme.titleStyle,
-            ),
-          ),
+          appBar: AppBar(),
           body: RefreshIndicator(
             onRefresh: () async {},
             child: Padding(
