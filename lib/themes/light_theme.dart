@@ -4,6 +4,8 @@ class LightTheme {
   //COLORES
   //Color primario de la app
   static const Color primary = Color(0xff134895);
+  static const Color grey = Colors.grey;
+
   static const Color grayAppBar = Color(0xfff5f5f5);
   static const Color secondary = Color(0xff1C82AD);
   static const Color activeStep = Color(0xffcccccc);
@@ -84,5 +86,17 @@ class LightTheme {
   static const subTitleStyle = TextStyle(
     fontSize: 14,
     color: Colors.black,
+  );
+
+  static const disabledStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const buttonsStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   );
 }

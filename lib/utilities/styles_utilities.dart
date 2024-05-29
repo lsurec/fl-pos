@@ -8,4 +8,7 @@ class Styles {
   static String secondBackground = "secondBackground";
   static String title = "title";
   static String subTitle = "subTitle";
+  static String grey = "grey";
+  static String disabledStyle = "disabledStyle";
+  static String buttonsStyle = "buttonsStyle";
 }

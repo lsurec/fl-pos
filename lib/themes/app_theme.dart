@@ -194,6 +194,7 @@ class AppTheme {
       Styles.hora: LightTheme.horaBoldStyle,
       Styles.title: LightTheme.titleStyle,
       Styles.subTitle: LightTheme.subTitleStyle,
+      Styles.disabledStyle: LightTheme.disabledStyle,
 
     };
 
@@ -204,6 +205,7 @@ class AppTheme {
       Styles.hora: DarkTheme.horaBoldStyle,
       Styles.title: DarkTheme.titleStyle,
       Styles.subTitle: DarkTheme.subTitleStyle,
+      Styles.disabledStyle: DarkTheme.disabledStyle,
     };
 
     // Selecciona el mapa correspondiente al tema
@@ -219,12 +221,15 @@ class AppTheme {
       Styles.primary: primary,
       Styles.background: backroundColor,
       Styles.secondBackground: LightTheme.backroundColorSecondary,
+      Styles.grey: LightTheme.grey,
+
     };
 
     final darkThemeStyles = {
       Styles.primary: darkPrimary,
       Styles.background: darkbackroundColor,
       Styles.secondBackground: DarkTheme.darkBackroundSecondary,
+      Styles.grey: DarkTheme.grey,
     };
 
     // Selecciona el mapa correspondiente al tema

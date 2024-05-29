@@ -5,6 +5,7 @@ class DarkTheme {
   static const Color darkDackroundColor = Color.fromARGB(255, 48, 45, 45);
   static const Color darkPrimary = Color.fromARGB(255, 159, 197, 255);
   static const Color darkBackroundSecondary = Color.fromARGB(255, 68, 68, 67);
+  static const Color grey = Colors.grey;
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
@@ -39,5 +40,17 @@ class DarkTheme {
   static const subTitleStyle = TextStyle(
     fontSize: 14,
     color: Color.fromARGB(255, 206, 192, 192),
+  );
+
+  static const disabledStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const buttonsStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   );
 }
