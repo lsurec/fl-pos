@@ -6,5 +6,6 @@ class Styles {
   static String primary = "primary";
   static String background = "background";
   static String secondBackground = "secondBackground";
-
+  static String title = "title";
+  static String subTitle = "subTitle";
 }

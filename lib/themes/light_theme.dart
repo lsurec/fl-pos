@@ -80,4 +80,9 @@ class LightTheme {
     fontWeight: FontWeight.w500,
     color: Colors.black,
   );
+
+  static const subTitleStyle = TextStyle(
+    fontSize: 14,
+    color: Colors.black,
+  );
 }

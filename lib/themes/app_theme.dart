@@ -192,13 +192,18 @@ class AppTheme {
       Styles.bold: LightTheme.normalBoldStyle,
       Styles.obligatory: LightTheme.obligatoryBoldStyle,
       Styles.hora: LightTheme.horaBoldStyle,
+      Styles.title: LightTheme.titleStyle,
+      Styles.subTitle: LightTheme.subTitleStyle,
+
     };
 
     final darkThemeStyles = {
-      Styles.normal: DarkTheme.darkNormalStyle,
-      Styles.bold: DarkTheme.darkNormalBoldStyle,
-      Styles.obligatory: DarkTheme.darkObligatoryBoldStyle,
-      Styles.hora: DarkTheme.darkHoraBoldStyle,
+      Styles.normal: DarkTheme.normalStyle,
+      Styles.bold: DarkTheme.normalBoldStyle,
+      Styles.obligatory: DarkTheme.obligatoryStyle,
+      Styles.hora: DarkTheme.horaBoldStyle,
+      Styles.title: DarkTheme.titleStyle,
+      Styles.subTitle: DarkTheme.subTitleStyle,
     };
 
     // Selecciona el mapa correspondiente al tema
