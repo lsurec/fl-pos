@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/dark_theme.dart';
+import 'package:flutter_post_printer_example/themes/light_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class AppTheme {
+  static int idTheme = 1; //Tema claro
+
   //Color primario de la app
   static const Color primary = Color(0xff134895);
   static const Color grayAppBar = Color(0xfff5f5f5);
@@ -13,6 +18,10 @@ class AppTheme {
   static Color backroundColor = Colors.orange.shade50;
   static const Color backroundColorSecondary = Color(0xffFEF5E7);
   static const Color white = Colors.white;
+
+  static const Color black = Colors.black;
+  static const Color darkPrimary = Color.fromARGB(255, 159, 197, 255);
+  static const Color darkbackroundColor = Color.fromARGB(255, 48, 45, 45);
 
   static const normalStyle = TextStyle(
     fontSize: 17,
@@ -124,4 +133,99 @@ class AppTheme {
       ),
     ),
   );
+
+  static final ThemeData darkTheme = ThemeData.dark().copyWith(
+    primaryColor: DarkTheme.darkPrimary,
+    appBarTheme: const AppBarTheme(
+      color: darkbackroundColor,
+      iconTheme: IconThemeData(
+        size: 30,
+        color: Colors.white,
+      ),
+      elevation: 0,
+    ),
+    scaffoldBackgroundColor: darkbackroundColor,
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        // ignore: deprecated_member_use
+        primary: DarkTheme.darkPrimary,
+      ),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: DarkTheme.darkPrimary,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        // ignore: deprecated_member_use
+        primary: DarkTheme.darkPrimary,
+        elevation: 0,
+        shape: const StadiumBorder(),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      floatingLabelStyle: const TextStyle(
+        color: DarkTheme.darkPrimary,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: DarkTheme.darkPrimary,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: DarkTheme.darkPrimary,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      border: OutlineInputBorder(
+        //borderSide: const BorderSide(color: primary),
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+  );
+
+  static TextStyle styleTheme(String style, int tema) {
+    // Define los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.normal: LightTheme.normalStyle,
+      Styles.bold: LightTheme.normalBoldStyle,
+      Styles.obligatory: LightTheme.obligatoryBoldStyle,
+      Styles.hora: LightTheme.horaBoldStyle,
+    };
+
+    final darkThemeStyles = {
+      Styles.normal: DarkTheme.darkNormalStyle,
+      Styles.bold: DarkTheme.darkNormalBoldStyle,
+      Styles.obligatory: DarkTheme.darkObligatoryBoldStyle,
+      Styles.hora: DarkTheme.darkHoraBoldStyle,
+    };
+
+    // Selecciona el mapa correspondiente al tema
+    final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+
+    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    return themeStyles[style] ?? normalStyle;
+  }
+
+  static Color colorTheme(String style, int tema) {
+    // Define los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.primary: primary,
+      Styles.background: backroundColor,
+      Styles.secondBackground: LightTheme.backroundColorSecondary,
+    };
+
+    final darkThemeStyles = {
+      Styles.primary: darkPrimary,
+      Styles.background: darkbackroundColor,
+      Styles.secondBackground: DarkTheme.darkBackroundSecondary,
+    };
+
+    // Selecciona el mapa correspondiente al tema
+    final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+
+    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    return themeStyles[style] ?? black;
+  }
 }

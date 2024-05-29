@@ -1,5 +1,7 @@
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +33,47 @@ class HomeView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: ListView(
-                  children: const [],
+                  children: [
+                    Text(
+                      "Holas",
+                      style: AppTheme.styleTheme(
+                        Styles.bold,
+                        1,
+                      ),
+                    ),
+                    Text(
+                      Preferences.theme == 1 ? "Claro" : "Oscuro",
+                      style: AppTheme.styleTheme(
+                        Styles.normal,
+                        Preferences.theme,
+                      ),
+                    ),
+                    SwitchListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 0,
+                        horizontal: 0,
+                      ),
+                      activeColor: AppTheme.colorTheme(
+                        Styles.primary,
+                        Preferences.theme,
+                      ),
+                      title: Text(
+                        Preferences.theme == 1
+                            ? "Activar Tema Oscuro"
+                            : "Desactivar Tema Oscuro",
+                        style: TextStyle(
+                          color: AppTheme.colorTheme(
+                            Styles.primary,
+                            Preferences.theme,
+                          ),
+                        ),
+                        textAlign: TextAlign.right,
+                      ),
+                      // value: vm.tema,
+                      value: (Preferences.theme == 1 ? false : true),
+                      onChanged: (value) => vm.themaActivo(value),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -60,7 +102,10 @@ class _MyDrawer extends StatelessWidget {
 
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppTheme.backroundColor,
+      backgroundColor: AppTheme.colorTheme(
+        Styles.background,
+        Preferences.theme,
+      ),
       child: Column(
         children: [
           const SizedBox(height: kToolbarHeight),
@@ -83,7 +128,10 @@ class _MyDrawer extends StatelessWidget {
                         route.name,
                         style: TextStyle(
                           color: index == routeMenu.length - 1
-                              ? AppTheme.primary
+                              ? AppTheme.colorTheme(
+                                  Styles.primary,
+                                  Preferences.theme,
+                                )
                               : null,
                           fontSize: 17,
                         ),
@@ -108,7 +156,10 @@ class _MyDrawer extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 MenuModel itemMenu = menu[index];
                 return ListTile(
-                  titleTextStyle: AppTheme.normalStyle,
+                  titleTextStyle: AppTheme.styleTheme(
+                    Styles.normal,
+                    Preferences.theme,
+                  ),
                   title: Text(
                     itemMenu.name,
                   ),
@@ -148,25 +199,29 @@ class _FooterDrawer extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-          height: 56,
-          color: AppTheme.backroundColorSecondary,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () => vm.navigateSettings(context),
-                icon: const Icon(
-                  Icons.settings,
-                ),
+        height: 56,
+        color: AppTheme.colorTheme(
+          Styles.secondBackground,
+          Preferences.theme,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () => vm.navigateSettings(context),
+              icon: const Icon(
+                Icons.settings,
               ),
-              IconButton(
-                onPressed: () => vm.logout(context),
-                icon: const Icon(
-                  Icons.logout,
-                ),
-              )
-            ],
-          )),
+            ),
+            IconButton(
+              onPressed: () => vm.logout(context),
+              icon: const Icon(
+                Icons.logout,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
