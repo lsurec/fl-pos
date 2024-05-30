@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class HelpView extends StatelessWidget {
@@ -15,7 +17,10 @@ class HelpView extends StatelessWidget {
             BlockTranslate.botones,
             "ayuda",
           ),
-          style: AppTheme.titleStyle,
+          style: AppTheme.styleTheme(
+            Styles.title,
+            Preferences.theme,
+          ),
         ),
       ),
       body: const SingleChildScrollView(
@@ -44,7 +49,10 @@ class HelpSection extends StatelessWidget {
               BlockTranslate.impresora,
               "sinImprimir",
             ),
-            style: AppTheme.normalBoldStyle,
+            style: AppTheme.styleTheme(
+              Styles.bold,
+              Preferences.theme,
+            ),
           ),
           subtitle: Text(
             AppLocalizations.of(context)!.translate(
@@ -79,7 +87,10 @@ class ClientSection extends StatelessWidget {
               BlockTranslate.cliente,
               "noEncontrado",
             ),
-            style: AppTheme.normalBoldStyle,
+            style: AppTheme.styleTheme(
+              Styles.bold,
+              Preferences.theme,
+            ),
           ),
           subtitle: Text(
             AppLocalizations.of(context)!.translate(
@@ -136,8 +147,9 @@ class ClientSection extends StatelessWidget {
                           BlockTranslate.cliente,
                           "soporte",
                         ),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                        style: AppTheme.styleTheme(
+                          Styles.bold,
+                          Preferences.theme,
                         ),
                       ),
                     ],
