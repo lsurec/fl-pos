@@ -28,19 +28,6 @@ class DetailsView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.general,
-                          'filtros',
-                        ),
-                        style: AppTheme.normalStyle,
-                      ),
-                      const Spacer(),
-                      _RadioFilter(),
-                    ],
-                  ),
-                  Row(
-                    children: [
                       Expanded(
                         child: Form(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -60,7 +47,8 @@ class DetailsView extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              hintText: 'Sku',
+                              hintText: 'SKU/Descripcion', //TODO:Translate
+                              labelText: 'Buscar producto',
                               suffixIcon: IconButton(
                                 icon: const Icon(
                                   Icons.search,
@@ -391,56 +379,6 @@ class _RadioCargo extends StatelessWidget {
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.calcular,
                   'monto',
-                ),
-                style: AppTheme.normalStyle,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _RadioFilter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<DetailsViewModel>(context);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-          onTap: () => vm.changeOptionFilter('SKU'),
-          child: Row(
-            children: [
-              Radio<String>(
-                activeColor: AppTheme.primary,
-                value: 'SKU',
-                groupValue: vm.filterOption,
-                onChanged: (value) => vm.changeOptionFilter(value),
-              ),
-              const Text(
-                'SKU',
-                style: AppTheme.normalStyle,
-              ),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: () => vm.changeOptionFilter('Descripcion'),
-          child: Row(
-            children: [
-              Radio<String>(
-                activeColor: AppTheme.primary,
-                value: 'Descripcion',
-                groupValue: vm.filterOption,
-                onChanged: (value) => vm.changeOptionFilter(value),
-              ),
-              Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.general,
-                  'descripcion',
                 ),
                 style: AppTheme.normalStyle,
               ),
