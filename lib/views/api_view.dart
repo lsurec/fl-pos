@@ -1,5 +1,6 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -39,9 +40,9 @@ class ApiView extends StatelessWidget {
                               BlockTranslate.url,
                               "url",
                             ),
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                            style: AppTheme.styleTheme(
+                              Styles.bold30Style,
+                              Preferences.theme,
                             ),
                           ),
                         if (Preferences.urlApi.isEmpty)
@@ -52,8 +53,9 @@ class ApiView extends StatelessWidget {
                               BlockTranslate.url,
                               "ingresar",
                             ),
-                            style: const TextStyle(
-                              fontSize: 20,
+                            style: AppTheme.styleTheme(
+                              Styles.normal20Style,
+                              Preferences.theme,
                             ),
                           ),
                         if (Preferences.urlApi.isNotEmpty)
@@ -63,15 +65,14 @@ class ApiView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.url,
-                                  "actual",
-                                ),
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.url,
+                                    "actual",
+                                  ),
+                                  style: AppTheme.styleTheme(
+                                    Styles.bold30Style,
+                                    Preferences.theme,
+                                  )),
                               IconButton(
                                 tooltip:
                                     AppLocalizations.of(context)!.translate(
@@ -79,7 +80,9 @@ class ApiView extends StatelessWidget {
                                   "copiar",
                                 ),
                                 onPressed: () => vm.copyToClipboard(context),
-                                icon: const Icon(Icons.copy_outlined),
+                                icon: const Icon(
+                                  Icons.copy_outlined,
+                                ),
                               )
                             ],
                           ),
@@ -88,8 +91,9 @@ class ApiView extends StatelessWidget {
                         if (Preferences.urlApi.isNotEmpty)
                           Text(
                             Preferences.urlApi,
-                            style: const TextStyle(
-                              fontSize: 20,
+                            style: AppTheme.styleTheme(
+                              Styles.normal20Style,
+                              Preferences.theme,
                             ),
                           )
                       ],
@@ -137,6 +141,10 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => Navigator.pop(context),
+                                    style: AppTheme.buttonStyle(
+                                      Styles.buttonStyle,
+                                      Preferences.theme,
+                                    ),
                                     // onPressed: () => Preferences.clearUrl(),
                                     child: SizedBox(
                                       width: double.infinity,
@@ -147,7 +155,10 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cancelar",
                                           ),
-                                          style: AppTheme.whiteBoldStyle,
+                                          style: AppTheme.styleTheme(
+                                            Styles.whiteBoldStyle,
+                                            Preferences.theme,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -157,6 +168,10 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => vm.connectService(context),
+                                    style: AppTheme.buttonStyle(
+                                      Styles.buttonStyle,
+                                      Preferences.theme,
+                                    ),
                                     child: SizedBox(
                                       width: double.infinity,
                                       child: Center(
@@ -166,7 +181,10 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cambiar",
                                           ),
-                                          style: AppTheme.whiteBoldStyle,
+                                          style: AppTheme.styleTheme(
+                                            Styles.whiteBoldStyle,
+                                            Preferences.theme,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -185,7 +203,10 @@ class ApiView extends StatelessWidget {
                                       BlockTranslate.botones,
                                       "aceptar",
                                     ),
-                                    style: AppTheme.whiteBoldStyle,
+                                    style: AppTheme.styleTheme(
+                                      Styles.whiteBoldStyle,
+                                      Preferences.theme,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -203,8 +224,9 @@ class ApiView extends StatelessWidget {
                           BlockTranslate.url,
                           "version",
                         )}: ${vmSplash.versionLocal}",
-                        style: const TextStyle(
-                          color: Colors.black54,
+                        style: AppTheme.styleTheme(
+                          Styles.versionStyle,
+                          Preferences.theme,
                         ),
                       ),
                       const SizedBox(width: 10)
@@ -219,7 +241,10 @@ class ApiView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.colorTheme(
+              Styles.background,
+              Preferences.theme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

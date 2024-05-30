@@ -68,4 +68,30 @@ class DarkTheme {
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
+
+  static const normal20Style = TextStyle(
+    fontSize: 20,
+    color: Colors.white,
+  );
+
+  static const bold30Style = TextStyle(
+    fontSize: 30,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const inactivoStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+  );
+
+  static const versionStyle = TextStyle(
+    fontSize: 16,
+    color: Color.fromARGB(255, 235, 219, 219),
+  );
+
+  static const whiteStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+  );
 }

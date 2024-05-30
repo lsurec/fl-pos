@@ -81,7 +81,7 @@ class HomeViewModel extends ChangeNotifier {
       Preferences.theme = 1;
       notifyListeners();
     } else if (tema) {
-      Preferences.theme = 0;
+      Preferences.theme = 2;
       notifyListeners();
     }
     notifyListeners();

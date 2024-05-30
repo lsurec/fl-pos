@@ -58,7 +58,7 @@ class HomeView extends StatelessWidget {
                         Preferences.theme,
                       ),
                       title: Text(
-                        Preferences.theme == 1
+                        Preferences.theme <= 1
                             ? "Activar Tema Oscuro"
                             : "Desactivar Tema Oscuro",
                         style: TextStyle(
@@ -70,7 +70,7 @@ class HomeView extends StatelessWidget {
                         textAlign: TextAlign.right,
                       ),
                       // value: vm.tema,
-                      value: (Preferences.theme == 1 ? false : true),
+                      value: (Preferences.theme == 2 ? true : false),
                       onChanged: (value) => vm.themaActivo(value),
                     ),
                   ],

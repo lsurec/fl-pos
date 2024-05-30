@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/dark_theme.dart';
 import 'package:flutter_post_printer_example/themes/light_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class AppTheme {
-  static int idTheme = Preferences.theme.isNaN ? 1 : 0; //Tema claro
-
   //Color primario de la app
   static const Color primary = Color(0xff134895);
   static const Color grayAppBar = Color(0xfff5f5f5);
@@ -194,8 +191,47 @@ class AppTheme {
     ),
   );
 
+  // static TextStyle styleTheme(String style, int tema) {
+  //   // Define los mapas para los estilos claros y oscuros
+  //   final lightThemeStyles = {
+  //     Styles.normal: LightTheme.normalStyle,
+  //     Styles.bold: LightTheme.normalBoldStyle,
+  //     Styles.obligatory: LightTheme.obligatoryBoldStyle,
+  //     Styles.hora: LightTheme.horaBoldStyle,
+  //     Styles.title: LightTheme.titleStyle,
+  //     Styles.subTitle: LightTheme.subTitleStyle,
+  //     Styles.disabledStyle: LightTheme.disabledStyle,
+  //     Styles.whiteBoldStyle: LightTheme.whiteBoldStyle,
+  //     Styles.bold30Style: LightTheme.bold30Style,
+  //     Styles.normal20Style: LightTheme.normal20Style,
+  //     Styles.versionStyle: LightTheme.versionStyle,
+  //     Styles.whiteStyle: LightTheme.whiteStyle,
+  //   };
+
+  //   final darkThemeStyles = {
+  //     Styles.normal: DarkTheme.normalStyle,
+  //     Styles.bold: DarkTheme.normalBoldStyle,
+  //     Styles.obligatory: DarkTheme.obligatoryStyle,
+  //     Styles.hora: DarkTheme.horaBoldStyle,
+  //     Styles.title: DarkTheme.titleStyle,
+  //     Styles.subTitle: DarkTheme.subTitleStyle,
+  //     Styles.disabledStyle: DarkTheme.disabledStyle,
+  //     Styles.whiteBoldStyle: DarkTheme.whiteBoldStyle,
+  //     Styles.bold30Style: DarkTheme.bold30Style,
+  //     Styles.normal20Style: DarkTheme.normal20Style,
+  //     Styles.versionStyle: DarkTheme.versionStyle,
+  //     Styles.whiteStyle: DarkTheme.whiteStyle,
+  //   };
+
+  //   // Selecciona el mapa correspondiente al tema
+  //   final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+
+  //   // Retorna el estilo correspondiente o normalStyle si no se encuentra
+  //   return themeStyles[style] ?? normalStyle;
+  // }
+
   static TextStyle styleTheme(String style, int tema) {
-    // Define los mapas para los estilos claros y oscuros
+    // Define los mapas para los estilos de los diferentes temas
     final lightThemeStyles = {
       Styles.normal: LightTheme.normalStyle,
       Styles.bold: LightTheme.normalBoldStyle,
@@ -205,6 +241,10 @@ class AppTheme {
       Styles.subTitle: LightTheme.subTitleStyle,
       Styles.disabledStyle: LightTheme.disabledStyle,
       Styles.whiteBoldStyle: LightTheme.whiteBoldStyle,
+      Styles.bold30Style: LightTheme.bold30Style,
+      Styles.normal20Style: LightTheme.normal20Style,
+      Styles.versionStyle: LightTheme.versionStyle,
+      Styles.whiteStyle: LightTheme.whiteStyle,
     };
 
     final darkThemeStyles = {
@@ -216,23 +256,38 @@ class AppTheme {
       Styles.subTitle: DarkTheme.subTitleStyle,
       Styles.disabledStyle: DarkTheme.disabledStyle,
       Styles.whiteBoldStyle: DarkTheme.whiteBoldStyle,
+      Styles.bold30Style: DarkTheme.bold30Style,
+      Styles.normal20Style: DarkTheme.normal20Style,
+      Styles.versionStyle: DarkTheme.versionStyle,
+      Styles.whiteStyle: DarkTheme.whiteStyle,
     };
 
-    // Selecciona el mapa correspondiente al tema
-    final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+    // Selecciona el mapa correspondiente al tema utilizando un switch-case
+    Map<String, TextStyle> themeStyles;
+    switch (tema) {
+      case 1:
+        themeStyles = lightThemeStyles;
+        break;
+      case 2:
+        themeStyles = darkThemeStyles;
+        break;
+      default:
+        themeStyles = lightThemeStyles;
+        break;
+    }
 
     // Retorna el estilo correspondiente o normalStyle si no se encuentra
-    return themeStyles[style] ?? normalStyle;
+    return themeStyles[style] ?? LightTheme.normalStyle;
   }
 
   static Color colorTheme(String style, int tema) {
-    // Define los mapas para los estilos claros y oscuros
+    // Define los mapas para los estilos de los diferentes temas
     final lightThemeStyles = {
       Styles.primary: primary,
       Styles.background: backroundColor,
       Styles.secondBackground: LightTheme.backroundColorSecondary,
       Styles.grey: LightTheme.grey,
-      Styles.icons: DarkTheme.grey
+      Styles.icons: DarkTheme.grey,
     };
 
     final darkThemeStyles = {
@@ -241,18 +296,29 @@ class AppTheme {
       Styles.secondBackground: DarkTheme.darkBackroundSecondary,
       Styles.grey: DarkTheme.grey,
       Styles.icons: DarkTheme.icons,
-      Styles.darkPrimary: DarkTheme.primary
+      Styles.darkPrimary: DarkTheme.primary,
     };
 
-    // Selecciona el mapa correspondiente al tema
-    final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+    // Selecciona el mapa correspondiente al tema utilizando un switch-case
+    Map<String, Color> themeStyles;
+    switch (tema) {
+      case 1:
+        themeStyles = lightThemeStyles;
+        break;
+      case 2:
+        themeStyles = darkThemeStyles;
+        break;
+      default:
+        themeStyles = lightThemeStyles;
+        break;
+    }
 
-    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    // Retorna el color correspondiente o black si no se encuentra
     return themeStyles[style] ?? black;
   }
 
   static ButtonStyle buttonStyle(String style, int tema) {
-    // Define los mapas para los estilos claros y oscuros
+    // Define los mapas para los estilos de los diferentes temas
     final lightThemeStyles = {
       Styles.buttonStyle: LightTheme.buttonStyle,
     };
@@ -261,10 +327,64 @@ class AppTheme {
       Styles.buttonStyle: DarkTheme.buttonStyle,
     };
 
-    // Selecciona el mapa correspondiente al tema
-    final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+    // Selecciona el mapa correspondiente al tema utilizando un switch-case
+    Map<String, ButtonStyle> themeStyles;
+    switch (tema) {
+      case 1:
+        themeStyles = darkThemeStyles;
+        break;
+      case 2:
+        themeStyles = darkThemeStyles;
+        break;
+      default:
+        themeStyles = lightThemeStyles;
+        break;
+    }
 
-    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    // Retorna el estilo correspondiente o buttonsStyle si no se encuentra
     return themeStyles[style] ?? buttonsStyle;
   }
+
+  // static Color colorTheme(String style, int tema) {
+  //   // Define los mapas para los estilos claros y oscuros
+  //   final lightThemeStyles = {
+  //     Styles.primary: primary,
+  //     Styles.background: backroundColor,
+  //     Styles.secondBackground: LightTheme.backroundColorSecondary,
+  //     Styles.grey: LightTheme.grey,
+  //     Styles.icons: DarkTheme.grey
+  //   };
+
+  //   final darkThemeStyles = {
+  //     Styles.primary: darkPrimary,
+  //     Styles.background: darkbackroundColor,
+  //     Styles.secondBackground: DarkTheme.darkBackroundSecondary,
+  //     Styles.grey: DarkTheme.grey,
+  //     Styles.icons: DarkTheme.icons,
+  //     Styles.darkPrimary: DarkTheme.primary
+  //   };
+
+  //   // Selecciona el mapa correspondiente al tema
+  //   final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+
+  //   // Retorna el estilo correspondiente o normalStyle si no se encuentra
+  //   return themeStyles[style] ?? black;
+  // }
+
+  // static ButtonStyle buttonStyle(String style, int tema) {
+  //   // Define los mapas para los estilos claros y oscuros
+  //   final lightThemeStyles = {
+  //     Styles.buttonStyle: LightTheme.buttonStyle,
+  //   };
+
+  //   final darkThemeStyles = {
+  //     Styles.buttonStyle: DarkTheme.buttonStyle,
+  //   };
+
+  //   // Selecciona el mapa correspondiente al tema
+  //   final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+
+  //   // Retorna el estilo correspondiente o normalStyle si no se encuentra
+  //   return themeStyles[style] ?? buttonsStyle;
+  // }
 }

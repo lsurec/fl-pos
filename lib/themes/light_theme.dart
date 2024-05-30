@@ -42,6 +42,11 @@ class LightTheme {
     fontWeight: FontWeight.bold,
   );
 
+  static const whiteStyle = TextStyle(
+    fontSize: 17,
+    color: Colors.white,
+  );
+
   static const titleStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -104,5 +109,21 @@ class LightTheme {
     backgroundColor: MaterialStateProperty.all<Color>(
       primary,
     ),
+  );
+
+  static const normal20Style = TextStyle(
+    fontSize: 20,
+    color: Colors.black,
+  );
+
+  static const bold30Style = TextStyle(
+    fontSize: 30,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const versionStyle = TextStyle(
+    fontSize: 16,
+    color: Colors.grey,
   );
 }

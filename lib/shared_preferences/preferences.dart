@@ -120,4 +120,12 @@ class Preferences {
   static set theme(int value) {
     _prefs.setInt(_themeKey, value);
   }
+
+  // static String get theme {
+  //   return _prefs.getString(_themeKey) ?? "";
+  // }
+
+  // static set theme(String value) {
+  //   _prefs.setString(_themeKey, value);
+  // }
 }
