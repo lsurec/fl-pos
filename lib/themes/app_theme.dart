@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/dark_theme.dart';
 import 'package:flutter_post_printer_example/themes/light_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class AppTheme {
-  static int idTheme = 1; //Tema claro
+  static int idTheme = Preferences.theme.isNaN ? 1 : 0; //Tema claro
 
   //Color primario de la app
   static const Color primary = Color(0xff134895);
@@ -231,7 +232,7 @@ class AppTheme {
       Styles.background: backroundColor,
       Styles.secondBackground: LightTheme.backroundColorSecondary,
       Styles.grey: LightTheme.grey,
-      Styles.icons : DarkTheme.grey
+      Styles.icons: DarkTheme.grey
     };
 
     final darkThemeStyles = {
@@ -239,7 +240,7 @@ class AppTheme {
       Styles.background: darkbackroundColor,
       Styles.secondBackground: DarkTheme.darkBackroundSecondary,
       Styles.grey: DarkTheme.grey,
-      Styles.icons : DarkTheme.icons
+      Styles.icons: DarkTheme.icons
     };
 
     // Selecciona el mapa correspondiente al tema
