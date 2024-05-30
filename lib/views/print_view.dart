@@ -82,10 +82,18 @@ class _SettingsFromState extends State<SettingsFrom> {
   scan() {
     devices.clear();
     _subscriptionScan = instanceManager
-        .discovery(type: PrinterType.bluetooth, isBle: isPairedSelect)
+        .discovery(
+      type: PrinterType.bluetooth,
+      isBle: isPairedSelect,
+    )
         .listen((device) {
       setState(() {
-        devices.add(PrinterDevice(name: device.name, address: device.address));
+        devices.add(
+          PrinterDevice(
+            name: device.name,
+            address: device.address,
+          ),
+        );
       });
     });
   }
@@ -98,14 +106,18 @@ class _SettingsFromState extends State<SettingsFrom> {
       if (status == BTStatus.connected && pendingTask != null) {
         if (Platform.isAndroid) {
           Future.delayed(const Duration(milliseconds: 1000), () {
-            PrinterManager.instance
-                .send(type: PrinterType.bluetooth, bytes: pendingTask!);
+            PrinterManager.instance.send(
+              type: PrinterType.bluetooth,
+              bytes: pendingTask!,
+            );
             pendingTask = null;
           });
         }
         if (Platform.isIOS) {
-          PrinterManager.instance
-              .send(type: PrinterType.bluetooth, bytes: pendingTask!);
+          PrinterManager.instance.send(
+            type: PrinterType.bluetooth,
+            bytes: pendingTask!,
+          );
           pendingTask = null;
         }
       }
@@ -149,11 +161,14 @@ class _SettingsFromState extends State<SettingsFrom> {
   }
 
   void setPrinter(int paper) {
-    BlocProvider.of<PrintBloc>(context).add(SetPrinterEvent(
+    BlocProvider.of<PrintBloc>(context).add(
+      SetPrinterEvent(
         name: printerSelect.name,
         address: printerSelect.address!,
         paired: isPairedSelect,
-        paper: paper));
+        paper: paper,
+      ),
+    );
   }
 
   @override
@@ -285,9 +300,12 @@ class _SettingsFromState extends State<SettingsFrom> {
                       onPressed: () {
                         NotificationService.showInfoPrint(context);
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.help_outline,
-                        color: Colors.grey,
+                        color: AppTheme.colorTheme(
+                          Styles.icons,
+                          Preferences.theme,
+                        ),
                         size: 20,
                       ),
                       tooltip: "Ayuda",
@@ -345,19 +363,24 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   ),
                                 );
                               },
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                Icons.edit,
+                              ),
                             ),
                             IconButton(
                               onPressed: () {
-                                BlocProvider.of<PrintBloc>(context)
-                                    .add(DelPrinterEvent());
+                                BlocProvider.of<PrintBloc>(context).add(
+                                  DelPrinterEvent(),
+                                );
                               },
                               icon: const Icon(Icons.delete),
                             ),
                           ],
                         ),
-                        leading: Icon(Icons.bluetooth,
-                            color: AppData.statusColor[_currentStatus]),
+                        leading: Icon(
+                          Icons.bluetooth,
+                          color: AppData.statusColor[_currentStatus],
+                        ),
                       ),
                       const Divider(),
                       const SizedBox(height: 10),
@@ -416,7 +439,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           "agregar",
                                         ),
                                         style: AppTheme.styleTheme(
-                                          Styles.buttonsStyle,
+                                          Styles.textButtonStyle,
                                           Preferences.theme,
                                         ),
                                       ),
@@ -434,7 +457,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                 ModalBarrier(
                   dismissible: false,
                   // color: Colors.black.withOpacity(0.3),
-                  color: AppTheme.backroundColor,
+                  color: AppTheme.colorTheme(
+                    Styles.background,
+                    Preferences.theme,
+                  ),
                 ),
               if (printVM.isLoading) const LoadWidget(),
             ],
@@ -506,12 +532,19 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           onPressed: () {
             Navigator.pop(context);
           },
+          style: AppTheme.buttonStyle(
+            Styles.buttonStyle,
+            Preferences.theme,
+          ),
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
               "cancelar",
             ),
-            style: AppTheme.whiteBoldStyle,
+            style: AppTheme.styleTheme(
+              Styles.whiteBoldStyle,
+              Preferences.theme,
+            ),
           ),
         ),
         ElevatedButton(
@@ -521,12 +554,21 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
                   Navigator.pop(context);
                 }
               : null,
+          style: (paper != null)
+              ? AppTheme.buttonStyle(
+                  Styles.buttonStyle,
+                  Preferences.theme,
+                ) //si esta desactivado
+              : AppTheme.disabledButtonsStyle,
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
               "conectar",
             ),
-            style: AppTheme.whiteBoldStyle,
+            style: AppTheme.styleTheme(
+              Styles.whiteBoldStyle,
+              Preferences.theme,
+            ),
           ),
         ),
       ],

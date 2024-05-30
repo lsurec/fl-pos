@@ -99,4 +99,10 @@ class LightTheme {
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
+
+  static final ButtonStyle buttonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+      primary,
+    ),
+  );
 }

@@ -86,6 +86,14 @@ class AppTheme {
     color: Colors.black,
   );
 
+  static final ButtonStyle buttonsStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(primary),
+  );
+
+  static final ButtonStyle disabledButtonsStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+  );
+
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,
@@ -195,7 +203,7 @@ class AppTheme {
       Styles.title: LightTheme.titleStyle,
       Styles.subTitle: LightTheme.subTitleStyle,
       Styles.disabledStyle: LightTheme.disabledStyle,
-
+      Styles.whiteBoldStyle: LightTheme.whiteBoldStyle,
     };
 
     final darkThemeStyles = {
@@ -206,6 +214,7 @@ class AppTheme {
       Styles.title: DarkTheme.titleStyle,
       Styles.subTitle: DarkTheme.subTitleStyle,
       Styles.disabledStyle: DarkTheme.disabledStyle,
+      Styles.whiteBoldStyle: DarkTheme.whiteBoldStyle,
     };
 
     // Selecciona el mapa correspondiente al tema
@@ -222,7 +231,7 @@ class AppTheme {
       Styles.background: backroundColor,
       Styles.secondBackground: LightTheme.backroundColorSecondary,
       Styles.grey: LightTheme.grey,
-
+      Styles.icons : DarkTheme.grey
     };
 
     final darkThemeStyles = {
@@ -230,6 +239,7 @@ class AppTheme {
       Styles.background: darkbackroundColor,
       Styles.secondBackground: DarkTheme.darkBackroundSecondary,
       Styles.grey: DarkTheme.grey,
+      Styles.icons : DarkTheme.icons
     };
 
     // Selecciona el mapa correspondiente al tema
@@ -237,5 +247,22 @@ class AppTheme {
 
     // Retorna el estilo correspondiente o normalStyle si no se encuentra
     return themeStyles[style] ?? black;
+  }
+
+  static ButtonStyle buttonStyle(String style, int tema) {
+    // Define los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.buttonStyle: LightTheme.buttonStyle,
+    };
+
+    final darkThemeStyles = {
+      Styles.buttonStyle: DarkTheme.buttonStyle,
+    };
+
+    // Selecciona el mapa correspondiente al tema
+    final themeStyles = tema == 1 ? lightThemeStyles : darkThemeStyles;
+
+    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    return themeStyles[style] ?? buttonsStyle;
   }
 }

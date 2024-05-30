@@ -10,5 +10,10 @@ class Styles {
   static String subTitle = "subTitle";
   static String grey = "grey";
   static String disabledStyle = "disabledStyle";
-  static String buttonsStyle = "buttonsStyle";
+  static String textButtonStyle = "buttonsStyle";
+  static String buttonStyle = "buttonStyle";
+  static String disabledButtonsStyle = "disabledButtonsStyle";
+  static String whiteBoldStyle = "whiteBoldStyle";
+  static String icons = "icons";
+
 }
