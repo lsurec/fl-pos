@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
@@ -34,7 +35,10 @@ class LangView extends StatelessWidget {
                           BlockTranslate.preferencias,
                           "idioma",
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.styleTheme(
+                          Styles.bold,
+                          Preferences.theme,
+                        ),
                       ),
                     ),
                     ListView.builder(
@@ -48,16 +52,28 @@ class LangView extends StatelessWidget {
                           children: [
                             CardWidget(
                               color: index == Preferences.idLanguage
-                                  ? AppTheme.primary
-                                  : AppTheme.backroundColorSecondary,
+                                  ? AppTheme.colorTheme(
+                                      Styles.darkPrimary,
+                                      Preferences.theme,
+                                    )
+                                  : AppTheme.colorTheme(
+                                      Styles.secondBackground,
+                                      Preferences.theme,
+                                    ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(
                                 title: Text(
                                   vm.getNameLang(lang)!,
                                   style: index == Preferences.idLanguage
-                                      ? AppTheme.whiteBoldStyle
-                                      : AppTheme.normalBoldStyle,
+                                      ? AppTheme.styleTheme(
+                                          Styles.whiteBoldStyle,
+                                          Preferences.theme,
+                                        )
+                                      : AppTheme.styleTheme(
+                                          Styles.normal,
+                                          Preferences.theme,
+                                        ),
                                   textAlign: TextAlign.center,
                                 ),
                                 onTap: () => vm.cambiarIdioma(
@@ -75,12 +91,19 @@ class LangView extends StatelessWidget {
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
+                        style: AppTheme.buttonStyle(
+                          Styles.buttonStyle,
+                          Preferences.theme,
+                        ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,
                             "continuar",
                           ),
-                          style: AppTheme.whiteBoldStyle,
+                          style: AppTheme.styleTheme(
+                            Styles.whiteBoldStyle,
+                            Preferences.theme,
+                          ),
                         ),
                       ),
                   ],
@@ -93,7 +116,10 @@ class LangView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.colorTheme(
+              Styles.background,
+              Preferences.theme,
+            ),
           ),
         if (vm.isLoading)
           Center(

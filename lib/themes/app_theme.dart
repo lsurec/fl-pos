@@ -240,7 +240,8 @@ class AppTheme {
       Styles.background: darkbackroundColor,
       Styles.secondBackground: DarkTheme.darkBackroundSecondary,
       Styles.grey: DarkTheme.grey,
-      Styles.icons: DarkTheme.icons
+      Styles.icons: DarkTheme.icons,
+      Styles.darkPrimary: DarkTheme.primary
     };
 
     // Selecciona el mapa correspondiente al tema

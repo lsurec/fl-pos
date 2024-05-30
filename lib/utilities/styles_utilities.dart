@@ -15,5 +15,5 @@ class Styles {
   static String disabledButtonsStyle = "disabledButtonsStyle";
   static String whiteBoldStyle = "whiteBoldStyle";
   static String icons = "icons";
-
+  static String darkPrimary = "darkPrimary";
 }
