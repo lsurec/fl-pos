@@ -83,7 +83,10 @@ class HomeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.colorTheme(
+              Styles.background,
+              Preferences.theme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
