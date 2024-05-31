@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/view_models/theme_view_model.dart';
 export 'package:flutter_post_printer_example/view_models/lang_view_model.dart';
 export 'package:flutter_post_printer_example/view_models/share_doc_view_model.dart';
 export 'package:flutter_post_printer_example/view_models/update_view_model.dart';
