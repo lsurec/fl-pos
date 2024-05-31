@@ -124,4 +124,12 @@ class AppTheme {
       ),
     ),
   );
+
+  static int cambiarTema = 0;
+  static bool claro = false;
+  static bool oscuro = false;
+
+  static final ThemeData darkTheme = ThemeData.dark().copyWith(
+    primaryColor: Colors.white,
+  );
 }

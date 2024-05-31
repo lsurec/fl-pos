@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -80,23 +81,58 @@ class SplashViewModel extends ChangeNotifier {
     //   }
     // }
 
-    //si no hay una url para las apis configurada y si no hay idioma seleccionado
-    //mostrar pantalla de idiomas
-    if (Preferences.urlApi.isEmpty && Preferences.language.isEmpty) {
-      Preferences.idLanguage = 0;
-      // Simula una carga de datos
-      await Future.delayed(const Duration(seconds: 1));
+    //PASOS SPLASH 1: IDIOMA, 2: TEMA, 3: URL, 4: TOKEN 5: ESTACION
 
-      //mostrar pantallaconfiguracion de apis
+    // si no hay un idioma guardado, mostrar pantalla de idioma
+    if (Preferences.language.isEmpty) {
+      print("1 Idioma");
+      Preferences.idLanguage = 0;
+
+      await Future.delayed(const Duration(seconds: 1));
+      //mostrar login
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const LangView(),
         ), // Cambiar a la pantalla principal después de cargar los datos
       );
       return;
+    }
 
-      //entrar a pantalla de la url de las apis si no hay url guardada y ya existe un idioma guardado
-    } else if (Preferences.language.isNotEmpty && Preferences.urlApi.isEmpty) {
+    //Encontrar el tema del dispositivo
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+    final bool isLightMode = brightness == Brightness.light;
+
+    //sino hay tema seleccionado, mostrar pantalla de temas
+    if (Preferences.idTheme.isEmpty) {
+      print("2 Thema");
+
+      //si el tema oscuro del dispositivo está activo
+      if (isDarkMode) {
+        //La preferencia será cero.
+        Preferences.theme = 0;
+        AppTheme.oscuro = true;
+      }
+
+      //si el tema claro del dispositivo está activo
+      if (isLightMode) {
+        //La preferencia será uno.
+        Preferences.theme = 0;
+        AppTheme.claro = true;
+      }
+
+      await Future.delayed(const Duration(seconds: 1));
+      //mostrar login
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ThemeView(),
+        ), // Cambiar a la pantalla principal después de cargar los datos
+      );
+      return;
+    }
+
+    if (Preferences.urlApi.isEmpty) {
+      print("3 Url");
       //si hay un idioma guardado asignarlo a la variable global del idioma
       AppLocalizations.idioma = Locale(Preferences.language);
       // Simula una carga de datos
@@ -113,6 +149,7 @@ class SplashViewModel extends ChangeNotifier {
 
     // si no hay una sesion de usuario guradada
     if (Preferences.token.isEmpty) {
+      print("4 Token");
       await Future.delayed(const Duration(seconds: 1));
       //mostrar login
       Navigator.of(context).pushReplacement(

@@ -19,7 +19,10 @@
         "aplicacion": "Aplicaciones",
         "configuracion": "Configuraciones",
         "nuevaVersion": "Nueva version disponble.",
-        "continuar": "Actualiza para continuar."
+        "continuar": "Actualiza para continuar.",
+        "tema": "Tema de la aplicación",
+        "claro": "Claro",
+        "oscuro": "Oscuro"
     },
     "login": {
         "contrasena": "Contraseña",
@@ -190,6 +193,7 @@
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
         "idioma": "Selecciona el idioma de tu preferencia.",
+        "tema": "Selecciona el tema de tu preferencia. O continua con el tema de tu dispositivo.",
         "seleccionado": "Idioma seleccionado."
     },
     "error": {

@@ -80,6 +80,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // limpiar preferencias
     // Preferences.clearLang();
+    // Preferences.clearTheme();
     // Preferences.clearUrl();
     // Preferences.clearToken();
     // Preferences.clearDocument();

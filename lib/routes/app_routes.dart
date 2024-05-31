@@ -45,6 +45,7 @@ class AppRoutes {
   static const calendario = 'Calenadario Tareas';
   static const detailsTaskCalendar = 'detailsTaskCalendar';
   static const lang = 'lang';
+  static const theme = 'theme';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -88,6 +89,8 @@ class AppRoutes {
     calendario: (BuildContext context) => const CalendarioView(),
     detailsTaskCalendar: (BuildContext context) => const DetalleTareaCalendariaView(),
     lang: (BuildContext context) => const LangView(),
+    theme: (BuildContext context) => const ThemeView(),
+
   };
 
   //en caso de ruta incorrecta

@@ -85,6 +85,11 @@ class Preferences {
     _prefs.remove(_langKey);
   }
 
+  static void clearTheme() {
+    _prefs.remove(_themeKey);
+    _prefs.remove(_themeNameKey);
+  }
+
   //limpiar pedido
   static void clearDocument() {
     _prefs.remove(_docKey);
@@ -117,11 +122,11 @@ class Preferences {
     _prefs.setInt(_themeKey, value);
   }
 
-  static String get themeName {
+  static String get idTheme {
     return _prefs.getString(_themeNameKey) ?? "";
   }
 
-  static set themeName(String value) {
+  static set idTheme(String value) {
     _prefs.setString(_themeNameKey, value);
   }
 }

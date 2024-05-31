@@ -19,7 +19,8 @@
         "aplicacion": "Applications",
         "configuracion": "Settings",
         "nuevaVersion": "New version available.",
-        "continuar": "Update to continue."
+        "continuar": "Update to continue.",
+        "tema": "App theme"
     },
     "login": {
         "contrasena": "Password",
@@ -190,6 +191,7 @@
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
         "idioma": "Select your preferred language.",
+        "tema": "Select the theme of your preference. Or continue with the topic of your device.",
         "seleccionado": "Selected language."
     },
     "error": {
