@@ -67,6 +67,7 @@ class AppState extends StatelessWidget {
 
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
         ChangeNotifierProvider(create: (_) => LangViewModel()),
+        ChangeNotifierProvider(create: (_) => ThemeViewModel()),
       ],
       child: const MyApp(),
     );
@@ -93,9 +94,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
       // theme: AppTheme.lightTheme,
-      theme: AppTheme.themes[0].theme,
+      theme: AppTheme.themes[AppTheme.defaultTheme].theme,
       //configurar ruta inicial
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: const ThemeView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
       localizationsDelegates: const [

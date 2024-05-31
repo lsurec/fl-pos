@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/views/theme_view.dart';
 export 'package:flutter_post_printer_example/views/lang_view.dart';
 export 'package:flutter_post_printer_example/views/hepl_view.dart';
 export 'package:flutter_post_printer_example/views/update_view.dart';

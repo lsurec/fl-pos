@@ -15,6 +15,7 @@ class Preferences {
   static const String _langKey = "langKey";
   static const String _idLangKey = "idLangKey";
   static const String _themeKey = "theme";
+  static const String _themeNameKey = "nameTheme";
 
   //iniciar shared preferences
   static Future init() async {
@@ -121,11 +122,11 @@ class Preferences {
     _prefs.setInt(_themeKey, value);
   }
 
-  // static String get theme {
-  //   return _prefs.getString(_themeKey) ?? "";
-  // }
+  static String get themeName {
+    return _prefs.getString(_themeNameKey) ?? "";
+  }
 
-  // static set theme(String value) {
-  //   _prefs.setString(_themeKey, value);
-  // }
+  static set themeName(String value) {
+    _prefs.setString(_themeNameKey, value);
+  }
 }
