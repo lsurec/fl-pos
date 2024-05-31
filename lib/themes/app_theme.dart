@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/themes/dark_theme.dart';
 import 'package:flutter_post_printer_example/themes/light_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -139,6 +140,23 @@ class AppTheme {
       ),
     ),
   );
+
+  //Lista de temas
+  static final List<ThemeModel> themes = [
+    ThemeModel(
+      id: 1,
+      descripcion: "Claro",
+      theme: lightTheme,
+    ),
+    ThemeModel(
+      id: 2,
+      descripcion: "Oscuro",
+      theme: darkTheme,
+    )
+  ];
+
+  //tema por defecto
+  static final ThemeModel defaultTheme = themes[0];
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
     primaryColor: DarkTheme.darkPrimary,

@@ -93,8 +93,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
       // theme: AppTheme.lightTheme,
-      theme:
-          (Preferences.theme <= 1 ? AppTheme.lightTheme : AppTheme.darkTheme),
+      theme: AppTheme.themes[0].theme,
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas

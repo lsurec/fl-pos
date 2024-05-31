@@ -12,3 +12,4 @@ export 'package:flutter_post_printer_example/models/login_model.dart';
 export 'package:flutter_post_printer_example/models/menu_model.dart';
 export 'package:flutter_post_printer_example/models/language_model.dart';
 export 'package:flutter_post_printer_example/models/filter_model.dart';
+export 'package:flutter_post_printer_example/models/theme_model.dart';
