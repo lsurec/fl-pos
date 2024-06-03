@@ -91,7 +91,7 @@ class ThemeViewModel extends ChangeNotifier {
     });
 
     print(
-        "Tema de preferencia ${Preferences.theme} Sistema ${Preferences.systemTheme}");
+        "Tema de preferencia id ${Preferences.idTheme} index ${Preferences.theme} Sistema ${Preferences.systemTheme}");
   }
 
   reiniciarApp() {

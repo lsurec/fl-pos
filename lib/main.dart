@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
       title: "Business",
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
-      theme: themeApp(context),
+      theme: aplicarTema(context),
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
@@ -121,6 +121,10 @@ class MyApp extends StatelessWidget {
 }
 
 ThemeData themeApp(BuildContext context) {
+  print(
+    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+  );
+
   //Encontrar el tema del dispositivo
   final Brightness brightness = MediaQuery.of(context).platformBrightness;
   //si es oscuro
@@ -171,4 +175,72 @@ ThemeData themeApp(BuildContext context) {
   }
 
   return AppTheme.lightTheme;
+}
+
+ThemeData temaApplicacion(BuildContext context) {
+  print(
+    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+  );
+
+  //Encontrar el tema del dispositivo
+  final Brightness brightness = MediaQuery.of(context).platformBrightness;
+  //si es oscuro
+  final bool isDarkMode = brightness == Brightness.dark;
+  //si es claro
+  final bool isLightMode = brightness == Brightness.light;
+
+  //INICIALMENTE NO HAY PREFERENCIAS
+  if (Preferences.idTheme.isEmpty) {
+    //INDEX 0 Y TEMA DISPOSITIVO = CLARO
+    if (Preferences.theme == 0 && isLightMode) {
+      Preferences.systemTheme = "1";
+      print("tema claro");
+      return AppTheme.lightTheme;
+    }
+
+    //INDEX 0 Y TEMA DISPOSITIVO = OSCURO
+    if (Preferences.theme == 0 && isDarkMode) {
+      Preferences.systemTheme = "2";
+      print("tema oscuro");
+      return AppTheme.darkTheme;
+    }
+  } else {
+    //TEMA CLARO
+    if (Preferences.idTheme == "1") {
+      return AppTheme.lightTheme;
+    }
+
+    //TEMA OSCURO
+    if (Preferences.idTheme == "2") {
+      return AppTheme.darkTheme;
+    }
+  }
+  // print("Aqui ${Preferences.idTheme}");
+  print(
+    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+  );
+  return AppTheme.lightTheme;
+}
+
+ThemeData aplicarTema(BuildContext context) {
+  print(
+    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+  );
+
+  //Encontrar el tema del dispositivo
+  final Brightness brightness = MediaQuery.of(context).platformBrightness;
+  //si es oscuro
+  final bool isDarkMode = brightness == Brightness.dark;
+  //si es claro
+  final bool isLightMode = brightness == Brightness.light;
+
+  if (Preferences.idTheme.isEmpty && isLightMode) {
+    return AppTheme.lightTheme;
+  }
+
+  if (Preferences.idTheme.isEmpty && isDarkMode) {
+    return AppTheme.darkTheme;
+  }
+
+  return AppTheme.darkTheme;
 }
