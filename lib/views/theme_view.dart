@@ -41,7 +41,8 @@ class ThemeView extends StatelessWidget {
                             BlockTranslate.preferencias,
                             "tema",
                           ),
-                          style: AppTheme.styleTheme(
+                          style: AppTheme.theme(
+                            context,
                             Styles.bold,
                             Preferences.idTheme,
                           ),

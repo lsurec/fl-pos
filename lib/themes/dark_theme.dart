@@ -4,7 +4,7 @@ class DarkTheme {
   //COLORES
   static const Color darkDackroundColor = Color.fromARGB(255, 48, 45, 45);
   static const Color darkPrimary = Color.fromARGB(255, 159, 197, 255);
-  static const Color darkBackroundSecondary = Color.fromARGB(255, 68, 68, 67);
+  static const Color backroundSecondary = Color.fromARGB(255, 68, 68, 67);
   static const Color grey = Colors.grey;
   static const Color primary = Color(0xff134895);
 
