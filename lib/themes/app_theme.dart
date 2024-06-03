@@ -205,19 +205,13 @@ class AppTheme {
   }
 
   static Color color(BuildContext context, String style, String tema) {
-    //Encontrar el tema del dispositivo
+    // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    //si es oscuro
     final bool isDarkMode = brightness == Brightness.dark;
-    //si es claro
-    final bool isLightMode = brightness == Brightness.light;
 
-    if (tema.isEmpty || tema == "0" && isLightMode) {
-      tema = "1";
-    }
-
-    if (tema.isEmpty || tema == "0" && isDarkMode) {
-      tema = "2";
+    // Determinar el tema a utilizar
+    if (tema.isEmpty || tema == "0") {
+      tema = isDarkMode ? "2" : "1";
     }
 
     // Define los mapas para los estilos claros y oscuros
@@ -256,19 +250,13 @@ class AppTheme {
   );
 
   static ButtonStyle button(BuildContext context, String style, String tema) {
-    //Encontrar el tema del dispositivo
+    // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    //si es oscuro
     final bool isDarkMode = brightness == Brightness.dark;
-    //si es claro
-    final bool isLightMode = brightness == Brightness.light;
 
-    if (tema.isEmpty || tema == "0" && isLightMode) {
-      tema = "1";
-    }
-
-    if (tema.isEmpty || tema == "0" && isDarkMode) {
-      tema = "2";
+    // Determinar el tema a utilizar
+    if (tema.isEmpty || tema == "0") {
+      tema = isDarkMode ? "2" : "1";
     }
     // Define los mapas para los estilos de los diferentes temas
     final lightThemeStyles = {
@@ -295,5 +283,46 @@ class AppTheme {
 
     // Retorna el estilo correspondiente o buttonsStyle si no se encuentra
     return themeStyles[style] ?? buttonsStyle;
+  }
+
+  static Color colorcito(BuildContext context, String style, String tema) {
+    // Encontrar el tema del dispositivo
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+
+    // Determinar el tema a utilizar
+    if (tema.isEmpty || tema == "0") {
+      tema = isDarkMode ? "2" : "1";
+    }
+
+    // Definir los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.primary: primary,
+      Styles.background: LightTheme.backroundColor,
+      Styles.secondBackground: LightTheme.backroundColorSecondary,
+    };
+
+    final darkThemeStyles = {
+      Styles.primary: primary,
+      Styles.background: DarkTheme.backroundColor,
+      Styles.secondBackground: DarkTheme.backroundSecondary,
+    };
+
+    // Seleccionar el mapa correspondiente al tema
+    Map<String, Color> themeStyles;
+    switch (tema) {
+      case "1":
+        themeStyles = lightThemeStyles;
+        break;
+      case "2":
+        themeStyles = darkThemeStyles;
+        break;
+      default:
+        themeStyles = lightThemeStyles;
+        break;
+    }
+
+    // Retornar el estilo correspondiente o un color por defecto si no se encuentra
+    return themeStyles[style] ?? black;
   }
 }

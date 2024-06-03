@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
       title: "Business",
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
-      theme: aplicarTema(context),
+      theme: aplicarTemaApp(context),
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
@@ -243,4 +243,34 @@ ThemeData aplicarTema(BuildContext context) {
   }
 
   return AppTheme.darkTheme;
+}
+
+ThemeData aplicarTemaApp(BuildContext context) {
+  print(
+    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+  );
+
+  // Encontrar el tema del dispositivo
+  final Brightness brightness = MediaQuery.of(context).platformBrightness;
+  final bool isDarkMode = brightness == Brightness.dark;
+  final bool isLightMode = brightness == Brightness.light;
+
+  if (Preferences.idTheme.isNotEmpty) {
+    if (Preferences.idTheme == "1") {
+      return AppTheme.lightTheme;
+    } else if (Preferences.idTheme == "2") {
+      return AppTheme.darkTheme;
+    }
+  } else {
+    if (isDarkMode) {
+      Preferences.idTheme = "2"; //verificar esto
+      return AppTheme.darkTheme;
+    } else if (isLightMode) {
+      Preferences.idTheme = "1"; //verificar esto
+      return AppTheme.lightTheme;
+    }
+  }
+
+  // Retornar un tema por defecto en caso de que no se cumplan las condiciones
+  return AppTheme.lightTheme;
 }
