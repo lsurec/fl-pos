@@ -37,7 +37,7 @@ class LangView extends StatelessWidget {
                         ),
                         style: AppTheme.style(
                           context,
-                          Styles.normal,
+                          Styles.bold,
                           Preferences.idTheme,
                         ),
                       ),
@@ -65,7 +65,11 @@ class LangView extends StatelessWidget {
                                 title: Text(
                                   vm.getNameLang(lang)!,
                                   style: index == Preferences.idLanguage
-                                      ?  AppTheme.style(context, Styles.whiteBoldStyle, Preferences.idTheme,)
+                                      ? AppTheme.style(
+                                          context,
+                                          Styles.whiteBoldStyle,
+                                          Preferences.idTheme,
+                                        )
                                       : AppTheme.style(
                                           context,
                                           Styles.bold,
@@ -106,7 +110,11 @@ class LangView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading)
           Center(
