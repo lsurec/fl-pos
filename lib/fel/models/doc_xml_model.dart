@@ -3,16 +3,14 @@ import 'dart:convert';
 class DocXmlModel {
   int id;
   String userName;
-  String fechaHora;
+  DateTime fechaHora;
   int dConsecutivoInterno;
   String xmlContenido;
   int certificadorDte;
   String xmlDocumentoFirmado;
   bool respuesta;
-  dynamic mensaje;
+  String mensaje;
   String dIdUnc;
-  bool certificacion;
-  bool anulacion;
 
   DocXmlModel({
     required this.id,
@@ -25,8 +23,6 @@ class DocXmlModel {
     required this.respuesta,
     required this.mensaje,
     required this.dIdUnc,
-    required this.certificacion,
-    required this.anulacion,
   });
 
   factory DocXmlModel.fromJson(String str) =>
@@ -37,7 +33,7 @@ class DocXmlModel {
   factory DocXmlModel.fromMap(Map<String, dynamic> json) => DocXmlModel(
         id: json["id"],
         userName: json["userName"],
-        fechaHora: json["fecha_Hora"],
+        fechaHora: DateTime.parse(json["fecha_Hora"]),
         dConsecutivoInterno: json["d_Consecutivo_Interno"],
         xmlContenido: json["xml_Contenido"],
         certificadorDte: json["certificador_DTE"],
@@ -45,14 +41,12 @@ class DocXmlModel {
         respuesta: json["respuesta"],
         mensaje: json["mensaje"],
         dIdUnc: json["d_Id_Unc"],
-        certificacion: json["certificacion"],
-        anulacion: json["anulacion"],
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
         "userName": userName,
-        "fecha_Hora": fechaHora,
+        "fecha_Hora": fechaHora.toIso8601String(),
         "d_Consecutivo_Interno": dConsecutivoInterno,
         "xml_Contenido": xmlContenido,
         "certificador_DTE": certificadorDte,
@@ -60,7 +54,5 @@ class DocXmlModel {
         "respuesta": respuesta,
         "mensaje": mensaje,
         "d_Id_Unc": dIdUnc,
-        "certificacion": certificacion,
-        "anulacion": anulacion,
       };
 }

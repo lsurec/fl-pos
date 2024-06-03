@@ -131,10 +131,8 @@ class DocumentService {
     String user,
     String token,
     int consecutivo,
-    int anula,
-    int certifica,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Documento/xml");
+    Uri url = Uri.parse("${_baseUrl}Fel/xml/cert/$user/$consecutivo");
     try {
       //url completa
 
@@ -142,11 +140,7 @@ class DocumentService {
       final response = await http.get(
         url,
         headers: {
-          "user": user,
           "Authorization": "bearer $token",
-          "consecutivo": "$consecutivo",
-          "anula": "$anula",
-          "certifica": "$certifica",
         },
       );
 

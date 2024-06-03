@@ -642,7 +642,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
     );
 
     //usuario token y cadena de conexion
-    String conStr = loginVM.conStr;
     String user = loginVM.user;
     String tokenUser = loginVM.token;
 
@@ -654,8 +653,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
       user,
       tokenUser,
       consecutivoDoc,
-      0,
-      1,
     );
 
     //Si el api falló
