@@ -40,12 +40,12 @@ class LangViewModel extends ChangeNotifier {
       Preferences.idLanguage = LanguagesProvider.indexDefaultLang;
       notifyListeners();
     }
-    // isLoading = true;
+    isLoading = true;
     // timer?.cancel(); // Cancelar el temporizador existente si existe
     timer = Timer(const Duration(milliseconds: 2000), () {
       // Función de filtrado que consume el servicio
       FocusScope.of(context).unfocus(); //ocultar teclado
-      // reiniciarApp();
+      reiniciarApp();
     }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 

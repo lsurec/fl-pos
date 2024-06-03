@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
@@ -34,7 +35,11 @@ class LangView extends StatelessWidget {
                           BlockTranslate.preferencias,
                           "idioma",
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ),
                     ListView.builder(
@@ -49,15 +54,23 @@ class LangView extends StatelessWidget {
                             CardWidget(
                               color: index == Preferences.idLanguage
                                   ? AppTheme.primary
-                                  : AppTheme.backroundColorSecondary,
+                                  : AppTheme.color(
+                                      context,
+                                      Styles.secondBackground,
+                                      Preferences.idTheme,
+                                    ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(
                                 title: Text(
                                   vm.getNameLang(lang)!,
                                   style: index == Preferences.idLanguage
-                                      ? AppTheme.whiteBoldStyle
-                                      : AppTheme.normalBoldStyle,
+                                      ?  AppTheme.style(context, Styles.whiteBoldStyle, Preferences.idTheme,)
+                                      : AppTheme.style(
+                                          context,
+                                          Styles.bold,
+                                          Preferences.idTheme,
+                                        ),
                                   textAlign: TextAlign.center,
                                 ),
                                 onTap: () => vm.cambiarIdioma(

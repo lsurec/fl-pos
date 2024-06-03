@@ -41,7 +41,7 @@ class ThemeView extends StatelessWidget {
                             BlockTranslate.preferencias,
                             "tema",
                           ),
-                          style: AppTheme.theme(
+                          style: AppTheme.style(
                             context,
                             Styles.bold,
                             Preferences.idTheme,
@@ -61,15 +61,27 @@ class ThemeView extends StatelessWidget {
                             CardWidget(
                               color: theme.id == Preferences.theme
                                   ? AppTheme.primary
-                                  : AppTheme.backroundColorSecondary,
+                                  : AppTheme.color(
+                                      context,
+                                      Styles.secondBackground,
+                                      Preferences.idTheme,
+                                    ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(
                                 title: Text(
                                   theme.descripcion,
                                   style: index == Preferences.theme
-                                      ? AppTheme.whiteBoldStyle
-                                      : AppTheme.normalBoldStyle,
+                                      ? AppTheme.style(
+                                          context,
+                                          Styles.whiteBoldStyle,
+                                          Preferences.idTheme,
+                                        )
+                                      : AppTheme.style(
+                                          context,
+                                          Styles.bold,
+                                          Preferences.idTheme,
+                                        ),
                                   textAlign: TextAlign.center,
                                 ),
                                 onTap: () => vm.nuevoTema(context, theme),
@@ -100,7 +112,11 @@ class ThemeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading)
           Center(
