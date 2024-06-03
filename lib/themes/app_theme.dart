@@ -250,4 +250,50 @@ class AppTheme {
     // Retorna el estilo correspondiente o normalStyle si no se encuentra
     return themeStyles[style] ?? black;
   }
+
+  static final ButtonStyle buttonsStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(primary),
+  );
+
+  static ButtonStyle button(BuildContext context, String style, String tema) {
+    //Encontrar el tema del dispositivo
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    //si es oscuro
+    final bool isDarkMode = brightness == Brightness.dark;
+    //si es claro
+    final bool isLightMode = brightness == Brightness.light;
+
+    if (tema.isEmpty && isLightMode) {
+      tema = "1";
+    }
+
+    if (tema.isEmpty && isDarkMode) {
+      tema = "2";
+    }
+    // Define los mapas para los estilos de los diferentes temas
+    final lightThemeStyles = {
+      Styles.buttonStyle: LightTheme.buttonStyle,
+    };
+
+    final darkThemeStyles = {
+      Styles.buttonStyle: DarkTheme.buttonStyle,
+    };
+
+    // Selecciona el mapa correspondiente al tema utilizando un switch-case
+    Map<String, ButtonStyle> themeStyles;
+    switch (tema) {
+      case "1":
+        themeStyles = darkThemeStyles;
+        break;
+      case "2":
+        themeStyles = darkThemeStyles;
+        break;
+      default:
+        themeStyles = lightThemeStyles;
+        break;
+    }
+
+    // Retorna el estilo correspondiente o buttonsStyle si no se encuentra
+    return themeStyles[style] ?? buttonsStyle;
+  }
 }
