@@ -147,11 +147,11 @@ class AppTheme {
     //si es claro
     final bool isLightMode = brightness == Brightness.light;
 
-    if (tema.isEmpty && isLightMode) {
+    if (tema.isEmpty || tema == "0" && isLightMode) {
       tema = "1";
     }
 
-    if (tema.isEmpty && isDarkMode) {
+    if (tema.isEmpty || tema == "0" && isDarkMode) {
       tema = "2";
     }
 
@@ -212,11 +212,11 @@ class AppTheme {
     //si es claro
     final bool isLightMode = brightness == Brightness.light;
 
-    if (tema.isEmpty && isLightMode) {
+    if (tema.isEmpty || tema == "0" && isLightMode) {
       tema = "1";
     }
 
-    if (tema.isEmpty && isDarkMode) {
+    if (tema.isEmpty || tema == "0" && isDarkMode) {
       tema = "2";
     }
 
@@ -263,11 +263,11 @@ class AppTheme {
     //si es claro
     final bool isLightMode = brightness == Brightness.light;
 
-    if (tema.isEmpty && isLightMode) {
+    if (tema.isEmpty || tema == "0" && isLightMode) {
       tema = "1";
     }
 
-    if (tema.isEmpty && isDarkMode) {
+    if (tema.isEmpty || tema == "0" && isDarkMode) {
       tema = "2";
     }
     // Define los mapas para los estilos de los diferentes temas

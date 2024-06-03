@@ -1,5 +1,6 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -97,6 +98,11 @@ class ApiView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CardWidget(
+                    color: AppTheme.color(
+                      context,
+                      Styles.secondBackground,
+                      Preferences.idTheme,
+                    ),
                     width: double.infinity,
                     raidus: 18,
                     child: Padding(
@@ -137,6 +143,11 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => Navigator.pop(context),
+                                    style: AppTheme.button(
+                                      context,
+                                      Styles.buttonStyle,
+                                      Preferences.idTheme,
+                                    ),
                                     // onPressed: () => Preferences.clearUrl(),
                                     child: SizedBox(
                                       width: double.infinity,
@@ -147,7 +158,11 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cancelar",
                                           ),
-                                          style: AppTheme.whiteBoldStyle,
+                                          style: AppTheme.style(
+                                            context,
+                                            Styles.whiteBoldStyle,
+                                            Preferences.idTheme,
+                                          ),
                                         ),
                                       ),
                                     ),

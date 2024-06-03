@@ -133,16 +133,31 @@ ThemeData themeApp(BuildContext context) {
     //TEMA DEL DISPOSITIVO CLARO
     if (Preferences.theme == 0 && isLightMode) {
       AppTheme.claro = true;
+      Preferences.systemTheme = "1";
       return AppTheme.lightTheme;
     }
 
     //TEMA DEL DISPOSITIVO OSCURO
     if (Preferences.theme == 0 && isDarkMode) {
+      Preferences.systemTheme = "2";
       AppTheme.oscuro = false;
       return AppTheme.darkTheme;
     }
   } else {
     //Si hay preferencia
+
+    //SI ES DEL SISTEMA TEMA CLARO
+    if (Preferences.theme == 0 && Preferences.systemTheme == "1") {
+      Preferences.idTheme == "1";
+      return AppTheme.lightTheme;
+    }
+
+    //SI ES DEL SISTEMA TEMA OSCURO
+    if (Preferences.theme == 0 && Preferences.systemTheme == "2") {
+      print("tema oscuro");
+      Preferences.idTheme == "2";
+      return AppTheme.darkTheme;
+    }
 
     //TEMA CLARO
     if (Preferences.idTheme == "1") {

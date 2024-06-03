@@ -22,7 +22,7 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   nuevoTema(BuildContext context, ThemeModel tema) {
-    Preferences.theme = tema.id;
+    // Preferences.theme = tema.id;
     Preferences.idTheme = tema.id.toString();
     print(
         "${tema.id} id del tema y preferencia ${Preferences.theme} ${Preferences.idTheme}");
@@ -64,13 +64,21 @@ class ThemeViewModel extends ChangeNotifier {
   Timer? timer; // Temporizador
 
   void reiniciarTemp(BuildContext context) {
-    if (Preferences.idTheme.isEmpty && AppTheme.claro) {
-      Preferences.idTheme = "1";
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+    final bool isLightMode = brightness == Brightness.light;
+
+    if (Preferences.idTheme.isEmpty && isLightMode) {
+      print("euuuuu");
+      Preferences.idTheme = "0";
+      Preferences.systemTheme = "1";
       notifyListeners();
     }
 
-    if (Preferences.idTheme.isEmpty && AppTheme.oscuro) {
-      Preferences.idTheme = "2";
+    if (Preferences.idTheme.isEmpty && isDarkMode) {
+      print("uuuue");
+      Preferences.idTheme = "0";
+      Preferences.systemTheme = "2";
       notifyListeners();
     }
 
@@ -82,7 +90,8 @@ class ThemeViewModel extends ChangeNotifier {
       // reiniciarApp();
     });
 
-    print("Tema de preferencia ${Preferences.theme}");
+    print(
+        "Tema de preferencia ${Preferences.theme} Sistema ${Preferences.systemTheme}");
   }
 
   reiniciarApp() {
