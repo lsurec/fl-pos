@@ -64,10 +64,16 @@ class ThemeViewModel extends ChangeNotifier {
   Timer? timer; // Temporizador
 
   void reiniciarTemp(BuildContext context) {
-    if (Preferences.idTheme.isEmpty) {
+    if (Preferences.idTheme.isEmpty && AppTheme.claro) {
       Preferences.idTheme = "1";
       notifyListeners();
     }
+
+    if (Preferences.idTheme.isEmpty && AppTheme.oscuro) {
+      Preferences.idTheme = "2";
+      notifyListeners();
+    }
+
     // isLoading = true;
     // timer?.cancel(); // Cancelar el temporizador existente si existe
     timer = Timer(const Duration(milliseconds: 2000), () {

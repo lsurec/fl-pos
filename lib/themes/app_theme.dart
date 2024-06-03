@@ -1,4 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/dark_theme.dart';
+import 'package:flutter_post_printer_example/themes/light_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class AppTheme {
   //Color primario de la app
@@ -13,6 +18,7 @@ class AppTheme {
   static Color backroundColor = Colors.orange.shade50;
   static const Color backroundColorSecondary = Color(0xffFEF5E7);
   static const Color white = Colors.white;
+  static const Color black = Colors.black;
 
   static const normalStyle = TextStyle(
     fontSize: 17,
@@ -132,4 +138,101 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
     primaryColor: Colors.white,
   );
+
+  static TextStyle styleTheme(String style, String tema) {
+    // Define los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.normal: LightTheme.normalStyle,
+      Styles.bold: LightTheme.normalBoldStyle,
+      Styles.obligatory: LightTheme.obligatoryBoldStyle,
+      Styles.hora: LightTheme.horaBoldStyle,
+    };
+
+    final darkThemeStyles = {
+      Styles.normal: DarkTheme.normalStyle,
+      Styles.bold: DarkTheme.normalBoldStyle,
+      Styles.obligatory: DarkTheme.obligatoryStyle,
+      Styles.hora: DarkTheme.horaBoldStyle,
+    };
+
+    // Selecciona el mapa correspondiente al tema
+    final themeStyles = tema == "1" ? lightThemeStyles : darkThemeStyles;
+
+    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    return themeStyles[style] ?? normalStyle;
+  }
+
+  static Color colorTheme(String style, String tema) {
+    // Define los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.primary: primary,
+    };
+
+    final darkThemeStyles = {
+      Styles.primary: primary,
+    };
+
+    // Selecciona el mapa correspondiente al tema
+    final themeStyles = tema == "1" ? lightThemeStyles : darkThemeStyles;
+
+    // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    return themeStyles[style] ?? black;
+  }
+
+  static TextStyle theme(BuildContext context, String style, String tema) {
+    //Encontrar el tema del dispositivo
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    //si es oscuro
+    final bool isDarkMode = brightness == Brightness.dark;
+    //si es claro
+    final bool isLightMode = brightness == Brightness.light;
+
+    print(tema);
+    print("claro $isLightMode");
+    print("oscuro $isDarkMode");
+
+    // Define los mapas para los estilos claros y oscuros
+    final lightThemeStyles = {
+      Styles.normal: LightTheme.normalStyle,
+      Styles.bold: LightTheme.normalBoldStyle,
+      Styles.obligatory: LightTheme.obligatoryBoldStyle,
+      Styles.hora: LightTheme.horaBoldStyle,
+    };
+
+    final darkThemeStyles = {
+      Styles.normal: DarkTheme.normalStyle,
+      Styles.bold: DarkTheme.normalBoldStyle,
+      Styles.obligatory: DarkTheme.obligatoryStyle,
+      Styles.hora: DarkTheme.horaBoldStyle,
+    };
+
+    // Selecciona el mapa correspondiente al tema
+    // final themeStyles = tema == "1" ? lightThemeStyles : darkThemeStyles;
+
+    if (tema.isEmpty && isLightMode) {
+      print("aqui");
+      tema = "1";
+    }
+
+    if (tema.isEmpty && isDarkMode) {
+      print("aqui 2");
+      tema = "2";
+    }
+
+    switch (tema) {
+      case "1":
+        lightThemeStyles[style];
+        break;
+      case "2":
+        darkThemeStyles[style];
+        break;
+      default:
+        normalStyle;
+    }
+
+    return normalStyle;
+
+    // // Retorna el estilo correspondiente o normalStyle si no se encuentra
+    // return themeStyles[style] ?? normalStyle;
+  }
 }

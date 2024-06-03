@@ -6,7 +6,6 @@ import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -98,28 +97,9 @@ class SplashViewModel extends ChangeNotifier {
       return;
     }
 
-    //Encontrar el tema del dispositivo
-    final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final bool isDarkMode = brightness == Brightness.dark;
-    final bool isLightMode = brightness == Brightness.light;
-
     //sino hay tema seleccionado, mostrar pantalla de temas
     if (Preferences.idTheme.isEmpty) {
       print("2 Thema");
-
-      //si el tema oscuro del dispositivo está activo
-      if (isDarkMode) {
-        //La preferencia será cero.
-        Preferences.theme = 0;
-        AppTheme.oscuro = true;
-      }
-
-      //si el tema claro del dispositivo está activo
-      if (isLightMode) {
-        //La preferencia será uno.
-        Preferences.theme = 0;
-        AppTheme.claro = true;
-      }
 
       await Future.delayed(const Duration(seconds: 1));
       //mostrar login

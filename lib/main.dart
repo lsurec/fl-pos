@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -93,7 +95,7 @@ class MyApp extends StatelessWidget {
       title: "Business",
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
-      theme: AppTheme.lightTheme,
+      theme: themeApp(context),
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
@@ -116,4 +118,42 @@ class MyApp extends StatelessWidget {
           : Locale(Preferences.language),
     );
   }
+}
+
+ThemeData themeApp(BuildContext context) {
+  //Encontrar el tema del dispositivo
+  final Brightness brightness = MediaQuery.of(context).platformBrightness;
+  //si es oscuro
+  final bool isDarkMode = brightness == Brightness.dark;
+  //si es claro
+  final bool isLightMode = brightness == Brightness.light;
+
+  //sino hay preferencia, asignar el tema del dispositivo
+  if (Preferences.idTheme.isEmpty) {
+    //TEMA DEL DISPOSITIVO CLARO
+    if (Preferences.theme == 0 && isLightMode) {
+      AppTheme.claro = true;
+      return AppTheme.lightTheme;
+    }
+
+    //TEMA DEL DISPOSITIVO OSCURO
+    if (Preferences.theme == 0 && isDarkMode) {
+      AppTheme.oscuro = false;
+      return AppTheme.darkTheme;
+    }
+  } else {
+    //Si hay preferencia
+
+    //TEMA CLARO
+    if (Preferences.idTheme == "1") {
+      return AppTheme.lightTheme;
+    }
+
+    //TEMA OSCURO
+    if (Preferences.idTheme == "2") {
+      return AppTheme.darkTheme;
+    }
+  }
+
+  return AppTheme.lightTheme;
 }
