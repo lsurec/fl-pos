@@ -204,7 +204,8 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
       serie: "",
       no: "",
       autorizacion: "",
-      noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
+      noInterno: encabezado.refIdDocumento ?? "",
+      serieInterna: encabezado.serieDocumento ?? "",
     );
 
     DateTime now = DateTime.now();

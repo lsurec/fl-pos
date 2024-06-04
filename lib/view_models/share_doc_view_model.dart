@@ -107,7 +107,8 @@ class ShareDocViewModel extends ChangeNotifier {
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
       autorizacion: encabezado.feLUuid ?? "",
-      noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
+      noInterno: encabezado.iDDocumentoRef ?? "",
+      serieInterna: encabezado.serieDocumento ?? "",
     );
 
     //fecha del usuario
