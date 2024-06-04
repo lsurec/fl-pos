@@ -76,7 +76,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
     }
 
     //agregar respesta de api a la lista de id referencias encontradas
-    idReferencias.addAll(res.message);
+    idReferencias.addAll(res.response);
 
     isLoading = false; //detener carga
   }

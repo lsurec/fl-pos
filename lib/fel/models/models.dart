@@ -4,3 +4,4 @@ export 'package:flutter_post_printer_example/fel/models/catalogo_parametro_model
 export 'package:flutter_post_printer_example/fel/models/catalogo_api_model.dart';
 export 'package:flutter_post_printer_example/fel/models/credencial_model.dart';
 export 'package:flutter_post_printer_example/fel/models/doc_xml_model.dart';
+export 'package:flutter_post_printer_example/fel/models/data_infile_model.dart';

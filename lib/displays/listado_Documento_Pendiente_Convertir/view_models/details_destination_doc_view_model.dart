@@ -78,7 +78,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
     }
 
     //agregar detalles
-    detalles.addAll(res.message);
+    detalles.addAll(res.response);
   }
 
   //Salir de la pantalla
@@ -159,12 +159,12 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<PrintConvertModel> data = res.message;
+    final List<PrintConvertModel> data = res.response;
 
     if (data.isEmpty) {
       isLoading = false;
 
-      res.message = AppLocalizations.of(contextP)!.translate(
+      res.response = AppLocalizations.of(contextP)!.translate(
         BlockTranslate.notificacion,
         'sinDatos',
       );

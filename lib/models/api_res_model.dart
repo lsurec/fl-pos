@@ -1,14 +1,14 @@
 class ApiResModel {
   int? typeError;
   bool succes;
-  dynamic message;
+  dynamic response;
   String url;
   String? storeProcedure;
 
   ApiResModel({
     this.typeError,
     required this.succes,
-    required this.message,
+    required this.response,
     required this.url,
     required this.storeProcedure,
   });

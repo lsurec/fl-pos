@@ -122,7 +122,7 @@ class ProductViewModel extends ChangeNotifier {
         return;
       }
 
-      prices = precios.message;
+      prices = precios.response;
 
       if (prices.isEmpty) {
         NotificationService.showSnackbar(
@@ -172,20 +172,20 @@ class ProductViewModel extends ChangeNotifier {
     if (!resPrecio.succes) {
       ErrorModel error = ErrorModel(
         date: DateTime.now(),
-        description: resPrecio.message,
+        description: resPrecio.response,
         url: resPrecio.url,
         storeProcedure: resPrecio.storeProcedure,
       );
 
       return ApiResModel(
         succes: false,
-        message: error,
+        response: error,
         url: "",
         storeProcedure: null,
       );
     }
 
-    final List<PrecioModel> precios = resPrecio.message;
+    final List<PrecioModel> precios = resPrecio.response;
 
     final List<UnitarioModel> unitarios = [];
 
@@ -224,7 +224,7 @@ class ProductViewModel extends ChangeNotifier {
 
       return ApiResModel(
         succes: true,
-        message: unitarios,
+        response: unitarios,
         url: "",
         storeProcedure: null,
       );
@@ -241,20 +241,20 @@ class ProductViewModel extends ChangeNotifier {
     if (!resFactores.succes) {
       ErrorModel error = ErrorModel(
         date: DateTime.now(),
-        description: resFactores.message,
+        description: resFactores.response,
         url: resFactores.url,
         storeProcedure: resFactores.storeProcedure,
       );
 
       return ApiResModel(
         succes: false,
-        message: error,
+        response: error,
         url: "",
         storeProcedure: null,
       );
     }
 
-    final List<FactorConversionModel> factores = resFactores.message;
+    final List<FactorConversionModel> factores = resFactores.response;
 
     for (var factor in factores) {
       final UnitarioModel unitario = UnitarioModel(
@@ -290,7 +290,7 @@ class ProductViewModel extends ChangeNotifier {
 
     return ApiResModel(
       succes: true,
-      message: unitarios,
+      response: unitarios,
       url: "",
       storeProcedure: null,
     );
@@ -335,7 +335,7 @@ class ProductViewModel extends ChangeNotifier {
     }
 
     //agreagar bodegas encontradas
-    bodegas.addAll(res.message);
+    bodegas.addAll(res.response);
 
     //si solo hay una bodega seleccionarla por defecto
     if (bodegas.length == 1) {
@@ -414,7 +414,7 @@ class ProductViewModel extends ChangeNotifier {
       return;
     }
 
-    prices = precios.message;
+    prices = precios.response;
 
     if (prices.isEmpty) {
       calculateTotal();
@@ -553,7 +553,7 @@ class ProductViewModel extends ChangeNotifier {
 
       //agreagar bodegas encontradas
 
-      final List<String> mensajes = res.message;
+      final List<String> mensajes = res.response;
 
       if (mensajes.isNotEmpty) {
         NotificationService.showSnackbar(mensajes[0]);

@@ -103,14 +103,14 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
-      final List<TipoCambioModel> cambios = resCambio.message;
+      final List<TipoCambioModel> cambios = resCambio.response;
 
       if (cambios.isNotEmpty) {
         tipoCambio = cambios[0].tipoCambio;
       } else {
         vmHome.isLoading = false;
 
-        resCambio.message = AppLocalizations.of(context)!.translate(
+        resCambio.response = AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
           'sinTipoCambio',
         );
@@ -149,7 +149,7 @@ class MenuViewModel extends ChangeNotifier {
       }
 
       //Agregar series encontradas
-      vmDoc.series.addAll(resSeries.message);
+      vmDoc.series.addAll(resSeries.response);
 
       // si sololo hay una serie seleccionarla por defecto
       if (vmDoc.series.length == 1) {
@@ -189,7 +189,7 @@ class MenuViewModel extends ChangeNotifier {
         }
 
         //agregar vendedores
-        vmDoc.cuentasCorrentistasRef.addAll(resCuentRef.message);
+        vmDoc.cuentasCorrentistasRef.addAll(resCuentRef.response);
 
         //si solo hay un vendedor agregarlo por defecto
         if (vmDoc.cuentasCorrentistasRef.length == 1) {
@@ -224,7 +224,7 @@ class MenuViewModel extends ChangeNotifier {
         }
 
         //Agregar series encontradas
-        vmDoc.tiposTransaccion.addAll(resTiposTra.message);
+        vmDoc.tiposTransaccion.addAll(resTiposTra.response);
 
         vmDoc.parametros.clear();
 
@@ -252,7 +252,7 @@ class MenuViewModel extends ChangeNotifier {
         }
 
         //Agregar series encontradas
-        vmDoc.parametros.addAll(resParams.message);
+        vmDoc.parametros.addAll(resParams.response);
       }
 
       //limpiar lista
@@ -284,7 +284,7 @@ class MenuViewModel extends ChangeNotifier {
         }
 
         //agregar formas de pago encontradas
-        vmPayment.paymentList.addAll(resPayments.message);
+        vmPayment.paymentList.addAll(resPayments.response);
       }
 
       if (vmPayment.paymentList.isEmpty) {
@@ -347,7 +347,7 @@ class MenuViewModel extends ChangeNotifier {
       }
 
       //agregar tipos de docuentos encontrados
-      vmTipos.documents.addAll(res.message);
+      vmTipos.documents.addAll(res.response);
 
       //si solo hay un documento sleccioanrlo
       if (vmTipos.documents.length == 1) {
@@ -383,7 +383,7 @@ class MenuViewModel extends ChangeNotifier {
         }
 
         //asignar documntos disponibles
-        penVM.documents.addAll(res.message);
+        penVM.documents.addAll(res.response);
 
         penVM.orderList();
 
@@ -463,12 +463,12 @@ class MenuViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<TipoCambioModel> cambios = resCambio.message;
+    final List<TipoCambioModel> cambios = resCambio.response;
 
     if (cambios.isNotEmpty) {
       tipoCambio = cambios[0].tipoCambio;
     } else {
-      resCambio.message = AppLocalizations.of(context)!.translate(
+      resCambio.response = AppLocalizations.of(context)!.translate(
         BlockTranslate.notificacion,
         'sinTipoCambio',
       );
@@ -491,7 +491,7 @@ class MenuViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<ApplicationModel> applications = resApps.message;
+    final List<ApplicationModel> applications = resApps.response;
 
     menuData.clear();
 
@@ -514,7 +514,7 @@ class MenuViewModel extends ChangeNotifier {
       menuData.add(
         MenuData(
           application: application,
-          children: resDisplay.message,
+          children: resDisplay.response,
         ),
       );
     }

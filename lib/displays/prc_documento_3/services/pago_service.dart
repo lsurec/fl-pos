@@ -37,7 +37,7 @@ class PagoService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -57,7 +57,7 @@ class PagoService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: payments,
+        response: payments,
         storeProcedure: null,
       );
     } catch (e) {
@@ -65,7 +65,7 @@ class PagoService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -98,7 +98,7 @@ class PagoService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -118,7 +118,7 @@ class PagoService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: banks,
+        response: banks,
         storeProcedure: null,
       );
     } catch (e) {
@@ -126,7 +126,7 @@ class PagoService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -160,7 +160,7 @@ class PagoService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -180,7 +180,7 @@ class PagoService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: accounts,
+        response: accounts,
         storeProcedure: null,
       );
     } catch (e) {
@@ -188,7 +188,7 @@ class PagoService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

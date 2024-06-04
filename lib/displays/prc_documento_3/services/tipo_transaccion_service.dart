@@ -40,7 +40,7 @@ class TipoTransaccionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -60,7 +60,7 @@ class TipoTransaccionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: transacciones,
+        response: transacciones,
         storeProcedure: null,
       );
     } catch (e) {
@@ -68,7 +68,7 @@ class TipoTransaccionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

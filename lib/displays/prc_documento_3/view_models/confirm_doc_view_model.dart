@@ -161,7 +161,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<PrintDataComandaModel> detalles = res.message;
+    final List<PrintDataComandaModel> detalles = res.response;
 
     final List<FormatoComanda> formats = [];
 
@@ -449,13 +449,13 @@ class ConfirmDocViewModel extends ChangeNotifier {
       //verificar tipo de error
       if (felProcces.typeError == 1) {
         //mensaje de error
-        error = felProcces.message;
+        error = felProcces.response;
         viewMessage = true;
       } else {
         //si es necesario pantalla de error
         errorView = ErrorModel(
           date: DateTime.now(),
-          description: felProcces.message.toString(),
+          description: felProcces.response.toString(),
           url: felProcces.url,
           storeProcedure: felProcces.storeProcedure,
         );
@@ -505,7 +505,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
         return;
       }
 
-      consecutivoDoc = sendProcess.message["data"];
+      consecutivoDoc = sendProcess.response["data"];
       showPrint = true;
 
       if (directPrint) {
@@ -557,13 +557,13 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       //verificar tipo de error
       if (sendProcess.typeError == 1) {
-        error = sendProcess.message;
+        error = sendProcess.response;
         viewMessage = true;
       } else {
         //si es necesario ventana de error
         errorView = ErrorModel(
           date: DateTime.now(),
-          description: sendProcess.message,
+          description: sendProcess.response,
           url: sendProcess.url,
           storeProcedure: sendProcess.storeProcedure,
         );
@@ -586,7 +586,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     notifyListeners();
 
-    consecutivoDoc = sendProcess.message["data"];
+    consecutivoDoc = sendProcess.response["data"];
 
     //Certificar documento, certificador (SAT)
     ApiResModel felProcces = await certDTE(context);
@@ -598,13 +598,13 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       //tipo de error
       if (felProcces.typeError == 1) {
-        error = felProcces.message;
+        error = felProcces.response;
         viewMessage = true;
       } else {
         //ir a pantalla de error
         errorView = ErrorModel(
           date: DateTime.now(),
-          description: felProcces.message.toString(),
+          description: felProcces.response.toString(),
           url: felProcces.url,
           storeProcedure: felProcces.storeProcedure,
         );
@@ -641,17 +641,27 @@ class ConfirmDocViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final localVM = Provider.of<LocalSettingsViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
     //usuario token y cadena de conexion
+    int empresa = localVM.selectedEmpresa!.empresa;
     String user = loginVM.user;
-    String tokenUser = loginVM.token;
+    String token = loginVM.token;
+    String uuid = "";
+    String apiUse = "";
+    int certificador = 1; //TODO:parametrizar
 
     //Servicio para documentos
-    DocumentService documentService = DocumentService();
+
+    final FelService felService = FelService();
 
     //Obtener plantilla xml para certificar
-    ApiResModel resXmlDoc = await documentService.getDocXml(
+    ApiResModel resXmlDoc = await felService.getDocXml(
       user,
-      tokenUser,
+      token,
       consecutivoDoc,
     );
 
@@ -659,14 +669,14 @@ class ConfirmDocViewModel extends ChangeNotifier {
     if (!resXmlDoc.succes) return resXmlDoc;
 
     //plantilla del documento
-    List<DocXmlModel> docs = resXmlDoc.message;
+    List<DocXmlModel> docs = resXmlDoc.response;
 
     //si no se encuntra el documento
     if (docs.isEmpty) {
       return ApiResModel(
         typeError: 1,
         succes: false,
-        message: AppLocalizations.of(context)!.translate(
+        response: AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
           'noDispoDocCert',
         ),
@@ -677,38 +687,26 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //Docuemnto que se va a usar
     DocXmlModel docXMl = docs.first;
+    uuid = docXMl.dIdUnc;
     //Certificador del que se obtiene el token
-    int apiToken = -1;
-    //token si es necesario
-    String token = "";
-    //api que se va a usar
-    String apiUse = "";
-    //docuemtno que se va a certificar
-    String uuidDoc = docXMl.dIdUnc.toUpperCase();
-    //certificador que se va a usar
-    int certificador = docXMl.certificadorDte;
-    //Documento xml sin firma
-    String xmlContenido = docXMl.xmlContenido;
-
-    //Servicios para obtener las crednecials
-    CredencialeService credencialeService = CredencialeService();
 
     //obtner credenciales
-    ApiResModel resCredenciales = await credencialeService.getCredenciales(
+    ApiResModel resCredenciales = await felService.getCredenciales(
       certificador,
+      empresa,
       user,
-      conStr,
+      token,
     );
 
     //Si el api falló
     if (!resCredenciales.succes) return resCredenciales;
 
     //Credenciales encontradas
-    List<CredencialModel> credenciales = resCredenciales.message;
+    List<CredencialModel> credenciales = resCredenciales.response;
 
     //Si se quiere certificar un documento buscar el api que se va a usar
     for (var credencial in credenciales) {
-      if (credencial.campoNombre.toLowerCase() == 'certifica') {
+      if (credencial.campoNombre.toLowerCase() == 'apiUnificadaInfile') {
         //econtrar api en catalogo api (identificador)
         apiUse = credencial.campoValor;
         break;
@@ -720,7 +718,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       return ApiResModel(
         typeError: 1,
         succes: false,
-        message: AppLocalizations.of(context)!.translate(
+        response: AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
           'noDispoServiProceDoc',
         ),
@@ -729,335 +727,81 @@ class ConfirmDocViewModel extends ChangeNotifier {
       );
     }
 
-    //servicio para obtener las apis que se van aa usar
-    CatalogoApisService catalogoApisService = CatalogoApisService();
+    String llaveApi = "";
+    String llaveFirma = "";
+    String usuarioApi = "";
+    String usuarioFirma = "";
 
-    //Obtener api que se va a usar
-    ApiResModel resApiCatalago = await catalogoApisService.getCatalogoApis(
-      apiUse,
-      user,
-      conStr,
-    );
+    for (var i = 0; i < credenciales.length; i++) {
+      final CredencialModel credencial = credenciales[i];
 
-    //Si el api para obtener la url falló
-    if (!resApiCatalago.succes) return resApiCatalago;
+      switch (credencial.campoNombre) {
+        case "LlaveApi":
+          llaveApi = credencial.campoValor;
 
-    //catalogo de apis
-    List<CatalogoApiModel> apis = resApiCatalago.message;
-
-    //si no se encuentra el api
-    if (apis.isEmpty) {
-      return ApiResModel(
-        typeError: 1,
-        succes: false,
-        message: AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'verifiqueCatalogoApis',
-        ),
-        storeProcedure: null,
-        url: "",
-      );
-    }
-
-    // api que se va ausar
-    CatalogoApiModel api = apis.first;
-
-    //verificar si es necesqrio un token
-    if (api.reqAutorizacion) {
-      //buscar api para el token
-      for (var credencial in credenciales) {
-        //encontrar y asignar api para el token
-        if (credencial.campoNombre.toLowerCase() == 'token') {
-          apiToken = int.parse(credencial.campoValor);
           break;
-        }
-      }
-
-      //si no se encontró el api para el token mostrar alerta
-      if (apiToken == -1) {
-        return ApiResModel(
-          typeError: 1,
-          succes: false,
-          message: AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'autoNoDispo',
-          ),
-          url: "",
-          storeProcedure: null,
-        );
-      }
-
-      //servicio para obtner tokens
-      TokenService tokenService = TokenService();
-
-      //obtener token
-      ApiResModel resToken = await tokenService.getToken(
-        apiToken,
-        certificador,
-        user,
-        conStr,
-      );
-
-      //Si el api falló
-      if (!resToken.succes) return resToken;
-
-      //token que se va a usar
-      ResStatusModel tokenResp = resToken.message;
-
-      //si no se ecojntró el token
-      if (tokenResp.statusCode != 200) {
-        return ApiResModel(
-          succes: false,
-          message: resToken.message,
-          url: resToken.url,
-          storeProcedure: resToken.storeProcedure,
-        );
-      }
-
-      //El token debe contener mas de 7 caracteres
-      if (tokenResp.response.length > 7) {
-        token = tokenResp.response;
-      } else {
-        return ApiResModel(
-          typeError: 1,
-          succes: false,
-          message: AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'sinTokenAutoriza',
-          ),
-          url: "",
-          storeProcedure: null,
-        );
-      }
-    }
-
-    //Obtener parametros del api que se va a usar
-    ApiResModel resParametros = await catalogoApisService.getCatalogoParametros(
-      apiUse,
-      user,
-      conStr,
-    );
-
-    //si algo salio mal mostrar alerta
-    if (!resParametros.succes) return resParametros;
-
-    //parametros encontrados
-    List<CatalogoParametroModel> parametros = resParametros.message;
-
-    //api que se va a usar
-    String urlApi = api.urlApi;
-
-    //buscar parametros en url y reemplazar valores
-    urlApi = replaceValues(
-      urlApi,
-      token,
-      xmlContenido,
-      uuidDoc,
-      credenciales,
-    );
-
-    //headers del api que se va a usar
-    Map<String, String> headers = {};
-
-    //Contenido
-    String content = "";
-
-    //Buscar parametros
-    for (var parametro in parametros) {
-      //Obtener tipo de parametro
-      switch (parametro.tipoParametro) {
-        //
-        case 3: //Headers
-          //Buscar valores de los parametors
-          for (var credencial in credenciales) {
-            //si un el nombre de un valor coincide con un parametro
-            if (credencial.campoNombre == parametro.descripcion &&
-                parametro.descripcion != "Authorization") {
-              //agregar header
-              headers[credencial.campoNombre] = credencial.campoValor;
-            }
-          }
+        case "LlaveFirma":
+          llaveFirma = credencial.campoValor;
           break;
 
-        case 2: //Si los parametros son el body
-          //si el tipo del body es xml
-          if (parametro.tipoDato == 6) {
-            //Agregar header
-            headers["Content-Type"] = "application/xml";
-            //reemplazar avlores dentro del xml
-            content = replaceValues(
-              parametro.plantilla,
-              token,
-              xmlContenido,
-              uuidDoc,
-              credenciales,
-            );
-          } else {
-            //si el parametro es json
-            //agregar header
-            headers["Content-Type"] = "application/json";
-            //Buscar valores que se deban reemplazar
-            content = replaceValuesJson(
-              parametro.plantilla,
-              token,
-              xmlContenido,
-              uuidDoc,
-              credenciales,
-            );
-          }
+        case "UsuarioApi":
+          usuarioApi = credencial.campoValor;
+          break;
+        case "UsuarioFirma":
+          usuarioFirma = credencial.campoValor;
           break;
         default:
+          break;
       }
     }
 
-    //Si requiere autenticacion por token agregar header
-    if (api.reqAutorizacion) headers["Authorization"] = token;
-
-    //agregar cadena de conexion
-    headers["connectionStr"] = conStr;
-
-    //Servicio generico para FEL
-    ResolveApisService resolveApisService = ResolveApisService();
-
-    //Consumir api para certificar o anular documentos
-    ApiResModel resApi = await resolveApisService.resolveMethod(
-      context,
-      urlApi,
-      headers,
-      api.tipoMetodo,
-      content,
+    final DataInfileModel paramFel = DataInfileModel(
+      usuarioFirma: usuarioFirma,
+      llaveFirma: llaveFirma,
+      usuarioApi: usuarioApi,
+      llaveApi: llaveApi,
+      identificador: uuid,
+      docXml: docXMl.xmlContenido,
     );
 
-    //si algo salio mal mostrar alerta
-    if (!resApi.succes) return resApi;
+    final ApiResModel resCertDoc = await felService.postInfile(
+      apiUse,
+      paramFel,
+      token,
+    );
 
-    //verificar respuesta
-    //si la respuesta es el documento procesado
-    if (api.nodoFirmaDocumentoResponse.isEmpty) {
-      //Objeto para actualizar el documento (Agregar firma)
-      PostDocXmlModel body = PostDocXmlModel(
-        usuario: user,
-        documento: resApi.message,
-        uuid: uuidDoc,
-        documentoCompleto: resApi.message,
-      );
+    if (!resCertDoc.succes) return resCertDoc;
 
-      //Consumo del servicio para atualizar el documento
-      ApiResModel resPostDoc = await documentService.postDocumentXml(
-        body,
-        conStr,
-      );
+    final dynamic doc = resCertDoc.response;
 
-      //si algo salio mal mostrar alerta
-      if (!resPostDoc.succes) return resPostDoc;
+    final PostDocXmlModel paramUpdate = PostDocXmlModel(
+      usuario: user,
+      documento: doc,
+      uuid: uuid,
+      documentoCompleto: doc,
+    );
 
-      return ApiResModel(
-        typeError: 1,
-        succes: true,
-        message: AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'docCertificado',
-        ),
-        url: "",
-        storeProcedure: null,
-      );
-    }
+    final ApiResModel resUpdateXml = await felService.postXmlUpdate(
+      token,
+      paramUpdate,
+    );
 
-    //si el documento está en un nodo o propiedad especifica
-    switch (api.tipoRespuesta) {
-      case 1: //JSON
-        //Convertir obejeto de la respuesta en mapa
-        final Map<String, dynamic> jsonObject = jsonDecode(resApi.message);
+    if (!resUpdateXml.succes) return resUpdateXml;
 
-        //buscar propiedad donde esté el documento procesado
-        final dynamic content = jsonObject[api.nodoFirmaDocumentoResponse];
+    final List<DataFelModel> dataFel = resUpdateXml.response;
 
-        //Objeto para actualizar el documento
-        PostDocXmlModel body = PostDocXmlModel(
-          usuario: user,
-          documento: content,
-          uuid: uuidDoc,
-          documentoCompleto: resApi.message,
-        );
+    if (dataFel.isNotEmpty) {}
 
-        //Actualizar el documento
-        ApiResModel resPostDoc = await documentService.postDocumentXml(
-          body,
-          conStr,
-        );
-
-        //si algo salio mal mostrar alerta
-        if (!resPostDoc.succes) return resPostDoc;
-        return ApiResModel(
-          typeError: 1,
-          succes: true,
-          message: AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'docCertificado',
-          ),
-          storeProcedure: null,
-          url: "",
-        );
-
-      case 2: //XML
-        //Convertir a un objeto xml
-        final docXml = XmlDocument.parse(resApi.message);
-
-        //separar por nodos
-        final List<String> nodos = api.nodoFirmaDocumentoResponse.split("/");
-
-        //ultimo nodo
-        final String nodoPadre = nodos[nodos.length - 1];
-
-        //contenifo del nodo
-        final bodyNode = docXml.findAllElements(nodoPadre).first;
-
-        //docuemto procesado
-        final bodyContent =
-            bodyNode.children.map((node) => node.toString()).join('\n');
-
-        //Objeto para actualizar
-        PostDocXmlModel body = PostDocXmlModel(
-          usuario: user,
-          documento: bodyContent,
-          uuid: uuidDoc,
-          documentoCompleto: resApi.message,
-        );
-
-        //Actualizar el documento procesado
-        ApiResModel resPostDoc = await documentService.postDocumentXml(
-          body,
-          conStr,
-        );
-
-        //si algo salio mal mostrar alerta
-        if (!resPostDoc.succes) return resPostDoc;
-
-        return ApiResModel(
-          typeError: 1,
-          succes: true,
-          message: AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'docCertificado',
-          ),
-          storeProcedure: null,
-          url: "",
-        );
-
-      default:
-        //en caso que la resouesta sea un tipo no implementado
-
-        return ApiResModel(
-          typeError: 1,
-          succes: false,
-          message: AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'resIncorrecta',
-          ),
-          storeProcedure: null,
-          url: "",
-        );
-    }
+    return ApiResModel(
+      typeError: 1,
+      succes: true,
+      response: AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'docCertificado',
+      ),
+      storeProcedure: null,
+      url: "",
+    );
   }
 
   //enviar el odcumento

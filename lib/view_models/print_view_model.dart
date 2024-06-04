@@ -100,10 +100,10 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<PrintConvertModel> data = res.message;
+    final List<PrintConvertModel> data = res.response;
 
     if (data.isEmpty) {
-      res.message = AppLocalizations.of(context)!.translate(
+      res.response = AppLocalizations.of(context)!.translate(
         BlockTranslate.notificacion,
         "sinDatos",
       );
@@ -585,7 +585,7 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    List<EncabezadoModel> encabezadoTemplate = resEncabezado.message;
+    List<EncabezadoModel> encabezadoTemplate = resEncabezado.response;
 
     //consumir servicio
     ApiResModel resDetalle = await documentService.getDetalles(
@@ -606,7 +606,7 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    List<DetalleModel> detallesTemplate = resDetalle.message;
+    List<DetalleModel> detallesTemplate = resDetalle.response;
 
     //consumir servicio
     ApiResModel resPago = await documentService.getPagos(
@@ -627,14 +627,14 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    List<PagoModel> pagosTemplate = resPago.message;
+    List<PagoModel> pagosTemplate = resPago.response;
 
     isLoading = false;
 
     //validar que haya datos
 
     if (encabezadoTemplate.isEmpty) {
-      resEncabezado.message = AppLocalizations.of(context)!.translate(
+      resEncabezado.response = AppLocalizations.of(context)!.translate(
         BlockTranslate.notificacion,
         'sinEncabezados',
       );

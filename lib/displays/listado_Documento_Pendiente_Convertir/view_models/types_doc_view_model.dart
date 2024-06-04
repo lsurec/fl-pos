@@ -84,6 +84,6 @@ class TypesDocViewModel extends ChangeNotifier {
     }
 
     //agregar tipos de docuentos encontrados
-    documents.addAll(res.message);
+    documents.addAll(res.response);
   }
 }

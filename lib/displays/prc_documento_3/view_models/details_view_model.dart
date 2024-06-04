@@ -135,7 +135,7 @@ class DetailsViewModel extends ChangeNotifier {
       return;
     }
 
-    products.addAll(resSku.message);
+    products.addAll(resSku.response);
 
     if (products.isEmpty) {
       final ApiResModel resDesc =
@@ -154,7 +154,7 @@ class DetailsViewModel extends ChangeNotifier {
         return;
       }
 
-      products.addAll(resDesc.message);
+      products.addAll(resDesc.response);
     }
 
     //si no hay coicncidencias de busqueda mostrar mensaje
@@ -217,7 +217,7 @@ class DetailsViewModel extends ChangeNotifier {
           );
           return;
         }
-        productVM.prices = precios.message;
+        productVM.prices = precios.response;
 
         if (productVM.prices.isEmpty) {
           NotificationService.showSnackbar(

@@ -194,7 +194,7 @@ class PendingDocsViewModel extends ChangeNotifier {
     }
 
     //asignar documntos disponibles
-    documents.addAll(res.message);
+    documents.addAll(res.response);
 
     orderList();
 
