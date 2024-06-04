@@ -862,6 +862,7 @@ class PrintViewModel extends ChangeNotifier {
         "DOCUMENTO GENERICO",
         styles: centerBold,
       );
+      bytes += generator.emptyLines(1);
     }
 
     bytes += generator.emptyLines(1);

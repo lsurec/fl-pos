@@ -411,7 +411,7 @@ class _OptionsError extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.printWithoutFel(),
+              onTap: () => vm.printWithoutFel(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,

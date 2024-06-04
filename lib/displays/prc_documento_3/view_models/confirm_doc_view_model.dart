@@ -419,11 +419,20 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //Immprimir sin firma fel
-  printWithoutFel() {
+  printWithoutFel(BuildContext context) {
     //finalizar proceso
     isLoadingDTE = false;
     //Mostrar boton para imprimir
     showPrint = true;
+    //boton proceso correto
+
+    if (directPrint) {
+      // if (screen == 1) {
+      navigatePrint(context);
+      // } else {
+      // printNetwork(context);
+      // }
+    }
   }
 
   //Volver a certificar
@@ -480,7 +489,17 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     stepsSucces++;
 
-    viewSucces = true;
+    //boton proceso correto
+    isLoadingDTE = false;
+    showPrint = true;
+
+    if (directPrint) {
+      // if (screen == 1) {
+      navigatePrint(context);
+      // } else {
+      // printNetwork(context);
+      // }
+    }
     notifyListeners();
   }
 
@@ -627,7 +646,16 @@ class ConfirmDocViewModel extends ChangeNotifier {
     stepsSucces++;
 
     //boton proceso correto
-    viewSucces = true;
+    isLoadingDTE = false;
+    showPrint = true;
+
+    if (directPrint) {
+      // if (screen == 1) {
+      navigatePrint(context);
+      // } else {
+      // printNetwork(context);
+      // }
+    }
     notifyListeners();
   }
 
