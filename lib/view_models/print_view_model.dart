@@ -855,7 +855,9 @@ class PrintViewModel extends ChangeNotifier {
       styles: centerBold,
     );
 
-    final bool isFel = true; //TODO:Parametrizar
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+
+    final bool isFel = docVM.printFel(); //TODO:Parametrizar
 
     if (!isFel) {
       bytes += generator.text(

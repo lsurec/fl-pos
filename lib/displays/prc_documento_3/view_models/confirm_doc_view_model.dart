@@ -509,8 +509,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
   ) async {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    // if (docVM.printFel()) {
-    if (true) {
+    if (docVM.printFel()) {
+      // if (true) {
       processDocument(context);
     } else {
       isLoading = true;
@@ -745,7 +745,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //si no se encpntró el api que se va a usar mostrar alerta
     if (apiUse.isEmpty) {
-      print("aqui me qudo");
       return ApiResModel(
         typeError: 1,
         succes: false,
@@ -792,74 +791,74 @@ class ConfirmDocViewModel extends ChangeNotifier {
       usuarioApi: usuarioApi,
       llaveApi: llaveApi,
       identificador: uuid,
-      // docXml: docXMl.xmlContenido,
-      docXml:
-          """<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
-  <dte:SAT ClaseDocumento="dte">
-    <dte:DTE ID="DatosCertificados">
-      <dte:DatosEmision ID="DatosEmision">
-        <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2024-06-03T02:53:51.000-06:00" Tipo="FCAM" />
-        <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="" NITEmisor="9300000118K" NombreComercial="TEXAS MUEBLES Y MAS" NombreEmisor="CORPORACION NR, SOCIEDAD ANONIMA">
-          <dte:DireccionEmisor>
-            <dte:Direccion>4 AVENIDA 5-99 ZONA 1</dte:Direccion>
-            <dte:CodigoPostal>010020</dte:CodigoPostal>
-            <dte:Municipio>SANTA LUCIA COTZULMALGUAPA</dte:Municipio>
-            <dte:Departamento>ESCUINTLA</dte:Departamento>
-            <dte:Pais>GT</dte:Pais>
-          </dte:DireccionEmisor>
-        </dte:Emisor>
-        <dte:Receptor CorreoReceptor="" IDReceptor="2768220480502" NombreReceptor="MELVIN DANIEL ,SOMA MÉNDEZ" TipoEspecial="CUI">
-          <dte:DireccionReceptor>
-            <dte:Direccion>Ciudad</dte:Direccion>
-            <dte:CodigoPostal>01007</dte:CodigoPostal>
-            <dte:Municipio>Guatemala</dte:Municipio>
-            <dte:Departamento>Guatemala</dte:Departamento>
-            <dte:Pais>GT</dte:Pais>
-          </dte:DireccionReceptor>
-        </dte:Receptor>
-        <dte:Frases>
-          <dte:Frase CodigoEscenario="1" TipoFrase="1" />
-        </dte:Frases>
-        <dte:Items>
-          <dte:Item NumeroLinea="1" BienOServicio="B">
-            <dte:Cantidad>1.0000</dte:Cantidad>
-            <dte:UnidadMedida>UND</dte:UnidadMedida>
-            <dte:Descripcion>457224|TELEFONO SAMSUNG GALAXY A34 457224RFCWA0SDV8Y     IMEI1: 350350681547282 IMEI2:351525681547288</dte:Descripcion>
-            <dte:PrecioUnitario>2200.0000</dte:PrecioUnitario>
-            <dte:Precio>2200.0000</dte:Precio>
-            <dte:Descuento>0</dte:Descuento>
-            <dte:Impuestos>
-              <dte:Impuesto>
-                <dte:NombreCorto>IVA</dte:NombreCorto>
-                <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
-                <dte:MontoGravable>1964.29</dte:MontoGravable>
-                <dte:MontoImpuesto>235.7143</dte:MontoImpuesto>
-              </dte:Impuesto>
-            </dte:Impuestos>
-            <dte:Total>2200.0000</dte:Total>
-          </dte:Item>
-        </dte:Items>
-        <dte:Totales>
-          <dte:TotalImpuestos>
-            <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="235.7143" />
-          </dte:TotalImpuestos>
-          <dte:GranTotal>2200.0000</dte:GranTotal>
-        </dte:Totales>
-        <dte:Complementos>
-          <dte:Complemento IDComplemento="Cambiaria" NombreComplemento="Cambiaria" URIComplemento="http://www.sat.gob.gt/fel/cambiaria.xsd">
-            <cfc:AbonosFacturaCambiaria xmlns:cfc="http://www.sat.gob.gt/dte/fel/CompCambiaria/0.1.0" Version="1">
-              <cfc:Abono>
-                <cfc:NumeroAbono>1</cfc:NumeroAbono>
-                <cfc:FechaVencimiento>2024-03-29</cfc:FechaVencimiento>
-                <cfc:MontoAbono>2200.00</cfc:MontoAbono>
-              </cfc:Abono>
-            </cfc:AbonosFacturaCambiaria>
-          </dte:Complemento>
-        </dte:Complementos>
-      </dte:DatosEmision>
-    </dte:DTE>
-  </dte:SAT>
-</dte:GTDocumento>""",
+      docXml: docXMl.xmlContenido,
+//       docXml:
+//           """<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
+//   <dte:SAT ClaseDocumento="dte">
+//     <dte:DTE ID="DatosCertificados">
+//       <dte:DatosEmision ID="DatosEmision">
+//         <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2024-06-03T02:53:51.000-06:00" Tipo="FCAM" />
+//         <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="" NITEmisor="9300000118K" NombreComercial="TEXAS MUEBLES Y MAS" NombreEmisor="CORPORACION NR, SOCIEDAD ANONIMA">
+//           <dte:DireccionEmisor>
+//             <dte:Direccion>4 AVENIDA 5-99 ZONA 1</dte:Direccion>
+//             <dte:CodigoPostal>010020</dte:CodigoPostal>
+//             <dte:Municipio>SANTA LUCIA COTZULMALGUAPA</dte:Municipio>
+//             <dte:Departamento>ESCUINTLA</dte:Departamento>
+//             <dte:Pais>GT</dte:Pais>
+//           </dte:DireccionEmisor>
+//         </dte:Emisor>
+//         <dte:Receptor CorreoReceptor="" IDReceptor="2768220480502" NombreReceptor="MELVIN DANIEL ,SOMA MÉNDEZ" TipoEspecial="CUI">
+//           <dte:DireccionReceptor>
+//             <dte:Direccion>Ciudad</dte:Direccion>
+//             <dte:CodigoPostal>01007</dte:CodigoPostal>
+//             <dte:Municipio>Guatemala</dte:Municipio>
+//             <dte:Departamento>Guatemala</dte:Departamento>
+//             <dte:Pais>GT</dte:Pais>
+//           </dte:DireccionReceptor>
+//         </dte:Receptor>
+//         <dte:Frases>
+//           <dte:Frase CodigoEscenario="1" TipoFrase="1" />
+//         </dte:Frases>
+//         <dte:Items>
+//           <dte:Item NumeroLinea="1" BienOServicio="B">
+//             <dte:Cantidad>1.0000</dte:Cantidad>
+//             <dte:UnidadMedida>UND</dte:UnidadMedida>
+//             <dte:Descripcion>457224|TELEFONO SAMSUNG GALAXY A34 457224RFCWA0SDV8Y     IMEI1: 350350681547282 IMEI2:351525681547288</dte:Descripcion>
+//             <dte:PrecioUnitario>2200.0000</dte:PrecioUnitario>
+//             <dte:Precio>2200.0000</dte:Precio>
+//             <dte:Descuento>0</dte:Descuento>
+//             <dte:Impuestos>
+//               <dte:Impuesto>
+//                 <dte:NombreCorto>IVA</dte:NombreCorto>
+//                 <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
+//                 <dte:MontoGravable>1964.29</dte:MontoGravable>
+//                 <dte:MontoImpuesto>235.7143</dte:MontoImpuesto>
+//               </dte:Impuesto>
+//             </dte:Impuestos>
+//             <dte:Total>2200.0000</dte:Total>
+//           </dte:Item>
+//         </dte:Items>
+//         <dte:Totales>
+//           <dte:TotalImpuestos>
+//             <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="235.7143" />
+//           </dte:TotalImpuestos>
+//           <dte:GranTotal>2200.0000</dte:GranTotal>
+//         </dte:Totales>
+//         <dte:Complementos>
+//           <dte:Complemento IDComplemento="Cambiaria" NombreComplemento="Cambiaria" URIComplemento="http://www.sat.gob.gt/fel/cambiaria.xsd">
+//             <cfc:AbonosFacturaCambiaria xmlns:cfc="http://www.sat.gob.gt/dte/fel/CompCambiaria/0.1.0" Version="1">
+//               <cfc:Abono>
+//                 <cfc:NumeroAbono>1</cfc:NumeroAbono>
+//                 <cfc:FechaVencimiento>2024-03-29</cfc:FechaVencimiento>
+//                 <cfc:MontoAbono>2200.00</cfc:MontoAbono>
+//               </cfc:Abono>
+//             </cfc:AbonosFacturaCambiaria>
+//           </dte:Complemento>
+//         </dte:Complementos>
+//       </dte:DatosEmision>
+//     </dte:DTE>
+//   </dte:SAT>
+// </dte:GTDocumento>""",
     );
 
     final ApiResModel resCertDoc = await felService.postInfile(
