@@ -845,73 +845,75 @@ class PrintViewModel extends ChangeNotifier {
       styles: centerBold,
     );
 
-    // if (!isFel) {
-    //   bytes += generator.text(
-    //     "DOCUMENTO GENERICO",
-    //     styles: centerBold,
-    //   );
-    // }
+    final bool isFel = true; //TODO:Parametrizar
 
-    // if (isFel) {
-    //   bytes += generator.text(
-    //     docPrintModel.documento.descripcion,
-    //     styles: centerBold,
-    //   );
-    //   bytes += generator.text(
-    //       "Fecha certificacion: ${docPrintModel.documento.fechaCert}",
-    //       styles: center);
-    //   bytes += generator.row(
-    //     [
-    //       PosColumn(
-    //         text: "Factura No.",
-    //         width: 6,
-    //         styles: const PosStyles(
-    //           align: PosAlign.center,
-    //         ),
-    //       ),
-    //       PosColumn(
-    //         text: "Serie:",
-    //         width: 6,
-    //         styles: const PosStyles(
-    //           align: PosAlign.center,
-    //         ),
-    //       ),
-    //     ],
-    //   );
+    if (!isFel) {
+      bytes += generator.text(
+        "DOCUMENTO GENERICO",
+        styles: centerBold,
+      );
+    }
 
-    //   bytes += generator.row(
-    //     [
-    //       PosColumn(
-    //         text: docPrintModel.documento.no,
-    //         styles: const PosStyles(
-    //           height: PosTextSize.size2,
-    //           width: PosTextSize.size1,
-    //           align: PosAlign.center,
-    //         ),
-    //         width: 6,
-    //       ),
-    //       PosColumn(
-    //         text: docPrintModel.documento.serie,
-    //         styles: const PosStyles(
-    //           height: PosTextSize.size2,
-    //           width: PosTextSize.size1,
-    //           align: PosAlign.center,
-    //         ),
-    //         width: 6,
-    //       ),
-    //     ],
-    //   );
+    if (isFel) {
+      bytes += generator.text(
+        docPrintModel.documento.descripcion,
+        styles: centerBold,
+      );
+      bytes += generator.text(
+          "Fecha certificacion: ${docPrintModel.documento.fechaCert}",
+          styles: center);
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "Factura No.",
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.center,
+            ),
+          ),
+          PosColumn(
+            text: "Serie:",
+            width: 6,
+            styles: const PosStyles(
+              align: PosAlign.center,
+            ),
+          ),
+        ],
+      );
 
-    //   bytes += generator.text(
-    //     "Autorizacion:",
-    //     styles: centerBold,
-    //   );
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: docPrintModel.documento.no,
+            styles: const PosStyles(
+              height: PosTextSize.size2,
+              width: PosTextSize.size1,
+              align: PosAlign.center,
+            ),
+            width: 6,
+          ),
+          PosColumn(
+            text: docPrintModel.documento.serie,
+            styles: const PosStyles(
+              height: PosTextSize.size2,
+              width: PosTextSize.size1,
+              align: PosAlign.center,
+            ),
+            width: 6,
+          ),
+        ],
+      );
 
-    //   bytes += generator.text(
-    //     docPrintModel.documento.autorizacion,
-    //     styles: centerBold,
-    //   );
-    // }
+      bytes += generator.text(
+        "Autorizacion:",
+        styles: centerBold,
+      );
+
+      bytes += generator.text(
+        docPrintModel.documento.autorizacion,
+        styles: centerBold,
+      );
+    }
 
     bytes += generator.emptyLines(1);
     bytes += generator.text(
@@ -1210,17 +1212,17 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    // if (isFel) {
-    //   bytes += generator.text(
-    //     "Ceritificador: ${docPrintModel.certificador.nombre}",
-    //     styles: center,
-    //   );
+    if (isFel) {
+      bytes += generator.text(
+        "Ceritificador: ${docPrintModel.certificador.nombre}",
+        styles: center,
+      );
 
-    //   bytes += generator.text(
-    //     "Nit: ${docPrintModel.certificador.nit}",
-    //     styles: center,
-    //   );
-    // }
+      bytes += generator.text(
+        "Nit: ${docPrintModel.certificador.nit}",
+        styles: center,
+      );
+    }
 
     bytes += generator.emptyLines(1);
 

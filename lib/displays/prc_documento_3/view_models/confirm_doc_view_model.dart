@@ -881,6 +881,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
           await documentService.updateDocument(
         estructuraupdate,
         token,
+        consecutivoDoc,
       );
 
       if (!resUpdateEstructura.succes) {

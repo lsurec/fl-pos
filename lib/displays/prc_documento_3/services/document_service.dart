@@ -320,9 +320,10 @@ class DocumentService {
   Future<ApiResModel> updateDocument(
     PostDocumentModel document,
     String token,
+    int consecutivo,
   ) async {
     //manejo de errores
-    Uri url = Uri.parse("${_baseUrl}Documento");
+    Uri url = Uri.parse("${_baseUrl}Documento/update/estructura/$consecutivo");
     try {
       //url completa
 
