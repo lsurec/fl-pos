@@ -75,32 +75,29 @@ class ThemeViewModel extends ChangeNotifier {
   Timer? timer; // Temporizador
 
   void reiniciarTemp(BuildContext context) {
-    print(
-      "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-    );
+    // print(
+    //   "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+    // );
 
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
 
     if (Preferences.idTheme.isEmpty && isLightMode) {
-      print("euuuuu");
       Preferences.idTheme = "0";
       Preferences.systemTheme = "1";
       notifyListeners();
     }
 
     if (Preferences.idTheme.isEmpty && isDarkMode) {
-      print("uuuue");
       Preferences.idTheme = "0";
       Preferences.systemTheme = "2";
       notifyListeners();
     }
 
     isLoading = true;
-    // timer?.cancel(); // Cancelar el temporizador existente si existe
     timer = Timer(const Duration(milliseconds: 2000), () {
-      // Función de filtrado que consume el servicio
+      // Ocultar teclado y reiniciar App
       FocusScope.of(context).unfocus(); //ocultar teclado
       reiniciarApp();
     });

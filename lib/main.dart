@@ -120,131 +120,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-ThemeData themeApp(BuildContext context) {
-  print(
-    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-  );
-
-  //Encontrar el tema del dispositivo
-  final Brightness brightness = MediaQuery.of(context).platformBrightness;
-  //si es oscuro
-  final bool isDarkMode = brightness == Brightness.dark;
-  //si es claro
-  final bool isLightMode = brightness == Brightness.light;
-
-  //sino hay preferencia, asignar el tema del dispositivo
-  if (Preferences.idTheme.isEmpty) {
-    //TEMA DEL DISPOSITIVO CLARO
-    if (Preferences.theme == 0 && isLightMode) {
-      AppTheme.claro = true;
-      Preferences.systemTheme = "1";
-      return AppTheme.lightTheme;
-    }
-
-    //TEMA DEL DISPOSITIVO OSCURO
-    if (Preferences.theme == 0 && isDarkMode) {
-      Preferences.systemTheme = "2";
-      AppTheme.oscuro = false;
-      return AppTheme.darkTheme;
-    }
-  } else {
-    //Si hay preferencia
-
-    //SI ES DEL SISTEMA TEMA CLARO
-    if (Preferences.theme == 0 && Preferences.systemTheme == "1") {
-      Preferences.idTheme == "1";
-      return AppTheme.lightTheme;
-    }
-
-    //SI ES DEL SISTEMA TEMA OSCURO
-    if (Preferences.theme == 0 && Preferences.systemTheme == "2") {
-      print("tema oscuro");
-      Preferences.idTheme == "2";
-      return AppTheme.darkTheme;
-    }
-
-    //TEMA CLARO
-    if (Preferences.idTheme == "1") {
-      return AppTheme.lightTheme;
-    }
-
-    //TEMA OSCURO
-    if (Preferences.idTheme == "2") {
-      return AppTheme.darkTheme;
-    }
-  }
-
-  return AppTheme.lightTheme;
-}
-
-ThemeData temaApplicacion(BuildContext context) {
-  print(
-    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-  );
-
-  //Encontrar el tema del dispositivo
-  final Brightness brightness = MediaQuery.of(context).platformBrightness;
-  //si es oscuro
-  final bool isDarkMode = brightness == Brightness.dark;
-  //si es claro
-  final bool isLightMode = brightness == Brightness.light;
-
-  //INICIALMENTE NO HAY PREFERENCIAS
-  if (Preferences.idTheme.isEmpty) {
-    //INDEX 0 Y TEMA DISPOSITIVO = CLARO
-    if (Preferences.theme == 0 && isLightMode) {
-      Preferences.systemTheme = "1";
-      print("tema claro");
-      return AppTheme.lightTheme;
-    }
-
-    //INDEX 0 Y TEMA DISPOSITIVO = OSCURO
-    if (Preferences.theme == 0 && isDarkMode) {
-      Preferences.systemTheme = "2";
-      print("tema oscuro");
-      return AppTheme.darkTheme;
-    }
-  } else {
-    //TEMA CLARO
-    if (Preferences.idTheme == "1") {
-      return AppTheme.lightTheme;
-    }
-
-    //TEMA OSCURO
-    if (Preferences.idTheme == "2") {
-      return AppTheme.darkTheme;
-    }
-  }
-  // print("Aqui ${Preferences.idTheme}");
-  print(
-    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-  );
-  return AppTheme.lightTheme;
-}
-
-ThemeData aplicarTema(BuildContext context) {
-  print(
-    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-  );
-
-  //Encontrar el tema del dispositivo
-  final Brightness brightness = MediaQuery.of(context).platformBrightness;
-  //si es oscuro
-  final bool isDarkMode = brightness == Brightness.dark;
-  //si es claro
-  final bool isLightMode = brightness == Brightness.light;
-
-  if (Preferences.idTheme.isEmpty && isLightMode) {
-    return AppTheme.lightTheme;
-  }
-
-  if (Preferences.idTheme.isEmpty && isDarkMode) {
-    return AppTheme.darkTheme;
-  }
-
-  return AppTheme.darkTheme;
-}
-
+//Tema de la aplicación
 ThemeData aplicarTemaApp(BuildContext context) {
   print(
     "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
@@ -255,22 +131,45 @@ ThemeData aplicarTemaApp(BuildContext context) {
   final bool isDarkMode = brightness == Brightness.dark;
   final bool isLightMode = brightness == Brightness.light;
 
+  //1- Evaluar que la preferencia idTheme no esté vacía.
   if (Preferences.idTheme.isNotEmpty) {
+    //2- Verificar si la preferencia es 1: Tema Claro
     if (Preferences.idTheme == "1") {
       return AppTheme.lightTheme;
+      //3- Verificar si la preferencia es 2: Tema Oscuro
     } else if (Preferences.idTheme == "2") {
       return AppTheme.darkTheme;
     }
+
+    //4- Verificar si la preferencia es 0:Determinado por el sistema
+    if (Preferences.idTheme == "0") {
+      //5- Verifiar el tema del dispositivo es: Oscuro
+      if (isDarkMode) {
+        Preferences.systemTheme = "2";
+        return AppTheme.darkTheme;
+        //6- Verificar el tema del dispositivo es: Claro
+      } else if (isLightMode) {
+        Preferences.systemTheme = "1";
+        return AppTheme.lightTheme;
+      }
+    }
+    //7- Si la preferencia está vacía. Verificar el tema del dispositivo
   } else {
+    //8- Si es tema Claro
     if (isDarkMode) {
-      Preferences.systemTheme = "2"; //verificar esto
+      Preferences.systemTheme = "2";
       return AppTheme.darkTheme;
-    } else if (isLightMode) {
-      Preferences.systemTheme = "1"; //verificar esto
+    }
+
+    //9- Si es tema Oscuro
+    if (isLightMode) {
+      print("Paso 10");
+      Preferences.systemTheme = "1";
       return AppTheme.lightTheme;
     }
   }
 
+  //10- Sino encuentra nada
   // Retornar un tema por defecto en caso de que no se cumplan las condiciones
   return AppTheme.lightTheme;
 }
