@@ -7,10 +7,10 @@ class DocEstructuraModel {
   int? docCuentaVendedor;
   int docIdCertificador;
   int docIdDocumentoRef;
-  int? docFelNumeroDocumento;
+  String? docFelNumeroDocumento;
   String? docFelSerie;
   String? docFelUUID;
-  DateTime? docFelFechaCertificacion;
+  String? docFelFechaCertificacion;
   String docFechaDocumento;
   int docCuentaCorrentista;
   String docCuentaCta;

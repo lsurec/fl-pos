@@ -317,6 +317,56 @@ class DocumentService {
   }
 
   //Enviar documento al servidor
+  Future<ApiResModel> updateDocument(
+    PostDocumentModel document,
+    String token,
+  ) async {
+    //manejo de errores
+    Uri url = Uri.parse("${_baseUrl}Documento");
+    try {
+      //url completa
+
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: document.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: res.data,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Enviar documento al servidor
   Future<ApiResModel> postDocument(
     PostDocumentModel document,
     String token,
