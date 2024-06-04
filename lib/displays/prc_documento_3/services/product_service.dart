@@ -56,7 +56,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -75,7 +75,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: mensajes,
+        response: mensajes,
         storeProcedure: null,
       );
     } catch (e) {
@@ -83,7 +83,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -113,7 +113,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -124,7 +124,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: respLogin,
+        response: respLogin,
         storeProcedure: null,
       );
     } catch (e) {
@@ -132,7 +132,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -171,7 +171,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -191,7 +191,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: bodegas,
+        response: bodegas,
         storeProcedure: null,
       );
     } catch (e) {
@@ -199,7 +199,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -227,7 +227,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -245,14 +245,14 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: products,
+        response: products,
         storeProcedure: null,
       );
     } catch (e) {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -280,7 +280,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -298,14 +298,14 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: products,
+        response: products,
         storeProcedure: null,
       );
     } catch (e) {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -340,7 +340,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -358,7 +358,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: precios,
+        response: precios,
         storeProcedure: null,
       );
     } catch (e) {
@@ -366,7 +366,7 @@ class ProductService {
         url: url.toString(),
         succes: false,
         storeProcedure: null,
-        message: e.toString(),
+        response: e.toString(),
       );
     }
   }
@@ -400,7 +400,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -418,14 +418,14 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: factor,
+        response: factor,
         storeProcedure: null,
       );
     } catch (e) {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

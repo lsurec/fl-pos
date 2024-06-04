@@ -45,7 +45,7 @@ class CatalogoApisService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: apis,
+        response: apis,
         storeProcedure: null,
       );
     } catch (e) {
@@ -53,7 +53,7 @@ class CatalogoApisService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -81,7 +81,7 @@ class CatalogoApisService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: response.body,
+          response: response.body,
           storeProcedure: null,
         );
       }
@@ -104,7 +104,7 @@ class CatalogoApisService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: parametros,
+        response: parametros,
         storeProcedure: null,
       );
     } catch (e) {
@@ -112,7 +112,7 @@ class CatalogoApisService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

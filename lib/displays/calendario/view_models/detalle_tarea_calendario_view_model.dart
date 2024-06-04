@@ -175,7 +175,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     }
 
     //añadir a la lista los usuarios responsables encontrados
-    responsablesTarea.addAll(res.message);
+    responsablesTarea.addAll(res.response);
 
     //recorrer la lista y buscar los de estado "inactivo"
     for (var i = 0; i < responsablesTarea.length; i++) {
@@ -228,7 +228,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     }
 
     //Agregar a lista de invitados
-    invitados.addAll(res.message);
+    invitados.addAll(res.response);
     //Retornar respuesta correcta
     isLoading = false; //detener carga
 
@@ -271,7 +271,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     }
 
     //Agregar repuesta de api a la lista de comentarios
-    comentarios.addAll(res.message);
+    comentarios.addAll(res.response);
 
     isLoading = false; //detener carga
 
@@ -315,7 +315,7 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     }
 
     //Almacener respuesta de api a la lista de objetosComentario
-    objetosComentario.addAll(res.message);
+    objetosComentario.addAll(res.response);
 
     isLoading = false; //detener carga
 

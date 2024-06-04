@@ -110,7 +110,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     //Asiganr detalles encontrados
-    List<OriginDetailModel> details = res.message;
+    List<OriginDetailModel> details = res.response;
 
     //Recorrer todos los detalles para crear una nueva lista
     for (var element in details) {
@@ -326,7 +326,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     //Respuesta docummento destino procesado
-    DocConvertModel objDest = resConvert.message;
+    DocConvertModel objDest = resConvert.response;
 
     // volver a cargar datos
     await loadData(context, origen);

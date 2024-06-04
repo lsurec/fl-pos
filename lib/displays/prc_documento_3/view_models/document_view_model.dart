@@ -197,7 +197,7 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //Agregar series encontradas
-    parametros.addAll(res.message);
+    parametros.addAll(res.response);
   }
 
   Future<void> loadTipoTransaccion(
@@ -232,7 +232,7 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //Agregar series encontradas
-    tiposTransaccion.addAll(res.message);
+    tiposTransaccion.addAll(res.response);
   }
 
   //Cargar series
@@ -279,7 +279,7 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //Agregar series encontradas
-    series.addAll(res.message);
+    series.addAll(res.response);
 
     // si sololo hay una serie seleccionarla por defecto
     if (series.length == 1) {
@@ -334,7 +334,7 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //agregar vendedores
-    cuentasCorrentistasRef.addAll(res.message);
+    cuentasCorrentistasRef.addAll(res.response);
 
     //si solo hay un vendedor agregarlo por defecto
     if (cuentasCorrentistasRef.length == 1) {
@@ -437,7 +437,7 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     //agregar clientes seleccionados
-    cuentasCorrentistas.addAll(res.message);
+    cuentasCorrentistas.addAll(res.response);
 
     // si no se encontró nada mostrar mensaje
     if (cuentasCorrentistas.isEmpty) {

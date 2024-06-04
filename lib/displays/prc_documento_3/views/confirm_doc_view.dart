@@ -45,6 +45,17 @@ class ConfirmDocView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (vm.showPrint)
+                    const Text(
+                      "Consecutivo interno",
+                      style: AppTheme.titleStyle,
+                    ),
+                  if (vm.showPrint)
+                    Text(
+                      "${vm.consecutivoDoc}",
+                      style: AppTheme.normalStyle,
+                    ),
+                  if (vm.showPrint) const SizedBox(height: 5),
                   _DataUser(
                     title: AppLocalizations.of(context)!.translate(
                       BlockTranslate.cuenta,
@@ -108,7 +119,7 @@ class ConfirmDocView extends StatelessWidget {
                   const SizedBox(height: 5),
                   _TotalsPayment(),
                   const SizedBox(height: 10),
-                  _Observacion(),
+                  if (!vm.showPrint) _Observacion(),
                   const SizedBox(height: 10),
                   SwitchListTile(
                     activeColor: AppTheme.primary,
@@ -411,7 +422,7 @@ class _OptionsError extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.printWithoutFel(),
+              onTap: () => vm.printWithoutFel(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,

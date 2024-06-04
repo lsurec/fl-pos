@@ -4,9 +4,7 @@ import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/fel/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/providers/api_provider.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -19,7 +17,6 @@ import 'package:provider/provider.dart';
 class DocumentService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
-  final String _baseUrlFel = ApiProvider().baseUrl;
 
   Future<ApiResModel> getDataComanda(
     String user,
@@ -44,7 +41,7 @@ class DocumentService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -64,7 +61,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: detalles,
+        response: detalles,
         storeProcedure: null,
       );
     } catch (e) {
@@ -72,123 +69,13 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
   }
 
 //actualizar documento
-  Future<ApiResModel> postDocumentXml(
-    PostDocXmlModel body,
-    String con,
-  ) async {
-    Uri url = Uri.parse("${_baseUrlFel}DocumentoXml");
-    try {
-      //url completa
-
-      // Configurar Api y consumirla
-      final response = await http.post(
-        url,
-        body: body.toJson(),
-        headers: {
-          "connectionStr": con,
-          "Content-Type": "application/json",
-        },
-      );
-
-      //si el api no responde
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        return ApiResModel(
-          url: url.toString(),
-          succes: false,
-          message: response.body,
-          storeProcedure: null,
-        );
-      }
-
-      final res = response.body;
-
-      //respuesta correcta
-      return ApiResModel(
-        url: url.toString(),
-        succes: true,
-        message: res,
-        storeProcedure: null,
-      );
-    } catch (e) {
-      //respuesta incorrecta
-      return ApiResModel(
-        url: url.toString(),
-        succes: false,
-        message: e.toString(),
-        storeProcedure: null,
-      );
-    }
-  }
-
-  Future<ApiResModel> getDocXml(
-    String user,
-    String token,
-    int consecutivo,
-    int anula,
-    int certifica,
-  ) async {
-    Uri url = Uri.parse("${_baseUrl}Documento/xml");
-    try {
-      //url completa
-
-      //Configuracion del api
-      final response = await http.get(
-        url,
-        headers: {
-          "user": user,
-          "Authorization": "bearer $token",
-          "consecutivo": "$consecutivo",
-          "anula": "$anula",
-          "certifica": "$certifica",
-        },
-      );
-
-      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
-
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        return ApiResModel(
-          url: url.toString(),
-          succes: false,
-          message: res.data,
-          storeProcedure: res.storeProcedure,
-        );
-      }
-
-      //series disponibñes
-      List<DocXmlModel> documentos = [];
-
-      //recorrer lista api Y  agregar a lista local
-      for (var item in res.data) {
-        //Tipar a map
-        final responseFinally = DocXmlModel.fromMap(item);
-        //agregar item a la lista
-        documentos.add(responseFinally);
-      }
-
-      //respuesta corecta
-      return ApiResModel(
-        url: url.toString(),
-        succes: true,
-        message: documentos,
-        storeProcedure: null,
-      );
-    } catch (e) {
-      //respuesta incorrecta
-      return ApiResModel(
-        url: url.toString(),
-        succes: false,
-        message: e.toString(),
-        storeProcedure: null,
-      );
-    }
-  }
 
   Future<ApiResModel> getEncabezados(
     int doc,
@@ -216,7 +103,7 @@ class DocumentService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -236,7 +123,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: encabezados,
+        response: encabezados,
         storeProcedure: res.storeProcedure,
       );
     } catch (e) {
@@ -244,7 +131,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -276,7 +163,7 @@ class DocumentService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -296,7 +183,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: detalles,
+        response: detalles,
         storeProcedure: null,
       );
     } catch (e) {
@@ -305,7 +192,7 @@ class DocumentService {
         url: url.toString(),
         succes: false,
         storeProcedure: null,
-        message: e.toString(),
+        response: e.toString(),
       );
     }
   }
@@ -336,7 +223,7 @@ class DocumentService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -356,7 +243,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: pagos,
+        response: pagos,
         storeProcedure: null,
       );
     } catch (e) {
@@ -364,7 +251,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -396,7 +283,7 @@ class DocumentService {
           url: url.toString(),
           succes: false,
           storeProcedure: res.storeProcedure,
-          message: res.data,
+          response: res.data,
         );
       }
 
@@ -415,7 +302,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: documentos,
+        response: documentos,
         storeProcedure: null,
       );
     } catch (e) {
@@ -423,7 +310,58 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Enviar documento al servidor
+  Future<ApiResModel> updateDocument(
+    PostDocumentModel document,
+    String token,
+    int consecutivo,
+  ) async {
+    //manejo de errores
+    Uri url = Uri.parse("${_baseUrl}Documento/update/estructura/$consecutivo");
+    try {
+      //url completa
+
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: document.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: res.data,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -456,7 +394,7 @@ class DocumentService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -465,7 +403,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -473,7 +411,7 @@ class DocumentService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

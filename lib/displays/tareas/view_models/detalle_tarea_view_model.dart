@@ -94,7 +94,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     }
 
     //añadir a la lista los usuarios responsables encontrados
-    responsablesTarea.addAll(res.message);
+    responsablesTarea.addAll(res.response);
 
     //recorrer la lista y buscar los de estado "inactivo"
     for (var i = 0; i < responsablesTarea.length; i++) {
@@ -147,7 +147,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     }
 
     //Agregar a lista de invitados
-    invitados.addAll(res.message);
+    invitados.addAll(res.response);
     //Retornar respuesta correcta
     isLoading = false; //detener carga
 
@@ -345,7 +345,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
         false;
 
     ApiResModel cancelar = ApiResModel(
-      message: "",
+      response: "",
       succes: false,
       url: "",
       storeProcedure: '',
@@ -472,7 +472,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       }
 
       //Respuesta del invitado
-      resInvitado.add(res.message[0]);
+      resInvitado.add(res.response[0]);
 
       //Crear modelo del nuevo inivtado
       InvitadoModel agregarInvitado = InvitadoModel(
@@ -516,7 +516,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       );
 
       ApiResModel nuevoInvitado = ApiResModel(
-        message: repetidos,
+        response: repetidos,
         succes: false,
         url: "",
         storeProcedure: '',
@@ -539,7 +539,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     //Respuesta correcta
     ApiResModel nuevoInvitado = ApiResModel(
-      message: agregados,
+      response: agregados,
       succes: true,
       url: "",
       storeProcedure: '',
@@ -664,7 +664,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     }
 
     //Agregar repuesta de api a la lista de comentarios
-    comentarios.addAll(res.message);
+    comentarios.addAll(res.response);
 
     isLoading = false; //detener carga
 
@@ -708,7 +708,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     }
 
     //Almacener respuesta de api a la lista de objetosComentario
-    objetosComentario.addAll(res.message);
+    objetosComentario.addAll(res.response);
 
     isLoading = false; //detener carga
 

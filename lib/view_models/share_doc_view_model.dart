@@ -52,7 +52,7 @@ class ShareDocViewModel extends ChangeNotifier {
     }
 
     //encabezados encontrados
-    List<EncabezadoModel> encabezadoTemplate = resEncabezado.message;
+    List<EncabezadoModel> encabezadoTemplate = resEncabezado.response;
 
     //consumir servicio obetener detalles del documento
     ApiResModel resDetalle = await documentService.getDetalles(
@@ -72,7 +72,7 @@ class ShareDocViewModel extends ChangeNotifier {
     }
 
     //Detalles del documento
-    List<DetalleModel> detallesTemplate = resDetalle.message;
+    List<DetalleModel> detallesTemplate = resDetalle.response;
 
     //validar que haya datos para imprimir
     if (encabezadoTemplate.isEmpty || detallesTemplate.isEmpty) {
@@ -107,7 +107,8 @@ class ShareDocViewModel extends ChangeNotifier {
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
       autorizacion: encabezado.feLUuid ?? "",
-      noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
+      noInterno: encabezado.iDDocumentoRef ?? "",
+      serieInterna: encabezado.serieDocumento ?? "",
     );
 
     //fecha del usuario
