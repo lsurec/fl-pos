@@ -22,11 +22,22 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   nuevoTema(BuildContext context, ThemeModel tema) {
-    // Preferences.theme = tema.id;
-    Preferences.idTheme = tema.id.toString();
-    print(
-        "${tema.id} id del tema y preferencia ${Preferences.theme} ${Preferences.idTheme}");
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+    final bool isLightMode = brightness == Brightness.light;
 
+    if (tema.id == 0 && isLightMode) {
+      Preferences.systemTheme = "1";
+    } else if (tema.id == 0 && isDarkMode) {
+      Preferences.systemTheme = "2";
+    }
+
+    Preferences.theme = tema.id;
+    Preferences.idTheme = tema.id.toString();
+
+    print(
+      "Tema de preferencia id ${Preferences.idTheme} index ${Preferences.theme} Sistema ${Preferences.systemTheme}",
+    );
     notifyListeners();
 
     if (AppTheme.cambiarTema == 1) {
@@ -64,6 +75,10 @@ class ThemeViewModel extends ChangeNotifier {
   Timer? timer; // Temporizador
 
   void reiniciarTemp(BuildContext context) {
+    print(
+      "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
+    );
+
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
@@ -82,16 +97,17 @@ class ThemeViewModel extends ChangeNotifier {
       notifyListeners();
     }
 
-    // isLoading = true;
+    isLoading = true;
     // timer?.cancel(); // Cancelar el temporizador existente si existe
     timer = Timer(const Duration(milliseconds: 2000), () {
       // Función de filtrado que consume el servicio
       FocusScope.of(context).unfocus(); //ocultar teclado
-      // reiniciarApp();
+      reiniciarApp();
     });
 
     print(
-        "Tema de preferencia id ${Preferences.idTheme} index ${Preferences.theme} Sistema ${Preferences.systemTheme}");
+      "Tema de preferencia id ${Preferences.idTheme} index ${Preferences.theme} Sistema ${Preferences.systemTheme}",
+    );
   }
 
   reiniciarApp() {

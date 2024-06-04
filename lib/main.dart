@@ -263,10 +263,10 @@ ThemeData aplicarTemaApp(BuildContext context) {
     }
   } else {
     if (isDarkMode) {
-      Preferences.idTheme = "2"; //verificar esto
+      Preferences.systemTheme = "2"; //verificar esto
       return AppTheme.darkTheme;
     } else if (isLightMode) {
-      Preferences.idTheme = "1"; //verificar esto
+      Preferences.systemTheme = "1"; //verificar esto
       return AppTheme.lightTheme;
     }
   }
