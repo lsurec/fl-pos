@@ -13,7 +13,9 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/print_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -80,10 +82,18 @@ class _SettingsFromState extends State<SettingsFrom> {
   scan() {
     devices.clear();
     _subscriptionScan = instanceManager
-        .discovery(type: PrinterType.bluetooth, isBle: isPairedSelect)
+        .discovery(
+      type: PrinterType.bluetooth,
+      isBle: isPairedSelect,
+    )
         .listen((device) {
       setState(() {
-        devices.add(PrinterDevice(name: device.name, address: device.address));
+        devices.add(
+          PrinterDevice(
+            name: device.name,
+            address: device.address,
+          ),
+        );
       });
     });
   }
@@ -96,14 +106,18 @@ class _SettingsFromState extends State<SettingsFrom> {
       if (status == BTStatus.connected && pendingTask != null) {
         if (Platform.isAndroid) {
           Future.delayed(const Duration(milliseconds: 1000), () {
-            PrinterManager.instance
-                .send(type: PrinterType.bluetooth, bytes: pendingTask!);
+            PrinterManager.instance.send(
+              type: PrinterType.bluetooth,
+              bytes: pendingTask!,
+            );
             pendingTask = null;
           });
         }
         if (Platform.isIOS) {
-          PrinterManager.instance
-              .send(type: PrinterType.bluetooth, bytes: pendingTask!);
+          PrinterManager.instance.send(
+            type: PrinterType.bluetooth,
+            bytes: pendingTask!,
+          );
           pendingTask = null;
         }
       }
@@ -147,11 +161,14 @@ class _SettingsFromState extends State<SettingsFrom> {
   }
 
   void setPrinter(int paper) {
-    BlocProvider.of<PrintBloc>(context).add(SetPrinterEvent(
+    BlocProvider.of<PrintBloc>(context).add(
+      SetPrinterEvent(
         name: printerSelect.name,
         address: printerSelect.address!,
         paired: isPairedSelect,
-        paper: paper));
+        paper: paper,
+      ),
+    );
   }
 
   @override
@@ -239,8 +256,16 @@ class _SettingsFromState extends State<SettingsFrom> {
                         : null,
                     child: Container(
                       color: (_currentStatus == BTStatus.connected)
-                          ? AppTheme.primary
-                          : Colors.grey,
+                          ? AppTheme.color(
+                              context,
+                              Styles.primary,
+                              Preferences.idTheme,
+                            )
+                          : AppTheme.color(
+                              context,
+                              Styles.grey,
+                              Preferences.idTheme,
+                            ),
                       child: Center(
                         child: Text(
                           widget.settings.opcion == 1
@@ -252,9 +277,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   BlockTranslate.impresora,
                                   "documento",
                                 ),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
+                          style: AppTheme.style(
+                            context,
+                            Styles.disabledStyle,
+                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -267,16 +293,24 @@ class _SettingsFromState extends State<SettingsFrom> {
                       BlockTranslate.impresora,
                       "impresion",
                     ),
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   actions: [
                     IconButton(
                       onPressed: () {
                         NotificationService.showInfoPrint(context);
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.help_outline,
-                        color: Colors.grey,
+                        color: AppTheme.color(
+                          context,
+                          Styles.icons,
+                          Preferences.idTheme,
+                        ),
                         size: 20,
                       ),
                       tooltip: "Ayuda",
@@ -294,16 +328,33 @@ class _SettingsFromState extends State<SettingsFrom> {
                           BlockTranslate.impresora,
                           "conectado",
                         ),
-                        style: AppTheme.titleStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                          Preferences.idTheme,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       ListTile(
-                        title: Text(printerDefault.name),
+                        title: Text(
+                          printerDefault.name,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
+                        ),
                         subtitle: Text(
-                            "${printerDefault.address!} | ${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.impresora,
-                          "papelT",
-                        )} $paperDefault"),
+                          "${printerDefault.address!} | ${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.impresora,
+                            "papelT",
+                          )} $paperDefault",
+                          style: AppTheme.style(
+                            context,
+                            Styles.subTitle,
+                            Preferences.idTheme,
+                          ),
+                        ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -320,19 +371,24 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   ),
                                 );
                               },
-                              icon: const Icon(Icons.edit),
+                              icon: const Icon(
+                                Icons.edit,
+                              ),
                             ),
                             IconButton(
                               onPressed: () {
-                                BlocProvider.of<PrintBloc>(context)
-                                    .add(DelPrinterEvent());
+                                BlocProvider.of<PrintBloc>(context).add(
+                                  DelPrinterEvent(),
+                                );
                               },
                               icon: const Icon(Icons.delete),
                             ),
                           ],
                         ),
-                        leading: Icon(Icons.bluetooth,
-                            color: AppData.statusColor[_currentStatus]),
+                        leading: Icon(
+                          Icons.bluetooth,
+                          color: AppData.statusColor[_currentStatus],
+                        ),
                       ),
                       const Divider(),
                       const SizedBox(height: 10),
@@ -341,7 +397,11 @@ class _SettingsFromState extends State<SettingsFrom> {
                           BlockTranslate.impresora,
                           "disponibles",
                         ),
-                        style: AppTheme.titleStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                          Preferences.idTheme,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Expanded(
@@ -350,8 +410,22 @@ class _SettingsFromState extends State<SettingsFrom> {
                           itemCount: devices.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              title: Text(devices[index].name),
-                              subtitle: Text(devices[index].address!),
+                              title: Text(
+                                devices[index].name,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                  Preferences.idTheme,
+                                ),
+                              ),
+                              subtitle: Text(
+                                devices[index].address!,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.subTitle,
+                                  Preferences.idTheme,
+                                ),
+                              ),
                               onTap: () {
                                 setState(() {
                                   printerSelect = devices[index];
@@ -375,7 +449,11 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           BlockTranslate.botones,
                                           "agregar",
                                         ),
-                                        style: AppTheme.whiteBoldStyle,
+                                        style: AppTheme.style(
+                                          context,
+                                          Styles.textButtonStyle,
+                                          Preferences.idTheme,
+                                        ),
                                       ),
                                     )
                                   : null,
@@ -391,7 +469,11 @@ class _SettingsFromState extends State<SettingsFrom> {
                 ModalBarrier(
                   dismissible: false,
                   // color: Colors.black.withOpacity(0.3),
-                  color: AppTheme.backroundColor,
+                  color: AppTheme.color(
+                    context,
+                    Styles.background,
+                    Preferences.idTheme,
+                  ),
                 ),
               if (printVM.isLoading) const LoadWidget(),
             ],
@@ -430,10 +512,17 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
   Widget build(BuildContext context) {
     return AlertDialog(
       scrollable: true,
-      title: Text(AppLocalizations.of(context)!.translate(
-        BlockTranslate.impresora,
-        "selecPapel",
-      )),
+      title: Text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.impresora,
+          "selecPapel",
+        ),
+        style: AppTheme.style(
+          context,
+          Styles.subTitle,
+          Preferences.idTheme,
+        ),
+      ),
       content: DropdownButtonFormField<int>(
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)!.translate(
@@ -457,12 +546,21 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           onPressed: () {
             Navigator.pop(context);
           },
+          style: AppTheme.button(
+            context,
+            Styles.buttonStyle,
+            Preferences.idTheme,
+          ),
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
               "cancelar",
             ),
-            style: AppTheme.whiteBoldStyle,
+            style: AppTheme.style(
+              context,
+              Styles.whiteBoldStyle,
+              Preferences.idTheme,
+            ),
           ),
         ),
         ElevatedButton(
@@ -472,12 +570,23 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
                   Navigator.pop(context);
                 }
               : null,
+          style: (paper != null)
+              ? AppTheme.button(
+                  context,
+                  Styles.buttonStyle,
+                  Preferences.idTheme,
+                ) //si esta desactivado
+              : AppTheme.disabledButtonsStyle,
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
               "conectar",
             ),
-            style: AppTheme.whiteBoldStyle,
+            style: AppTheme.style(
+              context,
+              Styles.whiteBoldStyle,
+              Preferences.idTheme,
+            ),
           ),
         ),
       ],

@@ -84,6 +84,10 @@ class AppTheme {
     color: Colors.black,
   );
 
+  static final ButtonStyle disabledButtonsStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+  );
+
   //Tema claro
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     primaryColor: primary,
