@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,6 @@ class AddClientView extends StatelessWidget {
             ),
             child: const Icon(
               Icons.save_outlined,
-              color: AppTheme.white,
             ),
           ),
           appBar: AppBar(
@@ -32,7 +33,11 @@ class AddClientView extends StatelessWidget {
                 BlockTranslate.cuenta,
                 'nueva',
               ),
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: SingleChildScrollView(
@@ -127,7 +132,11 @@ class AddClientView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

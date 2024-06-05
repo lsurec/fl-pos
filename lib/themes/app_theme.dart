@@ -142,116 +142,10 @@ class AppTheme {
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
     primaryColor: Colors.white,
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: primary,
+    ),
   );
-
-  // static TextStyle style(BuildContext context, String style, String tema) {
-  //   //Encontrar el tema del dispositivo
-  //   final Brightness brightness = MediaQuery.of(context).platformBrightness;
-  //   //si es oscuro
-  //   final bool isDarkMode = brightness == Brightness.dark;
-
-  //   // Determinar el tema a utilizar
-  //   if (tema.isEmpty || tema == "0") {
-  //     tema = isDarkMode ? "2" : "1";
-  //   }
-
-  //   if (Preferences.systemTheme == "1") {
-  //     tema = "1";
-  //   }
-
-  //   if (Preferences.systemTheme == "2") {
-  //     tema = "2";
-  //   }
-
-  //   // Define los mapas para los estilos de los diferentes temas
-  //   final lightThemeStyles = {
-  //     Styles.normal: LightTheme.normalStyle,
-  //     Styles.bold: LightTheme.normalBoldStyle,
-  //     Styles.obligatory: LightTheme.obligatoryBoldStyle,
-  //     Styles.hora: LightTheme.horaBoldStyle,
-  //     Styles.title: LightTheme.titleStyle,
-  //     Styles.subTitle: LightTheme.subTitleStyle,
-  //     Styles.disabledStyle: LightTheme.disabledStyle,
-  //     Styles.whiteBoldStyle: LightTheme.whiteBoldStyle,
-  //     Styles.bold30Style: LightTheme.bold30Style,
-  //     Styles.normal20Style: LightTheme.normal20Style,
-  //     Styles.versionStyle: LightTheme.versionStyle,
-  //     Styles.whiteStyle: LightTheme.whiteStyle,
-  //   };
-
-  //   final darkThemeStyles = {
-  //     Styles.normal: DarkTheme.normalStyle,
-  //     Styles.bold: DarkTheme.normalBoldStyle,
-  //     Styles.obligatory: DarkTheme.obligatoryStyle,
-  //     Styles.hora: DarkTheme.horaBoldStyle,
-  //     Styles.title: DarkTheme.titleStyle,
-  //     Styles.subTitle: DarkTheme.subTitleStyle,
-  //     Styles.disabledStyle: DarkTheme.disabledStyle,
-  //     Styles.whiteBoldStyle: DarkTheme.whiteBoldStyle,
-  //     Styles.bold30Style: DarkTheme.bold30Style,
-  //     Styles.normal20Style: DarkTheme.normal20Style,
-  //     Styles.versionStyle: DarkTheme.versionStyle,
-  //     Styles.whiteStyle: DarkTheme.whiteStyle,
-  //   };
-
-  //   // Selecciona el mapa correspondiente al tema utilizando un switch-case
-  //   Map<String, TextStyle> themeStyles;
-  //   switch (tema) {
-  //     case "1":
-  //       themeStyles = lightThemeStyles;
-  //       break;
-  //     case "2":
-  //       themeStyles = darkThemeStyles;
-  //       break;
-  //     default:
-  //       themeStyles = lightThemeStyles;
-  //       break;
-  //   }
-
-  //   // Retorna el estilo correspondiente o normalStyle si no se encuentra
-  //   return themeStyles[style] ?? LightTheme.normalStyle;
-  // }
-
-  // static Color color(BuildContext context, String style, String tema) {
-  //   // Encontrar el tema del dispositivo
-  //   final Brightness brightness = MediaQuery.of(context).platformBrightness;
-  //   final bool isDarkMode = brightness == Brightness.dark;
-
-  //   // Determinar el tema a utilizar
-  //   if (tema.isEmpty || tema == "0") {
-  //     tema = isDarkMode ? "2" : "1";
-  //   }
-
-  //   // Define los mapas para los estilos claros y oscuros
-  //   final lightThemeStyles = {
-  //     Styles.primary: primary,
-  //     Styles.background: LightTheme.backroundColor,
-  //     Styles.secondBackground: LightTheme.backroundColorSecondary,
-  //   };
-
-  //   final darkThemeStyles = {
-  //     Styles.primary: primary,
-  //     Styles.background: DarkTheme.backroundColor,
-  //     Styles.secondBackground: DarkTheme.backroundSecondary,
-  //   };
-
-  //   // Selecciona el mapa correspondiente al tema utilizando un switch-case
-  //   Map<String, Color> themeStyles;
-  //   switch (tema) {
-  //     case "1":
-  //       themeStyles = lightThemeStyles;
-  //       break;
-  //     case "2":
-  //       themeStyles = darkThemeStyles;
-  //       break;
-  //     default:
-  //       themeStyles = lightThemeStyles;
-  //       break;
-  //   }
-
-  //   // Retorna el estilo correspondiente o normalStyle si no se encuentra
-  //   return themeStyles[style] ?? black;
-  // }
 
   static TextStyle style(BuildContext context, String style, String tema) {
     // Encontrar el tema del dispositivo
@@ -585,42 +479,6 @@ class AppTheme {
     // Retorna el estilo correspondiente o buttonsStyle si no se encuentra
     return themeStyles[style] ?? buttonsStyle;
   }
-
-  // static ButtonStyle button(BuildContext context, String style, String tema) {
-  //   // Encontrar el tema del dispositivo
-  //   final Brightness brightness = MediaQuery.of(context).platformBrightness;
-  //   final bool isDarkMode = brightness == Brightness.dark;
-
-  //   // Determinar el tema a utilizar
-  //   if (tema.isEmpty || tema == "0") {
-  //     tema = isDarkMode ? "2" : "1";
-  //   }
-  //   // Define los mapas para los estilos de los diferentes temas
-  //   final lightThemeStyles = {
-  //     Styles.buttonStyle: LightTheme.buttonStyle,
-  //   };
-
-  //   final darkThemeStyles = {
-  //     Styles.buttonStyle: DarkTheme.buttonStyle,
-  //   };
-
-  //   // Selecciona el mapa correspondiente al tema utilizando un switch-case
-  //   Map<String, ButtonStyle> themeStyles;
-  //   switch (tema) {
-  //     case "1":
-  //       themeStyles = darkThemeStyles;
-  //       break;
-  //     case "2":
-  //       themeStyles = darkThemeStyles;
-  //       break;
-  //     default:
-  //       themeStyles = lightThemeStyles;
-  //       break;
-  //   }
-
-  //   // Retorna el estilo correspondiente o buttonsStyle si no se encuentra
-  //   return themeStyles[style] ?? buttonsStyle;
-  // }
 
   static Color colorcito(BuildContext context, String style, String tema) {
     // Encontrar el tema del dispositivo
