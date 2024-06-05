@@ -20,4 +20,5 @@ class Styles {
   static String bold30Style = "bold30Style";
   static String versionStyle = "versionStyle";
   static String whiteStyle = "whiteStyle";
+  static String menuActive = "menuActive";
 }

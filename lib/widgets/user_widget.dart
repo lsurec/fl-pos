@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -59,18 +61,30 @@ void _showUserInfoModal(
     context: context,
     builder: (BuildContext context) {
       return Container(
-        color: AppTheme.backroundColor,
+        color: AppTheme.color(
+          context,
+          Styles.background,
+          Preferences.idTheme,
+        ),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const Text(
+              Text(
                 "DMOSOFT S.A",
-                style: AppTheme.titleStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.title,
+                  Preferences.idTheme,
+                ),
               ),
               const SizedBox(height: 10),
               Card(
-                color: AppTheme.backroundColor,
+                color: AppTheme.color(
+                  context,
+                  Styles.background,
+                  Preferences.idTheme,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22),
                 ),
@@ -82,13 +96,17 @@ void _showUserInfoModal(
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           vmLogin.user.toUpperCase(),
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                         leading: IconButton(
                           onPressed: () {},
                           icon: ClipOval(
                             child: Container(
-                              width: 50,
+                              width: 45,
                               height: 50,
                               color: AppTheme.primary,
                               child: Center(
@@ -112,11 +130,19 @@ void _showUserInfoModal(
                             BlockTranslate.localConfig,
                             'empresa',
                           ),
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                            Preferences.idTheme,
+                          ),
                         ),
                         subtitle: Text(
                           vmLocal.selectedEmpresa!.empresaNombre,
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ),
                       ListTile(
@@ -125,11 +151,19 @@ void _showUserInfoModal(
                             BlockTranslate.localConfig,
                             'estaciones',
                           ),
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                            Preferences.idTheme,
+                          ),
                         ),
                         subtitle: Text(
                           vmLocal.selectedEstacion!.nombre,
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ),
                       if (vmMenu.tipoCambio != 0)
@@ -139,11 +173,19 @@ void _showUserInfoModal(
                               BlockTranslate.localConfig,
                               'cambioTipo',
                             ),
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                           subtitle: Text(
                             currencyFormat.format(vmMenu.tipoCambio),
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ),
                     ],

@@ -290,6 +290,7 @@ class AppTheme {
       Styles.normal20Style: LightTheme.normal20Style,
       Styles.versionStyle: LightTheme.versionStyle,
       Styles.whiteStyle: LightTheme.whiteStyle,
+      Styles.menuActive: LightTheme.menuActiveStyle,
     };
 
     final darkThemeStyles = {
@@ -305,6 +306,7 @@ class AppTheme {
       Styles.normal20Style: DarkTheme.normal20Style,
       Styles.versionStyle: DarkTheme.versionStyle,
       Styles.whiteStyle: DarkTheme.whiteStyle,
+      Styles.menuActive: DarkTheme.menuActiveStyle,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case
@@ -433,12 +435,14 @@ class AppTheme {
       Styles.primary: primary,
       Styles.background: LightTheme.backroundColor,
       Styles.secondBackground: LightTheme.backroundColorSecondary,
+      Styles.grey: LightTheme.grey,
     };
 
     final darkThemeStyles = {
       Styles.primary: primary,
       Styles.background: DarkTheme.backroundColor,
       Styles.secondBackground: DarkTheme.backroundSecondary,
+      Styles.grey: DarkTheme.grey,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case

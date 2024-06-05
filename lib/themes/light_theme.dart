@@ -126,4 +126,9 @@ class LightTheme {
     fontSize: 16,
     color: Colors.grey,
   );
+
+    static const menuActiveStyle = TextStyle(
+    fontSize: 17,
+    color: primary,
+  );
 }

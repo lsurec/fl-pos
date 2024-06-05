@@ -94,4 +94,9 @@ class DarkTheme {
     fontSize: 17,
     color: Colors.white,
   );
+
+  static const menuActiveStyle = TextStyle(
+    fontSize: 17,
+    color: darkPrimary,
+  );
 }
