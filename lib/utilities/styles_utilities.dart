@@ -28,5 +28,5 @@ class Styles {
   static String cargDesc = "cargDesc";
   static String cargo = "cargo";
   static String descuento = "descuento";
-
+  static String border = "border";
 }

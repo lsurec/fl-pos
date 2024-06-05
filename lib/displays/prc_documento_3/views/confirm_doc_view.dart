@@ -26,11 +26,16 @@ class ConfirmDocView extends StatelessWidget {
           key: vm.scaffoldKey,
           appBar: AppBar(
             title: Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.factura,
-                  'resumenDoc',
-                ),
-                style: AppTheme.titleStyle),
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.factura,
+                'resumenDoc',
+              ),
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
+            ),
             actions: [
               if (vm.showPrint)
                 IconButton(
@@ -70,12 +75,20 @@ class ConfirmDocView extends StatelessWidget {
                             BlockTranslate.factura,
                             'vendedor',
                           ),
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           docVM.vendedorSelect!.nomCuentaCorrentista,
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ],
                     ),
@@ -87,7 +100,11 @@ class ConfirmDocView extends StatelessWidget {
                       BlockTranslate.factura,
                       'productos',
                     ),
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   _Transaction(),
@@ -99,7 +116,11 @@ class ConfirmDocView extends StatelessWidget {
                       BlockTranslate.factura,
                       'formasPago',
                     ),
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   _Pyments(),
@@ -113,7 +134,11 @@ class ConfirmDocView extends StatelessWidget {
                   _Observacion(),
                   const SizedBox(height: 10),
                   SwitchListTile(
-                    activeColor: AppTheme.primary,
+                    activeColor: AppTheme.color(
+                      context,
+                      Styles.darkPrimary,
+                      Preferences.idTheme,
+                    ),
                     value: vm.directPrint,
                     onChanged: (value) => vm.directPrint = value,
                     title: Text(
@@ -121,7 +146,11 @@ class ConfirmDocView extends StatelessWidget {
                         BlockTranslate.tiket,
                         'imprimir',
                       ),
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                   ),
                   if (!vm.showPrint)
@@ -138,7 +167,11 @@ class ConfirmDocView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
         if (vm.isLoadingDTE)
@@ -196,7 +229,11 @@ class ConfirmDocView extends StatelessWidget {
                               children: [
                                 Text(
                                   step.text,
-                                  style: AppTheme.normalStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.normal,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                                 if (step.status == 1) //Cargando
                                   const Icon(
@@ -288,9 +325,10 @@ class ConfirmDocView extends StatelessWidget {
                                         BlockTranslate.botones,
                                         'aceptar',
                                       ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17,
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.whiteStyle,
+                                        Preferences.idTheme,
                                       ),
                                     ),
                                   ),
@@ -360,9 +398,10 @@ class _Print extends StatelessWidget {
                       BlockTranslate.botones,
                       'listo',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -387,9 +426,10 @@ class _Print extends StatelessWidget {
                       BlockTranslate.botones,
                       'imprimir',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -427,9 +467,10 @@ class _OptionsError extends StatelessWidget {
                       BlockTranslate.botones,
                       'sinFirma',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -452,9 +493,10 @@ class _OptionsError extends StatelessWidget {
                       BlockTranslate.botones,
                       'reintentar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -492,9 +534,10 @@ class _OptionsErrorAll extends StatelessWidget {
                       BlockTranslate.botones,
                       'aceptar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -517,9 +560,10 @@ class _OptionsErrorAll extends StatelessWidget {
                       BlockTranslate.botones,
                       'reintentar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -560,9 +604,10 @@ class _Options extends StatelessWidget {
                       BlockTranslate.botones,
                       'cancelar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -582,16 +627,21 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'confirmar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -622,14 +672,27 @@ class _Pyments extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
-                color: Colors.grey[400]!,
-                width: 1.0), // Define el color y grosor del borde
+              color: AppTheme.color(
+                context,
+                Styles.border,
+                Preferences.idTheme,
+              ),
+              width: 1.0,
+            ),
           ),
-          color: AppTheme.backroundColor,
+          color: AppTheme.color(
+            context,
+            Styles.background,
+            Preferences.idTheme,
+          ),
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
-              style: AppTheme.normalStyle,
+              style: AppTheme.style(
+                context,
+                Styles.normal,
+                Preferences.idTheme,
+              ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -640,7 +703,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'autorizar',
                     )}: ${amount.authorization}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.reference != "")
                   Text(
@@ -648,7 +715,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'referencia',
                     )}: ${amount.reference}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.payment.banco)
                   Text(
@@ -656,7 +727,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'banco',
                     )}: ${amount.bank?.nombre}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.account != null)
                   Text(
@@ -664,14 +739,22 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'cuenta',
                     )}: ${amount.account!.descripcion}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'monto',
                   )}: ${amount.amount.toStringAsFixed(2)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
@@ -694,10 +777,19 @@ class _TotalsPayment extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: BorderSide(
-            color: Colors.grey[400]!,
-            width: 1.0), // Define el color y grosor del borde
+          color: AppTheme.color(
+            context,
+            Styles.border,
+            Preferences.idTheme,
+          ),
+          width: 1.0,
+        ), // Define el color y grosor del borde
       ),
-      color:  AppTheme.color(context, Styles.background, Preferences.idTheme,),
+      color: AppTheme.color(
+        context,
+        Styles.background,
+        Preferences.idTheme,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -734,10 +826,19 @@ class _Totals extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: BorderSide(
-            color: Colors.grey[400]!,
-            width: 1.0), // Define el color y grosor del borde
+          color: AppTheme.color(
+            context,
+            Styles.border,
+            Preferences.idTheme,
+          ),
+          width: 1.0,
+        ), // Define el color y grosor del borde
       ),
-      color: AppTheme.backroundColor,
+      color: AppTheme.color(
+        context,
+        Styles.background,
+        Preferences.idTheme,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -806,21 +907,38 @@ class _Transaction extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
-                color: Colors.grey[400]!,
-                width: 1.0), // Define el color y grosor del borde
+              color: AppTheme.color(
+                context,
+                Styles.border,
+                Preferences.idTheme,
+              ),
+              width: 1.0,
+            ), // Define el color y grosor del borde
           ),
-          color: AppTheme.backroundColor,
+          color: AppTheme.color(
+            context,
+            Styles.background,
+            Preferences.idTheme,
+          ),
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${transaction.cantidad} x ${transaction.producto.desProducto}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 Text(
                   'SKU: ${transaction.producto.productoId}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
               ],
             ),
@@ -833,7 +951,11 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'precioU',
                     )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
 
                 Text(
@@ -841,7 +963,11 @@ class _Transaction extends StatelessWidget {
                     BlockTranslate.calcular,
                     'total',
                   )}: ${transaction.total.toStringAsFixed(2)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 if (transaction.cargo != 0)
                   Text(
@@ -849,7 +975,11 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'cargo',
                     )}: ${transaction.cargo.toStringAsFixed(2)}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
 
                 if (transaction.descuento != 0)
@@ -858,7 +988,11 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'descuento',
                     )}: ${transaction.descuento.toStringAsFixed(2)}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
@@ -886,26 +1020,42 @@ class _DataUser extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTheme.titleStyle,
+          style: AppTheme.style(
+            context,
+            Styles.title,
+            Preferences.idTheme,
+          ),
         ),
         const SizedBox(height: 5),
         Text(
           "Nit: ${user.nit}",
-          style: AppTheme.normalStyle,
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.general,
             'nombre',
           )}: ${user.name}",
-          style: AppTheme.normalStyle,
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.general,
             'direccion',
           )}: ${user.adress}",
-          style: AppTheme.normalStyle,
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
         )
       ],
     );

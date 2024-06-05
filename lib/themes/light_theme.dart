@@ -17,6 +17,7 @@ class LightTheme {
   static const Color backroundColorSecondary = Color(0xffFEF5E7);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static Color border = Colors.grey[400]!;
 
   //ESTILOS DE LO TEXTOS
 

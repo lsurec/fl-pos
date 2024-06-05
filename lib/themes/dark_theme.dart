@@ -10,8 +10,9 @@ class DarkTheme {
   static const Color primary = Color(0xff134895);
   static const Color iconActive = Colors.white60;
   static const Color white = Colors.white;
-
   static const Color icons = Color.fromARGB(255, 246, 216, 216);
+  static const Color border = Color.fromARGB(255, 112, 111, 111);
+
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
