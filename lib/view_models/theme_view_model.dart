@@ -135,27 +135,44 @@ class ThemeViewModel extends ChangeNotifier {
     reiniciarTemp(context);
   }
 
-  Icon getThemeIcon(int theme, bool isClaro, bool isOscuro) {
-    if (theme == 1) {
+  Icon getThemeIcon(BuildContext context, String tema) {
+    // Encontrar el tema del dispositivo
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    // si es oscuro
+    final bool isDarkMode = brightness == Brightness.dark;
+
+    if (Preferences.idTheme == "0") {
+      // Si no coincide con "1" o "2", usar la lógica original
+      tema = isDarkMode ? "2" : "1";
+    }
+    // Verificar si Preferences.systemTheme tiene longitud mayor que 0
+    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+      // Determinar el tema a utilizar basado en Preferences.systemTheme
+      switch (Preferences.systemTheme) {
+        case "1":
+          tema = "1"; // Tema claro
+          break;
+        case "2":
+          tema = "2"; // Tema oscuro
+          break;
+        default:
+          // Si no coincide con "1" o "2", usar la lógica original
+          tema = isDarkMode ? "2" : "1";
+          break;
+      }
+    }
+
+    if (tema == "1") {
       return const Icon(
         Icons.light_mode_outlined,
       );
-    } else if (theme == 2) {
+    } else if (tema == "2") {
       return const Icon(
         Icons.dark_mode_outlined,
-      );
-    } else if (theme == 0 && isClaro) {
-      return const Icon(
-        Icons.light_mode_outlined,
-      );
-    } else if (theme == 0 && isOscuro) {
-      return const Icon(
-        Icons.dark_mode_outlined,
-      );
-    } else {
-      return const Icon(
-        Icons.light_mode_outlined,
       );
     }
+    return const Icon(
+      Icons.light_mode_outlined,
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,11 @@ class SettingsView extends StatelessWidget {
             BlockTranslate.home,
             'configuracion',
           ),
-          style: AppTheme.titleStyle,
+          style: AppTheme.style(
+            context,
+            Styles.title,
+            Preferences.idTheme,
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -80,9 +85,8 @@ class SettingsView extends StatelessWidget {
               ),
               ListTile(
                 leading: vmTheme.getThemeIcon(
-                  Preferences.theme,
-                  AppTheme.claro,
-                  AppTheme.oscuro,
+                  context,
+                  Preferences.idTheme,
                 ),
                 title: Text(
                   AppLocalizations.of(context)!.translate(
