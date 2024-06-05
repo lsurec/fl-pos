@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
       //Tema de la aplicacion
       theme: aplicarTemaApp(context),
       //configurar ruta inicial
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: const LoginView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
       localizationsDelegates: const [

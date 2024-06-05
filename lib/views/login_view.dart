@@ -1,4 +1,6 @@
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -42,6 +44,11 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CardWidget(
+                    color: AppTheme.color(
+                      context,
+                      Styles.secondBackground,
+                      Preferences.idTheme,
+                    ),
                     width: double.infinity,
                     raidus: 18,
                     child: Padding(
@@ -78,27 +85,32 @@ class LoginView extends StatelessWidget {
                                     children: [
                                       TextFormField(
                                         decoration: InputDecoration(
-                                            hintText:
-                                                AppLocalizations.of(context)!
-                                                    .translate(
-                                              BlockTranslate.login,
-                                              "contrasena",
-                                            ),
-                                            labelText:
-                                                AppLocalizations.of(context)!
-                                                    .translate(
-                                              BlockTranslate.login,
-                                              "contrasena",
-                                            ),
-                                            suffixIcon: IconButton(
-                                              onPressed: vm.toggle,
-                                              icon: Icon(
-                                                vm.obscureText
-                                                    ? Icons.visibility
-                                                    : Icons.visibility_off,
-                                                color: AppTheme.primary,
+                                          hintText:
+                                              AppLocalizations.of(context)!
+                                                  .translate(
+                                            BlockTranslate.login,
+                                            "contrasena",
+                                          ),
+                                          labelText:
+                                              AppLocalizations.of(context)!
+                                                  .translate(
+                                            BlockTranslate.login,
+                                            "contrasena",
+                                          ),
+                                          suffixIcon: IconButton(
+                                            onPressed: vm.toggle,
+                                            icon: Icon(
+                                              vm.obscureText
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: AppTheme.color(
+                                                context,
+                                                Styles.iconActive,
+                                                Preferences.idTheme,
                                               ),
-                                            )),
+                                            ),
+                                          ),
+                                        ),
                                         onChanged: (value) => {
                                           vm.formValues['pass'] = value,
                                         },
@@ -123,22 +135,34 @@ class LoginView extends StatelessWidget {
                           SwitchListTile(
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 0),
-                            activeColor: AppTheme.primary,
+                            activeColor: AppTheme.color(
+                              context,
+                              Styles.darkPrimary,
+                              Preferences.idTheme,
+                            ),
                             title: Text(
                               AppLocalizations.of(context)!.translate(
                                 BlockTranslate.login,
                                 "recordar",
                               ),
-                              style: const TextStyle(
-                                color: AppTheme.primary,
+                              style: AppTheme.style(
+                                context,
+                                Styles.menuActive,
+                                Preferences.idTheme,
                               ),
                               textAlign: TextAlign.right,
                             ),
                             value: vm.isSliderDisabledSession,
                             onChanged: (value) => vm.disableSession(value),
                           ),
+                          const SizedBox(height: 5),
                           ElevatedButton(
                             onPressed: () => vm.login(context),
+                            style: AppTheme.button(
+                              context,
+                              Styles.buttonStyle,
+                              Preferences.idTheme,
+                            ),
                             child: SizedBox(
                               width: double.infinity,
                               child: Center(
@@ -160,14 +184,15 @@ class LoginView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        "${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.url,
-                          "version",
-                        )}  : ${vmSplash.versionLocal}",
-                        style: const TextStyle(
-                          color: Colors.black54,
-                        ),
-                      ),
+                          "${AppLocalizations.of(context)!.translate(
+                            BlockTranslate.url,
+                            "version",
+                          )}  : ${vmSplash.versionLocal}",
+                          style: AppTheme.style(
+                            context,
+                            Styles.versionStyle,
+                            Preferences.idTheme,
+                          )),
                       const SizedBox(width: 10)
                     ],
                   ),

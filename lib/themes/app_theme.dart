@@ -440,6 +440,8 @@ class AppTheme {
       Styles.background: LightTheme.backroundColor,
       Styles.secondBackground: LightTheme.backroundColorSecondary,
       Styles.grey: LightTheme.grey,
+      Styles.iconActive: LightTheme.primary,
+      Styles.darkPrimary: LightTheme.primary,
     };
 
     final darkThemeStyles = {
@@ -447,6 +449,8 @@ class AppTheme {
       Styles.background: DarkTheme.backroundColor,
       Styles.secondBackground: DarkTheme.backroundSecondary,
       Styles.grey: DarkTheme.grey,
+      Styles.iconActive: DarkTheme.iconActive,
+      Styles.darkPrimary: const Color.fromARGB(255, 82, 150, 252),
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case

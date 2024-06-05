@@ -21,4 +21,5 @@ class Styles {
   static String versionStyle = "versionStyle";
   static String whiteStyle = "whiteStyle";
   static String menuActive = "menuActive";
+  static String iconActive = "inconActive";
 }
