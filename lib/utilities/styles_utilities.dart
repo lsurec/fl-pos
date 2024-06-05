@@ -24,4 +24,9 @@ class Styles {
   static String iconActive = "inconActive";
   static String action = "action";
   static String total = "total";
+  static String transaction = "transaction";
+  static String cargDesc = "cargDesc";
+  static String cargo = "cargo";
+  static String descuento = "descuento";
+
 }

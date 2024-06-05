@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class DarkTheme {
   //COLORES
   static const Color backroundColor = Color.fromARGB(255, 48, 45, 45);
+  static const Color grayAppBar = Color.fromARGB(255, 51, 50, 50);
   static const Color darkPrimary = Color.fromARGB(255, 159, 197, 255);
   static const Color backroundSecondary = Color.fromARGB(255, 68, 68, 67);
   static const Color grey = Colors.grey;
@@ -105,5 +106,21 @@ class DarkTheme {
   static const actionStyle = TextStyle(
     fontSize: 15,
     color: darkPrimary,
+  );
+
+  static const cargDesc = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const cargo = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 96, 217, 100),
+  );
+
+  static const descuento = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 248, 119, 109),
   );
 }

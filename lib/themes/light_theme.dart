@@ -136,4 +136,20 @@ class LightTheme {
     fontSize: 15,
     color: primary,
   );
+
+  static const cargDesc = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const cargo = TextStyle(
+    fontSize: 17,
+    color: Colors.green,
+  );
+
+  static const descuento = TextStyle(
+    fontSize: 17,
+    color: Colors.red,
+  );
 }
