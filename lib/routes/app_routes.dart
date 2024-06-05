@@ -57,7 +57,7 @@ class AppRoutes {
     product: (BuildContext context) => const ProductView(),
     selectProduct: (BuildContext context) => const SelectProductView(),
     cargoDescuento: (BuildContext context) => const CargoDescuentoView(),
-    // amount: (BuildContext context) => const AmountView(),
+    amount: (BuildContext context) => const AmountView(),
     confirm: (BuildContext context) => const ConfirmDocView(),
     selectClient: (BuildContext context) => const SelectClientView(),
     //Display documento pos (factura)
