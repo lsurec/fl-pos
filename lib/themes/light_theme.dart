@@ -127,8 +127,13 @@ class LightTheme {
     color: Colors.grey,
   );
 
-    static const menuActiveStyle = TextStyle(
+  static const menuActiveStyle = TextStyle(
     fontSize: 17,
+    color: primary,
+  );
+
+  static const actionStyle = TextStyle(
+    fontSize: 15,
     color: primary,
   );
 }

@@ -295,6 +295,7 @@ class AppTheme {
       Styles.versionStyle: LightTheme.versionStyle,
       Styles.whiteStyle: LightTheme.whiteStyle,
       Styles.menuActive: LightTheme.menuActiveStyle,
+      Styles.action: LightTheme.actionStyle,
     };
 
     final darkThemeStyles = {
@@ -311,6 +312,7 @@ class AppTheme {
       Styles.versionStyle: DarkTheme.versionStyle,
       Styles.whiteStyle: DarkTheme.whiteStyle,
       Styles.menuActive: DarkTheme.menuActiveStyle,
+      Styles.action: DarkTheme.actionStyle,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case

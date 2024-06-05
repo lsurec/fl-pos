@@ -9,7 +9,6 @@ class DarkTheme {
   static const Color primary = Color(0xff134895);
   static const Color iconActive = Colors.white60;
 
-
   static const Color icons = Color.fromARGB(255, 246, 216, 216);
 
   //ESTILOD TEXTOS
@@ -99,6 +98,11 @@ class DarkTheme {
 
   static const menuActiveStyle = TextStyle(
     fontSize: 17,
+    color: darkPrimary,
+  );
+
+  static const actionStyle = TextStyle(
+    fontSize: 15,
     color: darkPrimary,
   );
 }
