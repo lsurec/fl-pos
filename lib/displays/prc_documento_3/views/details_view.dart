@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/row_total_widget.dart';
@@ -228,7 +230,11 @@ class DetailsView extends StatelessWidget {
               'subTotal',
             ),
             value: vm.subtotal,
-            color: AppTheme.primary,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+              Preferences.idTheme,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(

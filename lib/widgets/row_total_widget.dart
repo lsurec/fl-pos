@@ -1,3 +1,6 @@
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +11,7 @@ class RowTotalWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
-    this.color = Colors.black,
+    this.color,
   });
 
   final String title;
@@ -32,7 +35,12 @@ class RowTotalWidget extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: color,
+            color: color ??
+                AppTheme.color(
+                  context,
+                  Styles.total,
+                  Preferences.idTheme,
+                ),
             fontSize: 17,
             fontWeight: FontWeight.bold,
           ),
@@ -40,7 +48,12 @@ class RowTotalWidget extends StatelessWidget {
         Text(
           currencyFormat.format(value),
           style: TextStyle(
-            color: color,
+            color: color ??
+                AppTheme.color(
+                  context,
+                  Styles.total,
+                  Preferences.idTheme,
+                ),
             fontSize: 17,
           ),
         ),

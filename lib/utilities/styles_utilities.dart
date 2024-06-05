@@ -23,5 +23,5 @@ class Styles {
   static String menuActive = "menuActive";
   static String iconActive = "inconActive";
   static String action = "action";
-
+  static String total = "total";
 }

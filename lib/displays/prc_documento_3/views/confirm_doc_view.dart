@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -695,7 +697,7 @@ class _TotalsPayment extends StatelessWidget {
             color: Colors.grey[400]!,
             width: 1.0), // Define el color y grosor del borde
       ),
-      color: AppTheme.backroundColor,
+      color:  AppTheme.color(context, Styles.background, Preferences.idTheme,),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
