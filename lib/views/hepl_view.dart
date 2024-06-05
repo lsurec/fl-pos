@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class HelpView extends StatelessWidget {
@@ -15,7 +17,11 @@ class HelpView extends StatelessWidget {
             BlockTranslate.botones,
             "ayuda",
           ),
-          style: AppTheme.titleStyle,
+          style: AppTheme.style(
+            context,
+            Styles.title,
+            Preferences.idTheme,
+          ),
         ),
       ),
       body: const SingleChildScrollView(
@@ -38,13 +44,22 @@ class HelpSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
+        color: AppTheme.color(
+          context,
+          Styles.background,
+          Preferences.idTheme,
+        ),
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.impresora,
               "sinImprimir",
             ),
-            style: AppTheme.normalBoldStyle,
+            style: AppTheme.style(
+              context,
+              Styles.bold,
+              Preferences.idTheme,
+            ),
           ),
           subtitle: Text(
             AppLocalizations.of(context)!.translate(
@@ -73,13 +88,22 @@ class ClientSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
+        color: AppTheme.color(
+          context,
+          Styles.background,
+          Preferences.idTheme,
+        ),
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.cliente,
               "noEncontrado",
             ),
-            style: AppTheme.normalBoldStyle,
+            style: AppTheme.style(
+              context,
+              Styles.bold,
+              Preferences.idTheme,
+            ),
           ),
           subtitle: Text(
             AppLocalizations.of(context)!.translate(
@@ -136,8 +160,10 @@ class ClientSection extends StatelessWidget {
                           BlockTranslate.cliente,
                           "soporte",
                         ),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
                         ),
                       ),
                     ],
