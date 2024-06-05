@@ -122,10 +122,6 @@ class MyApp extends StatelessWidget {
 
 //Tema de la aplicación
 ThemeData aplicarTemaApp(BuildContext context) {
-  print(
-    "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-  );
-
   // Encontrar el tema del dispositivo
   final Brightness brightness = MediaQuery.of(context).platformBrightness;
   final bool isDarkMode = brightness == Brightness.dark;
@@ -163,7 +159,6 @@ ThemeData aplicarTemaApp(BuildContext context) {
 
     //9- Si es tema Oscuro
     if (isLightMode) {
-      print("Paso 10");
       Preferences.systemTheme = "1";
       return AppTheme.lightTheme;
     }

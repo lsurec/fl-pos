@@ -35,9 +35,6 @@ class ThemeViewModel extends ChangeNotifier {
     Preferences.theme = tema.id;
     Preferences.idTheme = tema.id.toString();
 
-    print(
-      "Tema de preferencia id ${Preferences.idTheme} index ${Preferences.theme} Sistema ${Preferences.systemTheme}",
-    );
     notifyListeners();
 
     if (AppTheme.cambiarTema == 1) {
@@ -75,10 +72,6 @@ class ThemeViewModel extends ChangeNotifier {
   Timer? timer; // Temporizador
 
   void reiniciarTemp(BuildContext context) {
-    // print(
-    //   "ID: ${Preferences.idTheme} INDEX: ${Preferences.theme} SISTEMA: ${Preferences.systemTheme}",
-    // );
-
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
@@ -101,10 +94,6 @@ class ThemeViewModel extends ChangeNotifier {
       FocusScope.of(context).unfocus(); //ocultar teclado
       reiniciarApp();
     });
-
-    print(
-      "Tema de preferencia id ${Preferences.idTheme} index ${Preferences.theme} Sistema ${Preferences.systemTheme}",
-    );
   }
 
   reiniciarApp() {
