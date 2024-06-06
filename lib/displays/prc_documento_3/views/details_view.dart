@@ -502,7 +502,11 @@ class MyExpansionTile extends StatelessWidget {
     return ExpansionTile(
       tilePadding: EdgeInsets.zero,
       childrenPadding: const EdgeInsets.symmetric(vertical: 10),
-      iconColor: AppTheme.disableStepLine,
+      iconColor: AppTheme.color(
+        context,
+        Styles.disableStepLine,
+        Preferences.idTheme,
+      ),
       textColor: Colors.black,
       title: Text(
         title,

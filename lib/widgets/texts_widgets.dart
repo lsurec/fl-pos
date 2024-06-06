@@ -17,7 +17,11 @@ class TextsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: AppTheme.normalStyle,
+        style: AppTheme.style(
+          context,
+          Styles.normal,
+          Preferences.idTheme,
+        ),
         children: [
           TextSpan(
             text: title,

@@ -1135,7 +1135,11 @@ class _VistaDiaState extends State<_VistaDia> {
                   BlockTranslate.calendario,
                   'nueva',
                 ),
-                style: AppTheme.tareaStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.taskStyle,
+                  Preferences.idTheme,
+                ),
               ),
             ),
         ],
@@ -1152,7 +1156,11 @@ class _VistaDiaState extends State<_VistaDia> {
               child: Center(
                 child: Text(
                   horasDia[indexHora].hora12,
-                  style: AppTheme.horaBoldStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.hora,
+                    Preferences.idTheme,
+                  ),
                 ),
               ),
             ),

@@ -130,7 +130,11 @@ class _MyDrawer extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 MenuModel itemMenu = menu[index];
                 return ListTile(
-                  titleTextStyle: AppTheme.normalStyle,
+                  titleTextStyle: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                   title: Text(
                     itemMenu.name,
                     style: AppTheme.style(

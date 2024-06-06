@@ -23,7 +23,6 @@ class LightTheme {
   static const Color greyBorder = Color.fromRGBO(0, 0, 0, 0.12);
   static const Color transparent = Colors.transparent;
 
-
   //ESTILOS DE LO TEXTOS
 
   static const normalStyle = TextStyle(
@@ -83,7 +82,7 @@ class LightTheme {
     fontWeight: FontWeight.w500,
   );
 
-  static const inactivoStyle = TextStyle(
+  static const inactive = TextStyle(
     fontSize: 17,
     color: Colors.grey,
   );

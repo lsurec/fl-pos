@@ -41,4 +41,6 @@ class Styles {
   static String taskStyle = "taskStyle";
   static String verMas = "verMas";
   static String transparent = "transparent";
+  static String inactive = "inactive";
+  static String disableStepLine = "disableStepLine";
 }

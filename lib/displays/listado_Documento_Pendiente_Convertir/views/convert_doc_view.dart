@@ -33,7 +33,11 @@ class ConvertDocView extends StatelessWidget {
                 BlockTranslate.cotizacion,
                 'convertirDoc',
               ),
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
             // actions: const [_Actions()],
           ),

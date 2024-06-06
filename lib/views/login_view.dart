@@ -171,7 +171,11 @@ class LoginView extends StatelessWidget {
                                     BlockTranslate.login,
                                     "iniciar",
                                   ),
-                                  style: AppTheme.whiteBoldStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.whiteBoldStyle,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                               ),
                             ),

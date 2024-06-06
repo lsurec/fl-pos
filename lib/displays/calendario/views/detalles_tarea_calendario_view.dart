@@ -30,7 +30,11 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                 BlockTranslate.tareas,
                 'detalleTarea',
               )}: ${vm.tarea!.tarea}',
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: RefreshIndicator(
@@ -414,7 +418,11 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                   return ListTile(
                                     title: Text(
                                       responsable.tUserName,
-                                      style: AppTheme.inactivoStyle,
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.inactive,
+                                        Preferences.idTheme,
+                                      ),
                                     ),
                                     leading: const Icon(Icons.person_4),
                                   );

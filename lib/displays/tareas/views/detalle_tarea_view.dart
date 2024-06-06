@@ -414,7 +414,11 @@ class DetalleTareaView extends StatelessWidget {
                                   return ListTile(
                                     title: Text(
                                       responsable.tUserName,
-                                      style: AppTheme.inactivoStyle,
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.inactive,
+                                        Preferences.idTheme,
+                                      ),
                                     ),
                                     leading: const Icon(Icons.person_4),
                                   );

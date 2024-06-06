@@ -42,13 +42,21 @@ class NotFoundView extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              style:  AppTheme.button(context, Styles.buttonStyle, Preferences.idTheme,),
+              style: AppTheme.button(
+                context,
+                Styles.buttonStyle,
+                Preferences.idTheme,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.botones,
                   "regresar",
                 ),
-                style: AppTheme.whiteBoldStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.whiteBoldStyle,
+                  Preferences.idTheme,
+                ),
               ),
             ),
           ],

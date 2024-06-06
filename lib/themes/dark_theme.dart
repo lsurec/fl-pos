@@ -16,6 +16,7 @@ class DarkTheme {
   static const Color rojo = Color.fromARGB(255, 248, 119, 109);
   static const Color greyBorder = Color.fromARGB(255, 112, 111, 111);
   static const Color transparent = Colors.transparent;
+  static const Color disableStepSecondary = Color(0xFFBABABA);
 
 
   //ESTILOD TEXTOS
@@ -94,7 +95,7 @@ class DarkTheme {
     fontWeight: FontWeight.bold,
   );
 
-  static const inactivoStyle = TextStyle(
+  static const inactive = TextStyle(
     fontSize: 17,
     color: Colors.grey,
   );
