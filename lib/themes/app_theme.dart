@@ -278,6 +278,7 @@ class AppTheme {
       Styles.border: LightTheme.border,
       Styles.green: LightTheme.verde,
       Styles.red: LightTheme.rojo,
+      Styles.delete: LightTheme.rojo,
     };
 
     final darkThemeStyles = {
@@ -292,6 +293,7 @@ class AppTheme {
       Styles.border: DarkTheme.border,
       Styles.green: DarkTheme.verde,
       Styles.red: DarkTheme.rojo,
+      Styles.delete: LightTheme.rojo,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case
