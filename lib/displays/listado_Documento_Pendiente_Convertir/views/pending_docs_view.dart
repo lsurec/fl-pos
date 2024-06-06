@@ -5,6 +5,8 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:provider/provider.dart';
 
 class PendingDocsView extends StatelessWidget {
@@ -25,7 +27,11 @@ class PendingDocsView extends StatelessWidget {
                 BlockTranslate.cotizacion,
                 'origen',
               )})",
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: RefreshIndicator(
@@ -49,15 +55,30 @@ class PendingDocsView extends StatelessWidget {
                                     BlockTranslate.fecha,
                                     'inicio',
                                   ),
-                                  style: AppTheme.normalBoldStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.bold,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                               ),
                               TextButton.icon(
                                 onPressed: () => vm.showPickerIni(context),
-                                icon: const Icon(Icons.calendar_today_outlined),
+                                icon: Icon(
+                                  Icons.calendar_today_outlined,
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.darkPrimary,
+                                    Preferences.idTheme,
+                                  ),
+                                ),
                                 label: Text(
                                   vm.formatView(vm.fechaIni!),
-                                  style: AppTheme.normalStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.normal,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                               ),
                             ],
@@ -72,18 +93,30 @@ class PendingDocsView extends StatelessWidget {
                                     BlockTranslate.fecha,
                                     'fin',
                                   ),
-                                  style: AppTheme.normalBoldStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.bold,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                               ),
                               TextButton.icon(
                                 onPressed: () => vm.showPickerFin(context),
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.calendar_today_outlined,
-                                  color: AppTheme.primary,
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.darkPrimary,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                                 label: Text(
                                   vm.formatView(vm.fechaFin!),
-                                  style: AppTheme.normalStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.normal,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                               ),
                             ],
@@ -97,7 +130,11 @@ class PendingDocsView extends StatelessWidget {
                             width: 175,
                             child: DropdownButton<int>(
                               isExpanded: true,
-                              dropdownColor: AppTheme.backroundColor,
+                              dropdownColor: AppTheme.color(
+                                context,
+                                Styles.background,
+                                Preferences.idTheme,
+                              ),
                               value: vm.idSelectFilter,
                               onChanged: (value) => vm.changeFilter(value!),
                               items: [
@@ -108,7 +145,11 @@ class PendingDocsView extends StatelessWidget {
                                       BlockTranslate.cotizacion,
                                       'filtroDoc',
                                     ),
-                                    style: AppTheme.normalStyle,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.normal,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                 ),
                                 DropdownMenuItem<int>(
@@ -118,7 +159,11 @@ class PendingDocsView extends StatelessWidget {
                                       BlockTranslate.fecha,
                                       'filtroDoc',
                                     ),
-                                    style: AppTheme.normalStyle,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.normal,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -138,7 +183,11 @@ class PendingDocsView extends StatelessWidget {
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.documents.length})",
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -166,7 +215,11 @@ class PendingDocsView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -200,14 +253,22 @@ class _CardDoc extends StatelessWidget {
                   BlockTranslate.home,
                   'idDoc',
                 )} ${document.iDDocumento}",
-                style: AppTheme.normalBoldStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                  Preferences.idTheme,
+                ),
               ),
               Text(
                 "${AppLocalizations.of(context)!.translate(
                   BlockTranslate.general,
                   'usuario',
                 )}: ${document.usuario}",
-                style: AppTheme.normalBoldStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                  Preferences.idTheme,
+                ),
               ),
             ],
           ),
@@ -215,7 +276,11 @@ class _CardDoc extends StatelessWidget {
         GestureDetector(
           onTap: () => vm.navigateDestination(context, document),
           child: CardWidget(
-            color: AppTheme.grayAppBar,
+            color: AppTheme.color(
+              context,
+              Styles.secondBackground,
+              Preferences.idTheme,
+            ),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -229,11 +294,19 @@ class _CardDoc extends StatelessWidget {
                           BlockTranslate.fecha,
                           'fechaHora',
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                       Text(
                         vm.formatDate(document.fechaHora),
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ],
                   ),
@@ -246,11 +319,19 @@ class _CardDoc extends StatelessWidget {
                           BlockTranslate.fecha,
                           'fechaDoc',
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                       Text(
                         document.fechaDocumento,
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ],
                   ),
