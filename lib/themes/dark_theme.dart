@@ -12,7 +12,8 @@ class DarkTheme {
   static const Color white = Colors.white;
   static const Color icons = Color.fromARGB(255, 246, 216, 216);
   static const Color border = Color.fromARGB(255, 112, 111, 111);
-
+  static const Color verde = Color.fromARGB(255, 96, 217, 100);
+  static const Color rojo = Color.fromARGB(255, 248, 119, 109);
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
@@ -123,5 +124,21 @@ class DarkTheme {
   static const descuento = TextStyle(
     fontSize: 17,
     color: Color.fromARGB(255, 248, 119, 109),
+  );
+
+  static const green = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 96, 217, 100),
+  );
+
+  static const red = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 248, 119, 109),
+  );
+
+  static const azul = TextStyle(
+    fontSize: 14,
+    color: darkPrimary,
+    decoration: TextDecoration.underline,
   );
 }

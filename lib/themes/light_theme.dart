@@ -18,6 +18,8 @@ class LightTheme {
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static Color border = Colors.grey[400]!;
+  static const Color verde = Colors.green;
+  static const Color rojo = Colors.red;
 
   //ESTILOS DE LO TEXTOS
 
@@ -152,5 +154,21 @@ class LightTheme {
   static const descuento = TextStyle(
     fontSize: 17,
     color: Colors.red,
+  );
+
+  static const green = TextStyle(
+    fontSize: 17,
+    color: Colors.green,
+  );
+
+  static const red = TextStyle(
+    fontSize: 17,
+    color: Colors.red,
+  );
+
+  static const azul = TextStyle(
+    fontSize: 14,
+    color: primary,
+    decoration: TextDecoration.underline,
   );
 }

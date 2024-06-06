@@ -29,4 +29,7 @@ class Styles {
   static String cargo = "cargo";
   static String descuento = "descuento";
   static String border = "border";
+  static String blue = "azul";
+  static String green = "green";
+  static String red = "red";
 }

@@ -53,14 +53,22 @@ class ConfirmDocView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (vm.showPrint)
-                    const Text(
+                    Text(
                       "Consecutivo interno",
-                      style: AppTheme.titleStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.title,
+                        Preferences.idTheme,
+                      ),
                     ),
                   if (vm.showPrint)
                     Text(
                       "${vm.consecutivoDoc}",
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                   if (vm.showPrint) const SizedBox(height: 5),
                   _DataUser(
@@ -209,8 +217,10 @@ class ConfirmDocView extends StatelessWidget {
                             BlockTranslate.general,
                             'tareasCompletas',
                           )} ${vm.stepsSucces}/${vm.steps.length}",
-                          style: const TextStyle(
-                            color: Colors.black45,
+                          style: AppTheme.style(
+                            context,
+                            Styles.versionStyle,
+                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -247,26 +257,42 @@ class ConfirmDocView extends StatelessWidget {
                                   ),
                                 ),
                                 if (step.status == 1) //Cargando
-                                  const Icon(
+                                  Icon(
                                     Icons.pending_outlined,
-                                    color: Colors.grey,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.grey,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                 if (step.status == 2) //exitoso
-                                  const Icon(
+                                  Icon(
                                     Icons.check_circle_outline,
-                                    color: Colors.green,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.green,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                 if (step.status == 3) //error
-                                  const Icon(
+                                  Icon(
                                     Icons.cancel_outlined,
-                                    color: Colors.red,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.red,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                               ],
                             ),
                             const SizedBox(height: 10),
                             if (step.isLoading)
-                              const LinearProgressIndicator(
-                                color: AppTheme.primary,
+                              LinearProgressIndicator(
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.darkPrimary,
+                                  Preferences.idTheme,
+                                ),
                               ),
                           ],
                         );
@@ -276,9 +302,10 @@ class ConfirmDocView extends StatelessWidget {
                     if (vm.viewMessage)
                       Text(
                         vm.error,
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.red,
+                        style: AppTheme.style(
+                          context,
+                          Styles.red,
+                          Preferences.idTheme,
                         ),
                       ),
                     if (vm.viewSucces)
@@ -287,9 +314,10 @@ class ConfirmDocView extends StatelessWidget {
                           BlockTranslate.notificacion,
                           'docProcesado',
                         ),
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.green,
+                        style: AppTheme.style(
+                          context,
+                          Styles.green,
+                          Preferences.idTheme,
                         ),
                       ),
                     if (vm.viewError)
@@ -302,9 +330,10 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.botones,
                               'verError',
                             ),
-                            style: const TextStyle(
-                              color: AppTheme.primary,
-                              decoration: TextDecoration.underline,
+                            style: AppTheme.style(
+                              context,
+                              Styles.blue,
+                              Preferences.idTheme,
                             ),
                           ),
                         ),
@@ -329,7 +358,11 @@ class ConfirmDocView extends StatelessWidget {
                                     bottom: 10,
                                     right: 10,
                                   ),
-                                  color: AppTheme.primary,
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.primary,
+                                    Preferences.idTheme,
+                                  ),
                                   child: Center(
                                     child: Text(
                                       AppLocalizations.of(context)!.translate(
@@ -402,7 +435,11 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -430,7 +467,11 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -471,7 +512,11 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -497,7 +542,11 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -538,7 +587,11 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -564,7 +617,11 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -608,7 +665,11 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
