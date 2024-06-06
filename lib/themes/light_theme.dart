@@ -20,6 +20,8 @@ class LightTheme {
   static Color border = Colors.grey[400]!;
   static const Color verde = Colors.green;
   static const Color rojo = Colors.red;
+  static const Color greyBorder = Color.fromRGBO(0, 0, 0, 0.12);
+
 
   //ESTILOS DE LO TEXTOS
 

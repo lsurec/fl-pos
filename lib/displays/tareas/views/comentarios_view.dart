@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
@@ -36,7 +38,11 @@ class ComentariosView extends StatelessWidget {
                       BlockTranslate.tareas,
                       'comentariosTarea',
                     )}: ${vmTareaCalendario.tarea!.tarea}',
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: RefreshIndicator(
@@ -53,7 +59,11 @@ class ComentariosView extends StatelessWidget {
                           BlockTranslate.general,
                           'observacion',
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                       Text(
                         vm.vistaTarea == 1
@@ -63,7 +73,11 @@ class ComentariosView extends StatelessWidget {
                                   'noDisponible',
                                 )
                             : vmTareaCalendario.tarea!.texto,
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                         textAlign: TextAlign.justify,
                       ),
                       Row(
@@ -74,7 +88,11 @@ class ComentariosView extends StatelessWidget {
                               BlockTranslate.tareas,
                               'comentarios',
                             )} (${vm.comentarioDetalle.length})",
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -103,7 +121,11 @@ class ComentariosView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'archivosSelec',
                           )} (${vm.files.length})",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                            Preferences.idTheme,
+                          ),
                         ),
                       const SizedBox(height: 5),
                       if (vm.files.isNotEmpty) const Divider(),
@@ -119,7 +141,11 @@ class ComentariosView extends StatelessWidget {
                               ListTile(
                                 title: Text(
                                   Utilities.nombreArchivo(archivo),
-                                  style: AppTheme.normalStyle,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.normal,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                                 leading: const Icon(Icons.attachment),
                                 trailing: GestureDetector(
@@ -147,7 +173,11 @@ class ComentariosView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -166,6 +196,11 @@ class _NuevoComentario extends StatelessWidget {
       controller: vm.comentarioController,
       onChanged: (value) => vm.comentarioController.text = value,
       decoration: InputDecoration(
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 1,
+          ),
+        ),
         labelText: AppLocalizations.of(context)!.translate(
           BlockTranslate.tareas,
           'nuevoComentario',
@@ -221,22 +256,34 @@ class _Comentario extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
                 width: 1.5,
-                color: Color.fromRGBO(0, 0, 0, 0.12),
+                color: AppTheme.color(
+                  context,
+                  Styles.greyBorder,
+                  Preferences.idTheme,
+                ),
               ),
               left: BorderSide(
                 width: 1.5,
-                color: Color.fromRGBO(0, 0, 0, 0.12),
+                color: AppTheme.color(
+                  context,
+                  Styles.greyBorder,
+                  Preferences.idTheme,
+                ),
               ),
               right: BorderSide(
                 width: 1.5,
-                color: Color.fromRGBO(0, 0, 0, 0.12),
+                color: AppTheme.color(
+                  context,
+                  Styles.greyBorder,
+                  Preferences.idTheme,
+                ),
               ),
             ),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
@@ -246,13 +293,21 @@ class _Comentario extends StatelessWidget {
             children: [
               Text(
                 comentario.comentario.nameUser,
-                style: AppTheme.normalBoldStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                  Preferences.idTheme,
+                ),
               ),
               Text(
                 Utilities.formatearFecha(
                   comentario.comentario.fechaHora,
                 ),
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
             ],
           ),
@@ -262,7 +317,11 @@ class _Comentario extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.5,
-              color: const Color.fromRGBO(0, 0, 0, 0.12),
+              color: AppTheme.color(
+                context,
+                Styles.greyBorder,
+                Preferences.idTheme,
+              ),
             ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
@@ -274,7 +333,11 @@ class _Comentario extends StatelessWidget {
             children: [
               Text(
                 comentario.comentario.comentario,
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
                 textAlign: TextAlign.justify,
               ),
               ListView.builder(
@@ -287,7 +350,11 @@ class _Comentario extends StatelessWidget {
                   return ListTile(
                     title: Text(
                       objeto.objetoNombre,
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                     leading: const Icon(Icons.insert_photo_outlined),
                     contentPadding: const EdgeInsets.symmetric(

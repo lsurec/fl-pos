@@ -14,6 +14,7 @@ class DarkTheme {
   static const Color border = Color.fromARGB(255, 112, 111, 111);
   static const Color verde = Color.fromARGB(255, 96, 217, 100);
   static const Color rojo = Color.fromARGB(255, 248, 119, 109);
+  static const Color greyBorder = Color.fromARGB(255, 112, 111, 111);
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
