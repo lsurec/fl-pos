@@ -33,4 +33,5 @@ class Styles {
   static String green = "green";
   static String red = "red";
   static String delete = "delete";
+  static String titlegrey = "titlegrey";
 }

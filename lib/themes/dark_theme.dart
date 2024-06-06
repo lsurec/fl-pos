@@ -45,6 +45,12 @@ class DarkTheme {
     color: Colors.white,
   );
 
+  static const titlegrey = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey,
+  );
+
   static const subTitleStyle = TextStyle(
     fontSize: 14,
     color: Color.fromARGB(255, 206, 192, 192),

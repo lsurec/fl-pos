@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,11 @@ class DocumentView extends StatelessWidget {
                     BlockTranslate.general,
                     'serie',
                   ),
-                  style: AppTheme.titleStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
+                    Preferences.idTheme,
+                  ),
                 ),
                 if (vm.series.isEmpty)
                   NotFoundWidget(
@@ -45,7 +51,11 @@ class DocumentView extends StatelessWidget {
                 if (vm.series.isNotEmpty)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
-                    dropdownColor: AppTheme.backroundColor,
+                    dropdownColor: AppTheme.color(
+                      context,
+                      Styles.background,
+                      Preferences.idTheme,
+                    ),
                     value: vm.serieSelect,
                     onChanged: (value) => vm.changeSerie(value, context),
                     items: vm.series.map(
@@ -62,8 +72,12 @@ class DocumentView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      vm.getTextCuenta(),
-                      style: AppTheme.titleStyle,
+                      vm.getTextCuenta(context),
+                      style: AppTheme.style(
+                        context,
+                        Styles.title,
+                        Preferences.idTheme,
+                      ),
                     ),
                     IconButton(
                       onPressed: () => Navigator.pushNamed(
@@ -90,9 +104,13 @@ class DocumentView extends StatelessWidget {
                         vm.performSearchClient(context),
                     textInputAction: TextInputAction.search,
                     decoration: InputDecoration(
-                      hintText: vm.getTextCuenta(),
+                      hintText: vm.getTextCuenta(context),
                       suffixIcon: IconButton(
-                        color: AppTheme.primary,
+                        color: AppTheme.color(
+                          context,
+                          Styles.darkPrimary,
+                          Preferences.idTheme,
+                        ),
                         icon: const Icon(Icons.search),
                         onPressed: () => vm.performSearchClient(context),
                       ),
@@ -110,16 +128,24 @@ class DocumentView extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 SwitchListTile(
-                  activeColor: AppTheme.primary,
+                  activeColor: AppTheme.color(
+                    context,
+                    Styles.darkPrimary,
+                    Preferences.idTheme,
+                  ),
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
                   onChanged: (value) => vm.changeCF(
                     context,
                     value,
                   ),
-                  title: const Text(
+                  title: Text(
                     "C/F",
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                 ),
                 if (vm.clienteSelect != null)
@@ -130,11 +156,11 @@ class DocumentView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            vm.getTextCuenta(),
-                            style: TextStyle(
-                              color: Colors.grey[500],
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                            vm.getTextCuenta(context),
+                            style: AppTheme.style(
+                              context,
+                              Styles.titlegrey,
+                              Preferences.idTheme,
                             ),
                           ),
                           if (!vm.cf)
@@ -145,7 +171,11 @@ class DocumentView extends StatelessWidget {
                               },
                               icon: Icon(
                                 Icons.edit_outlined,
-                                color: Colors.grey[500],
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.grey,
+                                  Preferences.idTheme,
+                                ),
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.cuenta,
@@ -157,17 +187,29 @@ class DocumentView extends StatelessWidget {
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNit,
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNombre,
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaDireccion,
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ],
                   ),
@@ -183,18 +225,28 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.factura,
                           'vendedor',
                         ),
-                        style: AppTheme.titleStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                          Preferences.idTheme,
+                        ),
                       ),
                       DropdownButton<SellerModel>(
                         isExpanded: true,
-                        dropdownColor: AppTheme.backroundColor,
+                        dropdownColor: AppTheme.color(
+                          context,
+                          Styles.background,
+                          Preferences.idTheme,
+                        ),
                         value: vm.vendedorSelect,
                         onChanged: (value) => vm.changeSeller(value),
                         items: vm.cuentasCorrentistasRef.map(
                           (seller) {
                             return DropdownMenuItem<SellerModel>(
                               value: seller,
-                              child: Text(seller.nomCuentaCorrentista),
+                              child: Text(
+                                seller.nomCuentaCorrentista,
+                              ),
                             );
                           },
                         ).toList(),

@@ -56,6 +56,12 @@ class LightTheme {
     color: Colors.black,
   );
 
+  static TextStyle titlegrey = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: border,
+  );
+
   static const obligatoryBoldStyle = TextStyle(
     fontSize: 20,
     color: Colors.red,
