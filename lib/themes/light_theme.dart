@@ -177,4 +177,9 @@ class LightTheme {
     color: primary,
     decoration: TextDecoration.underline,
   );
+
+  static const blueText = TextStyle(
+    fontSize: 15,
+    color: primary,
+  );
 }

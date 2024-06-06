@@ -147,4 +147,9 @@ class DarkTheme {
     color: darkPrimary,
     decoration: TextDecoration.underline,
   );
+
+  static const blueText = TextStyle(
+    fontSize: 15,
+    color: darkPrimary,
+  );
 }
