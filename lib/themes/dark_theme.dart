@@ -18,7 +18,6 @@ class DarkTheme {
   static const Color transparent = Colors.transparent;
   static const Color disableStepSecondary = Color(0xFFBABABA);
 
-
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
     fontSize: 17,
