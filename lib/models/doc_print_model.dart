@@ -129,6 +129,7 @@ class Documento {
   String serie;
   String no;
   String autorizacion;
+  String serieInterna;
   String noInterno;
 
   Documento({
@@ -138,6 +139,7 @@ class Documento {
     required this.serie,
     required this.no,
     required this.autorizacion,
+    required this.serieInterna,
     required this.noInterno,
   });
 
@@ -152,6 +154,7 @@ class Documento {
         serie: json["serie"],
         no: json["no"],
         autorizacion: json["autorizacion"],
+        serieInterna: json["serieInterna"],
         noInterno: json["noInterno"],
       );
 
@@ -163,6 +166,7 @@ class Documento {
         "no": no,
         "autorizacion": autorizacion,
         "noInterno": noInterno,
+        "serieInterna": serieInterna,
       };
 }
 

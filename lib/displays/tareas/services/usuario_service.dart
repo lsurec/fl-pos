@@ -33,7 +33,7 @@ class UsuarioService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -53,7 +53,7 @@ class UsuarioService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: usuarios,
+        response: usuarios,
         storeProcedure: null,
       );
     } catch (e) {
@@ -61,7 +61,7 @@ class UsuarioService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

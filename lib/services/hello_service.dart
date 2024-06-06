@@ -19,7 +19,7 @@ class HelloService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: response.body,
+          response: response.body,
           storeProcedure: null,
         );
       }
@@ -30,7 +30,7 @@ class HelloService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: response.body,
+        response: response.body,
         storeProcedure: null,
       );
     } catch (e) {
@@ -38,7 +38,7 @@ class HelloService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

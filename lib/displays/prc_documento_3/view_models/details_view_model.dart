@@ -40,9 +40,6 @@ class DetailsViewModel extends ChangeNotifier {
   //opciones Monto/porcentaje
   String? selectedOption = "Porcentaje"; // Opción seleccionada
 
-  //Filtro seleccionado SKU/Descripcion
-  String? filterOption = "SKU"; // Opción seleccionada
-
   //Key for form barra busqueda
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
 
@@ -82,12 +79,6 @@ class DetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Cambair valor ociones filtros
-  void changeOptionFilter(String? value) {
-    filterOption = value; //asignar nuevo valor
-    notifyListeners();
-  }
-
   //Buscar con input
   Future<void> performSearch(BuildContext context) async {
     //ocultar tecladp
@@ -123,39 +114,48 @@ class DetailsViewModel extends ChangeNotifier {
     //instacia del servicio
     ProductService productService = ProductService();
 
-    //respuesta del servixio
-    ApiResModel? res;
-
     //load prosses
     vmFactura.isLoading = true;
 
-    //si el filtro es  sku
-    if (filterOption == "SKU") {
-      //Consumir api
-      res = await productService.getProductId(searchText, loginVM.token);
-    }
-
-    //si el filtro es descripcion
-    if (filterOption == "Descripcion") {
-      //consumir api
-      res = await productService.getProductDesc(searchText, loginVM.token);
-    }
+    final ApiResModel resSku = await productService.getProductId(
+      searchText,
+      loginVM.token,
+    );
 
     //valid succes response
-    if (!res!.succes) {
+    if (!resSku.succes) {
       //si algo salio mal mostrar alerta
       vmFactura.isLoading = false;
 
       await NotificationService.showErrorView(
         context,
-        res,
+        resSku,
       );
 
       return;
     }
 
-    //Agregar productos encontrados
-    products.addAll(res.message);
+    products.addAll(resSku.response);
+
+    if (products.isEmpty) {
+      final ApiResModel resDesc =
+          await productService.getProductDesc(searchText, loginVM.token);
+
+      //valid succes response
+      if (!resDesc.succes) {
+        //si algo salio mal mostrar alerta
+        vmFactura.isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resDesc,
+        );
+
+        return;
+      }
+
+      products.addAll(resDesc.response);
+    }
 
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
@@ -217,7 +217,7 @@ class DetailsViewModel extends ChangeNotifier {
           );
           return;
         }
-        productVM.prices = precios.message;
+        productVM.prices = precios.response;
 
         if (productVM.prices.isEmpty) {
           NotificationService.showSnackbar(

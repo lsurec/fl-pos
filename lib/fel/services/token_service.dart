@@ -34,7 +34,7 @@ class TokenService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: response.body,
+          response: response.body,
           storeProcedure: null,
         );
       }
@@ -46,7 +46,7 @@ class TokenService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res,
+        response: res,
         storeProcedure: null,
       );
     } catch (e) {
@@ -54,7 +54,7 @@ class TokenService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

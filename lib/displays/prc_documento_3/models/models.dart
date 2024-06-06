@@ -26,3 +26,4 @@ export 'package:flutter_post_printer_example/displays/prc_documento_3/models/pro
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/seller_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/serie_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/bodega_producto_model.dart';
+export 'package:flutter_post_printer_example/displays/prc_documento_3/models/data_fel_model.dart';

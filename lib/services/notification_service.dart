@@ -141,7 +141,7 @@ class NotificationService {
   ) async {
     ErrorModel error = ErrorModel(
       date: DateTime.now(),
-      description: res.message,
+      description: res.response,
       url: res.url,
       storeProcedure: res.storeProcedure,
     );

@@ -3,10 +3,12 @@ import 'dart:convert';
 class PostDocumentModel {
   String estructura;
   String user;
+  int estado;
 
   PostDocumentModel({
     required this.estructura,
     required this.user,
+    required this.estado,
   });
 
   factory PostDocumentModel.fromJson(String str) =>
@@ -18,10 +20,12 @@ class PostDocumentModel {
       PostDocumentModel(
         estructura: json["estructura"],
         user: json["user"],
+        estado: json["estado"],
       );
 
   Map<String, dynamic> toMap() => {
         "estructura": estructura,
         "user": user,
+        "estado": estado,
       };
 }

@@ -93,6 +93,6 @@ class DestinationDocViewModel extends ChangeNotifier {
     }
 
     //Agregar documentos disponibles
-    documents.addAll(res.message);
+    documents.addAll(res.response);
   }
 }

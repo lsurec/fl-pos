@@ -31,7 +31,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -51,7 +51,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: tareas,
+        response: tareas,
         storeProcedure: null,
       );
     } catch (e) {
@@ -59,7 +59,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -93,7 +93,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -114,7 +114,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: tareas,
+        response: tareas,
         storeProcedure: null,
       );
     } catch (e) {
@@ -122,7 +122,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -155,7 +155,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -175,7 +175,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: tareas,
+        response: tareas,
         storeProcedure: null,
       );
     } catch (e) {
@@ -183,7 +183,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -211,7 +211,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -231,7 +231,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: estados,
+        response: estados,
         storeProcedure: null,
       );
     } catch (e) {
@@ -239,7 +239,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -268,7 +268,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -288,7 +288,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: tipos,
+        response: tipos,
         storeProcedure: null,
       );
     } catch (e) {
@@ -296,7 +296,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -325,7 +325,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -345,7 +345,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: prioridades,
+        response: prioridades,
         storeProcedure: null,
       );
     } catch (e) {
@@ -353,7 +353,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -382,7 +382,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -402,7 +402,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: periodicidades,
+        response: periodicidades,
         storeProcedure: null,
       );
     } catch (e) {
@@ -410,7 +410,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -442,7 +442,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -462,7 +462,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: comentarios,
+        response: comentarios,
         storeProcedure: null,
       );
     } catch (e) {
@@ -470,7 +470,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -502,7 +502,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -522,7 +522,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: objetos,
+        response: objetos,
         storeProcedure: null,
       );
     } catch (e) {
@@ -530,7 +530,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -562,7 +562,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -582,7 +582,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: responsables,
+        response: responsables,
         storeProcedure: null,
       );
     } catch (e) {
@@ -590,7 +590,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -622,7 +622,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -642,7 +642,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: invitados,
+        response: invitados,
         storeProcedure: null,
       );
     } catch (e) {
@@ -650,7 +650,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -681,7 +681,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -701,7 +701,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: resTarea,
+        response: resTarea,
         storeProcedure: null,
       );
     } catch (e) {
@@ -709,13 +709,13 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
   }
 
-   //Consumo api para actualizar el estado de la tarea.
+  //Consumo api para actualizar el estado de la tarea.
   Future<ApiResModel> postEstadoTarea(
     String token,
     ActualizarEstadoModel estado,
@@ -741,7 +741,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -750,7 +750,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -758,7 +758,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -790,7 +790,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -799,7 +799,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -807,7 +807,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -837,7 +837,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -846,7 +846,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -854,7 +854,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -885,7 +885,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -905,7 +905,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: invitado,
+        response: invitado,
         storeProcedure: null,
       );
     } catch (e) {
@@ -913,7 +913,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -944,7 +944,7 @@ class TareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -964,7 +964,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: responsable,
+        response: responsable,
         storeProcedure: null,
       );
     } catch (e) {
@@ -972,7 +972,7 @@ class TareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

@@ -106,7 +106,7 @@ class LoginViewModel extends ChangeNotifier {
       }
 
       //mapear respuesta servicio
-      AccessModel respLogin = res.message;
+      AccessModel respLogin = res.response;
 
       //si el usuaro es correcto
       if (respLogin.success) {
@@ -165,8 +165,8 @@ class LoginViewModel extends ChangeNotifier {
         localVM.empresas.clear();
         localVM.estaciones.clear();
 
-        localVM.empresas.addAll(resEmpresas.message);
-        localVM.estaciones.addAll(resEstaciones.message);
+        localVM.empresas.addAll(resEmpresas.response);
+        localVM.estaciones.addAll(resEstaciones.response);
 
         if (localVM.estaciones.length == 1) {
           localVM.selectedEstacion = localVM.estaciones.first;
@@ -195,7 +195,7 @@ class LoginViewModel extends ChangeNotifier {
             return;
           }
 
-          final List<ApplicationModel> applications = resApps.message;
+          final List<ApplicationModel> applications = resApps.response;
 
           menuVM.menuData.clear();
 
@@ -217,7 +217,7 @@ class LoginViewModel extends ChangeNotifier {
             menuVM.menuData.add(
               MenuData(
                 application: application,
-                children: resDisplay.message,
+                children: resDisplay.response,
               ),
             );
           }

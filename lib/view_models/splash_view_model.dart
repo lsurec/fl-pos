@@ -194,8 +194,8 @@ class SplashViewModel extends ChangeNotifier {
       return;
     }
 
-    localVM.empresas.addAll(resEmpresas.message);
-    localVM.estaciones.addAll(resEstaciones.message);
+    localVM.empresas.addAll(resEmpresas.response);
+    localVM.estaciones.addAll(resEstaciones.response);
 
     if (localVM.estaciones.length == 1) {
       localVM.selectedEstacion = localVM.estaciones.first;
@@ -228,7 +228,7 @@ class SplashViewModel extends ChangeNotifier {
         return;
       }
 
-      final List<ApplicationModel> applications = resApps.message;
+      final List<ApplicationModel> applications = resApps.response;
 
       menuVM.menuData.clear();
 
@@ -256,7 +256,7 @@ class SplashViewModel extends ChangeNotifier {
         menuVM.menuData.add(
           MenuData(
             application: application,
-            children: resDisplay.message,
+            children: resDisplay.response,
           ),
         );
       }

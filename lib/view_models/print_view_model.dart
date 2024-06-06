@@ -100,10 +100,10 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<PrintConvertModel> data = res.message;
+    final List<PrintConvertModel> data = res.response;
 
     if (data.isEmpty) {
-      res.message = AppLocalizations.of(context)!.translate(
+      res.response = AppLocalizations.of(context)!.translate(
         BlockTranslate.notificacion,
         "sinDatos",
       );
@@ -142,7 +142,8 @@ class PrintViewModel extends ChangeNotifier {
       serie: "",
       no: "",
       autorizacion: "",
-      noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
+      noInterno: encabezado.refIdDocumento ?? "",
+      serieInterna: encabezado.serieDocumento ?? "",
     );
 
     DateTime now = DateTime.now();
@@ -585,7 +586,7 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    List<EncabezadoModel> encabezadoTemplate = resEncabezado.message;
+    List<EncabezadoModel> encabezadoTemplate = resEncabezado.response;
 
     //consumir servicio
     ApiResModel resDetalle = await documentService.getDetalles(
@@ -606,7 +607,7 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    List<DetalleModel> detallesTemplate = resDetalle.message;
+    List<DetalleModel> detallesTemplate = resDetalle.response;
 
     //consumir servicio
     ApiResModel resPago = await documentService.getPagos(
@@ -627,14 +628,14 @@ class PrintViewModel extends ChangeNotifier {
       return;
     }
 
-    List<PagoModel> pagosTemplate = resPago.message;
+    List<PagoModel> pagosTemplate = resPago.response;
 
     isLoading = false;
 
     //validar que haya datos
 
     if (encabezadoTemplate.isEmpty) {
-      resEncabezado.message = AppLocalizations.of(context)!.translate(
+      resEncabezado.response = AppLocalizations.of(context)!.translate(
         BlockTranslate.notificacion,
         'sinEncabezados',
       );
@@ -667,6 +668,14 @@ class PrintViewModel extends ChangeNotifier {
       tel: encabezado.empresaTelefono!,
     );
 
+    String formattedDateCert = "";
+
+    if (encabezado.feLFechaCertificacion != null) {
+      DateTime dateTimeCert = DateTime.parse(encabezado.feLFechaCertificacion);
+      formattedDateCert =
+          "${dateTimeCert.day}/${dateTimeCert.month}/${dateTimeCert.year} ${dateTimeCert.hour}:${dateTimeCert.minute}:${dateTimeCert.second}";
+    }
+
     //TODO: Certificar
     Documento documento = Documento(
       titulo: encabezado.tipoDocumento!,
@@ -674,11 +683,12 @@ class PrintViewModel extends ChangeNotifier {
         BlockTranslate.tiket,
         'docTributario',
       ),
-      fechaCert: encabezado.feLFechaCertificacion ?? "",
+      fechaCert: formattedDateCert,
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
       autorizacion: encabezado.feLUuid ?? "",
-      noInterno: "${encabezado.serieDocumento}-${encabezado.idDocumento}",
+      noInterno: encabezado.iDDocumentoRef ?? "",
+      serieInterna: encabezado.serieDocumento ?? "",
     );
 
     DateTime now = DateTime.now();
@@ -845,75 +855,25 @@ class PrintViewModel extends ChangeNotifier {
       styles: centerBold,
     );
 
-    // if (!isFel) {
-    //   bytes += generator.text(
-    //     "DOCUMENTO GENERICO",
-    //     styles: centerBold,
-    //   );
-    // }
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    // if (isFel) {
-    //   bytes += generator.text(
-    //     docPrintModel.documento.descripcion,
-    //     styles: centerBold,
-    //   );
-    //   bytes += generator.text(
-    //       "Fecha certificacion: ${docPrintModel.documento.fechaCert}",
-    //       styles: center);
-    //   bytes += generator.row(
-    //     [
-    //       PosColumn(
-    //         text: "Factura No.",
-    //         width: 6,
-    //         styles: const PosStyles(
-    //           align: PosAlign.center,
-    //         ),
-    //       ),
-    //       PosColumn(
-    //         text: "Serie:",
-    //         width: 6,
-    //         styles: const PosStyles(
-    //           align: PosAlign.center,
-    //         ),
-    //       ),
-    //     ],
-    //   );
+    final bool isFel = docVM.printFel(); //TODO:Parametrizar
 
-    //   bytes += generator.row(
-    //     [
-    //       PosColumn(
-    //         text: docPrintModel.documento.no,
-    //         styles: const PosStyles(
-    //           height: PosTextSize.size2,
-    //           width: PosTextSize.size1,
-    //           align: PosAlign.center,
-    //         ),
-    //         width: 6,
-    //       ),
-    //       PosColumn(
-    //         text: docPrintModel.documento.serie,
-    //         styles: const PosStyles(
-    //           height: PosTextSize.size2,
-    //           width: PosTextSize.size1,
-    //           align: PosAlign.center,
-    //         ),
-    //         width: 6,
-    //       ),
-    //     ],
-    //   );
-
-    //   bytes += generator.text(
-    //     "Autorizacion:",
-    //     styles: centerBold,
-    //   );
-
-    //   bytes += generator.text(
-    //     docPrintModel.documento.autorizacion,
-    //     styles: centerBold,
-    //   );
-    // }
+    if (!isFel) {
+      bytes += generator.text(
+        "DOCUMENTO GENERICO",
+        styles: centerBold,
+      );
+      bytes += generator.emptyLines(1);
+    }
 
     bytes += generator.emptyLines(1);
+
+    //TODO:Translate
+    bytes += generator.text(
+      "Serie interna: ${docPrintModel.documento.serieInterna}",
+      styles: center,
+    );
     bytes += generator.text(
       "${AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
@@ -922,6 +882,34 @@ class PrintViewModel extends ChangeNotifier {
       styles: center,
     );
     bytes += generator.emptyLines(1);
+
+    if (isFel) {
+      bytes += generator.text(
+        docPrintModel.documento.descripcion,
+        styles: centerBold,
+      );
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.text("Serie: ${docPrintModel.documento.serie}",
+          styles: center);
+      bytes +=
+          generator.text("No: ${docPrintModel.documento.no}", styles: center);
+      bytes += generator.text("Fecha: ${docPrintModel.documento.fechaCert}",
+          styles: center);
+
+      bytes += generator.text(
+        "Autorizacion:",
+        styles: centerBold,
+      );
+
+      bytes += generator.text(
+        docPrintModel.documento.autorizacion,
+        styles: centerBold,
+      );
+    }
+
+    bytes += generator.emptyLines(1);
+
     bytes += generator.text(
       AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
@@ -1210,27 +1198,30 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    // if (isFel) {
-    //   bytes += generator.text(
-    //     "Ceritificador: ${docPrintModel.certificador.nombre}",
-    //     styles: center,
-    //   );
-
-    //   bytes += generator.text(
-    //     "Nit: ${docPrintModel.certificador.nit}",
-    //     styles: center,
-    //   );
-    // }
-
-    bytes += generator.emptyLines(1);
-
     for (var mensaje in docPrintModel.mensajes) {
       bytes += generator.text(
         mensaje,
         styles: centerBold,
       );
     }
+    bytes += generator.emptyLines(1);
 
+    if (isFel) {
+      bytes += generator.text(
+        "Ceritificador:",
+        styles: center,
+      );
+
+      bytes += generator.text(
+        docPrintModel.certificador.nombre,
+        styles: center,
+      );
+
+      bytes += generator.text(
+        docPrintModel.certificador.nit,
+        styles: center,
+      );
+    }
     bytes += generator.emptyLines(1);
 
     bytes += generator.text(
