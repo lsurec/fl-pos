@@ -36,4 +36,5 @@ class Styles {
   static String titlegrey = "titlegrey";
   static String blueText = "blueText";
   static String greyBorder = "greyBorder";
+  static String tareaBorder = "tareaBorder";
 }

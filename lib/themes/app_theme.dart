@@ -285,6 +285,7 @@ class AppTheme {
       Styles.delete: LightTheme.rojo,
       Styles.normal: LightTheme.black,
       Styles.greyBorder: LightTheme.greyBorder,
+      Styles.tareaBorder: LightTheme.greyBorder,
     };
 
     final darkThemeStyles = {
