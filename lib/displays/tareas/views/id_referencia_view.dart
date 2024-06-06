@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +27,11 @@ class IdReferenciaView extends StatelessWidget {
                 BlockTranslate.tareas,
                 'buscarIdRef',
               ),
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: ListView(
@@ -53,7 +59,11 @@ class IdReferenciaView extends StatelessWidget {
                             BlockTranslate.general,
                             'registro',
                           )} (${vm.idReferencias.length})",
-                          style: AppTheme.normalBoldStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ],
                     ),
@@ -70,7 +80,11 @@ class IdReferenciaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.background,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -97,11 +111,15 @@ class _ReferenciasEncontradas extends StatelessWidget {
             referencia,
           ),
           child: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   width: 1.5,
-                  color: Color.fromRGBO(0, 0, 0, 0.12),
+                  color: AppTheme.color(
+                    context,
+                    Styles.greyBorder,
+                    Preferences.idTheme,
+                  ),
                 ),
               ),
             ),
@@ -116,7 +134,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     referencia.descripcion,
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                   Row(
                     children: [
@@ -125,11 +147,19 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRef',
                         )}: ",
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                       Text(
                         referencia.referenciaId,
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ],
                   ),
