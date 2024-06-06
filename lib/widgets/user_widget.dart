@@ -25,7 +25,11 @@ class UserWidget extends StatelessWidget {
         child: Container(
           width: 35,
           height: 35,
-          color: AppTheme.primary,
+          color: AppTheme.color(
+            context,
+            Styles.primary,
+            Preferences.idTheme,
+          ),
           child: Center(
             child: Text(
               vmLogin.user.isNotEmpty ? vmLogin.user[0].toUpperCase() : "",
