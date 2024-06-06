@@ -37,4 +37,8 @@ class Styles {
   static String blueText = "blueText";
   static String greyBorder = "greyBorder";
   static String tareaBorder = "tareaBorder";
+  static String diasOtroMes = "diasOtroMes";
+  static String taskStyle = "taskStyle";
+  static String verMas = "verMas";
+  static String transparent = "transparent";
 }

@@ -15,6 +15,8 @@ class DarkTheme {
   static const Color verde = Color.fromARGB(255, 96, 217, 100);
   static const Color rojo = Color.fromARGB(255, 248, 119, 109);
   static const Color greyBorder = Color.fromARGB(255, 112, 111, 111);
+  static const Color transparent = Colors.transparent;
+
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
@@ -152,5 +154,23 @@ class DarkTheme {
   static const blueText = TextStyle(
     fontSize: 15,
     color: darkPrimary,
+  );
+
+  static const diasFueraMes = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 159, 150, 150),
+    fontWeight: FontWeight.bold,
+  );
+
+  static const taskStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
+  static const verMas = TextStyle(
+    fontSize: 12,
+    color: Color.fromARGB(255, 207, 191, 191),
+    fontWeight: FontWeight.w500,
   );
 }

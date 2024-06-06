@@ -61,27 +61,9 @@ class AppTheme {
     fontWeight: FontWeight.w500,
   );
 
-  static const verMas = TextStyle(
-    fontSize: 12,
-    color: Color.fromARGB(255, 111, 111, 111),
-    fontWeight: FontWeight.w500,
-  );
-
   static const inactivoStyle = TextStyle(
     fontSize: 17,
     color: Colors.grey,
-  );
-
-  static const diasFueraMes = TextStyle(
-    fontSize: 17,
-    color: Color.fromARGB(255, 111, 111, 111),
-    fontWeight: FontWeight.bold,
-  );
-
-  static const taskStyle = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-    color: Colors.black,
   );
 
   static final ButtonStyle disabledButtonsStyle = ButtonStyle(
@@ -198,6 +180,9 @@ class AppTheme {
       Styles.green: LightTheme.green,
       Styles.titlegrey: LightTheme.titlegrey,
       Styles.blueText: LightTheme.blueText,
+      Styles.diasOtroMes: LightTheme.diasFueraMes,
+      Styles.taskStyle: LightTheme.taskStyle,
+      Styles.verMas: LightTheme.verMas,
     };
 
     final darkThemeStyles = {
@@ -223,6 +208,9 @@ class AppTheme {
       Styles.green: DarkTheme.green,
       Styles.titlegrey: DarkTheme.titlegrey,
       Styles.blueText: DarkTheme.blueText,
+      Styles.diasOtroMes: DarkTheme.diasFueraMes,
+      Styles.taskStyle: DarkTheme.taskStyle,
+      Styles.verMas: DarkTheme.verMas,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case
@@ -286,6 +274,7 @@ class AppTheme {
       Styles.normal: LightTheme.black,
       Styles.greyBorder: LightTheme.greyBorder,
       Styles.tareaBorder: LightTheme.greyBorder,
+      Styles.transparent: LightTheme.transparent,
     };
 
     final darkThemeStyles = {
@@ -303,6 +292,7 @@ class AppTheme {
       Styles.delete: LightTheme.rojo,
       Styles.normal: LightTheme.white,
       Styles.greyBorder: DarkTheme.greyBorder,
+      Styles.transparent: DarkTheme.transparent,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case
