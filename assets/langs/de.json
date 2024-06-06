@@ -323,7 +323,9 @@
         "tipoPrecio": "Preistyp",
         "presentaciones": "Präsentationen",
         "cantidad": "Menge",
-        "docRecientes": "Neueste Dokumente"
+        "docRecientes": "Neueste Dokumente",
+        "skuDesc": "Artikelnummer/Beschreibung",
+        "buscarPro": "Produkt suchen"
     },
     "calculos": {
         "calcular": "Berechnen",

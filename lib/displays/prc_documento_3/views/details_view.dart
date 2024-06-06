@@ -49,8 +49,15 @@ class DetailsView extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              hintText: 'SKU/Descripcion', //TODO:Translate
-                              labelText: 'Buscar producto',
+                              hintText: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'skuDesc',
+                              ),
+                              labelText:
+                                  AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'buscarPro',
+                              ),
                               suffixIcon: IconButton(
                                 icon: const Icon(
                                   Icons.search,

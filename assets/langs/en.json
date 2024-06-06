@@ -325,7 +325,9 @@
         "tipoPrecio": "Price type",
         "presentaciones": "Presentations",
         "cantidad": "Quantity",
-        "docRecientes": "Recent documents"
+        "docRecientes": "Recent documents",
+        "skuDesc": "SKU/Description",
+        "buscarPro": "Search product"
     },
     "calculos": {
         "calcular": "Calculate",

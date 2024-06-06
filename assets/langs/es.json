@@ -327,7 +327,9 @@
         "tipoPrecio": "Tipo precio",
         "presentaciones": "Presentaciones.",
         "cantidad": "Cantidad",
-        "docRecientes": "Documentos recientes"
+        "docRecientes": "Documentos recientes",
+        "skuDesc": "SKU/Descripción",
+        "buscarPro": "Buscar producto"
     },
     "calculos": {
         "calcular": "Calcular",

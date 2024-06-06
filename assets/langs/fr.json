@@ -323,7 +323,9 @@
         "tipoPrecio": "Type de prix",
         "presentaciones": "Présentations.",
         "cantidad": "Quantité",
-        "docRecientes": "Documents récents"
+        "docRecientes": "Documents récents",
+        "skuDesc": "UGS/Description",
+        "buscarPro": "Rechercher un produit"
     },
     "calculos": {
         "calcular": "Calculer",
