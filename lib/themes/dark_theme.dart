@@ -17,6 +17,8 @@ class DarkTheme {
   static const Color greyBorder = Color.fromARGB(255, 112, 111, 111);
   static const Color transparent = Colors.transparent;
   static const Color disableStepSecondary = Color(0xFFBABABA);
+  static const Color text = Color.fromARGB(255, 235, 219, 219);
+  static const Color titleText = Color.fromARGB(255, 138, 131, 131);
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
