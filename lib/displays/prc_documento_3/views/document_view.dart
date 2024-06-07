@@ -14,6 +14,7 @@ class DocumentView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DocumentViewModel>(context);
     final vmFactura = Provider.of<DocumentoViewModel>(context);
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context);
 
     return RefreshIndicator(
       onRefresh: () => vmFactura.loadData(context),
@@ -29,8 +30,8 @@ class DocumentView extends StatelessWidget {
                   style: AppTheme.titleStyle,
                 ),
                 const SizedBox(height: 3),
-                const Text(
-                  "19498498498498498",
+                Text(
+                  vmConfirm.idDocumentoRef.toString(),
                   style: AppTheme.normalStyle,
                 ),
                 const SizedBox(height: 10),
