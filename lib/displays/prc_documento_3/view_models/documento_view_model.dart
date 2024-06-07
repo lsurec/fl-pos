@@ -26,6 +26,9 @@ class DocumentoViewModel extends ChangeNotifier {
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
     final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+    vmConfirm.setIdDocumentoRef();
+
     //mostrar dialogo de confirmacion
     bool result = await showDialog(
           context: context,
