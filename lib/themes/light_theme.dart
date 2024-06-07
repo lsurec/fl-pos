@@ -110,6 +110,11 @@ class LightTheme {
     fontWeight: FontWeight.bold,
   );
 
+  static const titleWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+  );
+
   static final ButtonStyle buttonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(
       primary,

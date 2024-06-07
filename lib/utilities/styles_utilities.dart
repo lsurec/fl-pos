@@ -43,4 +43,7 @@ class Styles {
   static String transparent = "transparent";
   static String inactive = "inactive";
   static String disableStepLine = "disableStepLine";
+  static String titleWhite = "titleWhite";
+  static String white = "white";
+  static String user = "user";
 }

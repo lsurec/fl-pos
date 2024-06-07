@@ -129,6 +129,8 @@ class AppTheme {
       Styles.taskStyle: LightTheme.taskStyle,
       Styles.verMas: LightTheme.verMas,
       Styles.inactive: LightTheme.inactive,
+      Styles.titleWhite: LightTheme.titleWhite,
+      Styles.user: DarkTheme.titleWhite,
     };
 
     final darkThemeStyles = {
@@ -158,6 +160,8 @@ class AppTheme {
       Styles.taskStyle: DarkTheme.taskStyle,
       Styles.verMas: DarkTheme.verMas,
       Styles.inactive: DarkTheme.inactive,
+      Styles.titleWhite: DarkTheme.titleWhite,
+      Styles.user: DarkTheme.titleWhite,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case
@@ -223,6 +227,7 @@ class AppTheme {
       Styles.tareaBorder: LightTheme.greyBorder,
       Styles.transparent: LightTheme.transparent,
       Styles.disableStepLine: LightTheme.disableStepLine,
+      Styles.white: LightTheme.white,
     };
 
     final darkThemeStyles = {
@@ -242,6 +247,7 @@ class AppTheme {
       Styles.greyBorder: DarkTheme.greyBorder,
       Styles.transparent: DarkTheme.transparent,
       Styles.disableStepLine: LightTheme.disableStepLine,
+      Styles.white: DarkTheme.white,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case

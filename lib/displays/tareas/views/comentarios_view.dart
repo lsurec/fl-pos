@@ -370,7 +370,11 @@ class _Comentario extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
-              color: const Color.fromRGBO(0, 0, 0, 0.12),
+              color: AppTheme.color(
+                context,
+                Styles.greyBorder,
+                Preferences.idTheme,
+              ),
               height: 20,
               width: 3,
             ),

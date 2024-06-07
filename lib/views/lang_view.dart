@@ -53,7 +53,11 @@ class LangView extends StatelessWidget {
                           children: [
                             CardWidget(
                               color: index == Preferences.idLanguage
-                                  ? AppTheme.primary
+                                  ? AppTheme.color(
+                                      context,
+                                      Styles.primary,
+                                      Preferences.idTheme,
+                                    )
                                   : AppTheme.color(
                                       context,
                                       Styles.secondBackground,

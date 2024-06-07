@@ -148,7 +148,11 @@ class _RecentViewState extends State<RecentView> {
                                   Container(
                                     width: 50,
                                     height: 1,
-                                    color: Colors.black,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.normal,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                   Text(
                                     currencyFormat.format(doc.total),

@@ -60,7 +60,11 @@ class ThemeView extends StatelessWidget {
                           children: [
                             CardWidget(
                               color: theme.id == Preferences.theme
-                                  ? AppTheme.primary
+                                  ? AppTheme.color(
+                                      context,
+                                      Styles.primary,
+                                      Preferences.idTheme,
+                                    )
                                   : AppTheme.color(
                                       context,
                                       Styles.secondBackground,

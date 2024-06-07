@@ -33,10 +33,10 @@ class UserWidget extends StatelessWidget {
           child: Center(
             child: Text(
               vmLogin.user.isNotEmpty ? vmLogin.user[0].toUpperCase() : "",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+              style: AppTheme.style(
+                context,
+                Styles.user,
+                Preferences.idTheme,
               ),
             ),
           ),
@@ -112,14 +112,18 @@ void _showUserInfoModal(
                             child: Container(
                               width: 45,
                               height: 50,
-                              color: AppTheme.primary,
+                              color: AppTheme.color(
+                                context,
+                                Styles.primary,
+                                Preferences.idTheme,
+                              ),
                               child: Center(
                                 child: Text(
                                   vmLogin.user[0].toUpperCase(),
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.user,
+                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),

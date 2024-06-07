@@ -141,7 +141,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -199,7 +203,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -257,7 +265,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -297,7 +309,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -336,7 +352,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -401,7 +421,11 @@ class DetalleTareaView extends StatelessWidget {
                               ),
                               elevation: 0,
                               borderWidth: 1.5,
-                              borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                              borderColor: AppTheme.color(
+                                context,
+                                Styles.greyBorder,
+                                Preferences.idTheme,
+                              ),
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -459,7 +483,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -514,7 +542,11 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.greyBorder,
+                          Preferences.idTheme,
+                        ),
                         raidus: 10,
                         child: ListTile(
                           title: Text(

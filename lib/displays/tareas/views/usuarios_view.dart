@@ -28,9 +28,13 @@ class UsuariosView extends StatelessWidget {
             floatingActionButton: vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
                 ? FloatingActionButton(
                     onPressed: () => vmDetalle.invitadosButton(context),
-                    child: const Icon(
+                    child: Icon(
                       Icons.group_add_rounded,
-                      color: Colors.white,
+                      color: AppTheme.color(
+                        context,
+                        Styles.white,
+                        Preferences.idTheme,
+                      ),
                     ),
                   )
                 : null,

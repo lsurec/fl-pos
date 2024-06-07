@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class CountdownCircleWidget extends StatefulWidget {
@@ -52,13 +55,17 @@ class _CountdownCircleWidgetState extends State<CountdownCircleWidget>
       percent: 1.0 - (_controller.value),
       center: Text(
         '${widget.duration - (_controller.value * widget.duration).floor()}',
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
+        style: AppTheme.style(
+          context,
+          Styles.whiteBoldStyle,
+          Preferences.idTheme,
         ),
       ),
-      progressColor: Colors.white,
+      progressColor: AppTheme.color(
+        context,
+        Styles.white,
+        Preferences.idTheme,
+      ),
     );
   }
 }

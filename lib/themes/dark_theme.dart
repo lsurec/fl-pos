@@ -108,6 +108,11 @@ class DarkTheme {
     fontSize: 17,
     color: Colors.white,
   );
+  
+  static const titleWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+  );
 
   static const menuActiveStyle = TextStyle(
     fontSize: 17,

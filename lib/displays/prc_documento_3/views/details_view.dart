@@ -226,7 +226,9 @@ class DetailsView extends StatelessWidget {
                           alignment:
                               Alignment.centerLeft, // Alineado a la izquierda
                           padding: const EdgeInsets.only(left: 16.0),
-                          child: const Icon(Icons.delete, color: Colors.white),
+                          child: const Icon(
+                            Icons.delete,
+                          ),
                         ),
                         child: GestureDetector(
                           onTap: () => vm.navigatorDetails(context, index),
@@ -507,7 +509,11 @@ class MyExpansionTile extends StatelessWidget {
         Styles.disableStepLine,
         Preferences.idTheme,
       ),
-      textColor: Colors.black,
+      textColor: AppTheme.color(
+        context,
+        Styles.normal,
+        Preferences.idTheme,
+      ),
       title: Text(
         title,
         style: AppTheme.style(
