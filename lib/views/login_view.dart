@@ -188,15 +188,16 @@ class LoginView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                          "${AppLocalizations.of(context)!.translate(
-                            BlockTranslate.url,
-                            "version",
-                          )}  : ${vmSplash.versionLocal}",
-                          style: AppTheme.style(
-                            context,
-                            Styles.versionStyle,
-                            Preferences.idTheme,
-                          )),
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.url,
+                          "version",
+                        )}: ${vmSplash.versionLocal}",
+                        style: AppTheme.style(
+                          context,
+                          Styles.versionStyle,
+                          Preferences.idTheme,
+                        ),
+                      ),
                       const SizedBox(width: 10)
                     ],
                   ),

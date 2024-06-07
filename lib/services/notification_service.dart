@@ -22,7 +22,7 @@ class NotificationService {
         message,
         style: AppTheme.style(
           messengerKey.currentContext!,
-          Styles.normal,
+          Styles.whiteStyle,
           Preferences.idTheme,
         ),
       ),
