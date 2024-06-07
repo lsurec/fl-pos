@@ -271,7 +271,8 @@
         "certificador": "Informations du certificateur :",
         "imprimir": "Imprimer le document après confirmation.",
         "mesa": "Table",
-        "atencion": "Vous a servi"
+        "atencion": "Vous a servi",
+        "serie": "Série interne :"
     },
     "generales": {
         "registro": "Enregistrements",

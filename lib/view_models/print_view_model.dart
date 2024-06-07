@@ -869,9 +869,11 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    //TODO:Translate
     bytes += generator.text(
-      "Serie interna: ${docPrintModel.documento.serieInterna}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'traducir',
+      )} ${docPrintModel.documento.serieInterna}",
       styles: center,
     );
     bytes += generator.text(

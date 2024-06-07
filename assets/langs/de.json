@@ -271,7 +271,8 @@
         "certificador": "Zertifizierungsdaten:",
         "imprimir": "Dokument nach Bestätigung drucken.",
         "mesa": "Tisch",
-        "atencion": "Bedient von"
+        "atencion": "Bedient von",
+        "serie": "Interne Serie:"
     },
     "generales": {
         "registro": "Einträge",

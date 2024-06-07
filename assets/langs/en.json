@@ -273,7 +273,8 @@
         "certificador": "Certifier data:",
         "imprimir": "Print document after confirming.",
         "mesa": "Table",
-        "atencion": "Served by"
+        "atencion": "Served by",
+        "serie": "Internal series:"
     },
     "generales": {
         "registro": "Records",

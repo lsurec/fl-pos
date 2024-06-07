@@ -275,7 +275,8 @@
         "certificador": "Datos del ceritificador:",
         "imprimir": "Imprimir documento después de confirmar.",
         "mesa": "Mesa",
-        "atencion": "Le atendió"
+        "atencion": "Le atendió",
+        "serie": "Serie interna:"
     },
     "generales": {
         "registro": "Registros",
