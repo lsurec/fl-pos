@@ -31,6 +31,8 @@ class _Tabs2ViewState extends State<Tabs2View>
     //cargar documento guardado en el dispositivo
     DocumentService documentService = DocumentService();
     documentService.loadDocumentSave(context);
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+    vmConfirm.setIdDocumentoRef();
   }
 
   @override

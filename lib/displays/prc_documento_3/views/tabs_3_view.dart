@@ -28,6 +28,8 @@ class _Tabs3ViewState extends State<Tabs3View>
   }
 
   loadData(BuildContext context) {
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+    vmConfirm.setIdDocumentoRef();
     //cargar documento guardado en el dispositivo
     DocumentService documentService = DocumentService();
     documentService.loadDocumentSave(context);

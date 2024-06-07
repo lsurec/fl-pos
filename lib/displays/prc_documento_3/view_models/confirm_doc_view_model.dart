@@ -701,8 +701,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     //si no se encuntra el documento
     if (docs.isEmpty) {
-      print("Entro por aquu");
-
       return ApiResModel(
         typeError: 1,
         succes: false,
@@ -930,6 +928,27 @@ class ConfirmDocViewModel extends ChangeNotifier {
     );
   }
 
+  int idDocumentoRef = 0;
+
+  void setIdDocumentoRef() {
+    DateTime dateConsecutivo = DateTime.now();
+    int randomNumber1 = Random().nextInt(900) + 100;
+
+    // Combinar los dos números para formar uno de 14 dígitos
+    String strNum1 = randomNumber1.toString();
+    String combinedStr = strNum1 +
+        dateConsecutivo.day.toString().padLeft(2, '0') +
+        dateConsecutivo.month.toString().padLeft(2, '0') +
+        dateConsecutivo.year.toString() +
+        dateConsecutivo.hour.toString().padLeft(2, '0') +
+        dateConsecutivo.minute.toString().padLeft(2, '0') +
+        dateConsecutivo.second.toString().padLeft(2, '0');
+
+    // ref id
+    idDocumentoRef = int.parse(combinedStr);
+    notifyListeners();
+  }
+
   //enviar el odcumento
   Future<ApiResModel> sendDocument() async {
     //view models ecternos
@@ -973,10 +992,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
     // Generar dos números aleatorios de 7 dígitos cada uno
     int firstPart = random.nextInt(10000000);
-    int secondPart = random.nextInt(10000000);
-
-    // Combinar los dos números para formar uno de 14 dígitos
-    int randomNumber = firstPart * 10000000 + secondPart;
 
     int consectivo = 1;
     //Objeto transaccion documento para estructura documento
@@ -1108,7 +1123,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docCaMonto: totalCA,
       docIdCertificador: 1, //TODO: Agrgar certificador
       docCuentaVendedor: cuentaVendedor,
-      docIdDocumentoRef: randomNumber,
+      docIdDocumentoRef: idDocumentoRef,
       docFelNumeroDocumento: null,
       docFelSerie: null,
       docFelUUID: null,
