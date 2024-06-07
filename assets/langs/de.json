@@ -19,7 +19,11 @@
         "aplicacion": "Anwendungen",
         "configuracion": "Einstellungen",
         "nuevaVersion": "Neue Version verfügbar.",
-        "continuar": "Aktualisieren, um fortzufahren."
+        "continuar": "Aktualisieren, um fortzufahren.",
+        "tema": "Anwendungsthema",
+        "claro": "Hell",
+        "oscuro": "Dunkel",
+        "temaDispositivo": "Vom System festgelegt"
     },
     "login": {
         "contrasena": "Passwort",
@@ -190,7 +194,11 @@
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
         "idioma": "Wählen Sie Ihre bevorzugte Sprache aus.",
-        "seleccionado": "Ausgewählte Sprache."
+        "tema": "Wähle dein bevorzugtes Thema oder fahre mit dem Thema deines Geräts fort.",
+        "seleccionado": "Sprache ausgewählt.",
+        "nuevoTema": "Thema ausgewählt.",
+        "reiniciarTema": "Die Anwendung wird neu gestartet, sobald Sie Ihr bevorzugtes Thema ausgewählt haben.",
+        "nota": "Hinweis:"
     },
     "error": {
         "informeT": "FEHLERBERICHT",

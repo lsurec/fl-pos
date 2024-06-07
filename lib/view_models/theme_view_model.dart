@@ -8,7 +8,6 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:restart_app/restart_app.dart';
 
 class ThemeViewModel extends ChangeNotifier {
@@ -38,7 +37,7 @@ class ThemeViewModel extends ChangeNotifier {
     notifyListeners();
 
     if (AppTheme.cambiarTema == 1) {
-      guardarReiniciar(context);
+      reiniciarTemp(context);
     }
   }
 
@@ -49,7 +48,10 @@ class ThemeViewModel extends ChangeNotifier {
     return [
       ThemeModel(
         id: 0,
-        descripcion: "Determinado por el Sistema",
+        descripcion: AppLocalizations.of(context)!.translate(
+          BlockTranslate.home,
+          'temaDispositivo',
+        ),
         theme: isLightMode
             ? AppTheme.lightTheme
             : isDarkMode
@@ -58,12 +60,18 @@ class ThemeViewModel extends ChangeNotifier {
       ),
       ThemeModel(
         id: 1,
-        descripcion: "Claro",
+        descripcion: AppLocalizations.of(context)!.translate(
+          BlockTranslate.home,
+          'claro',
+        ),
         theme: AppTheme.lightTheme,
       ),
       ThemeModel(
         id: 2,
-        descripcion: "Oscuro",
+        descripcion: AppLocalizations.of(context)!.translate(
+          BlockTranslate.home,
+          'oscuro',
+        ),
         theme: AppTheme.darkTheme,
       )
     ];
@@ -89,7 +97,7 @@ class ThemeViewModel extends ChangeNotifier {
     }
 
     isLoading = true;
-    timer = Timer(const Duration(milliseconds: 2000), () {
+    timer = Timer(const Duration(milliseconds: 1500), () {
       // Ocultar teclado y reiniciar App
       FocusScope.of(context).unfocus(); //ocultar teclado
       reiniciarApp();
@@ -99,40 +107,6 @@ class ThemeViewModel extends ChangeNotifier {
   reiniciarApp() {
     /// Fill webOrigin only when your new origin is different than the app's origin
     Restart.restartApp();
-  }
-
-  guardarReiniciar(BuildContext context) async {
-    //mostrar dialogo de confirmacion
-    bool result = await showDialog(
-          context: context,
-          builder: (context) => AlertWidget(
-            textOk: AppLocalizations.of(context)!.translate(
-              BlockTranslate.botones,
-              "reiniciar",
-            ),
-            textCancel: AppLocalizations.of(context)!.translate(
-              BlockTranslate.botones,
-              "aceptar",
-            ),
-            title: AppLocalizations.of(context)!.translate(
-              BlockTranslate.preferencias,
-              "seleccionado",
-            ),
-            description: AppLocalizations.of(context)!.translate(
-              BlockTranslate.notificacion,
-              "reiniciar",
-            ),
-            onOk: () => Navigator.of(context).pop(true),
-            onCancel: () => Navigator.of(context).pop(false),
-          ),
-        ) ??
-        false;
-
-    if (!result) return;
-
-    //reiniciar la aplicacion
-    // ignore: use_build_context_synchronously
-    reiniciarTemp(context);
   }
 
   Icon getThemeIcon(BuildContext context, String tema) {

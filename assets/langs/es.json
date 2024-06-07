@@ -22,7 +22,8 @@
         "continuar": "Actualiza para continuar.",
         "tema": "Tema de la aplicación",
         "claro": "Claro",
-        "oscuro": "Oscuro"
+        "oscuro": "Oscuro",
+        "temaDispositivo": "Determinado por el Sistema"
     },
     "login": {
         "contrasena": "Contraseña",
@@ -194,7 +195,10 @@
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
         "idioma": "Selecciona el idioma de tu preferencia.",
         "tema": "Selecciona el tema de tu preferencia. O continua con el tema de tu dispositivo.",
-        "seleccionado": "Idioma seleccionado."
+        "seleccionado": "Idioma seleccionado.",
+        "nuevoTema": "Tema seleccionado.",
+        "reiniciarTema": "La aplicación se reiniciará una vez que hayas seleccionado el tema de tu preferencia.",
+        "nota": "Nota:"
     },
     "error": {
         "informeT": "INFORME DE ERRORES",
