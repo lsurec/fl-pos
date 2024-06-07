@@ -46,4 +46,5 @@ class Styles {
   static String titleWhite = "titleWhite";
   static String white = "white";
   static String user = "user";
+  static String blueTitle = "blueTitle";
 }

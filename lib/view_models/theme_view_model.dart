@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -88,12 +89,17 @@ class ThemeViewModel extends ChangeNotifier {
       Preferences.idTheme = "0";
       Preferences.systemTheme = "1";
       notifyListeners();
+
+      Navigator.pushNamed(context, AppRoutes.api);
+      return;
     }
 
     if (Preferences.idTheme.isEmpty && isDarkMode) {
       Preferences.idTheme = "0";
       Preferences.systemTheme = "2";
       notifyListeners();
+      Navigator.pushNamed(context, AppRoutes.api);
+      return;
     }
 
     isLoading = true;

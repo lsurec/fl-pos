@@ -38,14 +38,15 @@ class ThemeView extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
-                            BlockTranslate.preferencias,
+                            BlockTranslate.home,
                             "tema",
                           ),
                           style: AppTheme.style(
                             context,
-                            Styles.bold,
+                            Styles.blueTitle,
                             Preferences.idTheme,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),

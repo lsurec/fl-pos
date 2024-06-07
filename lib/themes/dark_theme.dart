@@ -184,4 +184,10 @@ class DarkTheme {
     color: Color.fromARGB(255, 207, 191, 191),
     fontWeight: FontWeight.w500,
   );
+
+  static const blueTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: darkPrimary,
+  );
 }

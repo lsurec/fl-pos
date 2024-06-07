@@ -207,6 +207,11 @@ class ApiView extends StatelessWidget {
                           if (Preferences.urlApi.isEmpty)
                             ElevatedButton(
                               onPressed: () => vm.connectService(context),
+                              style: AppTheme.button(
+                                context,
+                                Styles.primary,
+                                Preferences.idTheme,
+                              ),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Center(

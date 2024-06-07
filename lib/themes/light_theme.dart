@@ -183,4 +183,10 @@ class LightTheme {
     fontSize: 15,
     color: primary,
   );
+
+  static const blueTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: primary,
+  );
 }
