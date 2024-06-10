@@ -183,7 +183,7 @@ class _RecentViewState extends State<RecentView> {
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
               context,
-              Styles.background,
+              Styles.loading,
               Preferences.idTheme,
             ),
           ),

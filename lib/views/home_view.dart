@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
               context,
-              Styles.background,
+              Styles.loading,
               Preferences.idTheme,
             ),
           ),
@@ -68,7 +68,7 @@ class _MyDrawer extends StatelessWidget {
       width: screenSize.width * 0.8,
       backgroundColor: AppTheme.color(
         context,
-        Styles.background,
+        Styles.black,
         Preferences.idTheme,
       ),
       child: Column(
@@ -179,29 +179,30 @@ class _FooterDrawer extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-          height: 56,
-          color: AppTheme.color(
-            context,
-            Styles.secondBackground,
-            Preferences.idTheme,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                onPressed: () => vm.navigateSettings(context),
-                icon: const Icon(
-                  Icons.settings,
-                ),
+        height: 56,
+        color: AppTheme.color(
+          context,
+          Styles.secondBackground,
+          Preferences.idTheme,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+              onPressed: () => vm.navigateSettings(context),
+              icon: const Icon(
+                Icons.settings,
               ),
-              IconButton(
-                onPressed: () => vm.logout(context),
-                icon: const Icon(
-                  Icons.logout,
-                ),
-              )
-            ],
-          )),
+            ),
+            IconButton(
+              onPressed: () => vm.logout(context),
+              icon: const Icon(
+                Icons.logout,
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

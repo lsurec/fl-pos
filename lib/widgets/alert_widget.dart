@@ -28,7 +28,7 @@ class AlertWidget extends StatelessWidget {
     return AlertDialog(
       backgroundColor: AppTheme.color(
         context,
-        Styles.background,
+        Styles.black,
         Preferences.idTheme,
       ),
       title: Text(title),

@@ -230,6 +230,8 @@ class AppTheme {
       Styles.transparent: LightTheme.transparent,
       Styles.disableStepLine: LightTheme.disableStepLine,
       Styles.white: LightTheme.white,
+      Styles.black: LightTheme.backroundColorSecondary,
+      Styles.loading: LightTheme.backroundColor,
     };
 
     final darkThemeStyles = {
@@ -250,6 +252,8 @@ class AppTheme {
       Styles.transparent: DarkTheme.transparent,
       Styles.disableStepLine: LightTheme.disableStepLine,
       Styles.white: DarkTheme.white,
+      Styles.black: DarkTheme.black,
+      Styles.loading: DarkTheme.loading,
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case

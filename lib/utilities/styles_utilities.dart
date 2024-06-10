@@ -47,4 +47,6 @@ class Styles {
   static String white = "white";
   static String user = "user";
   static String blueTitle = "blueTitle";
+  static String black = "black";
+  static String loading = "isLoading";
 }

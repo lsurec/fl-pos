@@ -228,7 +228,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
             dismissible: false,
             color: AppTheme.color(
               context,
-              Styles.background,
+              Styles.loading,
               Preferences.idTheme,
             ),
           ),

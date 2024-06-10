@@ -175,7 +175,7 @@ class ComentariosView extends StatelessWidget {
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
               context,
-              Styles.background,
+              Styles.loading,
               Preferences.idTheme,
             ),
           ),

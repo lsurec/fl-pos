@@ -199,7 +199,7 @@ class _Tabs2ViewState extends State<Tabs2View>
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
               context,
-              Styles.background,
+              Styles.loading,
               Preferences.idTheme,
             ),
           ),
