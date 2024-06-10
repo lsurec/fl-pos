@@ -112,17 +112,22 @@ class _MyDrawer extends StatelessWidget {
               },
             ),
           ),
-          const Divider(),
+          Divider(
+            color: AppTheme.color(
+              context,
+              Styles.divider,
+              Preferences.idTheme,
+            ),
+          ),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.zero,
               itemCount: menu.length,
               separatorBuilder: (BuildContext context, int index) {
-                //TODO: verificar sino es necesario colocarle color
                 return Divider(
                   color: AppTheme.color(
                     context,
-                    Styles.grey,
+                    Styles.divider,
                     Preferences.idTheme,
                   ),
                 );

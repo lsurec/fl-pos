@@ -21,6 +21,7 @@ class DarkTheme {
   static const Color titleText = Color.fromARGB(255, 138, 131, 131);
   static const Color black = Colors.black;
   static const Color loading = Colors.black;
+  static const Color divider = Colors.white60;
 
   //ESTILOD TEXTOS
   static const normalStyle = TextStyle(
@@ -41,7 +42,7 @@ class DarkTheme {
   );
 
   static const horaBoldStyle = TextStyle(
-    fontSize: 12,
+    fontSize: 14,
     color: white,
     fontWeight: FontWeight.bold,
   );

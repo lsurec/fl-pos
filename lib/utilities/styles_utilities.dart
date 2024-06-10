@@ -49,4 +49,5 @@ class Styles {
   static String blueTitle = "blueTitle";
   static String black = "black";
   static String loading = "isLoading";
+  static String divider = "divider";
 }

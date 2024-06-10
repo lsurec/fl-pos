@@ -16,6 +16,7 @@ class LightTheme {
   static const Color rojo = Colors.red;
   static const Color greyBorder = Color.fromRGBO(0, 0, 0, 0.12);
   static const Color transparent = Colors.transparent;
+  static Color divider = Colors.grey[400]!;
 
   //ESTILOS DE LO TEXTOS
 
@@ -30,7 +31,7 @@ class LightTheme {
   );
 
   static const horaBoldStyle = TextStyle(
-    fontSize: 12,
+    fontSize: 14,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );

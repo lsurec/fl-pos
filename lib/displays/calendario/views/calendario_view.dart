@@ -329,7 +329,7 @@ class _DrawerCalendar extends StatelessWidget {
       width: screenSize.width * 0.8,
       backgroundColor: AppTheme.color(
         context,
-        Styles.background,
+        Styles.black,
         Preferences.idTheme,
       ),
       child: Column(
@@ -355,7 +355,13 @@ class _DrawerCalendar extends StatelessWidget {
                   icon: const Icon(Icons.calendar_month),
                 ),
               ),
-              const Divider(),
+              Divider(
+                color: AppTheme.color(
+                  context,
+                  Styles.divider,
+                  Preferences.idTheme,
+                ),
+              ),
               ListTile(
                 title: Text(
                   AppLocalizations.of(context)!.translate(
@@ -371,7 +377,13 @@ class _DrawerCalendar extends StatelessWidget {
                 leading: const Icon(Icons.calendar_month),
                 onTap: () => vm.mostrarVistaMes(context),
               ),
-              const Divider(),
+              Divider(
+                color: AppTheme.color(
+                  context,
+                  Styles.divider,
+                  Preferences.idTheme,
+                ),
+              ),
               ListTile(
                 title: Text(
                   AppLocalizations.of(context)!.translate(
@@ -387,7 +399,13 @@ class _DrawerCalendar extends StatelessWidget {
                 leading: const Icon(Icons.date_range),
                 onTap: () => vm.mostrarVistaSemana(context),
               ),
-              const Divider(),
+              Divider(
+                color: AppTheme.color(
+                  context,
+                  Styles.divider,
+                  Preferences.idTheme,
+                ),
+              ),
               ListTile(
                 title: Text(
                   AppLocalizations.of(context)!.translate(
@@ -403,7 +421,13 @@ class _DrawerCalendar extends StatelessWidget {
                 leading: const Icon(Icons.today),
                 onTap: () => vm.mostrarVistaDia(context, 0),
               ),
-              const Divider(),
+              Divider(
+                color: AppTheme.color(
+                  context,
+                  Styles.divider,
+                  Preferences.idTheme,
+                ),
+              ),
             ],
           ),
         ],
@@ -686,17 +710,23 @@ class _VistaMes extends StatelessWidget {
                       Preferences.idTheme,
                     )
                   : null;
-              final dias = vm.diasOtroMes(dia, index, diasMesSeleccionado)
+              final hoyColor = vm.nuevaIsToday(dia.value, index)
                   ? AppTheme.style(
                       context,
-                      Styles.diasOtroMes,
+                      Styles.whiteBoldStyle,
                       Preferences.idTheme,
                     )
-                  : AppTheme.style(
-                      context,
-                      Styles.bold,
-                      Preferences.idTheme,
-                    );
+                  : vm.diasOtroMes(dia, index, diasMesSeleccionado)
+                      ? AppTheme.style(
+                          context,
+                          Styles.diasOtroMes,
+                          Preferences.idTheme,
+                        )
+                      : AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        );
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
                   context,
@@ -724,7 +754,7 @@ class _VistaMes extends StatelessWidget {
                       child: Center(
                         child: Text(
                           "${dia.value}",
-                          style: dias,
+                          style: hoyColor,
                         ),
                       ),
                     ),
@@ -1265,7 +1295,10 @@ class _VistaDiaState extends State<_VistaDia> {
                         vm.monthSelectView,
                         vm.yearSelect,
                       ),
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(
+                        Icons.add,
+                        size: 20,
+                      ),
                     ),
                 ],
               )
