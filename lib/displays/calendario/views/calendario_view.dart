@@ -88,173 +88,145 @@ class _CalendarioViewState extends State<CalendarioView> {
                     child: Column(
                       children: [
                         if (vm.vistaDia)
-                          Column(
-                            children: [
-                              ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${vm.daySelect} ${Utilities.nombreMes(
-                                        context,
-                                        vm.monthSelectView,
-                                      )} ${vm.yearSelect}",
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.bold,
-                                        Preferences.idTheme,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Icon(
-                                      Icons.arrow_drop_down,
-                                    ),
-                                  ],
-                                ),
-                                onTap: () => vm.abrirPickerCalendario(
-                                  context,
-                                ),
+                          ListTile(
+                            leading: IconButton(
+                              onPressed: () => vm.diaAnterior(context),
+                              icon: const Icon(
+                                Icons.arrow_back,
                               ),
-                              Row(
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calendario,
+                                'anterior',
+                              ),
+                            ),
+                            title: GestureDetector(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  IconButton(
-                                    onPressed: () => vm.diaAnterior(context),
-                                    icon: const Icon(
-                                      Icons.arrow_back,
-                                    ),
-                                    tooltip:
-                                        AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.calendario,
-                                      'anterior',
+                                  Text(
+                                    "${vm.daySelect} ${Utilities.nombreMes(
+                                      context,
+                                      vm.monthSelectView,
+                                    )} ${vm.yearSelect}",
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                      Preferences.idTheme,
                                     ),
                                   ),
-                                  const Spacer(),
-                                  IconButton(
-                                    onPressed: () => vm.diaSiguiente(context),
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    ),
-                                    tooltip:
-                                        AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.calendario,
-                                      'siguiente',
-                                    ),
+                                  const SizedBox(width: 5),
+                                  const Icon(
+                                    Icons.arrow_drop_down,
                                   ),
                                 ],
                               ),
-                            ],
+                              onTap: () => vm.abrirPickerCalendario(
+                                context,
+                              ),
+                            ),
+                            trailing: IconButton(
+                              onPressed: () => vm.diaSiguiente(context),
+                              icon: const Icon(
+                                Icons.arrow_forward,
+                              ),
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calendario,
+                                'siguiente',
+                              ),
+                            ),
                           ),
                         if (vm.vistaMes)
-                          Column(
-                            children: [
-                              ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "${Utilities.nombreMes(
-                                        context,
-                                        vm.monthSelectView,
-                                      )} ${vm.yearSelect}",
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.bold,
-                                        Preferences.idTheme,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Icon(
-                                      Icons.arrow_drop_down,
-                                    ),
-                                  ],
-                                ),
-                                onTap: () => vm.abrirPickerCalendario(
-                                  context,
-                                ),
+                          ListTile(
+                            leading: IconButton(
+                              onPressed: () => vm.mesAnterior(context),
+                              icon: const Icon(
+                                Icons.arrow_back,
                               ),
-                              Row(
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calendario,
+                                'anterior',
+                              ),
+                            ),
+                            title: GestureDetector(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  IconButton(
-                                    onPressed: () => vm.mesAnterior(context),
-                                    icon: const Icon(
-                                      Icons.arrow_back,
-                                    ),
-                                    tooltip:
-                                        AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.calendario,
-                                      'anterior',
+                                  Text(
+                                    "${Utilities.nombreMes(
+                                      context,
+                                      vm.monthSelectView,
+                                    )} ${vm.yearSelect}",
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                      Preferences.idTheme,
                                     ),
                                   ),
-                                  const Spacer(),
-                                  IconButton(
-                                    onPressed: () => vm.mesSiguiente(context),
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    ),
-                                    tooltip:
-                                        AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.calendario,
-                                      'siguiente',
-                                    ),
+                                  const SizedBox(width: 5),
+                                  const Icon(
+                                    Icons.arrow_drop_down,
                                   ),
                                 ],
                               ),
-                            ],
+                              onTap: () => vm.abrirPickerCalendario(
+                                context,
+                              ),
+                            ),
+                            trailing: IconButton(
+                              onPressed: () => vm.mesSiguiente(context),
+                              icon: const Icon(
+                                Icons.arrow_forward,
+                              ),
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calendario,
+                                'siguiente',
+                              ),
+                            ),
                           ),
                         if (vm.vistaSemana)
-                          Column(
-                            children: [
-                              ListTile(
-                                title: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      vm.generateNameWeeck(context),
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.bold,
-                                        Preferences.idTheme,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    const Icon(
-                                      Icons.arrow_drop_down,
-                                    ),
-                                  ],
-                                ),
-                                onTap: () => vm.abrirPickerCalendario(
-                                  context,
-                                ),
+                          ListTile(
+                            leading: IconButton(
+                              onPressed: () => vm.semanaAnterior(context),
+                              icon: const Icon(
+                                Icons.arrow_back,
                               ),
-                              Row(
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calendario,
+                                'anterior',
+                              ),
+                            ),
+                            title: GestureDetector(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  IconButton(
-                                    onPressed: () => vm.semanaAnterior(context),
-                                    icon: const Icon(
-                                      Icons.arrow_back,
-                                    ),
-                                    tooltip:
-                                        AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.calendario,
-                                      'anterior',
+                                  Text(
+                                    vm.generateNameWeeck(context),
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                      Preferences.idTheme,
                                     ),
                                   ),
-                                  const Spacer(),
-                                  IconButton(
-                                    onPressed: () =>
-                                        vm.semanaSiguiente(context),
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                    ),
-                                    tooltip:
-                                        AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.calendario,
-                                      'siguiente',
-                                    ),
+                                  const SizedBox(width: 5),
+                                  const Icon(
+                                    Icons.arrow_drop_down,
                                   ),
                                 ],
                               ),
-                            ],
+                              onTap: () => vm.abrirPickerCalendario(
+                                context,
+                              ),
+                            ),
+                            trailing: IconButton(
+                              onPressed: () => vm.semanaSiguiente(context),
+                              icon: const Icon(
+                                Icons.arrow_forward,
+                              ),
+                              tooltip: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calendario,
+                                'siguiente',
+                              ),
+                            ),
                           ),
                         const SizedBox(height: 10),
                         if (vm.vistaMes || vm.vistaSemana) _NombreDias(),
@@ -622,7 +594,7 @@ class _VistaSemana extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      height: 800,
+                      height: 850,
                       padding: const EdgeInsets.all(5),
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
@@ -1138,6 +1110,7 @@ class _VistaDiaState extends State<_VistaDia> {
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.top,
             child: Container(
+              transformAlignment: Alignment.center,
               padding: const EdgeInsets.all(10),
               width: 32,
               child: Text(
@@ -1160,6 +1133,7 @@ class _VistaDiaState extends State<_VistaDia> {
               padding: const EdgeInsets.all(10),
               height: 45,
               alignment: Alignment.center,
+              transformAlignment: Alignment.center,
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.calendario,
