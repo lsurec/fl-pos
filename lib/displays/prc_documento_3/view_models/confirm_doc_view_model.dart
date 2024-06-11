@@ -41,7 +41,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       isLoading: true,
     ),
     LoadStepModel(
-      text: "Generando firma electronica",
+      text: "Generando firma electronica.",
       status: 1,
       isLoading: true,
     ),
