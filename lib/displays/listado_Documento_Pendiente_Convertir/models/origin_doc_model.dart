@@ -10,30 +10,30 @@ class OriginDocModel {
   int fechaReg;
   dynamic fechaDocumento;
   dynamic fechaHora;
-  String? usuario;
-  String? documentoDescripcion;
-  String serie;
+  dynamic usuario;
+  dynamic documentoDescripcion;
+  dynamic serie;
   int cuentaCorrentista;
   String cuentaCta;
-  int cuentaCorrentistaRef;
-  String? nit;
-  String? cliente;
-  String? direccion;
+  int? cuentaCorrentistaRef;
+  dynamic nit;
+  dynamic cliente;
+  dynamic direccion;
   int iDDocumento;
-  String? observacion1;
-  dynamic fechaIni;
-  dynamic fechaFin;
+  dynamic observacion1;
+  DateTime? fechaIni;
+  DateTime? fechaFin;
   double monto;
-  int referencia;
+  int? referencia;
   int consecutivoInterno;
-  dynamic referenciaDFechaIni;
-  dynamic referenciaDFechaFin;
+  DateTime? referenciaDFechaIni;
+  DateTime? referenciaDFechaFin;
   String? referenciaDDescripcion;
   String? referenciaDObservacion;
   String? referenciaDObservacion2;
   String? referenciaDObservacion3;
-  int tipoReferencia;
-  String? referenciaDDesTipoReferencia;
+  int? tipoReferencia;
+  dynamic referenciaDDesTipoReferencia;
   int? consecutivoInternoRef;
 
   OriginDocModel({
@@ -99,13 +99,21 @@ class OriginDocModel {
         direccion: json["direccion"],
         iDDocumento: json["iD_Documento"],
         observacion1: json["observacion_1"],
-        fechaIni: DateTime.parse(json["fecha_Ini"]),
-        fechaFin: DateTime.parse(json["fecha_Fin"]),
+        fechaIni: json["fecha_Ini"] == null
+            ? null
+            : DateTime.parse(json["fecha_Ini"]),
+        fechaFin: json["fecha_Fin"] == null
+            ? null
+            : DateTime.parse(json["fecha_Fin"]),
         monto: json["monto"]?.toDouble(),
         referencia: json["referencia"],
         consecutivoInterno: json["consecutivo_Interno"],
-        referenciaDFechaIni: DateTime.parse(json["referencia_D_Fecha_Ini"]),
-        referenciaDFechaFin: DateTime.parse(json["referencia_D_Fecha_Fin"]),
+        referenciaDFechaIni: json["referencia_D_Fecha_Ini"] == null
+            ? null
+            : DateTime.parse(json["referencia_D_Fecha_Ini"]),
+        referenciaDFechaFin: json["referencia_D_Fecha_Fin"] == null
+            ? null
+            : DateTime.parse(json["referencia_D_Fecha_Fin"]),
         referenciaDDescripcion: json["referencia_D_Descripcion"],
         referenciaDObservacion: json["referencia_D_Observacion"],
         referenciaDObservacion2: json["referencia_D_Observacion_2"],

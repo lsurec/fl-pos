@@ -71,6 +71,36 @@ class ConfirmDocView extends StatelessWidget {
                       ),
                     ),
                   if (vm.showPrint) const SizedBox(height: 5),
+                  RichText(
+                    text: TextSpan(
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Id Doc Ref: ",
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
+                        ),
+                        TextSpan(
+                          text: vm.idDocumentoRef.toString(),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Divider(),
+                  const SizedBox(height: 5),
                   _DataUser(
                     title: AppLocalizations.of(context)!.translate(
                       BlockTranslate.cuenta,
