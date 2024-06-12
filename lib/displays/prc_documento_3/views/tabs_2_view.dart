@@ -36,13 +36,13 @@ class _Tabs2ViewState extends State<Tabs2View>
     vmConfirm.setIdDocumentoRef();
   }
 
-  @override
-  void dispose() {
-    final vm = Provider.of<DocumentoViewModel>(context, listen: false);
+  // @override
+  // void dispose() {
+  //   final vm = Provider.of<DocumentoViewModel>(context, listen: false);
 
-    vm.tabController.dispose();
-    super.dispose();
-  }
+  //   vm.tabController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

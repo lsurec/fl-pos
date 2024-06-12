@@ -35,13 +35,13 @@ class _Tabs3ViewState extends State<Tabs3View>
     documentService.loadDocumentSave(context);
   }
 
-  @override
-  void dispose() {
-    final vm = Provider.of<DocumentoViewModel>(context, listen: false);
+  // @override
+  // void dispose() {
+  //   final vm = Provider.of<DocumentoViewModel>(context, listen: false);
 
-    vm.tabController.dispose();
-    super.dispose();
-  }
+  //   vm.tabController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

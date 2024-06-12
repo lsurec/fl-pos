@@ -17,304 +17,309 @@ class ConfirmDocView extends StatelessWidget {
     final docVM = Provider.of<DocumentViewModel>(context);
     final vm = Provider.of<ConfirmDocViewModel>(context);
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
+    final vmDoc = Provider.of<DocumentoViewModel>(context);
 
-    return Stack(
-      children: [
-        Scaffold(
-          key: vm.scaffoldKey,
-          appBar: AppBar(
-            title: Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.factura,
-                  'resumenDoc',
-                ),
-                style: AppTheme.titleStyle),
-            actions: [
-              if (vm.showPrint)
-                IconButton(
-                  onPressed: () => vm.sheredDoc(context),
-                  icon: const Icon(
-                    Icons.share,
-                  ),
-                ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (vm.showPrint)
-                    const Text(
-                      "Consecutivo interno",
-                      style: AppTheme.titleStyle,
-                    ),
-                  if (vm.showPrint)
-                    Text(
-                      "${vm.consecutivoDoc}",
-                      style: AppTheme.normalStyle,
-                    ),
-                  if (vm.showPrint) const SizedBox(height: 5),
-                  _DataUser(
-                    title: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.cuenta,
-                      'cliente',
-                    ),
-                    user: DataUserModel(
-                      name: docVM.clienteSelect!.facturaNombre,
-                      nit: docVM.clienteSelect!.facturaNit,
-                      adress: docVM.clienteSelect!.facturaDireccion,
-                    ),
-                  ),
-                  if (docVM.cuentasCorrentistasRef.isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 5),
-                        const Divider(),
-                        const SizedBox(height: 5),
-                        Text(
-                          AppLocalizations.of(context)!.translate(
-                            BlockTranslate.factura,
-                            'vendedor',
-                          ),
-                          style: AppTheme.titleStyle,
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          docVM.vendedorSelect!.nomCuentaCorrentista,
-                          style: AppTheme.normalStyle,
-                        ),
-                      ],
-                    ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'productos',
-                    ),
-                    style: AppTheme.titleStyle,
-                  ),
-                  const SizedBox(height: 5),
-                  _Transaction(),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'formasPago',
-                    ),
-                    style: AppTheme.titleStyle,
-                  ),
-                  const SizedBox(height: 5),
-                  _Pyments(),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  _Totals(),
-                  const SizedBox(height: 5),
-                  _TotalsPayment(),
-                  const SizedBox(height: 10),
-                  if (!vm.showPrint) _Observacion(),
-                  const SizedBox(height: 10),
-                  SwitchListTile(
-                    activeColor: AppTheme.primary,
-                    value: vm.directPrint,
-                    onChanged: (value) => vm.directPrint = value,
-                    title: Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.tiket,
-                        'imprimir',
-                      ),
-                      style: AppTheme.normalStyle,
-                    ),
-                  ),
-                  if (!vm.showPrint)
-                    _Options(
-                      screen: screen,
-                    ),
-                  if (vm.showPrint) _Print(screen: screen),
-                ],
-              ),
-            ),
-          ),
-        ),
-        if (vm.isLoadingDTE || vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
-          ),
-        if (vm.isLoading) const LoadWidget(),
-        if (vm.isLoadingDTE)
-          // const LoadWidget(),
+    return WillPopScope(
+      onWillPop: () => vmDoc.backTabs(context),
+      child: Stack(
+        children: [
           Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            key: vm.scaffoldKey,
+            appBar: AppBar(
+              title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.factura,
+                    'resumenDoc',
+                  ),
+                  style: AppTheme.titleStyle),
+              actions: [
+                if (vm.showPrint)
+                  IconButton(
+                    onPressed: () => vm.sheredDoc(context),
+                    icon: const Icon(
+                      Icons.share,
+                    ),
+                  ),
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(20),
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Image.asset(
-                        "assets/logo_demosoft.png",
-                        height: 150,
+                    if (vm.showPrint)
+                      const Text(
+                        "Consecutivo interno",
+                        style: AppTheme.titleStyle,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "${AppLocalizations.of(context)!.translate(
-                            BlockTranslate.general,
-                            'tareasCompletas',
-                          )} ${vm.stepsSucces}/${vm.steps.length}",
-                          style: const TextStyle(
-                            color: Colors.black45,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: vm.steps.length,
-                      separatorBuilder: (_, __) {
-                        return const Column(
-                          children: [
-                            SizedBox(height: 5),
-                            Divider(),
-                            SizedBox(height: 5),
-                          ],
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        final LoadStepModel step = vm.steps[index];
-
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  step.text,
-                                  style: AppTheme.normalStyle,
-                                ),
-                                if (step.status == 1) //Cargando
-                                  const Icon(
-                                    Icons.pending_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                if (step.status == 2) //exitoso
-                                  const Icon(
-                                    Icons.check_circle_outline,
-                                    color: Colors.green,
-                                  ),
-                                if (step.status == 3) //error
-                                  const Icon(
-                                    Icons.cancel_outlined,
-                                    color: Colors.red,
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            if (step.isLoading)
-                              const LinearProgressIndicator(
-                                color: AppTheme.primary,
-                              ),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    if (vm.viewMessage)
+                    if (vm.showPrint)
                       Text(
-                        vm.error,
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.red,
-                        ),
+                        "${vm.consecutivoDoc}",
+                        style: AppTheme.normalStyle,
                       ),
-                    if (vm.viewSucces)
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.notificacion,
-                          'docProcesado',
-                        ),
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.green,
-                        ),
+                    if (vm.showPrint) const SizedBox(height: 5),
+                    _DataUser(
+                      title: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'cliente',
                       ),
-                    if (vm.viewError)
-                      SizedBox(
-                        width: double.infinity,
-                        child: TextButton(
-                          onPressed: () => vm.navigateError(),
-                          child: Text(
+                      user: DataUserModel(
+                        name: docVM.clienteSelect?.facturaNombre ?? "",
+                        nit: docVM.clienteSelect?.facturaNit ?? "",
+                        adress: docVM.clienteSelect?.facturaDireccion ?? "",
+                      ),
+                    ),
+                    if (docVM.cuentasCorrentistasRef.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
                             AppLocalizations.of(context)!.translate(
-                              BlockTranslate.botones,
-                              'verError',
+                              BlockTranslate.factura,
+                              'vendedor',
                             ),
-                            style: const TextStyle(
-                              color: AppTheme.primary,
-                              decoration: TextDecoration.underline,
-                            ),
+                            style: AppTheme.titleStyle,
                           ),
-                        ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.vendedorSelect!.nomCuentaCorrentista,
+                            style: AppTheme.normalStyle,
+                          ),
+                        ],
                       ),
-                    const SizedBox(height: 20),
-                    if (vm.viewErrorFel) _OptionsError(),
-                    if (vm.viewErrorProcess) _OptionsErrorAll(),
-                    if (vm.viewSucces)
-                      SizedBox(
-                        height: 75,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  vm.isLoadingDTE = false;
-                                  vm.showPrint = true;
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
-                                    right: 10,
-                                  ),
-                                  color: AppTheme.primary,
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        BlockTranslate.botones,
-                                        'aceptar',
-                                      ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'productos',
                       ),
+                      style: AppTheme.titleStyle,
+                    ),
+                    const SizedBox(height: 5),
+                    _Transaction(),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'formasPago',
+                      ),
+                      style: AppTheme.titleStyle,
+                    ),
+                    const SizedBox(height: 5),
+                    _Pyments(),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    _Totals(),
+                    const SizedBox(height: 5),
+                    _TotalsPayment(),
+                    const SizedBox(height: 10),
+                    if (!vm.showPrint) _Observacion(),
+                    const SizedBox(height: 10),
+                    SwitchListTile(
+                      activeColor: AppTheme.primary,
+                      value: vm.directPrint,
+                      onChanged: (value) => vm.directPrint = value,
+                      title: Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'imprimir',
+                        ),
+                        style: AppTheme.normalStyle,
+                      ),
+                    ),
+                    if (!vm.showPrint)
+                      _Options(
+                        screen: screen,
+                      ),
+                    if (vm.showPrint) _Print(screen: screen),
                   ],
                 ),
               ),
             ),
           ),
-      ],
+          if (vm.isLoadingDTE || vm.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.backroundColor,
+            ),
+          if (vm.isLoading) const LoadWidget(),
+          if (vm.isLoadingDTE)
+            // const LoadWidget(),
+            Scaffold(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          "assets/logo_demosoft.png",
+                          height: 150,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'tareasCompletas',
+                            )} ${vm.stepsSucces}/${vm.steps.length}",
+                            style: const TextStyle(
+                              color: Colors.black45,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm.steps.length,
+                        separatorBuilder: (_, __) {
+                          return const Column(
+                            children: [
+                              SizedBox(height: 5),
+                              Divider(),
+                              SizedBox(height: 5),
+                            ],
+                          );
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          final LoadStepModel step = vm.steps[index];
+
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    step.text,
+                                    style: AppTheme.normalStyle,
+                                  ),
+                                  if (step.status == 1) //Cargando
+                                    const Icon(
+                                      Icons.pending_outlined,
+                                      color: Colors.grey,
+                                    ),
+                                  if (step.status == 2) //exitoso
+                                    const Icon(
+                                      Icons.check_circle_outline,
+                                      color: Colors.green,
+                                    ),
+                                  if (step.status == 3) //error
+                                    const Icon(
+                                      Icons.cancel_outlined,
+                                      color: Colors.red,
+                                    ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              if (step.isLoading)
+                                const LinearProgressIndicator(
+                                  color: AppTheme.primary,
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      if (vm.viewMessage)
+                        Text(
+                          vm.error,
+                          style: const TextStyle(
+                            fontSize: 17,
+                            color: Colors.red,
+                          ),
+                        ),
+                      if (vm.viewSucces)
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.notificacion,
+                            'docProcesado',
+                          ),
+                          style: const TextStyle(
+                            fontSize: 17,
+                            color: Colors.green,
+                          ),
+                        ),
+                      if (vm.viewError)
+                        SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            onPressed: () => vm.navigateError(),
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.botones,
+                                'verError',
+                              ),
+                              style: const TextStyle(
+                                color: AppTheme.primary,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: 20),
+                      if (vm.viewErrorFel) _OptionsError(),
+                      if (vm.viewErrorProcess) _OptionsErrorAll(),
+                      if (vm.viewSucces)
+                        SizedBox(
+                          height: 75,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    vm.isLoadingDTE = false;
+                                    vm.showPrint = true;
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 10,
+                                      bottom: 10,
+                                      right: 10,
+                                    ),
+                                    color: AppTheme.primary,
+                                    child: Center(
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'aceptar',
+                                        ),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
@@ -348,6 +353,7 @@ class _Print extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmDoc = Provider.of<DocumentoViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -355,7 +361,7 @@ class _Print extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.backButton(context),
+              onTap: () => vmDoc.backTabs(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,

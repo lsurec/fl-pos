@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
@@ -51,6 +52,29 @@ class DocumentoViewModel extends ChangeNotifier {
     if (!result) return;
 
     setValuesNewDoc(context);
+  }
+
+  Future<bool> backTabs(BuildContext context) async {
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+
+    final vmPayment = Provider.of<PaymentViewModel>(
+      context,
+      listen: false,
+    );
+
+    if (!vmConfirm.showPrint) return true;
+
+    setValuesNewDoc(context);
+
+    if (vmPayment.paymentList.isEmpty) {
+      Navigator.popUntil(
+          context, ModalRoute.withName(AppRoutes.withoutPayment));
+
+      return false;
+    }
+
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.withPayment));
+    return false;
   }
 
   setValuesNewDoc(BuildContext context) {
