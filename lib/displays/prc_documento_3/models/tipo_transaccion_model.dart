@@ -23,7 +23,7 @@ class TipoTransaccionModel {
         tipoTransaccion: json["tipo_Transaccion"],
         descripcion: json["descripcion"],
         tipo: json["tipo"],
-        altCantidad: json["alt_Cantidad"],
+        altCantidad: json["alt_Cantidad"] ?? false,
       );
 
   Map<String, dynamic> toMap() => {

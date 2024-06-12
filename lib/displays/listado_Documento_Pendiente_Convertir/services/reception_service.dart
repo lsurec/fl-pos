@@ -397,6 +397,7 @@ class ReceptionService {
     int doc,
     String fechaIni,
     String fechaFin,
+    String criterio,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Recepcion/pending/documents");
     try {
@@ -411,6 +412,8 @@ class ReceptionService {
           "doc": "$doc",
           "fechaIni": fechaIni,
           "fechaFin": fechaFin,
+          "criterio": criterio.isNotEmpty ? criterio : "empty",
+          "opcion": criterio.isNotEmpty ? "0" : "1",
         },
       );
 

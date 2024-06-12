@@ -343,13 +343,13 @@ class _CardDoc extends StatelessWidget {
                       )}: ",
                       text: "${document.serie} (${document.serieDocumento})"),
                   const SizedBox(height: 5),
-                  if (document.observacion != null)
+                  if (document.observacion1 != null)
                     TextsWidget(
                       title: "${AppLocalizations.of(context)!.translate(
                         BlockTranslate.general,
                         'observacion',
                       )}: ",
-                      text: document.observacion,
+                      text: document.observacion1 ?? "",
                     ),
                 ],
               ),

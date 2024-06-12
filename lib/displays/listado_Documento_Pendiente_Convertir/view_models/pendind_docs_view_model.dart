@@ -179,6 +179,7 @@ class PendingDocsViewModel extends ChangeNotifier {
       tipoDoc,
       formatStrFilterDate(fechaIni!),
       formatStrFilterDate(fechaFin!),
+      "",
     );
 
     //si el consumo salió mal

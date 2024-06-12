@@ -363,12 +363,12 @@ class MenuViewModel extends ChangeNotifier {
 
         //consumo del api
         final ApiResModel res = await receptionService.getPendindgDocs(
-          user,
-          token,
-          documento!,
-          penVM.formatStrFilterDate(penVM.fechaIni!),
-          penVM.formatStrFilterDate(penVM.fechaFin!),
-        );
+            user,
+            token,
+            documento!,
+            penVM.formatStrFilterDate(penVM.fechaIni!),
+            penVM.formatStrFilterDate(penVM.fechaFin!),
+            "");
 
         //si el consumo salió mal
         if (!res.succes) {

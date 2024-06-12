@@ -77,7 +77,7 @@ class ConvertDocView extends StatelessWidget {
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'origenT',
-                        )} - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
+                        )} - (${docOrigen.documento}) ${docOrigen.documentoDescripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
                       ColorTextCardWidget(
                         color: AppTheme.color(
