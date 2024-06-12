@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -50,7 +52,11 @@ class _RecentViewState extends State<RecentView> {
                 BlockTranslate.factura,
                 'docRecientes',
               ),
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: Padding(
@@ -65,7 +71,11 @@ class _RecentViewState extends State<RecentView> {
                         BlockTranslate.general,
                         'registro',
                       )} (${vm.documents.length})",
-                      style: AppTheme.normalBoldStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.bold,
+                        Preferences.idTheme,
+                      ),
                     ),
                   ],
                 ),
@@ -94,43 +104,63 @@ class _RecentViewState extends State<RecentView> {
                                 children: [
                                   Text(
                                     "${doc.item.consecutivoInterno}",
-                                    style: AppTheme.normalBoldStyle,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                   Text(
                                     vm.strDate(doc.item.fechaHora),
-                                    style: AppTheme.normalStyle,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.normal,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(
-                                    currencyFormat.format(doc.subtotal),
-                                    style: const TextStyle(
-                                      color: AppTheme.primary,
-                                    ),
-                                  ),
+                                  Text(currencyFormat.format(doc.subtotal),
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.blueText,
+                                        Preferences.idTheme,
+                                      )),
                                   Text(
                                     "(+) ${currencyFormat.format(doc.cargo)}",
-                                    style: const TextStyle(
-                                      color: Colors.green,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.cargo,
+                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
                                     "(-) ${currencyFormat.format(doc.descuento)}",
-                                    style: const TextStyle(
-                                      color: Colors.red,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.descuento,
+                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Container(
                                     width: 50,
                                     height: 1,
-                                    color: Colors.black,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.normal,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                   Text(
                                     currencyFormat.format(doc.total),
-                                    style: AppTheme.normalBoldStyle,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                      Preferences.idTheme,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -151,7 +181,11 @@ class _RecentViewState extends State<RecentView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

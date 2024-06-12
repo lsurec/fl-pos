@@ -139,15 +139,22 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getTextCuenta() {
-    String fileName = "Cuenta";
+  String getTextCuenta(BuildContext context) {
+    String fileName = AppLocalizations.of(context)!.translate(
+      BlockTranslate.factura,
+      'cuenta',
+    );
 
     for (var i = 0; i < parametros.length; i++) {
       final ParametroModel param = parametros[i];
 
       //buscar nombre del campo en el parametro 57
       if (param.parametro == 57) {
-        fileName = param.paCaracter ?? "Cuenta";
+        fileName = param.paCaracter ??
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.factura,
+              'cuenta',
+            );
         break;
       }
     }

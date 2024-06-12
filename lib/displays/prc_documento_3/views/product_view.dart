@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -47,19 +49,24 @@ class ProductView extends StatelessWidget {
                 children: [
                   Text(
                     "SKU: ${product.productoId}",
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   const SizedBox(height: 10),
                   _NumericField(),
                   Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.general,
-                      'descripcion',
-                    ),
-                    style: const TextStyle(
-                      color: AppTheme.primary,
-                    ),
-                  ),
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'descripcion',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.blueText,
+                        Preferences.idTheme,
+                      )),
                   const SizedBox(height: 5),
                   Text(
                     product.desProducto,
@@ -70,15 +77,21 @@ class ProductView extends StatelessWidget {
                       BlockTranslate.factura,
                       'bodega',
                     ),
-                    style: const TextStyle(
-                      color: AppTheme.primary,
+                    style: AppTheme.style(
+                      context,
+                      Styles.blueText,
+                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
                   DropdownButton<BodegaProductoModel>(
                     isExpanded: true,
                     isDense: true,
-                    dropdownColor: AppTheme.backroundColor,
+                    dropdownColor: AppTheme.color(
+                      context,
+                      Styles.background,
+                      Preferences.idTheme,
+                    ),
                     value: vm.selectedBodega,
                     onChanged: (value) =>
                         vm.changeBodega(value, context, product),
@@ -111,8 +124,10 @@ class ProductView extends StatelessWidget {
                                   BlockTranslate.factura,
                                   'presentaciones',
                                 ),
-                          style: const TextStyle(
-                            color: AppTheme.primary,
+                          style: AppTheme.style(
+                            context,
+                            Styles.blueText,
+                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -125,18 +140,38 @@ class ProductView extends StatelessWidget {
                         BlockTranslate.notificacion,
                         'preciosNoEncontrados',
                       ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                   const SizedBox(height: 5),
                   if (vm.prices.isNotEmpty && docVM.editPrice())
                     TextFormField(
                       decoration: InputDecoration(
+                        border: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 1,
+                          ),
+                        ),
                         hintText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioU',
                         ),
+                        hintStyle: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                         labelText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioU',
+                        ),
+                        labelStyle: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
                         ),
                       ),
                       controller: vm.controllerPrice,
@@ -157,8 +192,10 @@ class ProductView extends StatelessWidget {
                             BlockTranslate.calcular,
                             'precioU',
                           ),
-                          style: const TextStyle(
-                            color: AppTheme.primary,
+                          style: AppTheme.style(
+                            context,
+                            Styles.blueText,
+                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -175,7 +212,11 @@ class ProductView extends StatelessWidget {
                           BlockTranslate.calcular,
                           'total',
                         )}: ${currencyFormat.format(vm.total)}",
-                        style: AppTheme.titleStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ],
                   ),
@@ -188,7 +229,11 @@ class ProductView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -226,16 +271,21 @@ class _BottomBar extends StatelessWidget {
               onDoubleTap: () => vm.cancelButton(back, context),
               child: Container(
                 margin: const EdgeInsets.all(10),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'cancelar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -247,16 +297,21 @@ class _BottomBar extends StatelessWidget {
               onTap: () => vm.addTransaction(context, product, back),
               child: Container(
                 margin: const EdgeInsets.all(10),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'agregar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -278,7 +333,11 @@ class TipoPrecioSelect extends StatelessWidget {
 
     return DropdownButton<UnitarioModel>(
       isExpanded: true,
-      dropdownColor: AppTheme.backroundColor,
+      dropdownColor: AppTheme.color(
+        context,
+        Styles.background,
+        Preferences.idTheme,
+      ),
       value: vm.selectedPrice,
       onChanged: (value) => vm.changePrice(value),
       items: vm.prices.map(
@@ -304,15 +363,29 @@ class _NumericField extends StatelessWidget {
         Expanded(
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.translate(
-                BlockTranslate.factura,
-                'cantidad',
-              ),
-              labelText: AppLocalizations.of(context)!.translate(
-                BlockTranslate.factura,
-                'cantidad',
-              ),
-            ),
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 1,
+                  ),
+                ),
+                hintText: AppLocalizations.of(context)!.translate(
+                  BlockTranslate.factura,
+                  'cantidad',
+                ),
+                hintStyle: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
+                labelText: AppLocalizations.of(context)!.translate(
+                  BlockTranslate.factura,
+                  'cantidad',
+                ),
+                labelStyle: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                )),
             controller: vm.controllerNum,
             inputFormatters: [
               FilteringTextInputFormatter.allow(

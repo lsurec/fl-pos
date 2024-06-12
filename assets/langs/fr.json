@@ -19,7 +19,11 @@
         "aplicacion": "Applications",
         "configuracion": "Paramètres",
         "nuevaVersion": "Nouvelle version disponible.",
-        "continuar": "Mettez à jour pour continuer."
+        "continuar": "Mettez à jour pour continuer.",
+        "tema": "Thème de l'application",
+        "claro": "Clair",
+        "oscuro": "Sombre",
+        "temaDispositivo": "Déterminé par le système"
     },
     "login": {
         "contrasena": "Mot de passe",
@@ -190,7 +194,11 @@
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
         "idioma": "Sélectionnez la langue de votre préférence.",
-        "seleccionado": "Langue sélectionnée."
+        "tema": "Sélectionnez votre thème préféré ou continuez avec le thème de votre appareil.",
+        "seleccionado": "Langue sélectionnée.",
+        "nuevoTema": "Thème sélectionné.",
+        "reiniciarTema": "L'application redémarrera une fois que vous aurez sélectionné votre thème préféré.",
+        "nota": "Remarque :"
     },
     "error": {
         "informeT": "RAPPORT D'ERREURS",
@@ -271,7 +279,8 @@
         "certificador": "Informations du certificateur :",
         "imprimir": "Imprimer le document après confirmation.",
         "mesa": "Table",
-        "atencion": "Vous a servi"
+        "atencion": "Vous a servi",
+        "serie": "Série interne :"
     },
     "generales": {
         "registro": "Enregistrements",
@@ -323,7 +332,9 @@
         "tipoPrecio": "Type de prix",
         "presentaciones": "Présentations.",
         "cantidad": "Quantité",
-        "docRecientes": "Documents récents"
+        "docRecientes": "Documents récents",
+        "skuDesc": "UGS/Description",
+        "buscarPro": "Rechercher un produit"
     },
     "calculos": {
         "calcular": "Calculer",

@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -62,7 +64,11 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             BlockTranslate.localConfig,
                             'configuracion',
                           ),
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -74,26 +80,43 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               BlockTranslate.localConfig,
                               'empresa',
                             ),
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                           Text(
                             '${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.empresas.length})',
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
                       if (vm.empresas.isNotEmpty)
                         CardWidget(
+                          color: AppTheme.color(
+                            context,
+                            Styles.background,
+                            Preferences.idTheme,
+                          ),
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownButton<EmpresaModel>(
                               isExpanded: true,
-                              dropdownColor: AppTheme.backroundColor,
+                              dropdownColor: AppTheme.color(
+                                context,
+                                Styles.background,
+                                Preferences.idTheme,
+                              ),
                               value: vm.selectedEmpresa,
                               onChanged: (value) => vm.changeEmpresa(value),
                               items: vm.empresas.map((empresa) {
@@ -114,26 +137,43 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               BlockTranslate.localConfig,
                               'estaciones',
                             ),
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                           Text(
                             '${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.estaciones.length})',
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
                       if (vm.estaciones.isNotEmpty)
                         CardWidget(
+                          color: AppTheme.color(
+                            context,
+                            Styles.background,
+                            Preferences.idTheme,
+                          ),
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownButton<EstacionModel>(
                               isExpanded: true,
-                              dropdownColor: AppTheme.backroundColor,
+                              dropdownColor: AppTheme.color(
+                                context,
+                                Styles.background,
+                                Preferences.idTheme,
+                              ),
                               value: vm.selectedEstacion,
                               onChanged: (value) => vm.changeEstacion(value),
                               items: vm.estaciones.map((estacion) {
@@ -149,6 +189,11 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       SizedBox(
                         height: 50,
                         child: ElevatedButton(
+                          style: AppTheme.button(
+                            context,
+                            Styles.buttonStyle,
+                            Preferences.idTheme,
+                          ),
                           onPressed:
                               vm.estaciones.isEmpty || vm.empresas.isEmpty
                                   ? null
@@ -161,7 +206,11 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                                   BlockTranslate.botones,
                                   'continuar',
                                 ),
-                                style: AppTheme.whiteBoldStyle,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.whiteBoldStyle,
+                                  Preferences.idTheme,
+                                ),
                               ),
                             ),
                           ),
@@ -177,7 +226,11 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
         if (vm.isLoading)
           ModalBarrier(
             dismissible: false,
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 
@@ -16,8 +18,19 @@ class NotificationService {
   //Mostrar snack bar
   static showSnackbar(String message) {
     final snackBar = SnackBar(
-      content: Text(message),
-      backgroundColor: AppTheme.primary,
+      content: Text(
+        message,
+        style: AppTheme.style(
+          messengerKey.currentContext!,
+          Styles.whiteStyle,
+          Preferences.idTheme,
+        ),
+      ),
+      backgroundColor: AppTheme.color(
+        messengerKey.currentContext!,
+        Styles.primary,
+        Preferences.idTheme,
+      ),
       // action: SnackBarAction(
       //   label: 'Aceptar',
       //   onPressed: () => Navigator.pop(context),

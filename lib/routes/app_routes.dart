@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
@@ -45,6 +47,7 @@ class AppRoutes {
   static const calendario = 'Calenadario Tareas';
   static const detailsTaskCalendar = 'detailsTaskCalendar';
   static const lang = 'lang';
+  static const theme = 'theme';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -62,7 +65,6 @@ class AppRoutes {
     withPayment: (BuildContext context) => const Tabs3View(),
     //Display configuracion local
     shrLocalConfig: (BuildContext context) => const LocalSettingsView(),
-    //TODO:buscar ruta print
     printer: (BuildContext context) => const PrintView(),
     settings: (BuildContext context) => const SettingsView(),
     error: (BuildContext context) => const ErrorView(),
@@ -86,8 +88,10 @@ class AppRoutes {
     selectReferenceId: (BuildContext context) => const IdReferenciaView(),
     selectResponsibleUser: (BuildContext context) => const UsuariosView(),
     calendario: (BuildContext context) => const CalendarioView(),
-    detailsTaskCalendar: (BuildContext context) => const DetalleTareaCalendariaView(),
+    detailsTaskCalendar: (BuildContext context) =>
+        const DetalleTareaCalendariaView(),
     lang: (BuildContext context) => const LangView(),
+    theme: (BuildContext context) => const ThemeView(),
   };
 
   //en caso de ruta incorrecta

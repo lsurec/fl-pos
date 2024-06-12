@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -26,9 +28,13 @@ class UsuariosView extends StatelessWidget {
             floatingActionButton: vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
                 ? FloatingActionButton(
                     onPressed: () => vmDetalle.invitadosButton(context),
-                    child: const Icon(
+                    child: Icon(
                       Icons.group_add_rounded,
-                      color: Colors.white,
+                      color: AppTheme.color(
+                        context,
+                        Styles.white,
+                        Preferences.idTheme,
+                      ),
                     ),
                   )
                 : null,
@@ -43,48 +49,52 @@ class UsuariosView extends StatelessWidget {
                         BlockTranslate.botones,
                         'agregarInvitados',
                       ),
-                style: AppTheme.titleStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.title,
+                  Preferences.idTheme,
+                ),
               ),
             ),
-            body: RefreshIndicator(
-              onRefresh: () async {},
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: vm.buscar,
-                          onChanged: (criterio) =>
-                              vm.buscarUsuarioTemp(context),
-                          decoration: InputDecoration(
-                            labelText: AppLocalizations.of(context)!.translate(
-                              BlockTranslate.tareas,
-                              'buscar',
-                            ),
+            body: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: vm.buscar,
+                        onChanged: (criterio) => vm.buscarUsuarioTemp(context),
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tareas,
+                            'buscar',
                           ),
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.general,
-                                'registro',
-                              )} (${vm.usuarios.length})",
-                              style: AppTheme.normalBoldStyle,
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'registro',
+                            )} (${vm.usuarios.length})",
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
                             ),
-                          ],
-                        ),
-                        const Divider(),
-                        const _UsuariosEncontados()
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      const _UsuariosEncontados()
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           //importarte para mostrar la pantalla de carga
@@ -92,7 +102,11 @@ class UsuariosView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.backroundColor,
+              color: AppTheme.color(
+                context,
+                Styles.loading,
+                Preferences.idTheme,
+              ),
             ),
           if (vm.isLoading) const LoadWidget(),
         ],
@@ -117,10 +131,16 @@ class _UsuariosEncontados extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final UsuarioModel usuario = vm.usuarios[index];
         return Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
-              bottom:
-                  BorderSide(width: 1.5, color: Color.fromRGBO(0, 0, 0, 0.12)),
+              bottom: BorderSide(
+                width: 1.5,
+                color: AppTheme.color(
+                  context,
+                  Styles.greyBorder,
+                  Preferences.idTheme,
+                ),
+              ),
             ),
           ),
           child: Padding(
@@ -134,11 +154,19 @@ class _UsuariosEncontados extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       usuario.name,
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                     RichText(
                       text: TextSpan(
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                         children: [
                           TextSpan(
                             text: AppLocalizations.of(context)!.translate(
@@ -149,7 +177,11 @@ class _UsuariosEncontados extends StatelessWidget {
                           const TextSpan(text: " "),
                           TextSpan(
                             text: usuario.email,
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -161,7 +193,11 @@ class _UsuariosEncontados extends StatelessWidget {
                   children: [
                     if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
                       Checkbox(
-                        activeColor: AppTheme.primary,
+                        activeColor: AppTheme.color(
+                          context,
+                          Styles.darkPrimary,
+                          Preferences.idTheme,
+                        ),
                         value: usuario.select,
                         onChanged: (value) => vm.changeChecked(
                           value,

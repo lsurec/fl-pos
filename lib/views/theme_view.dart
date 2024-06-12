@@ -1,20 +1,24 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/services/language_service.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/card_widget.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class LangView extends StatelessWidget {
-  const LangView({super.key});
+class ThemeView extends StatelessWidget {
+  const ThemeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<LangViewModel>(context);
+    final vm = Provider.of<ThemeViewModel>(context);
+
+    List<ThemeModel> themes = vm.temasApp(context);
 
     return Stack(
       children: [
@@ -29,16 +33,20 @@ class LangView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 50,
-                      child: Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.preferencias,
-                          "idioma",
-                        ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                          Preferences.idTheme,
+                      width: 350,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.home,
+                            "tema",
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.blueTitle,
+                            Preferences.idTheme,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -46,13 +54,13 @@ class LangView extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      itemCount: vm.languages.length,
+                      itemCount: themes.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final LanguageModel lang = vm.languages[index];
+                        final ThemeModel theme = themes[index];
                         return Column(
                           children: [
                             CardWidget(
-                              color: index == Preferences.idLanguage
+                              color: theme.id == Preferences.theme
                                   ? AppTheme.color(
                                       context,
                                       Styles.primary,
@@ -67,8 +75,8 @@ class LangView extends StatelessWidget {
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(
                                 title: Text(
-                                  vm.getNameLang(lang)!,
-                                  style: index == Preferences.idLanguage
+                                  theme.descripcion,
+                                  style: index == Preferences.theme
                                       ? AppTheme.style(
                                           context,
                                           Styles.whiteBoldStyle,
@@ -81,19 +89,14 @@ class LangView extends StatelessWidget {
                                         ),
                                   textAlign: TextAlign.center,
                                 ),
-                                onTap: () => vm.cambiarIdioma(
-                                  context,
-                                  Locale(lang.lang),
-                                  index,
-                                ),
+                                onTap: () => vm.nuevoTema(context, theme),
                               ),
                             ),
                           ],
                         );
                       },
                     ),
-                    const SizedBox(height: 10),
-                    if (AppLocalizations.cambiarIdioma == 0)
+                    if (AppTheme.cambiarTema == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
                         style: AppTheme.button(
@@ -111,6 +114,37 @@ class LangView extends StatelessWidget {
                             Styles.whiteBoldStyle,
                             Preferences.idTheme,
                           ),
+                        ),
+                      ),
+                    if (AppTheme.cambiarTema == 1)
+                      SizedBox(
+                        width: 350,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.preferencias,
+                                'nota',
+                              ),
+                              style: AppTheme.style(
+                                context,
+                                Styles.bold,
+                                Preferences.idTheme,
+                              ),
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.preferencias,
+                                'reiniciarTema',
+                              ),
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                                Preferences.idTheme,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                   ],

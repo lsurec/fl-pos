@@ -1,6 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/row_total_widget.dart';
@@ -47,12 +49,23 @@ class DetailsView extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                              hintText: 'SKU/Descripcion', //TODO:Translate
-                              labelText: 'Buscar producto',
+                              hintText: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'skuDesc',
+                              ),
+                              labelText:
+                                  AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'buscarPro',
+                              ),
                               suffixIcon: IconButton(
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.search,
-                                  color: AppTheme.primary,
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.darkPrimary,
+                                    Preferences.idTheme,
+                                  ),
                                 ),
                                 onPressed: () => vm.performSearch(context),
                               ),
@@ -131,16 +144,24 @@ class DetailsView extends StatelessWidget {
                             const SizedBox(width: 10),
                             IconButton(
                               onPressed: () => vm.cargoDescuento(1, context),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.add_circle,
-                                color: Colors.green,
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.green,
+                                  Preferences.idTheme,
+                                ),
                               ),
                             ),
                             IconButton(
                               onPressed: () => vm.cargoDescuento(2, context),
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.remove_circle,
-                                color: Colors.red,
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.delete,
+                                  Preferences.idTheme,
+                                ),
                               ),
                             ),
                           ],
@@ -154,7 +175,11 @@ class DetailsView extends StatelessWidget {
                       if (vm.traInternas.isNotEmpty) const SizedBox(width: 14),
                       if (vm.traInternas.isNotEmpty)
                         Checkbox(
-                          activeColor: AppTheme.primary,
+                          activeColor: AppTheme.color(
+                            context,
+                            Styles.darkPrimary,
+                            Preferences.idTheme,
+                          ),
                           value: vm.selectAll,
                           onChanged: (value) => vm.selectAllTransactions(value),
                         ),
@@ -164,7 +189,11 @@ class DetailsView extends StatelessWidget {
                           BlockTranslate.general,
                           'numTransacciones',
                         )}: ${vm.traInternas.length}",
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                       const Spacer(),
                       if (vm.traInternas.isNotEmpty)
@@ -189,11 +218,17 @@ class DetailsView extends StatelessWidget {
                         onDismissed: (direction) =>
                             vm.dismissItem(context, index),
                         background: Container(
-                          color: Colors.red,
+                          color: AppTheme.color(
+                            context,
+                            Styles.delete,
+                            Preferences.idTheme,
+                          ),
                           alignment:
                               Alignment.centerLeft, // Alineado a la izquierda
                           padding: const EdgeInsets.only(left: 16.0),
-                          child: const Icon(Icons.delete, color: Colors.white),
+                          child: const Icon(
+                            Icons.delete,
+                          ),
                         ),
                         child: GestureDetector(
                           onTap: () => vm.navigatorDetails(context, index),
@@ -216,7 +251,11 @@ class DetailsView extends StatelessWidget {
               'subTotal',
             ),
             value: vm.subtotal,
-            color: AppTheme.primary,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+              Preferences.idTheme,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -224,7 +263,11 @@ class DetailsView extends StatelessWidget {
               'cargo',
             ),
             value: vm.cargo,
-            color: AppTheme.primary,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+              Preferences.idTheme,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -232,7 +275,11 @@ class DetailsView extends StatelessWidget {
               'descuento',
             ),
             value: vm.descuento,
-            color: AppTheme.primary,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+              Preferences.idTheme,
+            ),
           ),
           const Divider(),
           RowTotalWidget(
@@ -241,7 +288,11 @@ class DetailsView extends StatelessWidget {
               'total',
             ),
             value: vm.total,
-            color: AppTheme.primary,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+              Preferences.idTheme,
+            ),
           ),
         ],
       ),
@@ -272,7 +323,11 @@ class _TransactionCard extends StatelessWidget {
     );
 
     return Card(
-      color: AppTheme.grayAppBar,
+      color: AppTheme.color(
+        context,
+        Styles.transaction,
+        Preferences.idTheme,
+      ),
       child: ListTile(
         contentPadding: const EdgeInsets.all(10),
         title: Column(
@@ -280,11 +335,19 @@ class _TransactionCard extends StatelessWidget {
           children: [
             Text(
               '${transaction.cantidad} x ${transaction.producto.desProducto}',
-              style: AppTheme.normalBoldStyle,
+              style: AppTheme.style(
+                context,
+                Styles.bold,
+                Preferences.idTheme,
+              ),
             ),
             Text(
               'SKU: ${transaction.producto.productoId}',
-              style: AppTheme.normalBoldStyle,
+              style: AppTheme.style(
+                context,
+                Styles.bold,
+                Preferences.idTheme,
+              ),
             )
           ],
         ),
@@ -297,7 +360,11 @@ class _TransactionCard extends StatelessWidget {
                   BlockTranslate.calcular,
                   'precioU',
                 )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
 
             Text(
@@ -305,7 +372,11 @@ class _TransactionCard extends StatelessWidget {
                 BlockTranslate.calcular,
                 'precioT',
               )}: ${currencyFormat.format(transaction.total)}',
-              style: AppTheme.normalStyle,
+              style: AppTheme.style(
+                context,
+                Styles.normal,
+                Preferences.idTheme,
+              ),
             ),
             if (transaction.cargo != 0)
               Text(
@@ -313,7 +384,11 @@ class _TransactionCard extends StatelessWidget {
                   BlockTranslate.calcular,
                   'cargo',
                 )}: ${currencyFormat.format(transaction.cargo)}',
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
 
             if (transaction.descuento != 0)
@@ -322,13 +397,21 @@ class _TransactionCard extends StatelessWidget {
                   BlockTranslate.calcular,
                   'descuento',
                 )}: ${currencyFormat.format(transaction.descuento)}',
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
             // Text('Detalles: ${transaction.detalles}'),
           ],
         ),
         leading: Checkbox(
-          activeColor: AppTheme.primary,
+          activeColor: AppTheme.color(
+            context,
+            Styles.darkPrimary,
+            Preferences.idTheme,
+          ),
           value: transaction.isChecked,
           onChanged: (value) => vm.changeChecked(value, indexTransaction),
         ),
@@ -350,7 +433,11 @@ class _RadioCargo extends StatelessWidget {
           child: Row(
             children: [
               Radio<String>(
-                activeColor: AppTheme.primary,
+                activeColor: AppTheme.color(
+                  context,
+                  Styles.darkPrimary,
+                  Preferences.idTheme,
+                ),
                 value: 'Porcentaje',
                 groupValue: vm.selectedOption,
                 onChanged: (value) => vm.changeOption(value),
@@ -360,7 +447,11 @@ class _RadioCargo extends StatelessWidget {
                   BlockTranslate.calcular,
                   'porcentaje',
                 ),
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
             ],
           ),
@@ -370,7 +461,11 @@ class _RadioCargo extends StatelessWidget {
           child: Row(
             children: [
               Radio<String>(
-                activeColor: AppTheme.primary,
+                activeColor: AppTheme.color(
+                  context,
+                  Styles.darkPrimary,
+                  Preferences.idTheme,
+                ),
                 value: 'Monto',
                 groupValue: vm.selectedOption,
                 onChanged: (value) => vm.changeOption(value),
@@ -380,7 +475,11 @@ class _RadioCargo extends StatelessWidget {
                   BlockTranslate.calcular,
                   'monto',
                 ),
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
             ],
           ),
@@ -405,11 +504,23 @@ class MyExpansionTile extends StatelessWidget {
     return ExpansionTile(
       tilePadding: EdgeInsets.zero,
       childrenPadding: const EdgeInsets.symmetric(vertical: 10),
-      iconColor: AppTheme.disableStepLine,
-      textColor: Colors.black,
+      iconColor: AppTheme.color(
+        context,
+        Styles.disableStepLine,
+        Preferences.idTheme,
+      ),
+      textColor: AppTheme.color(
+        context,
+        Styles.normal,
+        Preferences.idTheme,
+      ),
       title: Text(
         title,
-        style: AppTheme.titleStyle,
+        style: AppTheme.style(
+          context,
+          Styles.title,
+          Preferences.idTheme,
+        ),
       ),
       children: <Widget>[
         Padding(

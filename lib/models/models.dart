@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/models/theme_model.dart';
 export 'package:flutter_post_printer_example/models/print_doc_settigs_model.dart';
 export 'package:flutter_post_printer_example/models/response_model.dart';
 export 'package:flutter_post_printer_example/models/access_model.dart';
