@@ -191,6 +191,44 @@ class PendingDocsView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 5),
+                      Form(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        key: vm.formKeySearch,
+                        child: TextFormField(
+                          onChanged: ((value) => vm.filtrar(context)),
+                          onFieldSubmitted: (value) => vm.filtrar(context),
+                          textInputAction: TextInputAction.search,
+                          controller: vm.searchController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return AppLocalizations.of(context)!.translate(
+                                BlockTranslate.notificacion,
+                                'requerido',
+                              );
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            //TODO:Translate
+
+                            hintText: "Buscar",
+                            //TODO:Translate
+                            labelText: "Buscar",
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                Icons.search,
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.darkPrimary,
+                                  Preferences.idTheme,
+                                ),
+                              ),
+                              onPressed: () => vm.filtrar(context),
+                            ),
+                          ),
+                        ),
+                      ),
                       const Divider(),
                       const SizedBox(height: 10),
                       ListView.builder(
@@ -286,6 +324,17 @@ class _CardDoc extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  TextsWidget(
+                    title: "Id. Ref: ",
+                    text: document.consecutivoInternoRef.toString(),
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Cuenta:",
+                    text: document.cliente,
+                  ),
+                  const SizedBox(height: 5),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -343,14 +392,16 @@ class _CardDoc extends StatelessWidget {
                       )}: ",
                       text: "${document.serie} (${document.serieDocumento})"),
                   const SizedBox(height: 5),
-                  if (document.observacion1 != null)
-                    TextsWidget(
-                      title: "${AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'observacion',
-                      )}: ",
-                      text: document.observacion1 ?? "",
-                    ),
+
+                  // if (document.observacion1 != null ||
+                  //     document.observacion1 != "")
+                  //   TextsWidget(
+                  //     title: "${AppLocalizations.of(context)!.translate(
+                  //       BlockTranslate.general,
+                  //       'observacion',
+                  //     )}: ",
+                  //     text: document.observacion1 ?? "",
+                  //   ),
                 ],
               ),
             ),

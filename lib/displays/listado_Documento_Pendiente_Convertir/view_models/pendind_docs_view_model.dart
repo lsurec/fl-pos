@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
@@ -41,9 +43,23 @@ class PendingDocsViewModel extends ChangeNotifier {
   //Doucumentos disponibles
   final List<OriginDocModel> documents = [];
 
+  GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
+  final TextEditingController searchController = TextEditingController();
+
   changeFilter(int value) {
     idSelectFilter = value;
     orderList();
+  }
+
+  Timer? timer;
+
+  void filtrar(BuildContext context) {
+    if (timer != null) {
+      timer!.cancel(); // Cancelar el temporizador existente
+    }
+    timer = Timer(const Duration(seconds: 1), () {
+      laodData(context);
+    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 
   orderList() {
@@ -179,7 +195,7 @@ class PendingDocsViewModel extends ChangeNotifier {
       tipoDoc,
       formatStrFilterDate(fechaIni!),
       formatStrFilterDate(fechaFin!),
-      "",
+      searchController.text,
     );
 
     //si el consumo salió mal

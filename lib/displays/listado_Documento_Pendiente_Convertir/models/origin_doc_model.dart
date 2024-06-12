@@ -20,7 +20,7 @@ class OriginDocModel {
   dynamic cliente;
   dynamic direccion;
   int iDDocumento;
-  dynamic observacion1;
+  String? observacion1;
   DateTime? fechaIni;
   DateTime? fechaFin;
   double monto;
