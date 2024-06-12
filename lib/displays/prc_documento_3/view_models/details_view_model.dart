@@ -81,11 +81,21 @@ class DetailsViewModel extends ChangeNotifier {
 
   //Buscar con input
   Future<void> performSearch(BuildContext context) async {
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
     //ocultar tecladp
     FocusScope.of(context).unfocus();
 
     //validar dormulario
     if (!isValidFormCSearch()) return;
+
+    if (docVM.serieSelect == null) {
+      //TODO:TRANSLATE
+      NotificationService.showSnackbar("Seelcciona una serie");
+      return;
+    }
 
     //Limpiar lista de productros
     products.clear();

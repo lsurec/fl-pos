@@ -86,7 +86,7 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            docVM.vendedorSelect!.nomCuentaCorrentista,
+                            docVM.vendedorSelect?.nomCuentaCorrentista ?? "",
                             style: AppTheme.normalStyle,
                           ),
                         ],
