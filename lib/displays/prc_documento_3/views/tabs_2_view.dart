@@ -18,12 +18,13 @@ class Tabs2View extends StatefulWidget {
 
 class _Tabs2ViewState extends State<Tabs2View>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+
+    final vm = Provider.of<DocumentoViewModel>(context, listen: false);
+
+    vm.tabController = TabController(length: 2, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
   }
 
@@ -37,12 +38,10 @@ class _Tabs2ViewState extends State<Tabs2View>
 
   @override
   void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+    final vm = Provider.of<DocumentoViewModel>(context, listen: false);
 
-  void _goToFirstTab() {
-    _tabController.animateTo(0); // Cambiar al primer tab (índice 0)
+    vm.tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -75,7 +74,7 @@ class _Tabs2ViewState extends State<Tabs2View>
                     BlockTranslate.botones,
                     'nuevoDoc',
                   ),
-                  onPressed: () => vm.newDocument(context, _goToFirstTab),
+                  onPressed: () => vm.newDocument(context),
                   icon: const Icon(Icons.note_add_outlined),
                 ),
                 if (vmDoc.monitorPrint())
@@ -135,7 +134,7 @@ class _Tabs2ViewState extends State<Tabs2View>
                 ),
               ],
               bottom: TabBar(
-                controller: _tabController,
+                controller: vm.tabController,
                 labelColor: Colors.black,
                 indicatorColor: AppTheme.primary,
                 tabs: [
@@ -155,7 +154,7 @@ class _Tabs2ViewState extends State<Tabs2View>
               ),
             ),
             body: TabBarView(
-              controller: _tabController,
+              controller: vm.tabController,
               children: const [
                 // Contenido de la primera pestaña
                 DocumentView(),

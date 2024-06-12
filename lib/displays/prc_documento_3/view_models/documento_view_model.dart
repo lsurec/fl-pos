@@ -18,8 +18,10 @@ class DocumentoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  late TabController tabController;
+
   //nuevo documento
-  Future<void> newDocument(BuildContext context, Function backTab) async {
+  Future<void> newDocument(BuildContext context) async {
     //view models externos
     final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
@@ -64,7 +66,7 @@ class DocumentoViewModel extends ChangeNotifier {
     vmConfirm.setIdDocumentoRef();
 
     // Cambiar al primer tab al presionar el botón
-    backTab();
+    tabController.animateTo(0); // Cambiar al primer tab (índice 0)
   }
 
   //confirmar documento
