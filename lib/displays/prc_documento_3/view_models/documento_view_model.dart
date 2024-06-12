@@ -22,12 +22,6 @@ class DocumentoViewModel extends ChangeNotifier {
 
   //nuevo documento
   Future<void> newDocument(BuildContext context) async {
-    //view models externos
-    final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
-    final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
-    final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
-    final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
-
     //mostrar dialogo de confirmacion
     bool result = await showDialog(
           context: context,
@@ -56,13 +50,23 @@ class DocumentoViewModel extends ChangeNotifier {
 
     if (!result) return;
 
+    setValuesDoc(context);
+  }
+
+  setValuesDoc(BuildContext context) {
+    //view models externos
+    final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
+    final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
+    final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
+    final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+
     //limpiar pantalla documento
     documentVM.clearView();
     detailsVM.clearView(context);
     paymentVM.clearView(context);
     confirmVM.newDoc();
 
-    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
     vmConfirm.setIdDocumentoRef();
 
     // Cambiar al primer tab al presionar el botón
