@@ -103,7 +103,15 @@ class _RecentViewState extends State<RecentView> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "${doc.item.consecutivoInterno}",
+                                    "Id. Ref: ${doc.estructura.docIdDocumentoRef}",
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                      Preferences.idTheme,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Cons. Interno: ${doc.item.consecutivoInterno}",
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
