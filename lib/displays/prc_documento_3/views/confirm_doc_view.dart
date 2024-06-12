@@ -80,7 +80,10 @@ class ConfirmDocView extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: "Id Doc Ref: ",
+                          text: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cotizacion,
+                            'docIdRef',
+                          ),
                           style: AppTheme.style(
                             context,
                             Styles.title,
@@ -742,7 +745,7 @@ class _Options extends StatelessWidget {
                     ),
                     style: AppTheme.style(
                       context,
-                      Styles.normal,
+                      Styles.whiteStyle,
                       Preferences.idTheme,
                     ),
                   ),

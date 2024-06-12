@@ -28,7 +28,10 @@ class DocumentView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Id documento ref:",
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.cotizacion,
+                    'docIdRef',
+                  ),
                   style: AppTheme.style(
                     context,
                     Styles.title,
