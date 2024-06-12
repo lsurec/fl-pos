@@ -98,6 +98,36 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       ),
                       children: [
                         TextSpan(
+                          text: "Id Doc Ref: ",
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
+                        ),
+                        TextSpan(
+                          text: document.idRef.toString(),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Divider(),
+                  const SizedBox(height: 5),
+                  RichText(
+                    text: TextSpan(
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
+                      children: [
+                        TextSpan(
                           text: "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.fecha,
                             'fecha',

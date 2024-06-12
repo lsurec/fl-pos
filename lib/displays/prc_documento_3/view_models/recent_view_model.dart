@@ -388,6 +388,7 @@ class RecentViewModel extends ChangeNotifier {
     }
 
     final DetailDocModel detallesDoc = DetailDocModel(
+      idRef: doc.estructura.docIdDocumentoRef,
       fecha: strDate(doc.item.fechaHora),
       consecutivo: doc.item.consecutivoInterno,
       empresa: empresa!,
