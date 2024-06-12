@@ -27,14 +27,22 @@ class DocumentView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   "Id documento ref:",
-                  style: AppTheme.titleStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
+                    Preferences.idTheme,
+                  ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   vmConfirm.idDocumentoRef.toString(),
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
