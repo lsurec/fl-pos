@@ -50,10 +50,10 @@ class DocumentoViewModel extends ChangeNotifier {
 
     if (!result) return;
 
-    setValuesDoc(context);
+    setValuesNewDoc(context);
   }
 
-  setValuesDoc(BuildContext context) {
+  setValuesNewDoc(BuildContext context) {
     //view models externos
     final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
