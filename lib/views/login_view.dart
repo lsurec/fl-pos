@@ -97,19 +97,22 @@ class LoginView extends StatelessWidget {
                                             BlockTranslate.login,
                                             "contrasena",
                                           ),
-                                          suffixIcon: IconButton(
-                                            onPressed: vm.toggle,
-                                            icon: Icon(
-                                              vm.obscureText
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: AppTheme.color(
-                                                context,
-                                                Styles.iconActive,
-                                                Preferences.idTheme,
-                                              ),
-                                            ),
+                                          suffixIcon: const Icon(
+                                            Icons.lock_outlined,
                                           ),
+                                          // suffixIcon: IconButton(
+                                          //   onPressed: vm.toggle,
+                                          //   icon: Icon(
+                                          //     vm.obscureText
+                                          //         ? Icons.visibility
+                                          //         : Icons.visibility_off,
+                                          //     color: AppTheme.color(
+                                          //       context,
+                                          //       Styles.iconActive,
+                                          //       Preferences.idTheme,
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ),
                                         onChanged: (value) => {
                                           vm.formValues['pass'] = value,
@@ -125,6 +128,7 @@ class LoginView extends StatelessWidget {
                                           return null;
                                         },
                                         obscureText: vm.obscureText,
+                                        obscuringCharacter: "*",
                                       ),
                                     ],
                                   ),
