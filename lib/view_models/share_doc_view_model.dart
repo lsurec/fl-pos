@@ -160,7 +160,7 @@ class ShareDocViewModel extends ChangeNotifier {
 
     PdfColor backCell = PdfColor.fromHex("134895");
 
-    bool isFel = false;
+    bool isFel = documento.autorizacion.isNotEmpty ? true : false;
 
     //Docuemnto pdf nuevo
     final pdf = pw.Document();
