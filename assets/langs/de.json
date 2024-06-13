@@ -373,7 +373,9 @@
         "destino": "Ziel",
         "filtroDoc": "Dokument-ID",
         "docIdRef": "Dok-ID-Ref: ",
-        "consecutivoInter": "Interne Folge"
+        "consecutivoInter": "Interne Folge",
+        "idRef": "ID-Ref: ",
+        "cuenta": "Konto: "
     },
     "tareas": {
         "numTarea": "Aufgabe Nr: ",

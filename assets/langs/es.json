@@ -373,7 +373,9 @@
         "destino": "Destino",
         "filtroDoc": "Id documento",
         "docIdRef": "Id Doc Ref: ",
-        "consecutivoInter": "Consecutivo interno"
+        "consecutivoInter": "Consecutivo interno",
+        "idRef": "Id Ref: ",
+        "cuenta": "Cuenta: "
     },
     "tareas": {
         "numTarea": "Tarea No: ",

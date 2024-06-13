@@ -328,12 +328,12 @@ class _CardDoc extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextsWidget(
-                    title: "Id. Ref: ",
+                    title:  AppLocalizations.of(context)!.translate(BlockTranslate.cotizacion,'idRef',),
                     text: document.consecutivoInternoRef.toString(),
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
-                    title: "Cuenta:",
+                    title:  AppLocalizations.of(context)!.translate(BlockTranslate.cotizacion,'cuenta',),
                     text: document.cliente,
                   ),
                   const SizedBox(height: 5),
