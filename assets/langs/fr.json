@@ -371,7 +371,9 @@
         "transacciones": "Transactions",
         "origen": "Origine",
         "destino": "Destination",
-        "filtroDoc": "ID du document"
+        "filtroDoc": "ID du document",
+        "docIdRef": "Réf ID Doc: ",
+        "consecutivoInter": "Consécutif Interne"
     },
     "tareas": {
         "numTarea": "Tâche No : ",
