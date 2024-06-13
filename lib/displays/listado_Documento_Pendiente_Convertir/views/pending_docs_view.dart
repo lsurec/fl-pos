@@ -210,11 +210,14 @@ class PendingDocsView extends StatelessWidget {
                             return null;
                           },
                           decoration: InputDecoration(
-                            //TODO:Translate
-
-                            hintText: "Buscar",
-                            //TODO:Translate
-                            labelText: "Buscar",
+                            hintText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'buscar',
+                            ),
+                            labelText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'buscar',
+                            ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 Icons.search,

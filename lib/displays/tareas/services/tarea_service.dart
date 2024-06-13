@@ -85,7 +85,6 @@ class TareaService {
         },
       );
 
-      print("$filtro, desde servicio");
       ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
 
       //si el api no responde
@@ -107,7 +106,6 @@ class TareaService {
         final responseFinally = TareaModel.fromMap(item);
         //agregar item a la lista
         tareas.add(responseFinally);
-        print(responseFinally);
       }
 
       //retornar respuesta correcta del api
