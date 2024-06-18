@@ -129,45 +129,23 @@ class DetailsViewModel extends ChangeNotifier {
     //load prosses
     vmFactura.isLoading = true;
 
-    final ApiResModel resSku = await productService.getProductId(
-      searchText,
-      loginVM.token,
-    );
+    final ApiResModel resDesc =
+        await productService.getProduct(searchText, loginVM.token);
 
     //valid succes response
-    if (!resSku.succes) {
+    if (!resDesc.succes) {
       //si algo salio mal mostrar alerta
       vmFactura.isLoading = false;
 
       await NotificationService.showErrorView(
         context,
-        resSku,
+        resDesc,
       );
 
       return;
     }
 
-    products.addAll(resSku.response);
-
-    if (products.isEmpty) {
-      final ApiResModel resDesc =
-          await productService.getProductDesc(searchText, loginVM.token);
-
-      //valid succes response
-      if (!resDesc.succes) {
-        //si algo salio mal mostrar alerta
-        vmFactura.isLoading = false;
-
-        await NotificationService.showErrorView(
-          context,
-          resDesc,
-        );
-
-        return;
-      }
-
-      products.addAll(resDesc.response);
-    }
+    products.addAll(resDesc.response);
 
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
