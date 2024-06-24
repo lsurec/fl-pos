@@ -21,7 +21,7 @@ class LocationsViewModel extends ChangeNotifier {
 
   final List<LocationsModel> locations = [];
 
-  Future<void> loadData(BuildContext context) async {
+  Future<ApiResModel> loadLocations(BuildContext context) async {
     final vmLogin = Provider.of<LoginViewModel>(
       context,
       listen: false,
@@ -42,8 +42,6 @@ class LocationsViewModel extends ChangeNotifier {
     final String token = vmLogin.token;
     final int tipoDocumento = vmMenu.documento!;
 
-    isLoading = true;
-
     RestaurantService restaurantService = RestaurantService();
 
     final ApiResModel resLocations = await restaurantService.getLocations(
@@ -54,6 +52,14 @@ class LocationsViewModel extends ChangeNotifier {
       user,
       token,
     );
+
+    return resLocations;
+  }
+
+  Future<void> loadData(BuildContext context) async {
+    isLoading = true;
+
+    final ApiResModel resLocations = await loadLocations(context);
 
     if (!resLocations.succes) {
       isLoading = false;
@@ -69,5 +75,27 @@ class LocationsViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  navigateTables(BuildContext context) {}
+  Future<void> navigateTables(BuildContext context) async {
+    isLoading = true;
+
+    // RestaurantService restaurantService = RestaurantService();
+
+    // final ApiResModel resTables = await restaurantService.getTables(
+    //   typeDoc,
+    //   enterprise,
+    //   station,
+    //   series,
+    //   elementAssigned,
+    //   user,
+    //   token,
+    // );
+
+    // if (!resTables.succes) {
+    //   isLoading = false;
+    //   NotificationService.showErrorView(context, resTables);
+    //   return;
+    // }
+
+    isLoading = false;
+  }
 }

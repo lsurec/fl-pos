@@ -72,19 +72,12 @@ class MenuViewModel extends ChangeNotifier {
     //Restaurante
     //TODO:Parametrizar nombre del diplay
     if (nameDisplay.toLowerCase() == "restaurante") {
+      final vmLoc = Provider.of<LocationsViewModel>(context, listen: false);
+
       //Cargar datos
       vmHome.isLoading = true;
 
-      RestaurantService restaurantService = RestaurantService();
-
-      final ApiResModel resLocations = await restaurantService.getLocations(
-        tipoDocumento!,
-        empresa,
-        estacion,
-        "1", //TODO:Preguntar -serie
-        user,
-        token,
-      );
+      final ApiResModel resLocations = await vmLoc.loadLocations(context);
 
       if (!resLocations.succes) {
         vmHome.isLoading = false;
@@ -94,7 +87,6 @@ class MenuViewModel extends ChangeNotifier {
 
       final List<LocationsModel> locations = resLocations.response;
 
-      final vmLoc = Provider.of<LocationsViewModel>(context, listen: false);
       vmLoc.locations.clear();
       vmLoc.locations.addAll(locations);
 
