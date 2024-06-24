@@ -133,7 +133,6 @@ class LoginView extends StatelessWidget {
                                           return null;
                                         },
                                         obscureText: vm.obscureText,
-                                        obscuringCharacter: "*",
                                       ),
                                     ],
                                   ),
