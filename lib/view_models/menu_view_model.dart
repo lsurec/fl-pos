@@ -61,6 +61,17 @@ class MenuViewModel extends ChangeNotifier {
 
     tipoCambio = 0;
 
+    //Restaurante
+    //TODO:Parametrizar nombre del diplay
+    if (nameDisplay.toLowerCase() == "restaurante") {
+      //Cargar datos
+
+      Navigator.pushNamed(context, AppRoutes.classification);
+
+      return;
+    }
+
+    //POS
     if (route.toLowerCase() == "prcdocumento_3") {
       if (documento == null) {
         NotificationService.showSnackbar(
