@@ -2,6 +2,9 @@
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -54,6 +57,11 @@ class MenuViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmHome = Provider.of<HomeViewModel>(
+      context,
+      listen: false,
+    );
+
     final int empresa = vmLocal.selectedEmpresa!.empresa;
     final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
     final String user = vmLogin.user;
@@ -65,6 +73,32 @@ class MenuViewModel extends ChangeNotifier {
     //TODO:Parametrizar nombre del diplay
     if (nameDisplay.toLowerCase() == "restaurante") {
       //Cargar datos
+      vmHome.isLoading = true;
+
+      RestaurantService restaurantService = RestaurantService();
+
+      final ApiResModel resLocations = await restaurantService.getLocations(
+        tipoDocumento!,
+        empresa,
+        estacion,
+        "1", //TODO:Preguntar -serie
+        user,
+        token,
+      );
+
+      if (!resLocations.succes) {
+        vmHome.isLoading = false;
+        NotificationService.showErrorView(context, resLocations);
+        return;
+      }
+
+      final List<LocationsModel> locations = resLocations.response;
+
+      final vmLoc = Provider.of<LocationsViewModel>(context, listen: false);
+      vmLoc.locations.clear();
+      vmLoc.locations.addAll(locations);
+
+      vmHome.isLoading = false;
 
       Navigator.pushNamed(context, AppRoutes.locations);
 
@@ -84,10 +118,6 @@ class MenuViewModel extends ChangeNotifier {
       }
 
       final vmPayment = Provider.of<PaymentViewModel>(
-        context,
-        listen: false,
-      );
-      final vmHome = Provider.of<HomeViewModel>(
         context,
         listen: false,
       );
@@ -322,7 +352,6 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
-      final vmHome = Provider.of<HomeViewModel>(context, listen: false);
       final vmTipos = Provider.of<TypesDocViewModel>(context, listen: false);
       final vmPend = Provider.of<PendingDocsViewModel>(context, listen: false);
 
