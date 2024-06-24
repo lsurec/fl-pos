@@ -100,6 +100,11 @@ class LoginView extends StatelessWidget {
                                           suffixIcon: const Icon(
                                             Icons.lock_outlined,
                                           ),
+                                          suffixIconColor: AppTheme.color(
+                                            context,
+                                            Styles.primary,
+                                            Preferences.idTheme,
+                                          ),
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
                                           //   icon: Icon(
