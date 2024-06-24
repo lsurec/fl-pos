@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -75,26 +77,29 @@ class LocationsViewModel extends ChangeNotifier {
     isLoading = false;
   }
 
-  Future<void> navigateTables(BuildContext context) async {
+  Future<void> navigateTables(
+    BuildContext context,
+    int elementAssigned,
+  ) async {
     isLoading = true;
 
-    // RestaurantService restaurantService = RestaurantService();
+    final vmTables = Provider.of<TablesViewModel>(context, listen: false);
 
-    // final ApiResModel resTables = await restaurantService.getTables(
-    //   typeDoc,
-    //   enterprise,
-    //   station,
-    //   series,
-    //   elementAssigned,
-    //   user,
-    //   token,
-    // );
+    final ApiResModel resTables =
+        await vmTables.loadTables(context, elementAssigned);
 
-    // if (!resTables.succes) {
-    //   isLoading = false;
-    //   NotificationService.showErrorView(context, resTables);
-    //   return;
-    // }
+    if (!resTables.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resTables);
+      return;
+    }
+
+    final List<TableModel> tablesRes = resTables.response;
+
+    vmTables.tables.clear();
+    vmTables.tables.addAll(tablesRes);
+
+    Navigator.pushNamed(context, AppRoutes.tables);
 
     isLoading = false;
   }

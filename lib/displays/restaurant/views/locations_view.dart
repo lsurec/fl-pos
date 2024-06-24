@@ -37,7 +37,10 @@ class LocationsView extends StatelessWidget {
                   LocationsModel ubicacion = vm.locations[index];
                   return GestureDetector(
                     child: _CardLocations(ubicacion: ubicacion),
-                    onTap: () => vm.navigateTables(context),
+                    onTap: () => vm.navigateTables(
+                      context,
+                      ubicacion.elementoAsignado,
+                    ),
                   );
                 },
               ),
