@@ -66,7 +66,7 @@ class MenuViewModel extends ChangeNotifier {
     if (nameDisplay.toLowerCase() == "restaurante") {
       //Cargar datos
 
-      Navigator.pushNamed(context, AppRoutes.classification);
+      Navigator.pushNamed(context, AppRoutes.locations);
 
       return;
     }
