@@ -68,4 +68,6 @@ class LocationsViewModel extends ChangeNotifier {
 
     isLoading = false;
   }
+
+  navigateTables(BuildContext context) {}
 }
