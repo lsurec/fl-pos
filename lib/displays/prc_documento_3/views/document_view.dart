@@ -210,9 +210,7 @@ class DocumentView extends StatelessWidget {
                       Text(
                         "(${vm.clienteSelect!.desCuentaCta})",
                         style: AppTheme.style(
-                          context,
                           Styles.inactive,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],

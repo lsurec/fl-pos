@@ -308,7 +308,8 @@
         "invalido": "Correo inválido.",
         "cliente": "Cliente",
         "editar": "Editar Cuenta",
-        "actualizar": "Actualizar Cuenta"
+        "actualizar": "Actualizar Cuenta",
+        "cuentaCta": "Cuenta Cta:"
     },
     "factura": {
         "bancos": "Bancos",

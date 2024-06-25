@@ -1044,12 +1044,12 @@ class _DataUser extends StatelessWidget {
           ),
         ),
         Text(
-          //TODO:Translate
-          "Cuenta Cta: ${user.desCtaCta}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.cuenta,
+            'cuentaCta',
+          )} ${user.desCtaCta}",
           style: AppTheme.style(
-            context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         )
       ],
