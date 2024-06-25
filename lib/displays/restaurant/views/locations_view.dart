@@ -27,23 +27,30 @@ class LocationsView extends StatelessWidget {
               ),
             ),
           ),
-          body: RefreshIndicator(
-            onRefresh: () => vm.loadData(context),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: ListView.builder(
-                itemCount: vm.locations.length,
-                itemBuilder: (BuildContext context, int index) {
-                  LocationModel ubicacion = vm.locations[index];
-                  return GestureDetector(
-                    child: _CardLocations(ubicacion: ubicacion),
-                    onTap: () => vm.navigateTables(
-                      context,
-                      ubicacion,
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                RegisterCountWidget(count: vm.locations.length),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => vm.loadData(context),
+                    child: ListView.builder(
+                      itemCount: vm.locations.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        LocationModel ubicacion = vm.locations[index];
+                        return GestureDetector(
+                          child: _CardLocations(ubicacion: ubicacion),
+                          onTap: () => vm.navigateTables(
+                            context,
+                            ubicacion,
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -77,7 +84,9 @@ class _CardLocations extends StatelessWidget {
       borderColor: const Color(0xffc2cfd9),
       elevation: 0,
       width: double.infinity,
-      raidus: 0,
+      raidus: 10,
+      color: AppTheme.backroundColor,
+      borderWidth: 2,
       child: Row(
         children: [
           const SizedBox(
@@ -109,8 +118,6 @@ class _CardLocations extends StatelessWidget {
           )
         ],
       ),
-      color: AppTheme.backroundColor,
-      borderWidth: 2,
     );
   }
 }

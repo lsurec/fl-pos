@@ -34,7 +34,7 @@ class TablesView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 30,
+                  height: 60,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -64,6 +64,8 @@ class TablesView extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      RegisterCountWidget(count: vm.tables.length),
                     ],
                   ),
                 ),
@@ -123,7 +125,7 @@ class _CardTable extends StatelessWidget {
       borderColor: const Color(0xffc2cfd9),
       elevation: 0,
       width: double.infinity,
-      raidus: 0,
+      raidus: 10,
       color: AppTheme.backroundColor,
       borderWidth: 2,
       child: Row(
