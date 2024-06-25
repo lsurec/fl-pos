@@ -106,6 +106,7 @@ class ConfirmDocView extends StatelessWidget {
                         name: docVM.clienteSelect?.facturaNombre ?? "",
                         nit: docVM.clienteSelect?.facturaNit ?? "",
                         adress: docVM.clienteSelect?.facturaDireccion ?? "",
+                        desCtaCta: docVM.clienteSelect?.desCuentaCta ?? "",
                       ),
                     ),
                     if (docVM.cuentasCorrentistasRef.isNotEmpty)
@@ -1040,6 +1041,15 @@ class _DataUser extends StatelessWidget {
           )}: ${user.adress}",
           style: AppTheme.style(
             Styles.normal,
+          ),
+        ),
+        Text(
+          //TODO:Translate
+          "Cuenta Cta: ${user.desCtaCta}",
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
           ),
         )
       ],

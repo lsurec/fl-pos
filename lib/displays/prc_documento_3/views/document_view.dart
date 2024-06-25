@@ -206,6 +206,15 @@ class DocumentView extends StatelessWidget {
                           Styles.normal,
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "(${vm.clienteSelect!.desCuentaCta})",
+                        style: AppTheme.style(
+                          context,
+                          Styles.inactive,
+                          Preferences.idTheme,
+                        ),
+                      ),
                     ],
                   ),
                 if (vm.cuentasCorrentistasRef.isNotEmpty)
