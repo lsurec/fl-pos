@@ -75,6 +75,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LocationsViewModel()),
         ChangeNotifierProvider(create: (_) => TablesViewModel()),
         ChangeNotifierProvider(create: (_) => OrderViewModel()),
+        ChangeNotifierProvider(create: (_) => PinViewModel()),
       ],
       child: const MyApp(),
     );

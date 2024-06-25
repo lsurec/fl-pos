@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/services/servic
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,12 @@ class TablesViewModel extends ChangeNotifier {
   final List<TableModel> tables = [];
   TableModel? table;
 
-  navigateClassifications(TableModel tableParam) {
+  navigateClassifications(
+    BuildContext context,
+    TableModel tableParam,
+  ) {
     table = tableParam;
+    Navigator.pushNamed(context, AppRoutes.pin);
   }
 
   Future<void> loadData(BuildContext context) async {

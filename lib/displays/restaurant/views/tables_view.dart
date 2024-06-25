@@ -74,7 +74,10 @@ class TablesView extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         TableModel table = vm.tables[index];
                         return GestureDetector(
-                          onTap: () => vm.navigateClassifications(table),
+                          onTap: () => vm.navigateClassifications(
+                            context,
+                            table,
+                          ),
                           child: _CardTable(
                             mesa: table,
                           ),
