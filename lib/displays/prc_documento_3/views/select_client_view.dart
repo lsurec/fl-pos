@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SelectClientView extends StatelessWidget {
@@ -24,22 +25,7 @@ class SelectClientView extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "${AppLocalizations.of(context)!.translate(
-                    BlockTranslate.general,
-                    'registro',
-                  )} (${clients.length})",
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                    Preferences.idTheme,
-                  ),
-                ),
-              ],
-            ),
+            RegisterCountWidget(count: clients.length),
             Expanded(
               child: ListView.separated(
                 itemCount: clients.length,

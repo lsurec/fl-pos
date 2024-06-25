@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/widgets/register_count_widget.dart';
+
 export 'package:flutter_post_printer_example/widgets/texts_widgets.dart';
 export 'package:flutter_post_printer_example/widgets/color_text_card_widget.dart';
 export 'package:flutter_post_printer_example/widgets/user_widget.dart';
