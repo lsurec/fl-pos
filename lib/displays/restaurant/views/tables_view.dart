@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -13,61 +15,68 @@ class TablesView extends StatelessWidget {
     final vm = Provider.of<TablesViewModel>(context);
     final vmLoc = Provider.of<LocationsViewModel>(context);
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 100,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      const Text(
-                        "Ubicaciones/",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black38,
-                        ),
-                      ),
-                      Text(
-                        vmLoc.location!.descripcion,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  vmLoc.location!.descripcion,
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          vmLoc.location!.descripcion,
+          style: AppTheme.style(
+            context,
+            Styles.title,
+            Preferences.idTheme,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: vm.tables.length,
-              itemBuilder: (BuildContext context, int index) {
-                TableModel mesa = vm.tables[index];
-                return _CardLocations(
-                  mesa: mesa,
-                );
-              },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 30,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const Text(
+                          "Ubicaciones/",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black38,
+                          ),
+                        ),
+                        Text(
+                          vmLoc.location!.descripcion,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () => vm.loadData(),
+                child: ListView.builder(
+                  itemCount: vm.tables.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    TableModel mesa = vm.tables[index];
+                    return _CardLocations(
+                      mesa: mesa,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

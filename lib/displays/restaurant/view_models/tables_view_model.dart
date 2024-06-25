@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 class TablesViewModel extends ChangeNotifier {
   final List<TableModel> tables = [];
 
+  loadData() {}
+
   updateOrdersTable(BuildContext context) {
     final vmOrder = Provider.of<OrderViewModel>(context, listen: false);
 
