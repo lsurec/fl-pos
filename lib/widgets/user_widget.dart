@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -26,17 +25,13 @@ class UserWidget extends StatelessWidget {
           width: 35,
           height: 35,
           color: AppTheme.color(
-            context,
             Styles.primary,
-            Preferences.idTheme,
           ),
           child: Center(
             child: Text(
               vmLogin.user.isNotEmpty ? vmLogin.user[0].toUpperCase() : "",
               style: AppTheme.style(
-                context,
                 Styles.user,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -66,9 +61,7 @@ void _showUserInfoModal(
     builder: (BuildContext context) {
       return Container(
         color: AppTheme.color(
-          context,
           Styles.background,
-          Preferences.idTheme,
         ),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: SingleChildScrollView(
@@ -77,17 +70,13 @@ void _showUserInfoModal(
               Text(
                 "DMOSOFT S.A",
                 style: AppTheme.style(
-                  context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               const SizedBox(height: 10),
               Card(
                 color: AppTheme.color(
-                  context,
                   Styles.background,
-                  Preferences.idTheme,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22),
@@ -101,9 +90,7 @@ void _showUserInfoModal(
                         title: Text(
                           vmLogin.user.toUpperCase(),
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         leading: IconButton(
@@ -113,17 +100,13 @@ void _showUserInfoModal(
                               width: 45,
                               height: 50,
                               color: AppTheme.color(
-                                context,
                                 Styles.primary,
-                                Preferences.idTheme,
                               ),
                               child: Center(
                                 child: Text(
                                   vmLogin.user[0].toUpperCase(),
                                   style: AppTheme.style(
-                                    context,
                                     Styles.user,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -139,17 +122,13 @@ void _showUserInfoModal(
                             'empresa',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
                           vmLocal.selectedEmpresa!.empresaNombre,
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -160,17 +139,13 @@ void _showUserInfoModal(
                             'estaciones',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
                           vmLocal.selectedEstacion!.nombre,
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -182,17 +157,13 @@ void _showUserInfoModal(
                               'cambioTipo',
                             ),
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Text(
                             currencyFormat.format(vmMenu.tipoCambio),
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),

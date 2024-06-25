@@ -1,7 +1,6 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -65,9 +64,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             'configuracion',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -81,9 +78,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               'empresa',
                             ),
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
@@ -92,9 +87,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               'registro',
                             )} (${vm.empresas.length})',
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -102,9 +95,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       if (vm.empresas.isNotEmpty)
                         CardWidget(
                           color: AppTheme.color(
-                            context,
                             Styles.background,
-                            Preferences.idTheme,
                           ),
                           raidus: 10,
                           width: double.infinity,
@@ -113,9 +104,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             child: DropdownButton<EmpresaModel>(
                               isExpanded: true,
                               dropdownColor: AppTheme.color(
-                                context,
                                 Styles.background,
-                                Preferences.idTheme,
                               ),
                               value: vm.selectedEmpresa,
                               onChanged: (value) => vm.changeEmpresa(value),
@@ -138,9 +127,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               'estaciones',
                             ),
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
@@ -149,9 +136,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               'registro',
                             )} (${vm.estaciones.length})',
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -159,9 +144,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       if (vm.estaciones.isNotEmpty)
                         CardWidget(
                           color: AppTheme.color(
-                            context,
                             Styles.background,
-                            Preferences.idTheme,
                           ),
                           raidus: 10,
                           width: double.infinity,
@@ -170,9 +153,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             child: DropdownButton<EstacionModel>(
                               isExpanded: true,
                               dropdownColor: AppTheme.color(
-                                context,
                                 Styles.background,
-                                Preferences.idTheme,
                               ),
                               value: vm.selectedEstacion,
                               onChanged: (value) => vm.changeEstacion(value),
@@ -190,9 +171,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                         height: 50,
                         child: ElevatedButton(
                           style: AppTheme.button(
-                            context,
                             Styles.buttonStyle,
-                            Preferences.idTheme,
                           ),
                           onPressed:
                               vm.estaciones.isEmpty || vm.empresas.isEmpty
@@ -207,9 +186,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                                   'continuar',
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.whiteBoldStyle,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -227,9 +204,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
           ModalBarrier(
             dismissible: false,
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

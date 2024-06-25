@@ -13,7 +13,6 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -257,14 +256,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                     child: Container(
                       color: (_currentStatus == BTStatus.connected)
                           ? AppTheme.color(
-                              context,
                               Styles.primary,
-                              Preferences.idTheme,
                             )
                           : AppTheme.color(
-                              context,
                               Styles.grey,
-                              Preferences.idTheme,
                             ),
                       child: Center(
                         child: Text(
@@ -278,9 +273,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   "documento",
                                 ),
                           style: AppTheme.style(
-                            context,
                             Styles.disabledStyle,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -294,9 +287,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                       "impresion",
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   actions: [
@@ -307,9 +298,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                       icon: Icon(
                         Icons.help_outline,
                         color: AppTheme.color(
-                          context,
                           Styles.icons,
-                          Preferences.idTheme,
                         ),
                         size: 20,
                       ),
@@ -329,9 +318,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                           "conectado",
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -339,9 +326,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                         title: Text(
                           printerDefault.name,
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
@@ -350,9 +335,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                             "papelT",
                           )} $paperDefault",
                           style: AppTheme.style(
-                            context,
                             Styles.subTitle,
-                            Preferences.idTheme,
                           ),
                         ),
                         trailing: Row(
@@ -398,9 +381,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                           "disponibles",
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -413,17 +394,13 @@ class _SettingsFromState extends State<SettingsFrom> {
                               title: Text(
                                 devices[index].name,
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               subtitle: Text(
                                 devices[index].address!,
                                 style: AppTheme.style(
-                                  context,
                                   Styles.subTitle,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               onTap: () {
@@ -450,9 +427,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           "agregar",
                                         ),
                                         style: AppTheme.style(
-                                          context,
                                           Styles.textButtonStyle,
-                                          Preferences.idTheme,
                                         ),
                                       ),
                                     )
@@ -470,9 +445,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                   dismissible: false,
                   // color: Colors.black.withOpacity(0.3),
                   color: AppTheme.color(
-                    context,
                     Styles.loading,
-                    Preferences.idTheme,
                   ),
                 ),
               if (printVM.isLoading) const LoadWidget(),
@@ -518,9 +491,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           "selecPapel",
         ),
         style: AppTheme.style(
-          context,
           Styles.subTitle,
-          Preferences.idTheme,
         ),
       ),
       content: DropdownButtonFormField<int>(
@@ -547,9 +518,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
             Navigator.pop(context);
           },
           style: AppTheme.button(
-            context,
             Styles.buttonStyle,
-            Preferences.idTheme,
           ),
           child: Text(
             AppLocalizations.of(context)!.translate(
@@ -557,9 +526,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               "cancelar",
             ),
             style: AppTheme.style(
-              context,
               Styles.whiteBoldStyle,
-              Preferences.idTheme,
             ),
           ),
         ),
@@ -572,9 +539,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               : null,
           style: (paper != null)
               ? AppTheme.button(
-                  context,
                   Styles.buttonStyle,
-                  Preferences.idTheme,
                 ) //si esta desactivado
               : AppTheme.disabledButtonsStyle,
           child: Text(
@@ -583,9 +548,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               "conectar",
             ),
             style: AppTheme.style(
-              context,
               Styles.whiteBoldStyle,
-              Preferences.idTheme,
             ),
           ),
         ),

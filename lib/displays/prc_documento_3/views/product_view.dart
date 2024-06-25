@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -50,9 +49,7 @@ class ProductView extends StatelessWidget {
                   Text(
                     "SKU: ${product.productoId}",
                     style: AppTheme.style(
-                      context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -63,9 +60,7 @@ class ProductView extends StatelessWidget {
                         'descripcion',
                       ),
                       style: AppTheme.style(
-                        context,
                         Styles.blueText,
-                        Preferences.idTheme,
                       )),
                   const SizedBox(height: 5),
                   Text(
@@ -78,9 +73,7 @@ class ProductView extends StatelessWidget {
                       'bodega',
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.blueText,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -88,9 +81,7 @@ class ProductView extends StatelessWidget {
                     isExpanded: true,
                     isDense: true,
                     dropdownColor: AppTheme.color(
-                      context,
                       Styles.background,
-                      Preferences.idTheme,
                     ),
                     value: vm.selectedBodega,
                     onChanged: (value) =>
@@ -125,9 +116,7 @@ class ProductView extends StatelessWidget {
                                   'presentaciones',
                                 ),
                           style: AppTheme.style(
-                            context,
                             Styles.blueText,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -141,9 +130,7 @@ class ProductView extends StatelessWidget {
                         'preciosNoEncontrados',
                       ),
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                   const SizedBox(height: 5),
@@ -160,18 +147,14 @@ class ProductView extends StatelessWidget {
                           'precioU',
                         ),
                         hintStyle: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                         labelText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioU',
                         ),
                         labelStyle: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       controller: vm.controllerPrice,
@@ -193,9 +176,7 @@ class ProductView extends StatelessWidget {
                             'precioU',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.blueText,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -213,9 +194,7 @@ class ProductView extends StatelessWidget {
                           'total',
                         )}: ${currencyFormat.format(vm.total)}",
                         style: AppTheme.style(
-                          context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],
@@ -230,9 +209,7 @@ class ProductView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -272,9 +249,7 @@ class _BottomBar extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.all(10),
                 color: AppTheme.color(
-                  context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -283,9 +258,7 @@ class _BottomBar extends StatelessWidget {
                       'cancelar',
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -298,9 +271,7 @@ class _BottomBar extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.all(10),
                 color: AppTheme.color(
-                  context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -309,9 +280,7 @@ class _BottomBar extends StatelessWidget {
                       'agregar',
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -334,9 +303,7 @@ class TipoPrecioSelect extends StatelessWidget {
     return DropdownButton<UnitarioModel>(
       isExpanded: true,
       dropdownColor: AppTheme.color(
-        context,
         Styles.background,
-        Preferences.idTheme,
       ),
       value: vm.selectedPrice,
       onChanged: (value) => vm.changePrice(value),
@@ -373,18 +340,14 @@ class _NumericField extends StatelessWidget {
                   'cantidad',
                 ),
                 hintStyle: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
                 labelText: AppLocalizations.of(context)!.translate(
                   BlockTranslate.factura,
                   'cantidad',
                 ),
                 labelStyle: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 )),
             controller: vm.controllerNum,
             inputFormatters: [

@@ -4,7 +4,6 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -32,9 +31,7 @@ class DetalleTareaView extends StatelessWidget {
                 'detalleTarea',
               )}: ${vm.tarea!.iDTarea}',
               style: AppTheme.style(
-                context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -53,9 +50,7 @@ class DetalleTareaView extends StatelessWidget {
                           'observacion',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -65,9 +60,7 @@ class DetalleTareaView extends StatelessWidget {
                               'noDisponible',
                             ),
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                         textAlign: TextAlign.justify,
                       ),
@@ -82,9 +75,7 @@ class DetalleTareaView extends StatelessWidget {
                                 'comentarios',
                               )} (${vmComentarios.comentarioDetalle.length})",
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                           ),
@@ -101,9 +92,7 @@ class DetalleTareaView extends StatelessWidget {
                           'estadoT',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       const _ActualizarEstado(),
@@ -115,9 +104,7 @@ class DetalleTareaView extends StatelessWidget {
                           'prioridadT',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       const _ActualizarPrioridad(),
@@ -128,23 +115,17 @@ class DetalleTareaView extends StatelessWidget {
                           'feHoInicio',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: Padding(
@@ -160,9 +141,7 @@ class DetalleTareaView extends StatelessWidget {
                                   vm.tarea!.tareaFechaIni,
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               const Spacer(),
@@ -175,9 +154,7 @@ class DetalleTareaView extends StatelessWidget {
                                   vm.tarea!.tareaFechaIni,
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ],
@@ -190,23 +167,17 @@ class DetalleTareaView extends StatelessWidget {
                           'feHoFin',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: Padding(
@@ -222,9 +193,7 @@ class DetalleTareaView extends StatelessWidget {
                                   vm.tarea!.tareaFechaFin,
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               const Spacer(),
@@ -237,9 +206,7 @@ class DetalleTareaView extends StatelessWidget {
                                   vm.tarea!.tareaFechaFin,
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ],
@@ -252,23 +219,17 @@ class DetalleTareaView extends StatelessWidget {
                           'tipo',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -279,9 +240,7 @@ class DetalleTareaView extends StatelessWidget {
                                   'noDisponible',
                                 ),
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -296,23 +255,17 @@ class DetalleTareaView extends StatelessWidget {
                           'idRefT',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -323,9 +276,7 @@ class DetalleTareaView extends StatelessWidget {
                                   'noDisponible',
                                 ),
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -339,23 +290,17 @@ class DetalleTareaView extends StatelessWidget {
                           'responsableT',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -366,9 +311,7 @@ class DetalleTareaView extends StatelessWidget {
                                   'noAsignado',
                                 ),
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -396,9 +339,7 @@ class DetalleTareaView extends StatelessWidget {
                                   'sinHistorialResp',
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.bold,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             if (vm.responsablesHistorial.isNotEmpty)
@@ -408,23 +349,17 @@ class DetalleTareaView extends StatelessWidget {
                                   'historialResp',
                                 ),
                                 style: AppTheme.style(
-                                  context,
                                   Styles.bold,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             CardWidget(
                               color: AppTheme.color(
-                                context,
                                 Styles.secondBackground,
-                                Preferences.idTheme,
                               ),
                               elevation: 0,
                               borderWidth: 1.5,
                               borderColor: AppTheme.color(
-                                context,
                                 Styles.greyBorder,
-                                Preferences.idTheme,
                               ),
                               raidus: 10,
                               child: ListView.builder(
@@ -439,9 +374,7 @@ class DetalleTareaView extends StatelessWidget {
                                     title: Text(
                                       responsable.tUserName,
                                       style: AppTheme.style(
-                                        context,
                                         Styles.inactive,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                     leading: const Icon(Icons.person_4),
@@ -458,9 +391,7 @@ class DetalleTareaView extends StatelessWidget {
                             'invitados',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         trailing: IconButton(
@@ -477,16 +408,12 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListView.builder(
@@ -500,9 +427,7 @@ class DetalleTareaView extends StatelessWidget {
                               title: Text(
                                 invitado.userName,
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               leading: const Icon(Icons.person_4),
@@ -529,23 +454,17 @@ class DetalleTareaView extends StatelessWidget {
                           'creadorT',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
-                          context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -556,9 +475,7 @@ class DetalleTareaView extends StatelessWidget {
                                   'noDisponible',
                                 ),
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -579,9 +496,7 @@ class DetalleTareaView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -603,9 +518,7 @@ class _ActualizarEstado extends StatelessWidget {
 
     return CardWidget(
       color: AppTheme.color(
-        context,
         Styles.secondBackground,
-        Preferences.idTheme,
       ),
       elevation: 0,
       borderWidth: 0,
@@ -624,9 +537,7 @@ class _ActualizarEstado extends StatelessWidget {
               'nuevoEstado',
             ),
             style: AppTheme.style(
-              context,
               Styles.normal,
-              Preferences.idTheme,
             ),
           ),
           items: estados
@@ -636,9 +547,7 @@ class _ActualizarEstado extends StatelessWidget {
                   child: Text(
                     item.descripcion,
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -684,9 +593,7 @@ class _ActualizarPrioridad extends StatelessWidget {
 
     return CardWidget(
       color: AppTheme.color(
-        context,
         Styles.secondBackground,
-        Preferences.idTheme,
       ),
       elevation: 0,
       borderWidth: 0,
@@ -705,9 +612,7 @@ class _ActualizarPrioridad extends StatelessWidget {
               'nuevaPrioridad',
             ),
             style: AppTheme.style(
-              context,
               Styles.normal,
-              Preferences.idTheme,
             ),
           ),
           items: prioridades
@@ -717,9 +622,7 @@ class _ActualizarPrioridad extends StatelessWidget {
                   child: Text(
                     item.nombre,
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),

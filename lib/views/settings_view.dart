@@ -25,9 +25,7 @@ class SettingsView extends StatelessWidget {
             'configuracion',
           ),
           style: AppTheme.style(
-            context,
             Styles.title,
-            Preferences.idTheme,
           ),
         ),
       ),

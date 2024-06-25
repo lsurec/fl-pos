@@ -3,7 +3,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -61,9 +60,7 @@ class _Tabs2ViewState extends State<Tabs2View>
               title: Text(
                 vmMenu.name,
                 style: AppTheme.style(
-                  context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               actions: [
@@ -115,17 +112,13 @@ class _Tabs2ViewState extends State<Tabs2View>
                               'tipoDoc',
                             ),
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Text(
                             "${vmMenu.documentoName} (${vmMenu.documento})",
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),
@@ -137,17 +130,13 @@ class _Tabs2ViewState extends State<Tabs2View>
                               'serie',
                             ),
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Text(
                             "${vmDoc.serieSelect!.descripcion} (${vmDoc.serieSelect!.serieDocumento})",
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),
@@ -158,14 +147,10 @@ class _Tabs2ViewState extends State<Tabs2View>
               bottom: TabBar(
                 controller: vm.tabController,
                 labelColor: AppTheme.color(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
                 indicatorColor: AppTheme.color(
-                  context,
                   Styles.darkPrimary,
-                  Preferences.idTheme,
                 ),
                 tabs: [
                   Tab(
@@ -199,9 +184,7 @@ class _Tabs2ViewState extends State<Tabs2View>
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

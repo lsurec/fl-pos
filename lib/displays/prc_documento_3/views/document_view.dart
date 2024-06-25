@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -33,18 +32,14 @@ class DocumentView extends StatelessWidget {
                     'docIdRef',
                   ),
                   style: AppTheme.style(
-                    context,
                     Styles.title,
-                    Preferences.idTheme,
                   ),
                 ),
                 const SizedBox(height: 3),
                 Text(
                   vmConfirm.idDocumentoRef.toString(),
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -54,9 +49,7 @@ class DocumentView extends StatelessWidget {
                     'serie',
                   ),
                   style: AppTheme.style(
-                    context,
                     Styles.title,
-                    Preferences.idTheme,
                   ),
                 ),
                 if (vm.series.isEmpty)
@@ -74,9 +67,7 @@ class DocumentView extends StatelessWidget {
                   DropdownButton<SerieModel>(
                     isExpanded: true,
                     dropdownColor: AppTheme.color(
-                      context,
                       Styles.background,
-                      Preferences.idTheme,
                     ),
                     value: vm.serieSelect,
                     onChanged: (value) => vm.changeSerie(value, context),
@@ -96,9 +87,7 @@ class DocumentView extends StatelessWidget {
                     Text(
                       vm.getTextCuenta(context),
                       style: AppTheme.style(
-                        context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                     IconButton(
@@ -129,9 +118,7 @@ class DocumentView extends StatelessWidget {
                       hintText: vm.getTextCuenta(context),
                       suffixIcon: IconButton(
                         color: AppTheme.color(
-                          context,
                           Styles.darkPrimary,
-                          Preferences.idTheme,
                         ),
                         icon: const Icon(Icons.search),
                         onPressed: () => vm.performSearchClient(context),
@@ -151,9 +138,7 @@ class DocumentView extends StatelessWidget {
                 const SizedBox(height: 10),
                 SwitchListTile(
                   activeColor: AppTheme.color(
-                    context,
                     Styles.darkPrimary,
-                    Preferences.idTheme,
                   ),
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
@@ -164,9 +149,7 @@ class DocumentView extends StatelessWidget {
                   title: Text(
                     "C/F",
                     style: AppTheme.style(
-                      context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -180,9 +163,7 @@ class DocumentView extends StatelessWidget {
                           Text(
                             vm.getTextCuenta(context),
                             style: AppTheme.style(
-                              context,
                               Styles.titlegrey,
-                              Preferences.idTheme,
                             ),
                           ),
                           if (!vm.cf)
@@ -194,9 +175,7 @@ class DocumentView extends StatelessWidget {
                               icon: Icon(
                                 Icons.edit_outlined,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.grey,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
@@ -210,27 +189,21 @@ class DocumentView extends StatelessWidget {
                       Text(
                         vm.clienteSelect!.facturaNit,
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNombre,
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaDireccion,
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],
@@ -248,17 +221,13 @@ class DocumentView extends StatelessWidget {
                           'vendedor',
                         ),
                         style: AppTheme.style(
-                          context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                       DropdownButton<SellerModel>(
                         isExpanded: true,
                         dropdownColor: AppTheme.color(
-                          context,
                           Styles.background,
-                          Preferences.idTheme,
                         ),
                         value: vm.vendedorSelect,
                         onChanged: (value) => vm.changeSeller(value),

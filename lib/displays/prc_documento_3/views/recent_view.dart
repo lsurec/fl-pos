@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -53,9 +52,7 @@ class _RecentViewState extends State<RecentView> {
                 'docRecientes',
               ),
               style: AppTheme.style(
-                context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -72,9 +69,7 @@ class _RecentViewState extends State<RecentView> {
                         'registro',
                       )} (${vm.documents.length})",
                       style: AppTheme.style(
-                        context,
                         Styles.bold,
-                        Preferences.idTheme,
                       ),
                     ),
                   ],
@@ -105,25 +100,19 @@ class _RecentViewState extends State<RecentView> {
                                   Text(
                                     "Id. Ref: ${doc.estructura.docIdDocumentoRef}",
                                     style: AppTheme.style(
-                                      context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
                                     "Cons. Interno: ${doc.item.consecutivoInterno}",
                                     style: AppTheme.style(
-                                      context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
                                     vm.strDate(doc.item.fechaHora),
                                     style: AppTheme.style(
-                                      context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ],
@@ -133,41 +122,31 @@ class _RecentViewState extends State<RecentView> {
                                 children: [
                                   Text(currencyFormat.format(doc.subtotal),
                                       style: AppTheme.style(
-                                        context,
                                         Styles.blueText,
-                                        Preferences.idTheme,
                                       )),
                                   Text(
                                     "(+) ${currencyFormat.format(doc.cargo)}",
                                     style: AppTheme.style(
-                                      context,
                                       Styles.cargo,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
                                     "(-) ${currencyFormat.format(doc.descuento)}",
                                     style: AppTheme.style(
-                                      context,
                                       Styles.descuento,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Container(
                                     width: 50,
                                     height: 1,
                                     color: AppTheme.color(
-                                      context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
                                     currencyFormat.format(doc.total),
                                     style: AppTheme.style(
-                                      context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ],
@@ -190,9 +169,7 @@ class _RecentViewState extends State<RecentView> {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

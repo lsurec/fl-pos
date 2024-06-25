@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -62,9 +61,7 @@ class DetailsView extends StatelessWidget {
                                 icon: Icon(
                                   Icons.search,
                                   color: AppTheme.color(
-                                    context,
                                     Styles.darkPrimary,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 onPressed: () => vm.performSearch(context),
@@ -147,9 +144,7 @@ class DetailsView extends StatelessWidget {
                               icon: Icon(
                                 Icons.add_circle,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.green,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -158,9 +153,7 @@ class DetailsView extends StatelessWidget {
                               icon: Icon(
                                 Icons.remove_circle,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.delete,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -176,9 +169,7 @@ class DetailsView extends StatelessWidget {
                       if (vm.traInternas.isNotEmpty)
                         Checkbox(
                           activeColor: AppTheme.color(
-                            context,
                             Styles.darkPrimary,
-                            Preferences.idTheme,
                           ),
                           value: vm.selectAll,
                           onChanged: (value) => vm.selectAllTransactions(value),
@@ -190,9 +181,7 @@ class DetailsView extends StatelessWidget {
                           'numTransacciones',
                         )}: ${vm.traInternas.length}",
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       const Spacer(),
@@ -219,9 +208,7 @@ class DetailsView extends StatelessWidget {
                             vm.dismissItem(context, index),
                         background: Container(
                           color: AppTheme.color(
-                            context,
                             Styles.delete,
-                            Preferences.idTheme,
                           ),
                           alignment:
                               Alignment.centerLeft, // Alineado a la izquierda
@@ -252,9 +239,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.subtotal,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           RowTotalWidget(
@@ -264,9 +249,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.cargo,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           RowTotalWidget(
@@ -276,9 +259,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.descuento,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           const Divider(),
@@ -289,9 +270,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.total,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
         ],
@@ -324,9 +303,7 @@ class _TransactionCard extends StatelessWidget {
 
     return Card(
       color: AppTheme.color(
-        context,
         Styles.transaction,
-        Preferences.idTheme,
       ),
       child: ListTile(
         contentPadding: const EdgeInsets.all(10),
@@ -336,17 +313,13 @@ class _TransactionCard extends StatelessWidget {
             Text(
               '${transaction.cantidad} x ${transaction.producto.desProducto}',
               style: AppTheme.style(
-                context,
                 Styles.bold,
-                Preferences.idTheme,
               ),
             ),
             Text(
               'SKU: ${transaction.producto.productoId}',
               style: AppTheme.style(
-                context,
                 Styles.bold,
-                Preferences.idTheme,
               ),
             )
           ],
@@ -361,9 +334,7 @@ class _TransactionCard extends StatelessWidget {
                   'precioU',
                 )}: ${currencyFormat.format(transaction.precio!.precioU)}',
                 style: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
 
@@ -373,9 +344,7 @@ class _TransactionCard extends StatelessWidget {
                 'precioT',
               )}: ${currencyFormat.format(transaction.total)}',
               style: AppTheme.style(
-                context,
                 Styles.normal,
-                Preferences.idTheme,
               ),
             ),
             if (transaction.cargo != 0)
@@ -385,9 +354,7 @@ class _TransactionCard extends StatelessWidget {
                   'cargo',
                 )}: ${currencyFormat.format(transaction.cargo)}',
                 style: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
 
@@ -398,9 +365,7 @@ class _TransactionCard extends StatelessWidget {
                   'descuento',
                 )}: ${currencyFormat.format(transaction.descuento)}',
                 style: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
             // Text('Detalles: ${transaction.detalles}'),
@@ -408,9 +373,7 @@ class _TransactionCard extends StatelessWidget {
         ),
         leading: Checkbox(
           activeColor: AppTheme.color(
-            context,
             Styles.darkPrimary,
-            Preferences.idTheme,
           ),
           value: transaction.isChecked,
           onChanged: (value) => vm.changeChecked(value, indexTransaction),
@@ -434,9 +397,7 @@ class _RadioCargo extends StatelessWidget {
             children: [
               Radio<String>(
                 activeColor: AppTheme.color(
-                  context,
                   Styles.darkPrimary,
-                  Preferences.idTheme,
                 ),
                 value: 'Porcentaje',
                 groupValue: vm.selectedOption,
@@ -448,9 +409,7 @@ class _RadioCargo extends StatelessWidget {
                   'porcentaje',
                 ),
                 style: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
             ],
@@ -462,9 +421,7 @@ class _RadioCargo extends StatelessWidget {
             children: [
               Radio<String>(
                 activeColor: AppTheme.color(
-                  context,
                   Styles.darkPrimary,
-                  Preferences.idTheme,
                 ),
                 value: 'Monto',
                 groupValue: vm.selectedOption,
@@ -476,9 +433,7 @@ class _RadioCargo extends StatelessWidget {
                   'monto',
                 ),
                 style: AppTheme.style(
-                  context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
             ],
@@ -505,21 +460,15 @@ class MyExpansionTile extends StatelessWidget {
       tilePadding: EdgeInsets.zero,
       childrenPadding: const EdgeInsets.symmetric(vertical: 10),
       iconColor: AppTheme.color(
-        context,
         Styles.disableStepLine,
-        Preferences.idTheme,
       ),
       textColor: AppTheme.color(
-        context,
         Styles.normal,
-        Preferences.idTheme,
       ),
       title: Text(
         title,
         style: AppTheme.style(
-          context,
           Styles.title,
-          Preferences.idTheme,
         ),
       ),
       children: <Widget>[

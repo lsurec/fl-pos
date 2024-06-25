@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/document_view_model.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +32,7 @@ class SelectClientView extends StatelessWidget {
                     'registro',
                   )} (${clients.length})",
                   style: AppTheme.style(
-                    context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
               ],
@@ -46,9 +43,7 @@ class SelectClientView extends StatelessWidget {
                 // Agregar el separador
                 separatorBuilder: (context, index) => Divider(
                   color: AppTheme.color(
-                    context,
                     Styles.border,
-                    Preferences.idTheme,
                   ),
                 ),
                 itemBuilder: (context, index) {
@@ -61,17 +56,13 @@ class SelectClientView extends StatelessWidget {
                     title: Text(
                       client.facturaNombre,
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                     subtitle: Text(
                       client.facturaNit,
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                     onTap: () => docVM.selectClient(client, context),

@@ -42,9 +42,7 @@ class ThemeView extends StatelessWidget {
                             "tema",
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.blueTitle,
-                            Preferences.idTheme,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -62,14 +60,10 @@ class ThemeView extends StatelessWidget {
                             CardWidget(
                               color: theme.id == Preferences.theme
                                   ? AppTheme.color(
-                                      context,
                                       Styles.primary,
-                                      Preferences.idTheme,
                                     )
                                   : AppTheme.color(
-                                      context,
                                       Styles.secondBackground,
-                                      Preferences.idTheme,
                                     ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
@@ -78,14 +72,10 @@ class ThemeView extends StatelessWidget {
                                   theme.descripcion,
                                   style: index == Preferences.theme
                                       ? AppTheme.style(
-                                          context,
                                           Styles.whiteBoldStyle,
-                                          Preferences.idTheme,
                                         )
                                       : AppTheme.style(
-                                          context,
                                           Styles.bold,
-                                          Preferences.idTheme,
                                         ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -100,9 +90,7 @@ class ThemeView extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
                         style: AppTheme.button(
-                          context,
                           Styles.buttonStyle,
-                          Preferences.idTheme,
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
@@ -110,9 +98,7 @@ class ThemeView extends StatelessWidget {
                             "continuar",
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.whiteBoldStyle,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -128,9 +114,7 @@ class ThemeView extends StatelessWidget {
                                 'nota',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             Text(
@@ -139,9 +123,7 @@ class ThemeView extends StatelessWidget {
                                 'reiniciarTema',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -158,9 +140,7 @@ class ThemeView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading)

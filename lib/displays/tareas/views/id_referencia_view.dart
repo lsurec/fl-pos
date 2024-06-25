@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -28,9 +27,7 @@ class IdReferenciaView extends StatelessWidget {
                 'buscarIdRef',
               ),
               style: AppTheme.style(
-                context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -60,9 +57,7 @@ class IdReferenciaView extends StatelessWidget {
                             'registro',
                           )} (${vm.idReferencias.length})",
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -81,9 +76,7 @@ class IdReferenciaView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -116,9 +109,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
                 bottom: BorderSide(
                   width: 1.5,
                   color: AppTheme.color(
-                    context,
                     Styles.greyBorder,
-                    Preferences.idTheme,
                   ),
                 ),
               ),
@@ -135,9 +126,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
                   Text(
                     referencia.descripcion,
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                   Row(
@@ -148,17 +137,13 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           'idRef',
                         )}: ",
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
                         referencia.referenciaId,
                         style: AppTheme.style(
-                          context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],

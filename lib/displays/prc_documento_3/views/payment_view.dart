@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -55,9 +54,7 @@ class PaymentView extends StatelessWidget {
                         'agregarPago',
                       ),
                       style: AppTheme.style(
-                        context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                   const SizedBox(height: 10),
@@ -86,9 +83,7 @@ class PaymentView extends StatelessWidget {
                         const SizedBox(width: 20),
                         Checkbox(
                           activeColor: AppTheme.color(
-                            context,
                             Styles.darkPrimary,
-                            Preferences.idTheme,
                           ),
                           value: vm.selectAllAmounts,
                           onChanged: (value) => vm.selectAllMounts(value),
@@ -99,9 +94,7 @@ class PaymentView extends StatelessWidget {
                             'pagosAgregados',
                           )} (${vm.amounts.length})",
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         const Spacer(),
@@ -121,17 +114,13 @@ class PaymentView extends StatelessWidget {
 
                       return Card(
                         color: AppTheme.color(
-                          context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 2.0,
                         child: ListTile(
                           leading: Checkbox(
                             activeColor: AppTheme.color(
-                              context,
                               Styles.darkPrimary,
-                              Preferences.idTheme,
                             ),
                             value: amount.checked,
                             onChanged: (value) =>
@@ -140,9 +129,7 @@ class PaymentView extends StatelessWidget {
                           title: Text(
                             amount.payment.descripcion,
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Column(
@@ -155,9 +142,7 @@ class PaymentView extends StatelessWidget {
                                     'autorizar',
                                   )}: ${amount.authorization}',
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.payment.referencia)
@@ -167,9 +152,7 @@ class PaymentView extends StatelessWidget {
                                     'referencia',
                                   )}: ${amount.reference}',
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.payment.banco)
@@ -179,9 +162,7 @@ class PaymentView extends StatelessWidget {
                                     'banco',
                                   )}: ${amount.bank?.nombre}',
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.account != null)
@@ -191,9 +172,7 @@ class PaymentView extends StatelessWidget {
                                     'cuenta',
                                   )}: ${amount.account!.descripcion}',
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               Text(
@@ -202,9 +181,7 @@ class PaymentView extends StatelessWidget {
                                   'monto',
                                 )}: ${currencyFormat.format(amount.amount)}',
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               if (amount.diference > 0)
@@ -214,9 +191,7 @@ class PaymentView extends StatelessWidget {
                                     'diferencia',
                                   )}: ${currencyFormat.format(amount.diference)}',
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.diference > 0)
@@ -226,9 +201,7 @@ class PaymentView extends StatelessWidget {
                                     'precioT',
                                   )}: ${currencyFormat.format(amount.diference + amount.amount)}',
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                             ],
@@ -249,9 +222,7 @@ class PaymentView extends StatelessWidget {
             ),
             value: vmDetails.total,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           RowTotalWidget(
@@ -261,9 +232,7 @@ class PaymentView extends StatelessWidget {
             ),
             value: vm.saldo,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           RowTotalWidget(
@@ -273,9 +242,7 @@ class PaymentView extends StatelessWidget {
             ),
             value: vm.cambio,
             color: AppTheme.color(
-              context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
         ],
@@ -292,9 +259,7 @@ class PaymentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: AppTheme.color(
-        context,
         Styles.secondBackground,
-        Preferences.idTheme,
       ),
       elevation: 2.0,
       child: ListTile(
@@ -302,9 +267,7 @@ class PaymentCard extends StatelessWidget {
         title: Text(
           payment.descripcion,
           style: AppTheme.style(
-            context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -44,9 +43,7 @@ class HomeView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -67,9 +64,7 @@ class _MyDrawer extends StatelessWidget {
     return Drawer(
       width: screenSize.width * 0.8,
       backgroundColor: AppTheme.color(
-        context,
         Styles.black,
-        Preferences.idTheme,
       ),
       child: Column(
         children: [
@@ -93,14 +88,10 @@ class _MyDrawer extends StatelessWidget {
                         route.name,
                         style: index == routeMenu.length - 1
                             ? AppTheme.style(
-                                context,
                                 Styles.menuActive,
-                                Preferences.idTheme,
                               )
                             : AppTheme.style(
-                                context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                       ),
                       const Icon(
@@ -114,9 +105,7 @@ class _MyDrawer extends StatelessWidget {
           ),
           Divider(
             color: AppTheme.color(
-              context,
               Styles.divider,
-              Preferences.idTheme,
             ),
           ),
           Expanded(
@@ -126,9 +115,7 @@ class _MyDrawer extends StatelessWidget {
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(
                   color: AppTheme.color(
-                    context,
                     Styles.divider,
-                    Preferences.idTheme,
                   ),
                 );
               },
@@ -136,16 +123,12 @@ class _MyDrawer extends StatelessWidget {
                 MenuModel itemMenu = menu[index];
                 return ListTile(
                   titleTextStyle: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                   title: Text(
                     itemMenu.name,
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                   trailing: itemMenu.children.isNotEmpty
@@ -186,9 +169,7 @@ class _FooterDrawer extends StatelessWidget {
       child: Container(
         height: 56,
         color: AppTheme.color(
-          context,
           Styles.secondBackground,
-          Preferences.idTheme,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

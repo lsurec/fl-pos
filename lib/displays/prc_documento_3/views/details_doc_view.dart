@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -35,9 +34,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
             title: Text(
               "${document.consecutivo}",
               style: AppTheme.style(
-                context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
             actions: [
@@ -92,9 +89,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   RichText(
                     text: TextSpan(
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -103,17 +98,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'docIdRef',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
                           text: document.idRef.toString(),
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -125,9 +116,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   RichText(
                     text: TextSpan(
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -136,17 +125,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'fecha',
                           )} ",
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
                           text: document.fecha,
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -158,9 +143,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   RichText(
                     text: TextSpan(
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -169,18 +152,14 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'empresa',
                           )}: ",
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
                           text:
                               "${document.empresa.empresaNombre} (${document.empresa.empresa})",
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -192,9 +171,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   RichText(
                     text: TextSpan(
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -203,18 +180,14 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'estacion',
                           )}: ",
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
                           text:
                               "${document.estacion.descripcion} (${document.estacion.estacionTrabajo})",
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -235,17 +208,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                               'tipoDoc',
                             )}:",
                             style: AppTheme.style(
-                              context,
                               Styles.title,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
                             document.documentoDesc,
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -259,17 +228,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                               'serieDoc',
                             )}:",
                             style: AppTheme.style(
-                              context,
                               Styles.title,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
                             document.serieDesc,
                             style: AppTheme.style(
-                              context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -285,9 +250,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       'cuenta',
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -298,9 +261,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         'noDisponible',
                       ),
                       style: AppTheme.style(
-                        context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                   if (document.client != null)
@@ -310,9 +271,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         Text(
                           "Nit: ${document.client!.facturaNit}",
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         Text(
@@ -321,9 +280,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'nombre',
                           )}: ${document.client!.facturaNombre}",
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         Text(
@@ -332,9 +289,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'direccion',
                           )}: ${document.client!.facturaDireccion}",
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -352,18 +307,14 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'vendedor',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           document.seller!,
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -377,9 +328,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       'productos',
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -395,9 +344,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       'formasPago',
                     ),
                     style: AppTheme.style(
-                      context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -412,17 +359,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
                         color: AppTheme.color(
-                          context,
                           Styles.border,
-                          Preferences.idTheme,
                         ),
                         width: 1.0,
                       ), // Define el color y grosor del borde
                     ),
                     color: AppTheme.color(
-                      context,
                       Styles.background,
-                      Preferences.idTheme,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(
@@ -478,18 +421,14 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             'observacion',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           document.observacion,
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -535,9 +474,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -576,25 +513,19 @@ class _Pyments extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
               color: AppTheme.color(
-                context,
                 Styles.border,
-                Preferences.idTheme,
               ),
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
           color: AppTheme.color(
-            context,
             Styles.background,
-            Preferences.idTheme,
           ),
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
               style: AppTheme.style(
-                context,
                 Styles.normal,
-                Preferences.idTheme,
               ),
             ),
             subtitle: Column(
@@ -607,9 +538,7 @@ class _Pyments extends StatelessWidget {
                       'autorizar',
                     )}: ${amount.authorization}',
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.reference != "")
@@ -619,9 +548,7 @@ class _Pyments extends StatelessWidget {
                       'referencia',
                     )}: ${amount.reference}',
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.payment.banco)
@@ -631,9 +558,7 @@ class _Pyments extends StatelessWidget {
                       'banco',
                     )}: ${amount.bank?.nombre}',
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.account != null)
@@ -643,9 +568,7 @@ class _Pyments extends StatelessWidget {
                       'cuenta',
                     )}: ${amount.account!.descripcion}',
                     style: AppTheme.style(
-                      context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 Text(
@@ -654,9 +577,7 @@ class _Pyments extends StatelessWidget {
                     'monto',
                   )}: ${currencyFormat.format(amount.amount)}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -665,9 +586,7 @@ class _Pyments extends StatelessWidget {
                     'diferencia',
                   )}: ${currencyFormat.format(amount.diference)}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -676,9 +595,7 @@ class _Pyments extends StatelessWidget {
                     'pagoTotal',
                   )}: ${currencyFormat.format(amount.amount + amount.diference)}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 // Text('${AppLocalizations.of(context)!.translate(
@@ -725,17 +642,13 @@ class _Transaction extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
               color: AppTheme.color(
-                context,
                 Styles.border,
-                Preferences.idTheme,
               ),
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
           color: AppTheme.color(
-            context,
             Styles.background,
-            Preferences.idTheme,
           ),
           child: ListTile(
             title: Column(
@@ -744,17 +657,13 @@ class _Transaction extends StatelessWidget {
                 Text(
                   '${transaction.cantidad} x ${transaction.product.desProducto}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
                   'SKU: ${transaction.product.productoId}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
               ],
@@ -768,9 +677,7 @@ class _Transaction extends StatelessWidget {
                     'precioU',
                   )}: ${currencyFormat.format(transaction.cantidad > 0 ? transaction.total / transaction.cantidad : transaction.total)}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -779,9 +686,7 @@ class _Transaction extends StatelessWidget {
                     'total',
                   )}: ${currencyFormat.format(transaction.total)}',
                   style: AppTheme.style(
-                    context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 // Text(

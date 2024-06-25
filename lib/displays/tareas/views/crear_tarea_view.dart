@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -34,9 +33,7 @@ class CrearTareaView extends StatelessWidget {
                 'nueva',
               ),
               style: AppTheme.style(
-                context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
             actions: <Widget>[
@@ -90,17 +87,13 @@ class CrearTareaView extends StatelessWidget {
                                 'titulo',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             Text(
                               "*",
                               style: AppTheme.style(
-                                context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -133,9 +126,7 @@ class CrearTareaView extends StatelessWidget {
                             'fechaHoraInicio',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         Row(
@@ -146,9 +137,7 @@ class CrearTareaView extends StatelessWidget {
                               icon: Icon(
                                 Icons.calendar_today_outlined,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -157,9 +146,7 @@ class CrearTareaView extends StatelessWidget {
                                   'fecha',
                                 )} ${Utilities.formatearFecha(vm.fechaInicial)}",
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -168,9 +155,7 @@ class CrearTareaView extends StatelessWidget {
                               icon: Icon(
                                 Icons.schedule_outlined,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -179,9 +164,7 @@ class CrearTareaView extends StatelessWidget {
                                   'hora',
                                 )} ${Utilities.formatearHora(vm.fechaInicial)}",
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             )
@@ -196,9 +179,7 @@ class CrearTareaView extends StatelessWidget {
                             'fechaHoraFin',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         Row(
@@ -209,9 +190,7 @@ class CrearTareaView extends StatelessWidget {
                               icon: Icon(
                                 Icons.calendar_today_outlined,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -220,9 +199,7 @@ class CrearTareaView extends StatelessWidget {
                                   'fecha',
                                 )} ${Utilities.formatearFecha(vm.fechaFinal)}",
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -231,9 +208,7 @@ class CrearTareaView extends StatelessWidget {
                               icon: Icon(
                                 Icons.schedule_outlined,
                                 color: AppTheme.color(
-                                  context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -242,9 +217,7 @@ class CrearTareaView extends StatelessWidget {
                                   'hora',
                                 )} ${Utilities.formatearHora(vm.fechaFinal)}",
                                 style: AppTheme.style(
-                                  context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             )
@@ -259,9 +232,7 @@ class CrearTareaView extends StatelessWidget {
                             'tiempoEstimado',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -299,18 +270,14 @@ class CrearTareaView extends StatelessWidget {
                                 'tipoTarea',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
                             Text(
                               "*",
                               style: AppTheme.style(
-                                context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -328,9 +295,7 @@ class CrearTareaView extends StatelessWidget {
                                     'estadoTarea',
                                   ),
                                   style: AppTheme.style(
-                                    context,
                                     Styles.bold,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 const Padding(
@@ -338,9 +303,7 @@ class CrearTareaView extends StatelessWidget {
                                 Text(
                                   "*",
                                   style: AppTheme.style(
-                                    context,
                                     Styles.obligatory,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ],
@@ -360,18 +323,14 @@ class CrearTareaView extends StatelessWidget {
                                 'prioridadTarea',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
                             Text(
                               "*",
                               style: AppTheme.style(
-                                context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -389,18 +348,14 @@ class CrearTareaView extends StatelessWidget {
                                 'observacion',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
                             Text(
                               "*",
                               style: AppTheme.style(
-                                context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -415,9 +370,7 @@ class CrearTareaView extends StatelessWidget {
                               'archivosSelec',
                             )} (${vm.files.length})",
                             style: AppTheme.style(
-                              context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         const SizedBox(height: 5),
@@ -435,9 +388,7 @@ class CrearTareaView extends StatelessWidget {
                                   title: Text(
                                     Utilities.nombreArchivo(archivo),
                                     style: AppTheme.style(
-                                      context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   leading: const Icon(Icons.attachment),
@@ -466,17 +417,13 @@ class CrearTareaView extends StatelessWidget {
                                     'idRef',
                                   )}: ",
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 Text(
                                   " * ",
                                   style: AppTheme.style(
-                                    context,
                                     Styles.obligatory,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 const SizedBox(width: 30),
@@ -484,9 +431,7 @@ class CrearTareaView extends StatelessWidget {
                                   Text(
                                     vm.idReferencia!.referenciaId,
                                     style: AppTheme.style(
-                                      context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                               ],
@@ -507,17 +452,13 @@ class CrearTareaView extends StatelessWidget {
                                     'agregarResponsable',
                                   ),
                                   style: AppTheme.style(
-                                    context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 Text(
                                   " * ",
                                   style: AppTheme.style(
-                                    context,
                                     Styles.obligatory,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ],
@@ -532,17 +473,13 @@ class CrearTareaView extends StatelessWidget {
                             title: Text(
                               vm.responsable!.name,
                               style: AppTheme.style(
-                                context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             subtitle: Text(
                               vm.responsable!.email,
                               style: AppTheme.style(
-                                context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                             ),
                             leading: const Icon(Icons.person),
@@ -563,9 +500,7 @@ class CrearTareaView extends StatelessWidget {
                                 'agregarInvitados',
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                             ),
                             leading: const Icon(
@@ -588,17 +523,13 @@ class CrearTareaView extends StatelessWidget {
                                   title: Text(
                                     usuario.name,
                                     style: AppTheme.style(
-                                      context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   subtitle: Text(
                                     usuario.email,
                                     style: AppTheme.style(
-                                      context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   leading: const Icon(Icons.person),
@@ -629,9 +560,7 @@ class CrearTareaView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

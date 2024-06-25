@@ -78,6 +78,8 @@ class AppState extends StatelessWidget {
   }
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
@@ -118,6 +120,8 @@ class MyApp extends StatelessWidget {
       locale: Preferences.language.isEmpty
           ? AppLocalizations.idioma
           : Locale(Preferences.language),
+
+      navigatorKey: navigatorKey, // Asignar la clave global al MaterialApp
     );
   }
 }

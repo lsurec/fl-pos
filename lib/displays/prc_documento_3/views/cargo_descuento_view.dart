@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -40,18 +39,14 @@ class CargoDescuentoView extends StatelessWidget {
             children: [
               Card(
                 color: AppTheme.color(
-                  context,
                   Styles.transaction,
-                  Preferences.idTheme,
                 ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Text(
                     '${transaction.cantidad} x ${transaction.producto.desProducto} (SKU: ${transaction.producto.productoId})',
                     style: AppTheme.style(
-                      context,
                       Styles.bold,
-                      Preferences.idTheme,
                     ),
                   ),
                   subtitle: Column(
@@ -63,9 +58,7 @@ class CargoDescuentoView extends StatelessWidget {
                           'precioU',
                         )}: ${currencyFormat.format(transaction.precio!.precioU)}',
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -74,9 +67,7 @@ class CargoDescuentoView extends StatelessWidget {
                           'precioT',
                         )}: ${currencyFormat.format(transaction.total)}',
                         style: AppTheme.style(
-                          context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       if (transaction.cargo != 0)
@@ -86,9 +77,7 @@ class CargoDescuentoView extends StatelessWidget {
                             'cargo',
                           )}: ${currencyFormat.format(transaction.cargo)}',
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
 
@@ -99,9 +88,7 @@ class CargoDescuentoView extends StatelessWidget {
                             'descuento',
                           )}: ${currencyFormat.format(transaction.descuento)}',
                           style: AppTheme.style(
-                            context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       // Text('Detalles: ${transaction.detalles}'),
@@ -123,9 +110,7 @@ class CargoDescuentoView extends StatelessWidget {
                             'cargoDecuento',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         IconButton(
@@ -143,9 +128,7 @@ class CargoDescuentoView extends StatelessWidget {
                         const SizedBox(width: 12),
                         Checkbox(
                           activeColor: AppTheme.color(
-                            context,
                             Styles.darkPrimary,
-                            Preferences.idTheme,
                           ),
                           value: vm.selectAllMontos,
                           onChanged: (value) =>
@@ -157,9 +140,7 @@ class CargoDescuentoView extends StatelessWidget {
                             'descripcion',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         const Spacer(),
@@ -169,9 +150,7 @@ class CargoDescuentoView extends StatelessWidget {
                             'monto',
                           ),
                           style: AppTheme.style(
-                            context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -188,9 +167,7 @@ class CargoDescuentoView extends StatelessWidget {
                       transaction.operaciones[index];
                   return Card(
                     color: AppTheme.color(
-                      context,
                       Styles.transaction,
-                      Preferences.idTheme,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -198,9 +175,7 @@ class CargoDescuentoView extends StatelessWidget {
                         children: [
                           Checkbox(
                             activeColor: AppTheme.color(
-                              context,
                               Styles.darkPrimary,
-                              Preferences.idTheme,
                             ),
                             value: operacion.isChecked,
                             onChanged: (value) => vm.changeCheckedMonto(
@@ -220,9 +195,7 @@ class CargoDescuentoView extends StatelessWidget {
                                     'cargo',
                                   ),
                             style: AppTheme.style(
-                              context,
                               Styles.cargDesc,
-                              Preferences.idTheme,
                             ),
                           ),
                           const Spacer(),
@@ -232,14 +205,10 @@ class CargoDescuentoView extends StatelessWidget {
                                 : currencyFormat.format(operacion.cargo),
                             style: operacion.cargo == 0
                                 ? AppTheme.style(
-                                    context,
                                     Styles.descuento,
-                                    Preferences.idTheme,
                                   )
                                 : AppTheme.style(
-                                    context,
                                     Styles.cargo,
-                                    Preferences.idTheme,
                                   ),
                           )
                         ],

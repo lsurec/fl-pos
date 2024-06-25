@@ -1,5 +1,4 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -45,9 +44,7 @@ class LoginView extends StatelessWidget {
                   const SizedBox(height: 20),
                   CardWidget(
                     color: AppTheme.color(
-                      context,
                       Styles.secondBackground,
-                      Preferences.idTheme,
                     ),
                     width: double.infinity,
                     raidus: 18,
@@ -101,9 +98,7 @@ class LoginView extends StatelessWidget {
                                             Icons.lock_outlined,
                                           ),
                                           suffixIconColor: AppTheme.color(
-                                            context,
                                             Styles.primary,
-                                            Preferences.idTheme,
                                           ),
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
@@ -112,9 +107,9 @@ class LoginView extends StatelessWidget {
                                           //         ? Icons.visibility
                                           //         : Icons.visibility_off,
                                           //     color: AppTheme.color(
-                                          //       context,
+                                          //
                                           //       Styles.iconActive,
-                                          //       Preferences.idTheme,
+                                          //
                                           //     ),
                                           //   ),
                                           // ),
@@ -144,9 +139,7 @@ class LoginView extends StatelessWidget {
                             contentPadding: const EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 0),
                             activeColor: AppTheme.color(
-                              context,
                               Styles.darkPrimary,
-                              Preferences.idTheme,
                             ),
                             title: Text(
                               AppLocalizations.of(context)!.translate(
@@ -154,9 +147,7 @@ class LoginView extends StatelessWidget {
                                 "recordar",
                               ),
                               style: AppTheme.style(
-                                context,
                                 Styles.menuActive,
-                                Preferences.idTheme,
                               ),
                               textAlign: TextAlign.right,
                             ),
@@ -167,9 +158,7 @@ class LoginView extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () => vm.login(context),
                             style: AppTheme.button(
-                              context,
                               Styles.buttonStyle,
-                              Preferences.idTheme,
                             ),
                             child: SizedBox(
                               width: double.infinity,
@@ -180,9 +169,7 @@ class LoginView extends StatelessWidget {
                                     "iniciar",
                                   ),
                                   style: AppTheme.style(
-                                    context,
                                     Styles.whiteBoldStyle,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -201,9 +188,7 @@ class LoginView extends StatelessWidget {
                           "version",
                         )}: ${vmSplash.versionLocal}",
                         style: AppTheme.style(
-                          context,
                           Styles.versionStyle,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(width: 10)
@@ -226,9 +211,7 @@ class LoginView extends StatelessWidget {
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
-              context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
