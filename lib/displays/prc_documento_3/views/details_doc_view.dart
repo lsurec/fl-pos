@@ -98,7 +98,10 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       ),
                       children: [
                         TextSpan(
-                          text: "Id Doc Ref: ",
+                          text: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cotizacion,
+                            'docIdRef',
+                          ),
                           style: AppTheme.style(
                             context,
                             Styles.title,

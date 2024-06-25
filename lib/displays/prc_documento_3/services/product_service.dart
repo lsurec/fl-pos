@@ -205,64 +205,11 @@ class ProductService {
     }
   }
 
-  Future<ApiResModel> getProductId(
-    String id,
+  Future<ApiResModel> getProduct(
+    String search,
     String token,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/buscar/id/$id");
-    try {
-      //url completa
-
-      final response = await http.get(
-        url,
-        headers: {
-          "Authorization": "bearer $token",
-        },
-      );
-
-      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
-
-      //si el api no responde
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        return ApiResModel(
-          url: url.toString(),
-          succes: false,
-          response: res.data,
-          storeProcedure: res.storeProcedure,
-        );
-      }
-
-      List<ProductModel> products = [];
-
-      //recorrer lista api Y  agregar a lista local
-      for (var item in res.data) {
-        //Tipar a map
-        final responseFinally = ProductModel.fromMap(item);
-        //agregar item a la lista
-        products.add(responseFinally);
-      }
-
-      return ApiResModel(
-        url: url.toString(),
-        succes: true,
-        response: products,
-        storeProcedure: null,
-      );
-    } catch (e) {
-      return ApiResModel(
-        url: url.toString(),
-        succes: false,
-        response: e.toString(),
-        storeProcedure: null,
-      );
-    }
-  }
-
-  Future<ApiResModel> getProductDesc(
-    String desc,
-    String token,
-  ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/buscar/descripcion/$desc");
+    Uri url = Uri.parse("${_baseUrl}Producto/buscar/$search");
     try {
       //url completa
 

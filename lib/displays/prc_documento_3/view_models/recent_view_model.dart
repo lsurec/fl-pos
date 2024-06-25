@@ -248,7 +248,7 @@ class RecentViewModel extends ChangeNotifier {
 
       final RespLogin sku = resSku.response;
 
-      final ApiResModel resProduct = await productService.getProductId(
+      final ApiResModel resProduct = await productService.getProduct(
         sku.data,
         token,
       );

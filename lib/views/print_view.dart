@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/bloc/print_bloc/print_bloc.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/documento_view_model.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
     // ignore: library_prefixes
     as AppData;

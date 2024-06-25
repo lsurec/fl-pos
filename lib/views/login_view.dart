@@ -97,19 +97,27 @@ class LoginView extends StatelessWidget {
                                             BlockTranslate.login,
                                             "contrasena",
                                           ),
-                                          suffixIcon: IconButton(
-                                            onPressed: vm.toggle,
-                                            icon: Icon(
-                                              vm.obscureText
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: AppTheme.color(
-                                                context,
-                                                Styles.iconActive,
-                                                Preferences.idTheme,
-                                              ),
-                                            ),
+                                          suffixIcon: const Icon(
+                                            Icons.lock_outlined,
                                           ),
+                                          suffixIconColor: AppTheme.color(
+                                            context,
+                                            Styles.primary,
+                                            Preferences.idTheme,
+                                          ),
+                                          // suffixIcon: IconButton(
+                                          //   onPressed: vm.toggle,
+                                          //   icon: Icon(
+                                          //     vm.obscureText
+                                          //         ? Icons.visibility
+                                          //         : Icons.visibility_off,
+                                          //     color: AppTheme.color(
+                                          //       context,
+                                          //       Styles.iconActive,
+                                          //       Preferences.idTheme,
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ),
                                         onChanged: (value) => {
                                           vm.formValues['pass'] = value,

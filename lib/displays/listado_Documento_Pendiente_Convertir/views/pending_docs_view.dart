@@ -210,11 +210,14 @@ class PendingDocsView extends StatelessWidget {
                             return null;
                           },
                           decoration: InputDecoration(
-                            //TODO:Translate
-
-                            hintText: "Buscar",
-                            //TODO:Translate
-                            labelText: "Buscar",
+                            hintText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'buscar',
+                            ),
+                            labelText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tareas,
+                              'buscar',
+                            ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 Icons.search,
@@ -325,12 +328,12 @@ class _CardDoc extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextsWidget(
-                    title: "Id. Ref: ",
+                    title:  AppLocalizations.of(context)!.translate(BlockTranslate.cotizacion,'idRef',),
                     text: document.consecutivoInternoRef.toString(),
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
-                    title: "Cuenta:",
+                    title:  AppLocalizations.of(context)!.translate(BlockTranslate.cotizacion,'cuenta',),
                     text: document.cliente,
                   ),
                   const SizedBox(height: 5),

@@ -57,7 +57,10 @@ class ConfirmDocView extends StatelessWidget {
                   children: [
                     if (vm.showPrint)
                       Text(
-                        "Consecutivo interno",
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'consecutivoInter',
+                        ),
                         style: AppTheme.style(
                           context,
                           Styles.title,
@@ -83,7 +86,10 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            text: "Id Doc Ref: ",
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.cotizacion,
+                              'docIdRef',
+                            ),
                             style: AppTheme.style(
                               context,
                               Styles.title,
@@ -113,6 +119,7 @@ class ConfirmDocView extends StatelessWidget {
                         name: docVM.clienteSelect?.facturaNombre ?? "",
                         nit: docVM.clienteSelect?.facturaNit ?? "",
                         adress: docVM.clienteSelect?.facturaDireccion ?? "",
+                        desCtaCta: docVM.clienteSelect?.desCuentaCta ?? "",
                       ),
                     ),
                     if (docVM.cuentasCorrentistasRef.isNotEmpty)
@@ -1159,6 +1166,15 @@ class _DataUser extends StatelessWidget {
             BlockTranslate.general,
             'direccion',
           )}: ${user.adress}",
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
+        ),
+        Text(
+          //TODO:Translate
+          "Cuenta Cta: ${user.desCtaCta}",
           style: AppTheme.style(
             context,
             Styles.normal,
