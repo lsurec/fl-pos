@@ -59,20 +59,28 @@ class SelectClientView extends StatelessWidget {
                       horizontal: 20,
                     ),
                     title: Text(
-                      client.facturaNombre,
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                        Preferences.idTheme,
-                      ),
-                    ),
-                    subtitle: Text(
                       client.facturaNit,
                       style: AppTheme.style(
                         context,
                         Styles.normal,
                         Preferences.idTheme,
                       ),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 3),
+                        Text(
+                          client.facturaNombre,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Text("(${client.desCuentaCta})")
+                      ],
                     ),
                     onTap: () => docVM.selectClient(client, context),
                   );
