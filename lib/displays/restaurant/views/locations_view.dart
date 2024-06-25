@@ -34,12 +34,12 @@ class LocationsView extends StatelessWidget {
               child: ListView.builder(
                 itemCount: vm.locations.length,
                 itemBuilder: (BuildContext context, int index) {
-                  LocationsModel ubicacion = vm.locations[index];
+                  LocationModel ubicacion = vm.locations[index];
                   return GestureDetector(
                     child: _CardLocations(ubicacion: ubicacion),
                     onTap: () => vm.navigateTables(
                       context,
-                      ubicacion.elementoAsignado,
+                      ubicacion,
                     ),
                   );
                 },
@@ -69,7 +69,7 @@ class _CardLocations extends StatelessWidget {
     required this.ubicacion,
   }) : super(key: key);
 
-  final LocationsModel ubicacion;
+  final LocationModel ubicacion;
 
   @override
   Widget build(BuildContext context) {

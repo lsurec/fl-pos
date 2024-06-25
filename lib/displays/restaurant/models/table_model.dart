@@ -1,18 +1,10 @@
+// To parse this JSON data, do
+//
+//     final mesaModel = mesaModelFromMap(jsonString);
+
 import 'dart:convert';
 
 class TableModel {
-  int elementoAsignado;
-  String descripcion;
-  String elementoId;
-  int raiz;
-  int nivel;
-  int elementoAsignadoPadre;
-  int estado;
-  int ubicacionMesa;
-  int objHeight;
-  int objWidth;
-  dynamic objElementoAsignado;
-
   TableModel({
     required this.elementoAsignado,
     required this.descripcion,
@@ -25,7 +17,21 @@ class TableModel {
     required this.objHeight,
     required this.objWidth,
     required this.objElementoAsignado,
+    this.orders,
   });
+
+  int elementoAsignado;
+  String descripcion;
+  String elementoId;
+  int raiz;
+  int nivel;
+  int elementoAsignadoPadre;
+  int estado;
+  int ubicacionMesa;
+  int objHeight;
+  int objWidth;
+  String objElementoAsignado;
+  int? orders;
 
   factory TableModel.fromJson(String str) =>
       TableModel.fromMap(json.decode(str));

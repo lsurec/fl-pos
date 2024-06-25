@@ -21,7 +21,8 @@ class LocationsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  final List<LocationsModel> locations = [];
+  final List<LocationModel> locations = [];
+  LocationModel? location;
 
   Future<ApiResModel> loadLocations(BuildContext context) async {
     final vmLogin = Provider.of<LoginViewModel>(
@@ -69,7 +70,7 @@ class LocationsViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<LocationsModel> locationRes = resLocations.response;
+    final List<LocationModel> locationRes = resLocations.response;
 
     locations.clear();
     locations.addAll(locationRes);
@@ -79,14 +80,16 @@ class LocationsViewModel extends ChangeNotifier {
 
   Future<void> navigateTables(
     BuildContext context,
-    int elementAssigned,
+    LocationModel locationParam,
   ) async {
     isLoading = true;
 
     final vmTables = Provider.of<TablesViewModel>(context, listen: false);
 
-    final ApiResModel resTables =
-        await vmTables.loadTables(context, elementAssigned);
+    final ApiResModel resTables = await vmTables.loadTables(
+      context,
+      locationParam.elementoAsignado,
+    );
 
     if (!resTables.succes) {
       isLoading = false;
@@ -98,6 +101,11 @@ class LocationsViewModel extends ChangeNotifier {
 
     vmTables.tables.clear();
     vmTables.tables.addAll(tablesRes);
+
+    vmTables.updateOrdersTable(context);
+
+    location = null;
+    location = locationParam;
 
     Navigator.pushNamed(context, AppRoutes.tables);
 

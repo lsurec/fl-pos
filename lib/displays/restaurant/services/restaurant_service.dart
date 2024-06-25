@@ -115,12 +115,12 @@ class RestaurantService {
       }
 
       //bodegas disponibles
-      List<LocationsModel> locations = [];
+      List<LocationModel> locations = [];
 
       //recorrer lista api Y  agregar a lista local
       for (var item in res.data) {
         //Tipar a map
-        final responseFinally = LocationsModel.fromMap(item);
+        final responseFinally = LocationModel.fromMap(item);
         //agregar item a la lista
         locations.add(responseFinally);
       }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class LocationsModel {
+class LocationModel {
   int id;
   int elementoAsignado;
   String descripcion;
@@ -13,7 +13,7 @@ class LocationsModel {
   int objHeight;
   int objWidth;
 
-  LocationsModel({
+  LocationModel({
     required this.id,
     required this.elementoAsignado,
     required this.descripcion,
@@ -27,12 +27,12 @@ class LocationsModel {
     required this.objWidth,
   });
 
-  factory LocationsModel.fromJson(String str) =>
-      LocationsModel.fromMap(json.decode(str));
+  factory LocationModel.fromJson(String str) =>
+      LocationModel.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory LocationsModel.fromMap(Map<String, dynamic> json) => LocationsModel(
+  factory LocationModel.fromMap(Map<String, dynamic> json) => LocationModel(
         id: json["id"],
         elementoAsignado: json["elemento_Asignado"],
         descripcion: json["descripcion"],

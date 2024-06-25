@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/services.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -8,6 +9,23 @@ import 'package:provider/provider.dart';
 
 class TablesViewModel extends ChangeNotifier {
   final List<TableModel> tables = [];
+
+  updateOrdersTable(BuildContext context) {
+    final vmOrder = Provider.of<OrderViewModel>(context, listen: false);
+
+    for (var i = 0; i < tables.length; i++) {
+      final TableModel mesa = tables[i];
+
+      tables[i].orders = vmOrder.orders
+          .where((order) => order.mesa.elementoId
+              .toLowerCase()
+              .contains(mesa.elementoId.toLowerCase()))
+          .toList()
+          .length;
+    }
+
+    notifyListeners();
+  }
 
   Future<ApiResModel> loadTables(
     BuildContext context,

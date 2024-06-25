@@ -84,7 +84,7 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
-      final List<LocationsModel> locations = resLocations.response;
+      final List<LocationModel> locations = resLocations.response;
 
       vmLoc.locations.clear();
       vmLoc.locations.addAll(locations);
