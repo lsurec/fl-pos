@@ -84,7 +84,7 @@ class UsuariosViewModel extends ChangeNotifier {
     }
 
     //agregar a lista usuarios la respuesta de api.
-    usuarios.addAll(res.message);
+    usuarios.addAll(res.response);
 
     isLoading = false; //Detener carga
   }

@@ -20,12 +20,17 @@ class NotificationService {
     final snackBar = SnackBar(
       content: Text(
         message,
-        style: AppTheme.styleTheme(
-          Styles.normal,
-          Preferences.theme,
+        style: AppTheme.style(
+          messengerKey.currentContext!,
+          Styles.whiteStyle,
+          Preferences.idTheme,
         ),
       ),
-      backgroundColor: AppTheme.primary,
+      backgroundColor: AppTheme.color(
+        messengerKey.currentContext!,
+        Styles.primary,
+        Preferences.idTheme,
+      ),
       // action: SnackBarAction(
       //   label: 'Aceptar',
       //   onPressed: () => Navigator.pop(context),
@@ -149,7 +154,7 @@ class NotificationService {
   ) async {
     ErrorModel error = ErrorModel(
       date: DateTime.now(),
-      description: res.message,
+      description: res.response,
       url: res.url,
       storeProcedure: res.storeProcedure,
     );

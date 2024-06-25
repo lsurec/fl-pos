@@ -6,7 +6,9 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -39,9 +41,6 @@ class DetailsViewModel extends ChangeNotifier {
 
   //opciones Monto/porcentaje
   String? selectedOption = "Porcentaje"; // Opción seleccionada
-
-  //Filtro seleccionado SKU/Descripcion
-  String? filterOption = "SKU"; // Opción seleccionada
 
   //Key for form barra busqueda
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
@@ -82,19 +81,23 @@ class DetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Cambair valor ociones filtros
-  void changeOptionFilter(String? value) {
-    filterOption = value; //asignar nuevo valor
-    notifyListeners();
-  }
-
   //Buscar con input
   Future<void> performSearch(BuildContext context) async {
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
     //ocultar tecladp
     FocusScope.of(context).unfocus();
 
     //validar dormulario
     if (!isValidFormCSearch()) return;
+
+    if (docVM.serieSelect == null) {
+      //TODO:TRANSLATE
+      NotificationService.showSnackbar("Seelcciona una serie");
+      return;
+    }
 
     //Limpiar lista de productros
     products.clear();
@@ -123,39 +126,26 @@ class DetailsViewModel extends ChangeNotifier {
     //instacia del servicio
     ProductService productService = ProductService();
 
-    //respuesta del servixio
-    ApiResModel? res;
-
     //load prosses
     vmFactura.isLoading = true;
 
-    //si el filtro es  sku
-    if (filterOption == "SKU") {
-      //Consumir api
-      res = await productService.getProductId(searchText, loginVM.token);
-    }
-
-    //si el filtro es descripcion
-    if (filterOption == "Descripcion") {
-      //consumir api
-      res = await productService.getProductDesc(searchText, loginVM.token);
-    }
+    final ApiResModel resDesc =
+        await productService.getProduct(searchText, loginVM.token);
 
     //valid succes response
-    if (!res!.succes) {
+    if (!resDesc.succes) {
       //si algo salio mal mostrar alerta
       vmFactura.isLoading = false;
 
       await NotificationService.showErrorView(
         context,
-        res,
+        resDesc,
       );
 
       return;
     }
 
-    //Agregar productos encontrados
-    products.addAll(res.message);
+    products.addAll(resDesc.response);
 
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
@@ -217,7 +207,7 @@ class DetailsViewModel extends ChangeNotifier {
           );
           return;
         }
-        productVM.prices = precios.message;
+        productVM.prices = precios.response;
 
         if (productVM.prices.isEmpty) {
           NotificationService.showSnackbar(
@@ -670,7 +660,11 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Mostrar el SnackBar con la opción de deshacer
     final snackBar = SnackBar(
-      backgroundColor: AppTheme.primary,
+      backgroundColor: AppTheme.color(
+        context,
+        Styles.primary,
+        Preferences.idTheme,
+      ),
       duration: const Duration(seconds: 5),
       content: Row(
         children: [
@@ -691,7 +685,11 @@ class DetailsViewModel extends ChangeNotifier {
           BlockTranslate.botones,
           'deshacer',
         ),
-        textColor: Colors.white,
+        textColor: AppTheme.color(
+          context,
+          Styles.white,
+          Preferences.idTheme,
+        ),
         onPressed: () {
           // Acción de deshacer: Restaurar el elemento eliminado
           traInternas.insert(index, deletedItem);

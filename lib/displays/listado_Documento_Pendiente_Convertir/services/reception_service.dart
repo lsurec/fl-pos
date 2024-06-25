@@ -48,7 +48,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -68,7 +68,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: detalles,
+        response: detalles,
         storeProcedure: null,
       );
     } catch (e) {
@@ -76,7 +76,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -121,7 +121,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -141,7 +141,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: detalles,
+        response: detalles,
         storeProcedure: null,
       );
     } catch (e) {
@@ -149,7 +149,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -181,7 +181,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -192,7 +192,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: resDoc,
+        response: resDoc,
         storeProcedure: null,
       );
     } catch (e) {
@@ -200,7 +200,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -236,7 +236,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -245,7 +245,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: "ok",
+        response: "ok",
         storeProcedure: null,
       );
     } catch (e) {
@@ -253,7 +253,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -298,7 +298,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -318,7 +318,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: detalles,
+        response: detalles,
         storeProcedure: null,
       );
     } catch (e) {
@@ -326,7 +326,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -356,7 +356,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -376,7 +376,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: docs,
+        response: docs,
         storeProcedure: null,
       );
     } catch (e) {
@@ -384,7 +384,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -397,6 +397,7 @@ class ReceptionService {
     int doc,
     String fechaIni,
     String fechaFin,
+    String criterio,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Recepcion/pending/documents");
     try {
@@ -411,6 +412,8 @@ class ReceptionService {
           "doc": "$doc",
           "fechaIni": fechaIni,
           "fechaFin": fechaFin,
+          "criterio": criterio.isNotEmpty ? criterio : "empty",
+          "opcion": criterio.isNotEmpty ? "0" : "1",
         },
       );
 
@@ -421,7 +424,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -441,7 +444,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: docs,
+        response: docs,
         storeProcedure: null,
       );
     } catch (e) {
@@ -449,7 +452,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -488,7 +491,7 @@ class ReceptionService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -508,7 +511,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: docs,
+        response: docs,
         storeProcedure: null,
       );
     } catch (e) {
@@ -516,7 +519,7 @@ class ReceptionService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

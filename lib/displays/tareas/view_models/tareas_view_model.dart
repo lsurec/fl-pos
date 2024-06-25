@@ -76,7 +76,7 @@ class TareasViewModel extends ChangeNotifier {
       return;
     }
     //agregar tareas encontradas a la lista de tareas
-    tareas.addAll(res.message);
+    tareas.addAll(res.response);
 
     isLoading = false; //detener carga
   }
@@ -112,7 +112,7 @@ class TareasViewModel extends ChangeNotifier {
     }
 
     //agregar a la lista las tareas encontradas
-    tareas.addAll(res.message);
+    tareas.addAll(res.response);
 
     isLoading = false; //detener carga
   }
@@ -148,7 +148,7 @@ class TareasViewModel extends ChangeNotifier {
     }
 
     //Agregar a la lista las tareas encontradas.
-    tareas.addAll(res.message);
+    tareas.addAll(res.response);
 
     isLoading = false; //detener carga
   }
@@ -302,8 +302,8 @@ class TareasViewModel extends ChangeNotifier {
     if (!comentarios.succes) return false;
 
     //Recorrer lista de comentarios para obtener los objetos de los comentarios
-    for (var i = 0; i < comentarios.message.length; i++) {
-      final ComentarioModel coment = comentarios.message[i];
+    for (var i = 0; i < comentarios.response.length; i++) {
+      final ComentarioModel coment = comentarios.response[i];
 
       //Obtener los objetos del comentario
       ApiResModel objeto = await vmTarea.obtenerObjetoComentario(
@@ -314,8 +314,8 @@ class TareasViewModel extends ChangeNotifier {
 
       //comentario completo (comentario y objetos)
       vmComentario.comentarioDetalle.add(ComentarioDetalleModel(
-        comentario: comentarios.message[i],
-        objetos: objeto.message,
+        comentario: comentarios.response[i],
+        objetos: objeto.response,
       ));
     }
 

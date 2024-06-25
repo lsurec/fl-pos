@@ -97,7 +97,7 @@ class PaymentViewModel extends ChangeNotifier {
     }
 
     //agregar formas de pago encontradas
-    paymentList.addAll(res.message);
+    paymentList.addAll(res.response);
 
     notifyListeners();
   }
@@ -139,7 +139,7 @@ class PaymentViewModel extends ChangeNotifier {
     }
 
     //agreagar cuenta banccaria a un modelo nuevo
-    for (var account in res.message as List<AccountModel>) {
+    for (var account in res.response as List<AccountModel>) {
       accounts.add(SelectAccountModel(account: account, isSelected: false));
     }
 
@@ -188,7 +188,7 @@ class PaymentViewModel extends ChangeNotifier {
     }
 
     //Agregar bancos a un modelo nuevo
-    for (var bank in res.message as List<BankModel>) {
+    for (var bank in res.response as List<BankModel>) {
       banks.add(SelectBankModel(bank: bank, isSelected: false));
     }
 

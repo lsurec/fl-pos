@@ -19,7 +19,11 @@
         "aplicacion": "Applications",
         "configuracion": "Settings",
         "nuevaVersion": "New version available.",
-        "continuar": "Update to continue."
+        "continuar": "Update to continue.",
+        "tema": "App Theme",
+        "claro": "Light",
+        "oscuro": "Dark",
+        "temaDispositivo": "Determined by System"
     },
     "login": {
         "contrasena": "Password",
@@ -190,7 +194,11 @@
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
         "idioma": "Select your preferred language.",
-        "seleccionado": "Selected language."
+        "tema": "Select the theme of your preference. Or continue with the topic of your device.",
+        "seleccionado": "Selected language.",
+        "nuevoTema": "Selected theme.",
+        "reiniciarTema": "The application will restart once you have selected your preferred theme.",
+        "nota": "Note:"
     },
     "error": {
         "informeT": "ERROR REPORT",
@@ -271,7 +279,8 @@
         "certificador": "Certifier data:",
         "imprimir": "Print document after confirming.",
         "mesa": "Table",
-        "atencion": "Served by"
+        "atencion": "Served by",
+        "serie": "Internal series:"
     },
     "generales": {
         "registro": "Records",
@@ -323,7 +332,9 @@
         "tipoPrecio": "Price type",
         "presentaciones": "Presentations",
         "cantidad": "Quantity",
-        "docRecientes": "Recent documents"
+        "docRecientes": "Recent documents",
+        "skuDesc": "SKU/Description",
+        "buscarPro": "Search product"
     },
     "calculos": {
         "calcular": "Calculate",
@@ -360,7 +371,11 @@
         "transacciones": "Transactions",
         "origen": "Source",
         "destino": "Destination",
-        "filtroDoc": "Document ID"
+        "filtroDoc": "Document ID",
+        "docIdRef": "Doc ID Ref: ",
+        "consecutivoInter": "Internal Consecutive",
+        "idRef": "ID Ref: ",
+        "cuenta": "Account: "
     },
     "tareas": {
         "numTarea": "Task No: ",

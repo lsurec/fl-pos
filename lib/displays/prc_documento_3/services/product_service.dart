@@ -8,6 +8,87 @@ class ProductService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
 
+  Future<ApiResModel> getValidateProducts(
+    String user,
+    String serie,
+    int tipoDocumento,
+    int estacion,
+    int empresa,
+    int bodega,
+    int tipoTransaccion,
+    int unidadMedida,
+    int producto,
+    int cantidad,
+    double tipoCambio,
+    int moneda,
+    int tipoPrecio,
+    String token,
+  ) async {
+    //url completa
+    Uri url = Uri.parse("${_baseUrl}Producto/validate");
+
+    try {
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "serie": serie,
+          "tipoDocumento": "$tipoDocumento",
+          "estacion": "$estacion",
+          "empresa": "$empresa",
+          "bodega": "$bodega",
+          "tipoTransaccion": "$tipoTransaccion",
+          "unidadMedida": "$unidadMedida",
+          "producto": "$producto",
+          "cantidad": "$cantidad",
+          "tipoCambio": "$tipoCambio",
+          "moneda": "$moneda",
+          "tipoPrecio": "$tipoPrecio",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //bodegas disponibles
+      List<String> mensajes = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        //agregar item a la lista
+        mensajes.add(item);
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: mensajes,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
   Future<ApiResModel> getSku(
     String token,
     int product,
@@ -32,7 +113,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -43,7 +124,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: respLogin,
+        response: respLogin,
         storeProcedure: null,
       );
     } catch (e) {
@@ -51,7 +132,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -90,7 +171,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -110,7 +191,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: bodegas,
+        response: bodegas,
         storeProcedure: null,
       );
     } catch (e) {
@@ -118,17 +199,17 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
   }
 
-  Future<ApiResModel> getProductId(
-    String id,
+  Future<ApiResModel> getProduct(
+    String search,
     String token,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/buscar/id/$id");
+    Uri url = Uri.parse("${_baseUrl}Producto/buscar/$search");
     try {
       //url completa
 
@@ -146,7 +227,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -164,67 +245,14 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: products,
+        response: products,
         storeProcedure: null,
       );
     } catch (e) {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
-        storeProcedure: null,
-      );
-    }
-  }
-
-  Future<ApiResModel> getProductDesc(
-    String desc,
-    String token,
-  ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/buscar/descripcion/$desc");
-    try {
-      //url completa
-
-      final response = await http.get(
-        url,
-        headers: {
-          "Authorization": "bearer $token",
-        },
-      );
-
-      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
-
-      //si el api no responde
-      if (response.statusCode != 200 && response.statusCode != 201) {
-        return ApiResModel(
-          url: url.toString(),
-          succes: false,
-          message: res.data,
-          storeProcedure: res.storeProcedure,
-        );
-      }
-
-      List<ProductModel> products = [];
-
-      //recorrer lista api Y  agregar a lista local
-      for (var item in res.data) {
-        //Tipar a map
-        final responseFinally = ProductModel.fromMap(item);
-        //agregar item a la lista
-        products.add(responseFinally);
-      }
-
-      return ApiResModel(
-        url: url.toString(),
-        succes: true,
-        message: products,
-        storeProcedure: null,
-      );
-    } catch (e) {
-      return ApiResModel(
-        url: url.toString(),
-        succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -259,7 +287,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -277,7 +305,7 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: precios,
+        response: precios,
         storeProcedure: null,
       );
     } catch (e) {
@@ -285,7 +313,7 @@ class ProductService {
         url: url.toString(),
         succes: false,
         storeProcedure: null,
-        message: e.toString(),
+        response: e.toString(),
       );
     }
   }
@@ -319,7 +347,7 @@ class ProductService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -337,14 +365,14 @@ class ProductService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: factor,
+        response: factor,
         storeProcedure: null,
       );
     } catch (e) {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

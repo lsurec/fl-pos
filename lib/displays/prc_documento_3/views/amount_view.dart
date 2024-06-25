@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,11 @@ class AmountView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vmPayment.isLoading) const LoadWidget(),
       ],
@@ -67,7 +73,11 @@ class _Body extends StatelessWidget {
                   children: [
                     Text(
                       payment.descripcion,
-                      style: AppTheme.titleStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.title,
+                        Preferences.idTheme,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     //monto
@@ -75,7 +85,8 @@ class _Body extends StatelessWidget {
                       controller: vm.montoController,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
-                            RegExp(r'^(\d+)?\.?\d{0,2}'))
+                          RegExp(r'^(\d+)?\.?\d{0,2}'),
+                        ),
                       ],
                       keyboardType: TextInputType.number,
                       onChanged: (value) => vm.formValues["monto"] = value,
@@ -88,9 +99,13 @@ class _Body extends StatelessWidget {
                         hintText: "00.00",
                         suffixIcon: IconButton(
                           onPressed: () => vm.montoController.clear(),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.close,
-                            color: AppTheme.primary,
+                            color: AppTheme.color(
+                              context,
+                              Styles.darkPrimary,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ),
                       ),
@@ -149,7 +164,11 @@ class _Body extends StatelessWidget {
                           BlockTranslate.factura,
                           'banco',
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                     if (payment.banco) const SizedBox(height: 10),
                     if (payment.banco)
@@ -161,11 +180,26 @@ class _Body extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           SelectBankModel bank = vmPayment.banks[index];
                           return Card(
-                            color: AppTheme.grayAppBar,
+                            color: AppTheme.color(
+                              context,
+                              Styles.transaction,
+                              Preferences.idTheme,
+                            ),
                             elevation: 2.0,
                             child: RadioListTile(
-                              activeColor: AppTheme.primary,
-                              title: Text(bank.bank.nombre),
+                              activeColor: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                                Preferences.idTheme,
+                              ),
+                              title: Text(
+                                bank.bank.nombre,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                  Preferences.idTheme,
+                                ),
+                              ),
                               value: index,
                               groupValue: vmPayment.banks
                                   .indexWhere((bank) => bank.isSelected),
@@ -187,7 +221,11 @@ class _Body extends StatelessWidget {
                           BlockTranslate.factura,
                           'cuentas',
                         ),
-                        style: AppTheme.normalBoldStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                          Preferences.idTheme,
+                        ),
                       ),
                     if (vmPayment.accounts.isNotEmpty)
                       const SizedBox(height: 10),
@@ -201,11 +239,26 @@ class _Body extends StatelessWidget {
                           SelectAccountModel account =
                               vmPayment.accounts[index];
                           return Card(
-                            color: AppTheme.grayAppBar,
+                            color: AppTheme.color(
+                              context,
+                              Styles.transaction,
+                              Preferences.idTheme,
+                            ),
                             elevation: 2.0,
                             child: RadioListTile(
-                              activeColor: AppTheme.primary,
-                              title: Text(account.account.descripcion),
+                              activeColor: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                                Preferences.idTheme,
+                              ),
+                              title: Text(
+                                account.account.descripcion,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                  Preferences.idTheme,
+                                ),
+                              ),
                               value: index,
                               groupValue: vmPayment.accounts
                                   .indexWhere((acc) => acc.isSelected),
@@ -248,16 +301,21 @@ class _ButtonConfirm extends StatelessWidget {
       child: GestureDetector(
         onTap: () => vm.addAmount(payment, context),
         child: Container(
-          color: AppTheme.primary,
+          color: AppTheme.color(
+            context,
+            Styles.primary,
+            Preferences.idTheme,
+          ),
           child: Center(
             child: Text(
               AppLocalizations.of(context)!.translate(
                 BlockTranslate.factura,
                 'agregarPago',
               ),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 17,
+              style: AppTheme.style(
+                context,
+                Styles.whiteStyle,
+                Preferences.idTheme,
               ),
             ),
           ),
@@ -283,7 +341,11 @@ class _Footer extends StatelessWidget {
             'total',
           ),
           value: vmDetails.total,
-          color: AppTheme.primary,
+          color: AppTheme.color(
+            context,
+            Styles.darkPrimary,
+            Preferences.idTheme,
+          ),
         ),
         RowTotalWidget(
           title: AppLocalizations.of(context)!.translate(
@@ -291,7 +353,11 @@ class _Footer extends StatelessWidget {
             'saldo',
           ),
           value: vmPayment.saldo,
-          color: AppTheme.primary,
+          color: AppTheme.color(
+            context,
+            Styles.darkPrimary,
+            Preferences.idTheme,
+          ),
         ),
         RowTotalWidget(
           title: AppLocalizations.of(context)!.translate(
@@ -299,7 +365,11 @@ class _Footer extends StatelessWidget {
             'cambio',
           ),
           value: vmPayment.cambio,
-          color: AppTheme.primary,
+          color: AppTheme.color(
+            context,
+            Styles.darkPrimary,
+            Preferences.idTheme,
+          ),
         ),
       ],
     );

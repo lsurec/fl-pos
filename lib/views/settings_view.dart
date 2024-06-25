@@ -15,6 +15,7 @@ class SettingsView extends StatelessWidget {
     final vm = Provider.of<SettingsViewModel>(context);
     final vmSplash = Provider.of<SplashViewModel>(context);
     final vmLang = Provider.of<LangViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,9 +24,10 @@ class SettingsView extends StatelessWidget {
             BlockTranslate.home,
             'configuracion',
           ),
-          style: AppTheme.styleTheme(
+          style: AppTheme.style(
+            context,
             Styles.title,
-            Preferences.theme,
+            Preferences.idTheme,
           ),
         ),
       ),
@@ -41,10 +43,6 @@ class SettingsView extends StatelessWidget {
                     BlockTranslate.impresora,
                     'impresora',
                   ),
-                  style: AppTheme.styleTheme(
-                    Styles.normal,
-                    Preferences.theme,
-                  ),
                 ),
                 trailing: const Icon(Icons.arrow_right),
                 onTap: () => vm.navigatePrint(context),
@@ -56,18 +54,8 @@ class SettingsView extends StatelessWidget {
                     BlockTranslate.home,
                     'origen',
                   ),
-                  style: AppTheme.styleTheme(
-                    Styles.normal,
-                    Preferences.theme,
-                  ),
                 ),
-                subtitle: Text(
-                  Preferences.urlApi,
-                  style: AppTheme.styleTheme(
-                    Styles.subTitle,
-                    Preferences.theme,
-                  ),
-                ),
+                subtitle: Text(Preferences.urlApi),
               ),
               ListTile(
                 leading: const Icon(Icons.help_outline),
@@ -75,10 +63,6 @@ class SettingsView extends StatelessWidget {
                   AppLocalizations.of(context)!.translate(
                     BlockTranslate.botones,
                     'ayuda',
-                  ),
-                  style: AppTheme.styleTheme(
-                    Styles.normal,
-                    Preferences.theme,
                   ),
                 ),
                 trailing: const Icon(Icons.arrow_right),
@@ -91,21 +75,36 @@ class SettingsView extends StatelessWidget {
                     BlockTranslate.home,
                     'idioma',
                   ),
-                  style: AppTheme.styleTheme(
+                  style: AppTheme.style(
+                    context,
                     Styles.normal,
-                    Preferences.theme,
+                    Preferences.idTheme,
                   ),
                 ),
                 //Nombre del idioma seleccionado en el idioma seleccionado
                 subtitle: Text(
                   vmLang.getNameLang(vmLang.languages[Preferences.idLanguage])!,
-                  style: AppTheme.styleTheme(
-                    Styles.subTitle,
-                    Preferences.theme,
-                  ),
                 ),
                 trailing: const Icon(Icons.arrow_right),
                 onTap: () => vm.navigateLang(context),
+              ),
+              ListTile(
+                leading: vmTheme.getThemeIcon(
+                  context,
+                  Preferences.idTheme,
+                ),
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.home,
+                    'tema',
+                  ),
+                ),
+                //Nombre del idioma seleccionado en el idioma seleccionado
+                subtitle: Text(
+                  vmTheme.temasApp(context)[Preferences.theme].descripcion,
+                ),
+                trailing: const Icon(Icons.arrow_right),
+                onTap: () => vm.navigateTheme(context),
               ),
               ListTile(
                 leading: const Icon(Icons.cloud_outlined),
@@ -114,18 +113,8 @@ class SettingsView extends StatelessWidget {
                     BlockTranslate.home,
                     'versionActual',
                   ),
-                  style: AppTheme.styleTheme(
-                    Styles.normal,
-                    Preferences.theme,
-                  ),
                 ),
-                subtitle: Text(
-                  vmSplash.versionLocal,
-                  style: AppTheme.styleTheme(
-                    Styles.subTitle,
-                    Preferences.theme,
-                  ),
-                ),
+                subtitle: Text(vmSplash.versionLocal),
               ),
             ],
           ),

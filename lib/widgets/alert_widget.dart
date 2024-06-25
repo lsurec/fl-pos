@@ -26,9 +26,10 @@ class AlertWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.colorTheme(
-        Styles.background,
-        Preferences.theme,
+      backgroundColor: AppTheme.color(
+        context,
+        Styles.black,
+        Preferences.idTheme,
       ),
       title: Text(title),
       content: Text(description),
@@ -40,6 +41,11 @@ class AlertWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'cancelar',
                 ),
+            style: AppTheme.style(
+              context,
+              Styles.action,
+              Preferences.idTheme,
+            ),
           ),
           onPressed: () => onCancel(),
         ),
@@ -50,6 +56,11 @@ class AlertWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'aceptar',
                 ),
+            style: AppTheme.style(
+              context,
+              Styles.action,
+              Preferences.idTheme,
+            ),
           ),
           onPressed: () => onOk(),
         ),

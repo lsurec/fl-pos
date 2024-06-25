@@ -69,7 +69,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<EmpresaModel> empresas = resEmpresa.message;
+    final List<EmpresaModel> empresas = resEmpresa.response;
 
     for (var i = 0; i < empresas.length; i++) {
       final EmpresaModel item = empresas[i];
@@ -98,7 +98,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<EstacionModel> estaciones = resEstacion.message;
+    final List<EstacionModel> estaciones = resEstacion.response;
 
     for (var i = 0; i < estaciones.length; i++) {
       final EstacionModel item = estaciones[i];
@@ -130,7 +130,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<SerieModel> series = resSerie.message;
+    final List<SerieModel> series = resSerie.response;
 
     for (var i = 0; i < series.length; i++) {
       final SerieModel item = series[i];
@@ -160,7 +160,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final RespLogin nameClient = resNameClient.message;
+    final RespLogin nameClient = resNameClient.response;
 
     if (nameClient.data != null) {
       final ApiResModel resCuentaClient =
@@ -182,7 +182,7 @@ class RecentViewModel extends ChangeNotifier {
         return;
       }
 
-      final List<ClientModel> cuentas = resCuentaClient.message;
+      final List<ClientModel> cuentas = resCuentaClient.response;
 
       for (var i = 0; i < cuentas.length; i++) {
         final ClientModel item = cuentas[i];
@@ -213,7 +213,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<SellerModel> vendedores = resVendedor.message;
+    final List<SellerModel> vendedores = resVendedor.response;
 
     for (var i = 0; i < vendedores.length; i++) {
       final SellerModel item = vendedores[i];
@@ -246,9 +246,9 @@ class RecentViewModel extends ChangeNotifier {
         return;
       }
 
-      final RespLogin sku = resSku.message;
+      final RespLogin sku = resSku.response;
 
-      final ApiResModel resProduct = await productService.getProductId(
+      final ApiResModel resProduct = await productService.getProduct(
         sku.data,
         token,
       );
@@ -264,7 +264,7 @@ class RecentViewModel extends ChangeNotifier {
         return;
       }
 
-      final List<ProductModel> products = resProduct.message;
+      final List<ProductModel> products = resProduct.response;
 
       for (var i = 0; i < products.length; i++) {
         final ProductModel item = products[i];
@@ -300,7 +300,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<PaymentModel> pagos = resPagos.message;
+    final List<PaymentModel> pagos = resPagos.response;
 
     final List<AmountModel> montos = [];
 
@@ -324,7 +324,7 @@ class RecentViewModel extends ChangeNotifier {
           return;
         }
 
-        final List<BankModel> bancos = resBancos.message;
+        final List<BankModel> bancos = resBancos.response;
 
         for (var i = 0; i < bancos.length; i++) {
           final BankModel item = bancos[i];
@@ -352,7 +352,7 @@ class RecentViewModel extends ChangeNotifier {
             return;
           }
 
-          List<AccountModel> cuentasBanco = resCuentaBanco.message;
+          List<AccountModel> cuentasBanco = resCuentaBanco.response;
 
           for (var i = 0; i < cuentasBanco.length; i++) {
             final AccountModel item = cuentasBanco[i];
@@ -388,6 +388,7 @@ class RecentViewModel extends ChangeNotifier {
     }
 
     final DetailDocModel detallesDoc = DetailDocModel(
+      idRef: doc.estructura.docIdDocumentoRef,
       fecha: strDate(doc.item.fechaHora),
       consecutivo: doc.item.consecutivoInterno,
       empresa: empresa!,
@@ -478,7 +479,7 @@ class RecentViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<GetDocModel> docs = res.message;
+    final List<GetDocModel> docs = res.response;
 
     for (var doc in docs) {
       final DocEstructuraModel estructura =

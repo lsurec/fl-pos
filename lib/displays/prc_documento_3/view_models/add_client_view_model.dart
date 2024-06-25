@@ -120,7 +120,7 @@ class AddClientViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<ClientModel> clients = resClient.message;
+    final List<ClientModel> clients = resClient.response;
 
     if (clients.isEmpty) {
       NotificationService.showSnackbar(

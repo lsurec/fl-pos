@@ -80,23 +80,39 @@ class SplashViewModel extends ChangeNotifier {
     //   }
     // }
 
-    //si no hay una url para las apis configurada y si no hay idioma seleccionado
-    //mostrar pantalla de idiomas
-    if (Preferences.urlApi.isEmpty && Preferences.language.isEmpty) {
-      Preferences.idLanguage = 0;
-      // Simula una carga de datos
-      await Future.delayed(const Duration(seconds: 1));
+    //PASOS SPLASH 1: IDIOMA, 2: TEMA, 3: URL, 4: TOKEN 5: ESTACION
 
-      //mostrar pantallaconfiguracion de apis
+    // si no hay un idioma guardado, mostrar pantalla de idioma
+    if (Preferences.language.isEmpty) {
+      print("1 Idioma");
+      Preferences.idLanguage = 0;
+
+      await Future.delayed(const Duration(seconds: 1));
+      //mostrar login
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const LangView(),
         ), // Cambiar a la pantalla principal después de cargar los datos
       );
       return;
+    }
 
-      //entrar a pantalla de la url de las apis si no hay url guardada y ya existe un idioma guardado
-    } else if (Preferences.language.isNotEmpty && Preferences.urlApi.isEmpty) {
+    //sino hay tema seleccionado, mostrar pantalla de temas
+    if (Preferences.idTheme.isEmpty) {
+      print("2 Thema");
+
+      await Future.delayed(const Duration(seconds: 1));
+      //mostrar login
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ThemeView(),
+        ), // Cambiar a la pantalla principal después de cargar los datos
+      );
+      return;
+    }
+
+    if (Preferences.urlApi.isEmpty) {
+      print("3 Url");
       //si hay un idioma guardado asignarlo a la variable global del idioma
       AppLocalizations.idioma = Locale(Preferences.language);
       // Simula una carga de datos
@@ -113,6 +129,7 @@ class SplashViewModel extends ChangeNotifier {
 
     // si no hay una sesion de usuario guradada
     if (Preferences.token.isEmpty) {
+      print("4 Token");
       await Future.delayed(const Duration(seconds: 1));
       //mostrar login
       Navigator.of(context).pushReplacement(
@@ -177,8 +194,8 @@ class SplashViewModel extends ChangeNotifier {
       return;
     }
 
-    localVM.empresas.addAll(resEmpresas.message);
-    localVM.estaciones.addAll(resEstaciones.message);
+    localVM.empresas.addAll(resEmpresas.response);
+    localVM.estaciones.addAll(resEstaciones.response);
 
     if (localVM.estaciones.length == 1) {
       localVM.selectedEstacion = localVM.estaciones.first;
@@ -211,7 +228,7 @@ class SplashViewModel extends ChangeNotifier {
         return;
       }
 
-      final List<ApplicationModel> applications = resApps.message;
+      final List<ApplicationModel> applications = resApps.response;
 
       menuVM.menuData.clear();
 
@@ -239,7 +256,7 @@ class SplashViewModel extends ChangeNotifier {
         menuVM.menuData.add(
           MenuData(
             application: application,
-            children: resDisplay.message,
+            children: resDisplay.response,
           ),
         );
       }

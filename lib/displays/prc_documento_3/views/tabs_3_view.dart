@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
@@ -18,30 +20,30 @@ class Tabs3View extends StatefulWidget {
 
 class _Tabs3ViewState extends State<Tabs3View>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    final vm = Provider.of<DocumentoViewModel>(context, listen: false);
+
+    vm.tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
   }
 
   loadData(BuildContext context) {
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+    vmConfirm.setIdDocumentoRef();
     //cargar documento guardado en el dispositivo
     DocumentService documentService = DocumentService();
     documentService.loadDocumentSave(context);
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   final vm = Provider.of<DocumentoViewModel>(context, listen: false);
 
-  void _goToFirstTab() {
-    _tabController.animateTo(0); // Cambiar al primer tab (índice 0)
-  }
+  //   vm.tabController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,11 @@ class _Tabs3ViewState extends State<Tabs3View>
             appBar: AppBar(
               title: Text(
                 vmMenu.name,
-                style: AppTheme.titleStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.title,
+                  Preferences.idTheme,
+                ),
               ),
               actions: [
                 IconButton(
@@ -73,7 +79,7 @@ class _Tabs3ViewState extends State<Tabs3View>
                     BlockTranslate.botones,
                     'nuevoDoc',
                   ),
-                  onPressed: () => vm.newDocument(context, _goToFirstTab),
+                  onPressed: () => vm.newDocument(context),
                   icon: const Icon(Icons.note_add_outlined),
                 ),
                 if (vmDoc.monitorPrint())
@@ -107,11 +113,19 @@ class _Tabs3ViewState extends State<Tabs3View>
                               BlockTranslate.factura,
                               'tipoDoc',
                             ),
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                           subtitle: Text(
                             "${vmMenu.documentoName} (${vmMenu.documento})",
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ),
                       if (vmDoc.serieSelect != null)
@@ -121,11 +135,19 @@ class _Tabs3ViewState extends State<Tabs3View>
                               BlockTranslate.general,
                               'serie',
                             ),
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                           subtitle: Text(
                             "${vmDoc.serieSelect!.descripcion} (${vmDoc.serieSelect!.serieDocumento})",
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ),
                     ],
@@ -133,9 +155,17 @@ class _Tabs3ViewState extends State<Tabs3View>
                 ),
               ],
               bottom: TabBar(
-                controller: _tabController,
-                labelColor: Colors.black,
-                indicatorColor: AppTheme.primary,
+                controller: vm.tabController,
+                labelColor: AppTheme.color(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
+                indicatorColor: AppTheme.color(
+                  context,
+                  Styles.darkPrimary,
+                  Preferences.idTheme,
+                ),
                 tabs: [
                   Tab(
                     text: AppLocalizations.of(context)!.translate(
@@ -159,7 +189,7 @@ class _Tabs3ViewState extends State<Tabs3View>
               ),
             ),
             body: TabBarView(
-              controller: _tabController,
+              controller: vm.tabController,
               children: const [
                 // Contenido de la primera pestaña
                 DocumentView(),
@@ -175,7 +205,11 @@ class _Tabs3ViewState extends State<Tabs3View>
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

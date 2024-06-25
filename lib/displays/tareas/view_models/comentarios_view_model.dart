@@ -95,7 +95,7 @@ class ComentariosViewModel extends ChangeNotifier {
       nameUser: user,
       userName: user,
       tarea: idTarea!,
-      tareaComentario: res.message.res,
+      tareaComentario: res.response.res,
     );
 
     final List<ObjetoComentarioModel> archivos = [];
@@ -129,7 +129,7 @@ class ComentariosViewModel extends ChangeNotifier {
 
         ApiResModel error = ApiResModel(
           succes: false,
-          message:
+          response:
               "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
           url: "",
           storeProcedure: null,

@@ -56,7 +56,7 @@ class ResolveApisService {
           return ApiResModel(
             url: url.toString(),
             succes: false,
-            message: AppLocalizations.of(context)!.translate(
+            response: AppLocalizations.of(context)!.translate(
               BlockTranslate.notificacion,
               'metodos',
             ),
@@ -68,7 +68,7 @@ class ResolveApisService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: response.body,
+          response: response.body,
           storeProcedure: null,
         );
       }
@@ -84,7 +84,7 @@ class ResolveApisService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: resJson,
+        response: resJson,
         storeProcedure: null,
       );
     } catch (e) {
@@ -92,7 +92,7 @@ class ResolveApisService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

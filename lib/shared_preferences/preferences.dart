@@ -15,6 +15,8 @@ class Preferences {
   static const String _langKey = "langKey";
   static const String _idLangKey = "idLangKey";
   static const String _themeKey = "theme";
+  static const String _themeNameKey = "nameTheme";
+  static const String _systemThemeKey = "_systemTheme";
 
   //iniciar shared preferences
   static Future init() async {
@@ -84,9 +86,10 @@ class Preferences {
     _prefs.remove(_langKey);
   }
 
-  //limpiar theme
   static void clearTheme() {
     _prefs.remove(_themeKey);
+    _prefs.remove(_themeNameKey);
+    _prefs.remove(_systemThemeKey);
   }
 
   //limpiar pedido
@@ -121,11 +124,19 @@ class Preferences {
     _prefs.setInt(_themeKey, value);
   }
 
-  // static String get theme {
-  //   return _prefs.getString(_themeKey) ?? "";
-  // }
+  static String get idTheme {
+    return _prefs.getString(_themeNameKey) ?? "";
+  }
 
-  // static set theme(String value) {
-  //   _prefs.setString(_themeKey, value);
-  // }
+  static set idTheme(String value) {
+    _prefs.setString(_themeNameKey, value);
+  }
+
+  static String get systemTheme {
+    return _prefs.getString(_systemThemeKey) ?? "";
+  }
+
+  static set systemTheme(String value) {
+    _prefs.setString(_systemThemeKey, value);
+  }
 }

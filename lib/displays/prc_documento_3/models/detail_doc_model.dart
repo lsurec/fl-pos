@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/models/em
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/estacion_model.dart';
 
 class DetailDocModel {
+  int idRef;
   String fecha;
   int consecutivo;
   EmpresaModel empresa;
@@ -22,6 +23,7 @@ class DetailDocModel {
   String observacion;
 
   DetailDocModel({
+    required this.idRef,
     required this.fecha,
     required this.consecutivo,
     required this.empresa,

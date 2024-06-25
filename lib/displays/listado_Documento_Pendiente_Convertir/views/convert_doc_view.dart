@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +33,11 @@ class ConvertDocView extends StatelessWidget {
                 BlockTranslate.cotizacion,
                 'convertirDoc',
               ),
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
             // actions: const [_Actions()],
           ),
@@ -63,14 +69,22 @@ class ConvertDocView extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       ColorTextCardWidget(
-                        color: Colors.green,
+                        color: AppTheme.color(
+                          context,
+                          Styles.green,
+                          Preferences.idTheme,
+                        ),
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'origenT',
-                        )} - (${docOrigen.documento}) ${docOrigen.documentoDecripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
+                        )} - (${docOrigen.documento}) ${docOrigen.documentoDescripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
                       ColorTextCardWidget(
-                        color: Colors.red,
+                        color: AppTheme.color(
+                          context,
+                          Styles.red,
+                          Preferences.idTheme,
+                        ),
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'destinoT',
@@ -85,7 +99,11 @@ class ConvertDocView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 13),
                             child: Checkbox(
-                              activeColor: AppTheme.primary,
+                              activeColor: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                                Preferences.idTheme,
+                              ),
                               value: vm.selectAllTra,
                               onChanged: (value) => vm.selectAllTra = value!,
                             ),
@@ -95,7 +113,11 @@ class ConvertDocView extends StatelessWidget {
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.detalles.length})",
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -124,7 +146,11 @@ class ConvertDocView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -144,7 +170,11 @@ class _Actions extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              color: AppTheme.backroundColor,
+              color: AppTheme.color(
+                context,
+                Styles.background,
+                Preferences.idTheme,
+              ),
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: SingleChildScrollView(
                 child: Column(
@@ -216,7 +246,11 @@ class _CardDetalle extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              backgroundColor: AppTheme.backroundColor,
+              backgroundColor: AppTheme.color(
+                context,
+                Styles.background,
+                Preferences.idTheme,
+              ),
               title: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.cotizacion,
@@ -284,7 +318,11 @@ class _CardDetalle extends StatelessWidget {
         );
       },
       child: CardWidget(
-        color: AppTheme.grayAppBar,
+        color: AppTheme.color(
+          context,
+          Styles.secondBackground,
+          Preferences.idTheme,
+        ),
         child: ListTile(
           leading: Checkbox(
             value: detalle.checked,
@@ -293,7 +331,11 @@ class _CardDetalle extends StatelessWidget {
               index,
               value!,
             ),
-            activeColor: AppTheme.primary,
+            activeColor: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+              Preferences.idTheme,
+            ),
           ),
           contentPadding: const EdgeInsets.all(10),
           subtitle: Column(

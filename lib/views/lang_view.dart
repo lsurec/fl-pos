@@ -35,9 +35,10 @@ class LangView extends StatelessWidget {
                           BlockTranslate.preferencias,
                           "idioma",
                         ),
-                        style: AppTheme.styleTheme(
+                        style: AppTheme.style(
+                          context,
                           Styles.bold,
-                          Preferences.theme,
+                          Preferences.idTheme,
                         ),
                       ),
                     ),
@@ -52,13 +53,15 @@ class LangView extends StatelessWidget {
                           children: [
                             CardWidget(
                               color: index == Preferences.idLanguage
-                                  ? AppTheme.colorTheme(
-                                      Styles.darkPrimary,
-                                      Preferences.theme,
+                                  ? AppTheme.color(
+                                      context,
+                                      Styles.primary,
+                                      Preferences.idTheme,
                                     )
-                                  : AppTheme.colorTheme(
+                                  : AppTheme.color(
+                                      context,
                                       Styles.secondBackground,
-                                      Preferences.theme,
+                                      Preferences.idTheme,
                                     ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
@@ -66,13 +69,15 @@ class LangView extends StatelessWidget {
                                 title: Text(
                                   vm.getNameLang(lang)!,
                                   style: index == Preferences.idLanguage
-                                      ? AppTheme.styleTheme(
+                                      ? AppTheme.style(
+                                          context,
                                           Styles.whiteBoldStyle,
-                                          Preferences.theme,
+                                          Preferences.idTheme,
                                         )
-                                      : AppTheme.styleTheme(
-                                          Styles.normal,
-                                          Preferences.theme,
+                                      : AppTheme.style(
+                                          context,
+                                          Styles.bold,
+                                          Preferences.idTheme,
                                         ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -91,18 +96,20 @@ class LangView extends StatelessWidget {
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
-                        style: AppTheme.buttonStyle(
+                        style: AppTheme.button(
+                          context,
                           Styles.buttonStyle,
-                          Preferences.theme,
+                          Preferences.idTheme,
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,
                             "continuar",
                           ),
-                          style: AppTheme.styleTheme(
+                          style: AppTheme.style(
+                            context,
                             Styles.whiteBoldStyle,
-                            Preferences.theme,
+                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -116,9 +123,10 @@ class LangView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.colorTheme(
-              Styles.background,
-              Preferences.theme,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading)

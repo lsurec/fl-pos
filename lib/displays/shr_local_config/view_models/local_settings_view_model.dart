@@ -68,7 +68,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<ApplicationModel> applications = resApps.message;
+    final List<ApplicationModel> applications = resApps.response;
 
     menuVM.menuData.clear();
 
@@ -90,7 +90,7 @@ class LocalSettingsViewModel extends ChangeNotifier {
       menuVM.menuData.add(
         MenuData(
           application: application,
-          children: resDisplay.message,
+          children: resDisplay.response,
         ),
       );
     }
@@ -175,8 +175,8 @@ class LocalSettingsViewModel extends ChangeNotifier {
     }
 
     //agregar empresas y estaciones
-    empresas.addAll(resEmpresa.message);
-    estaciones.addAll(resEstacion.message);
+    empresas.addAll(resEmpresa.response);
+    estaciones.addAll(resEstacion.response);
 
     //si solo hay una emoresa seleccionarla
     if (empresas.length == 1) {

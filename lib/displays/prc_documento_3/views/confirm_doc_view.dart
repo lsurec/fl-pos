@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -17,293 +19,417 @@ class ConfirmDocView extends StatelessWidget {
     final docVM = Provider.of<DocumentViewModel>(context);
     final vm = Provider.of<ConfirmDocViewModel>(context);
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
+    final vmDoc = Provider.of<DocumentoViewModel>(context);
 
-    return Stack(
-      children: [
-        Scaffold(
-          key: vm.scaffoldKey,
-          appBar: AppBar(
-            title: Text(
+    return WillPopScope(
+      onWillPop: () => vmDoc.backTabs(context),
+      child: Stack(
+        children: [
+          Scaffold(
+            key: vm.scaffoldKey,
+            appBar: AppBar(
+              title: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.factura,
                   'resumenDoc',
                 ),
-                style: AppTheme.titleStyle),
-            actions: [
-              if (vm.showPrint)
-                IconButton(
-                  onPressed: () => vm.sheredDoc(context),
-                  icon: const Icon(
-                    Icons.share,
-                  ),
+                style: AppTheme.style(
+                  context,
+                  Styles.title,
+                  Preferences.idTheme,
                 ),
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _DataUser(
-                    title: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.cuenta,
-                      'cliente',
-                    ),
-                    user: DataUserModel(
-                      name: docVM.clienteSelect!.facturaNombre,
-                      nit: docVM.clienteSelect!.facturaNit,
-                      adress: docVM.clienteSelect!.facturaDireccion,
-                    ),
-                  ),
-                  if (docVM.cuentasCorrentistasRef.isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 5),
-                        const Divider(),
-                        const SizedBox(height: 5),
-                        Text(
-                          AppLocalizations.of(context)!.translate(
-                            BlockTranslate.factura,
-                            'vendedor',
-                          ),
-                          style: AppTheme.titleStyle,
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          docVM.vendedorSelect!.nomCuentaCorrentista,
-                          style: AppTheme.normalStyle,
-                        ),
-                      ],
-                    ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'productos',
-                    ),
-                    style: AppTheme.titleStyle,
-                  ),
-                  const SizedBox(height: 5),
-                  _Transaction(),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'formasPago',
-                    ),
-                    style: AppTheme.titleStyle,
-                  ),
-                  const SizedBox(height: 5),
-                  _Pyments(),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  _Totals(),
-                  const SizedBox(height: 5),
-                  _TotalsPayment(),
-                  const SizedBox(height: 10),
-                  _Observacion(),
-                  const SizedBox(height: 10),
-                  SwitchListTile(
-                    activeColor: AppTheme.primary,
-                    value: vm.directPrint,
-                    onChanged: (value) => vm.directPrint = value,
-                    title: Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.tiket,
-                        'imprimir',
-                      ),
-                      style: AppTheme.normalStyle,
-                    ),
-                  ),
-                  if (!vm.showPrint)
-                    _Options(
-                      screen: screen,
-                    ),
-                  if (vm.showPrint) _Print(screen: screen),
-                ],
               ),
+              actions: [
+                if (vm.showPrint)
+                  IconButton(
+                    onPressed: () => vm.sheredDoc(context),
+                    icon: const Icon(
+                      Icons.share,
+                    ),
+                  ),
+              ],
             ),
-          ),
-        ),
-        if (vm.isLoadingDTE || vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
-          ),
-        if (vm.isLoading) const LoadWidget(),
-        if (vm.isLoadingDTE)
-          // const LoadWidget(),
-          Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
+            body: Padding(
+              padding: const EdgeInsets.all(20),
+              child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Image.asset(
-                        "assets/logo_demosoft.png",
-                        height: 150,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          "${AppLocalizations.of(context)!.translate(
-                            BlockTranslate.general,
-                            'tareasCompletas',
-                          )} ${vm.stepsSucces}/${vm.steps.length}",
-                          style: const TextStyle(
-                            color: Colors.black45,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: vm.steps.length,
-                      separatorBuilder: (_, __) {
-                        return const Column(
-                          children: [
-                            SizedBox(height: 5),
-                            Divider(),
-                            SizedBox(height: 5),
-                          ],
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        final LoadStepModel step = vm.steps[index];
-
-                        return Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  step.text,
-                                  style: AppTheme.normalStyle,
-                                ),
-                                if (step.status == 1) //Cargando
-                                  const Icon(
-                                    Icons.pending_outlined,
-                                    color: Colors.grey,
-                                  ),
-                                if (step.status == 2) //exitoso
-                                  const Icon(
-                                    Icons.check_circle_outline,
-                                    color: Colors.green,
-                                  ),
-                                if (step.status == 3) //error
-                                  const Icon(
-                                    Icons.cancel_outlined,
-                                    color: Colors.red,
-                                  ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            if (step.isLoading)
-                              const LinearProgressIndicator(
-                                color: AppTheme.primary,
-                              ),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    if (vm.viewMessage)
-                      Text(
-                        vm.error,
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.red,
-                        ),
-                      ),
-                    if (vm.viewSucces)
+                    if (vm.showPrint)
                       Text(
                         AppLocalizations.of(context)!.translate(
-                          BlockTranslate.notificacion,
-                          'docProcesado',
+                          BlockTranslate.cotizacion,
+                          'consecutivoInter',
                         ),
-                        style: const TextStyle(
-                          fontSize: 17,
-                          color: Colors.green,
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                          Preferences.idTheme,
                         ),
                       ),
-                    if (vm.viewError)
-                      SizedBox(
-                        width: double.infinity,
-                        child: TextButton(
-                          onPressed: () => vm.navigateError(),
-                          child: Text(
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.botones,
-                              'verError',
+                    if (vm.showPrint)
+                      Text(
+                        "${vm.consecutivoDoc}",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
+                      ),
+                    if (vm.showPrint) const SizedBox(height: 5),
+                    RichText(
+                      text: TextSpan(
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.cotizacion,
+                              'docIdRef',
                             ),
-                            style: const TextStyle(
-                              color: AppTheme.primary,
-                              decoration: TextDecoration.underline,
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                              Preferences.idTheme,
                             ),
                           ),
-                        ),
-                      ),
-                    const SizedBox(height: 20),
-                    if (vm.viewErrorFel) _OptionsError(),
-                    if (vm.viewErrorProcess) _OptionsErrorAll(),
-                    if (vm.viewSucces)
-                      SizedBox(
-                        height: 75,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  vm.isLoadingDTE = false;
-                                  vm.showPrint = true;
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.only(
-                                    top: 10,
-                                    bottom: 10,
-                                    right: 10,
-                                  ),
-                                  color: AppTheme.primary,
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.translate(
-                                        BlockTranslate.botones,
-                                        'aceptar',
-                                      ),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                          TextSpan(
+                            text: vm.idDocumentoRef.toString(),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
                             ),
-                          ],
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    _DataUser(
+                      title: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'cliente',
+                      ),
+                      user: DataUserModel(
+                        name: docVM.clienteSelect?.facturaNombre ?? "",
+                        nit: docVM.clienteSelect?.facturaNit ?? "",
+                        adress: docVM.clienteSelect?.facturaDireccion ?? "",
+                        desCtaCta: docVM.clienteSelect?.desCuentaCta ?? "",
+                      ),
+                    ),
+                    if (docVM.cuentasCorrentistasRef.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'vendedor',
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                              Preferences.idTheme,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.vendedorSelect?.nomCuentaCorrentista ?? "",
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
+                          ),
+                        ],
+                      ),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'productos',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.title,
+                        Preferences.idTheme,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    _Transaction(),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'formasPago',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.title,
+                        Preferences.idTheme,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    _Pyments(),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
+                    _Totals(),
+                    const SizedBox(height: 5),
+                    _TotalsPayment(),
+                    const SizedBox(height: 10),
+                    if (!vm.showPrint) _Observacion(),
+                    const SizedBox(height: 10),
+                    SwitchListTile(
+                      activeColor: AppTheme.color(
+                        context,
+                        Styles.darkPrimary,
+                        Preferences.idTheme,
+                      ),
+                      value: vm.directPrint,
+                      onChanged: (value) => vm.directPrint = value,
+                      title: Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tiket,
+                          'imprimir',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
                         ),
                       ),
+                    ),
+                    if (!vm.showPrint)
+                      _Options(
+                        screen: screen,
+                      ),
+                    if (vm.showPrint) _Print(screen: screen),
                   ],
                 ),
               ),
             ),
           ),
-      ],
+          if (vm.isLoadingDTE || vm.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.color(
+                context,
+                Styles.loading,
+                Preferences.idTheme,
+              ),
+            ),
+          if (vm.isLoading) const LoadWidget(),
+          if (vm.isLoadingDTE)
+            // const LoadWidget(),
+            Scaffold(
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          "assets/logo_demosoft.png",
+                          height: 150,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'tareasCompletas',
+                            )} ${vm.stepsSucces}/${vm.steps.length}",
+                            style: AppTheme.style(
+                              context,
+                              Styles.versionStyle,
+                              Preferences.idTheme,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: vm.steps.length,
+                        separatorBuilder: (_, __) {
+                          return const Column(
+                            children: [
+                              SizedBox(height: 5),
+                              Divider(),
+                              SizedBox(height: 5),
+                            ],
+                          );
+                        },
+                        itemBuilder: (BuildContext context, int index) {
+                          final LoadStepModel step = vm.steps[index];
+
+                          return Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    step.text,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.normal,
+                                      Preferences.idTheme,
+                                    ),
+                                  ),
+                                  if (step.status == 1) //Cargando
+                                    Icon(
+                                      Icons.pending_outlined,
+                                      color: AppTheme.color(
+                                        context,
+                                        Styles.grey,
+                                        Preferences.idTheme,
+                                      ),
+                                    ),
+                                  if (step.status == 2) //exitoso
+                                    Icon(
+                                      Icons.check_circle_outline,
+                                      color: AppTheme.color(
+                                        context,
+                                        Styles.green,
+                                        Preferences.idTheme,
+                                      ),
+                                    ),
+                                  if (step.status == 3) //error
+                                    Icon(
+                                      Icons.cancel_outlined,
+                                      color: AppTheme.color(
+                                        context,
+                                        Styles.red,
+                                        Preferences.idTheme,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              if (step.isLoading)
+                                LinearProgressIndicator(
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.darkPrimary,
+                                    Preferences.idTheme,
+                                  ),
+                                ),
+                            ],
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      if (vm.viewMessage)
+                        Text(
+                          vm.error,
+                          style: AppTheme.style(
+                            context,
+                            Styles.red,
+                            Preferences.idTheme,
+                          ),
+                        ),
+                      if (vm.viewSucces)
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.notificacion,
+                            'docProcesado',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.green,
+                            Preferences.idTheme,
+                          ),
+                        ),
+                      if (vm.viewError)
+                        SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            onPressed: () => vm.navigateError(),
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.botones,
+                                'verError',
+                              ),
+                              style: AppTheme.style(
+                                context,
+                                Styles.blue,
+                                Preferences.idTheme,
+                              ),
+                            ),
+                          ),
+                        ),
+                      const SizedBox(height: 20),
+                      if (vm.viewErrorFel) _OptionsError(),
+                      if (vm.viewErrorProcess) _OptionsErrorAll(),
+                      if (vm.viewSucces)
+                        SizedBox(
+                          height: 75,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    vm.isLoadingDTE = false;
+                                    vm.showPrint = true;
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      top: 10,
+                                      bottom: 10,
+                                      right: 10,
+                                    ),
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.primary,
+                                      Preferences.idTheme,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'aceptar',
+                                        ),
+                                        style: AppTheme.style(
+                                          context,
+                                          Styles.whiteStyle,
+                                          Preferences.idTheme,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
@@ -337,6 +463,7 @@ class _Print extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmDoc = Provider.of<DocumentoViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -344,23 +471,28 @@ class _Print extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.backButton(context),
+              onTap: () => vmDoc.backTabs(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'listo',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -378,16 +510,21 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'imprimir',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -411,23 +548,28 @@ class _OptionsError extends StatelessWidget {
         children: [
           Expanded(
             child: GestureDetector(
-              onTap: () => vm.printWithoutFel(),
+              onTap: () => vm.printWithoutFel(context),
               child: Container(
                 margin: const EdgeInsets.only(
                   top: 10,
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'sinFirma',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -443,16 +585,21 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'reintentar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -483,16 +630,21 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'aceptar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -508,16 +660,21 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'reintentar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -551,16 +708,21 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'cancelar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -580,16 +742,21 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.primary,
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
+                  Preferences.idTheme,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'confirmar',
                     ),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -620,14 +787,27 @@ class _Pyments extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
-                color: Colors.grey[400]!,
-                width: 1.0), // Define el color y grosor del borde
+              color: AppTheme.color(
+                context,
+                Styles.border,
+                Preferences.idTheme,
+              ),
+              width: 1.0,
+            ),
           ),
-          color: AppTheme.backroundColor,
+          color: AppTheme.color(
+            context,
+            Styles.background,
+            Preferences.idTheme,
+          ),
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
-              style: AppTheme.normalStyle,
+              style: AppTheme.style(
+                context,
+                Styles.normal,
+                Preferences.idTheme,
+              ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -638,7 +818,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'autorizar',
                     )}: ${amount.authorization}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.reference != "")
                   Text(
@@ -646,7 +830,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'referencia',
                     )}: ${amount.reference}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.payment.banco)
                   Text(
@@ -654,7 +842,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'banco',
                     )}: ${amount.bank?.nombre}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.account != null)
                   Text(
@@ -662,14 +854,22 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'cuenta',
                     )}: ${amount.account!.descripcion}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'monto',
                   )}: ${amount.amount.toStringAsFixed(2)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
@@ -692,10 +892,19 @@ class _TotalsPayment extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: BorderSide(
-            color: Colors.grey[400]!,
-            width: 1.0), // Define el color y grosor del borde
+          color: AppTheme.color(
+            context,
+            Styles.border,
+            Preferences.idTheme,
+          ),
+          width: 1.0,
+        ), // Define el color y grosor del borde
       ),
-      color: AppTheme.backroundColor,
+      color: AppTheme.color(
+        context,
+        Styles.background,
+        Preferences.idTheme,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -732,10 +941,19 @@ class _Totals extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: BorderSide(
-            color: Colors.grey[400]!,
-            width: 1.0), // Define el color y grosor del borde
+          color: AppTheme.color(
+            context,
+            Styles.border,
+            Preferences.idTheme,
+          ),
+          width: 1.0,
+        ), // Define el color y grosor del borde
       ),
-      color: AppTheme.backroundColor,
+      color: AppTheme.color(
+        context,
+        Styles.background,
+        Preferences.idTheme,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -804,21 +1022,38 @@ class _Transaction extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
-                color: Colors.grey[400]!,
-                width: 1.0), // Define el color y grosor del borde
+              color: AppTheme.color(
+                context,
+                Styles.border,
+                Preferences.idTheme,
+              ),
+              width: 1.0,
+            ), // Define el color y grosor del borde
           ),
-          color: AppTheme.backroundColor,
+          color: AppTheme.color(
+            context,
+            Styles.background,
+            Preferences.idTheme,
+          ),
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${transaction.cantidad} x ${transaction.producto.desProducto}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 Text(
                   'SKU: ${transaction.producto.productoId}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
               ],
             ),
@@ -831,7 +1066,11 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'precioU',
                     )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
 
                 Text(
@@ -839,7 +1078,11 @@ class _Transaction extends StatelessWidget {
                     BlockTranslate.calcular,
                     'total',
                   )}: ${transaction.total.toStringAsFixed(2)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 if (transaction.cargo != 0)
                   Text(
@@ -847,7 +1090,11 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'cargo',
                     )}: ${transaction.cargo.toStringAsFixed(2)}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
 
                 if (transaction.descuento != 0)
@@ -856,7 +1103,11 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'descuento',
                     )}: ${transaction.descuento.toStringAsFixed(2)}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
@@ -884,26 +1135,51 @@ class _DataUser extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTheme.titleStyle,
+          style: AppTheme.style(
+            context,
+            Styles.title,
+            Preferences.idTheme,
+          ),
         ),
         const SizedBox(height: 5),
         Text(
           "Nit: ${user.nit}",
-          style: AppTheme.normalStyle,
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.general,
             'nombre',
           )}: ${user.name}",
-          style: AppTheme.normalStyle,
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.general,
             'direccion',
           )}: ${user.adress}",
-          style: AppTheme.normalStyle,
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
+        ),
+        Text(
+          //TODO:Translate
+          "Cuenta Cta: ${user.desCtaCta}",
+          style: AppTheme.style(
+            context,
+            Styles.normal,
+            Preferences.idTheme,
+          ),
         )
       ],
     );

@@ -20,5 +20,34 @@ class Styles {
   static String bold30Style = "bold30Style";
   static String versionStyle = "versionStyle";
   static String whiteStyle = "whiteStyle";
-
+  static String menuActive = "menuActive";
+  static String iconActive = "inconActive";
+  static String action = "action";
+  static String total = "total";
+  static String transaction = "transaction";
+  static String cargDesc = "cargDesc";
+  static String cargo = "cargo";
+  static String descuento = "descuento";
+  static String border = "border";
+  static String blue = "azul";
+  static String green = "green";
+  static String red = "red";
+  static String delete = "delete";
+  static String titlegrey = "titlegrey";
+  static String blueText = "blueText";
+  static String greyBorder = "greyBorder";
+  static String tareaBorder = "tareaBorder";
+  static String diasOtroMes = "diasOtroMes";
+  static String taskStyle = "taskStyle";
+  static String verMas = "verMas";
+  static String transparent = "transparent";
+  static String inactive = "inactive";
+  static String disableStepLine = "disableStepLine";
+  static String titleWhite = "titleWhite";
+  static String white = "white";
+  static String user = "user";
+  static String blueTitle = "blueTitle";
+  static String black = "black";
+  static String loading = "isLoading";
+  static String divider = "divider";
 }

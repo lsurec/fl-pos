@@ -8,7 +8,7 @@ class CardWidget extends StatelessWidget {
     Key? key,
     this.width = double.infinity,
     this.raidus = 0,
-    this.color = AppTheme.backroundColorSecondary,
+    this.color,
     required this.child,
     this.elevation = 2,
     this.borderColor,
@@ -31,10 +31,12 @@ class CardWidget extends StatelessWidget {
       margin: margin,
       width: width,
       child: Card(
-        color: AppTheme.colorTheme(
-          Styles.secondBackground,
-          Preferences.theme,
-        ),
+        color: color ??
+            AppTheme.color(
+              context,
+              Styles.secondBackground,
+              Preferences.idTheme,
+            ),
         shape: borderColor == null
             ? RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(raidus!),

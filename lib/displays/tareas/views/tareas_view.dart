@@ -1,7 +1,9 @@
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -41,7 +43,11 @@ class _TareasViewState extends State<TareasView> {
           appBar: AppBar(
             title: Text(
               vmMenu.name,
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
             actions: <Widget>[
               IconButton(
@@ -75,7 +81,11 @@ class _TareasViewState extends State<TareasView> {
                               BlockTranslate.general,
                               'registro',
                             )} (${tareas.length})",
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -101,7 +111,11 @@ class _TareasViewState extends State<TareasView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -144,7 +158,11 @@ class _CardTask extends StatelessWidget {
                         BlockTranslate.general,
                         'noDisponible',
                       ),
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 const SizedBox(width: 20),
                 Icon(
@@ -160,9 +178,18 @@ class _CardTask extends StatelessWidget {
             ),
           ),
           CardWidget(
+            color: AppTheme.color(
+              context,
+              Styles.secondBackground,
+              Preferences.idTheme,
+            ),
             elevation: 0,
             borderWidth: 1.5,
-            borderColor: const Color.fromRGBO(0, 0, 0, 0.12),
+            borderColor: AppTheme.color(
+              context,
+              Styles.tareaBorder,
+              Preferences.idTheme,
+            ),
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -176,7 +203,11 @@ class _CardTask extends StatelessWidget {
                             BlockTranslate.general,
                             'noDisponible',
                           ),
-                      style: AppTheme.normalBoldStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.bold,
+                        Preferences.idTheme,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -188,18 +219,30 @@ class _CardTask extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRef',
                         )}: ",
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                       Text(
                         '${tarea.iDReferencia}',
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                       const Spacer(),
                       Text(
                         Utilities.formatearFecha(
                           tarea.tareaFechaIni,
                         ),
-                        style: AppTheme.normalStyle,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                          Preferences.idTheme,
+                        ),
                       ),
                     ],
                   ),
@@ -208,7 +251,11 @@ class _CardTask extends StatelessWidget {
                       BlockTranslate.tareas,
                       'creador',
                     )} ${tarea.usuarioCreador}",
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                   Text(
                     "${AppLocalizations.of(context)!.translate(
@@ -218,7 +265,11 @@ class _CardTask extends StatelessWidget {
                           BlockTranslate.tareas,
                           'noAsignado',
                         )}",
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -228,7 +279,11 @@ class _CardTask extends StatelessWidget {
                         BlockTranslate.general,
                         'observacion',
                       )}:",
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                   ),
                   Text(
@@ -237,7 +292,11 @@ class _CardTask extends StatelessWidget {
                           BlockTranslate.general,
                           'noDisponible',
                         ),
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                     textAlign: TextAlign.justify,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -292,9 +351,13 @@ class _InputSerach extends StatelessWidget {
               BlockTranslate.tareas,
               'buscar',
             ),
-            icon: const Icon(
+            icon: Icon(
               Icons.search,
-              color: AppTheme.primary,
+              color: AppTheme.color(
+                context,
+                Styles.darkPrimary,
+                Preferences.idTheme,
+              ),
             ),
             onPressed: () => vm.searchText(context),
           ),
@@ -320,13 +383,22 @@ class _RadioFilter extends StatelessWidget {
                 value: 1,
                 groupValue: vm.filtro,
                 onChanged: (value) => vm.busqueda(value!),
+                activeColor: AppTheme.color(
+                  context,
+                  Styles.darkPrimary,
+                  Preferences.idTheme,
+                ),
               ),
               Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.general,
                   'descripcion',
                 ),
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
             ],
           ),
@@ -339,13 +411,22 @@ class _RadioFilter extends StatelessWidget {
                 value: 2,
                 groupValue: vm.filtro,
                 onChanged: (value) => vm.busqueda(value!),
+                activeColor: AppTheme.color(
+                  context,
+                  Styles.darkPrimary,
+                  Preferences.idTheme,
+                ),
               ),
               Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.tareas,
                   'idRef',
                 ),
-                style: AppTheme.normalStyle,
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                  Preferences.idTheme,
+                ),
               ),
             ],
           ),

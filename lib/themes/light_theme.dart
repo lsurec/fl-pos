@@ -5,18 +5,18 @@ class LightTheme {
   //Color primario de la app
   static const Color primary = Color(0xff134895);
   static const Color grey = Colors.grey;
-
   static const Color grayAppBar = Color(0xfff5f5f5);
-  static const Color secondary = Color(0xff1C82AD);
-  static const Color activeStep = Color(0xffcccccc);
-  static const Color disableStep = primary;
-  static const Color disableStepPrimary = Color(0xFF636564);
-  static const Color disableStepSecondary = Color(0xFFBABABA);
   static const Color disableStepLine = Color(0xFFDADADA);
   static Color backroundColor = Colors.orange.shade50;
   static const Color backroundColorSecondary = Color(0xffFEF5E7);
   static const Color white = Colors.white;
   static const Color black = Colors.black;
+  static Color border = Colors.grey[400]!;
+  static const Color verde = Colors.green;
+  static const Color rojo = Colors.red;
+  static const Color greyBorder = Color.fromRGBO(0, 0, 0, 0.12);
+  static const Color transparent = Colors.transparent;
+  static Color divider = Colors.grey[400]!;
 
   //ESTILOS DE LO TEXTOS
 
@@ -31,7 +31,7 @@ class LightTheme {
   );
 
   static const horaBoldStyle = TextStyle(
-    fontSize: 12,
+    fontSize: 14,
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
@@ -53,6 +53,12 @@ class LightTheme {
     color: Colors.black,
   );
 
+  static TextStyle titlegrey = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: border,
+  );
+
   static const obligatoryBoldStyle = TextStyle(
     fontSize: 20,
     color: Colors.red,
@@ -71,7 +77,7 @@ class LightTheme {
     fontWeight: FontWeight.w500,
   );
 
-  static const inactivoStyle = TextStyle(
+  static const inactive = TextStyle(
     fontSize: 17,
     color: Colors.grey,
   );
@@ -105,6 +111,11 @@ class LightTheme {
     fontWeight: FontWeight.bold,
   );
 
+  static const titleWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+  );
+
   static final ButtonStyle buttonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(
       primary,
@@ -125,5 +136,58 @@ class LightTheme {
   static const versionStyle = TextStyle(
     fontSize: 16,
     color: Colors.grey,
+  );
+
+  static const menuActiveStyle = TextStyle(
+    fontSize: 17,
+    color: primary,
+  );
+
+  static const actionStyle = TextStyle(
+    fontSize: 15,
+    color: primary,
+  );
+
+  static const cargDesc = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const cargo = TextStyle(
+    fontSize: 17,
+    color: Colors.green,
+  );
+
+  static const descuento = TextStyle(
+    fontSize: 17,
+    color: Colors.red,
+  );
+
+  static const green = TextStyle(
+    fontSize: 17,
+    color: Colors.green,
+  );
+
+  static const red = TextStyle(
+    fontSize: 17,
+    color: Colors.red,
+  );
+
+  static const azul = TextStyle(
+    fontSize: 14,
+    color: primary,
+    decoration: TextDecoration.underline,
+  );
+
+  static const blueText = TextStyle(
+    fontSize: 15,
+    color: primary,
+  );
+
+  static const blueTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: primary,
   );
 }

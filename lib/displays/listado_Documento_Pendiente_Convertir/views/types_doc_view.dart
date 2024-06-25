@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -22,7 +24,11 @@ class TypesDocView extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               vmMenu.name,
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
           ),
           body: RefreshIndicator(
@@ -41,7 +47,11 @@ class TypesDocView extends StatelessWidget {
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.documents.length})",
-                            style: AppTheme.normalBoldStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.bold,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -54,12 +64,21 @@ class TypesDocView extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final TypeDocModel doc = vm.documents[index];
                           return CardWidget(
+                            color: AppTheme.color(
+                              context,
+                              Styles.secondBackground,
+                              Preferences.idTheme,
+                            ),
                             child: ListTile(
                               onTap: () => vm.navigatePendDocs(context, doc),
                               trailing: const Icon(Icons.arrow_right),
                               title: Text(
                                 "${doc.fDesTipoDocumento} (${doc.tipoDocumento})",
-                                style: AppTheme.normalStyle,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                  Preferences.idTheme,
+                                ),
                               ),
                             ),
                           );
@@ -76,7 +95,11 @@ class TypesDocView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

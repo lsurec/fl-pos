@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -32,7 +34,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           appBar: AppBar(
             title: Text(
               "${document.consecutivo}",
-              style: AppTheme.titleStyle,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
             ),
             actions: [
               IconButton(
@@ -77,24 +83,71 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           ),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(
+                20,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cotizacion,
+                            'docIdRef',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
+                        ),
+                        TextSpan(
+                          text: document.idRef.toString(),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Divider(),
+                  const SizedBox(height: 5),
+                  RichText(
+                    text: TextSpan(
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                       children: [
                         TextSpan(
                           text: "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.fecha,
                             'fecha',
                           )} ",
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                         TextSpan(
                           text: document.fecha,
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         )
                       ],
                     ),
@@ -104,19 +157,31 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const SizedBox(height: 5),
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                       children: [
                         TextSpan(
                           text: "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.localConfig,
                             'empresa',
                           )}: ",
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                         TextSpan(
                           text:
                               "${document.empresa.empresaNombre} (${document.empresa.empresa})",
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         )
                       ],
                     ),
@@ -126,19 +191,31 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const SizedBox(height: 5),
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                       children: [
                         TextSpan(
                           text: "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.localConfig,
                             'estacion',
                           )}: ",
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                         TextSpan(
                           text:
                               "${document.estacion.descripcion} (${document.estacion.estacionTrabajo})",
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         )
                       ],
                     ),
@@ -157,11 +234,19 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                               BlockTranslate.factura,
                               'tipoDoc',
                             )}:",
-                            style: AppTheme.titleStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                              Preferences.idTheme,
+                            ),
                           ),
                           Text(
                             document.documentoDesc,
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -173,11 +258,19 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                               BlockTranslate.factura,
                               'serieDoc',
                             )}:",
-                            style: AppTheme.titleStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                              Preferences.idTheme,
+                            ),
                           ),
                           Text(
                             document.serieDesc,
-                            style: AppTheme.normalStyle,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                              Preferences.idTheme,
+                            ),
                           ),
                         ],
                       ),
@@ -191,7 +284,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       BlockTranslate.factura,
                       'cuenta',
                     ),
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   if (document.client == null)
@@ -200,7 +297,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         BlockTranslate.general,
                         'noDisponible',
                       ),
-                      style: AppTheme.normalStyle,
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                        Preferences.idTheme,
+                      ),
                     ),
                   if (document.client != null)
                     Column(
@@ -208,21 +309,33 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       children: [
                         Text(
                           "Nit: ${document.client!.facturaNit}",
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                         Text(
                           "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.general,
                             'nombre',
                           )}: ${document.client!.facturaNombre}",
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                         Text(
                           "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.general,
                             'direccion',
                           )}: ${document.client!.facturaDireccion}",
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ],
                     ),
@@ -238,12 +351,20 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.factura,
                             'vendedor',
                           ),
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           document.seller!,
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ],
                     ),
@@ -255,7 +376,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       BlockTranslate.factura,
                       'productos',
                     ),
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   _Transaction(
@@ -269,7 +394,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       BlockTranslate.factura,
                       'formasPago',
                     ),
-                    style: AppTheme.titleStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   _Pyments(amounts: document.payments),
@@ -282,12 +411,23 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
-                          color: Colors.grey[400]!,
-                          width: 1.0), // Define el color y grosor del borde
+                        color: AppTheme.color(
+                          context,
+                          Styles.border,
+                          Preferences.idTheme,
+                        ),
+                        width: 1.0,
+                      ), // Define el color y grosor del borde
                     ),
-                    color: AppTheme.backroundColor,
+                    color: AppTheme.color(
+                      context,
+                      Styles.background,
+                      Preferences.idTheme,
+                    ),
                     child: Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(
+                        10,
+                      ),
                       child: Column(
                         children: [
                           RowTotalWidget(
@@ -337,12 +477,20 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.general,
                             'observacion',
                           ),
-                          style: AppTheme.titleStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                            Preferences.idTheme,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           document.observacion,
-                          style: AppTheme.normalStyle,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                            Preferences.idTheme,
+                          ),
                         ),
                       ],
                     ),
@@ -386,7 +534,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.backroundColor,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -423,14 +575,27 @@ class _Pyments extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
-                color: Colors.grey[400]!,
-                width: 1.0), // Define el color y grosor del borde
+              color: AppTheme.color(
+                context,
+                Styles.border,
+                Preferences.idTheme,
+              ),
+              width: 1.0,
+            ), // Define el color y grosor del borde
           ),
-          color: AppTheme.backroundColor,
+          color: AppTheme.color(
+            context,
+            Styles.background,
+            Preferences.idTheme,
+          ),
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
-              style: AppTheme.normalStyle,
+              style: AppTheme.style(
+                context,
+                Styles.normal,
+                Preferences.idTheme,
+              ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -441,7 +606,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'autorizar',
                     )}: ${amount.authorization}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.reference != "")
                   Text(
@@ -449,7 +618,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'referencia',
                     )}: ${amount.reference}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.payment.banco)
                   Text(
@@ -457,7 +630,11 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'banco',
                     )}: ${amount.bank?.nombre}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 if (amount.account != null)
                   Text(
@@ -465,28 +642,44 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'cuenta',
                     )}: ${amount.account!.descripcion}',
-                    style: AppTheme.normalStyle,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'monto',
                   )}: ${currencyFormat.format(amount.amount)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'diferencia',
                   )}: ${currencyFormat.format(amount.diference)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'pagoTotal',
                   )}: ${currencyFormat.format(amount.amount + amount.diference)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 // Text('${AppLocalizations.of(context)!.translate(
                 //   BlockTranslate.general,
@@ -531,21 +724,38 @@ class _Transaction extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: BorderSide(
-                color: Colors.grey[400]!,
-                width: 1.0), // Define el color y grosor del borde
+              color: AppTheme.color(
+                context,
+                Styles.border,
+                Preferences.idTheme,
+              ),
+              width: 1.0,
+            ), // Define el color y grosor del borde
           ),
-          color: AppTheme.backroundColor,
+          color: AppTheme.color(
+            context,
+            Styles.background,
+            Preferences.idTheme,
+          ),
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${transaction.cantidad} x ${transaction.product.desProducto}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 Text(
                   'SKU: ${transaction.product.productoId}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
               ],
             ),
@@ -557,14 +767,22 @@ class _Transaction extends StatelessWidget {
                     BlockTranslate.calcular,
                     'precioU',
                   )}: ${currencyFormat.format(transaction.cantidad > 0 ? transaction.total / transaction.cantidad : transaction.total)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'total',
                   )}: ${currencyFormat.format(transaction.total)}',
-                  style: AppTheme.normalStyle,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                    Preferences.idTheme,
+                  ),
                 ),
                 // Text(
                 //   '${AppLocalizations.of(context)!.translate(

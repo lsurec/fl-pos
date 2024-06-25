@@ -33,47 +33,7 @@ class HomeView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: ListView(
-                  children: [
-                    Text(
-                      "Holas",
-                      style: AppTheme.styleTheme(
-                        Styles.bold,
-                        1,
-                      ),
-                    ),
-                    Text(
-                      Preferences.theme == 1 ? "Claro" : "Oscuro",
-                      style: AppTheme.styleTheme(
-                        Styles.normal,
-                        Preferences.theme,
-                      ),
-                    ),
-                    SwitchListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 0,
-                      ),
-                      activeColor: AppTheme.colorTheme(
-                        Styles.primary,
-                        Preferences.theme,
-                      ),
-                      title: Text(
-                        Preferences.theme <= 1
-                            ? "Activar Tema Oscuro"
-                            : "Desactivar Tema Oscuro",
-                        style: TextStyle(
-                          color: AppTheme.colorTheme(
-                            Styles.primary,
-                            Preferences.theme,
-                          ),
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
-                      // value: vm.tema,
-                      value: (Preferences.theme == 2 ? true : false),
-                      onChanged: (value) => vm.themaActivo(value),
-                    ),
-                  ],
+                  children: const [],
                 ),
               ),
             ),
@@ -83,9 +43,10 @@ class HomeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.colorTheme(
-              Styles.background,
-              Preferences.theme,
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -105,9 +66,10 @@ class _MyDrawer extends StatelessWidget {
 
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppTheme.colorTheme(
-        Styles.background,
-        Preferences.theme,
+      backgroundColor: AppTheme.color(
+        context,
+        Styles.black,
+        Preferences.idTheme,
       ),
       child: Column(
         children: [
@@ -129,15 +91,17 @@ class _MyDrawer extends StatelessWidget {
                     children: [
                       Text(
                         route.name,
-                        style: TextStyle(
-                          color: index == routeMenu.length - 1
-                              ? AppTheme.colorTheme(
-                                  Styles.primary,
-                                  Preferences.theme,
-                                )
-                              : null,
-                          fontSize: 17,
-                        ),
+                        style: index == routeMenu.length - 1
+                            ? AppTheme.style(
+                                context,
+                                Styles.menuActive,
+                                Preferences.idTheme,
+                              )
+                            : AppTheme.style(
+                                context,
+                                Styles.normal,
+                                Preferences.idTheme,
+                              ),
                       ),
                       const Icon(
                         Icons.arrow_right,
@@ -148,23 +112,41 @@ class _MyDrawer extends StatelessWidget {
               },
             ),
           ),
-          const Divider(),
+          Divider(
+            color: AppTheme.color(
+              context,
+              Styles.divider,
+              Preferences.idTheme,
+            ),
+          ),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.zero,
               itemCount: menu.length,
               separatorBuilder: (BuildContext context, int index) {
-                return const Divider();
+                return Divider(
+                  color: AppTheme.color(
+                    context,
+                    Styles.divider,
+                    Preferences.idTheme,
+                  ),
+                );
               },
               itemBuilder: (BuildContext context, int index) {
                 MenuModel itemMenu = menu[index];
                 return ListTile(
-                  titleTextStyle: AppTheme.styleTheme(
+                  titleTextStyle: AppTheme.style(
+                    context,
                     Styles.normal,
-                    Preferences.theme,
+                    Preferences.idTheme,
                   ),
                   title: Text(
                     itemMenu.name,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                      Preferences.idTheme,
+                    ),
                   ),
                   trailing: itemMenu.children.isNotEmpty
                       ? const Icon(Icons.chevron_right)
@@ -203,9 +185,10 @@ class _FooterDrawer extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 56,
-        color: AppTheme.colorTheme(
+        color: AppTheme.color(
+          context,
           Styles.secondBackground,
-          Preferences.theme,
+          Preferences.idTheme,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

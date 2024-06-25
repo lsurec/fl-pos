@@ -122,7 +122,7 @@ class ProductViewModel extends ChangeNotifier {
         return;
       }
 
-      prices = precios.message;
+      prices = precios.response;
 
       if (prices.isEmpty) {
         NotificationService.showSnackbar(
@@ -172,20 +172,20 @@ class ProductViewModel extends ChangeNotifier {
     if (!resPrecio.succes) {
       ErrorModel error = ErrorModel(
         date: DateTime.now(),
-        description: resPrecio.message,
+        description: resPrecio.response,
         url: resPrecio.url,
         storeProcedure: resPrecio.storeProcedure,
       );
 
       return ApiResModel(
         succes: false,
-        message: error,
+        response: error,
         url: "",
         storeProcedure: null,
       );
     }
 
-    final List<PrecioModel> precios = resPrecio.message;
+    final List<PrecioModel> precios = resPrecio.response;
 
     final List<UnitarioModel> unitarios = [];
 
@@ -224,7 +224,7 @@ class ProductViewModel extends ChangeNotifier {
 
       return ApiResModel(
         succes: true,
-        message: unitarios,
+        response: unitarios,
         url: "",
         storeProcedure: null,
       );
@@ -241,20 +241,20 @@ class ProductViewModel extends ChangeNotifier {
     if (!resFactores.succes) {
       ErrorModel error = ErrorModel(
         date: DateTime.now(),
-        description: resFactores.message,
+        description: resFactores.response,
         url: resFactores.url,
         storeProcedure: resFactores.storeProcedure,
       );
 
       return ApiResModel(
         succes: false,
-        message: error,
+        response: error,
         url: "",
         storeProcedure: null,
       );
     }
 
-    final List<FactorConversionModel> factores = resFactores.message;
+    final List<FactorConversionModel> factores = resFactores.response;
 
     for (var factor in factores) {
       final UnitarioModel unitario = UnitarioModel(
@@ -290,7 +290,7 @@ class ProductViewModel extends ChangeNotifier {
 
     return ApiResModel(
       succes: true,
-      message: unitarios,
+      response: unitarios,
       url: "",
       storeProcedure: null,
     );
@@ -335,7 +335,7 @@ class ProductViewModel extends ChangeNotifier {
     }
 
     //agreagar bodegas encontradas
-    bodegas.addAll(res.message);
+    bodegas.addAll(res.response);
 
     //si solo hay una bodega seleccionarla por defecto
     if (bodegas.length == 1) {
@@ -414,7 +414,7 @@ class ProductViewModel extends ChangeNotifier {
       return;
     }
 
-    prices = precios.message;
+    prices = precios.response;
 
     if (prices.isEmpty) {
       calculateTotal();
@@ -428,14 +428,25 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   //agregar la transaccion a al documento
-  void addTransaction(
+  Future<void> addTransaction(
     BuildContext context,
     ProductModel product,
     int back,
-  ) {
+  ) async {
     //vire model externo
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+
+    String serieDocumento = docVM.serieSelect!.serieDocumento!;
+    int tipoDocumento = menuVM.documento!;
+    final String user = loginVM.user;
+    final String token = loginVM.token;
+    int estacion = localVM.selectedEstacion!.estacionTrabajo;
+    int empresa = localVM.selectedEmpresa!.empresa;
 
     //Si hay formas de pago mostrar mensaje
     if (paymentVM.amounts.isNotEmpty) {
@@ -491,14 +502,63 @@ class ProductViewModel extends ChangeNotifier {
       return;
     }
 
-    if (selectedBodega!.existencia == 0) {
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'existenciaInsuficiente',
-        ),
+    // if (selectedBodega!.existencia == 0) {
+    //   NotificationService.showSnackbar(
+    //     AppLocalizations.of(context)!.translate(
+    //       BlockTranslate.notificacion,
+    //       'existenciaInsuficiente',
+    //     ),
+    //   );
+    //   return;
+    // }
+
+    //TODO:Validacion de producto
+
+    TipoTransaccionModel tipoTra =
+        getTipoTransaccion(product.tipoProducto, context);
+
+    if (tipoTra.altCantidad) {
+      //iniciar proceso
+
+      ProductService productService = ProductService();
+
+      //consumo del api
+      ApiResModel res = await productService.getValidateProducts(
+        user,
+        serieDocumento,
+        tipoDocumento,
+        estacion,
+        empresa,
+        selectedBodega!.bodega,
+        tipoTra.tipoTransaccion,
+        product.unidadMedida,
+        product.producto,
+        (int.tryParse(controllerNum.text) ?? 0),
+        8, //TODO:Parametrizar
+        selectedPrice!.moneda,
+        selectedPrice!.id,
+        token,
       );
-      return;
+
+      //valid succes response
+      if (!res.succes) {
+        //si algo salio mal mostrar alerta
+
+        await NotificationService.showErrorView(
+          context,
+          res,
+        );
+        return;
+      }
+
+      //agreagar bodegas encontradas
+
+      final List<String> mensajes = res.response;
+
+      if (mensajes.isNotEmpty) {
+        NotificationService.showSnackbar(mensajes[0]);
+        return;
+      }
     }
 
     if (detailsVM.traInternas.isNotEmpty) {
@@ -553,5 +613,29 @@ class ProductViewModel extends ChangeNotifier {
     } else {
       Navigator.pop(context);
     }
+  }
+
+  //devuelve el tipo de transaccion que se va a usar
+  TipoTransaccionModel getTipoTransaccion(
+    int tipo,
+    BuildContext context,
+  ) {
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+
+    for (var i = 0; i < docVM.tiposTransaccion.length; i++) {
+      final TipoTransaccionModel tipoTra = docVM.tiposTransaccion[i];
+
+      if (tipo == tipoTra.tipo) {
+        return tipoTra;
+      }
+    }
+
+    //si no encunetra el tipo
+    return TipoTransaccionModel(
+      tipoTransaccion: 0,
+      descripcion: "descripcion",
+      tipo: tipo,
+      altCantidad: true,
+    );
   }
 }

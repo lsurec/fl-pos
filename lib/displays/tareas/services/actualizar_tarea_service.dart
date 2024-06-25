@@ -33,7 +33,7 @@ class ActualizarTareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -42,7 +42,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -50,7 +50,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -82,7 +82,7 @@ class ActualizarTareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -91,7 +91,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -99,7 +99,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -129,7 +129,7 @@ class ActualizarTareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -138,7 +138,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: res.data,
+        response: res.data,
         storeProcedure: null,
       );
     } catch (e) {
@@ -146,7 +146,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }
@@ -177,7 +177,7 @@ class ActualizarTareaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -197,7 +197,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: invitado,
+        response: invitado,
         storeProcedure: null,
       );
     } catch (e) {
@@ -205,7 +205,7 @@ class ActualizarTareaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

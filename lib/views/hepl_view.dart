@@ -17,9 +17,10 @@ class HelpView extends StatelessWidget {
             BlockTranslate.botones,
             "ayuda",
           ),
-          style: AppTheme.styleTheme(
+          style: AppTheme.style(
+            context,
             Styles.title,
-            Preferences.theme,
+            Preferences.idTheme,
           ),
         ),
       ),
@@ -43,15 +44,21 @@ class HelpSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
+        color: AppTheme.color(
+          context,
+          Styles.background,
+          Preferences.idTheme,
+        ),
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.impresora,
               "sinImprimir",
             ),
-            style: AppTheme.styleTheme(
+            style: AppTheme.style(
+              context,
               Styles.bold,
-              Preferences.theme,
+              Preferences.idTheme,
             ),
           ),
           subtitle: Text(
@@ -81,15 +88,21 @@ class ClientSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
+        color: AppTheme.color(
+          context,
+          Styles.background,
+          Preferences.idTheme,
+        ),
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.cliente,
               "noEncontrado",
             ),
-            style: AppTheme.styleTheme(
+            style: AppTheme.style(
+              context,
               Styles.bold,
-              Preferences.theme,
+              Preferences.idTheme,
             ),
           ),
           subtitle: Text(
@@ -147,9 +160,10 @@ class ClientSection extends StatelessWidget {
                           BlockTranslate.cliente,
                           "soporte",
                         ),
-                        style: AppTheme.styleTheme(
+                        style: AppTheme.style(
+                          context,
                           Styles.bold,
-                          Preferences.theme,
+                          Preferences.idTheme,
                         ),
                       ),
                     ],

@@ -227,7 +227,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //Obtener respuesta correcta del api
-    NuevaTareaModel creada = res.message[0];
+    NuevaTareaModel creada = res.response[0];
 
     //Si se está creando desde busqueda de tareas
 
@@ -318,7 +318,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //Obtener respuesta de api responsable
-    ResNuevoUsuarioModel seleccionado = resResponsable.message[0];
+    ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
 
     //Asignar responsable a la propiedad de la tarea
     resCreada.usuarioResponsable =
@@ -361,7 +361,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         nameUser: user,
         userName: user,
         tarea: comentario.tarea,
-        tareaComentario: resComent.message.res,
+        tareaComentario: resComent.response.res,
       );
 
       FilesService filesService = FilesService();
@@ -380,7 +380,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
         ApiResModel error = ApiResModel(
           succes: false,
-          message:
+          response:
               "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
           url: "",
           storeProcedure: null,
@@ -714,7 +714,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //Agregar respuesta de api a la lista de tipos de tarea
-    tiposTarea.addAll(res.message);
+    tiposTarea.addAll(res.response);
 
     //Recorrer la lista y asignar a la variable tipoTarea: "Tarea"
     for (var i = 0; i < tiposTarea.length; i++) {
@@ -758,7 +758,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //Agregar respuesta de api a la lista de estados de tarea
-    estados.addAll(res.message);
+    estados.addAll(res.response);
 
     //Recorrer la lista y asignar a la variable estado; "Activo"
     for (var i = 0; i < estados.length; i++) {
@@ -806,7 +806,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //Agregar respuesta de api a la lista de prioridades de tarea
-    prioridades.addAll(res.message);
+    prioridades.addAll(res.response);
 
     //Recorrer la lista y asignar a la variable prioridad: "Normal"
     for (var i = 0; i < prioridades.length; i++) {
@@ -852,7 +852,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //Agregar a la lista de periodicidades la respuesta del api
-    periodicidades.addAll(res.message);
+    periodicidades.addAll(res.response);
 
     //Recorrer la lista de periodicidades y asignar a la variable periodicidad : "Minutos"
     for (var i = 0; i < periodicidades.length; i++) {

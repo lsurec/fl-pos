@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class NotFoundWidget extends StatelessWidget {
   const NotFoundWidget({
@@ -19,7 +22,11 @@ class NotFoundWidget extends StatelessWidget {
           icon,
           Text(
             text,
-            style: const TextStyle(fontSize: 20),
+            style: AppTheme.style(
+              context,
+              Styles.bold30Style,
+              Preferences.idTheme,
+            ),
           ),
         ],
       ),

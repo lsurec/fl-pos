@@ -256,13 +256,15 @@ class _SettingsFromState extends State<SettingsFrom> {
                         : null,
                     child: Container(
                       color: (_currentStatus == BTStatus.connected)
-                          ? AppTheme.colorTheme(
+                          ? AppTheme.color(
+                              context,
                               Styles.primary,
-                              Preferences.theme,
+                              Preferences.idTheme,
                             )
-                          : AppTheme.colorTheme(
+                          : AppTheme.color(
+                              context,
                               Styles.grey,
-                              Preferences.theme,
+                              Preferences.idTheme,
                             ),
                       child: Center(
                         child: Text(
@@ -275,9 +277,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   BlockTranslate.impresora,
                                   "documento",
                                 ),
-                          style: AppTheme.styleTheme(
+                          style: AppTheme.style(
+                            context,
                             Styles.disabledStyle,
-                            Preferences.theme,
+                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -290,9 +293,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                       BlockTranslate.impresora,
                       "impresion",
                     ),
-                    style: AppTheme.styleTheme(
+                    style: AppTheme.style(
+                      context,
                       Styles.title,
-                      Preferences.theme,
+                      Preferences.idTheme,
                     ),
                   ),
                   actions: [
@@ -302,9 +306,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                       },
                       icon: Icon(
                         Icons.help_outline,
-                        color: AppTheme.colorTheme(
+                        color: AppTheme.color(
+                          context,
                           Styles.icons,
-                          Preferences.theme,
+                          Preferences.idTheme,
                         ),
                         size: 20,
                       ),
@@ -323,18 +328,20 @@ class _SettingsFromState extends State<SettingsFrom> {
                           BlockTranslate.impresora,
                           "conectado",
                         ),
-                        style: AppTheme.styleTheme(
+                        style: AppTheme.style(
+                          context,
                           Styles.title,
-                          Preferences.theme,
+                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
                       ListTile(
                         title: Text(
                           printerDefault.name,
-                          style: AppTheme.styleTheme(
+                          style: AppTheme.style(
+                            context,
                             Styles.normal,
-                            Preferences.theme,
+                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
@@ -342,9 +349,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                             BlockTranslate.impresora,
                             "papelT",
                           )} $paperDefault",
-                          style: AppTheme.styleTheme(
+                          style: AppTheme.style(
+                            context,
                             Styles.subTitle,
-                            Preferences.theme,
+                            Preferences.idTheme,
                           ),
                         ),
                         trailing: Row(
@@ -389,9 +397,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                           BlockTranslate.impresora,
                           "disponibles",
                         ),
-                        style: AppTheme.styleTheme(
+                        style: AppTheme.style(
+                          context,
                           Styles.title,
-                          Preferences.theme,
+                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -403,16 +412,18 @@ class _SettingsFromState extends State<SettingsFrom> {
                             return ListTile(
                               title: Text(
                                 devices[index].name,
-                                style: AppTheme.styleTheme(
+                                style: AppTheme.style(
+                                  context,
                                   Styles.normal,
-                                  Preferences.theme,
+                                  Preferences.idTheme,
                                 ),
                               ),
                               subtitle: Text(
                                 devices[index].address!,
-                                style: AppTheme.styleTheme(
+                                style: AppTheme.style(
+                                  context,
                                   Styles.subTitle,
-                                  Preferences.theme,
+                                  Preferences.idTheme,
                                 ),
                               ),
                               onTap: () {
@@ -438,9 +449,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           BlockTranslate.botones,
                                           "agregar",
                                         ),
-                                        style: AppTheme.styleTheme(
+                                        style: AppTheme.style(
+                                          context,
                                           Styles.textButtonStyle,
-                                          Preferences.theme,
+                                          Preferences.idTheme,
                                         ),
                                       ),
                                     )
@@ -457,9 +469,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                 ModalBarrier(
                   dismissible: false,
                   // color: Colors.black.withOpacity(0.3),
-                  color: AppTheme.colorTheme(
-                    Styles.background,
-                    Preferences.theme,
+                  color: AppTheme.color(
+                    context,
+                    Styles.loading,
+                    Preferences.idTheme,
                   ),
                 ),
               if (printVM.isLoading) const LoadWidget(),
@@ -504,9 +517,10 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           BlockTranslate.impresora,
           "selecPapel",
         ),
-        style: AppTheme.styleTheme(
+        style: AppTheme.style(
+          context,
           Styles.subTitle,
-          Preferences.theme,
+          Preferences.idTheme,
         ),
       ),
       content: DropdownButtonFormField<int>(
@@ -532,18 +546,20 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           onPressed: () {
             Navigator.pop(context);
           },
-          style: AppTheme.buttonStyle(
+          style: AppTheme.button(
+            context,
             Styles.buttonStyle,
-            Preferences.theme,
+            Preferences.idTheme,
           ),
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
               "cancelar",
             ),
-            style: AppTheme.styleTheme(
+            style: AppTheme.style(
+              context,
               Styles.whiteBoldStyle,
-              Preferences.theme,
+              Preferences.idTheme,
             ),
           ),
         ),
@@ -555,9 +571,10 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
                 }
               : null,
           style: (paper != null)
-              ? AppTheme.buttonStyle(
+              ? AppTheme.button(
+                  context,
                   Styles.buttonStyle,
-                  Preferences.theme,
+                  Preferences.idTheme,
                 ) //si esta desactivado
               : AppTheme.disabledButtonsStyle,
           child: Text(
@@ -565,9 +582,10 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               BlockTranslate.botones,
               "conectar",
             ),
-            style: AppTheme.styleTheme(
+            style: AppTheme.style(
+              context,
               Styles.whiteBoldStyle,
-              Preferences.theme,
+              Preferences.idTheme,
             ),
           ),
         ),

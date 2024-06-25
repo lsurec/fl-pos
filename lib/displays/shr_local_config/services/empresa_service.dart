@@ -32,7 +32,7 @@ class EmpresaService {
         return ApiResModel(
           url: url.toString(),
           succes: false,
-          message: res.data,
+          response: res.data,
           storeProcedure: res.storeProcedure,
         );
       }
@@ -52,7 +52,7 @@ class EmpresaService {
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        message: empresas,
+        response: empresas,
         storeProcedure: null,
       );
     } catch (e) {
@@ -60,7 +60,7 @@ class EmpresaService {
       return ApiResModel(
         url: url.toString(),
         succes: false,
-        message: e.toString(),
+        response: e.toString(),
         storeProcedure: null,
       );
     }

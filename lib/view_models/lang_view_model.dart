@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/languages_utilities.dart';
@@ -39,6 +40,8 @@ class LangViewModel extends ChangeNotifier {
       Preferences.language = languages[LanguagesProvider.indexDefaultLang].lang;
       Preferences.idLanguage = LanguagesProvider.indexDefaultLang;
       notifyListeners();
+      Navigator.pushNamed(context, AppRoutes.theme);
+      return;
     }
     isLoading = true;
     // timer?.cancel(); // Cancelar el temporizador existente si existe
