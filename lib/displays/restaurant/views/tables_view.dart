@@ -45,7 +45,8 @@ class TablesView extends StatelessWidget {
                             GestureDetector(
                               onTap: () => Navigator.pop(context),
                               child: const Text(
-                                "Ubicaciones/",
+                                "Ubicaciones/", //TODO:Translate
+                                //TODO;Styles
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black38,
@@ -123,6 +124,8 @@ class _CardTable extends StatelessWidget {
       elevation: 0,
       width: double.infinity,
       raidus: 0,
+      color: AppTheme.backroundColor,
+      borderWidth: 2,
       child: Row(
         children: [
           const SizedBox(
@@ -145,9 +148,10 @@ class _CardTable extends StatelessWidget {
                 children: [
                   Text(
                     mesa.descripcion,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                      Preferences.idTheme,
                     ),
                     textAlign: TextAlign.justify,
                     maxLines: 3,
@@ -155,10 +159,12 @@ class _CardTable extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
+                    //TODO:Translate
                     "Cuentas: ${mesa.orders}",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                    style: AppTheme.style(
+                      context,
+                      Styles.bold,
+                      Preferences.idTheme,
                     ),
                     textAlign: TextAlign.justify,
                     maxLines: 1,
@@ -170,8 +176,6 @@ class _CardTable extends StatelessWidget {
           )
         ],
       ),
-      color: AppTheme.backroundColor,
-      borderWidth: 2,
     );
   }
 }
