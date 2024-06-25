@@ -15,69 +15,87 @@ class TablesView extends StatelessWidget {
     final vm = Provider.of<TablesViewModel>(context);
     final vmLoc = Provider.of<LocationsViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          vmLoc.location!.descripcion,
-          style: AppTheme.style(
-            context,
-            Styles.title,
-            Preferences.idTheme,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              vmLoc.location!.descripcion,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
+            ),
           ),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 30,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        const Text(
-                          "Ubicaciones/",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black38,
-                          ),
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 30,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: const Text(
+                                "Ubicaciones/",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black38,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              vmLoc.location!.descripcion,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          vmLoc.location!.descripcion,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => vm.loadData(context),
+                    child: ListView.builder(
+                      itemCount: vm.tables.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        TableModel mesa = vm.tables[index];
+                        return _CardLocations(
+                          mesa: mesa,
+                        );
+                      },
                     ),
                   ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () => vm.loadData(),
-                child: ListView.builder(
-                  itemCount: vm.tables.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    TableModel mesa = vm.tables[index];
-                    return _CardLocations(
-                      mesa: mesa,
-                    );
-                  },
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }
