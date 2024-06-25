@@ -72,9 +72,12 @@ class TablesView extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: vm.tables.length,
                       itemBuilder: (BuildContext context, int index) {
-                        TableModel mesa = vm.tables[index];
-                        return _CardLocations(
-                          mesa: mesa,
+                        TableModel table = vm.tables[index];
+                        return GestureDetector(
+                          onTap: () => vm.navigateClassifications(table),
+                          child: _CardTable(
+                            mesa: table,
+                          ),
                         );
                       },
                     ),
@@ -100,8 +103,8 @@ class TablesView extends StatelessWidget {
   }
 }
 
-class _CardLocations extends StatelessWidget {
-  const _CardLocations({
+class _CardTable extends StatelessWidget {
+  const _CardTable({
     Key? key,
     required this.mesa,
   }) : super(key: key);

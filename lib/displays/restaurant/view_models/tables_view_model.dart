@@ -21,6 +21,11 @@ class TablesViewModel extends ChangeNotifier {
   }
 
   final List<TableModel> tables = [];
+  TableModel? table;
+
+  navigateClassifications(TableModel tableParam) {
+    table = tableParam;
+  }
 
   Future<void> loadData(BuildContext context) async {
     isLoading = true;
