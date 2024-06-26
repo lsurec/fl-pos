@@ -80,7 +80,7 @@ class PinView extends StatelessWidget {
                               const SizedBox(width: 20),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () => vm.validatePin(),
+                                  onPressed: () => vm.validatePin(context),
                                   child: const SizedBox(
                                     width: double.infinity,
                                     child: Center(
@@ -100,6 +100,17 @@ class PinView extends StatelessWidget {
             ),
           ),
         ),
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
+          ),
+        if (vm.isLoading) const LoadWidget(),
       ],
     );
   }
