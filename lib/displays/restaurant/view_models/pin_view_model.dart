@@ -63,8 +63,6 @@ class PinViewModel extends ChangeNotifier {
       return;
     }
 
-    isLoading = false;
-
     final List<AccountPinModel> waiters = resPin.response;
 
     if (waiters.isEmpty) {
@@ -75,7 +73,11 @@ class PinViewModel extends ChangeNotifier {
 
     waitress = waiters.first;
 
+    //Cargar
+
     Navigator.pushNamed(context, AppRoutes.classification);
+
+    isLoading = false;
 
     //Navegar a clasificacion
   }
