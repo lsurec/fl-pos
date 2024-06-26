@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 class ClassificationViewModel extends ChangeNotifier {
+  final List<ClassificationModel> classifications = [];
+
   Future<ApiResModel> loadClassification(BuildContext context) async {
     final docVM = Provider.of<DocumentViewModel>(
       context,

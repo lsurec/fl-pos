@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/account_pin_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -74,6 +76,22 @@ class PinViewModel extends ChangeNotifier {
     waitress = waiters.first;
 
     //Cargar
+    final vmClass =
+        Provider.of<ClassificationViewModel>(context, listen: false);
+
+    final ApiResModel resClassification =
+        await vmClass.loadClassification(context);
+
+    if (!resClassification.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resClassification);
+      return;
+    }
+
+    List<ClassificationModel> classifications = resClassification.response;
+
+    vmClass.classifications.clear();
+    vmClass.classifications.addAll(classifications);
 
     Navigator.pushNamed(context, AppRoutes.classification);
 
