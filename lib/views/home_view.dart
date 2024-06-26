@@ -1,5 +1,4 @@
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -46,7 +45,6 @@ class HomeView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -69,7 +67,6 @@ class _MyDrawer extends StatelessWidget {
       backgroundColor: AppTheme.color(
         context,
         Styles.black,
-        Preferences.idTheme,
       ),
       child: Column(
         children: [
@@ -95,12 +92,10 @@ class _MyDrawer extends StatelessWidget {
                             ? AppTheme.style(
                                 context,
                                 Styles.menuActive,
-                                Preferences.idTheme,
                               )
                             : AppTheme.style(
                                 context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                       ),
                       const Icon(
@@ -116,7 +111,6 @@ class _MyDrawer extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.divider,
-              Preferences.idTheme,
             ),
           ),
           Expanded(
@@ -128,7 +122,6 @@ class _MyDrawer extends StatelessWidget {
                   color: AppTheme.color(
                     context,
                     Styles.divider,
-                    Preferences.idTheme,
                   ),
                 );
               },
@@ -138,14 +131,12 @@ class _MyDrawer extends StatelessWidget {
                   titleTextStyle: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                   title: Text(
                     itemMenu.name,
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                   trailing: itemMenu.children.isNotEmpty
@@ -188,7 +179,6 @@ class _FooterDrawer extends StatelessWidget {
         color: AppTheme.color(
           context,
           Styles.secondBackground,
-          Preferences.idTheme,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

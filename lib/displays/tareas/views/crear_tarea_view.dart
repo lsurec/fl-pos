@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -36,7 +35,6 @@ class CrearTareaView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
             actions: <Widget>[
@@ -92,7 +90,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             Text(
@@ -100,7 +97,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -135,7 +131,6 @@ class CrearTareaView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         Row(
@@ -148,7 +143,6 @@ class CrearTareaView extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -159,7 +153,6 @@ class CrearTareaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -170,7 +163,6 @@ class CrearTareaView extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -181,7 +173,6 @@ class CrearTareaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             )
@@ -198,7 +189,6 @@ class CrearTareaView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         Row(
@@ -211,7 +201,6 @@ class CrearTareaView extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -222,7 +211,6 @@ class CrearTareaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -233,7 +221,6 @@ class CrearTareaView extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               label: Text(
@@ -244,7 +231,6 @@ class CrearTareaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             )
@@ -261,7 +247,6 @@ class CrearTareaView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -301,7 +286,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
@@ -310,7 +294,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -330,7 +313,6 @@ class CrearTareaView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.bold,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 const Padding(
@@ -340,7 +322,6 @@ class CrearTareaView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.obligatory,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ],
@@ -362,7 +343,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
@@ -371,7 +351,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -391,7 +370,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
@@ -400,7 +378,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.obligatory,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -417,7 +394,6 @@ class CrearTareaView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         const SizedBox(height: 5),
@@ -437,7 +413,6 @@ class CrearTareaView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   leading: const Icon(Icons.attachment),
@@ -468,7 +443,6 @@ class CrearTareaView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 Text(
@@ -476,7 +450,6 @@ class CrearTareaView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.obligatory,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 const SizedBox(width: 30),
@@ -486,7 +459,6 @@ class CrearTareaView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                               ],
@@ -509,7 +481,6 @@ class CrearTareaView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 Text(
@@ -517,7 +488,6 @@ class CrearTareaView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.obligatory,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ],
@@ -534,7 +504,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             subtitle: Text(
@@ -542,7 +511,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                             ),
                             leading: const Icon(Icons.person),
@@ -565,7 +533,6 @@ class CrearTareaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.normal,
-                                Preferences.idTheme,
                               ),
                             ),
                             leading: const Icon(
@@ -590,7 +557,6 @@ class CrearTareaView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   subtitle: Text(
@@ -598,7 +564,6 @@ class CrearTareaView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   leading: const Icon(Icons.person),
@@ -631,7 +596,6 @@ class CrearTareaView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

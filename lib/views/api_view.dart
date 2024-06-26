@@ -43,7 +43,6 @@ class ApiView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold30Style,
-                              Preferences.idTheme,
                             ),
                           ),
                         if (Preferences.urlApi.isEmpty)
@@ -57,7 +56,6 @@ class ApiView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal20Style,
-                              Preferences.idTheme,
                             ),
                           ),
                         if (Preferences.urlApi.isNotEmpty)
@@ -74,7 +72,6 @@ class ApiView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.bold30Style,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               IconButton(
@@ -98,7 +95,6 @@ class ApiView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal20Style,
-                              Preferences.idTheme,
                             ),
                           ),
                       ],
@@ -109,7 +105,6 @@ class ApiView extends StatelessWidget {
                     color: AppTheme.color(
                       context,
                       Styles.secondBackground,
-                      Preferences.idTheme,
                     ),
                     width: double.infinity,
                     raidus: 18,
@@ -154,7 +149,6 @@ class ApiView extends StatelessWidget {
                                     style: AppTheme.button(
                                       context,
                                       Styles.buttonStyle,
-                                      Preferences.idTheme,
                                     ),
                                     // onPressed: () => Preferences.clearUrl(),
                                     child: SizedBox(
@@ -169,7 +163,6 @@ class ApiView extends StatelessWidget {
                                           style: AppTheme.style(
                                             context,
                                             Styles.whiteBoldStyle,
-                                            Preferences.idTheme,
                                           ),
                                         ),
                                       ),
@@ -183,7 +176,6 @@ class ApiView extends StatelessWidget {
                                     style: AppTheme.button(
                                       context,
                                       Styles.buttonStyle,
-                                      Preferences.idTheme,
                                     ),
                                     child: SizedBox(
                                       width: double.infinity,
@@ -197,7 +189,6 @@ class ApiView extends StatelessWidget {
                                           style: AppTheme.style(
                                             context,
                                             Styles.whiteBoldStyle,
-                                            Preferences.idTheme,
                                           ),
                                         ),
                                       ),
@@ -212,7 +203,6 @@ class ApiView extends StatelessWidget {
                               style: AppTheme.button(
                                 context,
                                 Styles.primary,
-                                Preferences.idTheme,
                               ),
                               child: SizedBox(
                                 width: double.infinity,
@@ -225,7 +215,6 @@ class ApiView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.whiteBoldStyle,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ),
@@ -247,7 +236,6 @@ class ApiView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.versionStyle,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(width: 10)
@@ -265,7 +253,6 @@ class ApiView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

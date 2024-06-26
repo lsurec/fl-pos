@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -36,7 +35,6 @@ class DetailsDestinationDocView extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               actions: [
@@ -94,7 +92,6 @@ class DetailsDestinationDocView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                           ],
@@ -111,7 +108,6 @@ class DetailsDestinationDocView extends StatelessWidget {
                               color: AppTheme.color(
                                 context,
                                 Styles.secondBackground,
-                                Preferences.idTheme,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
@@ -169,7 +165,6 @@ class DetailsDestinationDocView extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.loading,
-                Preferences.idTheme,
               ),
             ),
           if (vm.isLoading) const LoadWidget(),
@@ -207,7 +202,6 @@ class _PrintActions extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -218,7 +212,6 @@ class _PrintActions extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.whiteStyle,
-                        Preferences.idTheme,
                       )),
                 ),
               ),
@@ -236,7 +229,6 @@ class _PrintActions extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -247,7 +239,6 @@ class _PrintActions extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.whiteStyle,
-                        Preferences.idTheme,
                       )),
                 ),
               ),

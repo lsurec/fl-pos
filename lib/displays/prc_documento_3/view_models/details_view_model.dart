@@ -6,7 +6,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -667,7 +666,6 @@ class DetailsViewModel extends ChangeNotifier {
       backgroundColor: AppTheme.color(
         context,
         Styles.primary,
-        Preferences.idTheme,
       ),
       duration: const Duration(seconds: 5),
       content: Row(
@@ -692,7 +690,6 @@ class DetailsViewModel extends ChangeNotifier {
         textColor: AppTheme.color(
           context,
           Styles.white,
-          Preferences.idTheme,
         ),
         onPressed: () {
           // Acción de deshacer: Restaurar el elemento eliminado

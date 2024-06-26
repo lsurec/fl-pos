@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -55,7 +54,6 @@ class _RecentViewState extends State<RecentView> {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -74,7 +72,6 @@ class _RecentViewState extends State<RecentView> {
                       style: AppTheme.style(
                         context,
                         Styles.bold,
-                        Preferences.idTheme,
                       ),
                     ),
                   ],
@@ -107,7 +104,6 @@ class _RecentViewState extends State<RecentView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
@@ -115,7 +111,6 @@ class _RecentViewState extends State<RecentView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
@@ -123,7 +118,6 @@ class _RecentViewState extends State<RecentView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ],
@@ -135,14 +129,12 @@ class _RecentViewState extends State<RecentView> {
                                       style: AppTheme.style(
                                         context,
                                         Styles.blueText,
-                                        Preferences.idTheme,
                                       )),
                                   Text(
                                     "(+) ${currencyFormat.format(doc.cargo)}",
                                     style: AppTheme.style(
                                       context,
                                       Styles.cargo,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
@@ -150,7 +142,6 @@ class _RecentViewState extends State<RecentView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.descuento,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Container(
@@ -159,7 +150,6 @@ class _RecentViewState extends State<RecentView> {
                                     color: AppTheme.color(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   Text(
@@ -167,7 +157,6 @@ class _RecentViewState extends State<RecentView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ],
@@ -192,7 +181,6 @@ class _RecentViewState extends State<RecentView> {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

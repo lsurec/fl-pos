@@ -78,7 +78,7 @@ class AppTheme {
     ),
   );
 
-  static TextStyle style(BuildContext context, String style, String tema) {
+  static TextStyle styleApp(BuildContext context, String style, String tema) {
     // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     // si es oscuro
@@ -188,7 +188,7 @@ class AppTheme {
     return themeStyles[style] ?? LightTheme.normalStyle;
   }
 
-  static Color color(BuildContext context, String style, String tema) {
+  static Color colorApp(BuildContext context, String style, String tema) {
     // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
@@ -280,7 +280,7 @@ class AppTheme {
     return themeStyles[style] ?? black;
   }
 
-  static ButtonStyle button(BuildContext context, String style, String tema) {
+  static ButtonStyle button2(BuildContext context, String style, String tema) {
     // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
@@ -333,13 +333,19 @@ class AppTheme {
     return themeStyles[style] ?? buttonsStyle;
   }
 
-  static ButtonStyle button2(BuildContext context, String style, String tema) {
+  static ButtonStyle button(BuildContext context, String style) {
     // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
 
+    String tema = Preferences.idTheme;
+
+    if (Preferences.idTheme == "0") {
+      // Si no coincide con "1" o "2", usar la lógica original
+      tema = isDarkMode ? "2" : "1";
+    }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    if (Preferences.systemTheme.isNotEmpty) {
+    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -352,11 +358,6 @@ class AppTheme {
           // Si no coincide con "1" o "2", usar la lógica original
           tema = isDarkMode ? "2" : "1";
           break;
-      }
-    } else {
-      // Determinar el tema a utilizar basado en el modo oscuro del dispositivo
-      if (tema.isEmpty || tema == "0") {
-        tema = isDarkMode ? "2" : "1";
       }
     }
 
@@ -387,7 +388,7 @@ class AppTheme {
     return themeStyles[style] ?? buttonsStyle;
   }
 
-  static Color colorApp(BuildContext context, String style) {
+  static Color color(BuildContext context, String style) {
     // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
@@ -481,7 +482,7 @@ class AppTheme {
     return themeStyles[style] ?? black;
   }
 
-  static TextStyle styleApp(BuildContext context, String style) {
+  static TextStyle style(BuildContext context, String style) {
     // Encontrar el tema del dispositivo
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     // si es oscuro
