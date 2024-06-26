@@ -23,7 +23,7 @@ class RestaurantService {
         url,
         headers: {
           "Authorization": "bearer $token",
-          "enterprice": "$enterprice",
+          "enterprise": "$enterprice",
           "pin": pin,
         },
       );
