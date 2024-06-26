@@ -94,8 +94,12 @@ class DetailsViewModel extends ChangeNotifier {
     if (!isValidFormCSearch()) return;
 
     if (docVM.serieSelect == null) {
-      //TODO:TRANSLATE
-      NotificationService.showSnackbar("Seelcciona una serie");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaSerie',
+        ),
+      );
       return;
     }
 

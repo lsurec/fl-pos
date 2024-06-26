@@ -308,7 +308,8 @@
         "invalido": "Invalid email.",
         "cliente": "Client",
         "editar": "Edit Account",
-        "actualizar": "Update Account"
+        "actualizar": "Update Account",
+        "cuentaCta": "Account Acc:"
     },
     "factura": {
         "bancos": "Banks",
