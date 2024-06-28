@@ -61,11 +61,23 @@ class UsuariosView extends StatelessWidget {
                     children: [
                       TextFormField(
                         controller: vm.buscar,
-                        onChanged: (criterio) => vm.buscarUsuarioTemp(context),
+                        onFieldSubmitted: (criterio) => vm.buscarUsuario(
+                          context,
+                        ),
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.translate(
                             BlockTranslate.tareas,
                             'buscar',
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.search,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            onPressed: () => vm.buscarUsuario(context),
                           ),
                         ),
                       ),

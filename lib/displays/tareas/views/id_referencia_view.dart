@@ -40,11 +40,22 @@ class IdReferenciaView extends StatelessWidget {
                   children: [
                     TextFormField(
                       controller: vm.buscarIdReferencia,
-                      onChanged: (criterio) => vm.buscarRefTemp(context),
+                      onFieldSubmitted: (criterio) =>
+                          vm.buscarIdRefencia(context),
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.tareas,
                           'buscar',
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            Icons.search,
+                            color: AppTheme.color(
+                              context,
+                              Styles.darkPrimary,
+                            ),
+                          ),
+                          onPressed: () => vm.buscarIdRefencia(context),
                         ),
                       ),
                     ),
