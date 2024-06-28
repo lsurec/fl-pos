@@ -24,6 +24,8 @@ class ClassificationViewModel extends ChangeNotifier {
 
   int totalLength = 0;
 
+  Future<void> navigateProduct() async {}
+
   Future<void> loadData(BuildContext context) async {
     isLoading = true;
 

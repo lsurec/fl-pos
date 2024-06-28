@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/views/views.dar
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/classification_view.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/views/products_class_view.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
@@ -54,6 +55,7 @@ class AppRoutes {
   static const locations = 'locations';
   static const tables = 'tables';
   static const pin = 'pin';
+  static const productsClass = 'productsClass';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -102,6 +104,7 @@ class AppRoutes {
     locations: (BuildContext context) => const LocationsView(),
     tables: (BuildContext context) => const TablesView(),
     pin: (BuildContext context) => const PinView(),
+    productsClass: (BuildContext context) => const ProductClassView(),
   };
 
   //en caso de ruta incorrecta
