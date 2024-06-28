@@ -100,7 +100,7 @@ class LoginView extends StatelessWidget {
                                           ),
                                           suffixIconColor: AppTheme.color(
                                             context,
-                                            Styles.primary,
+                                            Styles.iconActive,
                                           ),
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
