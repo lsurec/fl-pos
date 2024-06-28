@@ -1,15 +1,49 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 class ClassificationViewModel extends ChangeNotifier {
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   final List<ClassificationModel> classifications = [];
   final List<List<ClassificationModel>> menu = [];
+
+  int totalLength = 0;
+
+  Future<void> loadData(BuildContext context) async {
+    isLoading = true;
+
+    final ApiResModel resClassification = await loadClassification(context);
+
+    if (!resClassification.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resClassification);
+      return;
+    }
+
+    List<ClassificationModel> classificationsRes = resClassification.response;
+
+    classifications.clear();
+    classifications.addAll(classificationsRes);
+
+    orderMenu();
+
+    isLoading = false;
+  }
 
   orderMenu() {
     double rowsNum = 0; //Saber cuantas filas tengo
@@ -52,14 +86,14 @@ class ClassificationViewModel extends ChangeNotifier {
         }
       }
     }
+
+    totalLength = 0;
+    for (var sublist in menu) {
+      totalLength += sublist.length;
+    }
   }
 
   Future<ApiResModel> loadClassification(BuildContext context) async {
-    final docVM = Provider.of<DocumentViewModel>(
-      context,
-      listen: false,
-    );
-
     final vmLogin = Provider.of<LoginViewModel>(
       context,
       listen: false,
