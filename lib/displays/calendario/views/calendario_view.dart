@@ -82,7 +82,8 @@ class _CalendarioViewState extends State<CalendarioView> {
               child: ListView(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    // padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Column(
                       children: [
                         if (vm.vistaDia)
@@ -304,6 +305,10 @@ class _DrawerCalendar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ListTile(
+                leading: IconButton(
+                  onPressed: () => vm.back(context),
+                  icon: const Icon(Icons.arrow_back),
+                ),
                 title: Text(
                   AppLocalizations.of(context)!.translate(
                     BlockTranslate.calendario,
@@ -423,7 +428,12 @@ class _NombreDias extends StatelessWidget {
             Styles.greyBorder,
           ),
         ), // Borde derecho
-        bottom: BorderSide.none, // Sin borde abajo
+        bottom: BorderSide(
+          color: AppTheme.color(
+            context,
+            Styles.greyBorder,
+          ),
+        ), // Sin borde abajo
         horizontalInside: BorderSide(
           color: AppTheme.color(
             context,
@@ -443,15 +453,14 @@ class _NombreDias extends StatelessWidget {
           children: diasSemana.map((dia) {
             return TableCell(
               child: Container(
-                height: 25,
-                width: 50,
-                alignment: Alignment.topCenter,
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                alignment: Alignment.center,
                 child: Text(
                   // Para obtener solo las tres primeras letras del día
                   dia.substring(0, 3),
                   style: AppTheme.style(
                     context,
-                    Styles.bold,
+                    Styles.normal,
                   ),
                 ),
               ),
@@ -473,12 +482,7 @@ class _VistaSemana extends StatelessWidget {
 
     return Table(
       border: TableBorder(
-        top: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
-        ), // Borde arriba
+        top: BorderSide.none, // Borde arriba
         left: BorderSide(
           color: AppTheme.color(
             context,
@@ -525,7 +529,6 @@ class _VistaSemana extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      height: 30,
                       decoration: BoxDecoration(
                         //si el dia no está correcto corregirlo eliminando resolveMonth por monthselectview
                         color: dia.value == vm.today &&
@@ -536,14 +539,6 @@ class _VistaSemana extends StatelessWidget {
                                 Styles.primary,
                               )
                             : null,
-                        border: Border(
-                          bottom: BorderSide(
-                            color: AppTheme.color(
-                              context,
-                              Styles.greyBorder,
-                            ),
-                          ),
-                        ), // Agregar borde inferior
                       ),
                       child: Center(
                         child: Text(
@@ -557,14 +552,13 @@ class _VistaSemana extends StatelessWidget {
                                 )
                               : AppTheme.style(
                                   context,
-                                  Styles.bold,
+                                  Styles.diasOtroMes,
                                 ),
                         ),
                       ),
                     ),
                     Container(
-                      height: 850,
-                      padding: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.symmetric(vertical: 3),
                       child: ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
@@ -583,22 +577,27 @@ class _VistaSemana extends StatelessWidget {
                             vm.resolveMonth(dia.indexWeek),
                             vm.resolveYear(index),
                           );
-                          return Container(
-                            alignment: Alignment.center,
-                            margin: const EdgeInsets.only(bottom: 2),
-                            child: Column(
-                              children: [
-                                if (tareasDia.isNotEmpty)
-                                  Text(
-                                    tareasDia[indexTarea].tarea.toString(),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.taskStyle,
-                                    ),
-                                  ),
-                                const Divider(),
-                              ],
-                            ),
+                          return Column(
+                            children: [
+                              const Divider(),
+                              Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.only(bottom: 2),
+                                child: Column(
+                                  children: [
+                                    if (tareasDia.isNotEmpty)
+                                      Text(
+                                        tareasDia[indexTarea].tarea.toString(),
+                                        style: AppTheme.style(
+                                          context,
+                                          Styles.taskStyle,
+                                        ),
+                                      ),
+                                    // const Divider(),
+                                  ],
+                                ),
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -660,7 +659,7 @@ class _VistaMes extends StatelessWidget {
                         )
                       : AppTheme.style(
                           context,
-                          Styles.bold,
+                          Styles.normal,
                         );
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
@@ -702,8 +701,9 @@ class _VistaMes extends StatelessWidget {
                           Column(
                             children: [
                               Container(
-                                height: 135,
-                                alignment: Alignment.topCenter,
+                                margin: const EdgeInsets.only(bottom: 20),
+                                //height: 135,
+                                alignment: Alignment.center,
                                 color: AppTheme.color(
                                   context,
                                   Styles.transparent,
@@ -814,8 +814,9 @@ class _VistaMes extends StatelessWidget {
                           Column(
                             children: [
                               Container(
+                                margin: const EdgeInsets.only(bottom: 20),
                                 alignment: Alignment.topCenter,
-                                height: 135,
+                                //height: 135,
                                 color: AppTheme.color(
                                   context,
                                   Styles.transparent,
@@ -904,7 +905,8 @@ class _VistaMes extends StatelessWidget {
                           Column(
                             children: [
                               Container(
-                                height: 135,
+                                margin: const EdgeInsets.only(bottom: 20),
+                                //height: 135,
                                 alignment: Alignment.topCenter,
                                 color: AppTheme.color(
                                   context,

@@ -1255,4 +1255,16 @@ class CalendarioViewModel extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  back(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.home);
+  }
+
+  heightDia(List<TareaCalendarioModel> tareas) {
+    if (tareas.length == 1) return 10.0;
+    if (tareas.length == 2) return 20.0;
+    if (tareas.length == 3) return 30.0;
+    if (tareas.length == 4) return 40.0;
+    if (tareas.length == 5) return 50.0;
+  }
 }
