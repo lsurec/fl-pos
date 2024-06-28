@@ -27,7 +27,7 @@ class ThemeViewModel extends ChangeNotifier {
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
 
-    if (AppTheme.cambiarTema == 1) {
+    if (AppTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
       //mostrar dialogo de confirmacion
       bool result = await showDialog(
             context: context,
@@ -79,7 +79,6 @@ class ThemeViewModel extends ChangeNotifier {
     Preferences.idTheme = tema.id.toString();
 
     notifyListeners();
-
   }
 
   List<ThemeModel> temasApp(BuildContext context) {

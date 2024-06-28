@@ -23,7 +23,8 @@ class LangViewModel extends ChangeNotifier {
     int indexLang,
   ) async {
     //Si es desde ajustes
-    if (AppLocalizations.cambiarIdioma == 1) {
+    if (AppLocalizations.cambiarIdioma == 1 &&
+        indexLang != Preferences.idLanguage) {
       bool result = await showDialog(
             context: context,
             builder: (context) => AlertWidget(
@@ -33,7 +34,7 @@ class LangViewModel extends ChangeNotifier {
               ),
               textCancel: AppLocalizations.of(context)!.translate(
                 BlockTranslate.botones,
-                "aceptar",
+                "cancelar",
               ),
               title: AppLocalizations.of(context)!.translate(
                 BlockTranslate.preferencias,
