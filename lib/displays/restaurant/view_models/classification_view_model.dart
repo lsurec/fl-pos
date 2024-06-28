@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -21,10 +23,39 @@ class ClassificationViewModel extends ChangeNotifier {
 
   final List<ClassificationModel> classifications = [];
   final List<List<ClassificationModel>> menu = [];
+  ClassificationModel? classification;
 
   int totalLength = 0;
 
-  Future<void> navigateProduct() async {}
+  Future<void> navigateProduct(
+    BuildContext context,
+    ClassificationModel classParam,
+  ) async {
+    isLoading = true;
+
+    classification = classParam;
+
+    final vmProdClass =
+        Provider.of<ProductsClassViewModel>(context, listen: false);
+
+    final ApiResModel res = await vmProdClass.loadProducts(context);
+
+    if (!res.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, res);
+      return;
+    }
+
+    vmProdClass.products.clear();
+
+    vmProdClass.products.addAll(res.response);
+
+    vmProdClass.orederMenu();
+
+    Navigator.pushNamed(context, AppRoutes.productsClass);
+
+    isLoading = false;
+  }
 
   Future<void> loadData(BuildContext context) async {
     isLoading = true;

@@ -103,7 +103,7 @@ class ClassificationView extends StatelessWidget {
                       itemCount: vm.menu.length,
                       itemBuilder: (BuildContext context, int index) {
                         return _RowMenu(
-                          options: vm.menu[index],
+                          classification: vm.menu[index],
                         );
                       },
                     ),
@@ -132,33 +132,34 @@ class ClassificationView extends StatelessWidget {
 class _RowMenu extends StatelessWidget {
   const _RowMenu({
     Key? key,
-    required this.options,
+    required this.classification,
   }) : super(key: key);
 
-  final List<ClassificationModel> options;
+  final List<ClassificationModel> classification;
 
   @override
   Widget build(BuildContext context) {
-    final menuVM = Provider.of<ClassificationViewModel>(context, listen: false);
+    final vmClass =
+        Provider.of<ClassificationViewModel>(context, listen: false);
 
     return Row(
       children: [
         CardImageWidget(
-          onTap: () => {},
-          description: options[0].desClasificacion,
+          onTap: () => vmClass.navigateProduct(context, classification[0]),
+          description: classification[0].desClasificacion,
           // srcImage: options[0].image,
           srcImage:
               "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
         ),
-        if (options.length == 2)
+        if (classification.length == 2)
           CardImageWidget(
-            onTap: () => {},
-            description: options[1].desClasificacion,
+            onTap: () => vmClass.navigateProduct(context, classification[1]),
+            description: classification[1].desClasificacion,
             // srcImage: options[1].image,
             srcImage:
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
           ),
-        if (options.length == 1) Expanded(child: Container()),
+        if (classification.length == 1) Expanded(child: Container()),
       ],
     );
   }

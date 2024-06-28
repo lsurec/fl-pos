@@ -25,6 +25,9 @@ class RestaurantService {
         url,
         headers: {
           "Authorization": "bearer $token",
+          "classification": "$classification",
+          "station": "$station",
+          "user": user,
         },
       );
 
