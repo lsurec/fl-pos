@@ -35,7 +35,6 @@ class ClassificationViewModel extends ChangeNotifier {
     final String user = vmLogin.user;
     final String token = vmLogin.token;
     final int tipoDocumento = vmMenu.documento!;
-    final String serie = docVM.serieSelect!.serieDocumento!;
 
     RestaurantService restaurantService = RestaurantService();
 
@@ -44,7 +43,7 @@ class ClassificationViewModel extends ChangeNotifier {
       tipoDocumento,
       empresa,
       estacion,
-      serie,
+      "1", //TODO:Restaurante
       user,
       token,
     );
