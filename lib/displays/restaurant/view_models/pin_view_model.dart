@@ -93,6 +93,8 @@ class PinViewModel extends ChangeNotifier {
     vmClass.classifications.clear();
     vmClass.classifications.addAll(classifications);
 
+    vmClass.orderMenu();
+
     Navigator.pushNamed(context, AppRoutes.classification);
 
     isLoading = false;
