@@ -17,92 +17,110 @@ class ProductClassView extends StatelessWidget {
     final vmClass = Provider.of<ClassificationViewModel>(context);
     final vm = Provider.of<ProductsClassViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          vmClass.classification!.desClasificacion,
-          style: AppTheme.style(
-            context,
-            Styles.title,
-            Preferences.idTheme,
-          ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.description_outlined,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              vmClass.classification!.desClasificacion,
+              style: AppTheme.style(
+                context,
+                Styles.title,
+                Preferences.idTheme,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
-            padding: const EdgeInsets.only(right: 20),
-            onPressed: () {},
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.description_outlined,
+                ),
+                padding: const EdgeInsets.only(right: 20),
+                onPressed: () {},
+              ),
+            ],
           ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 60,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        const Text(
-                          "Ubicaciones/",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black38,
-                          ),
+          body: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 60,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            const Text(
+                              "Ubicaciones/",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black38,
+                              ),
+                            ),
+                            Text(
+                              "${vmLoc.location!.descripcion}/",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.black38,
+                              ),
+                            ),
+                            Text(
+                              "${vmTables.table!.descripcion}/",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.black38,
+                              ),
+                            ),
+                            Text(
+                              vmClass.classification!.desClasificacion,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "${vmLoc.location!.descripcion}/",
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black38,
-                          ),
-                        ),
-                        Text(
-                          "${vmTables.table!.descripcion}/",
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.black38,
-                          ),
-                        ),
-                        Text(
-                          vmClass.classification!.desClasificacion,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                      ),
+                      const SizedBox(height: 10),
+                      RegisterCountWidget(count: vm.totalLength),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => vm.loadData(context),
+                    child: ListView.builder(
+                      itemCount: vm.menu.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _RowMenu(
+                          options: vm.menu[index],
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  RegisterCountWidget(count: vm.totalLength),
-                ],
-              ),
+                ),
+              ],
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: vm.menu.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _RowMenu(
-                    options: vm.menu[index],
-                  );
-                },
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.color(
+              context,
+              Styles.loading,
+              Preferences.idTheme,
+            ),
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }

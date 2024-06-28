@@ -50,7 +50,7 @@ class ClassificationViewModel extends ChangeNotifier {
 
     vmProdClass.products.addAll(res.response);
 
-    vmProdClass.orederMenu();
+    vmProdClass.orderMenu();
 
     Navigator.pushNamed(context, AppRoutes.productsClass);
 

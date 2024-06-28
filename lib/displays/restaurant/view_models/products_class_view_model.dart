@@ -1,18 +1,51 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/services.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 class ProductsClassViewModel extends ChangeNotifier {
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   final List<ProductRestaurantModel> products = [];
   final List<List<ProductRestaurantModel>> menu = [];
   int totalLength = 0;
 
-  orederMenu() {
+  Future<void> loadData(BuildContext context) async {
+    isLoading = true;
+
+    final ApiResModel resClassProduct = await loadProducts(context);
+
+    if (!resClassProduct.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resClassProduct);
+      return;
+    }
+
+    List<ProductRestaurantModel> productsRes = resClassProduct.response;
+
+    products.clear();
+    products.addAll(productsRes);
+
+    orderMenu();
+
+    isLoading = false;
+  }
+
+  orderMenu() {
     double rowsNum = 0; //Saber cuantas filas tengo
 
     //Dividir en 2 los items totales  pata obtener cuntas filas tengo
