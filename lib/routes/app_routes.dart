@@ -56,6 +56,7 @@ class AppRoutes {
   static const tables = 'tables';
   static const pin = 'pin';
   static const productsClass = 'productsClass';
+  static const detailsRestaurant = 'detailsRestaurant';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -105,6 +106,7 @@ class AppRoutes {
     tables: (BuildContext context) => const TablesView(),
     pin: (BuildContext context) => const PinView(),
     productsClass: (BuildContext context) => const ProductClassView(),
+    detailsRestaurant: (BuildContext context) => const DetailsRestaurantView(),
   };
 
   //en caso de ruta incorrecta
