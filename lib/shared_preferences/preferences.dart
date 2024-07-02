@@ -17,10 +17,19 @@ class Preferences {
   static const String _themeKey = "theme";
   static const String _themeNameKey = "nameTheme";
   static const String _systemThemeKey = "_systemTheme";
+  static const String _themeModeKey = "themeMode";
 
   //iniciar shared preferences
   static Future init() async {
     _prefs = await SharedPreferences.getInstance();
+  }
+
+  static int get themeMode {
+    return _prefs.getInt(_themeModeKey) ?? 0; //Ningun tema asignado
+  }
+
+  static set themeMode(int value) {
+    _prefs.setInt(_themeModeKey, value);
   }
 
   static bool get directPrint {

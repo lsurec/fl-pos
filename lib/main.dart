@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
       title: "Business",
       debugShowCheckedModeBanner: false,
       //Tema de la aplicacion
-      theme: aplicarTemaApp(context),
+      // theme: aplicarTemaApp(context),
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas

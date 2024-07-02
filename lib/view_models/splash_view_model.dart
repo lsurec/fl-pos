@@ -84,7 +84,6 @@ class SplashViewModel extends ChangeNotifier {
 
     // si no hay un idioma guardado, mostrar pantalla de idioma
     if (Preferences.language.isEmpty) {
-      print("1 Idioma");
       Preferences.idLanguage = 0;
 
       await Future.delayed(const Duration(seconds: 1));
@@ -99,8 +98,6 @@ class SplashViewModel extends ChangeNotifier {
 
     //sino hay tema seleccionado, mostrar pantalla de temas
     if (Preferences.idTheme.isEmpty) {
-      print("2 Thema");
-
       await Future.delayed(const Duration(seconds: 1));
       //mostrar login
       Navigator.of(context).pushReplacement(
@@ -112,7 +109,6 @@ class SplashViewModel extends ChangeNotifier {
     }
 
     if (Preferences.urlApi.isEmpty) {
-      print("3 Url");
       //si hay un idioma guardado asignarlo a la variable global del idioma
       AppLocalizations.idioma = Locale(Preferences.language);
       // Simula una carga de datos
@@ -129,7 +125,6 @@ class SplashViewModel extends ChangeNotifier {
 
     // si no hay una sesion de usuario guradada
     if (Preferences.token.isEmpty) {
-      print("4 Token");
       await Future.delayed(const Duration(seconds: 1));
       //mostrar login
       Navigator.of(context).pushReplacement(
