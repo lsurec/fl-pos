@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/providers/providers.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -17,6 +18,7 @@ class ThemeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ThemeViewModel>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     List<ThemeModel> themes = vm.temasApp(context);
 
@@ -32,6 +34,25 @@ class ThemeView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    RadioListTile<ThemeMode>(
+                      title: Text('Claro'),
+                      value: ThemeMode.light,
+                      groupValue: themeProvider.themeMode,
+                      onChanged: (ThemeMode? value) => themeProvider.setLigth(),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      title: Text('Oscuro'),
+                      value: ThemeMode.dark,
+                      groupValue: themeProvider.themeMode,
+                      onChanged: (ThemeMode? value) => themeProvider.setDark(),
+                    ),
+                    RadioListTile<ThemeMode>(
+                      title: Text('Sistema'),
+                      value: ThemeMode.system,
+                      groupValue: themeProvider.themeMode,
+                      onChanged: (ThemeMode? value) =>
+                          themeProvider.setSystem(),
+                    ),
                     SizedBox(
                       width: 350,
                       child: Padding(

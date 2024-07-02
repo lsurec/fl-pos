@@ -22,5 +22,20 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
+  setDark() {
+    themeMode = ThemeMode.dark;
+    notifyListeners();
+  }
+
+  setLigth() {
+    themeMode = ThemeMode.light;
+    notifyListeners();
+  }
+
+  setSystem() {
+    themeMode = ThemeMode.system;
+    notifyListeners();
+  }
+
   ThemeMode themeMode = ThemeMode.system;
 }
