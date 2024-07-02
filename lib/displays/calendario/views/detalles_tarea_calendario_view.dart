@@ -67,15 +67,25 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         children: [
                           TextButton(
                             onPressed: () => vm.comentariosTarea(context),
-                            child: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.tareas,
-                                'comentarios',
-                              )} (${vmComentarios.comentarioDetalle.length})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.add_comment_outlined),
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 5,
+                                  ),
+                                ),
+                                Text(
+                                  "${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.tareas,
+                                    'comentarios',
+                                  )} (${vmComentarios.comentarioDetalle.length})",
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.title,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -315,7 +325,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           title: Text(
                             vm.tarea!.usuarioResponsable ??
                                 AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.general,
+                                  BlockTranslate.tareas,
                                   'noAsignado',
                                 ),
                             style: AppTheme.style(

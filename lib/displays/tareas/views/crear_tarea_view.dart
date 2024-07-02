@@ -251,22 +251,28 @@ class CrearTareaView extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 150,
-                              child: TextFormField(
-                                controller: vm.tiempoController,
-                                onChanged: (value) =>
-                                    vm.tiempoController.text = value,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: 14,
-                                    horizontal: 16,
+                            Container(
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.primary,
                                   ),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                vm.tiempoController.text,
+                                textAlign: TextAlign.center,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
                                 ),
                               ),
                             ),
+                            const SizedBox(width: 10),
                             SizedBox(
                               width: 175,
                               child: _TiempoEstimado(
@@ -316,7 +322,8 @@ class CrearTareaView extends StatelessWidget {
                                   ),
                                 ),
                                 const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
+                                  padding: EdgeInsets.only(left: 5),
+                                ),
                                 Text(
                                   "*",
                                   style: AppTheme.style(
@@ -604,6 +611,62 @@ class CrearTareaView extends StatelessWidget {
   }
 }
 
+// class _TiempoEstimado extends StatelessWidget {
+//   const _TiempoEstimado({
+//     required this.tiempos,
+//   });
+
+//   final List<PeriodicidadModel> tiempos;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CrearTareaViewModel>(context);
+
+//     return DropdownButtonFormField2<PeriodicidadModel>(
+//       value: vm.periodicidad,
+//       isExpanded: true,
+//       decoration: InputDecoration(
+//         contentPadding: const EdgeInsets.symmetric(vertical: 16),
+//         border: UnderlineInputBorder(
+//           borderRadius: BorderRadius.circular(15),
+//           borderSide: const BorderSide(),
+//         ),
+//       ),
+//       items: tiempos
+//           .map(
+//             (item) => DropdownMenuItem<PeriodicidadModel>(
+//               value: item,
+//               child: Text(
+//                 item.descripcion,
+//                 style: const TextStyle(
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ),
+//           )
+//           .toList(),
+//       onChanged: (value) => vm.periodicidad = value!,
+//       buttonStyleData: const ButtonStyleData(
+//         padding: EdgeInsets.only(right: 8),
+//       ),
+//       iconStyleData: const IconStyleData(
+//         icon: Icon(
+//           Icons.arrow_drop_down,
+//         ),
+//         iconSize: 24,
+//       ),
+//       dropdownStyleData: DropdownStyleData(
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(15),
+//         ),
+//       ),
+//       menuItemStyleData: const MenuItemStyleData(
+//         padding: EdgeInsets.symmetric(horizontal: 16),
+//       ),
+//     );
+//   }
+// }
+
 class _TiempoEstimado extends StatelessWidget {
   const _TiempoEstimado({
     required this.tiempos,
@@ -613,48 +676,36 @@ class _TiempoEstimado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<CrearTareaViewModel>(context);
+    // Asegurarse de que la lista no esté vacía
+    if (tiempos.isEmpty) {
+      return Text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'noDisponible',
+        ),
+      );
+    }
 
-    return DropdownButtonFormField2<PeriodicidadModel>(
-      value: vm.periodicidad,
-      isExpanded: true,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
-        border: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(),
+    // Obtener el primer elemento de la lista
+    final PeriodicidadModel primerTiempo = tiempos.first;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppTheme.color(
+            context,
+            Styles.primary,
+          ),
         ),
+        borderRadius: BorderRadius.circular(10),
       ),
-      items: tiempos
-          .map(
-            (item) => DropdownMenuItem<PeriodicidadModel>(
-              value: item,
-              child: Text(
-                item.descripcion,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-      onChanged: (value) => vm.periodicidad = value!,
-      buttonStyleData: const ButtonStyleData(
-        padding: EdgeInsets.only(right: 8),
-      ),
-      iconStyleData: const IconStyleData(
-        icon: Icon(
-          Icons.arrow_drop_down,
+      child: Text(
+        primerTiempo.descripcion,
+        style: AppTheme.style(
+          context,
+          Styles.subTitle,
         ),
-        iconSize: 24,
-      ),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-      menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }
@@ -756,6 +807,70 @@ class _PrioridadTarea extends StatelessWidget {
   }
 }
 
+// class _EstadoTarea extends StatelessWidget {
+//   const _EstadoTarea({
+//     required this.estados,
+//   });
+
+//   final List<EstadoModel> estados;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CrearTareaViewModel>(context);
+
+//     return DropdownButtonFormField2<EstadoModel>(
+//       value: vm.estado,
+//       isExpanded: true,
+//       decoration: InputDecoration(
+//         contentPadding: const EdgeInsets.symmetric(vertical: 16),
+//         border: UnderlineInputBorder(
+//           borderRadius: BorderRadius.circular(15),
+//         ),
+//       ),
+//       items: estados
+//           .map(
+//             (item) => DropdownMenuItem<EstadoModel>(
+//               value: item,
+//               child: Text(
+//                 item.descripcion,
+//                 style: const TextStyle(
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ),
+//           )
+//           .toList(),
+//       validator: (value) {
+//         if (value == null) {
+//           return AppLocalizations.of(context)!.translate(
+//             BlockTranslate.tareas,
+//             'seleccionaEstado',
+//           );
+//         }
+//         return null;
+//       },
+//       onChanged: (value) => vm.estado = value,
+//       buttonStyleData: const ButtonStyleData(
+//         padding: EdgeInsets.only(right: 8),
+//       ),
+//       iconStyleData: const IconStyleData(
+//         icon: Icon(
+//           Icons.arrow_drop_down,
+//         ),
+//         iconSize: 24,
+//       ),
+//       dropdownStyleData: DropdownStyleData(
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(15),
+//         ),
+//       ),
+//       menuItemStyleData: const MenuItemStyleData(
+//         padding: EdgeInsets.symmetric(horizontal: 16),
+//       ),
+//     );
+//   }
+// }
+
 class _EstadoTarea extends StatelessWidget {
   const _EstadoTarea({
     required this.estados,
@@ -765,56 +880,37 @@ class _EstadoTarea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<CrearTareaViewModel>(context);
+    // Asegurarse de que la lista no esté vacía
+    if (estados.isEmpty) {
+      return Text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'noDisponible',
+        ),
+      );
+    }
 
-    return DropdownButtonFormField2<EstadoModel>(
-      value: vm.estado,
-      isExpanded: true,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
-        border: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+    // Obtener el primer elemento de la lista
+    final EstadoModel primerEstado = estados.first;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppTheme.color(
+            context,
+            Styles.primary,
+          ),
         ),
+        borderRadius: BorderRadius.circular(10),
       ),
-      items: estados
-          .map(
-            (item) => DropdownMenuItem<EstadoModel>(
-              value: item,
-              child: Text(
-                item.descripcion,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-      validator: (value) {
-        if (value == null) {
-          return AppLocalizations.of(context)!.translate(
-            BlockTranslate.tareas,
-            'seleccionaEstado',
-          );
-        }
-        return null;
-      },
-      onChanged: (value) => vm.estado = value,
-      buttonStyleData: const ButtonStyleData(
-        padding: EdgeInsets.only(right: 8),
-      ),
-      iconStyleData: const IconStyleData(
-        icon: Icon(
-          Icons.arrow_drop_down,
+      child: Text(
+        primerEstado.descripcion,
+        style: AppTheme.style(
+          context,
+          Styles.subTitle,
         ),
-        iconSize: 24,
-      ),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-      menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }
