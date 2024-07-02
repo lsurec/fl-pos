@@ -12,6 +12,24 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
   final List<PrecioModel> prices = [];
   final List<TypePriceModel> types = [];
 
+  final Map<String, dynamic> formValues = {
+    'observacion': '',
+  };
+
+  //Increment number of products
+  increment(int index) {
+    types[index].cantidad++;
+    notifyListeners();
+  }
+
+  //Decrement number of products
+  decrement(int index) {
+    if (types[index].cantidad <= 0) return;
+    types[index].cantidad--;
+
+    notifyListeners();
+  }
+
   setTypePrices() {
     types.clear();
 

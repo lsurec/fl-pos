@@ -1,5 +1,4 @@
 //estructura para una orden
-import 'package:flutter_post_printer_example/displays/restaurant/models/locations_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 
 class OrderModel {
