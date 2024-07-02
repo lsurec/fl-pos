@@ -11,6 +11,8 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/dark_theme.dart';
+import 'package:flutter_post_printer_example/themes/light_theme.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +102,9 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: NotificationService.messengerKey,
       title: "Business",
       debugShowCheckedModeBanner: false,
+      theme: LightTheme.theme,
+      darkTheme: DarkTheme.theme,
+      themeMode: Provider.of<ThemeProvider>(context).themeMode,
       //Tema de la aplicacion
       // theme: aplicarTemaApp(context),
       //configurar ruta inicial

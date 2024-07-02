@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DarkTheme {
-  final ThemeData lightTheme = ThemeData.dark().copyWith(
+  static final ThemeData theme = ThemeData.dark().copyWith(
     primaryColor: Colors.purple,
     // Define otros parámetros para el tema claro
   );
