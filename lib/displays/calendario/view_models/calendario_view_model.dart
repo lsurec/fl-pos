@@ -110,18 +110,7 @@ class CalendarioViewModel extends ChangeNotifier {
     //si la vista activa es semana inicializara con la semana del dia actual
     if (vistaSemana) {
       //Buscar la semana que tiene el día de hoy
-      for (var i = 0; i < semanasDelMes.length; i++) {
-        List<DiaModel> semana = semanasDelMes[i];
-        for (var j = 0; j < semana.length; j++) {
-          if (semana[j].value == today) {
-            indexWeekActive = i;
-            notifyListeners();
-            break;
-          }
-        }
-      }
-    } else {
-      indexWeekActive = 0;
+      cargarVistaSemana(context);
     }
 
     //obtener las tareas del usuario con por rango de fecha
@@ -371,11 +360,89 @@ class CalendarioViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //mostrar la vista por semana
-  mostrarVistaSemana(BuildContext context) async {
+  //cargar la vista por semana
+  cargarVistaSemana(BuildContext context) async {
+    // Copia de semanas para no alterarla
+    List<List<DiaModel>> semanasCopia = List<List<DiaModel>>.from(
+      semanasDelMes.map(
+        (week) => List<DiaModel>.from(week),
+      ),
+    );
+
+    // buscar el índice del día con la fecha más alta en la primera semana
+    int indiceFechaAltaPrimerSemana = obtenerIndiceNumeroMayor(semanasCopia[0]);
+
+    // si la semana no está completa (lunes = 1 y domingo = 7)
+    if (indiceFechaAltaPrimerSemana != 6) {
+      // cambiar la fecha de los días del mes anterior
+      for (int i = 0; i < indiceFechaAltaPrimerSemana + 1; i++) {
+        semanasCopia[0][i].value = -1;
+      }
+    }
+
+    int indiceFechaAltaultimaSemana = obtenerIndiceNumeroMayor(
+      semanasCopia[semanasCopia.length - 1],
+    );
+    // si la semana no está completa (lunes = 1 y domingo = 7)
+    if (indiceFechaAltaultimaSemana != 6) {
+      // cambiar la fecha de los días del mes anterior
+      for (int i = indiceFechaAltaultimaSemana + 1; i < 7; i++) {
+        semanasCopia[semanasCopia.length - 1][i].value = -1;
+      }
+    }
+
     //Buscar la semana que tiene el día de hoy
-    for (var i = 0; i < semanasDelMes.length; i++) {
-      List<DiaModel> semana = semanasDelMes[i];
+    for (var i = 0; i < semanasCopia.length; i++) {
+      List<DiaModel> semana = semanasCopia[i];
+      for (var j = 0; j < semana.length; j++) {
+        if (semana[j].value == today) {
+          indexWeekActive = i;
+          notifyListeners();
+          break;
+        }
+      }
+    }
+
+    //mostrar la vista y ocultar las demás
+    vistaSemana = true;
+    vistaMes = false;
+    vistaDia = false;
+
+    //cargar las tareas cuando se selecciona la vista por semana
+    await obtenerTareasRango(context, monthSelectView, yearSelect);
+    notifyListeners();
+  }
+
+  //mostrar la vista por semana
+  void mostrarVistaSemana(BuildContext context) async {
+    // Copia de semanas para no alterarla
+    List<List<DiaModel>> semanasCopia = List<List<DiaModel>>.from(
+        semanasDelMes.map((week) => List<DiaModel>.from(week)));
+
+    // buscar el índice del día con la fecha más alta en la primera semana
+    int indiceFechaAltaPrimerSemana = obtenerIndiceNumeroMayor(semanasCopia[0]);
+
+    // si la semana no está completa (lunes = 1 y domingo = 7)
+    if (indiceFechaAltaPrimerSemana != 6) {
+      // cambiar la fecha de los días del mes anterior
+      for (int i = 0; i < indiceFechaAltaPrimerSemana + 1; i++) {
+        semanasCopia[0][i].value = -1;
+      }
+    }
+
+    int indiceFechaAltaultimaSemana =
+        obtenerIndiceNumeroMayor(semanasCopia[semanasCopia.length - 1]);
+    // si la semana no está completa (lunes = 1 y domingo = 7)
+    if (indiceFechaAltaultimaSemana != 6) {
+      // cambiar la fecha de los días del mes anterior
+      for (int i = indiceFechaAltaultimaSemana + 1; i < 7; i++) {
+        semanasCopia[semanasCopia.length - 1][i].value = -1;
+      }
+    }
+
+//Buscar la semana que tiene el día de hoy
+    for (var i = 0; i < semanasCopia.length; i++) {
+      List<DiaModel> semana = semanasCopia[i];
       for (var j = 0; j < semana.length; j++) {
         if (semana[j].value == today) {
           indexWeekActive = i;
@@ -394,6 +461,36 @@ class CalendarioViewModel extends ChangeNotifier {
     await obtenerTareasRango(context, monthSelectView, yearSelect);
     Navigator.pop(context);
     notifyListeners();
+  }
+
+  // Función para obtener el índice del número mayor en una lista de DayInterface
+  int obtenerIndiceNumeroMayor(List<DiaModel> dias) {
+    int indiceMayor = 0;
+    int mayor = dias[0].value;
+
+    for (int i = 1; i < dias.length; i++) {
+      if (dias[i].value > mayor) {
+        mayor = dias[i].value;
+        indiceMayor = i;
+      }
+    }
+
+    return indiceMayor;
+  }
+
+// Función para obtener el índice del número menor en una lista de DayInterface
+  int obtenerIndiceNumeroMenor(List<DiaModel> dias) {
+    int indiceMenor = 0;
+    int menor = dias[0].value;
+
+    for (int i = 1; i < dias.length; i++) {
+      if (dias[i].value < menor) {
+        menor = dias[i].value;
+        indiceMenor = i;
+      }
+    }
+
+    return indiceMenor;
   }
 
   //mostrar la vista del dia seleccionado o el dia actual

@@ -91,7 +91,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             leading: IconButton(
                               onPressed: () => vm.diaAnterior(context),
                               icon: const Icon(
-                                Icons.arrow_back,
+                                Icons.arrow_left,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calendario,
@@ -125,7 +125,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             trailing: IconButton(
                               onPressed: () => vm.diaSiguiente(context),
                               icon: const Icon(
-                                Icons.arrow_forward,
+                                Icons.arrow_right,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calendario,
@@ -138,7 +138,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             leading: IconButton(
                               onPressed: () => vm.mesAnterior(context),
                               icon: const Icon(
-                                Icons.arrow_back,
+                                Icons.arrow_left,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calendario,
@@ -172,7 +172,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             trailing: IconButton(
                               onPressed: () => vm.mesSiguiente(context),
                               icon: const Icon(
-                                Icons.arrow_forward,
+                                Icons.arrow_right,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calendario,
@@ -185,7 +185,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             leading: IconButton(
                               onPressed: () => vm.semanaAnterior(context),
                               icon: const Icon(
-                                Icons.arrow_back,
+                                Icons.arrow_left,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calendario,
@@ -216,7 +216,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                             trailing: IconButton(
                               onPressed: () => vm.semanaSiguiente(context),
                               icon: const Icon(
-                                Icons.arrow_forward,
+                                Icons.arrow_right,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calendario,
@@ -518,6 +518,26 @@ class _VistaSemana extends StatelessWidget {
         1,
         (index) => TableRow(
           children: semanas[vm.indexWeekActive].map((dia) {
+            final color = dia.value == vm.today &&
+                    vm.resolveMonth(dia.indexWeek) == vm.month &&
+                    vm.resolveYear(dia.indexWeek) == vm.year
+                ? AppTheme.color(
+                    context,
+                    Styles.primary,
+                  )
+                : null;
+
+            final style = dia.value == vm.today &&
+                    vm.resolveMonth(dia.indexWeek) == vm.month &&
+                    vm.resolveYear(dia.indexWeek) == vm.year
+                ? AppTheme.style(
+                    context,
+                    Styles.whiteBoldStyle,
+                  )
+                : AppTheme.style(
+                    context,
+                    Styles.diasOtroMes,
+                  );
             return TableCell(
               child: GestureDetector(
                 onTap: () => vm.diaCorrectoSemana(
@@ -528,79 +548,46 @@ class _VistaSemana extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        //si el dia no está correcto corregirlo eliminando resolveMonth por monthselectview
-                        color: dia.value == vm.today &&
-                                vm.resolveMonth(dia.indexWeek) == vm.month &&
-                                vm.resolveYear(dia.indexWeek) == vm.year
-                            ? AppTheme.color(
-                                context,
-                                Styles.primary,
-                              )
-                            : null,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "${dia.value}",
-                          style: dia.value == vm.today &&
-                                  vm.resolveMonth(dia.indexWeek) == vm.month &&
-                                  vm.resolveYear(dia.indexWeek) == vm.year
-                              ? AppTheme.style(
-                                  context,
-                                  Styles.whiteBoldStyle,
-                                )
-                              : AppTheme.style(
-                                  context,
-                                  Styles.diasOtroMes,
-                                ),
-                        ),
-                      ),
+                    _CirculoDia(
+                      dia: dia.value,
+                      color: color,
+                      style: style,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 3),
-                      child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: vm
-                            .tareaDia(
-                              dia.value,
-                              vm.resolveMonth(dia.indexWeek),
-                              vm.resolveYear(index),
-                            )
-                            .length,
-                        itemBuilder: (BuildContext context, int indexTarea) {
-                          final List<TareaCalendarioModel> tareasDia =
-                              vm.tareaDia(
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: vm
+                          .tareaDia(
                             dia.value,
                             vm.resolveMonth(dia.indexWeek),
                             vm.resolveYear(index),
-                          );
-                          return Column(
-                            children: [
-                              const Divider(),
-                              Container(
-                                alignment: Alignment.center,
-                                margin: const EdgeInsets.only(bottom: 2),
-                                child: Column(
-                                  children: [
-                                    if (tareasDia.isNotEmpty)
-                                      Text(
-                                        tareasDia[indexTarea].tarea.toString(),
-                                        style: AppTheme.style(
-                                          context,
-                                          Styles.taskStyle,
-                                        ),
-                                      ),
-                                    // const Divider(),
-                                  ],
+                          )
+                          .length,
+                      itemBuilder: (BuildContext context, int indexTarea) {
+                        final List<TareaCalendarioModel> tareasDia =
+                            vm.tareaDia(
+                          dia.value,
+                          vm.resolveMonth(dia.indexWeek),
+                          vm.resolveYear(index),
+                        );
+                        return Column(
+                          children: [
+                            if (tareasDia.isNotEmpty)
+                              Text(
+                                tareasDia[indexTarea].tarea.toString(),
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.taskStyle,
                                 ),
                               ),
-                            ],
-                          );
-                        },
-                      ),
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 5),
+                            ),
+                            // const Divider(),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
