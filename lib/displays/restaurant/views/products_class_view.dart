@@ -135,8 +135,7 @@ class _RowMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productVM =
-        Provider.of<ProductsClassViewModel>(context, listen: false);
+    final vm = Provider.of<ProductsClassViewModel>(context, listen: false);
 
     return Row(
       children: [
