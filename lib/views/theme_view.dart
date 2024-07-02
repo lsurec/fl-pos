@@ -25,7 +25,10 @@ class ThemeView extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(),
+          floatingActionButton: FloatingActionButton(onPressed: () {}),
+          appBar: AppBar(
+            title: Text('Themes'),
+          ),
           body: RefreshIndicator(
             onRefresh: () async {},
             child: Padding(

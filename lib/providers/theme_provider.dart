@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
+  ThemeMode themeMode = ThemeMode.system;
+
   ThemeProvider({required int theme}) {
     switch (theme) {
       case 1:
@@ -22,20 +25,21 @@ class ThemeProvider extends ChangeNotifier {
     }
   }
 
-  setDark() {
-    themeMode = ThemeMode.dark;
+  setLigth() {
+    themeMode = ThemeMode.light;
+    Preferences.themeMode = 1;
     notifyListeners();
   }
 
-  setLigth() {
-    themeMode = ThemeMode.light;
+  setDark() {
+    themeMode = ThemeMode.dark;
+    Preferences.themeMode = 2;
     notifyListeners();
   }
 
   setSystem() {
     themeMode = ThemeMode.system;
+    Preferences.themeMode = 3;
     notifyListeners();
   }
-
-  ThemeMode themeMode = ThemeMode.system;
 }

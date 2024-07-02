@@ -88,12 +88,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // limpiar preferencias
-    // Preferences.clearLang();
-    // Preferences.clearTheme();
-    // Preferences.clearUrl();
-    // Preferences.clearToken();
-    // Preferences.clearDocument();
-    // Preferences.clearTheme();
+    Preferences.clearLang();
+    Preferences.clearTheme();
+    Preferences.clearUrl();
+    Preferences.clearToken();
+    Preferences.clearDocument();
+    Preferences.clearTheme();
 
     //app_business
 
