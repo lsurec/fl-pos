@@ -23,8 +23,14 @@ class ProductsClassViewModel extends ChangeNotifier {
   final List<ProductRestaurantModel> products = [];
   final List<List<ProductRestaurantModel>> menu = [];
   int totalLength = 0;
+  ProductRestaurantModel? product;
 
-  navigateDetails() {}
+  Future<void> navigateDetails(
+    BuildContext context,
+    ProductRestaurantModel pProduct,
+  ) async {
+    product = pProduct;
+  }
 
   Future<void> loadData(BuildContext context) async {
     isLoading = true;
