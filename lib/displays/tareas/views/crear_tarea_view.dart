@@ -676,6 +676,8 @@ class _TiempoEstimado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<CrearTareaViewModel>(context);
+
     // Asegurarse de que la lista no esté vacía
     if (tiempos.isEmpty) {
       return Text(
@@ -685,9 +687,6 @@ class _TiempoEstimado extends StatelessWidget {
         ),
       );
     }
-
-    // Obtener el primer elemento de la lista
-    final PeriodicidadModel primerTiempo = tiempos.first;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -701,10 +700,10 @@ class _TiempoEstimado extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
-        primerTiempo.descripcion,
+        vm.periodicidad!.descripcion,
         style: AppTheme.style(
           context,
-          Styles.subTitle,
+          Styles.normal,
         ),
       ),
     );

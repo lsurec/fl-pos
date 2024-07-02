@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -102,6 +103,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Fechas y horas
     fechaInicial = DateTime.now();
     fechaFinal = addDate10Min(fechaInicial);
+
+    //Tiempo estimado
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //Navegar a view para buscar Id de referencia.
@@ -183,14 +188,16 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     //View model para obtenerla empresa
     final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
-    int empresa = vmLocal.selectedEmpresa!.empresa;
+    EmpresaModel empresa = vmLocal.selectedEmpresa!;
 
     //view model de Tareas para insertar la nueva tarea en la lista de tareas
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
     //view model del calendario
-    final vmCalendario =
-        Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmCalendario = Provider.of<CalendarioViewModel>(
+      context,
+      listen: false,
+    );
 
     //Instancia del servicio
     final TareaService tareaService = TareaService();
@@ -206,7 +213,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       observacion1: observacionController.text,
       tipoTarea: tipoTarea!.tipoTarea,
       estado: estado!.estado,
-      empresa: empresa,
+      empresa: empresa.empresa,
       nivelPrioridad: prioridad!.nivelPrioridad,
       tiempoEstimadoTipoPeriocidad: periodicidad!.tipoPeriodicidad,
       tiempoEstimado: tiempoController.text,
@@ -326,6 +333,38 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     notifyListeners();
 
+    //si hay invitados seleccionados
+    if (invitados.isNotEmpty) {
+      for (var usuario in invitados) {
+        //usuario nuevo
+        NuevoUsuarioModel usuarioInvitado = NuevoUsuarioModel(
+          tarea: creada.tarea,
+          userResInvi: usuario.userName,
+          user: user,
+        );
+
+        isLoading = true; //cargar pantalla
+
+        //consumo de api
+        final ApiResModel resInvitado = await tareaService.postInvitados(
+          token,
+          usuarioInvitado,
+        );
+
+        //si el consumo salió mal
+        if (!resInvitado.succes) {
+          isLoading = false;
+
+          //Abrir dialogo de error
+          NotificationService.showErrorView(context, resInvitado);
+
+          //Retornar respusta incorrecta
+          return;
+        }
+      }
+    }
+
+    //Si hay archivos seleccionados
     if (files.isNotEmpty) {
       ComentarService comentarService = ComentarService();
 
@@ -372,6 +411,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         files,
         comentarioCreado.tarea,
         comentarioCreado.tareaComentario,
+        empresa.absolutePathPicture,
       );
 
       //si el consumo salió mal
@@ -397,37 +437,6 @@ class CrearTareaViewModel extends ChangeNotifier {
       isLoading = false;
     }
 
-    //si hay invitados seleccionados
-    if (invitados.isNotEmpty) {
-      for (var usuario in invitados) {
-        //usuario nuevo
-        NuevoUsuarioModel usuarioInvitado = NuevoUsuarioModel(
-          tarea: creada.tarea,
-          userResInvi: usuario.userName,
-          user: user,
-        );
-
-        isLoading = true; //cargar pantalla
-
-        //consumo de api
-        final ApiResModel resInvitado = await tareaService.postInvitados(
-          token,
-          usuarioInvitado,
-        );
-
-        //si el consumo salió mal
-        if (!resInvitado.succes) {
-          isLoading = false;
-
-          //Abrir dialogo de error
-          NotificationService.showErrorView(context, resInvitado);
-
-          //Retornar respusta incorrecta
-          return;
-        }
-      }
-    }
-
     // //mostrra mensaje
     // NotificationService.showSnackbar(
     //   "Tarea creada correctamente.",
@@ -442,14 +451,15 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<void> abrirFechaInicial(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: fechaInicial,
-        firstDate: fechaInicial,
-        lastDate: DateTime(2100),
-        confirmText: AppLocalizations.of(context)!.translate(
-          BlockTranslate.botones,
-          'aceptar',
-        ));
+      context: context,
+      initialDate: fechaInicial,
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
 
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
@@ -470,20 +480,24 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: fechaFinal,
-        //fecha minima es la inicial
-        firstDate: fechaInicial,
-        lastDate: DateTime(2100),
-        confirmText: AppLocalizations.of(context)!.translate(
-          BlockTranslate.botones,
-          'aceptar',
-        ));
+      context: context,
+      initialDate: fechaFinal,
+      //fecha minima es la inicial
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
 
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
@@ -498,6 +512,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //Abrir y seleccionar hora inicial
@@ -615,6 +631,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   bool compararFechas(
@@ -681,6 +699,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //Obtener Tipos
@@ -958,5 +978,88 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  int tiempoNum(DateTime fechaIni, DateTime fechaFin) {
+    int diffInMillis =
+        fechaFin.millisecondsSinceEpoch - fechaIni.millisecondsSinceEpoch;
+    double diffInSeconds = diffInMillis / 1000;
+    double diffInMinutes = diffInSeconds / 60;
+    double diffInHours = diffInMinutes / 60;
+    double diffInDays = diffInHours / 24;
+    double diffInWeeks = diffInDays / 7;
+    int diffInMonths = fechaFin.month -
+        fechaIni.month +
+        (12 * (fechaFin.year - fechaIni.year));
+    int diffInYears = fechaFin.year - fechaIni.year;
+
+    if (diffInMinutes < 60) {
+      return diffInMinutes.floor(); // diferencia en minutos
+    } else if (diffInHours < 24) {
+      return diffInHours.floor(); // diferencia en horas
+    } else if (diffInDays < 7) {
+      return diffInDays.floor(); // diferencia en días
+    } else if (diffInWeeks < 4) {
+      return diffInWeeks.floor(); // diferencia en semanas
+    } else if (diffInMonths < 12) {
+      return diffInMonths; // diferencia en meses
+    } else {
+      return diffInYears; // diferencia en años
+    }
+  }
+
+  int tiempoTipo(DateTime fechaIni, DateTime fechaFin) {
+    int diffInMillis =
+        fechaFin.millisecondsSinceEpoch - fechaIni.millisecondsSinceEpoch;
+    double diffInSeconds = diffInMillis / 1000;
+    double diffInMinutes = diffInSeconds / 60;
+    double diffInHours = diffInMinutes / 60;
+    double diffInDays = diffInHours / 24;
+    double diffInWeeks = diffInDays / 7;
+    int diffInMonths = fechaFin.month -
+        fechaIni.month +
+        (12 * (fechaFin.year - fechaIni.year));
+    // int diffInYears = fechaFin.year - fechaIni.year;
+
+    if (periodicidades.isNotEmpty) {
+      if (diffInMinutes < 60) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "minutos") {
+            return i;
+          }
+        }
+      } else if (diffInHours < 24) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "horas") {
+            return i;
+          }
+        }
+      } else if (diffInDays < 7) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "dias") {
+            return i;
+          }
+        }
+      } else if (diffInWeeks < 4) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "semanas") {
+            return i;
+          }
+        }
+      } else if (diffInMonths < 12) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "mes") {
+            return i;
+          }
+        }
+      } else {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "año") {
+            return i;
+          }
+        }
+      }
+    }
+    return 0;
   }
 }
