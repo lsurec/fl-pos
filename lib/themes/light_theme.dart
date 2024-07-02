@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LightTheme {
+  final ThemeData lightTheme = ThemeData.light().copyWith(
+    primaryColor: Colors.blue,
+    // Define otros parámetros para el tema claro
+  );
+
   //COLORES
   //Color primario de la app
   static const Color primary = Color(0xff134895);

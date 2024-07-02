@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DarkTheme {
+  final ThemeData lightTheme = ThemeData.dark().copyWith(
+    primaryColor: Colors.purple,
+    // Define otros parámetros para el tema claro
+  );
+
   //COLORES
   static const Color backroundColor = Color.fromARGB(255, 48, 45, 45);
   static const Color grayAppBar = Color.fromARGB(255, 51, 50, 50);
