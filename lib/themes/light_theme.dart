@@ -83,9 +83,8 @@ class LightTheme {
   );
 
   static const diasFueraMes = TextStyle(
-    fontSize: 17,
+    fontSize: 14,
     color: Color.fromARGB(255, 111, 111, 111),
-    // fontWeight: FontWeight.bold,
   );
 
   static const taskStyle = TextStyle(
@@ -189,5 +188,12 @@ class LightTheme {
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: primary,
+  );
+
+  //dia hoy
+  static const diaHoy = TextStyle(
+    fontSize: 14,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
   );
 }

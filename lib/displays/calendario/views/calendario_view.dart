@@ -532,7 +532,7 @@ class _VistaSemana extends StatelessWidget {
                     vm.resolveYear(dia.indexWeek) == vm.year
                 ? AppTheme.style(
                     context,
-                    Styles.whiteBoldStyle,
+                    Styles.diaHoy,
                   )
                 : AppTheme.style(
                     context,
@@ -653,7 +653,7 @@ class _VistaMes extends StatelessWidget {
               final hoyColor = vm.nuevaIsToday(dia.value, index)
                   ? AppTheme.style(
                       context,
-                      Styles.whiteBoldStyle,
+                      Styles.diaHoy,
                     )
                   : vm.diasOtroMes(dia, index, diasMesSeleccionado)
                       ? AppTheme.style(
@@ -662,7 +662,7 @@ class _VistaMes extends StatelessWidget {
                         )
                       : AppTheme.style(
                           context,
-                          Styles.normal,
+                          Styles.subTitle,
                         );
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
@@ -740,13 +740,6 @@ class _VistaMes extends StatelessWidget {
                                           style: AppTheme.style(
                                             context,
                                             Styles.taskStyle,
-                                          ),
-                                        ),
-                                        Divider(
-                                          height: 5,
-                                          color: AppTheme.color(
-                                            context,
-                                            Styles.greyBorder,
                                           ),
                                         ),
                                       ],
@@ -834,13 +827,6 @@ class _VistaMes extends StatelessWidget {
                                             Styles.taskStyle,
                                           ),
                                         ),
-                                        Divider(
-                                          height: 5,
-                                          color: AppTheme.color(
-                                            context,
-                                            Styles.greyBorder,
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   );
@@ -926,13 +912,6 @@ class _VistaMes extends StatelessWidget {
                                           style: AppTheme.style(
                                             context,
                                             Styles.taskStyle,
-                                          ),
-                                        ),
-                                        Divider(
-                                          height: 5,
-                                          color: AppTheme.color(
-                                            context,
-                                            Styles.greyBorder,
                                           ),
                                         ),
                                       ],
@@ -1252,9 +1231,9 @@ class _CirculoDia extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 15),
-      width: 35.0, // Anchura del círculo
-      height: 35.0, // Altura del círculo
+      margin: const EdgeInsets.only(top: 5, bottom: 10),
+      width: 25.0, // Anchura del círculo
+      height: 25.0, // Altura del círculo
       decoration: BoxDecoration(
         border: Border.all(
           color: AppTheme.color(
@@ -1267,12 +1246,9 @@ class _CirculoDia extends StatelessWidget {
         color: color == color ? color : null,
       ),
       child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Text(
-            dia.toString(),
-            style: style,
-          ),
+        child: Text(
+          dia.toString(),
+          style: style,
         ),
       ),
     );

@@ -173,7 +173,7 @@ class DarkTheme {
   );
 
   static const diasFueraMes = TextStyle(
-    fontSize: 17,
+    fontSize: 14,
     color: Color.fromARGB(255, 159, 150, 150),
     fontWeight: FontWeight.bold,
   );
