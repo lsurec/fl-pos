@@ -99,7 +99,7 @@ class ProductClassView extends StatelessWidget {
                       itemCount: vm.menu.length,
                       itemBuilder: (BuildContext context, int index) {
                         return _RowMenu(
-                          options: vm.menu[index],
+                          products: vm.menu[index],
                         );
                       },
                     ),
@@ -128,10 +128,10 @@ class ProductClassView extends StatelessWidget {
 class _RowMenu extends StatelessWidget {
   const _RowMenu({
     Key? key,
-    required this.options,
+    required this.products,
   }) : super(key: key);
 
-  final List<ProductRestaurantModel> options;
+  final List<ProductRestaurantModel> products;
 
   @override
   Widget build(BuildContext context) {
@@ -140,20 +140,21 @@ class _RowMenu extends StatelessWidget {
     return Row(
       children: [
         CardImageWidget(
-          onTap: () => {},
-          description: options[0].desProducto,
+          onTap: () => vm.navigateDetails(context, products[0]),
+          description: products[0].desProducto,
           srcImage:
               "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
           // srcImage: options[0].image,
         ),
-        if (options.length == 2)
+        if (products.length == 2)
           CardImageWidget(
-            onTap: () => {}, description: options[1].desProducto,
+            onTap: () => vm.navigateDetails(context, products[1]),
+            description: products[1].desProducto,
             srcImage:
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
             // srcImage: options[1].image,
           ),
-        if (options.length == 1) Expanded(child: Container()),
+        if (products.length == 1) Expanded(child: Container()),
       ],
     );
   }

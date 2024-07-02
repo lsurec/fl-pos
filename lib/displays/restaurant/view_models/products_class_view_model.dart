@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/services/servic
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,27 @@ class ProductsClassViewModel extends ChangeNotifier {
     BuildContext context,
     ProductRestaurantModel pProduct,
   ) async {
+    isLoading = true;
+
     product = pProduct;
+
+    final vmDetails =
+        Provider.of<DetailsRestaurantViewModel>(context, listen: false);
+
+    final ApiResModel resPrices = await vmDetails.loadPrice(context);
+
+    if (!resPrices.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resPrices);
+      return;
+    }
+
+    vmDetails.prices.clear();
+    vmDetails.prices.addAll(resPrices.response);
+
+    Navigator.pushNamed(context, AppRoutes.detailsRestaurant);
+
+    isLoading = false;
   }
 
   Future<void> loadData(BuildContext context) async {
