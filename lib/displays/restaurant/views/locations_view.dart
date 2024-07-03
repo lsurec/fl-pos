@@ -23,7 +23,6 @@ class LocationsView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -61,7 +60,6 @@ class LocationsView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -108,7 +106,6 @@ class _CardLocations extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
                 textAlign: TextAlign.justify,
                 maxLines: 4,

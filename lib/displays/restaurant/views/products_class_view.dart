@@ -26,7 +26,6 @@ class ProductClassView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -116,7 +115,6 @@ class ProductClassView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

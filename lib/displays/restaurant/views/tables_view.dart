@@ -24,7 +24,6 @@ class TablesView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -100,7 +99,6 @@ class TablesView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -153,7 +151,6 @@ class _CardTable extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                     textAlign: TextAlign.justify,
                     maxLines: 3,
@@ -166,7 +163,6 @@ class _CardTable extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.bold,
-                      Preferences.idTheme,
                     ),
                     textAlign: TextAlign.justify,
                     maxLines: 1,

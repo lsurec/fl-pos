@@ -26,7 +26,6 @@ class RegisterCountWidget extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.bold,
-            Preferences.idTheme,
           ),
         ),
       ],
