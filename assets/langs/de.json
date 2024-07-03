@@ -308,7 +308,8 @@
         "invalido": "Ungültige E-Mail.",
         "cliente": "Kunde",
         "editar": "Konto bearbeiten",
-        "actualizar": "Konto aktualisieren"
+        "actualizar": "Konto aktualisieren",
+        "cuentaCta": "Konto Kto:"
     },
     "factura": {
         "bancos": "Banken",

@@ -94,6 +94,7 @@ class MyApp extends StatelessWidget {
     // Preferences.clearUrl();
     // Preferences.clearToken();
     // Preferences.clearDocument();
+    // Preferences.clearTheme();
 
     //app_business
 
@@ -112,6 +113,7 @@ class MyApp extends StatelessWidget {
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('es'), // Español

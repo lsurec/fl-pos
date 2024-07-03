@@ -4,7 +4,6 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -33,7 +32,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -54,7 +52,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -62,7 +59,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                         textAlign: TextAlign.justify,
                       ),
@@ -79,7 +75,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                           ),
@@ -98,7 +93,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       const _ActualizarEstado(),
@@ -112,7 +106,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       const _ActualizarPrioridad(),
@@ -125,21 +118,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: Padding(
@@ -155,7 +145,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               const Spacer(),
@@ -168,7 +157,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ],
@@ -183,21 +171,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: Padding(
@@ -213,7 +198,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               const Spacer(),
@@ -226,7 +210,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ],
@@ -241,21 +224,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -264,7 +244,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading:
@@ -280,21 +259,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -306,7 +282,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -322,21 +297,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -349,7 +321,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -378,7 +349,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                             ),
                             if (vm.responsablesHistorial.isNotEmpty)
@@ -390,21 +360,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.bold,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             CardWidget(
                               color: AppTheme.color(
                                 context,
                                 Styles.secondBackground,
-                                Preferences.idTheme,
                               ),
                               elevation: 0,
                               borderWidth: 1.5,
                               borderColor: AppTheme.color(
                                 context,
                                 Styles.greyBorder,
-                                Preferences.idTheme,
                               ),
                               raidus: 10,
                               child: ListView.builder(
@@ -421,7 +388,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                       style: AppTheme.style(
                                         context,
                                         Styles.inactive,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                     leading: const Icon(Icons.person_4),
@@ -440,7 +406,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         trailing: IconButton(
@@ -462,14 +427,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListView.builder(
@@ -485,7 +448,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               leading: const Icon(Icons.person_4),
@@ -514,21 +476,18 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       CardWidget(
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: ListTile(
@@ -537,7 +496,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                           leading: const Icon(
@@ -560,7 +518,6 @@ class DetalleTareaCalendariaView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -584,7 +541,6 @@ class _ActualizarEstado extends StatelessWidget {
       color: AppTheme.color(
         context,
         Styles.secondBackground,
-        Preferences.idTheme,
       ),
       elevation: 0,
       borderWidth: 0,
@@ -605,7 +561,6 @@ class _ActualizarEstado extends StatelessWidget {
             style: AppTheme.style(
               context,
               Styles.normal,
-              Preferences.idTheme,
             ),
           ),
           items: estados
@@ -617,7 +572,6 @@ class _ActualizarEstado extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -665,7 +619,6 @@ class _ActualizarPrioridad extends StatelessWidget {
       color: AppTheme.color(
         context,
         Styles.secondBackground,
-        Preferences.idTheme,
       ),
       elevation: 0,
       borderWidth: 0,
@@ -686,7 +639,6 @@ class _ActualizarPrioridad extends StatelessWidget {
             style: AppTheme.style(
               context,
               Styles.normal,
-              Preferences.idTheme,
             ),
           ),
           items: prioridades
@@ -698,7 +650,6 @@ class _ActualizarPrioridad extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),

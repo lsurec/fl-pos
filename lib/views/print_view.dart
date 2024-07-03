@@ -13,7 +13,6 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -259,12 +258,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                           ? AppTheme.color(
                               context,
                               Styles.primary,
-                              Preferences.idTheme,
                             )
                           : AppTheme.color(
                               context,
                               Styles.grey,
-                              Preferences.idTheme,
                             ),
                       child: Center(
                         child: Text(
@@ -280,7 +277,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                           style: AppTheme.style(
                             context,
                             Styles.disabledStyle,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -296,7 +292,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                     style: AppTheme.style(
                       context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   actions: [
@@ -309,7 +304,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                         color: AppTheme.color(
                           context,
                           Styles.icons,
-                          Preferences.idTheme,
                         ),
                         size: 20,
                       ),
@@ -331,7 +325,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                         style: AppTheme.style(
                           context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -341,7 +334,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
@@ -352,7 +344,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                           style: AppTheme.style(
                             context,
                             Styles.subTitle,
-                            Preferences.idTheme,
                           ),
                         ),
                         trailing: Row(
@@ -400,7 +391,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                         style: AppTheme.style(
                           context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -415,7 +405,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               subtitle: Text(
@@ -423,7 +412,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 style: AppTheme.style(
                                   context,
                                   Styles.subTitle,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               onTap: () {
@@ -452,7 +440,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                                         style: AppTheme.style(
                                           context,
                                           Styles.textButtonStyle,
-                                          Preferences.idTheme,
                                         ),
                                       ),
                                     )
@@ -472,7 +459,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                   color: AppTheme.color(
                     context,
                     Styles.loading,
-                    Preferences.idTheme,
                   ),
                 ),
               if (printVM.isLoading) const LoadWidget(),
@@ -520,7 +506,6 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
         style: AppTheme.style(
           context,
           Styles.subTitle,
-          Preferences.idTheme,
         ),
       ),
       content: DropdownButtonFormField<int>(
@@ -549,7 +534,6 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           style: AppTheme.button(
             context,
             Styles.buttonStyle,
-            Preferences.idTheme,
           ),
           child: Text(
             AppLocalizations.of(context)!.translate(
@@ -559,7 +543,6 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
             style: AppTheme.style(
               context,
               Styles.whiteBoldStyle,
-              Preferences.idTheme,
             ),
           ),
         ),
@@ -574,7 +557,6 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               ? AppTheme.button(
                   context,
                   Styles.buttonStyle,
-                  Preferences.idTheme,
                 ) //si esta desactivado
               : AppTheme.disabledButtonsStyle,
           child: Text(
@@ -585,7 +567,6 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
             style: AppTheme.style(
               context,
               Styles.whiteBoldStyle,
-              Preferences.idTheme,
             ),
           ),
         ),

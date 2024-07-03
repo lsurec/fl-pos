@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -35,7 +34,6 @@ class AmountView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vmPayment.isLoading) const LoadWidget(),
@@ -76,7 +74,6 @@ class _Body extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -104,7 +101,6 @@ class _Body extends StatelessWidget {
                             color: AppTheme.color(
                               context,
                               Styles.darkPrimary,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),
@@ -167,7 +163,6 @@ class _Body extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                     if (payment.banco) const SizedBox(height: 10),
@@ -183,21 +178,18 @@ class _Body extends StatelessWidget {
                             color: AppTheme.color(
                               context,
                               Styles.transaction,
-                              Preferences.idTheme,
                             ),
                             elevation: 2.0,
                             child: RadioListTile(
                               activeColor: AppTheme.color(
                                 context,
                                 Styles.darkPrimary,
-                                Preferences.idTheme,
                               ),
                               title: Text(
                                 bank.bank.nombre,
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               value: index,
@@ -224,7 +216,6 @@ class _Body extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                     if (vmPayment.accounts.isNotEmpty)
@@ -242,21 +233,18 @@ class _Body extends StatelessWidget {
                             color: AppTheme.color(
                               context,
                               Styles.transaction,
-                              Preferences.idTheme,
                             ),
                             elevation: 2.0,
                             child: RadioListTile(
                               activeColor: AppTheme.color(
                                 context,
                                 Styles.darkPrimary,
-                                Preferences.idTheme,
                               ),
                               title: Text(
                                 account.account.descripcion,
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               value: index,
@@ -304,7 +292,6 @@ class _ButtonConfirm extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.primary,
-            Preferences.idTheme,
           ),
           child: Center(
             child: Text(
@@ -315,7 +302,6 @@ class _ButtonConfirm extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.whiteStyle,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -344,7 +330,6 @@ class _Footer extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.darkPrimary,
-            Preferences.idTheme,
           ),
         ),
         RowTotalWidget(
@@ -356,7 +341,6 @@ class _Footer extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.darkPrimary,
-            Preferences.idTheme,
           ),
         ),
         RowTotalWidget(
@@ -368,7 +352,6 @@ class _Footer extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.darkPrimary,
-            Preferences.idTheme,
           ),
         ),
       ],

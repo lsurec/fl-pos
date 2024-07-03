@@ -308,7 +308,8 @@
         "invalido": "E-mail invalide.",
         "cliente": "Client",
         "editar": "Modifier le compte",
-        "actualizar": "Mettre à jour le compte"
+        "actualizar": "Mettre à jour le compte",
+        "cuentaCta": "Compte Cpt:"
     },
     "factura": {
         "bancos": "Banques",

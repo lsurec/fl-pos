@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -28,7 +27,6 @@ class UserWidget extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.primary,
-            Preferences.idTheme,
           ),
           child: Center(
             child: Text(
@@ -36,7 +34,6 @@ class UserWidget extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.user,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -68,7 +65,6 @@ void _showUserInfoModal(
         color: AppTheme.color(
           context,
           Styles.background,
-          Preferences.idTheme,
         ),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: SingleChildScrollView(
@@ -79,7 +75,6 @@ void _showUserInfoModal(
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               const SizedBox(height: 10),
@@ -87,7 +82,6 @@ void _showUserInfoModal(
                 color: AppTheme.color(
                   context,
                   Styles.background,
-                  Preferences.idTheme,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22),
@@ -103,7 +97,6 @@ void _showUserInfoModal(
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         leading: IconButton(
@@ -115,7 +108,6 @@ void _showUserInfoModal(
                               color: AppTheme.color(
                                 context,
                                 Styles.primary,
-                                Preferences.idTheme,
                               ),
                               child: Center(
                                 child: Text(
@@ -123,7 +115,6 @@ void _showUserInfoModal(
                                   style: AppTheme.style(
                                     context,
                                     Styles.user,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -141,7 +132,6 @@ void _showUserInfoModal(
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
@@ -149,7 +139,6 @@ void _showUserInfoModal(
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -162,7 +151,6 @@ void _showUserInfoModal(
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         subtitle: Text(
@@ -170,7 +158,6 @@ void _showUserInfoModal(
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -184,7 +171,6 @@ void _showUserInfoModal(
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Text(
@@ -192,7 +178,6 @@ void _showUserInfoModal(
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),

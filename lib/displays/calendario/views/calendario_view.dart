@@ -48,7 +48,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               actions: <Widget>[
@@ -60,7 +59,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
                 IconButton(
@@ -111,7 +109,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   const SizedBox(width: 5),
@@ -159,7 +156,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   const SizedBox(width: 5),
@@ -204,7 +200,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                                     style: AppTheme.style(
                                       context,
                                       Styles.bold,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   const SizedBox(width: 5),
@@ -280,7 +275,6 @@ class _CalendarioViewState extends State<CalendarioView> {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -302,7 +296,6 @@ class _DrawerCalendar extends StatelessWidget {
       backgroundColor: AppTheme.color(
         context,
         Styles.black,
-        Preferences.idTheme,
       ),
       child: Column(
         children: [
@@ -319,7 +312,6 @@ class _DrawerCalendar extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
                 trailing: IconButton(
@@ -331,7 +323,6 @@ class _DrawerCalendar extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.divider,
-                  Preferences.idTheme,
                 ),
               ),
               ListTile(
@@ -343,7 +334,6 @@ class _DrawerCalendar extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
                 leading: const Icon(Icons.calendar_month),
@@ -353,7 +343,6 @@ class _DrawerCalendar extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.divider,
-                  Preferences.idTheme,
                 ),
               ),
               ListTile(
@@ -365,7 +354,6 @@ class _DrawerCalendar extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
                 leading: const Icon(Icons.date_range),
@@ -375,7 +363,6 @@ class _DrawerCalendar extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.divider,
-                  Preferences.idTheme,
                 ),
               ),
               ListTile(
@@ -387,7 +374,6 @@ class _DrawerCalendar extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
                 leading: const Icon(Icons.today),
@@ -397,7 +383,6 @@ class _DrawerCalendar extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.divider,
-                  Preferences.idTheme,
                 ),
               ),
             ],
@@ -424,21 +409,18 @@ class _NombreDias extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde arriba
         left: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde izquierdo
         right: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde derecho
         bottom: BorderSide.none, // Sin borde abajo
@@ -446,14 +428,12 @@ class _NombreDias extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde vertical dentro de la tabla
       ),
@@ -472,7 +452,6 @@ class _NombreDias extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
               ),
@@ -498,42 +477,36 @@ class _VistaSemana extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde arriba
         left: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde izquierdo
         right: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde derecho
         bottom: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Sin borde abajo
         horizontalInside: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde vertical dentro de la tabla
       ),
@@ -561,7 +534,6 @@ class _VistaSemana extends StatelessWidget {
                             ? AppTheme.color(
                                 context,
                                 Styles.primary,
-                                Preferences.idTheme,
                               )
                             : null,
                         border: Border(
@@ -569,7 +541,6 @@ class _VistaSemana extends StatelessWidget {
                             color: AppTheme.color(
                               context,
                               Styles.greyBorder,
-                              Preferences.idTheme,
                             ),
                           ),
                         ), // Agregar borde inferior
@@ -583,12 +554,10 @@ class _VistaSemana extends StatelessWidget {
                               ? AppTheme.style(
                                   context,
                                   Styles.whiteBoldStyle,
-                                  Preferences.idTheme,
                                 )
                               : AppTheme.style(
                                   context,
                                   Styles.bold,
-                                  Preferences.idTheme,
                                 ),
                         ),
                       ),
@@ -625,7 +594,6 @@ class _VistaSemana extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.taskStyle,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 const Divider(),
@@ -664,7 +632,6 @@ class _VistaMes extends StatelessWidget {
         color: AppTheme.color(
           context,
           Styles.greyBorder,
-          Preferences.idTheme,
         ),
       ),
       children: List.generate(
@@ -679,25 +646,21 @@ class _VistaMes extends StatelessWidget {
                   ? AppTheme.color(
                       context,
                       Styles.primary,
-                      Preferences.idTheme,
                     )
                   : null;
               final hoyColor = vm.nuevaIsToday(dia.value, index)
                   ? AppTheme.style(
                       context,
                       Styles.whiteBoldStyle,
-                      Preferences.idTheme,
                     )
                   : vm.diasOtroMes(dia, index, diasMesSeleccionado)
                       ? AppTheme.style(
                           context,
                           Styles.diasOtroMes,
-                          Preferences.idTheme,
                         )
                       : AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         );
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
@@ -718,7 +681,6 @@ class _VistaMes extends StatelessWidget {
                             color: AppTheme.color(
                               context,
                               Styles.greyBorder,
-                              Preferences.idTheme,
                             ),
                           ),
                         ), // Agregar borde inferior
@@ -745,7 +707,6 @@ class _VistaMes extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.transparent,
-                                  Preferences.idTheme,
                                 ),
                                 child: ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -799,7 +760,6 @@ class _VistaMes extends StatelessWidget {
                                             style: AppTheme.style(
                                               context,
                                               Styles.taskStyle,
-                                              Preferences.idTheme,
                                             ),
                                           ),
                                           Divider(
@@ -807,7 +767,6 @@ class _VistaMes extends StatelessWidget {
                                             color: AppTheme.color(
                                               context,
                                               Styles.greyBorder,
-                                              Preferences.idTheme,
                                             ),
                                           ),
                                         ],
@@ -845,7 +804,6 @@ class _VistaMes extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.verMas,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 )
@@ -861,7 +819,6 @@ class _VistaMes extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.transparent,
-                                  Preferences.idTheme,
                                 ),
                                 child: ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -903,7 +860,6 @@ class _VistaMes extends StatelessWidget {
                                             style: AppTheme.style(
                                               context,
                                               Styles.taskStyle,
-                                              Preferences.idTheme,
                                             ),
                                           ),
                                           Divider(
@@ -911,7 +867,6 @@ class _VistaMes extends StatelessWidget {
                                             color: AppTheme.color(
                                               context,
                                               Styles.greyBorder,
-                                              Preferences.idTheme,
                                             ),
                                           ),
                                         ],
@@ -937,7 +892,6 @@ class _VistaMes extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.verMas,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ),
@@ -955,7 +909,6 @@ class _VistaMes extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.transparent,
-                                  Preferences.idTheme,
                                 ),
                                 child: ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),
@@ -1009,7 +962,6 @@ class _VistaMes extends StatelessWidget {
                                             style: AppTheme.style(
                                               context,
                                               Styles.taskStyle,
-                                              Preferences.idTheme,
                                             ),
                                           ),
                                           Divider(
@@ -1017,7 +969,6 @@ class _VistaMes extends StatelessWidget {
                                             color: AppTheme.color(
                                               context,
                                               Styles.greyBorder,
-                                              Preferences.idTheme,
                                             ),
                                           ),
                                         ],
@@ -1055,7 +1006,6 @@ class _VistaMes extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.verMas,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ),
@@ -1103,7 +1053,6 @@ class _VistaDiaState extends State<_VistaDia> {
               style: AppTheme.style(
                 context,
                 Styles.bold,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -1121,7 +1070,6 @@ class _VistaDiaState extends State<_VistaDia> {
                 style: AppTheme.style(
                   context,
                   Styles.bold,
-                  Preferences.idTheme,
                 ),
               ),
             ),
@@ -1142,7 +1090,6 @@ class _VistaDiaState extends State<_VistaDia> {
                 style: AppTheme.style(
                   context,
                   Styles.taskStyle,
-                  Preferences.idTheme,
                 ),
               ),
             ),
@@ -1163,7 +1110,6 @@ class _VistaDiaState extends State<_VistaDia> {
                   style: AppTheme.style(
                     context,
                     Styles.hora,
-                    Preferences.idTheme,
                   ),
                 ),
               ),
@@ -1211,7 +1157,6 @@ class _VistaDiaState extends State<_VistaDia> {
                         borderColor: AppTheme.color(
                           context,
                           Styles.greyBorder,
-                          Preferences.idTheme,
                         ),
                         raidus: 10,
                         child: GestureDetector(
@@ -1225,7 +1170,6 @@ class _VistaDiaState extends State<_VistaDia> {
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
-                                Preferences.idTheme,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -1287,42 +1231,36 @@ class _VistaDiaState extends State<_VistaDia> {
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde arriba
         left: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde izquierdo
         right: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde derecho
         bottom: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Bo, // Sin borde abajo
         horizontalInside: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
           color: AppTheme.color(
             context,
             Styles.greyBorder,
-            Preferences.idTheme,
           ),
         ), // Borde vertical dentro de la tabla
       ),

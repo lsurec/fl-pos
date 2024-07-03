@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -62,7 +61,6 @@ class _Tabs3ViewState extends State<Tabs3View>
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               actions: [
@@ -116,7 +114,6 @@ class _Tabs3ViewState extends State<Tabs3View>
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Text(
@@ -124,7 +121,6 @@ class _Tabs3ViewState extends State<Tabs3View>
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),
@@ -138,7 +134,6 @@ class _Tabs3ViewState extends State<Tabs3View>
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Text(
@@ -146,7 +141,6 @@ class _Tabs3ViewState extends State<Tabs3View>
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ),
@@ -159,12 +153,10 @@ class _Tabs3ViewState extends State<Tabs3View>
                 labelColor: AppTheme.color(
                   context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
                 indicatorColor: AppTheme.color(
                   context,
                   Styles.darkPrimary,
-                  Preferences.idTheme,
                 ),
                 tabs: [
                   Tab(
@@ -208,7 +200,6 @@ class _Tabs3ViewState extends State<Tabs3View>
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

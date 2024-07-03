@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -37,7 +36,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
             actions: [
@@ -94,7 +92,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -105,7 +102,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
@@ -113,7 +109,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -127,7 +122,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -138,7 +132,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
@@ -146,7 +139,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -160,7 +152,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -171,7 +162,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
@@ -180,7 +170,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -194,7 +183,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                       children: [
                         TextSpan(
@@ -205,7 +193,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         TextSpan(
@@ -214,7 +201,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         )
                       ],
@@ -237,7 +223,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             style: AppTheme.style(
                               context,
                               Styles.title,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
@@ -245,7 +230,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -261,7 +245,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             style: AppTheme.style(
                               context,
                               Styles.title,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
@@ -269,7 +252,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -287,7 +269,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     style: AppTheme.style(
                       context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -300,7 +281,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                   if (document.client != null)
@@ -312,7 +292,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         Text(
@@ -323,7 +302,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         Text(
@@ -334,7 +312,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -354,7 +331,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -363,7 +339,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -379,7 +354,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     style: AppTheme.style(
                       context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -397,7 +371,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     style: AppTheme.style(
                       context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -414,7 +387,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         color: AppTheme.color(
                           context,
                           Styles.border,
-                          Preferences.idTheme,
                         ),
                         width: 1.0,
                       ), // Define el color y grosor del borde
@@ -422,7 +394,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     color: AppTheme.color(
                       context,
                       Styles.background,
-                      Preferences.idTheme,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(
@@ -480,7 +451,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -489,7 +459,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                       ],
@@ -537,7 +506,6 @@ class _DetailsDocViewState extends State<DetailsDocView> {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -578,7 +546,6 @@ class _Pyments extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.border,
-                Preferences.idTheme,
               ),
               width: 1.0,
             ), // Define el color y grosor del borde
@@ -586,7 +553,6 @@ class _Pyments extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.background,
-            Preferences.idTheme,
           ),
           child: ListTile(
             title: Text(
@@ -594,7 +560,6 @@ class _Pyments extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.normal,
-                Preferences.idTheme,
               ),
             ),
             subtitle: Column(
@@ -609,7 +574,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.reference != "")
@@ -621,7 +585,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.payment.banco)
@@ -633,7 +596,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.account != null)
@@ -645,7 +607,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 Text(
@@ -656,7 +617,6 @@ class _Pyments extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -667,7 +627,6 @@ class _Pyments extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -678,7 +637,6 @@ class _Pyments extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 // Text('${AppLocalizations.of(context)!.translate(
@@ -727,7 +685,6 @@ class _Transaction extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.border,
-                Preferences.idTheme,
               ),
               width: 1.0,
             ), // Define el color y grosor del borde
@@ -735,7 +692,6 @@ class _Transaction extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.background,
-            Preferences.idTheme,
           ),
           child: ListTile(
             title: Column(
@@ -746,7 +702,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -754,7 +709,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
               ],
@@ -770,7 +724,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -781,7 +734,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 // Text(
