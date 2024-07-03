@@ -3,8 +3,10 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 
 class LightTheme {
   static final ThemeData theme = ThemeData.light().copyWith(
+    // cardColor: AppTheme.backroundColor,
+    scaffoldBackgroundColor: AppTheme.lightBackround,
     primaryColor: AppTheme.primary,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       color: AppTheme.primary,
     ),
     radioTheme: RadioThemeData(

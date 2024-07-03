@@ -6,12 +6,29 @@ import 'package:flutter_post_printer_example/themes/light_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class AppTheme {
+  static const Color primary = Color(0xff134895);
+  static Color lightBackround = Colors.orange.shade50;
+  static const Color darkBackround = Color.fromARGB(255, 48, 45, 45);
+
+  static const TextStyle title = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle text = TextStyle(
+    fontSize: 17,
+  );
+
+  static const TextStyle textBold = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.bold,
+  );
+
   //CAMBIAR TEMA CAMBIA A 1 DESDE LOS AJUSTES
   static int cambiarTema = 0;
 
-  //Color primario de la app
-  static const Color primary = Color(0xff134895);
   static Color backroundColor = Colors.orange.shade50;
+
   static const Color black = Colors.black;
 
   static final ButtonStyle disabledButtonsStyle = ButtonStyle(

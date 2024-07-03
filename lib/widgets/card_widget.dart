@@ -34,7 +34,6 @@ class CardWidget extends StatelessWidget {
             AppTheme.color(
               context,
               Styles.secondBackground,
-              
             ),
         shape: borderColor == null
             ? RoundedRectangleBorder(

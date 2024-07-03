@@ -34,27 +34,80 @@ class ThemeView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.home,
+                        "tema",
+                      ),
+                      style: AppTheme.title,
+                    ),
+                    const SizedBox(height: 10),
                     RadioListTile<ThemeMode>(
-                      title: Text('Claro'),
+                      contentPadding: EdgeInsetsDirectional.zero,
+                      title: Text(
+                        'Claro',
+                        style: AppTheme.text,
+                      ),
                       value: ThemeMode.light,
                       groupValue: themeProvider.themeMode,
                       onChanged: (ThemeMode? value) => themeProvider.setLigth(),
-                      secondary: Icon(Icons.light_mode),
+                      secondary: const Icon(Icons.light_mode),
                     ),
                     RadioListTile<ThemeMode>(
-                      title: Text('Oscuro'),
+                      contentPadding: EdgeInsetsDirectional.zero,
+                      title: Text(
+                        'Oscuro',
+                        style: AppTheme.text,
+                      ),
                       value: ThemeMode.dark,
                       groupValue: themeProvider.themeMode,
                       onChanged: (ThemeMode? value) => themeProvider.setDark(),
-                      secondary: Icon(Icons.dark_mode),
+                      secondary: const Icon(Icons.dark_mode),
                     ),
                     RadioListTile<ThemeMode>(
-                      title: Text('Sistema'),
+                      contentPadding: EdgeInsetsDirectional.zero,
+                      title: Text(
+                        'Sistema',
+                        style: AppTheme.text,
+                      ),
                       value: ThemeMode.system,
                       groupValue: themeProvider.themeMode,
                       onChanged: (ThemeMode? value) =>
                           themeProvider.setSystem(),
                       secondary: Icon(Icons.monitor),
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primary,
+                        elevation: 0,
+                        side: const BorderSide(width: 1),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            13,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: SizedBox(
+                        height: 50,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Siguiente",
+                                style: AppTheme.text,
+                              ),
+                              Icon(
+                                Icons.trending_flat,
+                                size: 40,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       width: 350,

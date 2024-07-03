@@ -3,8 +3,9 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 
 class DarkTheme {
   static final ThemeData theme = ThemeData.dark().copyWith(
+      scaffoldBackgroundColor: AppTheme.darkBackround,
       primaryColor: AppTheme.primary,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         color: AppTheme.primary,
       ),
       radioTheme: RadioThemeData(
