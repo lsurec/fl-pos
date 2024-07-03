@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
 
 class DarkTheme {
   static final ThemeData theme = ThemeData.dark().copyWith(
-    primaryColor: Colors.purple,
-    appBarTheme: AppBarTheme(
-      color: Colors.purple,
-    ),
-  );
+      primaryColor: AppTheme.primary,
+      appBarTheme: AppBarTheme(
+        color: AppTheme.primary,
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: MaterialStateProperty.all(AppTheme.primary),
+      ));
 
   //COLORES
   static const Color backroundColor = Color.fromARGB(255, 48, 45, 45);

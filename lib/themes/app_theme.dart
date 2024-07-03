@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/dark_theme.dart';
@@ -104,7 +103,6 @@ class AppTheme {
           break;
       }
     }
-
     // Define los mapas para los estilos de los diferentes temas
     final lightThemeStyles = {
       Styles.normal: LightTheme.normalStyle,

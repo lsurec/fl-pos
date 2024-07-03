@@ -25,10 +25,7 @@ class ThemeView extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          floatingActionButton: FloatingActionButton(onPressed: () {}),
-          appBar: AppBar(
-            title: Text('Themes'),
-          ),
+          appBar: AppBar(),
           body: RefreshIndicator(
             onRefresh: () async {},
             child: Padding(
@@ -42,12 +39,14 @@ class ThemeView extends StatelessWidget {
                       value: ThemeMode.light,
                       groupValue: themeProvider.themeMode,
                       onChanged: (ThemeMode? value) => themeProvider.setLigth(),
+                      secondary: Icon(Icons.light_mode),
                     ),
                     RadioListTile<ThemeMode>(
                       title: Text('Oscuro'),
                       value: ThemeMode.dark,
                       groupValue: themeProvider.themeMode,
                       onChanged: (ThemeMode? value) => themeProvider.setDark(),
+                      secondary: Icon(Icons.dark_mode),
                     ),
                     RadioListTile<ThemeMode>(
                       title: Text('Sistema'),
@@ -55,6 +54,7 @@ class ThemeView extends StatelessWidget {
                       groupValue: themeProvider.themeMode,
                       onChanged: (ThemeMode? value) =>
                           themeProvider.setSystem(),
+                      secondary: Icon(Icons.monitor),
                     ),
                     SizedBox(
                       width: 350,

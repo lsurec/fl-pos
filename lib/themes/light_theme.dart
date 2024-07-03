@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
 
 class LightTheme {
   static final ThemeData theme = ThemeData.light().copyWith(
-    primaryColor: Colors.blue,
+    primaryColor: AppTheme.primary,
     appBarTheme: AppBarTheme(
-      color: Colors.blue,
+      color: AppTheme.primary,
+    ),
+    radioTheme: RadioThemeData(
+      fillColor: MaterialStateProperty.all(AppTheme.primary),
     ),
   );
 
