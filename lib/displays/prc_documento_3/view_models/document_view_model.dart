@@ -453,17 +453,17 @@ class DocumentViewModel extends ChangeNotifier {
 
       final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-      // if (!docVM.printFel()) {
-      //   vmFactura.isLoading = false;
+      if (!docVM.printFel()) {
+        vmFactura.isLoading = false;
 
-      //   NotificationService.showSnackbar(
-      //     AppLocalizations.of(context)!.translate(
-      //       BlockTranslate.notificacion,
-      //       'sinRegistros',
-      //     ),
-      //   );
-      //   return;
-      // }
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinRegistros',
+          ),
+        );
+        return;
+      }
 
       final FelService felService = FelService();
 
