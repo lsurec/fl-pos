@@ -77,7 +77,7 @@ class SelectClientView extends StatelessWidget {
                         Text("(${client.desCuentaCta})")
                       ],
                     ),
-                    onTap: () => docVM.selectClient(client, context),
+                    onTap: () => docVM.selectClient(true, client, context),
                   );
                 },
               ),
