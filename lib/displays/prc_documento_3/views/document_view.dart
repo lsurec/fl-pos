@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -35,7 +34,6 @@ class DocumentView extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.title,
-                    Preferences.idTheme,
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -44,7 +42,6 @@ class DocumentView extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -56,7 +53,6 @@ class DocumentView extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.title,
-                    Preferences.idTheme,
                   ),
                 ),
                 if (vm.series.isEmpty)
@@ -76,7 +72,6 @@ class DocumentView extends StatelessWidget {
                     dropdownColor: AppTheme.color(
                       context,
                       Styles.background,
-                      Preferences.idTheme,
                     ),
                     value: vm.serieSelect,
                     onChanged: (value) => vm.changeSerie(value, context),
@@ -98,7 +93,6 @@ class DocumentView extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                     IconButton(
@@ -131,7 +125,6 @@ class DocumentView extends StatelessWidget {
                         color: AppTheme.color(
                           context,
                           Styles.darkPrimary,
-                          Preferences.idTheme,
                         ),
                         icon: const Icon(Icons.search),
                         onPressed: () => vm.performSearchClient(context),
@@ -153,7 +146,6 @@ class DocumentView extends StatelessWidget {
                   activeColor: AppTheme.color(
                     context,
                     Styles.darkPrimary,
-                    Preferences.idTheme,
                   ),
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
@@ -166,7 +158,6 @@ class DocumentView extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.title,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -182,7 +173,6 @@ class DocumentView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.titlegrey,
-                              Preferences.idTheme,
                             ),
                           ),
                           if (!vm.cf)
@@ -196,7 +186,6 @@ class DocumentView extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.grey,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
@@ -212,7 +201,6 @@ class DocumentView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -221,7 +209,6 @@ class DocumentView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -230,7 +217,14 @@ class DocumentView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "(${vm.clienteSelect!.desCuentaCta})",
+                        style: AppTheme.style(
+                          context,
+                          Styles.inactive,
                         ),
                       ),
                     ],
@@ -250,7 +244,6 @@ class DocumentView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                       DropdownButton<SellerModel>(
@@ -258,7 +251,6 @@ class DocumentView extends StatelessWidget {
                         dropdownColor: AppTheme.color(
                           context,
                           Styles.background,
-                          Preferences.idTheme,
                         ),
                         value: vm.vendedorSelect,
                         onChanged: (value) => vm.changeSeller(value),

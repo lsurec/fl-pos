@@ -38,7 +38,6 @@ class LangView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                     ),
@@ -56,12 +55,10 @@ class LangView extends StatelessWidget {
                                   ? AppTheme.color(
                                       context,
                                       Styles.primary,
-                                      Preferences.idTheme,
                                     )
                                   : AppTheme.color(
                                       context,
                                       Styles.secondBackground,
-                                      Preferences.idTheme,
                                     ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
@@ -72,12 +69,10 @@ class LangView extends StatelessWidget {
                                       ? AppTheme.style(
                                           context,
                                           Styles.whiteBoldStyle,
-                                          Preferences.idTheme,
                                         )
                                       : AppTheme.style(
                                           context,
                                           Styles.bold,
-                                          Preferences.idTheme,
                                         ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -99,7 +94,6 @@ class LangView extends StatelessWidget {
                         style: AppTheme.button(
                           context,
                           Styles.buttonStyle,
-                          Preferences.idTheme,
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
@@ -109,7 +103,6 @@ class LangView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.whiteBoldStyle,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -126,7 +119,6 @@ class LangView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading)

@@ -1,5 +1,4 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -35,7 +34,7 @@ class DataUserWidget extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
+            
           ),
         ),
         const SizedBox(height: 10),
@@ -44,7 +43,7 @@ class DataUserWidget extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
+            
           ),
         ),
         const SizedBox(height: 10),
@@ -53,7 +52,7 @@ class DataUserWidget extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
+            
           ),
         ),
       ],

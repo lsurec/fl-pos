@@ -1,5 +1,4 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -49,7 +48,7 @@ class InputWidget extends StatelessWidget {
                   color: AppTheme.color(
                     context,
                     Styles.iconActive,
-                    Preferences.idTheme,
+                    
                   ),
                 ),
         ),

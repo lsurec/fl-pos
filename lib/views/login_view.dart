@@ -1,5 +1,4 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -47,7 +46,6 @@ class LoginView extends StatelessWidget {
                     color: AppTheme.color(
                       context,
                       Styles.secondBackground,
-                      Preferences.idTheme,
                     ),
                     width: double.infinity,
                     raidus: 18,
@@ -100,6 +98,10 @@ class LoginView extends StatelessWidget {
                                           suffixIcon: const Icon(
                                             Icons.lock_outlined,
                                           ),
+                                          suffixIconColor: AppTheme.color(
+                                            context,
+                                            Styles.primary,
+                                          ),
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
                                           //   icon: Icon(
@@ -109,7 +111,7 @@ class LoginView extends StatelessWidget {
                                           //     color: AppTheme.color(
                                           //       context,
                                           //       Styles.iconActive,
-                                          //       Preferences.idTheme,
+                                          //
                                           //     ),
                                           //   ),
                                           // ),
@@ -128,7 +130,6 @@ class LoginView extends StatelessWidget {
                                           return null;
                                         },
                                         obscureText: vm.obscureText,
-                                        obscuringCharacter: "*",
                                       ),
                                     ],
                                   ),
@@ -142,7 +143,6 @@ class LoginView extends StatelessWidget {
                             activeColor: AppTheme.color(
                               context,
                               Styles.darkPrimary,
-                              Preferences.idTheme,
                             ),
                             title: Text(
                               AppLocalizations.of(context)!.translate(
@@ -152,7 +152,6 @@ class LoginView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.menuActive,
-                                Preferences.idTheme,
                               ),
                               textAlign: TextAlign.right,
                             ),
@@ -165,7 +164,6 @@ class LoginView extends StatelessWidget {
                             style: AppTheme.button(
                               context,
                               Styles.buttonStyle,
-                              Preferences.idTheme,
                             ),
                             child: SizedBox(
                               width: double.infinity,
@@ -178,7 +176,6 @@ class LoginView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.whiteBoldStyle,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -199,7 +196,6 @@ class LoginView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.versionStyle,
-                          Preferences.idTheme,
                         ),
                       ),
                       const SizedBox(width: 10)
@@ -224,7 +220,6 @@ class LoginView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

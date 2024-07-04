@@ -3,6 +3,7 @@
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -70,6 +71,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
         ChangeNotifierProvider(create: (_) => LangViewModel()),
         ChangeNotifierProvider(create: (_) => ThemeViewModel()),
+        ChangeNotifierProvider(create: (_) => ClassificationViewModel()),
       ],
       child: const MyApp(),
     );
@@ -86,6 +88,7 @@ class MyApp extends StatelessWidget {
     // Preferences.clearUrl();
     // Preferences.clearToken();
     // Preferences.clearDocument();
+    // Preferences.clearTheme();
 
     //app_business
 
@@ -104,6 +107,7 @@ class MyApp extends StatelessWidget {
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('es'), // Español

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -41,7 +40,6 @@ class ComentariosView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -62,7 +60,6 @@ class ComentariosView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -76,7 +73,6 @@ class ComentariosView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                         textAlign: TextAlign.justify,
                       ),
@@ -91,7 +87,6 @@ class ComentariosView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -124,7 +119,6 @@ class ComentariosView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                       const SizedBox(height: 5),
@@ -144,7 +138,6 @@ class ComentariosView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 leading: const Icon(Icons.attachment),
@@ -176,7 +169,6 @@ class ComentariosView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -263,7 +255,6 @@ class _Comentario extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.greyBorder,
-                  Preferences.idTheme,
                 ),
               ),
               left: BorderSide(
@@ -271,7 +262,6 @@ class _Comentario extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.greyBorder,
-                  Preferences.idTheme,
                 ),
               ),
               right: BorderSide(
@@ -279,7 +269,6 @@ class _Comentario extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.greyBorder,
-                  Preferences.idTheme,
                 ),
               ),
             ),
@@ -296,7 +285,6 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.bold,
-                  Preferences.idTheme,
                 ),
               ),
               Text(
@@ -306,7 +294,6 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
             ],
@@ -320,7 +307,6 @@ class _Comentario extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.greyBorder,
-                Preferences.idTheme,
               ),
             ),
             borderRadius: const BorderRadius.only(
@@ -336,7 +322,6 @@ class _Comentario extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
                 textAlign: TextAlign.justify,
               ),
@@ -353,7 +338,6 @@ class _Comentario extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                     leading: const Icon(Icons.insert_photo_outlined),
@@ -373,7 +357,6 @@ class _Comentario extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.greyBorder,
-                Preferences.idTheme,
               ),
               height: 20,
               width: 3,

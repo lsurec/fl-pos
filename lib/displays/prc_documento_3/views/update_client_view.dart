@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/client_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -37,7 +36,6 @@ class UpdateClientView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -75,6 +73,7 @@ class UpdateClientView extends StatelessWidget {
                         BlockTranslate.cuenta,
                         'direccion',
                       ),
+                      validator: false,
                     ),
                     InputWidget(
                       initialValue: cuenta.facturaNit,
@@ -97,6 +96,7 @@ class UpdateClientView extends StatelessWidget {
                         BlockTranslate.cuenta,
                         'telefono',
                       ),
+                      validator: false,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -115,10 +115,15 @@ class UpdateClientView extends StatelessWidget {
                         ),
                         onChanged: (value) => vm.formValues["correo"] = value,
                         validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return null; // Campo no obligatorio, permitir vacío
+                          }
+
                           String pattern =
                               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                           RegExp regExp = RegExp(pattern);
-                          return regExp.hasMatch(value ?? '')
+
+                          return regExp.hasMatch(value)
                               ? null
                               : AppLocalizations.of(context)!.translate(
                                   BlockTranslate.cuenta,
@@ -140,7 +145,6 @@ class UpdateClientView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

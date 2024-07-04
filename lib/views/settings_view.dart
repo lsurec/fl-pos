@@ -27,7 +27,6 @@ class SettingsView extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.title,
-            Preferences.idTheme,
           ),
         ),
       ),
@@ -75,6 +74,10 @@ class SettingsView extends StatelessWidget {
                     BlockTranslate.home,
                     'idioma',
                   ),
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
                 ),
                 //Nombre del idioma seleccionado en el idioma seleccionado
                 subtitle: Text(
@@ -84,10 +87,7 @@ class SettingsView extends StatelessWidget {
                 onTap: () => vm.navigateLang(context),
               ),
               ListTile(
-                leading: vmTheme.getThemeIcon(
-                  context,
-                  Preferences.idTheme,
-                ),
+                leading: vmTheme.getThemeIcon(context, Preferences.idTheme),
                 title: Text(
                   AppLocalizations.of(context)!.translate(
                     BlockTranslate.home,
