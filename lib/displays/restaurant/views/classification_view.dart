@@ -3,7 +3,6 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/classifi
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/locations_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -67,18 +66,24 @@ class ClassificationView extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              const Text(
-                                "Ubicaciones/", //TODO:Translate
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
+                              GestureDetector(
+                                onTap: () => vm.backLocationsView(context),
+                                child: const Text(
+                                  "Ubicaciones/", //TODO:Translate
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black38,
+                                  ),
                                 ),
                               ),
-                              Text(
-                                "${vmLoc.location!.descripcion}/",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
+                              GestureDetector(
+                                onTap: () => vm.backTablesView(context),
+                                child: Text(
+                                  "${vmLoc.location!.descripcion}/",
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black38,
+                                  ),
                                 ),
                               ),
                               Text(
@@ -201,10 +206,7 @@ class CardImageWidget extends StatelessWidget {
                 description,
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTheme.style(context, Styles.title),
                 overflow: TextOverflow.ellipsis,
               ),
             ],
