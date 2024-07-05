@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/fel/models/credencial_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -430,11 +431,11 @@ class DocumentViewModel extends ChangeNotifier {
     );
 
     //Stop process
-    vmFactura.isLoading = false;
 
     //valid succes response
     if (!res.succes) {
       //si algo salio mal mostrar alerta
+      vmFactura.isLoading = false;
 
       await NotificationService.showErrorView(
         context,
@@ -448,21 +449,206 @@ class DocumentViewModel extends ChangeNotifier {
 
     // si no se encontró nada mostrar mensaje
     if (cuentasCorrentistas.isEmpty) {
+      //buscar nit cui en sat
+
+      final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+
+      if (!docVM.printFel()) {
+        vmFactura.isLoading = false;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinRegistros',
+          ),
+        );
+        return;
+      }
+
+      final FelService felService = FelService();
+
+      final ApiResModel resCredenciales = await felService.getCredenciales(
+        1, //TODO:Parametrizar certificador
+        empresa,
+        user,
+        token,
+      );
+
+      if (!resCredenciales.succes) {
+        //si algo salio mal mostrar alerta
+        vmFactura.isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          resCredenciales,
+        );
+        return;
+      }
+
+      final List<CredencialModel> credenciales = resCredenciales.response;
+
+      String llaveApi = "";
+      String usuarioApi = "";
+
+      for (var credencial in credenciales) {
+        switch (credencial.campoNombre) {
+          case "LlaveApi":
+            llaveApi = credencial.campoValor;
+
+            break;
+          case "UsuarioApi":
+            usuarioApi = credencial.campoValor;
+            break;
+          default:
+            break;
+        }
+      }
+
+      //elimar guines
+      final receptor = client.text.replaceAll(RegExp(r'[\s\-]'), '');
+
+      final ApiResModel resRecpetor = await felService.getReceptor(
+        token,
+        llaveApi,
+        usuarioApi,
+        receptor,
+      );
+
+      if (!resRecpetor.succes) {
+        //si algo salio mal mostrar alerta
+        vmFactura.isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          resRecpetor,
+        );
+        return;
+      }
+
+      if (resRecpetor.response.toString().isEmpty) {
+        vmFactura.isLoading = false;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinRegistros',
+          ),
+        );
+        return;
+      }
+
+      CuentaCorrentistaModel cuenta = CuentaCorrentistaModel(
+        cuentaCuenta: "",
+        grupoCuenta: 0,
+        cuenta: 0,
+        nombre: resRecpetor.response,
+        direccion: "",
+        telefono: "",
+        correo: "",
+        nit: client.text,
+      );
+
+      ApiResModel resNewAccount = await cuentaService.postCuenta(
+        user,
+        empresa,
+        token,
+        cuenta,
+      );
+
+      //validar respuesta del servico, si es incorrecta
+      if (!resNewAccount.succes) {
+        //si algo salio mal mostrar alerta
+        vmFactura.isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          resNewAccount,
+        );
+        return;
+      }
+
+      ApiResModel resClient = await cuentaService.getCuentaCorrentista(
+        empresa,
+        cuenta.nit,
+        user,
+        token,
+      );
+
+      //validar respuesta del servico, si es incorrecta
+      if (!resClient.succes) {
+        vmFactura.isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resClient,
+        );
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'cuentaCreadaNoSelec',
+          ),
+        );
+        return;
+      }
+
+      final List<ClientModel> clients = resClient.response;
+
+      if (clients.isEmpty) {
+        vmFactura.isLoading = false;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'cuentaCreadaNoSelec',
+          ),
+        );
+        return;
+      }
+
+      if (clients.length == 1) {
+        vmFactura.isLoading = false;
+
+        selectClient(false, clients.first, context);
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'cuentaCreadaSelec',
+          ),
+        );
+
+        return;
+      }
+
+      for (var i = 0; i < clients.length; i++) {
+        final ClientModel client = clients[i];
+        if (client.facturaNit == cuenta.nit) {
+          selectClient(false, client, context);
+          break;
+        }
+      }
+
+      setText(clienteSelect?.facturaNombre ?? "");
+
+      //mapear respuesta servicio
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
-          'sinRegistros',
+          'cuentaCreadaSelec',
         ),
       );
-      return;
     }
 
     //Si solo hay un cliente seleccionarlo por defecto
     if (cuentasCorrentistas.length == 1) {
+      vmFactura.isLoading = false;
+
       clienteSelect = cuentasCorrentistas.first;
       notifyListeners();
       return;
     }
+
+    vmFactura.isLoading = false;
 
     //si son varias coicidencias navegar a pantalla seleccionar cliente
     Navigator.pushNamed(
@@ -474,11 +660,12 @@ class DocumentViewModel extends ChangeNotifier {
 
   //Seleccionar clinte
   void selectClient(
+    bool back,
     ClientModel client,
     BuildContext context,
   ) {
     clienteSelect = client;
     notifyListeners();
-    Navigator.pop(context);
+    if (back) Navigator.pop(context);
   }
 }

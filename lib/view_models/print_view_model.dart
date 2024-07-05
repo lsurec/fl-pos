@@ -133,6 +133,7 @@ class PrintViewModel extends ChangeNotifier {
 
     //TODO: Certificar
     Documento documento = Documento(
+      consecutivoInterno: 0,
       titulo: encabezado.tipoDocumento!,
       descripcion: AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
@@ -689,6 +690,7 @@ class PrintViewModel extends ChangeNotifier {
       autorizacion: encabezado.feLUuid ?? "",
       noInterno: encabezado.iDDocumentoRef ?? "",
       serieInterna: encabezado.serieDocumento ?? "",
+      consecutivoInterno: consecutivoDoc,
     );
 
     DateTime now = DateTime.now();
@@ -881,6 +883,11 @@ class PrintViewModel extends ChangeNotifier {
         BlockTranslate.tiket,
         'interno',
       )} ${docPrintModel.documento.noInterno}",
+      styles: center,
+    );
+    //TODO:Translate
+    bytes += generator.text(
+      "Cons. Interno: ${docPrintModel.documento.consecutivoInterno}",
       styles: center,
     );
     bytes += generator.emptyLines(1);

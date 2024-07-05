@@ -131,6 +131,7 @@ class Documento {
   String autorizacion;
   String serieInterna;
   String noInterno;
+  int consecutivoInterno;
 
   Documento({
     required this.titulo,
@@ -141,6 +142,7 @@ class Documento {
     required this.autorizacion,
     required this.serieInterna,
     required this.noInterno,
+    required this.consecutivoInterno,
   });
 
   factory Documento.fromJson(String str) => Documento.fromMap(json.decode(str));
@@ -156,6 +158,7 @@ class Documento {
         autorizacion: json["autorizacion"],
         serieInterna: json["serieInterna"],
         noInterno: json["noInterno"],
+        consecutivoInterno: json["consecutivoInterno"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -167,6 +170,7 @@ class Documento {
         "autorizacion": autorizacion,
         "noInterno": noInterno,
         "serieInterna": serieInterna,
+        "consecutivoInterno": consecutivoInterno,
       };
 }
 
