@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/details_restaurant_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
-import 'package:flutter_post_printer_example/displays/shr_local_config/models/account_pin_model.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -40,16 +37,17 @@ class DetailsRestaurantView extends StatelessWidget {
           children: [
             Text(
               product.desProducto,
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+              style: AppTheme.style(
+                context,
+                Styles.title,
               ),
             ),
             const SizedBox(height: 10),
             Text(
               product.productoId,
-              style: const TextStyle(
-                fontSize: 20,
+              style: AppTheme.style(
+                context,
+                Styles.normal,
               ),
             ),
             const SizedBox(height: 10),
@@ -123,11 +121,9 @@ class DetailsRestaurantView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                const Text(
+                Text(
                   "Cuentas",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
+                  style: AppTheme.style(context, Styles.normal),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
