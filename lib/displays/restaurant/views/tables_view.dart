@@ -42,6 +42,7 @@ class TablesView extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () => Navigator.pop(context),
+                              //TODO:Verificar estilos
                               child: const Text(
                                 "Ubicaciones/", //TODO:Translate
                                 //TODO;Styles

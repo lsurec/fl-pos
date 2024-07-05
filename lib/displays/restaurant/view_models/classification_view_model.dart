@@ -27,6 +27,14 @@ class ClassificationViewModel extends ChangeNotifier {
 
   int totalLength = 0;
 
+  //Salir de la pantalla
+  Future<bool> backPage(BuildContext context) async {
+    //regresar a docuemntos pendientes de recepcionar
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
+
+    return false;
+  }
+
   Future<void> navigateProduct(
     BuildContext context,
     ClassificationModel classParam,

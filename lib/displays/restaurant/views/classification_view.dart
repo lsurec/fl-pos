@@ -18,111 +18,114 @@ class ClassificationView extends StatelessWidget {
     final vmTables = Provider.of<TablesViewModel>(context);
     final vm = Provider.of<ClassificationViewModel>(context);
 
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            title: Text(
-              vmTables.table!.descripcion,
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.description_outlined,
+    return WillPopScope(
+      onWillPop: () => vm.backPage(context),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: Text(
+                vmTables.table!.descripcion,
+                style: AppTheme.style(
+                  context,
+                  Styles.title,
                 ),
-                padding: const EdgeInsets.only(right: 20),
-                onPressed: () {},
               ),
-              PopupMenuButton<int>(
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    value: 1,
-                    child: Text("Trasladar Mesa"),
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.description_outlined,
                   ),
-                ],
-                // color: AppTheme.backroundColor,
-                elevation: 2,
-                // on selected we show the dialog box
-                onSelected: (value) => {},
-              )
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 60,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            const Text(
-                              "Ubicaciones/", //TODO:Translate
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black38,
-                              ),
-                            ),
-                            Text(
-                              "${vmLoc.location!.descripcion}/",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black38,
-                              ),
-                            ),
-                            Text(
-                              vmTables.table!.descripcion,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      RegisterCountWidget(count: vm.totalLength),
-                    ],
-                  ),
+                  padding: const EdgeInsets.only(right: 20),
+                  onPressed: () {},
                 ),
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () => vm.loadData(context),
-                    child: ListView.builder(
-                      itemCount: vm.menu.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _RowMenu(
-                          classification: vm.menu[index],
-                        );
-                      },
+                PopupMenuButton<int>(
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 1,
+                      child: Text("Trasladar Mesa"),
                     ),
-                  ),
-                ),
+                  ],
+                  // color: AppTheme.backroundColor,
+                  elevation: 2,
+                  // on selected we show the dialog box
+                  onSelected: (value) => {},
+                )
               ],
             ),
-          ),
-        ),
-        if (vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
+            body: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 60,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Ubicaciones/", //TODO:Translate
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black38,
+                                ),
+                              ),
+                              Text(
+                                "${vmLoc.location!.descripcion}/",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black38,
+                                ),
+                              ),
+                              Text(
+                                vmTables.table!.descripcion,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        RegisterCountWidget(count: vm.totalLength),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () => vm.loadData(context),
+                      child: ListView.builder(
+                        itemCount: vm.menu.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return _RowMenu(
+                            classification: vm.menu[index],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        if (vm.isLoading) const LoadWidget(),
-      ],
+          if (vm.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.color(
+                context,
+                Styles.loading,
+              ),
+            ),
+          if (vm.isLoading) const LoadWidget(),
+        ],
+      ),
     );
   }
 }
