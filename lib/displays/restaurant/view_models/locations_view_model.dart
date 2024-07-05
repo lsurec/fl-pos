@@ -24,6 +24,10 @@ class LocationsViewModel extends ChangeNotifier {
   final List<LocationModel> locations = [];
   LocationModel? location;
 
+  backLocationsView(BuildContext context) {
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.locations));
+  }
+
   Future<ApiResModel> loadLocations(BuildContext context) async {
     final vmLogin = Provider.of<LoginViewModel>(
       context,

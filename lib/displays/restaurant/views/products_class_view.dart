@@ -53,25 +53,34 @@ class ProductClassView extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            const Text(
-                              "Ubicaciones/",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black38,
+                            GestureDetector(
+                              onTap: () => vmLoc.backLocationsView(context),
+                              child: const Text(
+                                "Ubicaciones/",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black38,
+                                ),
                               ),
                             ),
-                            Text(
-                              "${vmLoc.location!.descripcion}/",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black38,
+                            GestureDetector(
+                              onTap: () => vmTables.backTablesView(context),
+                              child: Text(
+                                "${vmLoc.location!.descripcion}/",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black38,
+                                ),
                               ),
                             ),
-                            Text(
-                              "${vmTables.table!.descripcion}/",
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black38,
+                            GestureDetector(
+                              onTap: () => Navigator.pop(context),
+                              child: Text(
+                                "${vmTables.table!.descripcion}/",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black38,
+                                ),
                               ),
                             ),
                             Text(

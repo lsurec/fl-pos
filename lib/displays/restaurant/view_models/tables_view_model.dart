@@ -24,6 +24,10 @@ class TablesViewModel extends ChangeNotifier {
   final List<TableModel> tables = [];
   TableModel? table;
 
+  backTablesView(BuildContext context) {
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
+  }
+
   navigateClassifications(
     BuildContext context,
     TableModel tableParam,

@@ -67,7 +67,7 @@ class ClassificationView extends StatelessWidget {
                           child: Row(
                             children: [
                               GestureDetector(
-                                onTap: () => vm.backLocationsView(context),
+                                onTap: () => vmLoc.backLocationsView(context),
                                 child: const Text(
                                   "Ubicaciones/", //TODO:Translate
                                   style: TextStyle(
@@ -77,7 +77,7 @@ class ClassificationView extends StatelessWidget {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () => vm.backTablesView(context),
+                                onTap: () => vmTables.backTablesView(context),
                                 child: Text(
                                   "${vmLoc.location!.descripcion}/",
                                   style: const TextStyle(

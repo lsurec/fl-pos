@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -29,17 +30,11 @@ class ClassificationViewModel extends ChangeNotifier {
 
   //Salir de la pantalla
   Future<bool> backPage(BuildContext context) async {
-    backTablesView(context);
+    final vmTables = Provider.of<TablesViewModel>(context, listen: false);
+
+    vmTables.backTablesView(context);
 
     return false;
-  }
-
-  backTablesView(BuildContext context) {
-    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
-  }
-
-  backLocationsView(BuildContext context) {
-    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.locations));
   }
 
   Future<void> navigateProduct(
