@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -117,8 +116,6 @@ class _CardTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<TablesViewModel>(context);
-
     return CardWidget(
       borderColor: const Color(0xffc2cfd9),
       elevation: 0,
