@@ -30,115 +30,119 @@ class DetailsRestaurantView extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              product.desProducto,
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              product.productoId,
-              style: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(30),
-              height: 300,
-              width: double.infinity,
-              child: const FadeInImage(
-                placeholder: AssetImage('assets/load.gif'),
-                image: NetworkImage(
-                  'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
-                ),
-                height: 150,
-                fit: BoxFit.contain,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: vm.types.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        vm.types[index].precio.desTipoPrecio,
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "Q.${vm.types[index].precio.precioUnidad}",
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 10),
-                      _ButtonIncrement(indice: index),
-                    ],
-                  ),
-                );
-              },
-            ),
-            // _ListPrecios(),
-            // _ButtonIncrement(),
-            const SizedBox(height: 20),
-            InputWidget(
-              labelText: "Observacion",
-              hintText: "Observacion",
-              maxLines: 3,
-              formProperty: "observacion",
-              formValues: vm.formValues,
-            ),
-            const SizedBox(height: 20),
-            Row(
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                ),
-                const SizedBox(width: 10),
                 Text(
-                  "Cuentas",
-                  style: AppTheme.style(context, Styles.normal),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: 1,
-                    color: Colors.grey,
+                  product.desProducto,
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
                   ),
                 ),
+                const SizedBox(height: 10),
+                Text(
+                  product.productoId,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.all(30),
+                  height: 300,
+                  width: double.infinity,
+                  child: const FadeInImage(
+                    placeholder: AssetImage('assets/load.gif'),
+                    image: NetworkImage(
+                      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
+                    ),
+                    height: 150,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: vm.types.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            vm.types[index].precio.desTipoPrecio,
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            "Q.${vm.types[index].precio.precioUnidad}",
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 10),
+                          _ButtonIncrement(indice: index),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                // _ListPrecios(),
+                // _ButtonIncrement(),
+                const SizedBox(height: 20),
+                InputWidget(
+                  labelText: "Observacion",
+                  hintText: "Observacion",
+                  maxLines: 3,
+                  formProperty: "observacion",
+                  formValues: vm.formValues,
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Cuentas",
+                      style: AppTheme.style(context, Styles.normal),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        height: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+                const _Accounts(),
+                const _NewAccount(),
               ],
             ),
-            const _Accounts(),
-            _NewAccount(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
