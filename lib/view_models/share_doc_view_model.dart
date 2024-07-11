@@ -98,6 +98,7 @@ class ShareDocViewModel extends ChangeNotifier {
 
     //TODO: Remplazar datos de certificacion
     Documento documento = Documento(
+      consecutivoInterno: consecutivoDoc,
       titulo: encabezado.tipoDocumento!,
       descripcion: AppLocalizations.of(contextP)!.translate(
         BlockTranslate.tiket,

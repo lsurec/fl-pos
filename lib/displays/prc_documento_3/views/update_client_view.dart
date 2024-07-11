@@ -73,6 +73,7 @@ class UpdateClientView extends StatelessWidget {
                         BlockTranslate.cuenta,
                         'direccion',
                       ),
+                      validator: false,
                     ),
                     InputWidget(
                       initialValue: cuenta.facturaNit,
@@ -95,6 +96,7 @@ class UpdateClientView extends StatelessWidget {
                         BlockTranslate.cuenta,
                         'telefono',
                       ),
+                      validator: false,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -113,10 +115,15 @@ class UpdateClientView extends StatelessWidget {
                         ),
                         onChanged: (value) => vm.formValues["correo"] = value,
                         validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return null; // Campo no obligatorio, permitir vacío
+                          }
+
                           String pattern =
                               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
                           RegExp regExp = RegExp(pattern);
-                          return regExp.hasMatch(value ?? '')
+
+                          return regExp.hasMatch(value)
                               ? null
                               : AppLocalizations.of(context)!.translate(
                                   BlockTranslate.cuenta,
