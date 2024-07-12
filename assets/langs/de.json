@@ -195,7 +195,8 @@
         "responsableActualizado": "Verantwortliche Person erfolgreich aktualisiert.",
         "asignado": "Zuvor zugewiesener Benutzer.",
         "estadoIgual": "Zuvor zugewiesener Status.",
-        "prioridadIgual": "Zuvor zugewiesene Priorität."
+        "prioridadIgual": "Zuvor zugewiesene Priorität.",
+        "copiado": "Text in die Zwischenablage kopiert."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",

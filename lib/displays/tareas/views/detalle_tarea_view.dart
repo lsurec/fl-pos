@@ -55,17 +55,23 @@ class DetalleTareaView extends StatelessWidget {
                           Styles.bold,
                         ),
                       ),
-                      Text(
-                        vm.tarea!.tareaObservacion1 ??
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.general,
-                              'noDisponible',
-                            ),
-                        style: AppTheme.style(
+                      GestureDetector(
+                        onLongPress: () => Utilities.copyToClipboard(
                           context,
-                          Styles.normal,
+                          vm.tarea!.tareaObservacion1 ?? '',
                         ),
-                        textAlign: TextAlign.justify,
+                        child: Text(
+                          vm.tarea!.tareaObservacion1 ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

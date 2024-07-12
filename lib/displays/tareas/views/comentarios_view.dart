@@ -62,19 +62,27 @@ class ComentariosView extends StatelessWidget {
                           Styles.bold,
                         ),
                       ),
-                      Text(
-                        vm.vistaTarea == 1
-                            ? vmTarea.tarea!.tareaObservacion1 ??
-                                AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.general,
-                                  'noDisponible',
-                                )
-                            : vmTareaCalendario.tarea!.texto,
-                        style: AppTheme.style(
+                      GestureDetector(
+                        onLongPress: () => Utilities.copyToClipboard(
                           context,
-                          Styles.normal,
+                          vm.vistaTarea == 1
+                              ? vmTarea.tarea!.tareaObservacion1 ?? ''
+                              : vmTareaCalendario.tarea!.texto,
                         ),
-                        textAlign: TextAlign.justify,
+                        child: Text(
+                          vm.vistaTarea == 1
+                              ? vmTarea.tarea!.tareaObservacion1 ??
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.general,
+                                    'noDisponible',
+                                  )
+                              : vmTareaCalendario.tarea!.observacion1,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -317,13 +325,19 @@ class _Comentario extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                comentario.comentario.comentario,
-                style: AppTheme.style(
+              GestureDetector(
+                onLongPress: () => Utilities.copyToClipboard(
                   context,
-                  Styles.normal,
+                  comentario.comentario.comentario,
                 ),
-                textAlign: TextAlign.justify,
+                child: Text(
+                  comentario.comentario.comentario,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),

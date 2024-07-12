@@ -195,7 +195,8 @@
         "responsableActualizado": "Responsable actualizado correctamente.",
         "asignado": "Usuario asignado anteriormente.",
         "estadoIgual" :"Estado asignado anteriormente.",
-        "prioridadIgual" :"Prioridad asignada anteriormente."
+        "prioridadIgual" :"Prioridad asignada anteriormente.",
+        "copiado": "Texto copiado al portapapeles."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

@@ -2,10 +2,13 @@
 
 import 'dart:io';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/lang_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -339,5 +342,18 @@ class Utilities {
     String nombreArchivo = File(path).path.split('/').last;
 
     return nombreArchivo;
+  }
+
+  static copyToClipboard(BuildContext context, String value) {
+    FlutterClipboard.copy(value).then(
+      (value) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            "copiado",
+          ),
+        );
+      },
+    );
   }
 }

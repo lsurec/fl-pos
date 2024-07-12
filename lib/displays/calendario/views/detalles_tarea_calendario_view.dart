@@ -54,13 +54,19 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           Styles.bold,
                         ),
                       ),
-                      Text(
-                        vm.tarea!.descripcionTarea,
-                        style: AppTheme.style(
+                      GestureDetector(
+                        onLongPress: () => Utilities.copyToClipboard(
                           context,
-                          Styles.normal,
+                          vm.tarea!.observacion1,
                         ),
-                        textAlign: TextAlign.justify,
+                        child: Text(
+                          vm.tarea!.observacion1,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,

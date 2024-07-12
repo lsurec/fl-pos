@@ -195,7 +195,8 @@
         "responsableActualizado": "Responsible person updated successfully.",
         "asignado": "Previously assigned user.",
         "estadoIgual": "Previously assigned status.",
-        "prioridadIgual": "Previously assigned priority."
+        "prioridadIgual": "Previously assigned priority.",
+        "copiado": "Text copied to clipboard."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
