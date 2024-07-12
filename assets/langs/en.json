@@ -193,7 +193,9 @@
         "horaPosterior": "Select a time starting from: ",
         "modifiqueFeHofinal": "The end time cannot be earlier than the start date and time. First, modify the end date.",
         "responsableActualizado": "Responsible person updated successfully.",
-        "asignado": "Previously assigned user."
+        "asignado": "Previously assigned user.",
+        "estadoIgual": "Previously assigned status.",
+        "prioridadIgual": "Previously assigned priority."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

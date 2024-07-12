@@ -329,6 +329,25 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     BuildContext context,
     EstadoModel estado,
   ) async {
+    //validar que no sea el mismo estado
+    if (estadoAtual!.estado == estado.estado) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'estadoIgual',
+        ),
+      );
+
+      ApiResModel estadoIncorrecto = ApiResModel(
+        succes: false,
+        response: "Estado no puede ser el mismo que está actualmente.",
+        url: '',
+        storeProcedure: '',
+      );
+
+      return estadoIncorrecto;
+    }
+
     //View model para obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
@@ -405,6 +424,25 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     BuildContext context,
     PrioridadModel prioridad,
   ) async {
+    //validar el nivel de prioridad
+    if (prioridadActual!.nivelPrioridad == prioridad.nivelPrioridad) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'prioridadIgual',
+        ),
+      );
+
+      ApiResModel prioridadIncorrecta = ApiResModel(
+        succes: false,
+        response: "Prioridad no puede ser la misma que está actualmente.",
+        url: '',
+        storeProcedure: '',
+      );
+
+      return prioridadIncorrecta;
+    }
+
     //View model de login para obtener el usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;

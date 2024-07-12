@@ -193,7 +193,9 @@
         "horaPosterior": "Wählen Sie eine Uhrzeit ab: ",
         "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum.",
         "responsableActualizado": "Verantwortliche Person erfolgreich aktualisiert.",
-        "asignado": "Zuvor zugewiesener Benutzer."
+        "asignado": "Zuvor zugewiesener Benutzer.",
+        "estadoIgual": "Zuvor zugewiesener Status.",
+        "prioridadIgual": "Zuvor zugewiesene Priorität."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
