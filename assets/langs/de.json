@@ -97,7 +97,8 @@
         "feHoFin": "ENDDATUM UND -ZEIT: ",
         "fechaHoraInicio": "Startdatum und -zeit",
         "fechaHoraFin": "Enddatum und -zeit",
-        "hora": "Uhrzeit: "
+        "hora": "Uhrzeit: ",
+        "completa": "Datum und Uhrzeit: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
@@ -191,7 +192,8 @@
         "tareaCreada": "Aufgabe erfolgreich erstellt.",
         "horaPosterior": "Wählen Sie eine Uhrzeit ab: ",
         "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum.",
-        "responsableActualizado": "Verantwortliche Person erfolgreich aktualisiert."
+        "responsableActualizado": "Verantwortliche Person erfolgreich aktualisiert.",
+        "asignado": "Zuvor zugewiesener Benutzer."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",

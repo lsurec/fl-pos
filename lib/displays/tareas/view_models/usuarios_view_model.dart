@@ -88,6 +88,17 @@ class UsuariosViewModel extends ChangeNotifier {
     //agregar a lista usuarios la respuesta de api.
     usuarios.addAll(res.response);
 
+    if (usuarios.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinCoincidencias',
+        ),
+      );
+
+      buscar.text = '';
+    }
+
     isLoading = false; //Detener carga
   }
 

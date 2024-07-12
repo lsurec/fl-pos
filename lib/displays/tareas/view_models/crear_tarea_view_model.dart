@@ -122,7 +122,6 @@ class CrearTareaViewModel extends ChangeNotifier {
     vmUsuario.usuarios = [];
     vmUsuario.buscar.text = '';
 
-    print(vmUsuario.tipoBusqueda);
     Navigator.pushNamed(
       context,
       AppRoutes.selectResponsibleUser,
@@ -397,8 +396,6 @@ class CrearTareaViewModel extends ChangeNotifier {
         //Respuesta incorrecta
         return;
       }
-
-      // print(resComent.message.res);
 
       //Crear modelo de comentario
       ComentarioModel comentarioCreado = ComentarioModel(
@@ -921,9 +918,19 @@ class CrearTareaViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmDetalleCalendario = Provider.of<DetalleTareaCalendarioViewModel>(
+      context,
+      listen: false,
+    );
+
     //Para actualizar usuarios
     if (vmUsuarios.tipoBusqueda == 3) {
       vmDetalle.cambiarResponsable(context, respon);
+    }
+
+    //5= detalles de la tarea del calendario
+    if (vmUsuarios.tipoBusqueda == 5) {
+      vmDetalleCalendario.cambiarResponsable(context, respon);
     }
 
     responsable = respon;

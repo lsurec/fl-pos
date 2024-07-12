@@ -97,7 +97,8 @@
         "feHoFin": "END DATE AND TIME: ",
         "fechaHoraInicio": "Start date and time",
         "fechaHoraFin": "End date and time",
-        "hora": "Time: "
+        "hora": "Time: ",
+        "completa": "Date and Time: "
     },
     "notificaciones": {
         "reiniciar": "To view the changes, first restart the application.",
@@ -191,7 +192,8 @@
         "tareaCreada": "Task created successfully.",
         "horaPosterior": "Select a time starting from: ",
         "modifiqueFeHofinal": "The end time cannot be earlier than the start date and time. First, modify the end date.",
-        "responsableActualizado": "Responsible person updated successfully."
+        "responsableActualizado": "Responsible person updated successfully.",
+        "asignado": "Previously assigned user."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

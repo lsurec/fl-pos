@@ -314,7 +314,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           //tipoBusqueda = 3 para actualizar responsable
                           onPressed: () => vmUsuarios.irUsuarios(
                             context,
-                            3,
+                            5,
                             AppLocalizations.of(context)!.translate(
                               BlockTranslate.botones,
                               'cambiarResponsable',

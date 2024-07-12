@@ -97,7 +97,8 @@
         "feHoFin": "FECHA Y HORA FINAL: ",
         "fechaHoraInicio": "Fecha y hora inicial",
         "fechaHoraFin": "Fecha y hora final",
-        "hora": "Hora: "
+        "hora": "Hora: ",
+        "completa": "Fecha y hora: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -191,7 +192,8 @@
         "tareaCreada": "Tarea creada correctamente.",
         "horaPosterior": "Selecciona una hora a partir de las: ",
         "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.",
-        "responsableActualizado": "Responsable actualizado correctamente."
+        "responsableActualizado": "Responsable actualizado correctamente.",
+        "asignado": "Usuario asignado anteriormente."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

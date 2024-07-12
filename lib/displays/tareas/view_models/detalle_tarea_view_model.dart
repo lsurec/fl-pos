@@ -97,8 +97,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
     //añadir a la lista los usuarios responsables encontrados
     responsablesTarea.addAll(res.response);
 
-    print("cantidad de responsables ${responsablesTarea.length} respuesta api");
-
     //recorrer la lista y buscar los de estado "inactivo"
     for (var i = 0; i < responsablesTarea.length; i++) {
       ResponsableModel responsable = responsablesTarea[i];
@@ -110,7 +108,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
       }
     }
 
-    print("cantidad de responsables ${responsablesHistorial.length}");
     isLoading = false; //detener carga
 
     //retornar respuesta correcta
@@ -725,6 +722,17 @@ class DetalleTareaViewModel extends ChangeNotifier {
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
     String user = vmLogin.user;
+
+    if (tarea!.usuarioResponsable == usuario.userName ||
+        tarea!.usuarioResponsable == usuario.name) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'asignado',
+        ),
+      );
+      return;
+    }
     //Usuario responsable de la tarea
     //Crear modelo de usuario nuevo
     NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(

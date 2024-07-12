@@ -263,6 +263,22 @@ class Utilities {
     return horaFormateada;
   }
 
+  static String formatearFechaHora(DateTime fecha) {
+    // Asegurarse de que la fecha esté en la zona horaria local
+    fecha = fecha.toLocal();
+
+    // Formatear la fecha en el formato dd/MM/yyyy
+    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
+
+    // Formatear la hora en formato hh:mm a AM/PM
+    String horaFormateada = DateFormat('hh:mm a').format(fecha);
+
+    // Unir fecha y hora en el formato deseado
+    String fechaHoraFormateada = '$fechaFormateada  $horaFormateada';
+
+    return fechaHoraFormateada;
+  }
+
   static String formatearFechaString(String fecha) {
     // Parsear la cadena de fecha
     DateTime fechaParseada = DateTime.parse(fecha);

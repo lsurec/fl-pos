@@ -137,36 +137,50 @@ class _CardTask extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextsWidget(
+                      title: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tareas,
+                        'numTarea',
+                      ),
+                      text: "${tarea.iDTarea}",
+                    ),
+                    const Spacer(),
+                    Text(
+                      tarea.tareaEstado ??
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.general,
+                            'noDisponible',
+                          ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Icon(
+                      Icons.circle,
+                      color: Color.fromRGBO(
+                        colorTarea[0],
+                        colorTarea[1],
+                        colorTarea[2],
+                        1,
+                      ),
+                    ),
+                  ],
+                ),
                 TextsWidget(
                   title: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.tareas,
-                    'numTarea',
+                    BlockTranslate.fecha,
+                    'fecha',
                   ),
-                  text: "${tarea.iDTarea}",
-                ),
-                const Spacer(),
-                Text(
-                  tarea.tareaEstado ??
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'noDisponible',
-                      ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Icon(
-                  Icons.circle,
-                  color: Color.fromRGBO(
-                    colorTarea[0],
-                    colorTarea[1],
-                    colorTarea[2],
-                    1,
+                  text: Utilities.formatearFechaHora(
+                    tarea.tareaFechaIni,
                   ),
                 ),
               ],
@@ -218,16 +232,6 @@ class _CardTask extends StatelessWidget {
                       ),
                       Text(
                         '${tarea.iDReferencia}',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        Utilities.formatearFecha(
-                          tarea.tareaFechaIni,
-                        ),
                         style: AppTheme.style(
                           context,
                           Styles.normal,

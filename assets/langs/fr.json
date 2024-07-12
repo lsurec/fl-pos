@@ -97,7 +97,8 @@
         "feHoFin": "DATE ET HEURE DE FIN : ",
         "fechaHoraInicio": "Date et heure de début",
         "fechaHoraFin": "Date et heure de fin",
-        "hora": "Heure : "
+        "hora": "Heure : ",
+        "completa": "Date et Heure: "
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",
@@ -191,7 +192,8 @@
         "tareaCreada": "Tâche créée avec succès.",
         "horaPosterior": "Sélectionnez une heure à partir de : ",
         "modifiqueFeHofinal": "L'heure de fin ne peut pas être antérieure à la date et l'heure de début. Modifiez d'abord la date de fin.",
-        "responsableActualizado": "Personne responsable mise à jour avec succès."
+        "responsableActualizado": "Personne responsable mise à jour avec succès.",
+        "asignado": "Utilisateur précédemment assigné."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",

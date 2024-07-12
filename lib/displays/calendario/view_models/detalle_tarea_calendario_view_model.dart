@@ -29,6 +29,8 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
 
   //historial de los responsables
   List<ResponsableModel> responsablesHistorial = [];
+  List<ResponsableModel> responsablesTarea = [];
+
   final List<InvitadoModel> invitados = []; //alamcenar invitados
 
   bool historialResposables = false; //mostrra y ocultar historial
@@ -145,7 +147,6 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
     int idTarea,
   ) async {
     //Lista de responsables
-    final List<ResponsableModel> responsablesTarea = [];
     responsablesTarea.clear(); //limpiar lista
     responsablesHistorial.clear(); //Limpiar lista
 
@@ -475,5 +476,99 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
 
     //Retornar resspuesta correcta
     return res;
+  }
+
+  cambiarResponsable(BuildContext context, UsuarioModel usuario) async {
+    //View model para obtener el usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //verificar que no se agregue el mismo responsable si es el actual responsable activo
+
+    if (tarea!.usuarioResponsable == usuario.userName ||
+        tarea!.usuarioResponsable == usuario.name) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'asignado',
+        ),
+      );
+      return;
+    }
+
+    //Usuario responsable de la tarea
+    //Crear modelo de usuario nuevo
+    NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
+      tarea: tarea!.tarea,
+      userResInvi: usuario.userName,
+      user: user,
+    );
+
+    isLoading = true; //cargar pantalla
+
+    //Instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    //consumo de api para asignar responsable
+    final ApiResModel resResponsable = await tareaService.postResponsable(
+      token,
+      usuarioResponsable,
+    );
+
+    //si el consumo salió mal
+    if (!resResponsable.succes) {
+      isLoading = false;
+
+      //Abrir dialogo de error
+      NotificationService.showErrorView(context, resResponsable);
+
+      //Retornar respuesta incorrecta
+      return;
+    }
+
+    for (var i = 0; i < responsablesTarea.length; i++) {
+      ResponsableModel responsable = responsablesTarea[i];
+      if (responsable.estado.toLowerCase() == "activo") {
+        responsable.estado = "Inactivo";
+
+        //insertarlo en la lista del historial
+        // responsablesHistorial.add(responsable);
+        notifyListeners();
+        // break;
+      }
+    }
+
+    //Obtener respuesta de api responsable
+    ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
+
+    ResponsableModel responsableNuevo = ResponsableModel(
+      tUserName: usuario.email,
+      estado: "Activo",
+      userName: seleccionado.userName,
+      fechaHora: seleccionado.fechaHora,
+      mUserName: seleccionado.mUserName,
+      mFechaHora: seleccionado.mFechaHora,
+      dHm: '',
+      consecutivoInterno: 0,
+    );
+
+    //Asignar responsable a la propiedad de la tarea
+
+    // Insertar registro al principio de la lista de responsables
+    responsablesTarea.insert(0, responsableNuevo);
+
+    tarea!.usuarioResponsable = usuario.name;
+
+    notifyListeners();
+
+    isLoading = false;
+
+    // NotificationService.showSnackbar(
+    //   AppLocalizations.of(context)!.translate(
+    //     BlockTranslate.notificacion,
+    //     'responsableActualizado',
+    //   ),
+    // );
   }
 }
