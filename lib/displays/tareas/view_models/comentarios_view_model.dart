@@ -14,6 +14,7 @@ import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class ComentariosViewModel extends ChangeNotifier {
   //Almacenar comentarios de la tarea
@@ -127,7 +128,7 @@ class ComentariosViewModel extends ChangeNotifier {
         files,
         comentarioCreado.tarea,
         comentarioCreado.tareaComentario,
-        empresa.absolutePathPicture
+        empresa.absolutePathPicture,
       );
 
       //si el consumo salió mal
@@ -227,4 +228,20 @@ class ComentariosViewModel extends ChangeNotifier {
     files.removeAt(index);
     notifyListeners();
   }
+
+  // Future<void> abrirUrl(String url) async {
+  //   if (url.isEmpty) {
+  //     print("url no valida");
+  //     return;
+  //   }
+
+  //   print(url);
+
+  //   Uri urlParse = Uri.parse(url);
+
+  //   if (!await launchUrl(urlParse, mode: LaunchMode.externalApplication
+  //   )) {
+  //     throw Exception('Could not launch $urlParse');
+  //   }
+  // }
 }
