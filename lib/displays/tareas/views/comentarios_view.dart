@@ -347,11 +347,17 @@ class _Comentario extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final ObjetoComentarioModel objeto = objetos[index];
                   return ListTile(
-                    title: Text(
-                      objeto.objetoNombre,
-                      style: AppTheme.style(
+                    title: GestureDetector(
+                      onLongPress: () => Utilities.copyToClipboard(
                         context,
-                        Styles.normal,
+                        objeto.objetoUrl,
+                      ),
+                      child: Text(
+                        objeto.objetoNombre,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
                       ),
                     ),
                     leading: const Icon(Icons.insert_photo_outlined),
