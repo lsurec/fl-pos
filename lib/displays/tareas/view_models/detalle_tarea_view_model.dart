@@ -58,13 +58,14 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
+  List<ResponsableModel> responsablesTarea = [];
   //Obtener Responsable y responsables anteriores de la tarea
   Future<ApiResModel> obtenerResponsable(
     BuildContext context,
     int idTarea,
   ) async {
     //Lista de responsables
-    final List<ResponsableModel> responsablesTarea = [];
+    // final List<ResponsableModel> responsablesTarea = [];
     responsablesTarea.clear(); //limpiar lista
     responsablesHistorial.clear(); //Limpiar lista
 
@@ -96,6 +97,8 @@ class DetalleTareaViewModel extends ChangeNotifier {
     //añadir a la lista los usuarios responsables encontrados
     responsablesTarea.addAll(res.response);
 
+    print("cantidad de responsables ${responsablesTarea.length} respuesta api");
+
     //recorrer la lista y buscar los de estado "inactivo"
     for (var i = 0; i < responsablesTarea.length; i++) {
       ResponsableModel responsable = responsablesTarea[i];
@@ -103,7 +106,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
         //insertarlo en la lista del historial
         responsablesHistorial.add(responsable);
         notifyListeners();
-        break;
+        // break;
       }
     }
 
@@ -752,11 +755,38 @@ class DetalleTareaViewModel extends ChangeNotifier {
       return;
     }
 
+    for (var i = 0; i < responsablesTarea.length; i++) {
+      ResponsableModel responsable = responsablesTarea[i];
+      if (responsable.estado.toLowerCase() == "activo") {
+        responsable.estado = "Inactivo";
+
+        //insertarlo en la lista del historial
+        // responsablesHistorial.add(responsable);
+        notifyListeners();
+        // break;
+      }
+    }
+
     //Obtener respuesta de api responsable
     ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
 
+    ResponsableModel responsableNuevo = ResponsableModel(
+      tUserName: usuario.email,
+      estado: "Activo",
+      userName: seleccionado.userName,
+      fechaHora: seleccionado.fechaHora,
+      mUserName: seleccionado.mUserName,
+      mFechaHora: seleccionado.mFechaHora,
+      dHm: '',
+      consecutivoInterno: 0,
+    );
+
     //Asignar responsable a la propiedad de la tarea
-    tarea!.usuarioResponsable = seleccionado.userName;
+
+    // Insertar registro al principio de la lista de responsables
+    responsablesTarea.insert(0, responsableNuevo);
+
+    tarea!.usuarioResponsable = usuario.name;
 
     notifyListeners();
 
