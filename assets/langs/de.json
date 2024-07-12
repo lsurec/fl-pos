@@ -82,7 +82,8 @@
         "agregarResponsable": "Verantwortlichen hinzufügen",
         "eliminar": "Löschen",
         "adjuntarArchivos": "Dateien anhängen",
-        "enviarComentario": "Kommentar senden."
+        "enviarComentario": "Kommentar senden.",
+        "cambiarResponsable": "Verantwortliche Person aktualisieren"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -189,7 +190,8 @@
         "seleccioneRespo": "Fügen Sie einen Verantwortlichen hinzu, um fortzufahren.",
         "tareaCreada": "Aufgabe erfolgreich erstellt.",
         "horaPosterior": "Wählen Sie eine Uhrzeit ab: ",
-        "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum."
+        "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum.",
+        "responsableActualizado": "Verantwortliche Person erfolgreich aktualisiert."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",

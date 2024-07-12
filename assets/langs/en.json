@@ -82,7 +82,8 @@
         "agregarResponsable": "Add Responsible",
         "eliminar": "Delete",
         "adjuntarArchivos": "Attach Files",
-        "enviarComentario": "Send comment"
+        "enviarComentario": "Send comment",
+        "cambiarResponsable": "Update Responsible Person"
     },
     "fechas": {
         "fecha": "Date: ",
@@ -189,7 +190,8 @@
         "seleccioneRespo": "Add a responsible party to continue.",
         "tareaCreada": "Task created successfully.",
         "horaPosterior": "Select a time starting from: ",
-        "modifiqueFeHofinal": "The end time cannot be earlier than the start date and time. First, modify the end date."
+        "modifiqueFeHofinal": "The end time cannot be earlier than the start date and time. First, modify the end date.",
+        "responsableActualizado": "Responsible person updated successfully."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

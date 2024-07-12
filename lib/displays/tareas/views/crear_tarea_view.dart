@@ -476,7 +476,13 @@ class CrearTareaView extends StatelessWidget {
                         ),
                         const Divider(),
                         TextButton(
-                          onPressed: () => vm.irUsuarios(context, 1),
+                          onPressed: () => vm.irUsuarios(
+                              context,
+                              1,
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.botones,
+                                'agregarResponsable',
+                              )),
                           child: ListTile(
                             title: Row(
                               children: [
@@ -530,7 +536,14 @@ class CrearTareaView extends StatelessWidget {
                           ),
                         const Divider(),
                         TextButton(
-                          onPressed: () => vm.irUsuarios(context, 2),
+                          onPressed: () => vm.irUsuarios(
+                            context,
+                            2,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarInvitado',
+                            ),
+                          ),
                           child: ListTile(
                             title: Text(
                               AppLocalizations.of(context)!.translate(

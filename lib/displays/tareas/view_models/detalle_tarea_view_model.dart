@@ -107,6 +107,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
       }
     }
 
+    print("cantidad de responsables ${responsablesHistorial.length}");
     isLoading = false; //detener carga
 
     //retornar respuesta correcta
@@ -714,5 +715,58 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     //Si todo está correcto, retornar:
     return res;
+  }
+
+  cambiarResponsable(BuildContext context, UsuarioModel usuario) async {
+    //View model para obtener el usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+    //Usuario responsable de la tarea
+    //Crear modelo de usuario nuevo
+    NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
+      tarea: tarea!.iDTarea,
+      userResInvi: usuario.userName,
+      user: user,
+    );
+
+    isLoading = true; //cargar pantalla
+
+    //Instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    //consumo de api para asignar responsable
+    final ApiResModel resResponsable = await tareaService.postResponsable(
+      token,
+      usuarioResponsable,
+    );
+
+    //si el consumo salió mal
+    if (!resResponsable.succes) {
+      isLoading = false;
+
+      //Abrir dialogo de error
+      NotificationService.showErrorView(context, resResponsable);
+
+      //Retornar respuesta incorrecta
+      return;
+    }
+
+    //Obtener respuesta de api responsable
+    ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
+
+    //Asignar responsable a la propiedad de la tarea
+    tarea!.usuarioResponsable = seleccionado.userName;
+
+    notifyListeners();
+
+    isLoading = false;
+
+    // NotificationService.showSnackbar(
+    //   AppLocalizations.of(context)!.translate(
+    //     BlockTranslate.notificacion,
+    //     'responsableActualizado',
+    //   ),
+    // );
   }
 }

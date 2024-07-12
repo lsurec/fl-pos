@@ -299,14 +299,34 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.tareas,
-                          'responsableT',
+                      ListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tareas,
+                            'responsableT',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                          ),
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
+                        trailing: IconButton(
+                          //tipoBusqueda = 3 para actualizar responsable
+                          onPressed: () => vmUsuarios.irUsuarios(
+                            context,
+                            3,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'cambiarResponsable',
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.person_add_alt_1_outlined,
+                          ),
+                          tooltip: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.botones,
+                            'cambiarResponsable',
+                          ),
                         ),
                       ),
                       CardWidget(
@@ -423,6 +443,10 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           onPressed: () => vmUsuarios.irUsuarios(
                             context,
                             4,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarInvitado',
+                            ),
                           ),
                           icon: const Icon(
                             Icons.person_add_alt_1_outlined,

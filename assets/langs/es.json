@@ -82,7 +82,8 @@
         "agregarResponsable": "Agregar Responsable",
         "eliminar": "Eliminar",
         "adjuntarArchivos": "Adjuntar Archivos",
-        "enviarComentario": "Enviar comentario."
+        "enviarComentario": "Enviar comentario.",
+        "cambiarResponsable": "Actualizar Responsable"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -189,7 +190,8 @@
         "seleccioneRespo": "Añada un responsable para continuar.",
         "tareaCreada": "Tarea creada correctamente.",
         "horaPosterior": "Selecciona una hora a partir de las: ",
-        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final."
+        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.",
+        "responsableActualizado": "Responsable actualizado correctamente."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

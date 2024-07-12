@@ -82,7 +82,8 @@
         "agregarResponsable": "Ajouter un responsable",
         "eliminar": "Supprimer",
         "adjuntarArchivos": "Joindre des fichiers",
-        "enviarComentario": "Envoyer un commentaire."
+        "enviarComentario": "Envoyer un commentaire.",
+        "cambiarResponsable": "Mettre à jour la personne responsable"
     },
     "fechas": {
         "fecha": "Date:",
@@ -189,7 +190,8 @@
         "seleccioneRespo": "Ajoutez un responsable pour continuer.",
         "tareaCreada": "Tâche créée avec succès.",
         "horaPosterior": "Sélectionnez une heure à partir de : ",
-        "modifiqueFeHofinal": "L'heure de fin ne peut pas être antérieure à la date et l'heure de début. Modifiez d'abord la date de fin."
+        "modifiqueFeHofinal": "L'heure de fin ne peut pas être antérieure à la date et l'heure de début. Modifiez d'abord la date de fin.",
+        "responsableActualizado": "Personne responsable mise à jour avec succès."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",

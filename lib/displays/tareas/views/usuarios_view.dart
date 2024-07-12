@@ -18,6 +18,8 @@ class UsuariosView extends StatelessWidget {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
 
+    final String titulo = ModalRoute.of(context)!.settings.arguments as String;
+
     return WillPopScope(
       onWillPop: () => vm.back(),
       child: Stack(
@@ -38,15 +40,7 @@ class UsuariosView extends StatelessWidget {
                 : null,
             appBar: AppBar(
               title: Text(
-                vm.tipoBusqueda == 1
-                    ? AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'agregarResponsable',
-                      )
-                    : AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'agregarInvitados',
-                      ),
+                titulo,
                 style: AppTheme.style(
                   context,
                   Styles.title,

@@ -115,11 +115,17 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   //Navegar a view para buscar usuarios
-  irUsuarios(BuildContext context, int tipo) {
+  irUsuarios(BuildContext context, int tipo, String titulo) {
     final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
     invitados = [];
     vmUsuario.tipoBusqueda = tipo;
-    Navigator.pushNamed(context, AppRoutes.selectResponsibleUser);
+
+    print(vmUsuario.tipoBusqueda);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.selectResponsibleUser,
+      arguments: titulo,
+    );
   }
 
   //Recibe una fecha y le asigna 10 minutos más.
@@ -328,8 +334,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
 
     //Asignar responsable a la propiedad de la tarea
-    resCreada.usuarioResponsable =
-        responsable != null ? responsable!.name : seleccionado.userName;
+    resCreada.usuarioResponsable = seleccionado.userName;
 
     notifyListeners();
 
@@ -908,6 +913,17 @@ class CrearTareaViewModel extends ChangeNotifier {
     BuildContext context,
     UsuarioModel respon,
   ) {
+    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+    final vmDetalle = Provider.of<DetalleTareaViewModel>(
+      context,
+      listen: false,
+    );
+
+    //Para actualizar usuarios
+    if (vmUsuarios.tipoBusqueda == 3) {
+      vmDetalle.cambiarResponsable(context, respon);
+    }
+
     responsable = respon;
     notifyListeners();
 
