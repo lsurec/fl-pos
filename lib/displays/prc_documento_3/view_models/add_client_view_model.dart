@@ -68,6 +68,8 @@ class AddClientViewModel extends ChangeNotifier {
     CuentaService cuentaService = CuentaService();
 
     CuentaCorrentistaModel cuenta = CuentaCorrentistaModel(
+        cuentaCuenta: "",
+        grupoCuenta: 0,
         cuenta: idCuenta,
         nombre: formValues["nombre"],
         direccion: formValues["direccion"],
@@ -138,7 +140,7 @@ class AddClientViewModel extends ChangeNotifier {
     }
 
     if (clients.length == 1) {
-      documentVM.selectClient(clients.first, context);
+      documentVM.selectClient(true, clients.first, context);
       NotificationService.showSnackbar(
         idCuenta == 0
             ? AppLocalizations.of(context)!.translate(
@@ -157,7 +159,7 @@ class AddClientViewModel extends ChangeNotifier {
     for (var i = 0; i < clients.length; i++) {
       final ClientModel client = clients[i];
       if (client.facturaNit == cuenta.nit) {
-        documentVM.selectClient(client, context);
+        documentVM.selectClient(true, client, context);
         break;
       }
     }

@@ -1,7 +1,6 @@
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -46,7 +45,6 @@ class _TareasViewState extends State<TareasView> {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
             actions: <Widget>[
@@ -84,7 +82,6 @@ class _TareasViewState extends State<TareasView> {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -114,7 +111,6 @@ class _TareasViewState extends State<TareasView> {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -141,37 +137,50 @@ class _CardTask extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextsWidget(
+                      title: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tareas,
+                        'numTarea',
+                      ),
+                      text: "${tarea.iDTarea}",
+                    ),
+                    const Spacer(),
+                    Text(
+                      tarea.tareaEstado ??
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.general,
+                            'noDisponible',
+                          ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    Icon(
+                      Icons.circle,
+                      color: Color.fromRGBO(
+                        colorTarea[0],
+                        colorTarea[1],
+                        colorTarea[2],
+                        1,
+                      ),
+                    ),
+                  ],
+                ),
                 TextsWidget(
                   title: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.tareas,
-                    'numTarea',
+                    BlockTranslate.fecha,
+                    'fecha',
                   ),
-                  text: "${tarea.iDTarea}",
-                ),
-                const Spacer(),
-                Text(
-                  tarea.tareaEstado ??
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'noDisponible',
-                      ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                    Preferences.idTheme,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Icon(
-                  Icons.circle,
-                  color: Color.fromRGBO(
-                    colorTarea[0],
-                    colorTarea[1],
-                    colorTarea[2],
-                    1,
+                  text: Utilities.formatearFechaHora(
+                    tarea.tareaFechaIni,
                   ),
                 ),
               ],
@@ -181,14 +190,12 @@ class _CardTask extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.secondBackground,
-              Preferences.idTheme,
             ),
             elevation: 0,
             borderWidth: 1.5,
             borderColor: AppTheme.color(
               context,
               Styles.tareaBorder,
-              Preferences.idTheme,
             ),
             raidus: 15,
             child: Padding(
@@ -206,7 +213,6 @@ class _CardTask extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.bold,
-                        Preferences.idTheme,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -222,7 +228,6 @@ class _CardTask extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -230,18 +235,6 @@ class _CardTask extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        Utilities.formatearFecha(
-                          tarea.tareaFechaIni,
-                        ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],
@@ -254,7 +247,6 @@ class _CardTask extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                   Text(
@@ -268,7 +260,6 @@ class _CardTask extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                   Container(
@@ -282,7 +273,6 @@ class _CardTask extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                   ),
@@ -295,7 +285,6 @@ class _CardTask extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                     textAlign: TextAlign.justify,
                     maxLines: 3,
@@ -356,7 +345,6 @@ class _InputSerach extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.darkPrimary,
-                Preferences.idTheme,
               ),
             ),
             onPressed: () => vm.searchText(context),
@@ -386,7 +374,6 @@ class _RadioFilter extends StatelessWidget {
                 activeColor: AppTheme.color(
                   context,
                   Styles.darkPrimary,
-                  Preferences.idTheme,
                 ),
               ),
               Text(
@@ -397,7 +384,6 @@ class _RadioFilter extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
             ],
@@ -414,7 +400,6 @@ class _RadioFilter extends StatelessWidget {
                 activeColor: AppTheme.color(
                   context,
                   Styles.darkPrimary,
-                  Preferences.idTheme,
                 ),
               ),
               Text(
@@ -425,7 +410,6 @@ class _RadioFilter extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.normal,
-                  Preferences.idTheme,
                 ),
               ),
             ],

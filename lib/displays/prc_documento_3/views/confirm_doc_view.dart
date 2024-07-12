@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -36,7 +35,6 @@ class ConfirmDocView extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
               actions: [
@@ -64,7 +62,6 @@ class ConfirmDocView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.title,
-                          Preferences.idTheme,
                         ),
                       ),
                     if (vm.showPrint)
@@ -73,7 +70,6 @@ class ConfirmDocView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                     if (vm.showPrint) const SizedBox(height: 5),
@@ -82,7 +78,6 @@ class ConfirmDocView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                         children: [
                           TextSpan(
@@ -93,7 +88,6 @@ class ConfirmDocView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.title,
-                              Preferences.idTheme,
                             ),
                           ),
                           TextSpan(
@@ -101,7 +95,6 @@ class ConfirmDocView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           )
                         ],
@@ -137,7 +130,6 @@ class ConfirmDocView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.title,
-                              Preferences.idTheme,
                             ),
                           ),
                           const SizedBox(height: 5),
@@ -146,7 +138,6 @@ class ConfirmDocView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -162,7 +153,6 @@ class ConfirmDocView extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -178,7 +168,6 @@ class ConfirmDocView extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                     const SizedBox(height: 5),
@@ -196,7 +185,6 @@ class ConfirmDocView extends StatelessWidget {
                       activeColor: AppTheme.color(
                         context,
                         Styles.darkPrimary,
-                        Preferences.idTheme,
                       ),
                       value: vm.directPrint,
                       onChanged: (value) => vm.directPrint = value,
@@ -208,7 +196,6 @@ class ConfirmDocView extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                     ),
@@ -229,7 +216,6 @@ class ConfirmDocView extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.loading,
-                Preferences.idTheme,
               ),
             ),
           if (vm.isLoading) const LoadWidget(),
@@ -260,7 +246,6 @@ class ConfirmDocView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.versionStyle,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -294,7 +279,6 @@ class ConfirmDocView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                   if (step.status == 1) //Cargando
@@ -303,7 +287,6 @@ class ConfirmDocView extends StatelessWidget {
                                       color: AppTheme.color(
                                         context,
                                         Styles.grey,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                   if (step.status == 2) //exitoso
@@ -312,7 +295,6 @@ class ConfirmDocView extends StatelessWidget {
                                       color: AppTheme.color(
                                         context,
                                         Styles.green,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                   if (step.status == 3) //error
@@ -321,7 +303,6 @@ class ConfirmDocView extends StatelessWidget {
                                       color: AppTheme.color(
                                         context,
                                         Styles.red,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                 ],
@@ -332,7 +313,6 @@ class ConfirmDocView extends StatelessWidget {
                                   color: AppTheme.color(
                                     context,
                                     Styles.darkPrimary,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                             ],
@@ -346,7 +326,6 @@ class ConfirmDocView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.red,
-                            Preferences.idTheme,
                           ),
                         ),
                       if (vm.viewSucces)
@@ -358,7 +337,6 @@ class ConfirmDocView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.green,
-                            Preferences.idTheme,
                           ),
                         ),
                       if (vm.viewError)
@@ -374,7 +352,6 @@ class ConfirmDocView extends StatelessWidget {
                               style: AppTheme.style(
                                 context,
                                 Styles.blue,
-                                Preferences.idTheme,
                               ),
                             ),
                           ),
@@ -402,7 +379,6 @@ class ConfirmDocView extends StatelessWidget {
                                     color: AppTheme.color(
                                       context,
                                       Styles.primary,
-                                      Preferences.idTheme,
                                     ),
                                     child: Center(
                                       child: Text(
@@ -413,7 +389,6 @@ class ConfirmDocView extends StatelessWidget {
                                         style: AppTheme.style(
                                           context,
                                           Styles.whiteStyle,
-                                          Preferences.idTheme,
                                         ),
                                       ),
                                     ),
@@ -481,7 +456,6 @@ class _Print extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -492,7 +466,6 @@ class _Print extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -513,7 +486,6 @@ class _Print extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -524,7 +496,6 @@ class _Print extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -558,7 +529,6 @@ class _OptionsError extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -569,7 +539,6 @@ class _OptionsError extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -588,7 +557,6 @@ class _OptionsError extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -599,7 +567,6 @@ class _OptionsError extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -633,7 +600,6 @@ class _OptionsErrorAll extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -644,7 +610,6 @@ class _OptionsErrorAll extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -663,7 +628,6 @@ class _OptionsErrorAll extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -674,7 +638,6 @@ class _OptionsErrorAll extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -711,7 +674,6 @@ class _Options extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -722,7 +684,6 @@ class _Options extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -745,7 +706,6 @@ class _Options extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.primary,
-                  Preferences.idTheme,
                 ),
                 child: Center(
                   child: Text(
@@ -756,7 +716,6 @@ class _Options extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.whiteStyle,
-                      Preferences.idTheme,
                     ),
                   ),
                 ),
@@ -790,7 +749,6 @@ class _Pyments extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.border,
-                Preferences.idTheme,
               ),
               width: 1.0,
             ),
@@ -798,7 +756,6 @@ class _Pyments extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.background,
-            Preferences.idTheme,
           ),
           child: ListTile(
             title: Text(
@@ -806,7 +763,6 @@ class _Pyments extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.normal,
-                Preferences.idTheme,
               ),
             ),
             subtitle: Column(
@@ -821,7 +777,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.reference != "")
@@ -833,7 +788,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.payment.banco)
@@ -845,7 +799,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 if (amount.account != null)
@@ -857,7 +810,6 @@ class _Pyments extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 Text(
@@ -868,7 +820,6 @@ class _Pyments extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 // Text('Detalles: ${transaction.detalles}'),
@@ -895,7 +846,6 @@ class _TotalsPayment extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.border,
-            Preferences.idTheme,
           ),
           width: 1.0,
         ), // Define el color y grosor del borde
@@ -903,7 +853,6 @@ class _TotalsPayment extends StatelessWidget {
       color: AppTheme.color(
         context,
         Styles.background,
-        Preferences.idTheme,
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -944,7 +893,6 @@ class _Totals extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.border,
-            Preferences.idTheme,
           ),
           width: 1.0,
         ), // Define el color y grosor del borde
@@ -952,7 +900,6 @@ class _Totals extends StatelessWidget {
       color: AppTheme.color(
         context,
         Styles.background,
-        Preferences.idTheme,
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -1025,7 +972,6 @@ class _Transaction extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.border,
-                Preferences.idTheme,
               ),
               width: 1.0,
             ), // Define el color y grosor del borde
@@ -1033,7 +979,6 @@ class _Transaction extends StatelessWidget {
           color: AppTheme.color(
             context,
             Styles.background,
-            Preferences.idTheme,
           ),
           child: ListTile(
             title: Column(
@@ -1044,7 +989,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 Text(
@@ -1052,7 +996,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
               ],
@@ -1069,7 +1012,6 @@ class _Transaction extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
 
@@ -1081,7 +1023,6 @@ class _Transaction extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.normal,
-                    Preferences.idTheme,
                   ),
                 ),
                 if (transaction.cargo != 0)
@@ -1093,7 +1034,6 @@ class _Transaction extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
 
@@ -1106,7 +1046,6 @@ class _Transaction extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
                     ),
                   ),
                 // Text('Detalles: ${transaction.detalles}'),
@@ -1138,7 +1077,6 @@ class _DataUser extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.title,
-            Preferences.idTheme,
           ),
         ),
         const SizedBox(height: 5),
@@ -1147,7 +1085,6 @@ class _DataUser extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         ),
         Text(
@@ -1158,7 +1095,6 @@ class _DataUser extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         ),
         Text(
@@ -1169,16 +1105,16 @@ class _DataUser extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         ),
         Text(
-          //TODO:Translate
-          "Cuenta Cta: ${user.desCtaCta}",
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.cuenta,
+            'cuentaCta',
+          )} ${user.desCtaCta}",
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         )
       ],

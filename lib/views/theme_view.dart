@@ -44,7 +44,6 @@ class ThemeView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.blueTitle,
-                            Preferences.idTheme,
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -64,12 +63,10 @@ class ThemeView extends StatelessWidget {
                                   ? AppTheme.color(
                                       context,
                                       Styles.primary,
-                                      Preferences.idTheme,
                                     )
                                   : AppTheme.color(
                                       context,
                                       Styles.secondBackground,
-                                      Preferences.idTheme,
                                     ),
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
@@ -80,12 +77,10 @@ class ThemeView extends StatelessWidget {
                                       ? AppTheme.style(
                                           context,
                                           Styles.whiteBoldStyle,
-                                          Preferences.idTheme,
                                         )
                                       : AppTheme.style(
                                           context,
                                           Styles.bold,
-                                          Preferences.idTheme,
                                         ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -102,7 +97,6 @@ class ThemeView extends StatelessWidget {
                         style: AppTheme.button(
                           context,
                           Styles.buttonStyle,
-                          Preferences.idTheme,
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
@@ -112,39 +106,7 @@ class ThemeView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.whiteBoldStyle,
-                            Preferences.idTheme,
                           ),
-                        ),
-                      ),
-                    if (AppTheme.cambiarTema == 1)
-                      SizedBox(
-                        width: 350,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.preferencias,
-                                'nota',
-                              ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                                Preferences.idTheme,
-                              ),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.preferencias,
-                                'reiniciarTema',
-                              ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                                Preferences.idTheme,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                   ],
@@ -160,7 +122,6 @@ class ThemeView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading)

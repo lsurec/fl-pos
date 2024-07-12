@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -102,6 +103,10 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Fechas y horas
     fechaInicial = DateTime.now();
     fechaFinal = addDate10Min(fechaInicial);
+
+    //Tiempo estimado
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //Navegar a view para buscar Id de referencia.
@@ -110,11 +115,18 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   //Navegar a view para buscar usuarios
-  irUsuarios(BuildContext context, int tipo) {
+  irUsuarios(BuildContext context, int tipo, String titulo) {
     final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
     invitados = [];
     vmUsuario.tipoBusqueda = tipo;
-    Navigator.pushNamed(context, AppRoutes.selectResponsibleUser);
+    vmUsuario.usuarios = [];
+    vmUsuario.buscar.text = '';
+
+    Navigator.pushNamed(
+      context,
+      AppRoutes.selectResponsibleUser,
+      arguments: titulo,
+    );
   }
 
   //Recibe una fecha y le asigna 10 minutos más.
@@ -183,14 +195,16 @@ class CrearTareaViewModel extends ChangeNotifier {
 
     //View model para obtenerla empresa
     final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
-    int empresa = vmLocal.selectedEmpresa!.empresa;
+    EmpresaModel empresa = vmLocal.selectedEmpresa!;
 
     //view model de Tareas para insertar la nueva tarea en la lista de tareas
     final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
 
     //view model del calendario
-    final vmCalendario =
-        Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmCalendario = Provider.of<CalendarioViewModel>(
+      context,
+      listen: false,
+    );
 
     //Instancia del servicio
     final TareaService tareaService = TareaService();
@@ -206,7 +220,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       observacion1: observacionController.text,
       tipoTarea: tipoTarea!.tipoTarea,
       estado: estado!.estado,
-      empresa: empresa,
+      empresa: empresa.empresa,
       nivelPrioridad: prioridad!.nivelPrioridad,
       tiempoEstimadoTipoPeriocidad: periodicidad!.tipoPeriodicidad,
       tiempoEstimado: tiempoController.text,
@@ -321,81 +335,9 @@ class CrearTareaViewModel extends ChangeNotifier {
     ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
 
     //Asignar responsable a la propiedad de la tarea
-    resCreada.usuarioResponsable =
-        responsable != null ? responsable!.name : seleccionado.userName;
+    resCreada.usuarioResponsable = seleccionado.userName;
 
     notifyListeners();
-
-    if (files.isNotEmpty) {
-      ComentarService comentarService = ComentarService();
-
-      //Crear modelo de nuevo comentario
-      ComentarModel comentario = ComentarModel(
-        comentario: observacionController.text,
-        tarea: resCreada.iDTarea,
-        userName: user,
-      );
-
-      //consumo de api
-      ApiResModel resComent = await comentarService.postComentar(
-        token,
-        comentario,
-      );
-
-      //si el consumo salió mal
-      if (!resComent.succes) {
-        isLoading = false;
-
-        NotificationService.showErrorView(context, resComent);
-
-        //Respuesta incorrecta
-        return;
-      }
-
-      // print(resComent.message.res);
-
-      //Crear modelo de comentario
-      ComentarioModel comentarioCreado = ComentarioModel(
-        comentario: comentario.comentario,
-        fechaHora: DateTime.now(),
-        nameUser: user,
-        userName: user,
-        tarea: comentario.tarea,
-        tareaComentario: resComent.response.res,
-      );
-
-      FilesService filesService = FilesService();
-
-      bool resFiles = await filesService.posFilesComent(
-        token,
-        user,
-        files,
-        comentarioCreado.tarea,
-        comentarioCreado.tareaComentario,
-      );
-
-      //si el consumo salió mal
-      if (!resFiles) {
-        isLoading = false;
-
-        ApiResModel error = ApiResModel(
-          succes: false,
-          response:
-              "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
-          url: "",
-          storeProcedure: null,
-        );
-
-        NotificationService.showErrorView(context, error);
-
-        //Respuesta incorrecta
-        return;
-      }
-
-      files.clear(); //limpiar lista de archivos
-      notifyListeners();
-      isLoading = false;
-    }
 
     //si hay invitados seleccionados
     if (invitados.isNotEmpty) {
@@ -428,6 +370,77 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
+    //Si hay archivos seleccionados
+    if (files.isNotEmpty) {
+      ComentarService comentarService = ComentarService();
+
+      //Crear modelo de nuevo comentario
+      ComentarModel comentario = ComentarModel(
+        comentario: observacionController.text,
+        tarea: resCreada.iDTarea,
+        userName: user,
+      );
+
+      //consumo de api
+      ApiResModel resComent = await comentarService.postComentar(
+        token,
+        comentario,
+      );
+
+      //si el consumo salió mal
+      if (!resComent.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(context, resComent);
+
+        //Respuesta incorrecta
+        return;
+      }
+
+      //Crear modelo de comentario
+      ComentarioModel comentarioCreado = ComentarioModel(
+        comentario: comentario.comentario,
+        fechaHora: DateTime.now(),
+        nameUser: user,
+        userName: user,
+        tarea: comentario.tarea,
+        tareaComentario: resComent.response.res,
+      );
+
+      FilesService filesService = FilesService();
+
+      bool resFiles = await filesService.posFilesComent(
+        token,
+        user,
+        files,
+        comentarioCreado.tarea,
+        comentarioCreado.tareaComentario,
+        empresa.absolutePathPicture,
+      );
+
+      //si el consumo salió mal
+      if (!resFiles) {
+        isLoading = false;
+
+        ApiResModel error = ApiResModel(
+          succes: false,
+          response:
+              "No se pudieron subir los archivos. Verifique que la ruta de guardado esté disponible.",
+          url: "",
+          storeProcedure: null,
+        );
+
+        NotificationService.showErrorView(context, error);
+
+        //Respuesta incorrecta
+        return;
+      }
+
+      files.clear(); //limpiar lista de archivos
+      notifyListeners();
+      isLoading = false;
+    }
+
     // //mostrra mensaje
     // NotificationService.showSnackbar(
     //   "Tarea creada correctamente.",
@@ -442,14 +455,15 @@ class CrearTareaViewModel extends ChangeNotifier {
   Future<void> abrirFechaInicial(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: fechaInicial,
-        firstDate: fechaInicial,
-        lastDate: DateTime(2100),
-        confirmText: AppLocalizations.of(context)!.translate(
-          BlockTranslate.botones,
-          'aceptar',
-        ));
+      context: context,
+      initialDate: fechaInicial,
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
 
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
@@ -470,20 +484,24 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: fechaFinal,
-        //fecha minima es la inicial
-        firstDate: fechaInicial,
-        lastDate: DateTime(2100),
-        confirmText: AppLocalizations.of(context)!.translate(
-          BlockTranslate.botones,
-          'aceptar',
-        ));
+      context: context,
+      initialDate: fechaFinal,
+      //fecha minima es la inicial
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
 
     //si la fecha es null, no realiza nada
     if (pickedDate == null) return;
@@ -498,6 +516,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //Abrir y seleccionar hora inicial
@@ -615,6 +635,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   bool compararFechas(
@@ -681,6 +703,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
+    tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
+    periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
   }
 
   //Obtener Tipos
@@ -888,6 +912,27 @@ class CrearTareaViewModel extends ChangeNotifier {
     BuildContext context,
     UsuarioModel respon,
   ) {
+    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+    final vmDetalle = Provider.of<DetalleTareaViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmDetalleCalendario = Provider.of<DetalleTareaCalendarioViewModel>(
+      context,
+      listen: false,
+    );
+
+    //Para actualizar usuarios
+    if (vmUsuarios.tipoBusqueda == 3) {
+      vmDetalle.cambiarResponsable(context, respon);
+    }
+
+    //5= detalles de la tarea del calendario
+    if (vmUsuarios.tipoBusqueda == 5) {
+      vmDetalleCalendario.cambiarResponsable(context, respon);
+    }
+
     responsable = respon;
     notifyListeners();
 
@@ -958,5 +1003,88 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  int tiempoNum(DateTime fechaIni, DateTime fechaFin) {
+    int diffInMillis =
+        fechaFin.millisecondsSinceEpoch - fechaIni.millisecondsSinceEpoch;
+    double diffInSeconds = diffInMillis / 1000;
+    double diffInMinutes = diffInSeconds / 60;
+    double diffInHours = diffInMinutes / 60;
+    double diffInDays = diffInHours / 24;
+    double diffInWeeks = diffInDays / 7;
+    int diffInMonths = fechaFin.month -
+        fechaIni.month +
+        (12 * (fechaFin.year - fechaIni.year));
+    int diffInYears = fechaFin.year - fechaIni.year;
+
+    if (diffInMinutes < 60) {
+      return diffInMinutes.floor(); // diferencia en minutos
+    } else if (diffInHours < 24) {
+      return diffInHours.floor(); // diferencia en horas
+    } else if (diffInDays < 7) {
+      return diffInDays.floor(); // diferencia en días
+    } else if (diffInWeeks < 4) {
+      return diffInWeeks.floor(); // diferencia en semanas
+    } else if (diffInMonths < 12) {
+      return diffInMonths; // diferencia en meses
+    } else {
+      return diffInYears; // diferencia en años
+    }
+  }
+
+  int tiempoTipo(DateTime fechaIni, DateTime fechaFin) {
+    int diffInMillis =
+        fechaFin.millisecondsSinceEpoch - fechaIni.millisecondsSinceEpoch;
+    double diffInSeconds = diffInMillis / 1000;
+    double diffInMinutes = diffInSeconds / 60;
+    double diffInHours = diffInMinutes / 60;
+    double diffInDays = diffInHours / 24;
+    double diffInWeeks = diffInDays / 7;
+    int diffInMonths = fechaFin.month -
+        fechaIni.month +
+        (12 * (fechaFin.year - fechaIni.year));
+    // int diffInYears = fechaFin.year - fechaIni.year;
+
+    if (periodicidades.isNotEmpty) {
+      if (diffInMinutes < 60) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "minutos") {
+            return i;
+          }
+        }
+      } else if (diffInHours < 24) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "horas") {
+            return i;
+          }
+        }
+      } else if (diffInDays < 7) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "dias") {
+            return i;
+          }
+        }
+      } else if (diffInWeeks < 4) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "semanas") {
+            return i;
+          }
+        }
+      } else if (diffInMonths < 12) {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "mes") {
+            return i;
+          }
+        }
+      } else {
+        for (int i = 0; i < periodicidades.length; i++) {
+          if (periodicidades[i].descripcion.toLowerCase() == "año") {
+            return i;
+          }
+        }
+      }
+    }
+    return 0;
   }
 }

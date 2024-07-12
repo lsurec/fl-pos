@@ -1,7 +1,6 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -67,7 +66,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                           style: AppTheme.style(
                             context,
                             Styles.title,
-                            Preferences.idTheme,
                           ),
                         ),
                       ),
@@ -83,7 +81,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
@@ -94,7 +91,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -104,7 +100,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                           color: AppTheme.color(
                             context,
                             Styles.background,
-                            Preferences.idTheme,
                           ),
                           raidus: 10,
                           width: double.infinity,
@@ -115,7 +110,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               dropdownColor: AppTheme.color(
                                 context,
                                 Styles.background,
-                                Preferences.idTheme,
                               ),
                               value: vm.selectedEmpresa,
                               onChanged: (value) => vm.changeEmpresa(value),
@@ -140,7 +134,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           Text(
@@ -151,7 +144,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             style: AppTheme.style(
                               context,
                               Styles.normal,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -161,7 +153,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                           color: AppTheme.color(
                             context,
                             Styles.background,
-                            Preferences.idTheme,
                           ),
                           raidus: 10,
                           width: double.infinity,
@@ -172,7 +163,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               dropdownColor: AppTheme.color(
                                 context,
                                 Styles.background,
-                                Preferences.idTheme,
                               ),
                               value: vm.selectedEstacion,
                               onChanged: (value) => vm.changeEstacion(value),
@@ -192,7 +182,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                           style: AppTheme.button(
                             context,
                             Styles.buttonStyle,
-                            Preferences.idTheme,
                           ),
                           onPressed:
                               vm.estaciones.isEmpty || vm.empresas.isEmpty
@@ -209,7 +198,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                                 style: AppTheme.style(
                                   context,
                                   Styles.whiteBoldStyle,
-                                  Preferences.idTheme,
                                 ),
                               ),
                             ),
@@ -229,7 +217,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

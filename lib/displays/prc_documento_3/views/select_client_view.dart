@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/document_view_model.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +34,6 @@ class SelectClientView extends StatelessWidget {
                   style: AppTheme.style(
                     context,
                     Styles.bold,
-                    Preferences.idTheme,
                   ),
                 ),
               ],
@@ -48,7 +46,6 @@ class SelectClientView extends StatelessWidget {
                   color: AppTheme.color(
                     context,
                     Styles.border,
-                    Preferences.idTheme,
                   ),
                 ),
                 itemBuilder: (context, index) {
@@ -63,7 +60,6 @@ class SelectClientView extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                     subtitle: Column(
@@ -75,14 +71,13 @@ class SelectClientView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.normal,
-                            Preferences.idTheme,
                           ),
                         ),
                         const SizedBox(height: 3),
                         Text("(${client.desCuentaCta})")
                       ],
                     ),
-                    onTap: () => docVM.selectClient(client, context),
+                    onTap: () => docVM.selectClient(true, client, context),
                   );
                 },
               ),

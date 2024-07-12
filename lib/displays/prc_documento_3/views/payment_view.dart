@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -57,7 +56,6 @@ class PaymentView extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.title,
-                        Preferences.idTheme,
                       ),
                     ),
                   const SizedBox(height: 10),
@@ -88,7 +86,6 @@ class PaymentView extends StatelessWidget {
                           activeColor: AppTheme.color(
                             context,
                             Styles.darkPrimary,
-                            Preferences.idTheme,
                           ),
                           value: vm.selectAllAmounts,
                           onChanged: (value) => vm.selectAllMounts(value),
@@ -101,7 +98,6 @@ class PaymentView extends StatelessWidget {
                           style: AppTheme.style(
                             context,
                             Styles.bold,
-                            Preferences.idTheme,
                           ),
                         ),
                         const Spacer(),
@@ -123,7 +119,6 @@ class PaymentView extends StatelessWidget {
                         color: AppTheme.color(
                           context,
                           Styles.secondBackground,
-                          Preferences.idTheme,
                         ),
                         elevation: 2.0,
                         child: ListTile(
@@ -131,7 +126,6 @@ class PaymentView extends StatelessWidget {
                             activeColor: AppTheme.color(
                               context,
                               Styles.darkPrimary,
-                              Preferences.idTheme,
                             ),
                             value: amount.checked,
                             onChanged: (value) =>
@@ -142,7 +136,6 @@ class PaymentView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                           subtitle: Column(
@@ -157,7 +150,6 @@ class PaymentView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.payment.referencia)
@@ -169,7 +161,6 @@ class PaymentView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.payment.banco)
@@ -181,7 +172,6 @@ class PaymentView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.account != null)
@@ -193,7 +183,6 @@ class PaymentView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               Text(
@@ -204,7 +193,6 @@ class PaymentView extends StatelessWidget {
                                 style: AppTheme.style(
                                   context,
                                   Styles.normal,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               if (amount.diference > 0)
@@ -216,7 +204,6 @@ class PaymentView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               if (amount.diference > 0)
@@ -228,7 +215,6 @@ class PaymentView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                             ],
@@ -251,7 +237,6 @@ class PaymentView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           RowTotalWidget(
@@ -263,7 +248,6 @@ class PaymentView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
           RowTotalWidget(
@@ -275,7 +259,6 @@ class PaymentView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.darkPrimary,
-              Preferences.idTheme,
             ),
           ),
         ],
@@ -294,7 +277,6 @@ class PaymentCard extends StatelessWidget {
       color: AppTheme.color(
         context,
         Styles.secondBackground,
-        Preferences.idTheme,
       ),
       elevation: 2.0,
       child: ListTile(
@@ -304,7 +286,6 @@ class PaymentCard extends StatelessWidget {
           style: AppTheme.style(
             context,
             Styles.normal,
-            Preferences.idTheme,
           ),
         ),
       ),

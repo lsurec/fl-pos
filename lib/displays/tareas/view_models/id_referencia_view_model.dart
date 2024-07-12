@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
-import 'dart:async';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
@@ -19,23 +18,18 @@ class IdReferenciaViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Timer? timer; // Temporizador
-
   //variable de busqueda
   final TextEditingController buscarIdReferencia = TextEditingController();
 
   //Lista para almacenar id referencias encontradas
   List<IdReferenciaModel> idReferencias = [];
 
-//Buscar Id Referencia
-  Future<void> buscarIdRefencia(
-    BuildContext context,
-    String search,
-  ) async {
+  //Buscar Id Referencia
+  Future<void> buscarIdRefencia(BuildContext context) async {
     idReferencias.clear(); //Limpiar lista de idReferencia
 
     //si el campo de busqueda está vacio, limpiar lista.
-    if (search.isEmpty) {
+    if (buscarIdReferencia.text.isEmpty) {
       idReferencias.clear();
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
@@ -65,7 +59,7 @@ class IdReferenciaViewModel extends ChangeNotifier {
       user,
       token,
       empresa,
-      search,
+      buscarIdReferencia.text,
     );
 
     //si el consumo salió mal
@@ -79,17 +73,5 @@ class IdReferenciaViewModel extends ChangeNotifier {
     idReferencias.addAll(res.response);
 
     isLoading = false; //detener carga
-  }
-
-  void buscarRefTemp(BuildContext context) {
-    timer?.cancel(); // Cancelar el temporizador existente si existe
-    timer = Timer(
-      const Duration(milliseconds: 1000),
-      () {
-        // Función de filtrado que consume el servicio
-        FocusScope.of(context).unfocus(); //ocultar teclado
-        buscarIdRefencia(context, buscarIdReferencia.text);
-      },
-    ); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }

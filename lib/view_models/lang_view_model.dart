@@ -17,7 +17,62 @@ class LangViewModel extends ChangeNotifier {
       LanguagesProvider.languagesProvider[LanguagesProvider.indexDefaultLang];
 
   // cambiar el valor del idioma
-  void cambiarIdioma(BuildContext context, Locale nuevoIdioma, int indexLang) {
+  void cambiarIdioma(
+    BuildContext context,
+    Locale nuevoIdioma,
+    int indexLang,
+  ) async {
+    //Si es desde ajustes
+    if (AppLocalizations.cambiarIdioma == 1 &&
+        indexLang != Preferences.idLanguage) {
+      bool result = await showDialog(
+            context: context,
+            builder: (context) => AlertWidget(
+              textOk: AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                "reiniciar",
+              ),
+              textCancel: AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                "cancelar",
+              ),
+              title: AppLocalizations.of(context)!.translate(
+                BlockTranslate.preferencias,
+                "seleccionado",
+              ),
+              description: AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                "reiniciar",
+              ),
+              onOk: () => Navigator.of(context).pop(true),
+              onCancel: () => Navigator.of(context).pop(false),
+            ),
+          ) ??
+          false;
+
+      if (!result) return;
+
+      //Si reinicia, guardar el nuevo tema
+
+      Preferences.language = nuevoIdioma.languageCode;
+
+      AppLocalizations.idioma = Locale(Preferences.language);
+
+      Preferences.idLanguage = indexLang;
+
+      activeLang = languages[indexLang];
+
+      notifyListeners();
+
+      isLoading = true;
+      // timer?.cancel(); // Cancelar el temporizador existente si existe
+      timer = Timer(const Duration(milliseconds: 2000), () {
+        // Función de filtrado que consume el servicio
+        FocusScope.of(context).unfocus(); //ocultar teclado
+        reiniciarApp();
+      });
+    }
+
     Preferences.language = nuevoIdioma.languageCode;
 
     AppLocalizations.idioma = Locale(Preferences.language);
@@ -28,9 +83,9 @@ class LangViewModel extends ChangeNotifier {
 
     notifyListeners();
 
-    if (AppLocalizations.cambiarIdioma == 1) {
-      guardarReiniciar(context);
-    }
+    // if (AppLocalizations.cambiarIdioma == 1) {
+    //   guardarReiniciar(context);
+    // }
   }
 
   Timer? timer; // Temporizador

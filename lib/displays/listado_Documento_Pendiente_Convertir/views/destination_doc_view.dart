@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -31,7 +30,6 @@ class DestinationDocView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -54,7 +52,6 @@ class DestinationDocView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -74,7 +71,6 @@ class DestinationDocView extends StatelessWidget {
                               color: AppTheme.color(
                                 context,
                                 Styles.secondBackground,
-                                Preferences.idTheme,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
@@ -89,7 +85,6 @@ class DestinationDocView extends StatelessWidget {
                                       style: AppTheme.style(
                                         context,
                                         Styles.bold,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                     Text(
@@ -97,7 +92,6 @@ class DestinationDocView extends StatelessWidget {
                                       style: AppTheme.style(
                                         context,
                                         Styles.normal,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                     const SizedBox(height: 5),
@@ -109,7 +103,6 @@ class DestinationDocView extends StatelessWidget {
                                       style: AppTheme.style(
                                         context,
                                         Styles.bold,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                     Text(
@@ -117,7 +110,6 @@ class DestinationDocView extends StatelessWidget {
                                       style: AppTheme.style(
                                         context,
                                         Styles.normal,
-                                        Preferences.idTheme,
                                       ),
                                     ),
                                   ],
@@ -141,7 +133,6 @@ class DestinationDocView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),

@@ -82,7 +82,8 @@
         "agregarResponsable": "Agregar Responsable",
         "eliminar": "Eliminar",
         "adjuntarArchivos": "Adjuntar Archivos",
-        "enviarComentario": "Enviar comentario."
+        "enviarComentario": "Enviar comentario.",
+        "cambiarResponsable": "Actualizar Responsable"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -96,7 +97,8 @@
         "feHoFin": "FECHA Y HORA FINAL: ",
         "fechaHoraInicio": "Fecha y hora inicial",
         "fechaHoraFin": "Fecha y hora final",
-        "hora": "Hora: "
+        "hora": "Hora: ",
+        "completa": "Fecha y hora: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -189,7 +191,12 @@
         "seleccioneRespo": "Añada un responsable para continuar.",
         "tareaCreada": "Tarea creada correctamente.",
         "horaPosterior": "Selecciona una hora a partir de las: ",
-        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final."
+        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.",
+        "responsableActualizado": "Responsable actualizado correctamente.",
+        "asignado": "Usuario asignado anteriormente.",
+        "estadoIgual" :"Estado asignado anteriormente.",
+        "prioridadIgual" :"Prioridad asignada anteriormente.",
+        "copiado": "Texto copiado al portapapeles."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -308,7 +315,8 @@
         "invalido": "Correo inválido.",
         "cliente": "Cliente",
         "editar": "Editar Cuenta",
-        "actualizar": "Actualizar Cuenta"
+        "actualizar": "Actualizar Cuenta",
+        "cuentaCta": "Cuenta Cta:"
     },
     "factura": {
         "bancos": "Bancos",

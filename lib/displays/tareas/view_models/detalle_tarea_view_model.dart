@@ -58,13 +58,14 @@ class DetalleTareaViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
+  List<ResponsableModel> responsablesTarea = [];
   //Obtener Responsable y responsables anteriores de la tarea
   Future<ApiResModel> obtenerResponsable(
     BuildContext context,
     int idTarea,
   ) async {
     //Lista de responsables
-    final List<ResponsableModel> responsablesTarea = [];
+    // final List<ResponsableModel> responsablesTarea = [];
     responsablesTarea.clear(); //limpiar lista
     responsablesHistorial.clear(); //Limpiar lista
 
@@ -103,7 +104,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
         //insertarlo en la lista del historial
         responsablesHistorial.add(responsable);
         notifyListeners();
-        break;
+        // break;
       }
     }
 
@@ -159,6 +160,25 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     EstadoModel estado,
   ) async {
+    //validar que no sea el mismo estado
+    if (estadoAtual!.estado == estado.estado) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'estadoIgual',
+        ),
+      );
+
+      ApiResModel estadoIncorrecto = ApiResModel(
+        succes: false,
+        response: "Estado no puede ser el mismo que está actualmente.",
+        url: '',
+        storeProcedure: '',
+      );
+
+      return estadoIncorrecto;
+    }
+
     //View model para obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
@@ -233,6 +253,24 @@ class DetalleTareaViewModel extends ChangeNotifier {
     BuildContext context,
     PrioridadModel prioridad,
   ) async {
+    if (prioridadActual!.nivelPrioridad == prioridad.nivelPrioridad) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'prioridadIgual',
+        ),
+      );
+
+      ApiResModel prioridadIncorrecta = ApiResModel(
+        succes: false,
+        response: "Prioridad no puede ser la misma que está actualmente.",
+        url: '',
+        storeProcedure: '',
+      );
+
+      return prioridadIncorrecta;
+    }
+
     //View model de login para obtener el usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     String token = vmLogin.token;
@@ -714,5 +752,96 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     //Si todo está correcto, retornar:
     return res;
+  }
+
+  cambiarResponsable(BuildContext context, UsuarioModel usuario) async {
+    //View model para obtener el usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    if (tarea!.usuarioResponsable == usuario.userName ||
+        tarea!.usuarioResponsable == usuario.name) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'asignado',
+        ),
+      );
+      return;
+    }
+    //Usuario responsable de la tarea
+    //Crear modelo de usuario nuevo
+    NuevoUsuarioModel usuarioResponsable = NuevoUsuarioModel(
+      tarea: tarea!.iDTarea,
+      userResInvi: usuario.userName,
+      user: user,
+    );
+
+    isLoading = true; //cargar pantalla
+
+    //Instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    //consumo de api para asignar responsable
+    final ApiResModel resResponsable = await tareaService.postResponsable(
+      token,
+      usuarioResponsable,
+    );
+
+    //si el consumo salió mal
+    if (!resResponsable.succes) {
+      isLoading = false;
+
+      //Abrir dialogo de error
+      NotificationService.showErrorView(context, resResponsable);
+
+      //Retornar respuesta incorrecta
+      return;
+    }
+
+    for (var i = 0; i < responsablesTarea.length; i++) {
+      ResponsableModel responsable = responsablesTarea[i];
+      if (responsable.estado.toLowerCase() == "activo") {
+        responsable.estado = "Inactivo";
+
+        //insertarlo en la lista del historial
+        // responsablesHistorial.add(responsable);
+        notifyListeners();
+        // break;
+      }
+    }
+
+    //Obtener respuesta de api responsable
+    ResNuevoUsuarioModel seleccionado = resResponsable.response[0];
+
+    ResponsableModel responsableNuevo = ResponsableModel(
+      tUserName: usuario.email,
+      estado: "Activo",
+      userName: seleccionado.userName,
+      fechaHora: seleccionado.fechaHora,
+      mUserName: seleccionado.mUserName,
+      mFechaHora: seleccionado.mFechaHora,
+      dHm: '',
+      consecutivoInterno: 0,
+    );
+
+    //Asignar responsable a la propiedad de la tarea
+
+    // Insertar registro al principio de la lista de responsables
+    responsablesTarea.insert(0, responsableNuevo);
+
+    tarea!.usuarioResponsable = usuario.name;
+
+    notifyListeners();
+
+    isLoading = false;
+
+    // NotificationService.showSnackbar(
+    //   AppLocalizations.of(context)!.translate(
+    //     BlockTranslate.notificacion,
+    //     'responsableActualizado',
+    //   ),
+    // );
   }
 }

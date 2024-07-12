@@ -5,7 +5,6 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +29,6 @@ class PendingDocsView extends StatelessWidget {
               style: AppTheme.style(
                 context,
                 Styles.title,
-                Preferences.idTheme,
               ),
             ),
           ),
@@ -58,7 +56,6 @@ class PendingDocsView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.bold,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -69,7 +66,6 @@ class PendingDocsView extends StatelessWidget {
                                   color: AppTheme.color(
                                     context,
                                     Styles.darkPrimary,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 label: Text(
@@ -77,7 +73,6 @@ class PendingDocsView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -96,7 +91,6 @@ class PendingDocsView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.bold,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -107,7 +101,6 @@ class PendingDocsView extends StatelessWidget {
                                   color: AppTheme.color(
                                     context,
                                     Styles.darkPrimary,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                                 label: Text(
@@ -115,7 +108,6 @@ class PendingDocsView extends StatelessWidget {
                                   style: AppTheme.style(
                                     context,
                                     Styles.normal,
-                                    Preferences.idTheme,
                                   ),
                                 ),
                               ),
@@ -133,7 +125,6 @@ class PendingDocsView extends StatelessWidget {
                               dropdownColor: AppTheme.color(
                                 context,
                                 Styles.background,
-                                Preferences.idTheme,
                               ),
                               value: vm.idSelectFilter,
                               onChanged: (value) => vm.changeFilter(value!),
@@ -148,7 +139,6 @@ class PendingDocsView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ),
@@ -162,7 +152,6 @@ class PendingDocsView extends StatelessWidget {
                                     style: AppTheme.style(
                                       context,
                                       Styles.normal,
-                                      Preferences.idTheme,
                                     ),
                                   ),
                                 ),
@@ -186,7 +175,6 @@ class PendingDocsView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -224,7 +212,6 @@ class PendingDocsView extends StatelessWidget {
                                 color: AppTheme.color(
                                   context,
                                   Styles.darkPrimary,
-                                  Preferences.idTheme,
                                 ),
                               ),
                               onPressed: () => vm.filtrar(context),
@@ -259,7 +246,6 @@ class PendingDocsView extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.loading,
-              Preferences.idTheme,
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
@@ -297,7 +283,6 @@ class _CardDoc extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.bold,
-                  Preferences.idTheme,
                 ),
               ),
               Text(
@@ -308,7 +293,6 @@ class _CardDoc extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.bold,
-                  Preferences.idTheme,
                 ),
               ),
             ],
@@ -320,7 +304,6 @@ class _CardDoc extends StatelessWidget {
             color: AppTheme.color(
               context,
               Styles.secondBackground,
-              Preferences.idTheme,
             ),
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -328,12 +311,18 @@ class _CardDoc extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextsWidget(
-                    title:  AppLocalizations.of(context)!.translate(BlockTranslate.cotizacion,'idRef',),
+                    title: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.cotizacion,
+                      'idRef',
+                    ),
                     text: document.consecutivoInternoRef.toString(),
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
-                    title:  AppLocalizations.of(context)!.translate(BlockTranslate.cotizacion,'cuenta',),
+                    title: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.cotizacion,
+                      'cuenta',
+                    ),
                     text: document.cliente,
                   ),
                   const SizedBox(height: 5),
@@ -349,7 +338,6 @@ class _CardDoc extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -357,7 +345,6 @@ class _CardDoc extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],
@@ -374,7 +361,6 @@ class _CardDoc extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.bold,
-                          Preferences.idTheme,
                         ),
                       ),
                       Text(
@@ -382,7 +368,6 @@ class _CardDoc extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                       ),
                     ],

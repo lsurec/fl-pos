@@ -82,7 +82,8 @@
         "agregarResponsable": "Verantwortlichen hinzufügen",
         "eliminar": "Löschen",
         "adjuntarArchivos": "Dateien anhängen",
-        "enviarComentario": "Kommentar senden."
+        "enviarComentario": "Kommentar senden.",
+        "cambiarResponsable": "Verantwortliche Person aktualisieren"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -96,7 +97,8 @@
         "feHoFin": "ENDDATUM UND -ZEIT: ",
         "fechaHoraInicio": "Startdatum und -zeit",
         "fechaHoraFin": "Enddatum und -zeit",
-        "hora": "Uhrzeit: "
+        "hora": "Uhrzeit: ",
+        "completa": "Datum und Uhrzeit: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
@@ -189,7 +191,12 @@
         "seleccioneRespo": "Fügen Sie einen Verantwortlichen hinzu, um fortzufahren.",
         "tareaCreada": "Aufgabe erfolgreich erstellt.",
         "horaPosterior": "Wählen Sie eine Uhrzeit ab: ",
-        "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum."
+        "modifiqueFeHofinal": "Die Endzeit darf nicht vor dem Anfangsdatum und der Anfangszeit liegen. Ändern Sie zuerst das Enddatum.",
+        "responsableActualizado": "Verantwortliche Person erfolgreich aktualisiert.",
+        "asignado": "Zuvor zugewiesener Benutzer.",
+        "estadoIgual": "Zuvor zugewiesener Status.",
+        "prioridadIgual": "Zuvor zugewiesene Priorität.",
+        "copiado": "Text in die Zwischenablage kopiert."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -308,7 +315,8 @@
         "invalido": "Ungültige E-Mail.",
         "cliente": "Kunde",
         "editar": "Konto bearbeiten",
-        "actualizar": "Konto aktualisieren"
+        "actualizar": "Konto aktualisieren",
+        "cuentaCta": "Konto Kto:"
     },
     "factura": {
         "bancos": "Banken",

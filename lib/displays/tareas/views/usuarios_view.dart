@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -18,6 +17,8 @@ class UsuariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
+
+    final String titulo = ModalRoute.of(context)!.settings.arguments as String;
 
     return WillPopScope(
       onWillPop: () => vm.back(),
@@ -33,26 +34,16 @@ class UsuariosView extends StatelessWidget {
                       color: AppTheme.color(
                         context,
                         Styles.white,
-                        Preferences.idTheme,
                       ),
                     ),
                   )
                 : null,
             appBar: AppBar(
               title: Text(
-                vm.tipoBusqueda == 1
-                    ? AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'agregarResponsable',
-                      )
-                    : AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'agregarInvitados',
-                      ),
+                titulo,
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
                 ),
               ),
             ),
@@ -64,11 +55,23 @@ class UsuariosView extends StatelessWidget {
                     children: [
                       TextFormField(
                         controller: vm.buscar,
-                        onChanged: (criterio) => vm.buscarUsuarioTemp(context),
+                        onFieldSubmitted: (criterio) => vm.buscarUsuario(
+                          context,
+                        ),
                         decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.translate(
                             BlockTranslate.tareas,
                             'buscar',
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              Icons.search,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            onPressed: () => vm.buscarUsuario(context),
                           ),
                         ),
                       ),
@@ -84,7 +87,6 @@ class UsuariosView extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -105,7 +107,6 @@ class UsuariosView extends StatelessWidget {
               color: AppTheme.color(
                 context,
                 Styles.loading,
-                Preferences.idTheme,
               ),
             ),
           if (vm.isLoading) const LoadWidget(),
@@ -138,7 +139,6 @@ class _UsuariosEncontados extends StatelessWidget {
                 color: AppTheme.color(
                   context,
                   Styles.greyBorder,
-                  Preferences.idTheme,
                 ),
               ),
             ),
@@ -157,7 +157,6 @@ class _UsuariosEncontados extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.normal,
-                        Preferences.idTheme,
                       ),
                     ),
                     RichText(
@@ -165,7 +164,6 @@ class _UsuariosEncontados extends StatelessWidget {
                         style: AppTheme.style(
                           context,
                           Styles.normal,
-                          Preferences.idTheme,
                         ),
                         children: [
                           TextSpan(
@@ -180,7 +178,6 @@ class _UsuariosEncontados extends StatelessWidget {
                             style: AppTheme.style(
                               context,
                               Styles.bold,
-                              Preferences.idTheme,
                             ),
                           ),
                         ],
@@ -196,7 +193,6 @@ class _UsuariosEncontados extends StatelessWidget {
                         activeColor: AppTheme.color(
                           context,
                           Styles.darkPrimary,
-                          Preferences.idTheme,
                         ),
                         value: usuario.select,
                         onChanged: (value) => vm.changeChecked(

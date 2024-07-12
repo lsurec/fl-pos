@@ -2,10 +2,13 @@
 
 import 'dart:io';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/lang_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -263,6 +266,22 @@ class Utilities {
     return horaFormateada;
   }
 
+  static String formatearFechaHora(DateTime fecha) {
+    // Asegurarse de que la fecha esté en la zona horaria local
+    fecha = fecha.toLocal();
+
+    // Formatear la fecha en el formato dd/MM/yyyy
+    String fechaFormateada = DateFormat('dd/MM/yyyy').format(fecha);
+
+    // Formatear la hora en formato hh:mm a AM/PM
+    String horaFormateada = DateFormat('hh:mm a').format(fecha);
+
+    // Unir fecha y hora en el formato deseado
+    String fechaHoraFormateada = '$fechaFormateada  $horaFormateada';
+
+    return fechaHoraFormateada;
+  }
+
   static String formatearFechaString(String fecha) {
     // Parsear la cadena de fecha
     DateTime fechaParseada = DateTime.parse(fecha);
@@ -323,5 +342,18 @@ class Utilities {
     String nombreArchivo = File(path).path.split('/').last;
 
     return nombreArchivo;
+  }
+
+  static copyToClipboard(BuildContext context, String value) {
+    FlutterClipboard.copy(value).then(
+      (value) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            "copiado",
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/version_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -39,7 +38,7 @@ class UpdateView extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.title,
-                  Preferences.idTheme,
+                  
                 ),
               ),
               const SizedBox(height: 10),
@@ -51,7 +50,7 @@ class UpdateView extends StatelessWidget {
                 style: AppTheme.style(
                   context,
                   Styles.normal,
-                  Preferences.idTheme,
+                  
                 ),
               ),
               const SizedBox(height: 20),
@@ -63,7 +62,7 @@ class UpdateView extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.normal,
-                      Preferences.idTheme,
+                      
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -74,7 +73,7 @@ class UpdateView extends StatelessWidget {
                     style: AppTheme.style(
                       context,
                       Styles.bold,
-                      Preferences.idTheme,
+                      
                     ),
                   ),
                 ],
@@ -84,7 +83,7 @@ class UpdateView extends StatelessWidget {
                 style: AppTheme.button(
                   context,
                   Styles.buttonStyle,
-                  Preferences.idTheme,
+                  
                 ),
                 // onPressed: () => vm.openLink(),
                 onPressed: () {},
@@ -99,7 +98,7 @@ class UpdateView extends StatelessWidget {
                       style: AppTheme.style(
                         context,
                         Styles.whiteBoldStyle,
-                        Preferences.idTheme,
+                        
                       ),
                     ),
                     const Icon(

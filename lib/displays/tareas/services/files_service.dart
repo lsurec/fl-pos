@@ -14,8 +14,9 @@ class FilesService {
     List<File> files,
     int tarea,
     int tareaComentario,
+    String urlCarpeta,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Tareas/objetos/comentario");
+    Uri url = Uri.parse("${_baseUrl}FilesComment");
     try {
       var request = http.MultipartRequest('POST', url);
 
@@ -26,6 +27,7 @@ class FilesService {
         "user": user,
         "tarea": tarea.toString(),
         "tareaComentario": tareaComentario.toString(),
+        "urlCarpeta": urlCarpeta
       });
 
       // Agregar archivos a la solicitud

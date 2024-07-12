@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -46,6 +48,10 @@ class ComentariosViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     String user = loginVM.user;
     String token = loginVM.token;
+
+    //View model para obtenerla empresa
+    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    EmpresaModel empresa = vmLocal.selectedEmpresa!;
 
     //View model de detalla de tarea tareas
     final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
@@ -121,6 +127,7 @@ class ComentariosViewModel extends ChangeNotifier {
         files,
         comentarioCreado.tarea,
         comentarioCreado.tareaComentario,
+        empresa.absolutePathPicture
       );
 
       //si el consumo salió mal

@@ -195,6 +195,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
 
     //TODO: Certificar
     Documento documento = Documento(
+      consecutivoInterno: 0,
       titulo: encabezado.tipoDocumento!,
       descripcion: AppLocalizations.of(contextP)!.translate(
         BlockTranslate.tiket,
