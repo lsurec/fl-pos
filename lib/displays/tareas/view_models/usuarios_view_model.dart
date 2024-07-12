@@ -27,7 +27,7 @@ class UsuariosViewModel extends ChangeNotifier {
   final TextEditingController buscar = TextEditingController();
 
   //Almacenar usuarios
-  final List<UsuarioModel> usuarios = [];
+  List<UsuarioModel> usuarios = [];
   //Almacenar usuarios seleccionados
   final List<UsuarioModel> usuariosSeleccionados = [];
 

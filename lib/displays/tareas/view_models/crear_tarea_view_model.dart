@@ -119,6 +119,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
     invitados = [];
     vmUsuario.tipoBusqueda = tipo;
+    vmUsuario.usuarios = [];
+    vmUsuario.buscar.text = '';
 
     print(vmUsuario.tipoBusqueda);
     Navigator.pushNamed(
