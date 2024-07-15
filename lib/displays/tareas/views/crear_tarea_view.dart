@@ -113,8 +113,6 @@ class CrearTareaView extends StatelessWidget {
                             return null;
                           },
                           controller: vm.tituloController,
-                          onChanged: (value) =>
-                              vm.tituloController.text = value,
                           decoration: InputDecoration(
                             labelText: AppLocalizations.of(context)!.translate(
                               BlockTranslate.tareas,
@@ -658,7 +656,6 @@ class CrearTareaView extends StatelessWidget {
 //             ),
 //           )
 //           .toList(),
-//       onChanged: (value) => vm.periodicidad = value!,
 //       buttonStyleData: const ButtonStyleData(
 //         padding: EdgeInsets.only(right: 8),
 //       ),
@@ -732,7 +729,6 @@ class _ObservacionTarea extends StatelessWidget {
 
     return TextFormField(
       controller: vm.observacionController,
-      onChanged: (value) => vm.observacionController.text = value,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return AppLocalizations.of(context)!.translate(
@@ -818,70 +814,6 @@ class _PrioridadTarea extends StatelessWidget {
     );
   }
 }
-
-// class _EstadoTarea extends StatelessWidget {
-//   const _EstadoTarea({
-//     required this.estados,
-//   });
-
-//   final List<EstadoModel> estados;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CrearTareaViewModel>(context);
-
-//     return DropdownButtonFormField2<EstadoModel>(
-//       value: vm.estado,
-//       isExpanded: true,
-//       decoration: InputDecoration(
-//         contentPadding: const EdgeInsets.symmetric(vertical: 16),
-//         border: UnderlineInputBorder(
-//           borderRadius: BorderRadius.circular(15),
-//         ),
-//       ),
-//       items: estados
-//           .map(
-//             (item) => DropdownMenuItem<EstadoModel>(
-//               value: item,
-//               child: Text(
-//                 item.descripcion,
-//                 style: const TextStyle(
-//                   fontSize: 14,
-//                 ),
-//               ),
-//             ),
-//           )
-//           .toList(),
-//       validator: (value) {
-//         if (value == null) {
-//           return AppLocalizations.of(context)!.translate(
-//             BlockTranslate.tareas,
-//             'seleccionaEstado',
-//           );
-//         }
-//         return null;
-//       },
-//       onChanged: (value) => vm.estado = value,
-//       buttonStyleData: const ButtonStyleData(
-//         padding: EdgeInsets.only(right: 8),
-//       ),
-//       iconStyleData: const IconStyleData(
-//         icon: Icon(
-//           Icons.arrow_drop_down,
-//         ),
-//         iconSize: 24,
-//       ),
-//       dropdownStyleData: DropdownStyleData(
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(15),
-//         ),
-//       ),
-//       menuItemStyleData: const MenuItemStyleData(
-//         padding: EdgeInsets.symmetric(horizontal: 16),
-//       ),
-//     );
-//   }
-// }
 
 class _EstadoTarea extends StatelessWidget {
   const _EstadoTarea({

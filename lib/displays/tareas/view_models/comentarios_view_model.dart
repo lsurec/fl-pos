@@ -31,16 +31,27 @@ class ComentariosViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //formulario para escribir comentariosS
+  GlobalKey<FormState> formKeyComment = GlobalKey<FormState>();
+
   //comentario
   final TextEditingController comentarioController = TextEditingController();
 
   //ID TAREA PARA COMENTAR
   int? idTarea;
+
+  //Validar formulario barra busqueda
+  bool isValidFormComment() {
+    return formKeyComment.currentState?.validate() ?? false;
+  }
+
   //Nuevo comentario
   Future<void> comentar(
     BuildContext context,
-    String comentario,
   ) async {
+    //validar formulario
+    if (!isValidFormComment()) return;
+
     //ocultar teclado
     FocusScope.of(context).unfocus();
 
@@ -127,7 +138,7 @@ class ComentariosViewModel extends ChangeNotifier {
         files,
         comentarioCreado.tarea,
         comentarioCreado.tareaComentario,
-        empresa.absolutePathPicture
+        empresa.absolutePathPicture,
       );
 
       //si el consumo salió mal
