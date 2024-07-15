@@ -208,6 +208,7 @@ class _NuevoComentario extends StatelessWidget {
         },
         maxLines: 3,
         textInputAction: TextInputAction.send,
+        onFieldSubmitted: (value) => vm.comentar(context),
         decoration: InputDecoration(
           border: const OutlineInputBorder(
             borderSide: BorderSide(
