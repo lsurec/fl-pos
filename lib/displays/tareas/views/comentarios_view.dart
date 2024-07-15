@@ -309,15 +309,6 @@ class _Comentario extends StatelessWidget {
                   Styles.bold,
                 ),
               ),
-              Text(
-                Utilities.formatearFecha(
-                  comentario.comentario.fechaHora,
-                ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
             ],
           ),
         ),
@@ -339,6 +330,21 @@ class _Comentario extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    Utilities.formatearFechaHora(
+                      comentario.comentario.fechaHora,
+                    ),
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(),
               GestureDetector(
                 onLongPress: () => Utilities.copyToClipboard(
                   context,
