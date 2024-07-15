@@ -183,10 +183,63 @@ class _CardTask extends StatelessWidget {
                     tarea.tareaFechaIni,
                   ),
                 ),
+                if (tarea.ultimoComentario != null) const SizedBox(height: 10),
+                if (tarea.ultimoComentario != null)
+                  ExpansionTile(
+                    title: Text(
+                      'Ver último comentario',
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                    children: [
+                      CardWidget(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        color: AppTheme.color(
+                          context,
+                          Styles.secondBackground,
+                        ),
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.border,
+                        ),
+                        raidus: 15,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 15,
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            tarea.ultimoComentario ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'noDisponible',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                if (tarea.ultimoComentario != null) const SizedBox(height: 5),
               ],
             ),
           ),
           CardWidget(
+            margin: tarea.ultimoComentario != null
+                ? const EdgeInsets.only(
+                    top: 0,
+                  )
+                : const EdgeInsets.only(
+                    top: 5,
+                  ),
             color: AppTheme.color(
               context,
               Styles.secondBackground,
