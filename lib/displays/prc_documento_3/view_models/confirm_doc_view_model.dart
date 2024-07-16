@@ -94,6 +94,15 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
   Position? currentPosition;
 
+  setPosition() async {
+    getCurrentPosition().then((position) {
+      currentPosition = position;
+      notifyListeners();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   Future<Position> getCurrentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;

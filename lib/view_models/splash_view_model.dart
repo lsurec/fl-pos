@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
-import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/confirm_doc_view_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -34,10 +33,6 @@ class SplashViewModel extends ChangeNotifier {
     //view models externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
-    final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
-
-    //TODO:verificar
-    await confirmVM.getCurrentPosition();
 
     //serviico controlar version
     VersionService versionService = VersionService();
