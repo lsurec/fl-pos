@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 class DocEstructuraModel {
+  String? docLatitdud;
+  String? docLongitud;
   int consecutivoInterno;
   double docTraMonto;
   double docCaMonto;
@@ -26,6 +28,8 @@ class DocEstructuraModel {
   List<DocCargoAbono> docCargoAbono;
 
   DocEstructuraModel({
+    required this.docLatitdud,
+    required this.docLongitud,
     required this.consecutivoInterno,
     required this.docTraMonto,
     required this.docCaMonto,
@@ -58,6 +62,8 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
+        docLatitdud: json["docLatitdud"],
+        docLongitud: json["docLongitud"] ?? 0,
         consecutivoInterno: json["Consecutivo_Interno"] ?? 0,
         docTraMonto: json["Doc_Tra_Monto"].toDouble(),
         docCaMonto: json["Doc_CA_Monto"].toDouble(),
@@ -87,6 +93,8 @@ class DocEstructuraModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "docLatitdud": docLatitdud,
+        "docLongitud": docLongitud,
         "Consecutivo_Interno": consecutivoInterno,
         "Doc_Tra_Monto": docTraMonto,
         "Doc_CA_Monto": docCaMonto,

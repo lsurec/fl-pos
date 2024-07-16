@@ -1150,6 +1150,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     docGlobal = DocEstructuraModel(
+      docLatitdud: currentPosition?.latitude.toString(),
+      docLongitud: currentPosition?.longitude.toString(),
       consecutivoInterno: firstPart,
       docTraMonto: detailsVM.total,
       docCaMonto: totalCA,
