@@ -344,7 +344,7 @@ class _Comentario extends StatelessWidget {
                   ),
                 ],
               ),
-              const Divider(),
+              const SizedBox(height: 10),
               GestureDetector(
                 onLongPress: () => Utilities.copyToClipboard(
                   context,

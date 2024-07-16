@@ -208,22 +208,110 @@ class _CardTask extends StatelessWidget {
                           Styles.border,
                         ),
                         raidus: 15,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 15,
-                            vertical: 10,
-                          ),
-                          child: Text(
-                            tarea.ultimoComentario ??
-                                AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.general,
-                                  'noDisponible',
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                    width: 1.5,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.greyBorder,
+                                    ),
+                                  ),
+                                  left: BorderSide(
+                                    width: 1.5,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.greyBorder,
+                                    ),
+                                  ),
+                                  right: BorderSide(
+                                    width: 1.5,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.greyBorder,
+                                    ),
+                                  ),
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    tarea.usuarioUltimoComentario!,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.5,
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.greyBorder,
+                                  ),
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        Utilities.formatearFechaHora(
+                                          tarea.fechaUltimoComentario!,
+                                        ),
+                                        style: AppTheme.style(
+                                          context,
+                                          Styles.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  GestureDetector(
+                                    onLongPress: () =>
+                                        Utilities.copyToClipboard(
+                                      context,
+                                      tarea.ultimoComentario ?? '',
+                                    ),
+                                    child: Text(
+                                      tarea.ultimoComentario ??
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            BlockTranslate.general,
+                                            'noDisponible',
+                                          ),
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.normal,
+                                      ),
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
