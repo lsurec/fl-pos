@@ -180,6 +180,15 @@ class DocumentoViewModel extends ChangeNotifier {
       }
     }
 
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+
+    //Obtener latitude y longitud Si es necesario
+    vmConfirm.getCurrentPosition().then((position) {
+      vmConfirm.currentPosition = position;
+    }).catchError((e) {
+      print(e);
+    });
+
     //si todas las validaciones son correctas navegar a resumen del documento
     Navigator.pushNamed(
       context,
