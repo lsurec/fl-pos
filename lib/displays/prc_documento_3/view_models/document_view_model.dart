@@ -112,6 +112,23 @@ class DocumentViewModel extends ChangeNotifier {
     return fel;
   }
 
+  bool getPosition() {
+    bool position = false;
+
+    //el parametro que indica si genera fel o no es 349
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == 318) {
+        position = true;
+        break;
+      }
+    }
+
+    return position;
+  }
+
   //seleccionar serie
   Future<void> changeSerie(
     SerieModel? value,
