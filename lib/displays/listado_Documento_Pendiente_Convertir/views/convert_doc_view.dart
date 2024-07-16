@@ -45,7 +45,13 @@ class ConvertDocView extends StatelessWidget {
               docOrigen,
               docDestino,
             ),
-            child: const Icon(Icons.check),
+            child: Icon(
+              Icons.check,
+              color: AppTheme.color(
+                context,
+                Styles.white,
+              ),
+            ),
           ),
           body: RefreshIndicator(
             onRefresh: () => vm.loadData(context, docOrigen),

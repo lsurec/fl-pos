@@ -397,24 +397,15 @@ class CrearTareaViewModel extends ChangeNotifier {
         return;
       }
 
-      //Crear modelo de comentario
-      ComentarioModel comentarioCreado = ComentarioModel(
-        comentario: comentario.comentario,
-        fechaHora: DateTime.now(),
-        nameUser: user,
-        userName: user,
-        tarea: comentario.tarea,
-        tareaComentario: resComent.response.res,
-      );
-
       FilesService filesService = FilesService();
+      int idComentario = resComent.response.res;
 
       bool resFiles = await filesService.posFilesComent(
         token,
         user,
         files,
-        comentarioCreado.tarea,
-        comentarioCreado.tareaComentario,
+        resCreada.iDTarea,
+        idComentario,
         empresa.absolutePathPicture,
       );
 

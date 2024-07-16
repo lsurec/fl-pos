@@ -46,6 +46,18 @@ class DetalleTareaView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+                        vm.tarea!.descripcion ??
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'noDisponible',
+                            ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      const Divider(),
+                      Text(
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.general,
                           'observacion',

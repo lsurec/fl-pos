@@ -183,10 +183,151 @@ class _CardTask extends StatelessWidget {
                     tarea.tareaFechaIni,
                   ),
                 ),
+                if (tarea.ultimoComentario != null) const SizedBox(height: 10),
+                if (tarea.ultimoComentario != null)
+                  ExpansionTile(
+                    title: Text(
+                      'Ver último comentario',
+                      style: AppTheme.style(
+                        context,
+                        Styles.normal,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                    children: [
+                      CardWidget(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        color: AppTheme.color(
+                          context,
+                          Styles.secondBackground,
+                        ),
+                        elevation: 0,
+                        borderWidth: 1.5,
+                        borderColor: AppTheme.color(
+                          context,
+                          Styles.border,
+                        ),
+                        raidus: 15,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                    width: 1.5,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.greyBorder,
+                                    ),
+                                  ),
+                                  left: BorderSide(
+                                    width: 1.5,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.greyBorder,
+                                    ),
+                                  ),
+                                  right: BorderSide(
+                                    width: 1.5,
+                                    color: AppTheme.color(
+                                      context,
+                                      Styles.greyBorder,
+                                    ),
+                                  ),
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    tarea.usuarioUltimoComentario!,
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.5,
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.greyBorder,
+                                  ),
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        Utilities.formatearFechaHora(
+                                          tarea.fechaUltimoComentario!,
+                                        ),
+                                        style: AppTheme.style(
+                                          context,
+                                          Styles.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  GestureDetector(
+                                    onLongPress: () =>
+                                        Utilities.copyToClipboard(
+                                      context,
+                                      tarea.ultimoComentario ?? '',
+                                    ),
+                                    child: Text(
+                                      tarea.ultimoComentario ??
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            BlockTranslate.general,
+                                            'noDisponible',
+                                          ),
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.normal,
+                                      ),
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                if (tarea.ultimoComentario != null) const SizedBox(height: 5),
               ],
             ),
           ),
           CardWidget(
+            margin: tarea.ultimoComentario != null
+                ? const EdgeInsets.only(
+                    top: 0,
+                  )
+                : const EdgeInsets.only(
+                    top: 5,
+                  ),
             color: AppTheme.color(
               context,
               Styles.secondBackground,

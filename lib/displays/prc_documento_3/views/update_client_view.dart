@@ -25,7 +25,13 @@ class UpdateClientView extends StatelessWidget {
               context,
               cuenta.cuentaCorrentista,
             ),
-            child: const Icon(Icons.save_outlined),
+            child: Icon(
+              Icons.save_outlined,
+              color: AppTheme.color(
+                context,
+                Styles.white,
+              ),
+            ),
           ),
           appBar: AppBar(
             title: Text(
