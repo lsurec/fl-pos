@@ -98,7 +98,9 @@
         "fechaHoraInicio": "Startdatum und -zeit",
         "fechaHoraFin": "Enddatum und -zeit",
         "hora": "Uhrzeit: ",
-        "completa": "Datum und Uhrzeit: "
+        "completa": "Datum und Uhrzeit: ",
+        "entrega": "Lieferdatum: ",
+        "recoger": "Abholdatum: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
@@ -342,7 +344,9 @@
         "cantidad": "Menge",
         "docRecientes": "Neueste Dokumente",
         "skuDesc": "Artikelnummer/Beschreibung",
-        "buscarPro": "Produkt suchen"
+        "buscarPro": "Produkt suchen",
+        "evento": "Veranstaltungsdaten",
+        "opcion": "Wählen Sie eine Option"
     },
     "calculos": {
         "calcular": "Berechnen",

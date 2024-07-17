@@ -98,7 +98,9 @@
         "fechaHoraInicio": "Date et heure de début",
         "fechaHoraFin": "Date et heure de fin",
         "hora": "Heure : ",
-        "completa": "Date et Heure: "
+        "completa": "Date et Heure: ",
+        "entrega": "Date de Livraison: ",
+        "recoger": "Date de Ramassage: "
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",
@@ -342,7 +344,9 @@
         "cantidad": "Quantité",
         "docRecientes": "Documents récents",
         "skuDesc": "UGS/Description",
-        "buscarPro": "Rechercher un produit"
+        "buscarPro": "Rechercher un produit",
+        "evento": "Données de l'événement",
+        "opcion": "Sélectionnez une option"
     },
     "calculos": {
         "calcular": "Calculer",

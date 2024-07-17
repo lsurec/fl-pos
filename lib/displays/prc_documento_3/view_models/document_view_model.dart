@@ -125,6 +125,9 @@ class DocumentViewModel extends ChangeNotifier {
   bool valueParametro(int param) {
     bool value = false;
 
+    //sino existe serie, retornar false
+    if (serieSelect == null) return false;
+
     //validar que exista el parametro
 
     for (var i = 0; i < parametros.length; i++) {
@@ -771,5 +774,270 @@ class DocumentViewModel extends ChangeNotifier {
     clienteSelect = client;
     notifyListeners();
     if (back) Navigator.pop(context);
+  }
+
+  //Fechas
+  DateTime fechaInicial = DateTime.now();
+  DateTime fechaFinal = DateTime.now();
+  DateTime fechaEntrega = DateTime.now();
+  DateTime fechaRecoger = DateTime.now();
+
+  //Abrir picker de fecha inicial
+  Future<void> abrirFechaInicial(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaInicial,
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha con la fecha seleccionada en el picker
+    fechaInicial = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaInicial.hour,
+      fechaInicial.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> abrirHoraInicial(BuildContext context) async {
+    //inicializar picker de la hora con la hora recibida
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaInicial.hour,
+      minute: fechaInicial.minute,
+    );
+
+    //abre el time picker con la hora inicial
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora seleccionada es null, no hacer nada.
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaInicial = DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      fechaInicial.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //para la final
+  Future<void> abrirFechaFinal(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaFinal,
+      //fecha minima es la inicial
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha final con la fecha seleccionada en el picker
+    fechaFinal = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaFinal.hour,
+      fechaFinal.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir picker de la fecha final
+  Future<void> abrirHoraFinal(BuildContext context) async {
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaFinal.hour,
+      minute: fechaFinal.minute,
+    );
+
+    //abre el time picker con la hora creada con la fecha final
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora es null no hace nada
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaFinal = DateTime(
+      fechaFinal.year,
+      fechaFinal.month,
+      fechaFinal.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Fecha entrega
+  //Abrir picker de fecha entrega
+  Future<void> abrirFechaEntrega(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaEntrega,
+      firstDate: fechaEntrega,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha con la fecha seleccionada en el picker
+    fechaEntrega = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaEntrega.hour,
+      fechaEntrega.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> abrirHoraEntrega(BuildContext context) async {
+    //inicializar picker de la hora con la hora recibida
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaEntrega.hour,
+      minute: fechaEntrega.minute,
+    );
+
+    //abre el time picker con la hora inicial
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora seleccionada es null, no hacer nada.
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaEntrega = DateTime(
+      fechaEntrega.year,
+      fechaEntrega.month,
+      fechaEntrega.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> abrirFechaRecoger(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaRecoger,
+      firstDate: fechaRecoger,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha con la fecha seleccionada en el picker
+    fechaRecoger = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaRecoger.hour,
+      fechaRecoger.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> abrirHoraRecoger(BuildContext context) async {
+    //inicializar picker de la hora con la hora recibida
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaRecoger.hour,
+      minute: fechaRecoger.minute,
+    );
+
+    //abre el time picker con la hora inicial
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora seleccionada es null, no hacer nada.
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaRecoger = DateTime(
+      fechaRecoger.year,
+      fechaRecoger.month,
+      fechaRecoger.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
   }
 }
