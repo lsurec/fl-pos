@@ -16,6 +16,18 @@ class DocumentViewModel extends ChangeNotifier {
   //Controlador input buscar cliente
   final TextEditingController client = TextEditingController();
 
+  //input contacto
+  final TextEditingController contacto = TextEditingController();
+
+  //input descipcion
+  final TextEditingController descipcion = TextEditingController();
+
+  //input direccion de entrega
+  final TextEditingController direcEntrega = TextEditingController();
+
+  //input observaciones
+  final TextEditingController observaciones = TextEditingController();
+
   //Seleccionar consummidor final
   bool cf = false;
 
@@ -140,6 +152,27 @@ class DocumentViewModel extends ChangeNotifier {
     }
 
     return value;
+  }
+
+  String? getTextParam(int param) {
+    // Texto por defecto
+    String? name;
+
+    //sino existe serie, retornar false
+    if (serieSelect == null) return name;
+
+    // Recorrer lista de parámetros
+    for (var parametro in parametros) {
+      // Buscar el nombre en el parámetro 57
+      if (parametro.parametro == param) {
+        // Si nombre es nulo, agregar el texto por defecto
+        name = parametro.paCaracter;
+        break;
+      }
+    }
+
+    // Retornar texto
+    return name;
   }
 
   obtenerReferencias(BuildContext context) async {

@@ -306,7 +306,8 @@
         "serie": "Serie",
         "documento": "Documento",
         "detalle": "Detalle",
-        "pago": "Pago"
+        "pago": "Pago",
+        "observaciones": "Observaciones"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -387,7 +388,8 @@
         "docIdRef": "Id Doc Ref: ",
         "consecutivoInter": "Consecutivo interno",
         "idRef": "Id Ref: ",
-        "cuenta": "Cuenta: "
+        "cuenta": "Cuenta: ",
+        "direEntrega": "Dirección Entrega"
     },
     "tareas": {
         "numTarea": "Tarea No: ",

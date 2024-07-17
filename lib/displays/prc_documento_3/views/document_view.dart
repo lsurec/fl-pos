@@ -582,10 +582,73 @@ class DocumentView extends StatelessWidget {
                       const Divider(),
                     ],
                   ),
+//Fin fechas
+//parametro 385 = Contacto
+                if (vm.valueParametro(385))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(385) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'contacto',
+                        ),
+                  ),
+//parametro 383 = Descripcion
+                if (vm.valueParametro(383))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(383) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'descripcion',
+                        ),
+                  ),
+//parametro 386 = Direccion de entrega
+                if (vm.valueParametro(386))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(386) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'direEntrega',
+                        ),
+                  ),
+//parametro 384 = Observacion
+                if (vm.valueParametro(384))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(384) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'observacion',
+                        ),
+                  ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _Observacion extends StatelessWidget {
+  final TextEditingController controller;
+  final String labelText;
+
+  const _Observacion({
+    required this.controller,
+    required this.labelText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      maxLines: 3,
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: labelText,
       ),
     );
   }
