@@ -44,16 +44,14 @@ class FilesService {
 
       // Manejar la respuesta
       if (response.statusCode == 200) {
-        print('Archivos subidos exitosamente');
+        //Archivos subidos exitosamente
         return true;
       } else {
-        print(
-          'Error al subir archivos. Código de estado: ${response.statusCode}',
-        );
+        // 'Error al subir archivos. Código de estado: ${response.statusCode}',
         return false;
       }
     } catch (e) {
-      print('Error al subir archivos: $e');
+      //'Error al subir archivos: $e'
       return false;
     }
   }

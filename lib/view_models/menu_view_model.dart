@@ -151,6 +151,17 @@ class MenuViewModel extends ChangeNotifier {
       //Agregar series encontradas
       vmDoc.series.addAll(resSeries.response);
 
+      //Para realizar pruebas con una sola serie
+      // if (vmDoc.series.length > 1) {
+      //   if (vmDoc.series.length > 1) {
+      //     vmDoc.series.removeRange(
+      //       1,
+      //       vmDoc.series.length,
+      //     ); // Borra todos los elementos excepto el primero
+      //   }
+      //   vmDoc.serieSelect = vmDoc.series.first;
+      // }
+
       // si sololo hay una serie seleccionarla por defecto
       if (vmDoc.series.length == 1) {
         vmDoc.serieSelect = vmDoc.series.first;
@@ -253,6 +264,35 @@ class MenuViewModel extends ChangeNotifier {
 
         //Agregar series encontradas
         vmDoc.parametros.addAll(resParams.response);
+
+        //evaluar el parametro 58
+        TipoReferenciaService referenciaService = TipoReferenciaService();
+
+        if (vmDoc.valueParametro(58)) {
+          vmDoc.referencias.clear();
+          vmDoc.referenciaSelect = null;
+
+          //Consumo del servicio
+          ApiResModel resTiposRef = await referenciaService.getTiposReferencia(
+            user, //user
+            token, // token,
+          );
+
+          //valid succes response
+          if (!resTiposRef.succes) {
+            //si algo salio mal mostrar alerta
+            vmHome.isLoading = false;
+
+            await NotificationService.showErrorView(
+              context,
+              resTiposRef,
+            );
+            return;
+          }
+
+          //agregar formas de pago encontradas
+          vmDoc.referencias.addAll(resTiposRef.response);
+        }
       }
 
       //limpiar lista

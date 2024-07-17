@@ -204,6 +204,9 @@ class DocumentoViewModel extends ChangeNotifier {
 
     if (vmMenu.documento == null) return;
 
+    vmDocument.referencias.clear();
+    vmDocument.cuentasCorrentistasRef.clear();
+
     //iniciar proceso
     isLoading = true;
 
@@ -219,6 +222,7 @@ class DocumentoViewModel extends ChangeNotifier {
       );
       await vmDocument.loadTipoTransaccion(context);
       await vmDocument.loadParametros(context);
+      await vmDocument.obtenerReferencias(context); //cargar referencias
     }
 
     await vmPayment.loadPayments(context);

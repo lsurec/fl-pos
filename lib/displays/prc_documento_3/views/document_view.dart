@@ -269,6 +269,45 @@ class DocumentView extends StatelessWidget {
                       ),
                     ],
                   ),
+                //Mostrar tipos de eventos
+                if (vm.valueParametro(58) && vm.referencias.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'evento',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      DropdownButton<TipoReferenciaModel>(
+                        isExpanded: true,
+                        dropdownColor: AppTheme.color(
+                          context,
+                          Styles.background,
+                        ),
+                        value: vm.referenciaSelect,
+                        onChanged: (value) => vm.changeRef(value),
+                        items: vm.referencias.map(
+                          (tipoRef) {
+                            return DropdownMenuItem<TipoReferenciaModel>(
+                              value: tipoRef,
+                              child: Text(
+                                tipoRef.descripcion,
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),

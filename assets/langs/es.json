@@ -342,7 +342,8 @@
         "cantidad": "Cantidad",
         "docRecientes": "Documentos recientes",
         "skuDesc": "SKU/Descripción",
-        "buscarPro": "Buscar producto"
+        "buscarPro": "Buscar producto",
+        "evento": "Datos del Evento"
     },
     "calculos": {
         "calcular": "Calcular",

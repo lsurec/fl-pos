@@ -28,6 +28,9 @@ class DocumentViewModel extends ChangeNotifier {
   //Vendedor seleccionado selccionado
   SellerModel? vendedorSelect;
 
+  //Vendedor seleccionado selccionado
+  TipoReferenciaModel? referenciaSelect;
+
   //serie seleccionada
   SerieModel? serieSelect;
 
@@ -37,6 +40,7 @@ class DocumentViewModel extends ChangeNotifier {
   final List<SerieModel> series = [];
   final List<TipoTransaccionModel> tiposTransaccion = [];
   final List<ParametroModel> parametros = [];
+  final List<TipoReferenciaModel> referencias = []; //tipos de referencia
 
   //limmpiar campos de la vista del usuario
   void clearView() {
@@ -60,6 +64,12 @@ class DocumentViewModel extends ChangeNotifier {
   //Seleccioanr tipo precio
   void changeSeller(SellerModel? value) {
     vendedorSelect = value;
+    notifyListeners();
+  }
+
+  //Seleccioanr una referencia
+  void changeRef(TipoReferenciaModel? value) {
+    referenciaSelect = value;
     notifyListeners();
   }
 
@@ -112,6 +122,68 @@ class DocumentViewModel extends ChangeNotifier {
     return fel;
   }
 
+  bool valueParametro(int param) {
+    bool value = false;
+
+    //validar que exista el parametro
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == param) {
+        value = true;
+        break;
+      }
+    }
+
+    return value;
+  }
+
+  obtenerReferencias(BuildContext context) async {
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmHome = Provider.of<HomeViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String user = vmLogin.user;
+    final String token = vmLogin.token;
+
+    //evaluar el parametro 58
+    TipoReferenciaService referenciaService = TipoReferenciaService();
+
+    if (valueParametro(58)) {
+      referencias.clear();
+      referenciaSelect = null;
+
+      //Consumo del servicio
+      ApiResModel resTiposRef = await referenciaService.getTiposReferencia(
+        user, //user
+        token, // token,
+      );
+
+      //valid succes response
+      if (!resTiposRef.succes) {
+        //si algo salio mal mostrar alerta
+        await NotificationService.showErrorView(
+          context,
+          resTiposRef,
+        );
+        return;
+      }
+
+      //agregar formas de pago encontradas
+      referencias.addAll(resTiposRef.response);
+      notifyListeners();
+
+      vmHome.isLoading = false;
+    }
+  }
+
   bool getPosition() {
     bool position = false;
 
@@ -148,8 +220,9 @@ class DocumentViewModel extends ChangeNotifier {
     //Buscar vendedores de la serie
     await loadSellers(context, serieSelect!.serieDocumento!, vmMenu.documento!);
     await loadTipoTransaccion(context);
-    await vmPayment.loadPayments(context);
     await loadParametros(context);
+    await obtenerReferencias(context); //cargar las referencias
+    await vmPayment.loadPayments(context);
 
     //finalizar proceso
     vmFactura.isLoading = false;
@@ -306,9 +379,23 @@ class DocumentViewModel extends ChangeNotifier {
     //Agregar series encontradas
     series.addAll(res.response);
 
+    //Para realizar pruebas con una sola serie
+    // if (series.length > 1) {
+    //   if (series.length > 1) {
+    //     series.removeRange(
+    //       1,
+    //       series.length,
+    //     ); // Borra todos los elementos excepto el primero
+    //   }
+    //   serieSelect = series.first;
+    // }
+
     // si sololo hay una serie seleccionarla por defecto
     if (series.length == 1) {
       serieSelect = series.first;
+
+      //cargar las referencias si solo hay una serie y está seleccionada
+      await obtenerReferencias(context);
     }
 
     notifyListeners();

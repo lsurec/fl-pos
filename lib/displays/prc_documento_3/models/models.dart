@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/displays/prc_documento_3/models/tipo_referencia_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/formato_comanda.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/print_data_comanda_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/cuenta_correntista_model.dart';
