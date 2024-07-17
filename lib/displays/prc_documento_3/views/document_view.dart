@@ -1,4 +1,5 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -98,7 +99,7 @@ class DocumentView extends StatelessWidget {
                     IconButton(
                       onPressed: () => Navigator.pushNamed(
                         context,
-                        "addClient",
+                        AppRoutes.addClient,
                       ),
                       icon: const Icon(
                         Icons.person_add_outlined,
@@ -177,10 +178,11 @@ class DocumentView extends StatelessWidget {
                           ),
                           if (!vm.cf)
                             IconButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "updateClient",
-                                    arguments: vm.clienteSelect);
-                              },
+                              onPressed: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.updateClient,
+                                arguments: vm.clienteSelect,
+                              ),
                               icon: Icon(
                                 Icons.edit_outlined,
                                 color: AppTheme.color(
