@@ -632,6 +632,28 @@ class DocumentView extends StatelessWidget {
   }
 }
 
+// class _Observacion extends StatelessWidget {
+//   final TextEditingController controller;
+//   final String labelText;
+
+//   const _Observacion({
+//     required this.controller,
+//     required this.labelText,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextField(
+//       controller: controller,
+//       maxLines: 3,
+//       decoration: InputDecoration(
+//         labelText: labelText,
+//         hintText: labelText,
+//       ),
+//     );
+//   }
+// }
+
 class _Observacion extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
@@ -643,12 +665,33 @@ class _Observacion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      maxLines: 3,
-      decoration: InputDecoration(
-        labelText: labelText,
-        hintText: labelText,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: controller,
+        maxLines: 3,
+        decoration: InputDecoration(
+          labelText: labelText,
+          hintText: labelText,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.color(
+                context,
+                Styles.border,
+              ),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.color(
+                context,
+                Styles.border,
+              ),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
       ),
     );
   }
