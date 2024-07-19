@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/data_fel_model.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/fel/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -273,6 +274,65 @@ class FelService {
         url: url.toString(),
         succes: true,
         response: documentos,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Obtner empresas
+  Future<ApiResModel> getApiCatalogo(
+    String user,
+    String token,
+    String api,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Fel/api/$api/$user");
+    try {
+      //url completa
+
+      //configuracion del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Empresas disponuibles
+      List<ApiModel> empresas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ApiModel.fromMap(item);
+        //agregar item a la lista
+        empresas.add(responseFinally);
+      }
+
+      //Respuesta corerecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: empresas,
         storeProcedure: null,
       );
     } catch (e) {

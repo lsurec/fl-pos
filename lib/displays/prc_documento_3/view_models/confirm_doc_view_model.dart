@@ -700,6 +700,114 @@ class ConfirmDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<ApiResModel> genericFel(BuildContext context) async {
+    const int certificador = 1; //1 infile, 2 tekra
+    DocXmlModel doc;
+    String apiUse = "";
+    ApiModel api;
+
+    //Proveedor de datos externo
+    final loginVM = Provider.of<LoginViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    final localVM = Provider.of<LocalSettingsViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    int empresa = localVM.selectedEmpresa!.empresa;
+    String user = loginVM.user;
+    String token = loginVM.token;
+
+    final FelService felService = FelService();
+
+    //Obtener plantilla xml para certificar
+    ApiResModel resXmlDoc = await felService.getDocXml(
+      user,
+      token,
+      consecutivoDoc,
+    );
+
+    //Si el api falló
+    if (!resXmlDoc.succes) return resXmlDoc;
+
+    //plantilla del documento
+    List<DocXmlModel> docs = resXmlDoc.response;
+
+    //si no se encuntra el documento
+    if (docs.isEmpty) {
+      return ApiResModel(
+        typeError: 1,
+        succes: false,
+        response: AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noDispoDocCert',
+        ),
+        url: "",
+        storeProcedure: null,
+      );
+    }
+
+    //Docuemnto que se va a usar
+    doc = docs.first;
+
+    //Obtener credenciales
+    final ApiResModel resCrdenciales = await felService.getCredenciales(
+      certificador,
+      empresa,
+      user,
+      token,
+    );
+
+    if (!resCrdenciales.succes) return resCrdenciales;
+
+    final List<CredencialModel> credenciales = resCrdenciales.response;
+
+    //Buscar api que se va a usar
+
+    for (var i = 0; i < credenciales.length; i++) {
+      CredencialModel credencial = credenciales[i];
+
+      if (credencial.campoNombre == "certificar") {
+        apiUse = credencial.campoValor;
+        break;
+      }
+    }
+
+    //si el campo que se va a usar no esta disponible mostrar mensaje
+    if (apiUse.isEmpty) {
+      resCrdenciales.response =
+          "No se pudo obtener la credencial n\"certificarn\"";
+
+      return resCrdenciales;
+    }
+
+    //Obtener catalogos de apis
+
+    final ApiResModel resApis = await felService.getApiCatalogo(
+      user,
+      token,
+      apiUse,
+    );
+
+    if (!resApis.succes) return resApis;
+
+    final List<ApiModel> apis = resApis.response;
+
+    if (apis.isEmpty) {
+      resApis.response = "No se econtró el api en el catalago.";
+
+      return resApis;
+    }
+
+    api = apis.first;
+
+    //Busar árametros
+  }
+
   //certificar DTE (Servicios del certificador)
   Future<ApiResModel> certDTE(
     BuildContext context,
