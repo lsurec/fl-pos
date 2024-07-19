@@ -426,7 +426,11 @@
         "estadoTarea": "État",
         "prioridadTarea": "Priorité",
         "agregarResponsable": "Ajouter un responsable",
-        "agregarInvitados": "Ajouter des invités"
+        "agregarInvitados": "Ajouter des invités",
+        "todas": "Alle",
+        "creadas": "Erstellt",
+        "asignadas": "Zugewiesen",
+        "invitaciones": "Einladungen"
     },
     "calendario": {
         "hoy": "Aujourd'hui",

@@ -19,6 +19,8 @@ class TareasViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  late TabController tabController;
+
   //formulario para buscar tareas
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
 

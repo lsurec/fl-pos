@@ -426,7 +426,11 @@
         "estadoTarea": "Status",
         "prioridadTarea": "Priorität",
         "agregarResponsable": "Verantwortlichen hinzufügen",
-        "agregarInvitados": "Einladungen hinzufügen"
+        "agregarInvitados": "Einladungen hinzufügen",
+        "todas": "Alle",
+        "creadas": "Erstellt",
+        "asignadas": "Zugewiesen",
+        "invitaciones": "Einladungen"
     },
     "calendario": {
         "hoy": "Heute",

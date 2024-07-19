@@ -426,7 +426,11 @@
         "estadoTarea": "Status",
         "prioridadTarea": "Priority",
         "agregarResponsable": "Add Responsible",
-        "agregarInvitados": "Add Invited"
+        "agregarInvitados": "Add Invited",
+        "todas": "All",
+        "creadas": "Created",
+        "asignadas": "Assigned",
+        "invitaciones": "Invitations"
     },
     "calendario": {
         "hoy": "Today",
