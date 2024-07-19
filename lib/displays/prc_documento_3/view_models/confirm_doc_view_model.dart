@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'dart:math';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
+import 'package:geolocator/geolocator.dart';
 
 class ConfirmDocViewModel extends ChangeNotifier {
   final PrinterManager instanceManager = PrinterManager.instance;
@@ -89,6 +90,46 @@ class ConfirmDocViewModel extends ChangeNotifier {
   newDoc() {
     consecutivoDoc = 0;
     showPrint = false;
+  }
+
+  Position? currentPosition;
+
+  setPosition() async {
+    getCurrentPosition().then((position) {
+      currentPosition = position;
+      notifyListeners();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  Future<Position> getCurrentPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Verifica si el servicio de ubicación está habilitado.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Si no está habilitado, retorna un error.
+      return Future.error('El servicio de ubicación está deshabilitado.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Si los permisos están denegados, retorna un error.
+        return Future.error('Permiso de ubicación denegado.');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Los permisos están denegados permanentemente.
+      return Future.error('Permiso de ubicación denegado permanentemente.');
+    }
+
+    // Cuando los permisos están otorgados, obtiene la ubicación actual.
+    return await Geolocator.getCurrentPosition();
   }
 
   //generar formato pdf para compartir
@@ -1118,6 +1159,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     docGlobal = DocEstructuraModel(
+      docLatitdud: currentPosition?.latitude.toString(),
+      docLongitud: currentPosition?.longitude.toString(),
       consecutivoInterno: firstPart,
       docTraMonto: detailsVM.total,
       docCaMonto: totalCA,

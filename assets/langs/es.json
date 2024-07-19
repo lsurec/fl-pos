@@ -98,7 +98,9 @@
         "fechaHoraInicio": "Fecha y hora inicial",
         "fechaHoraFin": "Fecha y hora final",
         "hora": "Hora: ",
-        "completa": "Fecha y hora: "
+        "completa": "Fecha y hora: ",
+        "entrega": "Fecha Entrega: ",
+        "recoger": "Fecha Recoger: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -194,8 +196,8 @@
         "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.",
         "responsableActualizado": "Responsable actualizado correctamente.",
         "asignado": "Usuario asignado anteriormente.",
-        "estadoIgual" :"Estado asignado anteriormente.",
-        "prioridadIgual" :"Prioridad asignada anteriormente.",
+        "estadoIgual": "Estado asignado anteriormente.",
+        "prioridadIgual": "Prioridad asignada anteriormente.",
         "copiado": "Texto copiado al portapapeles."
     },
     "preferencias": {
@@ -304,7 +306,8 @@
         "serie": "Serie",
         "documento": "Documento",
         "detalle": "Detalle",
-        "pago": "Pago"
+        "pago": "Pago",
+        "observaciones": "Observaciones"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -342,7 +345,9 @@
         "cantidad": "Cantidad",
         "docRecientes": "Documentos recientes",
         "skuDesc": "SKU/Descripción",
-        "buscarPro": "Buscar producto"
+        "buscarPro": "Buscar producto",
+        "evento": "Datos del Evento",
+        "opcion": "Selecciona una opción"
     },
     "calculos": {
         "calcular": "Calcular",
@@ -383,7 +388,8 @@
         "docIdRef": "Id Doc Ref: ",
         "consecutivoInter": "Consecutivo interno",
         "idRef": "Id Ref: ",
-        "cuenta": "Cuenta: "
+        "cuenta": "Cuenta: ",
+        "direEntrega": "Dirección Entrega"
     },
     "tareas": {
         "numTarea": "Tarea No: ",

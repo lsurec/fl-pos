@@ -16,6 +16,18 @@ class DocumentViewModel extends ChangeNotifier {
   //Controlador input buscar cliente
   final TextEditingController client = TextEditingController();
 
+  //input contacto
+  final TextEditingController contacto = TextEditingController();
+
+  //input descipcion
+  final TextEditingController descipcion = TextEditingController();
+
+  //input direccion de entrega
+  final TextEditingController direcEntrega = TextEditingController();
+
+  //input observaciones
+  final TextEditingController observaciones = TextEditingController();
+
   //Seleccionar consummidor final
   bool cf = false;
 
@@ -28,6 +40,9 @@ class DocumentViewModel extends ChangeNotifier {
   //Vendedor seleccionado selccionado
   SellerModel? vendedorSelect;
 
+  //Vendedor seleccionado selccionado
+  TipoReferenciaModel? referenciaSelect;
+
   //serie seleccionada
   SerieModel? serieSelect;
 
@@ -37,6 +52,7 @@ class DocumentViewModel extends ChangeNotifier {
   final List<SerieModel> series = [];
   final List<TipoTransaccionModel> tiposTransaccion = [];
   final List<ParametroModel> parametros = [];
+  final List<TipoReferenciaModel> referencias = []; //tipos de referencia
 
   //limmpiar campos de la vista del usuario
   void clearView() {
@@ -60,6 +76,12 @@ class DocumentViewModel extends ChangeNotifier {
   //Seleccioanr tipo precio
   void changeSeller(SellerModel? value) {
     vendedorSelect = value;
+    notifyListeners();
+  }
+
+  //Seleccioanr una referencia
+  void changeRef(TipoReferenciaModel? value) {
+    referenciaSelect = value;
     notifyListeners();
   }
 
@@ -112,6 +134,109 @@ class DocumentViewModel extends ChangeNotifier {
     return fel;
   }
 
+  bool valueParametro(int param) {
+    bool value = false;
+
+    //sino existe serie, retornar false
+    if (serieSelect == null) return false;
+
+    //validar que exista el parametro
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == param) {
+        value = true;
+        break;
+      }
+    }
+
+    return value;
+  }
+
+  String? getTextParam(int param) {
+    // Texto por defecto
+    String? name;
+
+    //sino existe serie, retornar false
+    if (serieSelect == null) return name;
+
+    // Recorrer lista de parámetros
+    for (var parametro in parametros) {
+      // Buscar el nombre en el parámetro 57
+      if (parametro.parametro == param) {
+        // Si nombre es nulo, agregar el texto por defecto
+        name = parametro.paCaracter;
+        break;
+      }
+    }
+
+    // Retornar texto
+    return name;
+  }
+
+  obtenerReferencias(BuildContext context) async {
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmHome = Provider.of<HomeViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String user = vmLogin.user;
+    final String token = vmLogin.token;
+
+    //evaluar el parametro 58
+    TipoReferenciaService referenciaService = TipoReferenciaService();
+
+    if (valueParametro(58)) {
+      referencias.clear();
+      referenciaSelect = null;
+
+      //Consumo del servicio
+      ApiResModel resTiposRef = await referenciaService.getTiposReferencia(
+        user, //user
+        token, // token,
+      );
+
+      //valid succes response
+      if (!resTiposRef.succes) {
+        //si algo salio mal mostrar alerta
+        await NotificationService.showErrorView(
+          context,
+          resTiposRef,
+        );
+        return;
+      }
+
+      //agregar formas de pago encontradas
+      referencias.addAll(resTiposRef.response);
+      notifyListeners();
+
+      vmHome.isLoading = false;
+    }
+  }
+
+  bool getPosition() {
+    bool position = false;
+
+    //el parametro que indica si genera fel o no es 349
+
+    for (var i = 0; i < parametros.length; i++) {
+      final ParametroModel parametro = parametros[i];
+
+      if (parametro.parametro == 318) {
+        position = true;
+        break;
+      }
+    }
+
+    return position;
+  }
+
   //seleccionar serie
   Future<void> changeSerie(
     SerieModel? value,
@@ -131,8 +256,9 @@ class DocumentViewModel extends ChangeNotifier {
     //Buscar vendedores de la serie
     await loadSellers(context, serieSelect!.serieDocumento!, vmMenu.documento!);
     await loadTipoTransaccion(context);
-    await vmPayment.loadPayments(context);
     await loadParametros(context);
+    await obtenerReferencias(context); //cargar las referencias
+    await vmPayment.loadPayments(context);
 
     //finalizar proceso
     vmFactura.isLoading = false;
@@ -289,9 +415,23 @@ class DocumentViewModel extends ChangeNotifier {
     //Agregar series encontradas
     series.addAll(res.response);
 
+    //Para realizar pruebas con una sola serie
+    // if (series.length > 1) {
+    //   if (series.length > 1) {
+    //     series.removeRange(
+    //       1,
+    //       series.length,
+    //     ); // Borra todos los elementos excepto el primero
+    //   }
+    //   serieSelect = series.first;
+    // }
+
     // si sololo hay una serie seleccionarla por defecto
     if (series.length == 1) {
       serieSelect = series.first;
+
+      //cargar las referencias si solo hay una serie y está seleccionada
+      await obtenerReferencias(context);
     }
 
     notifyListeners();
@@ -667,5 +807,270 @@ class DocumentViewModel extends ChangeNotifier {
     clienteSelect = client;
     notifyListeners();
     if (back) Navigator.pop(context);
+  }
+
+  //Fechas
+  DateTime fechaInicial = DateTime.now();
+  DateTime fechaFinal = DateTime.now();
+  DateTime fechaEntrega = DateTime.now();
+  DateTime fechaRecoger = DateTime.now();
+
+  //Abrir picker de fecha inicial
+  Future<void> abrirFechaInicial(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaInicial,
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha con la fecha seleccionada en el picker
+    fechaInicial = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaInicial.hour,
+      fechaInicial.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> abrirHoraInicial(BuildContext context) async {
+    //inicializar picker de la hora con la hora recibida
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaInicial.hour,
+      minute: fechaInicial.minute,
+    );
+
+    //abre el time picker con la hora inicial
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora seleccionada es null, no hacer nada.
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaInicial = DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      fechaInicial.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //para la final
+  Future<void> abrirFechaFinal(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaFinal,
+      //fecha minima es la inicial
+      firstDate: fechaInicial,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha final con la fecha seleccionada en el picker
+    fechaFinal = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaFinal.hour,
+      fechaFinal.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir picker de la fecha final
+  Future<void> abrirHoraFinal(BuildContext context) async {
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaFinal.hour,
+      minute: fechaFinal.minute,
+    );
+
+    //abre el time picker con la hora creada con la fecha final
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora es null no hace nada
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaFinal = DateTime(
+      fechaFinal.year,
+      fechaFinal.month,
+      fechaFinal.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Fecha entrega
+  //Abrir picker de fecha entrega
+  Future<void> abrirFechaEntrega(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaEntrega,
+      firstDate: fechaEntrega,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha con la fecha seleccionada en el picker
+    fechaEntrega = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaEntrega.hour,
+      fechaEntrega.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> abrirHoraEntrega(BuildContext context) async {
+    //inicializar picker de la hora con la hora recibida
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaEntrega.hour,
+      minute: fechaEntrega.minute,
+    );
+
+    //abre el time picker con la hora inicial
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora seleccionada es null, no hacer nada.
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaEntrega = DateTime(
+      fechaEntrega.year,
+      fechaEntrega.month,
+      fechaEntrega.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
+  }
+
+  Future<void> abrirFechaRecoger(BuildContext context) async {
+    //abrir picker de la fecha inicial con la fecha actual
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: fechaRecoger,
+      firstDate: fechaRecoger,
+      lastDate: DateTime(2100),
+      confirmText: AppLocalizations.of(context)!.translate(
+        BlockTranslate.botones,
+        'aceptar',
+      ),
+    );
+
+    //si la fecha es null, no realiza nada
+    if (pickedDate == null) return;
+
+    //armar fecha con la fecha seleccionada en el picker
+    fechaRecoger = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      fechaRecoger.hour,
+      fechaRecoger.minute,
+    );
+
+    notifyListeners();
+  }
+
+  //Abrir y seleccionar hora inicial
+  Future<void> abrirHoraRecoger(BuildContext context) async {
+    //inicializar picker de la hora con la hora recibida
+    TimeOfDay? initialTime = TimeOfDay(
+      hour: fechaRecoger.hour,
+      minute: fechaRecoger.minute,
+    );
+
+    //abre el time picker con la hora inicial
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: initialTime, //hora inicial
+      builder: (BuildContext context, Widget? child) {
+        return Localizations.override(
+          context: context,
+          locale: const Locale('en', 'ES'),
+          child: child,
+        );
+      },
+    );
+
+    //si la hora seleccionada es null, no hacer nada.
+    if (pickedTime == null) return;
+
+    //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
+    fechaRecoger = DateTime(
+      fechaRecoger.year,
+      fechaRecoger.month,
+      fechaRecoger.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    notifyListeners();
   }
 }

@@ -32,16 +32,27 @@ class ComentariosViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //formulario para escribir comentariosS
+  GlobalKey<FormState> formKeyComment = GlobalKey<FormState>();
+
   //comentario
   final TextEditingController comentarioController = TextEditingController();
 
   //ID TAREA PARA COMENTAR
   int? idTarea;
+
+  //Validar formulario barra busqueda
+  bool isValidFormComment() {
+    return formKeyComment.currentState?.validate() ?? false;
+  }
+
   //Nuevo comentario
   Future<void> comentar(
     BuildContext context,
-    String comentario,
   ) async {
+    //validar formulario
+    if (!isValidFormComment()) return;
+
     //ocultar teclado
     FocusScope.of(context).unfocus();
 
@@ -95,19 +106,11 @@ class ComentariosViewModel extends ChangeNotifier {
       return;
     }
 
-    //Crear modelo de comentario
-    ComentarioModel comentarioCreado = ComentarioModel(
-      comentario: comentarioController.text,
-      fechaHora: DateTime.now(),
-      nameUser: user,
-      userName: user,
-      tarea: idTarea!,
-      tareaComentario: res.response.res,
-    );
-
+    //lista de archivos
     final List<ObjetoComentarioModel> archivos = [];
+    int idComentario = res.response.res;
 
-    if (archivos.isNotEmpty) {
+    if (files.isNotEmpty) {
       for (var i = 0; i < files.length; i++) {
         File file = files[i];
         ObjetoComentarioModel archivo = ObjetoComentarioModel(
@@ -126,8 +129,8 @@ class ComentariosViewModel extends ChangeNotifier {
         token,
         user,
         files,
-        comentarioCreado.tarea,
-        comentarioCreado.tareaComentario,
+        idTarea!,
+        idComentario,
         empresa.absolutePathPicture,
       );
 
@@ -148,26 +151,17 @@ class ComentariosViewModel extends ChangeNotifier {
         //Respuesta incorrecta
         return;
       }
-
-      isLoading = false;
-
-      //Crear modelo de comentario detalle, (comentario y objetos)
-      comentarioDetalle.add(
-        ComentarioDetalleModel(
-          comentario: comentarioCreado,
-          objetos: archivos,
-        ),
-      );
-
-      notifyListeners();
-      comentarioController.text = ""; //limpiar input
-      files.clear(); //limpiar lista de archivos
-
-      isLoading = false; //detener carga
-
-      //Retornar respuesta correcta
-      return;
     }
+
+    //Crear modelo de comentario
+    ComentarioModel comentarioCreado = ComentarioModel(
+      comentario: comentarioController.text,
+      fechaHora: DateTime.now(),
+      nameUser: user,
+      userName: user,
+      tarea: idTarea!,
+      tareaComentario: idComentario,
+    );
 
     //Crear modelo de comentario detalle, (comentario y objetos)
     comentarioDetalle.add(
@@ -183,8 +177,6 @@ class ComentariosViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
 
-    //Retornar respuesta correcta
-    return;
   }
 
   loadData(BuildContext context) async {

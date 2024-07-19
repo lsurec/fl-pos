@@ -192,44 +192,58 @@ class _NuevoComentario extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
 
-    return TextFormField(
-      controller: vm.comentarioController,
-      onChanged: (value) => vm.comentarioController.text = value,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 1,
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: vm.formKeyComment,
+      child: TextFormField(
+        controller: vm.comentarioController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'requerido',
+            );
+          }
+          return null;
+        },
+        maxLines: 3,
+        textInputAction: TextInputAction.send,
+        onFieldSubmitted: (value) => vm.comentar(context),
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 1,
+            ),
           ),
-        ),
-        labelText: AppLocalizations.of(context)!.translate(
-          BlockTranslate.tareas,
-          'nuevoComentario',
-        ),
-        suffixIcon: SizedBox(
-          width: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.botones,
-                  'adjuntarArchivos',
+          labelText: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'nuevoComentario',
+          ),
+          suffixIcon: SizedBox(
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'adjuntarArchivos',
+                  ),
+                  onPressed: () => vm.selectFiles(),
+                  icon: const Icon(Icons.attach_file_outlined),
                 ),
-                onPressed: () => vm.selectFiles(),
-                icon: const Icon(Icons.attach_file_outlined),
-              ),
-              IconButton(
-                tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.botones,
-                  'enviarComentario',
+                IconButton(
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'enviarComentario',
+                  ),
+                  onPressed: () => vm.comentar(
+                    context,
+                  ),
+                  icon: const Icon(Icons.send),
                 ),
-                onPressed: () => vm.comentar(
-                  context,
-                  vm.comentarioController.text,
-                ),
-                icon: const Icon(Icons.send),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -295,15 +309,6 @@ class _Comentario extends StatelessWidget {
                   Styles.bold,
                 ),
               ),
-              Text(
-                Utilities.formatearFecha(
-                  comentario.comentario.fechaHora,
-                ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
             ],
           ),
         ),
@@ -325,6 +330,21 @@ class _Comentario extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    Utilities.formatearFechaHora(
+                      comentario.comentario.fechaHora,
+                    ),
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
               GestureDetector(
                 onLongPress: () => Utilities.copyToClipboard(
                   context,

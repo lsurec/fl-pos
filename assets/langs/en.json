@@ -98,7 +98,9 @@
         "fechaHoraInicio": "Start date and time",
         "fechaHoraFin": "End date and time",
         "hora": "Time: ",
-        "completa": "Date and Time: "
+        "completa": "Date and Time: ",
+        "entrega": "Delivery Date: ",
+        "recoger": "Pick-up Date: "
     },
     "notificaciones": {
         "reiniciar": "To view the changes, first restart the application.",
@@ -304,7 +306,8 @@
         "serie": "Series",
         "documento": "Document",
         "detalle": "Detail",
-        "pago": "Payment"
+        "pago": "Payment",
+        "observaciones": "Observations"
     },
     "cuenta": {
         "nueva": "New Account",
@@ -342,7 +345,9 @@
         "cantidad": "Quantity",
         "docRecientes": "Recent documents",
         "skuDesc": "SKU/Description",
-        "buscarPro": "Search product"
+        "buscarPro": "Search product",
+        "evento": "Event Data",
+        "opcion": "Select an option"
     },
     "calculos": {
         "calcular": "Calculate",
@@ -383,7 +388,8 @@
         "docIdRef": "Doc ID Ref: ",
         "consecutivoInter": "Internal Consecutive",
         "idRef": "ID Ref: ",
-        "cuenta": "Account: "
+        "cuenta": "Account: ",
+        "direEntrega": "Delivery Address"
     },
     "tareas": {
         "numTarea": "Task No: ",

@@ -180,6 +180,13 @@ class DocumentoViewModel extends ChangeNotifier {
       }
     }
 
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
+
+    //Obtener latitude y longitud Si es necesario
+    if (documentVM.getPosition()) {
+      vmConfirm.setPosition();
+    }
+
     //si todas las validaciones son correctas navegar a resumen del documento
     Navigator.pushNamed(
       context,
@@ -197,6 +204,9 @@ class DocumentoViewModel extends ChangeNotifier {
 
     if (vmMenu.documento == null) return;
 
+    vmDocument.referencias.clear();
+    vmDocument.cuentasCorrentistasRef.clear();
+
     //iniciar proceso
     isLoading = true;
 
@@ -212,6 +222,7 @@ class DocumentoViewModel extends ChangeNotifier {
       );
       await vmDocument.loadTipoTransaccion(context);
       await vmDocument.loadParametros(context);
+      await vmDocument.obtenerReferencias(context); //cargar referencias
     }
 
     await vmPayment.loadPayments(context);

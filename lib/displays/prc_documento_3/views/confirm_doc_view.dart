@@ -103,6 +103,62 @@ class ConfirmDocView extends StatelessWidget {
                     const SizedBox(height: 5),
                     const Divider(),
                     const SizedBox(height: 5),
+                    RichText(
+                      text: TextSpan(
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                        children: [
+                          TextSpan(
+                            //TODO:Translate
+                            text: 'Latitud: ',
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          TextSpan(
+                            text: vm.currentPosition?.latitude.toString() ??
+                                "Sin obtener.",
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    RichText(
+                      text: TextSpan(
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                        children: [
+                          TextSpan(
+                            //TODO:Translate
+                            text: 'Longitud: ',
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          TextSpan(
+                            text: vm.currentPosition?.longitude.toString() ??
+                                "Sin obtener.",
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    const Divider(),
+                    const SizedBox(height: 5),
                     _DataUser(
                       title: AppLocalizations.of(context)!.translate(
                         BlockTranslate.cuenta,

@@ -98,7 +98,9 @@
         "fechaHoraInicio": "Startdatum und -zeit",
         "fechaHoraFin": "Enddatum und -zeit",
         "hora": "Uhrzeit: ",
-        "completa": "Datum und Uhrzeit: "
+        "completa": "Datum und Uhrzeit: ",
+        "entrega": "Lieferdatum: ",
+        "recoger": "Abholdatum: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
@@ -304,7 +306,8 @@
         "serie": "Serie",
         "documento": "Dokument",
         "detalle": "Detail",
-        "pago": "Zahlung"
+        "pago": "Zahlung",
+        "observaciones": "Bemerkungen"
     },
     "cuenta": {
         "nueva": "Neues Konto",
@@ -342,7 +345,9 @@
         "cantidad": "Menge",
         "docRecientes": "Neueste Dokumente",
         "skuDesc": "Artikelnummer/Beschreibung",
-        "buscarPro": "Produkt suchen"
+        "buscarPro": "Produkt suchen",
+        "evento": "Veranstaltungsdaten",
+        "opcion": "Wählen Sie eine Option"
     },
     "calculos": {
         "calcular": "Berechnen",
@@ -383,7 +388,8 @@
         "docIdRef": "Dok-ID-Ref: ",
         "consecutivoInter": "Interne Folge",
         "idRef": "ID-Ref: ",
-        "cuenta": "Konto: "
+        "cuenta": "Konto: ",
+        "direEntrega": "Lieferadresse"
     },
     "tareas": {
         "numTarea": "Aufgabe Nr: ",
