@@ -19,6 +19,7 @@ import 'dart:math';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:geolocator/geolocator.dart';
+import 'package:xml/xml.dart' as xml;
 
 class ConfirmDocViewModel extends ChangeNotifier {
   final PrinterManager instanceManager = PrinterManager.instance;
@@ -700,6 +701,74 @@ class ConfirmDocViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<ApiResModel> updateDTE(
+    BuildContext context,
+    PostDocXmlModel paramUpdate,
+  ) async {
+    //Proveedor de datos externo
+    final loginVM = Provider.of<LoginViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.user;
+    String token = loginVM.token;
+
+    final FelService felService = FelService();
+
+    final ApiResModel resUpdateXml = await felService.postXmlUpdate(
+      token,
+      paramUpdate,
+    );
+
+    if (!resUpdateXml.succes) return resUpdateXml;
+
+    final List<DataFelModel> dataFel = resUpdateXml.response;
+
+    if (dataFel.isNotEmpty) {
+      final DataFelModel fel = dataFel.first;
+
+      docGlobal!.docFelSerie = fel.serieDocumento;
+      docGlobal!.docFelUUID = fel.numeroAutorizacion;
+      docGlobal!.docFelFechaCertificacion =
+          fel.fechaHoraCertificacion.toIso8601String();
+      docGlobal!.docFelNumeroDocumento = fel.numeroDocumento;
+
+      final PostDocumentModel estructuraupdate = PostDocumentModel(
+        estructura: docGlobal!.toJson(),
+        user: user,
+        estado: 11,
+      );
+
+      final DocumentService documentService = DocumentService();
+
+      final ApiResModel resUpdateEstructura =
+          await documentService.updateDocument(
+        estructuraupdate,
+        token,
+        consecutivoDoc,
+      );
+
+      if (!resUpdateEstructura.succes) {
+        NotificationService.showSnackbar(
+          "No se pudo actalizar documento estructura",
+        );
+      }
+    }
+
+    return ApiResModel(
+      typeError: 1,
+      succes: true,
+      response: AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'docCertificado',
+      ),
+      storeProcedure: null,
+      url: "",
+    );
+  }
+
   Future<ApiResModel> genericFel(BuildContext context) async {
     const int certificador = 1; //1 infile, 2 tekra
     DocXmlModel doc;
@@ -856,6 +925,72 @@ class ConfirmDocViewModel extends ChangeNotifier {
         default:
       }
     }
+
+    final ApiResModel resDte = await felService.postDte(
+      api.urlApi,
+      headers,
+      content,
+      token,
+    );
+
+    if (!resDte.succes) return resDte;
+
+    if (api.nodoFirmaDocumentoResponse.isEmpty) {
+      final PostDocXmlModel paramUpdate = PostDocXmlModel(
+        usuario: user,
+        documento: resDte.response,
+        uuid: doc.dIdUnc,
+        documentoCompleto: resDte.response,
+      );
+
+      final ApiResModel resUpdateDTe = await updateDTE(context, paramUpdate);
+
+      return resUpdateDTe;
+    }
+
+    if (api.tipoRespuesta == 2) {
+      //Tipo respuesta XML
+      // Crear un objeto XML a partir del string `resDteResponse`
+      final document = xml.XmlDocument.parse(resDte.response);
+
+      final xmlNode =
+          document.findAllElements(api.nodoFirmaDocumentoResponse).first;
+
+      final PostDocXmlModel paramUpdate = PostDocXmlModel(
+        usuario: user,
+        documento: xmlNode.toXmlString(),
+        uuid: doc.dIdUnc,
+        documentoCompleto: resDte.response,
+      );
+
+      final ApiResModel resUpdateDTe = await updateDTE(context, paramUpdate);
+
+      return resUpdateDTe;
+    } else if (api.tipoRespuesta == 1) {
+      //json
+      final jsonObject = jsonDecode(resDte.response);
+
+      // Acceder a la propiedad específica
+      final xmlValue = jsonObject[api.nodoFirmaDocumentoResponse];
+
+      final PostDocXmlModel paramUpdate = PostDocXmlModel(
+        usuario: user,
+        documento: xmlValue,
+        uuid: doc.dIdUnc,
+        documentoCompleto: resDte.response,
+      );
+
+      final ApiResModel resUpdateDTe = await updateDTE(context, paramUpdate);
+
+      return resUpdateDTe;
+    }
+
+    return ApiResModel(
+      url: "",
+      succes: false,
+      response: "Fallo al procesar el  documento",
+      storeProcedure: null,
+    );
   }
 
   String replaceValuesJson(
@@ -1418,82 +1553,5 @@ class ConfirmDocViewModel extends ChangeNotifier {
     consecutivoDoc = 0;
     showPrint = false;
     Navigator.pop(context);
-  }
-
-  //rreplaxar valores y armar objeto json (body)
-  String replaceValuesJson(
-    String param,
-    String token,
-    String documento,
-    String uuid,
-    List<CredencialModel> credenciales,
-  ) {
-    //json final
-    Map<String, dynamic> params = {};
-
-    //Seprar propiedades pro ","
-    List<String> objects = param.split(",");
-
-    //Recorrer todas las propiedades disponibles
-    for (var object in objects) {
-      //separar propiedades y valores por ":"
-      List<String> properties = object.split(":");
-      //buscar el valor de cada propiedad
-      for (var credencial in credenciales) {
-        //Reemplazar propiedad por valor encontrado
-        properties[1] = properties[1].replaceAll(
-          "{${credencial.campoNombre}}",
-          credencial.campoValor,
-        );
-      }
-
-      //Buscar y agregar token
-      properties[1] = properties[1].replaceAll(
-        "{token}",
-        token,
-      );
-      //buscar y agregar docuemnto
-      properties[1] = properties[1].replaceAll(
-        "{xml_Contenido}",
-        documento,
-      );
-      //Buscar y agregar identificador unico del documento
-      properties[1] = properties[1].replaceAll(
-        "{d_Id_Unc}",
-        uuid,
-      );
-
-      //Agregar al json
-      params[properties[0]] = properties[1];
-    }
-
-    //Retornar json armado
-    return jsonEncode(params);
-  }
-
-  //reemplazar parametros necesarios
-  String replaceValues(
-    String param,
-    String token,
-    String documento,
-    String uuid,
-    List<CredencialModel> credenciales,
-  ) {
-    //Buscar valores que agregar
-    for (var credencial in credenciales) {
-      param = param.replaceAll(
-        "{${credencial.campoNombre}}",
-        credencial.campoValor,
-      );
-    }
-
-    //Reemplazar documento
-    param = param.replaceAll("{xml_Contenido}", documento);
-    //Reemplazar identificador del documento
-    param = param.replaceAll("{d_Id_Unc}", uuid);
-    //Reemplazar token
-    param = param.replaceAll("{token}", token);
-    //Retornar parametros con sus valores correctos
-    return param;
   }
 }

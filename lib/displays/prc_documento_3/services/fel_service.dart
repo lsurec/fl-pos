@@ -403,4 +403,50 @@ class FelService {
       );
     }
   }
+
+  Future<ApiResModel> postDte(
+    String urlApi,
+    Map<String, String> headers,
+    String body,
+    String token,
+  ) async {
+    Uri url = Uri.parse(urlApi);
+
+    try {
+      headers["Authorization"] = "bearer $token";
+
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: body,
+        headers: headers,
+      );
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: response.body,
+          storeProcedure: null,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: response.body,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 }
