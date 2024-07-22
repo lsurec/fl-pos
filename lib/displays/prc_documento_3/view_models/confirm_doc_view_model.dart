@@ -806,6 +806,110 @@ class ConfirmDocViewModel extends ChangeNotifier {
     api = apis.first;
 
     //Busar árametros
+    final ApiResModel resApiParams = await felService.getApiParametros(
+      user,
+      token,
+      api.api,
+    );
+
+    if (!resApiParams.succes) return resApiParams;
+
+    final List<ApiParamModel> params = resApiParams.response;
+
+    //replace params in url
+    api.urlApi = replaceValues(api.urlApi, doc, credenciales);
+
+    //Set headers
+    final headers = <String, String>{};
+
+    String content = "";
+
+    for (var param in params) {
+      switch (param.tipoParametro) {
+        case 3: // headers
+
+          for (var i = 0; i < credenciales.length; i++) {
+            final CredencialModel credencial = credenciales[i];
+
+            if (param.descripcion == credencial.campoNombre) {
+              headers[credencial.campoNombre] = credencial.campoValor;
+              break;
+            }
+          }
+
+          break;
+        case 2:
+          switch (param.tipoDato) {
+            case 5: //json
+              headers["Content-Type"] = "application/json";
+              content = replaceValuesJson(param.plantilla, doc, credenciales);
+              break;
+            case 6: //xml
+
+              headers["Content-Type"] = "application/xml";
+              content = replaceValues(param.plantilla, doc, credenciales);
+              break;
+            default:
+          }
+
+          break;
+        default:
+      }
+    }
+  }
+
+  String replaceValuesJson(
+    String param,
+    DocXmlModel document,
+    List<CredencialModel> credenciales,
+  ) {
+    // Crear un mapa para los parámetros
+    Map<String, dynamic> objParam = {};
+
+    // Dividir el parámetro en subcadenas
+    List<String> subs = param.split(',');
+
+    for (var i in subs) {
+      List<String> subs2 = i.split(':');
+
+      // Reemplazar credenciales en las subcadenas
+      for (var credencial in credenciales) {
+        subs2[1] = subs2[1].replaceAll(
+          '{${credencial.campoNombre}}',
+          credencial.campoValor,
+        );
+      }
+
+      // Reemplazar otros valores
+      subs2[1] = subs2[1].replaceAll('{xml_Contenido}', document.xmlContenido);
+      subs2[1] = subs2[1].replaceAll(
+        '{d_Id_Unc}',
+        document.dIdUnc.toUpperCase(),
+      );
+
+      // Agregar propiedades y valores al objeto
+      objParam[subs2[0]] = subs2[1];
+    }
+
+    // Convertir el objeto a JSON
+    return jsonEncode(objParam);
+  }
+
+  String replaceValues(
+      String param, DocXmlModel document, List<CredencialModel> credenciales) {
+    // Reemplazar parámetros con valores de la lista de credenciales
+    for (var credencial in credenciales) {
+      param = param.replaceAll(
+        '{${credencial.campoNombre}}',
+        credencial.campoValor,
+      );
+    }
+
+    // Reemplazar otros valores
+    param = param.replaceAll('{xml_Contenido}', document.xmlContenido);
+    param = param.replaceAll('{d_Id_Unc}', document.dIdUnc.toUpperCase());
+
+    return param;
   }
 
   //certificar DTE (Servicios del certificador)
