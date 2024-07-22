@@ -11,7 +11,7 @@ class VerInvitacionesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vmTarea = Provider.of<TareasViewModel>(context);
-    List<TareaModel> tareas = vmTarea.tareas;
+    List<TareaModel> tareas = vmTarea.tareasInvitaciones;
 
     return RefreshIndicator(
       onRefresh: () => vmTarea.loadData(context),

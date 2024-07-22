@@ -78,7 +78,7 @@ class SearchTask extends StatelessWidget {
               "${AppLocalizations.of(context)!.translate(
                 BlockTranslate.general,
                 'registro',
-              )} (${vm.tareas.length})",
+              )} (${vm.registros})",
               style: AppTheme.style(
                 context,
                 Styles.bold,

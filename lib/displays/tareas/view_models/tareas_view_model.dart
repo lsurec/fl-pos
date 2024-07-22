@@ -40,6 +40,11 @@ class TareasViewModel extends ChangeNotifier {
   //Lista de tareas
   final List<TareaModel> tareas = [];
 
+  final List<TareaModel> tareasGenerales = [];
+  final List<TareaModel> tareasCreadas = [];
+  final List<TareaModel> tareasInvitaciones = [];
+  final List<TareaModel> tareasAsignadas = [];
+
   //funcion para buscar tareas segun el filtro marcado
   searchText(BuildContext context) {
     //filtro = 1 es por descripcion
@@ -80,7 +85,9 @@ class TareasViewModel extends ChangeNotifier {
 
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
-    tareas.clear(); //limpiar lista
+    limpiar(0);
+    List<TareaModel> encontradas = [];
+    encontradas.clear(); //limpiar lista
     searchController.clear();
 
     //obtener token y usuario
@@ -103,9 +110,38 @@ class TareasViewModel extends ChangeNotifier {
       return;
     }
     //agregar tareas encontradas a la lista de tareas
-    tareas.addAll(res.response);
+    encontradas.addAll(res.response);
+    //Registros encontrados
+    registros = encontradas.length;
+
+    //tipo 1 = ultimas tareas
+    asignarTareas(encontradas, 0);
 
     isLoading = false; //detener carga
+  }
+
+  asignarTareas(List<TareaModel> tareasEncontradas, int tipo) {
+    if (tipo == 0) {
+      tareasGenerales.addAll(tareasEncontradas);
+      tareasCreadas.addAll(tareasEncontradas);
+      tareasInvitaciones.addAll(tareasEncontradas);
+      tareasAsignadas.addAll(tareasEncontradas);
+    }
+
+    if (tipo == 1) {
+      switch (tabController.index) {
+        case 0:
+          return tareasGenerales.addAll(tareasEncontradas);
+        case 1:
+          return tareasCreadas.addAll(tareasEncontradas);
+        case 2:
+          return tareasInvitaciones.addAll(tareasEncontradas);
+        case 3:
+          return tareasAsignadas.addAll(tareasEncontradas);
+        default:
+          return false;
+      }
+    }
   }
 
   //buscar por filtro: Descripción
@@ -144,15 +180,21 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
+  int registros = 0;
+
   //buscar por filtro: Descripción
   Future<void> buscarTareas(
     BuildContext context,
     String search,
     int opcion,
   ) async {
+    //limpiar listas
+    limpiar(1);
     //Validar formulario
     if (!isValidFormCSearch()) return;
-    tareas.clear(); //limpiar lista
+    // tareas.clear(); //limpiar lista
+    List<TareaModel> encontradas = [];
+    encontradas.clear(); //limpiar lista
 
     //obtener usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -182,10 +224,15 @@ class TareasViewModel extends ChangeNotifier {
       return;
     }
 
-    //agregar a la lista las tareas encontradas
-    tareas.addAll(res.response);
+    //agregar tareas encontradas a la lista de tareas
+    encontradas.addAll(res.response);
 
-    if (tareas.isEmpty) {
+    registros = encontradas.length;
+
+    //Tipo 2 = Busqueda
+    asignarTareas(encontradas, 0);
+
+    if (encontradas.isEmpty) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
@@ -420,7 +467,31 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   limpiarLista(BuildContext context) {
-    tareas.clear(); //limpiar lista
+    // tareas.clear(); //limpiar lista
     searchController.clear();
+  }
+
+  limpiar(int tipo) {
+    if (tipo == 0) {
+      tareasGenerales.clear();
+      tareasCreadas.clear();
+      tareasInvitaciones.clear();
+      tareasAsignadas.clear();
+    }
+
+    if (tipo == 1) {
+      switch (tabController.index) {
+        case 0:
+          return tareasGenerales.clear();
+        case 1:
+          return tareasCreadas.clear();
+        case 2:
+          return tareasInvitaciones.clear();
+        case 3:
+          return tareasAsignadas.clear();
+        default:
+          return false;
+      }
+    }
   }
 }
