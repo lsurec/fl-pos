@@ -1,10 +1,10 @@
 import 'package:flutter_post_printer_example/displays/tareas/view_models/tareas_view_model.dart';
+import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,8 +53,16 @@ class _Tabs4ViewState extends State<Tabs4View>
                     BlockTranslate.botones,
                     'nueva',
                   ),
-                  onPressed: () {},
+                  onPressed: () => vmTarea.crearTarea(context),
                   icon: const Icon(Icons.note_add_outlined),
+                ),
+                IconButton(
+                  onPressed: () => vmTarea.crearTarea(context),
+                  icon: const Icon(Icons.add),
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'nueva',
+                  ),
                 ),
               ],
               bottom: TabBar(
@@ -99,11 +107,13 @@ class _Tabs4ViewState extends State<Tabs4View>
               controller: vmTarea.tabController,
               children: const [
                 // Contenido de la primera pestaña
-                DocumentView(),
+                VerTodasView(),
                 // Contenido de la segunda pestaña
-                DetailsView(),
+                VerCreadasView(),
                 // Contenido de la tercera pestaña
-                PaymentView(),
+                VerAsignadasView(),
+                // Contenido de la cuarta pestaña
+                VerInvitacionesView(),
               ],
             ),
           ),

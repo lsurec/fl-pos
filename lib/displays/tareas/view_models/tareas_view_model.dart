@@ -23,6 +23,9 @@ class TareasViewModel extends ChangeNotifier {
 
   //formulario para buscar tareas
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
+  GlobalKey<FormState> formCreadasKeySearch = GlobalKey<FormState>();
+  GlobalKey<FormState> formAsignadasKeySearch = GlobalKey<FormState>();
+  GlobalKey<FormState> formInvitacioesKeySearch = GlobalKey<FormState>();
 
   //imput de busqueda de tareas
   final TextEditingController searchController = TextEditingController();
@@ -44,8 +47,23 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   //Validar formulario barra busqueda
-  bool isValidFormCSearch() {
+  bool isValidFormCSearchAnterior() {
     return formKeySearch.currentState?.validate() ?? false;
+  }
+
+  bool isValidFormCSearch() {
+    switch (tabController.index) {
+      case 0:
+        return formKeySearch.currentState?.validate() ?? false;
+      case 1:
+        return formCreadasKeySearch.currentState?.validate() ?? false;
+      case 2:
+        return formAsignadasKeySearch.currentState?.validate() ?? false;
+      case 3:
+        return formInvitacioesKeySearch.currentState?.validate() ?? false;
+      default:
+        return false;
+    }
   }
 
   //Asignar el valor del filtro seleccionado.
@@ -323,5 +341,21 @@ class TareasViewModel extends ChangeNotifier {
 
     //si todo está bien retornar true
     return true;
+  }
+
+  GlobalKey<FormState> getGlobalKey(int keyType) {
+    switch (keyType) {
+      case 0:
+        return formKeySearch;
+      case 1:
+        return formCreadasKeySearch;
+      case 2:
+        return formAsignadasKeySearch;
+      case 3:
+        return formInvitacioesKeySearch;
+      // Puedes agregar más casos según sea necesario
+      default:
+        throw ArgumentError('Invalid key type: $keyType');
+    }
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/views/classific
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
+import 'package:flutter_post_printer_example/views/tabs_4_view.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +84,7 @@ class AppRoutes {
     detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
     //Rutas Display Tareas
-    tareas: (BuildContext context) => const TareasView(),
+    tareas: (BuildContext context) => const Tabs4View(),
     detailsTask: (BuildContext context) => const DetalleTareaView(),
     viewComments: (BuildContext context) => const ComentariosView(),
     createTask: (BuildContext context) => const CrearTareaView(),
