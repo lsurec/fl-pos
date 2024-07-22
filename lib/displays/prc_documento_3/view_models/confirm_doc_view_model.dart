@@ -488,7 +488,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     notifyListeners();
 
     //iniciar proceso
-    ApiResModel felProcces = await certDTE(context);
+    ApiResModel felProcces = await genericFel(context);
 
     //No se completo el proceso fel
     if (!felProcces.succes) {
@@ -551,8 +551,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
   ) async {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
-    if (docVM.printFel()) {
-      // if (true) {
+    //TODO: Proceso FEL
+    // if (docVM.printFel()) {
+    if (true) {
       processDocument(context);
     } else {
       isLoading = true;
@@ -650,7 +651,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     consecutivoDoc = sendProcess.response["data"];
 
     //Certificar documento, certificador (SAT)
-    ApiResModel felProcces = await certDTE(context);
+    ApiResModel felProcces = await genericFel(context);
 
     if (!felProcces.succes) {
       //No se completo el proceso fel
@@ -770,7 +771,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   Future<ApiResModel> genericFel(BuildContext context) async {
-    const int certificador = 1; //1 infile, 2 tekra
+    const int certificador = 2; //1 infile, 2 tekra
     DocXmlModel doc;
     String apiUse = "";
     ApiModel api;
@@ -1048,273 +1049,273 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //certificar DTE (Servicios del certificador)
-  Future<ApiResModel> certDTE(
-    BuildContext context,
-  ) async {
-    //Proveedor de datos externo
-    final loginVM = Provider.of<LoginViewModel>(
-      scaffoldKey.currentContext!,
-      listen: false,
-    );
+//   Future<ApiResModel> certDTE(
+//     BuildContext context,
+//   ) async {
+//     //Proveedor de datos externo
+//     final loginVM = Provider.of<LoginViewModel>(
+//       scaffoldKey.currentContext!,
+//       listen: false,
+//     );
 
-    final localVM = Provider.of<LocalSettingsViewModel>(
-      scaffoldKey.currentContext!,
-      listen: false,
-    );
+//     final localVM = Provider.of<LocalSettingsViewModel>(
+//       scaffoldKey.currentContext!,
+//       listen: false,
+//     );
 
-    //usuario token y cadena de conexion
-    int empresa = localVM.selectedEmpresa!.empresa;
-    String user = loginVM.user;
-    String token = loginVM.token;
-    String uuid = "";
-    String apiUse = "";
-    int certificador = 1; //TODO:parametrizar
+//     //usuario token y cadena de conexion
+//     int empresa = localVM.selectedEmpresa!.empresa;
+//     String user = loginVM.user;
+//     String token = loginVM.token;
+//     String uuid = "";
+//     String apiUse = "";
+//     int certificador = 1; //TODO:parametrizar
 
-    //Servicio para documentos
+//     //Servicio para documentos
 
-    final FelService felService = FelService();
+//     final FelService felService = FelService();
 
-    //Obtener plantilla xml para certificar
-    ApiResModel resXmlDoc = await felService.getDocXml(
-      user,
-      token,
-      consecutivoDoc,
-    );
+//     //Obtener plantilla xml para certificar
+//     ApiResModel resXmlDoc = await felService.getDocXml(
+//       user,
+//       token,
+//       consecutivoDoc,
+//     );
 
-    //Si el api falló
-    if (!resXmlDoc.succes) return resXmlDoc;
+//     //Si el api falló
+//     if (!resXmlDoc.succes) return resXmlDoc;
 
-    //plantilla del documento
-    List<DocXmlModel> docs = resXmlDoc.response;
+//     //plantilla del documento
+//     List<DocXmlModel> docs = resXmlDoc.response;
 
-    //si no se encuntra el documento
-    if (docs.isEmpty) {
-      return ApiResModel(
-        typeError: 1,
-        succes: false,
-        response: AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'noDispoDocCert',
-        ),
-        url: "",
-        storeProcedure: null,
-      );
-    }
+//     //si no se encuntra el documento
+//     if (docs.isEmpty) {
+//       return ApiResModel(
+//         typeError: 1,
+//         succes: false,
+//         response: AppLocalizations.of(context)!.translate(
+//           BlockTranslate.notificacion,
+//           'noDispoDocCert',
+//         ),
+//         url: "",
+//         storeProcedure: null,
+//       );
+//     }
 
-    //Docuemnto que se va a usar
-    DocXmlModel docXMl = docs.first;
-    uuid = docXMl.dIdUnc;
-    //Certificador del que se obtiene el token
+//     //Docuemnto que se va a usar
+//     DocXmlModel docXMl = docs.first;
+//     uuid = docXMl.dIdUnc;
+//     //Certificador del que se obtiene el token
 
-    //obtner credenciales
-    ApiResModel resCredenciales = await felService.getCredenciales(
-      certificador,
-      empresa,
-      user,
-      token,
-    );
+//     //obtner credenciales
+//     ApiResModel resCredenciales = await felService.getCredenciales(
+//       certificador,
+//       empresa,
+//       user,
+//       token,
+//     );
 
-    //Si el api falló
-    if (!resCredenciales.succes) return resCredenciales;
+//     //Si el api falló
+//     if (!resCredenciales.succes) return resCredenciales;
 
-    //Credenciales encontradas
-    List<CredencialModel> credenciales = resCredenciales.response;
+//     //Credenciales encontradas
+//     List<CredencialModel> credenciales = resCredenciales.response;
 
-    //Si se quiere certificar un documento buscar el api que se va a usar
-    for (var credencial in credenciales) {
-      if (credencial.campoNombre == 'apiUnificadaInfile') {
-        //econtrar api en catalogo api (identificador)
-        apiUse = credencial.campoValor;
-        break;
-      }
-    }
+//     //Si se quiere certificar un documento buscar el api que se va a usar
+//     for (var credencial in credenciales) {
+//       if (credencial.campoNombre == 'apiUnificadaInfile') {
+//         //econtrar api en catalogo api (identificador)
+//         apiUse = credencial.campoValor;
+//         break;
+//       }
+//     }
 
-    //si no se encpntró el api que se va a usar mostrar alerta
-    if (apiUse.isEmpty) {
-      return ApiResModel(
-        typeError: 1,
-        succes: false,
-        response: AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'noDispoServiProceDoc',
-        ),
-        url: "",
-        storeProcedure: null,
-      );
-    }
+//     //si no se encpntró el api que se va a usar mostrar alerta
+//     if (apiUse.isEmpty) {
+//       return ApiResModel(
+//         typeError: 1,
+//         succes: false,
+//         response: AppLocalizations.of(context)!.translate(
+//           BlockTranslate.notificacion,
+//           'noDispoServiProceDoc',
+//         ),
+//         url: "",
+//         storeProcedure: null,
+//       );
+//     }
 
-    String llaveApi = "";
-    String llaveFirma = "";
-    String usuarioApi = "";
-    String usuarioFirma = "";
+//     String llaveApi = "";
+//     String llaveFirma = "";
+//     String usuarioApi = "";
+//     String usuarioFirma = "";
 
-    for (var i = 0; i < credenciales.length; i++) {
-      final CredencialModel credencial = credenciales[i];
+//     for (var i = 0; i < credenciales.length; i++) {
+//       final CredencialModel credencial = credenciales[i];
 
-      switch (credencial.campoNombre) {
-        case "LlaveApi":
-          llaveApi = credencial.campoValor;
+//       switch (credencial.campoNombre) {
+//         case "LlaveApi":
+//           llaveApi = credencial.campoValor;
 
-          break;
-        case "LlaveFirma":
-          llaveFirma = credencial.campoValor;
-          break;
+//           break;
+//         case "LlaveFirma":
+//           llaveFirma = credencial.campoValor;
+//           break;
 
-        case "UsuarioApi":
-          usuarioApi = credencial.campoValor;
-          break;
-        case "UsuarioFirma":
-          usuarioFirma = credencial.campoValor;
-          break;
-        default:
-          break;
-      }
-    }
+//         case "UsuarioApi":
+//           usuarioApi = credencial.campoValor;
+//           break;
+//         case "UsuarioFirma":
+//           usuarioFirma = credencial.campoValor;
+//           break;
+//         default:
+//           break;
+//       }
+//     }
 
-    final DataInfileModel paramFel = DataInfileModel(
-      usuarioFirma: usuarioFirma,
-      llaveFirma: llaveFirma,
-      usuarioApi: usuarioApi,
-      llaveApi: llaveApi,
-      identificador: uuid,
-      docXml: docXMl.xmlContenido,
-//       docXml:
-//           """<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
-//   <dte:SAT ClaseDocumento="dte">
-//     <dte:DTE ID="DatosCertificados">
-//       <dte:DatosEmision ID="DatosEmision">
-//         <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2024-06-03T02:53:51.000-06:00" Tipo="FCAM" />
-//         <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="" NITEmisor="9300000118K" NombreComercial="TEXAS MUEBLES Y MAS" NombreEmisor="CORPORACION NR, SOCIEDAD ANONIMA">
-//           <dte:DireccionEmisor>
-//             <dte:Direccion>4 AVENIDA 5-99 ZONA 1</dte:Direccion>
-//             <dte:CodigoPostal>010020</dte:CodigoPostal>
-//             <dte:Municipio>SANTA LUCIA COTZULMALGUAPA</dte:Municipio>
-//             <dte:Departamento>ESCUINTLA</dte:Departamento>
-//             <dte:Pais>GT</dte:Pais>
-//           </dte:DireccionEmisor>
-//         </dte:Emisor>
-//         <dte:Receptor CorreoReceptor="" IDReceptor="2768220480502" NombreReceptor="MELVIN DANIEL ,SOMA MÉNDEZ" TipoEspecial="CUI">
-//           <dte:DireccionReceptor>
-//             <dte:Direccion>Ciudad</dte:Direccion>
-//             <dte:CodigoPostal>01007</dte:CodigoPostal>
-//             <dte:Municipio>Guatemala</dte:Municipio>
-//             <dte:Departamento>Guatemala</dte:Departamento>
-//             <dte:Pais>GT</dte:Pais>
-//           </dte:DireccionReceptor>
-//         </dte:Receptor>
-//         <dte:Frases>
-//           <dte:Frase CodigoEscenario="1" TipoFrase="1" />
-//         </dte:Frases>
-//         <dte:Items>
-//           <dte:Item NumeroLinea="1" BienOServicio="B">
-//             <dte:Cantidad>1.0000</dte:Cantidad>
-//             <dte:UnidadMedida>UND</dte:UnidadMedida>
-//             <dte:Descripcion>457224|TELEFONO SAMSUNG GALAXY A34 457224RFCWA0SDV8Y     IMEI1: 350350681547282 IMEI2:351525681547288</dte:Descripcion>
-//             <dte:PrecioUnitario>2200.0000</dte:PrecioUnitario>
-//             <dte:Precio>2200.0000</dte:Precio>
-//             <dte:Descuento>0</dte:Descuento>
-//             <dte:Impuestos>
-//               <dte:Impuesto>
-//                 <dte:NombreCorto>IVA</dte:NombreCorto>
-//                 <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
-//                 <dte:MontoGravable>1964.29</dte:MontoGravable>
-//                 <dte:MontoImpuesto>235.7143</dte:MontoImpuesto>
-//               </dte:Impuesto>
-//             </dte:Impuestos>
-//             <dte:Total>2200.0000</dte:Total>
-//           </dte:Item>
-//         </dte:Items>
-//         <dte:Totales>
-//           <dte:TotalImpuestos>
-//             <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="235.7143" />
-//           </dte:TotalImpuestos>
-//           <dte:GranTotal>2200.0000</dte:GranTotal>
-//         </dte:Totales>
-//         <dte:Complementos>
-//           <dte:Complemento IDComplemento="Cambiaria" NombreComplemento="Cambiaria" URIComplemento="http://www.sat.gob.gt/fel/cambiaria.xsd">
-//             <cfc:AbonosFacturaCambiaria xmlns:cfc="http://www.sat.gob.gt/dte/fel/CompCambiaria/0.1.0" Version="1">
-//               <cfc:Abono>
-//                 <cfc:NumeroAbono>1</cfc:NumeroAbono>
-//                 <cfc:FechaVencimiento>2024-03-29</cfc:FechaVencimiento>
-//                 <cfc:MontoAbono>2200.00</cfc:MontoAbono>
-//               </cfc:Abono>
-//             </cfc:AbonosFacturaCambiaria>
-//           </dte:Complemento>
-//         </dte:Complementos>
-//       </dte:DatosEmision>
-//     </dte:DTE>
-//   </dte:SAT>
-// </dte:GTDocumento>""",
-    );
+//     final DataInfileModel paramFel = DataInfileModel(
+//       usuarioFirma: usuarioFirma,
+//       llaveFirma: llaveFirma,
+//       usuarioApi: usuarioApi,
+//       llaveApi: llaveApi,
+//       identificador: uuid,
+//       docXml: docXMl.xmlContenido,
+// //       docXml:
+// //           """<dte:GTDocumento xmlns:dte="http://www.sat.gob.gt/dte/fel/0.2.0" Version="0.1">
+// //   <dte:SAT ClaseDocumento="dte">
+// //     <dte:DTE ID="DatosCertificados">
+// //       <dte:DatosEmision ID="DatosEmision">
+// //         <dte:DatosGenerales CodigoMoneda="GTQ" FechaHoraEmision="2024-06-03T02:53:51.000-06:00" Tipo="FCAM" />
+// //         <dte:Emisor AfiliacionIVA="GEN" CodigoEstablecimiento="1" CorreoEmisor="" NITEmisor="9300000118K" NombreComercial="TEXAS MUEBLES Y MAS" NombreEmisor="CORPORACION NR, SOCIEDAD ANONIMA">
+// //           <dte:DireccionEmisor>
+// //             <dte:Direccion>4 AVENIDA 5-99 ZONA 1</dte:Direccion>
+// //             <dte:CodigoPostal>010020</dte:CodigoPostal>
+// //             <dte:Municipio>SANTA LUCIA COTZULMALGUAPA</dte:Municipio>
+// //             <dte:Departamento>ESCUINTLA</dte:Departamento>
+// //             <dte:Pais>GT</dte:Pais>
+// //           </dte:DireccionEmisor>
+// //         </dte:Emisor>
+// //         <dte:Receptor CorreoReceptor="" IDReceptor="2768220480502" NombreReceptor="MELVIN DANIEL ,SOMA MÉNDEZ" TipoEspecial="CUI">
+// //           <dte:DireccionReceptor>
+// //             <dte:Direccion>Ciudad</dte:Direccion>
+// //             <dte:CodigoPostal>01007</dte:CodigoPostal>
+// //             <dte:Municipio>Guatemala</dte:Municipio>
+// //             <dte:Departamento>Guatemala</dte:Departamento>
+// //             <dte:Pais>GT</dte:Pais>
+// //           </dte:DireccionReceptor>
+// //         </dte:Receptor>
+// //         <dte:Frases>
+// //           <dte:Frase CodigoEscenario="1" TipoFrase="1" />
+// //         </dte:Frases>
+// //         <dte:Items>
+// //           <dte:Item NumeroLinea="1" BienOServicio="B">
+// //             <dte:Cantidad>1.0000</dte:Cantidad>
+// //             <dte:UnidadMedida>UND</dte:UnidadMedida>
+// //             <dte:Descripcion>457224|TELEFONO SAMSUNG GALAXY A34 457224RFCWA0SDV8Y     IMEI1: 350350681547282 IMEI2:351525681547288</dte:Descripcion>
+// //             <dte:PrecioUnitario>2200.0000</dte:PrecioUnitario>
+// //             <dte:Precio>2200.0000</dte:Precio>
+// //             <dte:Descuento>0</dte:Descuento>
+// //             <dte:Impuestos>
+// //               <dte:Impuesto>
+// //                 <dte:NombreCorto>IVA</dte:NombreCorto>
+// //                 <dte:CodigoUnidadGravable>1</dte:CodigoUnidadGravable>
+// //                 <dte:MontoGravable>1964.29</dte:MontoGravable>
+// //                 <dte:MontoImpuesto>235.7143</dte:MontoImpuesto>
+// //               </dte:Impuesto>
+// //             </dte:Impuestos>
+// //             <dte:Total>2200.0000</dte:Total>
+// //           </dte:Item>
+// //         </dte:Items>
+// //         <dte:Totales>
+// //           <dte:TotalImpuestos>
+// //             <dte:TotalImpuesto NombreCorto="IVA" TotalMontoImpuesto="235.7143" />
+// //           </dte:TotalImpuestos>
+// //           <dte:GranTotal>2200.0000</dte:GranTotal>
+// //         </dte:Totales>
+// //         <dte:Complementos>
+// //           <dte:Complemento IDComplemento="Cambiaria" NombreComplemento="Cambiaria" URIComplemento="http://www.sat.gob.gt/fel/cambiaria.xsd">
+// //             <cfc:AbonosFacturaCambiaria xmlns:cfc="http://www.sat.gob.gt/dte/fel/CompCambiaria/0.1.0" Version="1">
+// //               <cfc:Abono>
+// //                 <cfc:NumeroAbono>1</cfc:NumeroAbono>
+// //                 <cfc:FechaVencimiento>2024-03-29</cfc:FechaVencimiento>
+// //                 <cfc:MontoAbono>2200.00</cfc:MontoAbono>
+// //               </cfc:Abono>
+// //             </cfc:AbonosFacturaCambiaria>
+// //           </dte:Complemento>
+// //         </dte:Complementos>
+// //       </dte:DatosEmision>
+// //     </dte:DTE>
+// //   </dte:SAT>
+// // </dte:GTDocumento>""",
+//     );
 
-    final ApiResModel resCertDoc = await felService.postInfile(
-      apiUse,
-      paramFel,
-      token,
-    );
+//     final ApiResModel resCertDoc = await felService.postInfile(
+//       apiUse,
+//       paramFel,
+//       token,
+//     );
 
-    if (!resCertDoc.succes) return resCertDoc;
+//     if (!resCertDoc.succes) return resCertDoc;
 
-    final dynamic doc = resCertDoc.response;
+//     final dynamic doc = resCertDoc.response;
 
-    final PostDocXmlModel paramUpdate = PostDocXmlModel(
-      usuario: user,
-      documento: doc,
-      uuid: uuid,
-      documentoCompleto: doc,
-    );
+//     final PostDocXmlModel paramUpdate = PostDocXmlModel(
+//       usuario: user,
+//       documento: doc,
+//       uuid: uuid,
+//       documentoCompleto: doc,
+//     );
 
-    final ApiResModel resUpdateXml = await felService.postXmlUpdate(
-      token,
-      paramUpdate,
-    );
+//     final ApiResModel resUpdateXml = await felService.postXmlUpdate(
+//       token,
+//       paramUpdate,
+//     );
 
-    if (!resUpdateXml.succes) return resUpdateXml;
+//     if (!resUpdateXml.succes) return resUpdateXml;
 
-    final List<DataFelModel> dataFel = resUpdateXml.response;
+//     final List<DataFelModel> dataFel = resUpdateXml.response;
 
-    if (dataFel.isNotEmpty) {
-      final DataFelModel fel = dataFel.first;
+//     if (dataFel.isNotEmpty) {
+//       final DataFelModel fel = dataFel.first;
 
-      docGlobal!.docFelSerie = fel.serieDocumento;
-      docGlobal!.docFelUUID = fel.numeroAutorizacion;
-      docGlobal!.docFelFechaCertificacion =
-          fel.fechaHoraCertificacion.toIso8601String();
-      docGlobal!.docFelNumeroDocumento = fel.numeroDocumento;
+//       docGlobal!.docFelSerie = fel.serieDocumento;
+//       docGlobal!.docFelUUID = fel.numeroAutorizacion;
+//       docGlobal!.docFelFechaCertificacion =
+//           fel.fechaHoraCertificacion.toIso8601String();
+//       docGlobal!.docFelNumeroDocumento = fel.numeroDocumento;
 
-      final PostDocumentModel estructuraupdate = PostDocumentModel(
-        estructura: docGlobal!.toJson(),
-        user: user,
-        estado: 11,
-      );
+//       final PostDocumentModel estructuraupdate = PostDocumentModel(
+//         estructura: docGlobal!.toJson(),
+//         user: user,
+//         estado: 11,
+//       );
 
-      final DocumentService documentService = DocumentService();
+//       final DocumentService documentService = DocumentService();
 
-      final ApiResModel resUpdateEstructura =
-          await documentService.updateDocument(
-        estructuraupdate,
-        token,
-        consecutivoDoc,
-      );
+//       final ApiResModel resUpdateEstructura =
+//           await documentService.updateDocument(
+//         estructuraupdate,
+//         token,
+//         consecutivoDoc,
+//       );
 
-      if (!resUpdateEstructura.succes) {
-        NotificationService.showSnackbar(
-          "No se pudo actalizar documento estructura",
-        );
-      }
-    }
+//       if (!resUpdateEstructura.succes) {
+//         NotificationService.showSnackbar(
+//           "No se pudo actalizar documento estructura",
+//         );
+//       }
+//     }
 
-    return ApiResModel(
-      typeError: 1,
-      succes: true,
-      response: AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'docCertificado',
-      ),
-      storeProcedure: null,
-      url: "",
-    );
-  }
+//     return ApiResModel(
+//       typeError: 1,
+//       succes: true,
+//       response: AppLocalizations.of(context)!.translate(
+//         BlockTranslate.notificacion,
+//         'docCertificado',
+//       ),
+//       storeProcedure: null,
+//       url: "",
+//     );
+//   }
 
   int idDocumentoRef = 0;
 

@@ -440,6 +440,8 @@ class FelService {
         storeProcedure: null,
       );
     } catch (e) {
+      print("Aqui esta el error");
+      print(e);
       //retornar respuesta incorrecta
       return ApiResModel(
         url: url.toString(),
