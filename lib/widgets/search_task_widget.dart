@@ -71,21 +71,6 @@ class SearchTask extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              "${AppLocalizations.of(context)!.translate(
-                BlockTranslate.general,
-                'registro',
-              )} (${vm.registros})",
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }
