@@ -552,8 +552,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     //TODO: Proceso FEL
-    // if (docVM.printFel()) {
-    if (true) {
+    if (docVM.printFel()) {
+      // if (true) {
       processDocument(context);
     } else {
       isLoading = true;
