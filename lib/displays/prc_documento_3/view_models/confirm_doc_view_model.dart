@@ -771,7 +771,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   Future<ApiResModel> genericFel(BuildContext context) async {
-    const int certificador = 2; //1 infile, 2 tekra
+    const int certificador = 1; //1 infile, 2 tekra
     DocXmlModel doc;
     String apiUse = "";
     ApiModel api;
