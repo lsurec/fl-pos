@@ -27,7 +27,10 @@ class _Tabs4ViewState extends State<Tabs4View>
     WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
   }
 
-  loadData(BuildContext context) {}
+  loadData(BuildContext context) async {
+    final vm = Provider.of<TareasViewModel>(context, listen: false);
+    vm.loadData(context);
+  }
 
   @override
   Widget build(BuildContext context) {

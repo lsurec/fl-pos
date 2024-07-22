@@ -13,21 +13,18 @@ class VerAsignadasView extends StatelessWidget {
     final vmTarea = Provider.of<TareasViewModel>(context);
     List<TareaModel> tareas = vmTarea.tareas;
 
-    return ListView(
-      children: [
-        RefreshIndicator(
-          onRefresh: () async {},
-          child: Padding(
+    return RefreshIndicator(
+      onRefresh: () => vmTarea.loadData(context),
+      child: ListView(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(20),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Todaaaass ${vmTarea.tabController.index}",
-                  ),
                   SearchTask(
-                    keyType: vmTarea.tabController.index,
+                    keyType: vmTarea.asignadas,
                   ),
                   const SizedBox(height: 10),
                   const Divider(),
@@ -46,8 +43,8 @@ class VerAsignadasView extends StatelessWidget {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

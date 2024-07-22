@@ -18,47 +18,75 @@ class SearchTask extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<TareasViewModel>(context);
 
-    return Form(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      key: vm.getGlobalKey(keyType),
-      child: TextFormField(
-        onFieldSubmitted: (value) => vm.searchText(context),
-        textInputAction: TextInputAction.search,
-        controller: vm.searchController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return AppLocalizations.of(context)!.translate(
-              BlockTranslate.notificacion,
-              'requerido',
-            );
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          hintText: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tareas,
-            'buscar',
-          ),
-          labelText: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tareas,
-            'buscar',
-          ),
-          suffixIcon: IconButton(
-            tooltip: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tareas,
-              'buscar',
+    return Column(
+      children: [
+        Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: vm.getGlobalKey(keyType),
+          child: TextFormField(
+            onFieldSubmitted: (value) => vm.buscarTareas(
+              context,
+              value,
+              keyType,
             ),
-            icon: Icon(
-              Icons.search,
-              color: AppTheme.color(
-                context,
-                Styles.darkPrimary,
+            textInputAction: TextInputAction.search,
+            controller: vm.searchController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  'requerido',
+                );
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tareas,
+                'buscar',
+              ),
+              labelText: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tareas,
+                'buscar',
+              ),
+              suffixIcon: IconButton(
+                tooltip: AppLocalizations.of(context)!.translate(
+                  BlockTranslate.tareas,
+                  'buscar',
+                ),
+                icon: Icon(
+                  Icons.search,
+                  color: AppTheme.color(
+                    context,
+                    Styles.darkPrimary,
+                  ),
+                ),
+                onPressed: () => vm.buscarTareas(
+                  context,
+                  vm.searchController.text,
+                  keyType,
+                ),
               ),
             ),
-            onPressed: () => vm.searchText(context),
           ),
         ),
-      ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              "${AppLocalizations.of(context)!.translate(
+                BlockTranslate.general,
+                'registro',
+              )} (${vm.tareas.length})",
+              style: AppTheme.style(
+                context,
+                Styles.bold,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

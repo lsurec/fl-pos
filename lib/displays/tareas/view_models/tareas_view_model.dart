@@ -19,6 +19,11 @@ class TareasViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  int todas = 0;
+  int creadas = 1;
+  int invitaciones = 2;
+  int asignadas = 3;
+
   late TabController tabController;
 
   //formulario para buscar tareas
@@ -58,9 +63,9 @@ class TareasViewModel extends ChangeNotifier {
       case 1:
         return formCreadasKeySearch.currentState?.validate() ?? false;
       case 2:
-        return formAsignadasKeySearch.currentState?.validate() ?? false;
-      case 3:
         return formInvitacioesKeySearch.currentState?.validate() ?? false;
+      case 3:
+        return formAsignadasKeySearch.currentState?.validate() ?? false;
       default:
         return false;
     }
@@ -75,6 +80,7 @@ class TareasViewModel extends ChangeNotifier {
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
     tareas.clear(); //limpiar lista
+    searchController.clear();
 
     //obtener token y usuario
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -123,6 +129,47 @@ class TareasViewModel extends ChangeNotifier {
     //consumo de api
     final ApiResModel res =
         await tareaService.getTareasDescripcion(user, token, search);
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, res);
+      return;
+    }
+
+    //agregar a la lista las tareas encontradas
+    tareas.addAll(res.response);
+
+    isLoading = false; //detener carga
+  }
+
+  //buscar por filtro: Descripción
+  Future<void> buscarTareas(
+    BuildContext context,
+    String search,
+    int opcion,
+  ) async {
+    //Validar formulario
+    if (!isValidFormCSearch()) return;
+    tareas.clear(); //limpiar lista
+
+    //obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel res = await tareaService.getTareas(
+      user,
+      token,
+      search,
+      tabController.index,
+    );
 
     //si el consumo salió mal
     if (!res.succes) {
@@ -350,9 +397,9 @@ class TareasViewModel extends ChangeNotifier {
       case 1:
         return formCreadasKeySearch;
       case 2:
-        return formAsignadasKeySearch;
-      case 3:
         return formInvitacioesKeySearch;
+      case 3:
+        return formAsignadasKeySearch;
       // Puedes agregar más casos según sea necesario
       default:
         throw ArgumentError('Invalid key type: $keyType');
