@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/tareas/services/services.d
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -161,6 +162,9 @@ class TareasViewModel extends ChangeNotifier {
     //instancia del servicio
     final TareaService tareaService = TareaService();
 
+    //ocultar teclado
+    FocusScope.of(context).unfocus();
+
     isLoading = true; //cargar pantalla
 
     //consumo de api
@@ -180,6 +184,15 @@ class TareasViewModel extends ChangeNotifier {
 
     //agregar a la lista las tareas encontradas
     tareas.addAll(res.response);
+
+    if (tareas.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinCoincidencias',
+        ),
+      );
+    }
 
     isLoading = false; //detener carga
   }
@@ -404,5 +417,10 @@ class TareasViewModel extends ChangeNotifier {
       default:
         throw ArgumentError('Invalid key type: $keyType');
     }
+  }
+
+  limpiarLista(BuildContext context) {
+    tareas.clear(); //limpiar lista
+    searchController.clear();
   }
 }

@@ -69,6 +69,7 @@ class _Tabs4ViewState extends State<Tabs4View>
                 ),
               ],
               bottom: TabBar(
+                onTap: (index) => vmTarea.limpiarLista(context),
                 controller: vmTarea.tabController,
                 labelColor: AppTheme.color(
                   context,
@@ -94,13 +95,13 @@ class _Tabs4ViewState extends State<Tabs4View>
                   Tab(
                     text: AppLocalizations.of(context)!.translate(
                       BlockTranslate.tareas,
-                      'asignadas',
+                      'invitaciones',
                     ),
                   ),
                   Tab(
                     text: AppLocalizations.of(context)!.translate(
                       BlockTranslate.tareas,
-                      'invitaciones',
+                      'asignadas',
                     ),
                   ),
                 ],
@@ -114,9 +115,9 @@ class _Tabs4ViewState extends State<Tabs4View>
                 // Contenido de la segunda pestaña
                 VerCreadasView(),
                 // Contenido de la tercera pestaña
-                VerAsignadasView(),
-                // Contenido de la cuarta pestaña
                 VerInvitacionesView(),
+                // Contenido de la cuarta pestaña
+                VerAsignadasView(),
               ],
             ),
           ),
