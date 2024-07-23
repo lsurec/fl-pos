@@ -115,6 +115,12 @@ class DocumentView extends StatelessWidget {
                         BlockTranslate.cuenta,
                         'nueva',
                       ),
+                    ),
+                    IconButton(
+                      onPressed: () => vm.restaurarFechas(),
+                      icon: const Icon(
+                        Icons.refresh,
+                      ),
                     )
                   ],
                 ),
@@ -301,6 +307,17 @@ class DocumentView extends StatelessWidget {
                           Styles.title,
                         ),
                       ),
+                      const SizedBox(height: 10),
+                      // Text(
+                      //   AppLocalizations.of(context)!.translate(
+                      //     BlockTranslate.cotizacion,
+                      //     'tipoRef',
+                      //   ),
+                      //   style: AppTheme.style(
+                      //     context,
+                      //     Styles.title,
+                      //   ),
+                      // ),
                       DropdownButton<TipoReferenciaModel>(
                         isExpanded: true,
                         dropdownColor: AppTheme.color(

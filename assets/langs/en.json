@@ -389,7 +389,8 @@
         "consecutivoInter": "Internal Consecutive",
         "idRef": "ID Ref: ",
         "cuenta": "Account: ",
-        "direEntrega": "Delivery Address"
+        "direEntrega": "Delivery Address",
+        "tipoRef": "Reference Type"
     },
     "tareas": {
         "numTarea": "Task No: ",

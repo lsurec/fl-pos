@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
@@ -820,9 +820,9 @@ class DocumentViewModel extends ChangeNotifier {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaInicial,
+      initialDate: fechaRecoger,
       firstDate: fechaInicial,
-      lastDate: DateTime(2100),
+      lastDate: fechaFinal,
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
         'aceptar',
@@ -884,10 +884,10 @@ class DocumentViewModel extends ChangeNotifier {
   Future<void> abrirFechaFinal(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaFinal,
+      initialDate: fechaInicial, //finalizo despues de iniciar
       //fecha minima es la inicial
       firstDate: fechaInicial,
-      lastDate: DateTime(2100),
+      lastDate: fechaRecoger, //no puedo finalizar despues de recoger
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
         'aceptar',
@@ -947,6 +947,8 @@ class DocumentViewModel extends ChangeNotifier {
   //Fecha entrega
   //Abrir picker de fecha entrega
   Future<void> abrirFechaEntrega(BuildContext context) async {
+    DateTime fechaHoraActual = DateTime.now();
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -970,6 +972,28 @@ class DocumentViewModel extends ChangeNotifier {
       fechaEntrega.hour,
       fechaEntrega.minute,
     );
+
+    if (compararFechas(fechaEntrega, fechaHoraActual)) {
+      print(fechaHoraActual);
+      print(fechaEntrega);
+
+      print(
+        "${compararFechas(fechaEntrega, fechaHoraActual)} las fechas de acá",
+      );
+
+      fechaEntrega = DateTime(
+        pickedDate.year,
+        pickedDate.month,
+        pickedDate.day,
+        0,
+        0,
+      );
+
+      print(fechaHoraActual);
+      print(fechaEntrega);
+    }
+
+    actualizarFechas(fechaEntrega, 1);
 
     notifyListeners();
   }
@@ -1014,7 +1038,7 @@ class DocumentViewModel extends ChangeNotifier {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaRecoger,
+      initialDate: fechaFinal,
       firstDate: fechaRecoger,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
@@ -1040,6 +1064,8 @@ class DocumentViewModel extends ChangeNotifier {
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraRecoger(BuildContext context) async {
+    DateTime fechaHoraActual = DateTime.now();
+
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaRecoger.hour,
@@ -1062,6 +1088,10 @@ class DocumentViewModel extends ChangeNotifier {
     //si la hora seleccionada es null, no hacer nada.
     if (pickedTime == null) return;
 
+    if (compararFechas(fechaHoraActual, fechaHoraActual)) {
+      print("no ${compararFechas(fechaEntrega, fechaHoraActual)}");
+    }
+
     //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
     fechaRecoger = DateTime(
       fechaRecoger.year,
@@ -1072,5 +1102,43 @@ class DocumentViewModel extends ChangeNotifier {
     );
 
     notifyListeners();
+  }
+
+  //Recibe una fecha y le asigna 10 minutos más.
+  DateTime addDate30Min(DateTime fecha) {
+    return fecha.add(
+      const Duration(
+        minutes: 30,
+      ),
+    );
+  }
+
+  actualizarFechas(DateTime fecha, int tipo) {
+    //si la fecha seleccionada es la Fecha Entrega
+    if (tipo == 1) {
+      //Actualizar fecha inicial + 30 minutos
+      fechaInicial = addDate30Min(fecha);
+      // fechaFinal = addDate30Min(fechaInicial);
+      // fechaRecoger = addDate30Min(fechaFinal);
+    }
+  }
+
+  restaurarFechas() {
+    fechaEntrega = DateTime.now();
+    fechaInicial = addDate30Min(fechaEntrega);
+    fechaFinal = addDate30Min(fechaInicial);
+    fechaRecoger = addDate30Min(fechaFinal);
+    // fechaInicial = DateTime.now();
+    // fechaFinal = DateTime.now();
+    // fechaRecoger = DateTime.now();
+
+    notifyListeners();
+  }
+
+  bool compararFechas(
+    DateTime fechaInicial,
+    DateTime fechaFinal,
+  ) {
+    return fechaInicial.isAfter(fechaFinal);
   }
 }

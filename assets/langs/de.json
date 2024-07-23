@@ -389,7 +389,8 @@
         "consecutivoInter": "Interne Folge",
         "idRef": "ID-Ref: ",
         "cuenta": "Konto: ",
-        "direEntrega": "Lieferadresse"
+        "direEntrega": "Lieferadresse",
+        "tipoRef": "Referenztyp"
     },
     "tareas": {
         "numTarea": "Aufgabe Nr: ",
