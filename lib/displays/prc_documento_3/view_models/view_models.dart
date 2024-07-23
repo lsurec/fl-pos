@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/fechas_view_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/details_doc_view_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/add_client_view_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/recent_view_model.dart';
