@@ -378,7 +378,7 @@ class DocumentView extends StatelessWidget {
                               "${AppLocalizations.of(context)!.translate(
                                 BlockTranslate.fecha,
                                 'fecha',
-                              )} ${Utilities.formatearFecha(vm.fechaEntrega)}",
+                              )} ${Utilities.formatearFecha(vm.fechaRefIni)}",
                               style: AppTheme.style(
                                 context,
                                 Styles.normal,
@@ -398,7 +398,7 @@ class DocumentView extends StatelessWidget {
                               "${AppLocalizations.of(context)!.translate(
                                 BlockTranslate.fecha,
                                 'hora',
-                              )} ${Utilities.formatearHora(vm.fechaEntrega)}",
+                              )} ${Utilities.formatearHora(vm.fechaRefIni)}",
                               style: AppTheme.style(
                                 context,
                                 Styles.normal,
@@ -441,7 +441,7 @@ class DocumentView extends StatelessWidget {
                               "${AppLocalizations.of(context)!.translate(
                                 BlockTranslate.fecha,
                                 'fecha',
-                              )} ${Utilities.formatearFecha(vm.fechaRecoger)}",
+                              )} ${Utilities.formatearFecha(vm.fechaRefFin)}",
                               style: AppTheme.style(
                                 context,
                                 Styles.normal,
@@ -461,7 +461,7 @@ class DocumentView extends StatelessWidget {
                               "${AppLocalizations.of(context)!.translate(
                                 BlockTranslate.fecha,
                                 'hora',
-                              )} ${Utilities.formatearHora(vm.fechaRecoger)}",
+                              )} ${Utilities.formatearHora(vm.fechaRefFin)}",
                               style: AppTheme.style(
                                 context,
                                 Styles.normal,

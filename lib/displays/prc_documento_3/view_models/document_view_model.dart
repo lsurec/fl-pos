@@ -249,6 +249,7 @@ class DocumentViewModel extends ChangeNotifier {
     final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
     final vmMenu = Provider.of<MenuViewModel>(context, listen: false);
     final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
+    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
 
     //niciar proceso
     vmFactura.isLoading = true;
@@ -259,7 +260,7 @@ class DocumentViewModel extends ChangeNotifier {
     await loadParametros(context);
     await obtenerReferencias(context); //cargar las referencias
     await vmPayment.loadPayments(context);
-
+    vmDoc.restaurarFechas();
     //finalizar proceso
     vmFactura.isLoading = false;
 
@@ -812,15 +813,15 @@ class DocumentViewModel extends ChangeNotifier {
   //Fechas
   DateTime fechaInicial = DateTime.now();
   DateTime fechaFinal = DateTime.now();
-  DateTime fechaEntrega = DateTime.now();
-  DateTime fechaRecoger = DateTime.now();
+  DateTime fechaRefIni = DateTime.now();
+  DateTime fechaRefFin = DateTime.now();
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaRecoger,
+      initialDate: fechaRefFin,
       firstDate: fechaInicial,
       lastDate: fechaFinal,
       confirmText: AppLocalizations.of(context)!.translate(
@@ -887,7 +888,7 @@ class DocumentViewModel extends ChangeNotifier {
       initialDate: fechaInicial, //finalizo despues de iniciar
       //fecha minima es la inicial
       firstDate: fechaInicial,
-      lastDate: fechaRecoger, //no puedo finalizar despues de recoger
+      lastDate: fechaRefFin, //no puedo finalizar despues de recoger
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
         'aceptar',
@@ -950,8 +951,8 @@ class DocumentViewModel extends ChangeNotifier {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaEntrega,
-      firstDate: fechaEntrega,
+      initialDate: fechaRefIni,
+      firstDate: fechaRefIni,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -963,12 +964,12 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedDate == null) return;
 
     //armar fecha con la fecha seleccionada en el picker
-    fechaEntrega = DateTime(
+    fechaRefIni = DateTime(
       pickedDate.year,
       pickedDate.month,
       pickedDate.day,
-      fechaEntrega.hour,
-      fechaEntrega.minute,
+      fechaRefIni.hour,
+      fechaRefIni.minute,
     );
 
     notifyListeners();
@@ -978,8 +979,8 @@ class DocumentViewModel extends ChangeNotifier {
   Future<void> abrirHoraEntrega(BuildContext context) async {
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
-      hour: fechaEntrega.hour,
-      minute: fechaEntrega.minute,
+      hour: fechaRefIni.hour,
+      minute: fechaRefIni.minute,
     );
 
     //abre el time picker con la hora inicial
@@ -999,10 +1000,10 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedTime == null) return;
 
     //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
-    fechaEntrega = DateTime(
-      fechaEntrega.year,
-      fechaEntrega.month,
-      fechaEntrega.day,
+    fechaRefIni = DateTime(
+      fechaRefIni.year,
+      fechaRefIni.month,
+      fechaRefIni.day,
       pickedTime.hour,
       pickedTime.minute,
     );
@@ -1015,7 +1016,7 @@ class DocumentViewModel extends ChangeNotifier {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaFinal,
-      firstDate: fechaRecoger,
+      firstDate: fechaRefFin,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -1027,12 +1028,12 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedDate == null) return;
 
     //armar fecha con la fecha seleccionada en el picker
-    fechaRecoger = DateTime(
+    fechaRefFin = DateTime(
       pickedDate.year,
       pickedDate.month,
       pickedDate.day,
-      fechaRecoger.hour,
-      fechaRecoger.minute,
+      fechaRefFin.hour,
+      fechaRefFin.minute,
     );
 
     notifyListeners();
@@ -1044,8 +1045,8 @@ class DocumentViewModel extends ChangeNotifier {
 
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
-      hour: fechaRecoger.hour,
-      minute: fechaRecoger.minute,
+      hour: fechaRefFin.hour,
+      minute: fechaRefFin.minute,
     );
 
     //abre el time picker con la hora inicial
@@ -1065,14 +1066,14 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedTime == null) return;
 
     if (compararFechas(fechaHoraActual, fechaHoraActual)) {
-      print("no ${compararFechas(fechaEntrega, fechaHoraActual)}");
+      print("no ${compararFechas(fechaRefIni, fechaHoraActual)}");
     }
 
     //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
-    fechaRecoger = DateTime(
-      fechaRecoger.year,
-      fechaRecoger.month,
-      fechaRecoger.day,
+    fechaRefFin = DateTime(
+      fechaRefFin.year,
+      fechaRefFin.month,
+      fechaRefFin.day,
       pickedTime.hour,
       pickedTime.minute,
     );
@@ -1100,10 +1101,10 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   restaurarFechas() {
-    fechaEntrega = DateTime.now();
-    fechaInicial = addDate30Min(fechaEntrega);
+    fechaRefIni = DateTime.now();
+    fechaInicial = addDate30Min(fechaRefIni);
     fechaFinal = addDate30Min(fechaInicial);
-    fechaRecoger = addDate30Min(fechaFinal);
+    fechaRefFin = addDate30Min(fechaFinal);
     // fechaInicial = DateTime.now();
     // fechaFinal = DateTime.now();
     // fechaRecoger = DateTime.now();
