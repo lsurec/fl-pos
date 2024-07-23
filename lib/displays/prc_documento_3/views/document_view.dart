@@ -116,12 +116,12 @@ class DocumentView extends StatelessWidget {
                         'nueva',
                       ),
                     ),
-                    IconButton(
-                      onPressed: () => vm.restaurarFechas(),
-                      icon: const Icon(
-                        Icons.refresh,
-                      ),
-                    )
+                    // IconButton(
+                    //   onPressed: () => vm.restaurarFechas(),
+                    //   icon: const Icon(
+                    //     Icons.refresh,
+                    //   ),
+                    // )
                   ],
                 ),
                 if (vm.clienteSelect == null) const SizedBox(height: 20),
@@ -308,16 +308,16 @@ class DocumentView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      // Text(
-                      //   AppLocalizations.of(context)!.translate(
-                      //     BlockTranslate.cotizacion,
-                      //     'tipoRef',
-                      //   ),
-                      //   style: AppTheme.style(
-                      //     context,
-                      //     Styles.title,
-                      //   ),
-                      // ),
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'tipoRef',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
                       DropdownButton<TipoReferenciaModel>(
                         isExpanded: true,
                         dropdownColor: AppTheme.color(

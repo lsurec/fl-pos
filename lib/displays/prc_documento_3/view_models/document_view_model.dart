@@ -947,8 +947,6 @@ class DocumentViewModel extends ChangeNotifier {
   //Fecha entrega
   //Abrir picker de fecha entrega
   Future<void> abrirFechaEntrega(BuildContext context) async {
-    DateTime fechaHoraActual = DateTime.now();
-
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -972,28 +970,6 @@ class DocumentViewModel extends ChangeNotifier {
       fechaEntrega.hour,
       fechaEntrega.minute,
     );
-
-    if (compararFechas(fechaEntrega, fechaHoraActual)) {
-      print(fechaHoraActual);
-      print(fechaEntrega);
-
-      print(
-        "${compararFechas(fechaEntrega, fechaHoraActual)} las fechas de acá",
-      );
-
-      fechaEntrega = DateTime(
-        pickedDate.year,
-        pickedDate.month,
-        pickedDate.day,
-        0,
-        0,
-      );
-
-      print(fechaHoraActual);
-      print(fechaEntrega);
-    }
-
-    actualizarFechas(fechaEntrega, 1);
 
     notifyListeners();
   }
