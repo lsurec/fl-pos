@@ -79,7 +79,10 @@ class CardTask extends StatelessWidget {
                 if (tarea.ultimoComentario != null)
                   ExpansionTile(
                     title: Text(
-                      'Ver último comentario',
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tareas,
+                        'ultimoComentario',
+                      ),
                       style: AppTheme.style(
                         context,
                         Styles.normal,

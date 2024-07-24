@@ -430,7 +430,9 @@
         "todas": "Todas",
         "creadas": "Creadas",
         "asignadas": "Asignadas",
-        "invitaciones": "Invitaciones"
+        "invitaciones": "Invitaciones",
+        "refSelec": "Referencia seleccionada",
+        "ultimoComentario": "Ver último comentario"
     },
     "calendario": {
         "hoy": "Hoy",

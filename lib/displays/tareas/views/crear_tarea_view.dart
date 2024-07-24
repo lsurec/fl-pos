@@ -458,29 +458,78 @@ class CrearTareaView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 30),
-                                if (vm.idReferencia != null)
-                                  Text(
-                                    vm.idReferencia!.referenciaId,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
-                                  ),
                               ],
                             ),
                             leading: const Icon(Icons.search),
                             contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
+                        if (vm.idReferencia != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tareas,
+                                  'refSelec',
+                                ),
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                ),
+                              ),
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(5),
+                                title: Text(
+                                  vm.idReferencia!.descripcion.isEmpty
+                                      ? "${vm.idReferencia?.referenciaId ?? vm.idReferencia?.referencia}"
+                                      : vm.idReferencia?.referenciaId ??
+                                          "${vm.idReferencia?.referencia ?? vm.idReferencia}",
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.bold,
+                                  ),
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.tareas,
+                                        'idRef',
+                                      )}: ",
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.normal,
+                                      ),
+                                    ),
+                                    Text(
+                                      vm.idReferencia?.referenciaId ??
+                                          vm.idReferencia?.referenciaId ??
+                                          "",
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailing: GestureDetector(
+                                  child: const Icon(Icons.close),
+                                  onTap: () => vm.eliminarRef(),
+                                ),
+                              ),
+                            ],
+                          ),
                         const Divider(),
                         TextButton(
                           onPressed: () => vm.irUsuarios(
-                              context,
-                              1,
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.botones,
-                                'agregarResponsable',
-                              )),
+                            context,
+                            1,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarResponsable',
+                            ),
+                          ),
                           child: ListTile(
                             title: Row(
                               children: [
@@ -503,8 +552,9 @@ class CrearTareaView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            leading:
-                                const Icon(Icons.person_add_alt_1_outlined),
+                            leading: const Icon(
+                              Icons.person_add_alt_1_outlined,
+                            ),
                             contentPadding: const EdgeInsets.all(0),
                           ),
                         ),

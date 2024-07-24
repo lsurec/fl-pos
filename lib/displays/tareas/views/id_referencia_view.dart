@@ -167,6 +167,49 @@ class _ReferenciasEncontradas extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'referencia',
+                        )}: ",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                      Text(
+                        "${referencia.referencia}",
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'estadoTarea',
+                        )}: ",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                      Text(
+                        referencia.fDesEstadoObjeto,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

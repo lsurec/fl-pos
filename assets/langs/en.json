@@ -430,7 +430,9 @@
         "todas": "All",
         "creadas": "Created",
         "asignadas": "Assigned",
-        "invitaciones": "Invitations"
+        "invitaciones": "Invitations",
+        "refSelec": "Selected Reference",
+        "ultimoComentario": "View Latest Comment"
     },
     "calendario": {
         "hoy": "Today",
