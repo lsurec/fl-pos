@@ -9,14 +9,14 @@ import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Tabs4View extends StatefulWidget {
-  const Tabs4View({Key? key}) : super(key: key);
+class TareasFiltroView extends StatefulWidget {
+  const TareasFiltroView({Key? key}) : super(key: key);
 
   @override
-  State<Tabs4View> createState() => _Tabs4ViewState();
+  State<TareasFiltroView> createState() => _TareasFiltroViewState();
 }
 
-class _Tabs4ViewState extends State<Tabs4View>
+class _TareasFiltroViewState extends State<TareasFiltroView>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
@@ -42,6 +42,21 @@ class _Tabs4ViewState extends State<Tabs4View>
         DefaultTabController(
           length: 4, // Número de pestañas
           child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => vmTarea.crearTarea(context),
+              tooltip: AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                'nueva',
+              ),
+              child: Icon(
+                Icons.add,
+                color: AppTheme.color(
+                  context,
+                  Styles.white,
+                ),
+                size: 30,
+              ),
+            ),
             appBar: AppBar(
               title: Text(
                 vmMenu.name,
@@ -50,24 +65,6 @@ class _Tabs4ViewState extends State<Tabs4View>
                   Styles.title,
                 ),
               ),
-              actions: [
-                IconButton(
-                  tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.botones,
-                    'nueva',
-                  ),
-                  onPressed: () => vmTarea.crearTarea(context),
-                  icon: const Icon(Icons.note_add_outlined),
-                ),
-                IconButton(
-                  onPressed: () => vmTarea.crearTarea(context),
-                  icon: const Icon(Icons.add),
-                  tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.botones,
-                    'nueva',
-                  ),
-                ),
-              ],
               bottom: TabBar(
                 onTap: (index) => vmTarea.limpiarLista(context),
                 controller: vmTarea.tabController,

@@ -111,6 +111,11 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Navegar a view para buscar Id de referencia.
   irIdReferencia(BuildContext context) {
+    final vmRef = Provider.of<IdReferenciaViewModel>(context, listen: false);
+
+    vmRef.idReferencias.clear();
+    vmRef.buscarIdReferencia.text = "";
+
     Navigator.pushNamed(context, AppRoutes.selectReferenceId);
   }
 
@@ -1077,5 +1082,11 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
     return 0;
+  }
+
+  eliminarRef() {
+    idReferencia = null;
+    notifyListeners();
+    print("eliminamos la refeencia");
   }
 }

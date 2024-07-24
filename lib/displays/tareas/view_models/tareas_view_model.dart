@@ -122,8 +122,6 @@ class TareasViewModel extends ChangeNotifier {
 
   asignarTareas(List<TareaModel> tareasEncontradas, int tipo) {
     if (tipo == 0) {
-      print("entra aqui");
-
       tareasGenerales.addAll(tareasEncontradas);
       tareasCreadas.addAll(tareasEncontradas);
       tareasInvitaciones.addAll(tareasEncontradas);

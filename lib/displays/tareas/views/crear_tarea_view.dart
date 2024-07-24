@@ -118,6 +118,15 @@ class CrearTareaView extends StatelessWidget {
                               BlockTranslate.tareas,
                               'agregaTitulo',
                             ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.border,
+                                ),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -256,7 +265,7 @@ class CrearTareaView extends StatelessWidget {
                                 border: Border.all(
                                   color: AppTheme.color(
                                     context,
-                                    Styles.primary,
+                                    Styles.border,
                                   ),
                                 ),
                                 borderRadius: BorderRadius.circular(10),
@@ -458,29 +467,78 @@ class CrearTareaView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 30),
-                                if (vm.idReferencia != null)
-                                  Text(
-                                    vm.idReferencia!.referenciaId,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
-                                  ),
                               ],
                             ),
                             leading: const Icon(Icons.search),
                             contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
+                        if (vm.idReferencia != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tareas,
+                                  'refSelec',
+                                ),
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                ),
+                              ),
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(5),
+                                title: Text(
+                                  vm.idReferencia!.descripcion.isEmpty
+                                      ? "${vm.idReferencia?.referenciaId ?? vm.idReferencia?.referencia}"
+                                      : vm.idReferencia?.referenciaId ??
+                                          "${vm.idReferencia?.referencia ?? vm.idReferencia}",
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.bold,
+                                  ),
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.tareas,
+                                        'idRef',
+                                      )}: ",
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.normal,
+                                      ),
+                                    ),
+                                    Text(
+                                      vm.idReferencia?.referenciaId ??
+                                          vm.idReferencia?.referenciaId ??
+                                          "",
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailing: GestureDetector(
+                                  child: const Icon(Icons.close),
+                                  onTap: () => vm.eliminarRef(),
+                                ),
+                              ),
+                            ],
+                          ),
                         const Divider(),
                         TextButton(
                           onPressed: () => vm.irUsuarios(
-                              context,
-                              1,
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.botones,
-                                'agregarResponsable',
-                              )),
+                            context,
+                            1,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarResponsable',
+                            ),
+                          ),
                           child: ListTile(
                             title: Row(
                               children: [
@@ -503,8 +561,9 @@ class CrearTareaView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            leading:
-                                const Icon(Icons.person_add_alt_1_outlined),
+                            leading: const Icon(
+                              Icons.person_add_alt_1_outlined,
+                            ),
                             contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
@@ -622,61 +681,6 @@ class CrearTareaView extends StatelessWidget {
   }
 }
 
-// class _TiempoEstimado extends StatelessWidget {
-//   const _TiempoEstimado({
-//     required this.tiempos,
-//   });
-
-//   final List<PeriodicidadModel> tiempos;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CrearTareaViewModel>(context);
-
-//     return DropdownButtonFormField2<PeriodicidadModel>(
-//       value: vm.periodicidad,
-//       isExpanded: true,
-//       decoration: InputDecoration(
-//         contentPadding: const EdgeInsets.symmetric(vertical: 16),
-//         border: UnderlineInputBorder(
-//           borderRadius: BorderRadius.circular(15),
-//           borderSide: const BorderSide(),
-//         ),
-//       ),
-//       items: tiempos
-//           .map(
-//             (item) => DropdownMenuItem<PeriodicidadModel>(
-//               value: item,
-//               child: Text(
-//                 item.descripcion,
-//                 style: const TextStyle(
-//                   fontSize: 14,
-//                 ),
-//               ),
-//             ),
-//           )
-//           .toList(),
-//       buttonStyleData: const ButtonStyleData(
-//         padding: EdgeInsets.only(right: 8),
-//       ),
-//       iconStyleData: const IconStyleData(
-//         icon: Icon(
-//           Icons.arrow_drop_down,
-//         ),
-//         iconSize: 24,
-//       ),
-//       dropdownStyleData: DropdownStyleData(
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(15),
-//         ),
-//       ),
-//       menuItemStyleData: const MenuItemStyleData(
-//         padding: EdgeInsets.symmetric(horizontal: 16),
-//       ),
-//     );
-//   }
-// }
-
 class _TiempoEstimado extends StatelessWidget {
   const _TiempoEstimado({
     required this.tiempos,
@@ -704,7 +708,7 @@ class _TiempoEstimado extends StatelessWidget {
         border: Border.all(
           color: AppTheme.color(
             context,
-            Styles.primary,
+            Styles.border,
           ),
         ),
         borderRadius: BorderRadius.circular(10),
@@ -743,6 +747,15 @@ class _ObservacionTarea extends StatelessWidget {
           BlockTranslate.tareas,
           'notaObservacion',
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
       maxLines: 5,
       minLines: 2,
@@ -769,6 +782,15 @@ class _PrioridadTarea extends StatelessWidget {
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       items: prioridades
@@ -844,7 +866,7 @@ class _EstadoTarea extends StatelessWidget {
         border: Border.all(
           color: AppTheme.color(
             context,
-            Styles.primary,
+            Styles.border,
           ),
         ),
         borderRadius: BorderRadius.circular(10),
@@ -880,6 +902,15 @@ class _TipoTarea extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           borderSide:
               const BorderSide(), // Cambia el color del borde inferior aquí
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
         // Add more decoration..
       ),
