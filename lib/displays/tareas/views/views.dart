@@ -8,3 +8,4 @@ export 'package:flutter_post_printer_example/displays/tareas/views/ver_asignadas
 export 'package:flutter_post_printer_example/displays/tareas/views/ver_creadas_view.dart';
 export 'package:flutter_post_printer_example/displays/tareas/views/ver_invitaciones_view.dart';
 export 'package:flutter_post_printer_example/displays/tareas/views/ver_todas_view.dart';
+export 'package:flutter_post_printer_example/displays/tareas/views/tareas_filtro_view.dart';

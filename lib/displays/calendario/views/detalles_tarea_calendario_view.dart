@@ -590,8 +590,17 @@ class _ActualizarEstado extends StatelessWidget {
         child: DropdownButtonFormField2<EstadoModel>(
           value: vm.estadoAtual,
           isExpanded: true,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 16),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.color(
+                  context,
+                  Styles.border,
+                ),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
@@ -668,8 +677,17 @@ class _ActualizarPrioridad extends StatelessWidget {
         child: DropdownButtonFormField2<PrioridadModel>(
           value: vm.prioridadActual,
           isExpanded: true,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 16),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.color(
+                  context,
+                  Styles.border,
+                ),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(

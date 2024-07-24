@@ -6,11 +6,11 @@ import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
-import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ComentariosView extends StatelessWidget {
@@ -214,6 +214,15 @@ class _NuevoComentario extends StatelessWidget {
             borderSide: BorderSide(
               width: 1,
             ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.color(
+                context,
+                Styles.border,
+              ),
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
           labelText: AppLocalizations.of(context)!.translate(
             BlockTranslate.tareas,

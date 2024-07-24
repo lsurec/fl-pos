@@ -431,7 +431,9 @@
         "todas": "Alle",
         "creadas": "Erstellt",
         "asignadas": "Zugewiesen",
-        "invitaciones": "Einladungen"
+        "invitaciones": "Einladungen",
+        "refSelec": "Référence sélectionnée",
+        "ultimoComentario": "Voir le dernier commentaire"
     },
     "calendario": {
         "hoy": "Aujourd'hui",

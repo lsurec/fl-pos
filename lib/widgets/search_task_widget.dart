@@ -41,6 +41,15 @@ class SearchTask extends StatelessWidget {
               return null;
             },
             decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppTheme.color(
+                    context,
+                    Styles.border,
+                  ),
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
               hintText: AppLocalizations.of(context)!.translate(
                 BlockTranslate.tareas,
                 'buscar',
