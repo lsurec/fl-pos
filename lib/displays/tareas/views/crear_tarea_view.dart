@@ -118,6 +118,15 @@ class CrearTareaView extends StatelessWidget {
                               BlockTranslate.tareas,
                               'agregaTitulo',
                             ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.border,
+                                ),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -256,7 +265,7 @@ class CrearTareaView extends StatelessWidget {
                                 border: Border.all(
                                   color: AppTheme.color(
                                     context,
-                                    Styles.primary,
+                                    Styles.border,
                                   ),
                                 ),
                                 borderRadius: BorderRadius.circular(10),
@@ -672,61 +681,6 @@ class CrearTareaView extends StatelessWidget {
   }
 }
 
-// class _TiempoEstimado extends StatelessWidget {
-//   const _TiempoEstimado({
-//     required this.tiempos,
-//   });
-
-//   final List<PeriodicidadModel> tiempos;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final vm = Provider.of<CrearTareaViewModel>(context);
-
-//     return DropdownButtonFormField2<PeriodicidadModel>(
-//       value: vm.periodicidad,
-//       isExpanded: true,
-//       decoration: InputDecoration(
-//         contentPadding: const EdgeInsets.symmetric(vertical: 16),
-//         border: UnderlineInputBorder(
-//           borderRadius: BorderRadius.circular(15),
-//           borderSide: const BorderSide(),
-//         ),
-//       ),
-//       items: tiempos
-//           .map(
-//             (item) => DropdownMenuItem<PeriodicidadModel>(
-//               value: item,
-//               child: Text(
-//                 item.descripcion,
-//                 style: const TextStyle(
-//                   fontSize: 14,
-//                 ),
-//               ),
-//             ),
-//           )
-//           .toList(),
-//       buttonStyleData: const ButtonStyleData(
-//         padding: EdgeInsets.only(right: 8),
-//       ),
-//       iconStyleData: const IconStyleData(
-//         icon: Icon(
-//           Icons.arrow_drop_down,
-//         ),
-//         iconSize: 24,
-//       ),
-//       dropdownStyleData: DropdownStyleData(
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(15),
-//         ),
-//       ),
-//       menuItemStyleData: const MenuItemStyleData(
-//         padding: EdgeInsets.symmetric(horizontal: 16),
-//       ),
-//     );
-//   }
-// }
-
 class _TiempoEstimado extends StatelessWidget {
   const _TiempoEstimado({
     required this.tiempos,
@@ -754,7 +708,7 @@ class _TiempoEstimado extends StatelessWidget {
         border: Border.all(
           color: AppTheme.color(
             context,
-            Styles.primary,
+            Styles.border,
           ),
         ),
         borderRadius: BorderRadius.circular(10),
@@ -793,6 +747,15 @@ class _ObservacionTarea extends StatelessWidget {
           BlockTranslate.tareas,
           'notaObservacion',
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
       ),
       maxLines: 5,
       minLines: 2,
@@ -819,6 +782,15 @@ class _PrioridadTarea extends StatelessWidget {
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       items: prioridades
@@ -894,7 +866,7 @@ class _EstadoTarea extends StatelessWidget {
         border: Border.all(
           color: AppTheme.color(
             context,
-            Styles.primary,
+            Styles.border,
           ),
         ),
         borderRadius: BorderRadius.circular(10),
@@ -930,6 +902,15 @@ class _TipoTarea extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           borderSide:
               const BorderSide(), // Cambia el color del borde inferior aquí
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
         // Add more decoration..
       ),

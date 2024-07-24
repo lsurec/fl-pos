@@ -47,6 +47,15 @@ class IdReferenciaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'buscar',
                         ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppTheme.color(
+                              context,
+                              Styles.border,
+                            ),
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         suffixIcon: IconButton(
                           icon: Icon(
                             Icons.search,
