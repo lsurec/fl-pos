@@ -54,6 +54,7 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
                   context,
                   Styles.white,
                 ),
+                size: 30,
               ),
             ),
             appBar: AppBar(

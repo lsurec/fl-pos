@@ -55,15 +55,7 @@ class CardTask extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 20),
-                    Icon(
-                      Icons.circle,
-                      color: Color.fromRGBO(
-                        colorTarea[0],
-                        colorTarea[1],
-                        colorTarea[2],
-                        1,
-                      ),
-                    ),
+                    EstadoColor(colorTarea: colorTarea),
                   ],
                 ),
                 TextsWidget(
@@ -334,6 +326,39 @@ class CardTask extends StatelessWidget {
           const Divider(),
           const SizedBox(height: 5),
         ],
+      ),
+    );
+  }
+}
+
+class EstadoColor extends StatelessWidget {
+  const EstadoColor({
+    super.key,
+    required this.colorTarea,
+  });
+
+  final List<int> colorTarea;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 24.0,
+      height: 24.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color.fromRGBO(
+          colorTarea[0],
+          colorTarea[1],
+          colorTarea[2],
+          1,
+        ),
+        border: Border.all(
+          color: AppTheme.color(
+            context,
+            Styles.grey,
+          ),
+          width: 1.0,
+        ),
       ),
     );
   }
