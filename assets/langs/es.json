@@ -370,7 +370,9 @@
         "porcentaje": "Porcentaje",
         "cargAgregado": "Cargo agregado.",
         "descAgregado": "Descuento agregado.",
-        "saldo": "Saldo"
+        "saldo": "Saldo",
+        "cantDias": "Cantidad días",
+        "precioTotalCant": "Precio total por cantidad"
     },
     "cotizacion": {
         "convertirDoc": "Convertir Documento",

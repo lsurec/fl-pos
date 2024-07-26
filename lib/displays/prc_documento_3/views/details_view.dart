@@ -303,6 +303,7 @@ class _TransactionCard extends StatelessWidget {
     final vm = Provider.of<DetailsViewModel>(context);
 
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -340,6 +341,19 @@ class _TransactionCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+//Cantidad dias
+            if (docVM.valueParametro(44))
+              Text(
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'cantDias',
+                )}: 0', //TODO: modificar
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
+
             if (transaction.precio != null)
               Text(
                 '${AppLocalizations.of(context)!.translate(
@@ -351,7 +365,18 @@ class _TransactionCard extends StatelessWidget {
                   Styles.normal,
                 ),
               ),
-
+//Total por cantidad
+            if (docVM.valueParametro(44))
+              Text(
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'precioTotalCant',
+                )}: ${currencyFormat.format(0)}', //TODO: modificar
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
             Text(
               '${AppLocalizations.of(context)!.translate(
                 BlockTranslate.calcular,

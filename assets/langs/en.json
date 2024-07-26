@@ -370,7 +370,9 @@
         "porcentaje": "Percentage",
         "cargAgregado": "Charge added.",
         "descAgregado": "Discount added.",
-        "saldo": "Balance"
+        "saldo": "Balance",
+        "cantDias": "Number of days",
+        "precioTotalCant": "Total price per quantity"
     },
     "cotizacion": {
         "convertirDoc": "Convert Document",

@@ -370,7 +370,9 @@
         "porcentaje": "Prozentsatz",
         "cargAgregado": "Gebühr hinzugefügt.",
         "descAgregado": "Rabatt hinzugefügt.",
-        "saldo": "Saldo"
+        "saldo": "Saldo",
+        "cantDias": "Anzahl der Tage",
+        "precioTotalCant": "Gesamtpreis pro Menge"
     },
     "cotizacion": {
         "convertirDoc": "Dokument konvertieren",
