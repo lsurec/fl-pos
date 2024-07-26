@@ -199,7 +199,8 @@
         "asignado": "Previously assigned user.",
         "estadoIgual": "Previously assigned status.",
         "prioridadIgual": "Previously assigned priority.",
-        "copiado": "Text copied to clipboard."
+        "copiado": "Text copied to clipboard.",
+        "precioDiasNoCalculado": "The price per day was not calculated. Verify that the dates are valid."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

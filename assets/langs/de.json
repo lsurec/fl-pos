@@ -199,7 +199,8 @@
         "asignado": "Zuvor zugewiesener Benutzer.",
         "estadoIgual": "Zuvor zugewiesener Status.",
         "prioridadIgual": "Zuvor zugewiesene Priorität.",
-        "copiado": "Text in die Zwischenablage kopiert."
+        "copiado": "Text in die Zwischenablage kopiert.",
+        "precioDiasNoCalculado": "Der Preis pro Tag wurde nicht berechnet. Überprüfen Sie, ob die Daten gültig sind."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",

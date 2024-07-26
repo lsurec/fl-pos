@@ -646,6 +646,8 @@ class ProductViewModel extends ChangeNotifier {
     //agregar transacion al documento
     detailsVM.addTransaction(
       TraInternaModel(
+        consecutivo: 0,
+        estadoTra: 1,
         isChecked: false,
         bodega: selectedBodega!,
         producto: product,
@@ -655,6 +657,9 @@ class ProductViewModel extends ChangeNotifier {
         cargo: 0,
         descuento: 0,
         operaciones: [],
+        precioCantidad: docVM.valueParametro(44) ? total : null,
+        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        precioDia: docVM.valueParametro(44) ? precioDias : null,
       ),
       context,
     );

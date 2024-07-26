@@ -199,7 +199,8 @@
         "asignado": "Utilisateur précédemment assigné.",
         "estadoIgual": "État précédemment assigné.",
         "prioridadIgual": "Priorité précédemment assignée.",
-        "copiado": "Texte copié dans le presse-papiers."
+        "copiado": "Texte copié dans le presse-papiers.",
+        "precioDiasNoCalculado": "Le prix par jour n'a pas été calculé. Vérifiez que les dates sont valides."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
