@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -519,11 +520,10 @@ class ProductViewModel extends ChangeNotifier {
 
     TipoTransaccionModel tipoTra =
         getTipoTransaccion(product.tipoProducto, context);
+    ProductService productService = ProductService();
 
     if (tipoTra.altCantidad) {
       //iniciar proceso
-
-      ProductService productService = ProductService();
 
       //consumo del api
       ApiResModel res = await productService.getValidateProducts(
@@ -584,6 +584,64 @@ class ProductViewModel extends ChangeNotifier {
         return;
       }
     }
+
+    //calcular precio por dias
+
+    double precioDias = 0;
+    int cantidadDias = 0;
+
+    if (docVM.valueParametro(44)) {
+      if (Utilities.fechaIgualOMayorSinSegundos(
+          docVM.fechaFinal, docVM.fechaInicial)) {
+        //formular precios por dias
+        ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
+          token,
+          user,
+          docVM.fechaInicial,
+          docVM.fechaFinal,
+          total.toString(),
+        );
+
+        //valid succes response
+        if (!resFormPrecio.succes) {
+          //si algo salio mal mostrar alerta
+
+          await NotificationService.showErrorView(
+            context,
+            resFormPrecio,
+          );
+          return;
+        }
+
+        List<PrecioDiaModel> preciosDia = resFormPrecio.response;
+
+        if (preciosDia.isEmpty) {
+          isLoading = false;
+          resFormPrecio.response =
+              'No fue posible obtner los valores calculados para el precio dia';
+
+          NotificationService.showErrorView(context, resFormPrecio);
+
+          return;
+        }
+
+        precioDias = preciosDia[0].montoCalculado;
+        cantidadDias = preciosDia[0].cantidadDia;
+      } else {
+        isLoading = false;
+        precioDias = total;
+        cantidadDias = 1;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'precioDiasNoCalculado',
+          ),
+        );
+      }
+    }
+
+//aqui termina lo que agregue..
 
     //agregar transacion al documento
     detailsVM.addTransaction(

@@ -356,4 +356,27 @@ class Utilities {
       },
     );
   }
+
+  static bool fechaIgualOMayorSinSegundos(DateTime date1, DateTime date2) {
+    // Crear nuevas instancias de fechas sin segundos
+    DateTime dateWithoutSeconds1 = DateTime(
+      date1.year,
+      date1.month,
+      date1.day,
+      date1.hour,
+      date1.minute,
+    );
+
+    DateTime dateWithoutSeconds2 = DateTime(
+      date2.year,
+      date2.month,
+      date2.day,
+      date2.hour,
+      date2.minute,
+    );
+
+    // Comparar las fechas
+    return dateWithoutSeconds1.isAtSameMomentAs(dateWithoutSeconds2) ||
+        dateWithoutSeconds1.isAfter(dateWithoutSeconds2);
+  }
 }

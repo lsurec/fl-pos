@@ -199,7 +199,9 @@
         "asignado": "Usuario asignado anteriormente.",
         "estadoIgual": "Estado asignado anteriormente.",
         "prioridadIgual": "Prioridad asignada anteriormente.",
-        "copiado": "Texto copiado al portapapeles."
+        "copiado": "Texto copiado al portapapeles.",
+        "precioDiasNoCalculado": "No se calculó el precio por día. Verifica que las fechas sean válidas.",
+        "taducir": "TRADUCIR AQUI"
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
