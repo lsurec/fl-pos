@@ -821,9 +821,9 @@ class DocumentViewModel extends ChangeNotifier {
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaInicial,
+      initialDate: fechaRefIni,
       firstDate: fechaRefIni,
-      lastDate: fechaFinal,
+      lastDate: fechaRefFin,
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
         'aceptar',
@@ -842,24 +842,9 @@ class DocumentViewModel extends ChangeNotifier {
       fechaInicial.minute,
     );
 
-    actualizarFechas(fechaInicial, 1);
+    fechaFinal = fechaInicial;
 
     notifyListeners();
-  }
-
-  actualizarFechas(DateTime fecha, int tipoFecha) {
-    //1: Fecha Ref Inicial
-    if (tipoFecha == 1) {
-      fechaInicial = addDate30Min(fecha);
-      fechaFinal = addDate30Min(fechaInicial);
-      fechaRefFin = addDate30Min(fechaFinal);
-    }
-
-    //2: Fecha Inicial
-    if (tipoFecha == 1) {
-      fechaFinal = addDate30Min(fechaInicial);
-      fechaRefFin = addDate30Min(fechaFinal);
-    }
   }
 
   //Abrir y seleccionar hora inicial
@@ -991,7 +976,10 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRefIni.minute,
     );
 
-    actualizarFechas(fechaRefIni, 1);
+    fechaRefFin = fechaRefIni;
+    fechaInicial = fechaRefFin;
+    fechaFinal = fechaInicial;
+
     notifyListeners();
   }
 
@@ -1032,13 +1020,11 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   Future<void> abrirFechaRecoger(BuildContext context) async {
-    DateTime fechaActual = DateTime.now();
-
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaRefFin,
-      firstDate: fechaActual,
+      initialDate: fechaFinal,
+      firstDate: fechaFinal,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -1112,16 +1098,6 @@ class DocumentViewModel extends ChangeNotifier {
     );
   }
 
-  actualizar2Fechas(DateTime fecha, int tipo) {
-    //si la fecha seleccionada es la Fecha Entrega
-    if (tipo == 1) {
-      //Actualizar fecha inicial + 30 minutos
-      fechaInicial = addDate30Min(fecha);
-      // fechaFinal = addDate30Min(fechaInicial);
-      // fechaRecoger = addDate30Min(fechaFinal);
-    }
-  }
-
   restaurarFechas() {
     fechaRefIni = DateTime.now();
     fechaInicial = addDate30Min(fechaRefIni);
@@ -1139,5 +1115,64 @@ class DocumentViewModel extends ChangeNotifier {
     DateTime fechaFinal,
   ) {
     return fechaInicial.isAfter(fechaFinal);
+  }
+
+  //Funcion para validar las fechas
+
+  DateTime fechaActual = DateTime.now();
+
+  bool validateDates() {
+    // Remover los segundos de las fechas para la comparación
+    fechaActual = DateTime(
+      fechaActual.year,
+      fechaActual.month,
+      fechaActual.day,
+      fechaActual.hour,
+      fechaActual.minute,
+    );
+
+    fechaRefIni = DateTime(
+      fechaRefIni.year,
+      fechaRefIni.month,
+      fechaRefIni.day,
+      fechaRefIni.hour,
+      fechaRefIni.minute,
+    );
+
+    fechaRefFin = DateTime(
+      fechaRefFin.year,
+      fechaRefFin.month,
+      fechaRefFin.day,
+      fechaRefFin.hour,
+      fechaRefFin.minute,
+    );
+
+    fechaInicial = DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      fechaInicial.day,
+      fechaInicial.hour,
+      fechaInicial.minute,
+    );
+
+    fechaFinal = DateTime(
+      fechaFinal.year,
+      fechaFinal.month,
+      fechaFinal.day,
+      fechaFinal.hour,
+      fechaFinal.minute,
+    );
+
+    // Validaciones según las condiciones especificadas
+    if (fechaRefIni.isAfter(fechaActual) &&
+        fechaRefIni.isBefore(fechaRefFin) &&
+        fechaRefFin.isAfter(fechaRefIni) &&
+        fechaInicial.isAfter(fechaRefIni) &&
+        fechaInicial.isBefore(fechaRefFin) &&
+        fechaFinal.isAfter(fechaInicial) &&
+        fechaFinal.isBefore(fechaRefFin)) {
+      return true;
+    }
+    return false;
   }
 }

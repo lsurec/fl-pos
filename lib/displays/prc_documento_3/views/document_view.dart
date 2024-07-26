@@ -365,46 +365,14 @@ class DocumentView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
+                          FechaButton(
+                            fecha: vm.fechaRefIni,
                             onPressed: () => vm.abrirFechaEntrega(context),
-                            icon: Icon(
-                              Icons.calendar_today_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'fecha',
-                              )} ${Utilities.formatearFecha(vm.fechaRefIni)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
                           ),
-                          TextButton.icon(
+                          HoraButton(
+                            fecha: vm.fechaRefIni,
                             onPressed: () => vm.abrirHoraEntrega(context),
-                            icon: Icon(
-                              Icons.schedule_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'hora',
-                              )} ${Utilities.formatearHora(vm.fechaRefIni)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
-                          )
+                          ),
                         ],
                       ),
                       const Divider(),
@@ -428,46 +396,14 @@ class DocumentView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
+                          FechaButton(
+                            fecha: vm.fechaRefFin,
                             onPressed: () => vm.abrirFechaRecoger(context),
-                            icon: Icon(
-                              Icons.calendar_today_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'fecha',
-                              )} ${Utilities.formatearFecha(vm.fechaRefFin)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
                           ),
-                          TextButton.icon(
+                          HoraButton(
+                            fecha: vm.fechaRefFin,
                             onPressed: () => vm.abrirHoraRecoger(context),
-                            icon: Icon(
-                              Icons.schedule_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'hora',
-                              )} ${Utilities.formatearHora(vm.fechaRefFin)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
-                          )
+                          ),
                         ],
                       ),
                       const Divider(),
@@ -491,46 +427,14 @@ class DocumentView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
+                          FechaButton(
+                            fecha: vm.fechaInicial,
                             onPressed: () => vm.abrirFechaInicial(context),
-                            icon: Icon(
-                              Icons.calendar_today_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'fecha',
-                              )} ${Utilities.formatearFecha(vm.fechaInicial)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
                           ),
-                          TextButton.icon(
+                          HoraButton(
+                            fecha: vm.fechaInicial,
                             onPressed: () => vm.abrirHoraInicial(context),
-                            icon: Icon(
-                              Icons.schedule_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'hora',
-                              )} ${Utilities.formatearHora(vm.fechaInicial)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
-                          )
+                          ),
                         ],
                       ),
                       const Divider(),
@@ -554,46 +458,14 @@ class DocumentView extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton.icon(
+                          FechaButton(
+                            fecha: vm.fechaFinal,
                             onPressed: () => vm.abrirFechaFinal(context),
-                            icon: Icon(
-                              Icons.calendar_today_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'fecha',
-                              )} ${Utilities.formatearFecha(vm.fechaFinal)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
                           ),
-                          TextButton.icon(
+                          HoraButton(
+                            fecha: vm.fechaFinal,
                             onPressed: () => vm.abrirHoraFinal(context),
-                            icon: Icon(
-                              Icons.schedule_outlined,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                            ),
-                            label: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.fecha,
-                                'hora',
-                              )} ${Utilities.formatearHora(vm.fechaFinal)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
-                          )
+                          ),
                         ],
                       ),
                       const Divider(),
@@ -709,6 +581,88 @@ class _Observacion extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class FechaButton extends StatelessWidget {
+  final DateTime fecha;
+  final VoidCallback onPressed;
+
+  const FechaButton({
+    super.key,
+    required this.fecha,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "${AppLocalizations.of(context)!.translate(
+              BlockTranslate.fecha,
+              'fecha',
+            )} ${Utilities.formatearFecha(fecha)}",
+            style: AppTheme.style(
+              context,
+              Styles.normal,
+            ),
+          ),
+          const SizedBox(width: 15),
+          Icon(
+            Icons.calendar_today_outlined,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HoraButton extends StatelessWidget {
+  final DateTime fecha;
+  final VoidCallback onPressed;
+
+  const HoraButton({
+    super.key,
+    required this.fecha,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "${AppLocalizations.of(context)!.translate(
+              BlockTranslate.fecha,
+              'hora',
+            )} ${Utilities.formatearHora(fecha)}",
+            style: AppTheme.style(
+              context,
+              Styles.normal,
+            ),
+          ),
+          const SizedBox(width: 15),
+          Icon(
+            Icons.schedule_outlined,
+            color: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+            ),
+          ),
+        ],
       ),
     );
   }

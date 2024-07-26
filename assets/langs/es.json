@@ -100,7 +100,8 @@
         "hora": "Hora: ",
         "completa": "Fecha y hora: ",
         "entrega": "Fecha Entrega: ",
-        "recoger": "Fecha Recoger: "
+        "recoger": "Fecha Recoger: ",
+        "restriccion": "Las fechas no son válidas. Por favor, revisa las restricciones"
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",

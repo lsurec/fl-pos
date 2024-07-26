@@ -100,7 +100,8 @@
         "hora": "Time: ",
         "completa": "Date and Time: ",
         "entrega": "Delivery Date: ",
-        "recoger": "Pick-up Date: "
+        "recoger": "Pick-up Date: ",
+        "restriccionFechas": "The dates are not valid. Please check the restrictions."
     },
     "notificaciones": {
         "reiniciar": "To view the changes, first restart the application.",

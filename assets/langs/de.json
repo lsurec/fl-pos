@@ -100,7 +100,8 @@
         "hora": "Uhrzeit: ",
         "completa": "Datum und Uhrzeit: ",
         "entrega": "Lieferdatum: ",
-        "recoger": "Abholdatum: "
+        "recoger": "Abholdatum: ",
+        "restriccionFechas": "Die Daten sind ungültig. Bitte überprüfen Sie die Einschränkungen."
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",

@@ -100,7 +100,8 @@
         "hora": "Heure : ",
         "completa": "Date et Heure: ",
         "entrega": "Date de Livraison: ",
-        "recoger": "Date de Ramassage: "
+        "recoger": "Date de Ramassage: ",
+        "restriccionFechas": "Les dates ne sont pas valides. Veuillez vérifier les restrictions."
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",

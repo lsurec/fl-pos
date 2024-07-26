@@ -180,6 +180,18 @@ class DocumentoViewModel extends ChangeNotifier {
       }
     }
 
+    if (documentVM.valueParametro(44)) {
+      if (!documentVM.validateDates()) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.fecha,
+            'restriccion',
+          ),
+        );
+        return;
+      }
+    }
+
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
     //Obtener latitude y longitud Si es necesario
