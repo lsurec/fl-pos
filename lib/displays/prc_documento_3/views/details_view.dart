@@ -347,7 +347,7 @@ class _TransactionCard extends StatelessWidget {
                 '${AppLocalizations.of(context)!.translate(
                   BlockTranslate.calcular,
                   'cantDias',
-                )}: 0', //TODO: modificar
+                )}: ${transaction.cantidadDias}', //TODO: modificar
                 style: AppTheme.style(
                   context,
                   Styles.normal,
@@ -371,7 +371,7 @@ class _TransactionCard extends StatelessWidget {
                 '${AppLocalizations.of(context)!.translate(
                   BlockTranslate.calcular,
                   'precioTotalCant',
-                )}: ${currencyFormat.format(0)}', //TODO: modificar
+                )}: ${currencyFormat.format(transaction.precioCantidad)}', //TODO: modificar
                 style: AppTheme.style(
                   context,
                   Styles.normal,

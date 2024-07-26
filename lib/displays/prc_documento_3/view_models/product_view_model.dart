@@ -596,7 +596,6 @@ class ProductViewModel extends ChangeNotifier {
         //formular precios por dias
         ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
           token,
-          user,
           docVM.fechaInicial,
           docVM.fechaFinal,
           total.toString(),
