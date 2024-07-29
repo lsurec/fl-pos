@@ -847,8 +847,6 @@ class DocumentViewModel extends ChangeNotifier {
     //Recalcular precios cuando se cambia la fechas Inicio
     validarFecha(context);
 
-    fechaFinal = fechaInicial;
-
     notifyListeners();
   }
 

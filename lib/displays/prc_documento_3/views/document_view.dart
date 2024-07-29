@@ -599,6 +599,11 @@ class FechaButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          const EdgeInsets.only(left: 0),
+        ),
+      ),
       onPressed: onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
