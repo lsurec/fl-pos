@@ -296,7 +296,8 @@
         "latitud": "Latitude: ",
         "longitud": "Longitude: ",
         "consInt": "Internal Cons.: ",
-        "sinObtener": "Not obtained."
+        "sinObtener": "Not obtained.",
+        "tipoRef": "Reference Type"
     },
     "generales": {
         "registro": "Records",

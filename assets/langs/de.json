@@ -296,7 +296,8 @@
         "latitud": "Breitengrad: ",
         "longitud": "Längengrad: ",
         "consInt": "Interne Kons.: ",
-        "sinObtener": "Nicht erhalten."
+        "sinObtener": "Nicht erhalten.",
+        "tipoRef": "Referenztyp"
     },
     "generales": {
         "registro": "Einträge",

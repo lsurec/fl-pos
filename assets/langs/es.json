@@ -296,7 +296,8 @@
         "latitud": "Latitud: ",
         "longitud": "Longitud: ",
         "consInt": "Cons. Interno: ",
-        "sinObtener": "Sin obtener."
+        "sinObtener": "Sin obtener.",
+        "tipoRef": "Tipo de referencia"
     },
     "generales": {
         "registro": "Registros",

@@ -296,7 +296,8 @@
         "latitud": "Latitude: ",
         "longitud": "Longitude: ",
         "consInt": "Cons. Interne: ",
-        "sinObtener": "Non obtenu."
+        "sinObtener": "Non obtenu.",
+        "tipoRef": "Type de référence"
     },
     "generales": {
         "registro": "Enregistrements",
