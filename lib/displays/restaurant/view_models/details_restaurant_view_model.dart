@@ -65,7 +65,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       product.producto,
       product.unidadMedida,
       user,
-      token,
+      token, //TODO:Preguntar sobre lacuenta
+      0, "0",
     );
 
     return res;
