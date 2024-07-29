@@ -46,6 +46,18 @@ class DetalleTareaView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
+                        vm.tarea!.descripcion ??
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'noDisponible',
+                            ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      const Divider(),
+                      Text(
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.general,
                           'observacion',
@@ -55,32 +67,48 @@ class DetalleTareaView extends StatelessWidget {
                           Styles.bold,
                         ),
                       ),
-                      Text(
-                        vm.tarea!.tareaObservacion1 ??
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.general,
-                              'noDisponible',
-                            ),
-                        style: AppTheme.style(
+                      GestureDetector(
+                        onLongPress: () => Utilities.copyToClipboard(
                           context,
-                          Styles.normal,
+                          vm.tarea!.tareaObservacion1 ?? '',
                         ),
-                        textAlign: TextAlign.justify,
+                        child: Text(
+                          vm.tarea!.tareaObservacion1 ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
                             onPressed: () => vm.comentariosTarea(context),
-                            child: Text(
-                              "${AppLocalizations.of(context)!.translate(
-                                BlockTranslate.tareas,
-                                'comentarios',
-                              )} (${vmComentarios.comentarioDetalle.length})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.add_comment_outlined),
+                                const Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 5,
+                                  ),
+                                ),
+                                Text(
+                                  "${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.tareas,
+                                    'comentarios',
+                                  )} (${vmComentarios.comentarioDetalle.length})",
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.title,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -308,14 +336,34 @@ class DetalleTareaView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.tareas,
-                          'responsableT',
+                      ListTile(
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tareas,
+                            'responsableT',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                          ),
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
+                        trailing: IconButton(
+                          //tipoBusqueda = 3 para actualizar responsable
+                          onPressed: () => vmUsuarios.irUsuarios(
+                            context,
+                            3,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'cambiarResponsable',
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.person_add_alt_1_outlined,
+                          ),
+                          tooltip: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.botones,
+                            'cambiarResponsable',
+                          ),
                         ),
                       ),
                       CardWidget(
@@ -334,7 +382,7 @@ class DetalleTareaView extends StatelessWidget {
                           title: Text(
                             vm.tarea!.usuarioResponsable ??
                                 AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.general,
+                                  BlockTranslate.tareas,
                                   'noAsignado',
                                 ),
                             style: AppTheme.style(
@@ -430,7 +478,14 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           //tipoBusqueda = 4 para actualizar invitados
-                          onPressed: () => vmUsuarios.irUsuarios(context, 4),
+                          onPressed: () => vmUsuarios.irUsuarios(
+                            context,
+                            4,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarInvitados',
+                            ),
+                          ),
                           icon: const Icon(
                             Icons.person_add_alt_1_outlined,
                           ),
@@ -571,8 +626,17 @@ class _ActualizarEstado extends StatelessWidget {
         child: DropdownButtonFormField2<EstadoModel>(
           value: vm.estadoAtual,
           isExpanded: true,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 16),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.color(
+                  context,
+                  Styles.border,
+                ),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
@@ -649,8 +713,17 @@ class _ActualizarPrioridad extends StatelessWidget {
         child: DropdownButtonFormField2<PrioridadModel>(
           value: vm.prioridadActual,
           isExpanded: true,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 16),
+          decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: AppTheme.color(
+                  context,
+                  Styles.border,
+                ),
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(

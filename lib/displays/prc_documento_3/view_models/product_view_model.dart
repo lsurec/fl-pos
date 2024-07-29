@@ -155,6 +155,7 @@ class ProductViewModel extends ChangeNotifier {
     selectedPrice = null;
 
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     String token = loginVM.token;
     String user = loginVM.user;
@@ -167,6 +168,8 @@ class ProductViewModel extends ChangeNotifier {
       um,
       user,
       token,
+      docVM.clienteSelect?.cuentaCorrentista ?? 0,
+      docVM.clienteSelect?.cuentaCta ?? "0",
     );
 
     if (!resPrecio.succes) {

@@ -50,4 +50,5 @@ class Styles {
   static String black = "black";
   static String loading = "isLoading";
   static String divider = "divider";
+  static String diaHoy = "diaHoy";
 }

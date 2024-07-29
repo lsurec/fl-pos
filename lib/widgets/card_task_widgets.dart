@@ -1,88 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/widgets/card_widget.dart';
+import 'package:flutter_post_printer_example/widgets/texts_widgets.dart';
 import 'package:provider/provider.dart';
 
-class TareasView extends StatefulWidget {
-  const TareasView({super.key});
-
-  @override
-  State<TareasView> createState() => _TareasViewState();
-}
-
-class _TareasViewState extends State<TareasView> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadData(context));
-  }
-
-  loadData(BuildContext context) async {
-    final vm = Provider.of<TareasViewModel>(context, listen: false);
-    vm.loadData(context);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<TareasViewModel>(context);
-    List<TareaModel> tareas = vm.tareas;
-
-    return RefreshIndicator(
-      onRefresh: () => vm.loadData(context),
-      child: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                // _RadioFilter(),
-                const _InputSerach(),
-                const SizedBox(height: 10),
-                const Divider(),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "${AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'registro',
-                      )} (${tareas.length})",
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: tareas.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final TareaModel tarea = tareas[index];
-                    return _CardTask(tarea: tarea);
-                  },
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _CardTask extends StatelessWidget {
-  const _CardTask({
+class CardTask extends StatelessWidget {
+  const CardTask({
+    super.key,
     required this.tarea,
   });
 
@@ -125,15 +55,7 @@ class _CardTask extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 20),
-                    Icon(
-                      Icons.circle,
-                      color: Color.fromRGBO(
-                        colorTarea[0],
-                        colorTarea[1],
-                        colorTarea[2],
-                        1,
-                      ),
-                    ),
+                    EstadoColor(colorTarea: colorTarea),
                   ],
                 ),
                 TextsWidget(
@@ -149,7 +71,10 @@ class _CardTask extends StatelessWidget {
                 if (tarea.ultimoComentario != null)
                   ExpansionTile(
                     title: Text(
-                      'Ver último comentario',
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.tareas,
+                        'ultimoComentario',
+                      ),
                       style: AppTheme.style(
                         context,
                         Styles.normal,
@@ -406,119 +331,35 @@ class _CardTask extends StatelessWidget {
   }
 }
 
-class _InputSerach extends StatelessWidget {
-  const _InputSerach();
+class EstadoColor extends StatelessWidget {
+  const EstadoColor({
+    super.key,
+    required this.colorTarea,
+  });
+
+  final List<int> colorTarea;
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<TareasViewModel>(context);
-
-    return Form(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      key: vm.formKeySearch,
-      child: TextFormField(
-        onFieldSubmitted: (value) => vm.searchText(context),
-        textInputAction: TextInputAction.search,
-        controller: vm.searchController,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return AppLocalizations.of(context)!.translate(
-              BlockTranslate.notificacion,
-              'requerido',
-            );
-          }
-          return null;
-        },
-        decoration: InputDecoration(
-          hintText: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tareas,
-            'buscar',
+    return Container(
+      width: 24.0,
+      height: 24.0,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color.fromRGBO(
+          colorTarea[0],
+          colorTarea[1],
+          colorTarea[2],
+          1,
+        ),
+        border: Border.all(
+          color: AppTheme.color(
+            context,
+            Styles.grey,
           ),
-          labelText: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tareas,
-            'buscar',
-          ),
-          suffixIcon: IconButton(
-            tooltip: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tareas,
-              'buscar',
-            ),
-            icon: Icon(
-              Icons.search,
-              color: AppTheme.color(
-                context,
-                Styles.darkPrimary,
-              ),
-            ),
-            onPressed: () => vm.searchText(context),
-          ),
+          width: 1.0,
         ),
       ),
-    );
-  }
-}
-
-class _RadioFilter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<TareasViewModel>(context);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-          onTap: () => vm.busqueda(1),
-          child: Row(
-            children: [
-              Radio(
-                value: 1,
-                groupValue: vm.filtro,
-                onChanged: (value) => vm.busqueda(value!),
-                activeColor: AppTheme.color(
-                  context,
-                  Styles.darkPrimary,
-                ),
-              ),
-              Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.general,
-                  'descripcion',
-                ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: () => vm.busqueda(2),
-          child: Row(
-            children: [
-              Radio(
-                value: 2,
-                groupValue: vm.filtro,
-                onChanged: (value) => vm.busqueda(value!),
-                activeColor: AppTheme.color(
-                  context,
-                  Styles.darkPrimary,
-                ),
-              ),
-              Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.tareas,
-                  'idRef',
-                ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

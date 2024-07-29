@@ -27,7 +27,7 @@ class UsuariosViewModel extends ChangeNotifier {
   final TextEditingController buscar = TextEditingController();
 
   //Almacenar usuarios
-  final List<UsuarioModel> usuarios = [];
+  List<UsuarioModel> usuarios = [];
   //Almacenar usuarios seleccionados
   final List<UsuarioModel> usuariosSeleccionados = [];
 
@@ -41,14 +41,13 @@ class UsuariosViewModel extends ChangeNotifier {
   }
 
   //Buscar usuarios
-  Future<void> buscarUsuarioService(
+  Future<void> buscarUsuario(
     BuildContext context,
-    String search,
   ) async {
     usuarios.clear(); //limpiar lista de usuarios
 
     //Si el buscador está vacio, limpiar la lista y moestrar mensaje
-    if (search.isEmpty) {
+    if (buscar.text.isEmpty) {
       usuarios.clear();
       notifyListeners();
       NotificationService.showSnackbar(
@@ -71,8 +70,11 @@ class UsuariosViewModel extends ChangeNotifier {
     isLoading = true; //Cargar pantalla
 
     //Consumo de api
-    final ApiResModel res =
-        await usuarioService.getUsuario(user, token, search);
+    final ApiResModel res = await usuarioService.getUsuario(
+      user,
+      token,
+      buscar.text,
+    );
 
     //si el consumo salió mal
     if (!res.succes) {
@@ -86,6 +88,17 @@ class UsuariosViewModel extends ChangeNotifier {
     //agregar a lista usuarios la respuesta de api.
     usuarios.addAll(res.response);
 
+    if (usuarios.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinCoincidencias',
+        ),
+      );
+
+      buscar.text = '';
+    }
+
     isLoading = false; //Detener carga
   }
 
@@ -94,16 +107,5 @@ class UsuariosViewModel extends ChangeNotifier {
     // Invertir el valor actual
     usuarios[index].select = !usuarios[index].select;
     notifyListeners();
-  }
-
-  Timer? timer; // Temporizador
-
-  void buscarUsuarioTemp(BuildContext context) {
-    timer?.cancel(); // Cancelar el temporizador existente si existe
-    timer = Timer(const Duration(milliseconds: 1000), () {
-      FocusScope.of(context).unfocus(); //ocultar teclado
-      // Función de filtrado que consume el servicio
-      buscarUsuarioService(context, buscar.text);
-    }); // Establecer el período de retardo en milisegundos (en este caso, 1000 ms o 1 segundo)
   }
 }

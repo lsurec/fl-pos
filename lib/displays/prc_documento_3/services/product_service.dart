@@ -264,6 +264,8 @@ class ProductService {
     int um,
     String user,
     String token,
+    int correntista,
+    String cuentaCta,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Producto/precios");
     try {
@@ -277,6 +279,8 @@ class ProductService {
           'um': um.toString(),
           'user': user,
           "Authorization": "bearer $token",
+          "correntista": correntista.toString(),
+          "cuentaCta": cuentaCta,
         },
       );
 

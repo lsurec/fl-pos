@@ -126,6 +126,70 @@ class TareaService {
     }
   }
 
+  //Consumo api para obtener tareas de la busqueda por descripción.
+  Future<ApiResModel> getTareas(
+    String user,
+    String token,
+    String filtro,
+    int opcion,
+  ) async {
+
+    Uri url = Uri.parse("${_baseUrl}Tareas/buscar");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "filtro": filtro,
+          "user": user,
+          "opcion": opcion.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TareaModel> tareas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TareaModel.fromMap(item);
+        //agregar item a la lista
+        tareas.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: tareas,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
   //Consumo api para obtener tareas de la busqueda por id de referencia.
   Future<ApiResModel> getTareasIdReferencia(
     String user,

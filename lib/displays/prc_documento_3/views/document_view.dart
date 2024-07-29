@@ -1,9 +1,11 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,6 +75,12 @@ class DocumentView extends StatelessWidget {
                       context,
                       Styles.background,
                     ),
+                    hint: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'opcion',
+                      ),
+                    ),
                     value: vm.serieSelect,
                     onChanged: (value) => vm.changeSerie(value, context),
                     items: vm.series.map(
@@ -98,7 +106,7 @@ class DocumentView extends StatelessWidget {
                     IconButton(
                       onPressed: () => Navigator.pushNamed(
                         context,
-                        "addClient",
+                        AppRoutes.addClient,
                       ),
                       icon: const Icon(
                         Icons.person_add_outlined,
@@ -110,37 +118,38 @@ class DocumentView extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(height: 20),
-                Form(
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  key: vm.formKeyClient,
-                  child: TextFormField(
-                    controller: vm.client,
-                    onFieldSubmitted: (value) =>
-                        vm.performSearchClient(context),
-                    textInputAction: TextInputAction.search,
-                    decoration: InputDecoration(
-                      hintText: vm.getTextCuenta(context),
-                      suffixIcon: IconButton(
-                        color: AppTheme.color(
-                          context,
-                          Styles.darkPrimary,
+                if (vm.clienteSelect == null) const SizedBox(height: 20),
+                if (vm.clienteSelect == null)
+                  Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: vm.formKeyClient,
+                    child: TextFormField(
+                      controller: vm.client,
+                      onFieldSubmitted: (value) =>
+                          vm.performSearchClient(context),
+                      textInputAction: TextInputAction.search,
+                      decoration: InputDecoration(
+                        hintText: vm.getTextCuenta(context),
+                        suffixIcon: IconButton(
+                          color: AppTheme.color(
+                            context,
+                            Styles.darkPrimary,
+                          ),
+                          icon: const Icon(Icons.search),
+                          onPressed: () => vm.performSearchClient(context),
                         ),
-                        icon: const Icon(Icons.search),
-                        onPressed: () => vm.performSearchClient(context),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return AppLocalizations.of(context)!.translate(
+                            BlockTranslate.notificacion,
+                            'requerido',
+                          );
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return AppLocalizations.of(context)!.translate(
-                          BlockTranslate.notificacion,
-                          'requerido',
-                        );
-                      }
-                      return null;
-                    },
                   ),
-                ),
                 const SizedBox(height: 10),
                 SwitchListTile(
                   activeColor: AppTheme.color(
@@ -177,10 +186,11 @@ class DocumentView extends StatelessWidget {
                           ),
                           if (!vm.cf)
                             IconButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "updateClient",
-                                    arguments: vm.clienteSelect);
-                              },
+                              onPressed: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.updateClient,
+                                arguments: vm.clienteSelect,
+                              ),
                               icon: Icon(
                                 Icons.edit_outlined,
                                 color: AppTheme.color(
@@ -252,6 +262,12 @@ class DocumentView extends StatelessWidget {
                           context,
                           Styles.background,
                         ),
+                        hint: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'opcion',
+                          ),
+                        ),
                         value: vm.vendedorSelect,
                         onChanged: (value) => vm.changeSeller(value),
                         items: vm.cuentasCorrentistasRef.map(
@@ -267,10 +283,415 @@ class DocumentView extends StatelessWidget {
                       ),
                     ],
                   ),
+                //Mostrar tipos de eventos
+                if (vm.valueParametro(58))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      const Divider(),
+                      const SizedBox(height: 10),
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'evento',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      DropdownButton<TipoReferenciaModel>(
+                        isExpanded: true,
+                        dropdownColor: AppTheme.color(
+                          context,
+                          Styles.background,
+                        ),
+                        hint: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'opcion',
+                          ),
+                        ),
+                        value: vm.referenciaSelect,
+                        onChanged: (value) => vm.changeRef(value),
+                        items: vm.referencias.map(
+                          (tipoRef) {
+                            return DropdownMenuItem<TipoReferenciaModel>(
+                              value: tipoRef,
+                              child: Text(
+                                tipoRef.descripcion,
+                              ),
+                            );
+                          },
+                        ).toList(),
+                      ),
+                    ],
+                  ),
+                const SizedBox(height: 10),
+                // const Divider(),
+//Fecha Entrega
+                if (vm.valueParametro(381))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'entrega',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () => vm.abrirFechaEntrega(context),
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'fecha',
+                              )} ${Utilities.formatearFecha(vm.fechaEntrega)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => vm.abrirHoraEntrega(context),
+                            icon: Icon(
+                              Icons.schedule_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'hora',
+                              )} ${Utilities.formatearHora(vm.fechaEntrega)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                    ],
+                  ),
+//Fecha Recoger
+                if (vm.valueParametro(382))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'recoger',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () => vm.abrirFechaRecoger(context),
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'fecha',
+                              )} ${Utilities.formatearFecha(vm.fechaRecoger)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => vm.abrirHoraRecoger(context),
+                            icon: Icon(
+                              Icons.schedule_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'hora',
+                              )} ${Utilities.formatearHora(vm.fechaRecoger)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                    ],
+                  ),
+//Fecha Inicio
+                if (vm.valueParametro(44))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'inicio',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () => vm.abrirFechaInicial(context),
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'fecha',
+                              )} ${Utilities.formatearFecha(vm.fechaInicial)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => vm.abrirHoraInicial(context),
+                            icon: Icon(
+                              Icons.schedule_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'hora',
+                              )} ${Utilities.formatearHora(vm.fechaInicial)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                    ],
+                  ),
+//Fecha Fin
+                if (vm.valueParametro(381))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'fin',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () => vm.abrirFechaFinal(context),
+                            icon: Icon(
+                              Icons.calendar_today_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'fecha',
+                              )} ${Utilities.formatearFecha(vm.fechaFinal)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => vm.abrirHoraFinal(context),
+                            icon: Icon(
+                              Icons.schedule_outlined,
+                              color: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                            ),
+                            label: Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'hora',
+                              )} ${Utilities.formatearHora(vm.fechaFinal)}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const Divider(),
+                    ],
+                  ),
+//Fin fechas
+//parametro 385 = Contacto
+                if (vm.valueParametro(385))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(385) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'contacto',
+                        ),
+                  ),
+//parametro 383 = Descripcion
+                if (vm.valueParametro(383))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(383) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'descripcion',
+                        ),
+                  ),
+//parametro 386 = Direccion de entrega
+                if (vm.valueParametro(386))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(386) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.cotizacion,
+                          'direEntrega',
+                        ),
+                  ),
+//parametro 384 = Observacion
+                if (vm.valueParametro(384))
+                  _Observacion(
+                    controller: vm.contacto,
+                    labelText: vm.getTextParam(384) ??
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'observacion',
+                        ),
+                  ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// class _Observacion extends StatelessWidget {
+//   final TextEditingController controller;
+//   final String labelText;
+
+//   const _Observacion({
+//     required this.controller,
+//     required this.labelText,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextField(
+//       controller: controller,
+//       maxLines: 3,
+//       decoration: InputDecoration(
+//         labelText: labelText,
+//         hintText: labelText,
+//       ),
+//     );
+//   }
+// }
+
+class _Observacion extends StatelessWidget {
+  final TextEditingController controller;
+  final String labelText;
+
+  const _Observacion({
+    required this.controller,
+    required this.labelText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: TextField(
+        controller: controller,
+        maxLines: 3,
+        decoration: InputDecoration(
+          labelText: labelText,
+          hintText: labelText,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.color(
+                context,
+                Styles.border,
+              ),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.color(
+                context,
+                Styles.border,
+              ),
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
       ),
     );
   }

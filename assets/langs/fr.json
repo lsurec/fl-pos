@@ -82,7 +82,8 @@
         "agregarResponsable": "Ajouter un responsable",
         "eliminar": "Supprimer",
         "adjuntarArchivos": "Joindre des fichiers",
-        "enviarComentario": "Envoyer un commentaire."
+        "enviarComentario": "Envoyer un commentaire.",
+        "cambiarResponsable": "Mettre à jour la personne responsable"
     },
     "fechas": {
         "fecha": "Date:",
@@ -96,7 +97,10 @@
         "feHoFin": "DATE ET HEURE DE FIN : ",
         "fechaHoraInicio": "Date et heure de début",
         "fechaHoraFin": "Date et heure de fin",
-        "hora": "Heure : "
+        "hora": "Heure : ",
+        "completa": "Date et Heure: ",
+        "entrega": "Date de Livraison: ",
+        "recoger": "Date de Ramassage: "
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",
@@ -189,7 +193,12 @@
         "seleccioneRespo": "Ajoutez un responsable pour continuer.",
         "tareaCreada": "Tâche créée avec succès.",
         "horaPosterior": "Sélectionnez une heure à partir de : ",
-        "modifiqueFeHofinal": "L'heure de fin ne peut pas être antérieure à la date et l'heure de début. Modifiez d'abord la date de fin."
+        "modifiqueFeHofinal": "L'heure de fin ne peut pas être antérieure à la date et l'heure de début. Modifiez d'abord la date de fin.",
+        "responsableActualizado": "Personne responsable mise à jour avec succès.",
+        "asignado": "Utilisateur précédemment assigné.",
+        "estadoIgual": "État précédemment assigné.",
+        "prioridadIgual": "Priorité précédemment assignée.",
+        "copiado": "Texte copié dans le presse-papiers."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
@@ -297,7 +306,8 @@
         "serie": "Série",
         "documento": "Document",
         "detalle": "Détail",
-        "pago": "Paiement"
+        "pago": "Paiement",
+        "observaciones": "Observations"
     },
     "cuenta": {
         "nueva": "Nouveau compte",
@@ -335,7 +345,9 @@
         "cantidad": "Quantité",
         "docRecientes": "Documents récents",
         "skuDesc": "UGS/Description",
-        "buscarPro": "Rechercher un produit"
+        "buscarPro": "Rechercher un produit",
+        "evento": "Données de l'événement",
+        "opcion": "Sélectionnez une option"
     },
     "calculos": {
         "calcular": "Calculer",
@@ -376,7 +388,8 @@
         "docIdRef": "Réf ID Doc: ",
         "consecutivoInter": "Consécutif Interne",
         "idRef": "Réf ID: ",
-        "cuenta": "Compte: "
+        "cuenta": "Compte: ",
+        "direEntrega": "Adresse de Livraison"
     },
     "tareas": {
         "numTarea": "Tâche No : ",
@@ -413,7 +426,13 @@
         "estadoTarea": "État",
         "prioridadTarea": "Priorité",
         "agregarResponsable": "Ajouter un responsable",
-        "agregarInvitados": "Ajouter des invités"
+        "agregarInvitados": "Ajouter des invités",
+        "todas": "Alle",
+        "creadas": "Erstellt",
+        "asignadas": "Zugewiesen",
+        "invitaciones": "Einladungen",
+        "refSelec": "Référence sélectionnée",
+        "ultimoComentario": "Voir le dernier commentaire"
     },
     "calendario": {
         "hoy": "Aujourd'hui",

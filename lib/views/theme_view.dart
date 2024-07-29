@@ -109,35 +109,6 @@ class ThemeView extends StatelessWidget {
                           ),
                         ),
                       ),
-                    if (AppTheme.cambiarTema == 1)
-                      SizedBox(
-                        width: 350,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.preferencias,
-                                'nota',
-                              ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.preferencias,
-                                'reiniciarTema',
-                              ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                   ],
                 ),
               ),

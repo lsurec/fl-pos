@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class ComentariosViewModel extends ChangeNotifier {
   //Almacenar comentarios de la tarea
@@ -29,16 +32,27 @@ class ComentariosViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //formulario para escribir comentariosS
+  GlobalKey<FormState> formKeyComment = GlobalKey<FormState>();
+
   //comentario
   final TextEditingController comentarioController = TextEditingController();
 
   //ID TAREA PARA COMENTAR
   int? idTarea;
+
+  //Validar formulario barra busqueda
+  bool isValidFormComment() {
+    return formKeyComment.currentState?.validate() ?? false;
+  }
+
   //Nuevo comentario
   Future<void> comentar(
     BuildContext context,
-    String comentario,
   ) async {
+    //validar formulario
+    if (!isValidFormComment()) return;
+
     //ocultar teclado
     FocusScope.of(context).unfocus();
 
@@ -46,6 +60,10 @@ class ComentariosViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     String user = loginVM.user;
     String token = loginVM.token;
+
+    //View model para obtenerla empresa
+    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    EmpresaModel empresa = vmLocal.selectedEmpresa!;
 
     //View model de detalla de tarea tareas
     final vmTarea = Provider.of<DetalleTareaViewModel>(context, listen: false);
@@ -88,19 +106,11 @@ class ComentariosViewModel extends ChangeNotifier {
       return;
     }
 
-    //Crear modelo de comentario
-    ComentarioModel comentarioCreado = ComentarioModel(
-      comentario: comentarioController.text,
-      fechaHora: DateTime.now(),
-      nameUser: user,
-      userName: user,
-      tarea: idTarea!,
-      tareaComentario: res.response.res,
-    );
-
+    //lista de archivos
     final List<ObjetoComentarioModel> archivos = [];
+    int idComentario = res.response.res;
 
-    if (archivos.isNotEmpty) {
+    if (files.isNotEmpty) {
       for (var i = 0; i < files.length; i++) {
         File file = files[i];
         ObjetoComentarioModel archivo = ObjetoComentarioModel(
@@ -119,8 +129,9 @@ class ComentariosViewModel extends ChangeNotifier {
         token,
         user,
         files,
-        comentarioCreado.tarea,
-        comentarioCreado.tareaComentario,
+        idTarea!,
+        idComentario,
+        empresa.absolutePathPicture,
       );
 
       //si el consumo salió mal
@@ -140,26 +151,17 @@ class ComentariosViewModel extends ChangeNotifier {
         //Respuesta incorrecta
         return;
       }
-
-      isLoading = false;
-
-      //Crear modelo de comentario detalle, (comentario y objetos)
-      comentarioDetalle.add(
-        ComentarioDetalleModel(
-          comentario: comentarioCreado,
-          objetos: archivos,
-        ),
-      );
-
-      notifyListeners();
-      comentarioController.text = ""; //limpiar input
-      files.clear(); //limpiar lista de archivos
-
-      isLoading = false; //detener carga
-
-      //Retornar respuesta correcta
-      return;
     }
+
+    //Crear modelo de comentario
+    ComentarioModel comentarioCreado = ComentarioModel(
+      comentario: comentarioController.text,
+      fechaHora: DateTime.now(),
+      nameUser: user,
+      userName: user,
+      tarea: idTarea!,
+      tareaComentario: idComentario,
+    );
 
     //Crear modelo de comentario detalle, (comentario y objetos)
     comentarioDetalle.add(
@@ -175,8 +177,6 @@ class ComentariosViewModel extends ChangeNotifier {
 
     isLoading = false; //detener carga
 
-    //Retornar respuesta correcta
-    return;
   }
 
   loadData(BuildContext context) async {
@@ -220,4 +220,20 @@ class ComentariosViewModel extends ChangeNotifier {
     files.removeAt(index);
     notifyListeners();
   }
+
+  // Future<void> abrirUrl(String url) async {
+  //   if (url.isEmpty) {
+  //     print("url no valida");
+  //     return;
+  //   }
+
+  //   print(url);
+
+  //   Uri urlParse = Uri.parse(url);
+
+  //   if (!await launchUrl(urlParse, mode: LaunchMode.externalApplication
+  //   )) {
+  //     throw Exception('Could not launch $urlParse');
+  //   }
+  // }
 }

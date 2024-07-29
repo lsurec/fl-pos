@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:restart_app/restart_app.dart';
 
 class ThemeViewModel extends ChangeNotifier {
@@ -21,10 +22,52 @@ class ThemeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  nuevoTema(BuildContext context, ThemeModel tema) {
+  nuevoTema(BuildContext context, ThemeModel tema) async {
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
+
+    if (AppTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
+      //mostrar dialogo de confirmacion
+      bool result = await showDialog(
+            context: context,
+            builder: (context) => AlertWidget(
+              textOk: AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                "reiniciar",
+              ),
+              textCancel: AppLocalizations.of(context)!.translate(
+                BlockTranslate.botones,
+                "cancelar",
+              ),
+              title: AppLocalizations.of(context)!.translate(
+                BlockTranslate.home,
+                "tema",
+              ),
+              description: AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                "reiniciar",
+              ),
+              onOk: () => Navigator.of(context).pop(true),
+              onCancel: () => Navigator.of(context).pop(false),
+            ),
+          ) ??
+          false;
+
+      if (!result) return;
+
+      Preferences.theme = tema.id;
+      Preferences.idTheme = tema.id.toString();
+
+      notifyListeners();
+
+      isLoading = true;
+      timer = Timer(const Duration(milliseconds: 1500), () {
+        // Ocultar teclado y reiniciar App
+        FocusScope.of(context).unfocus(); //ocultar teclado
+        reiniciarApp();
+      });
+    }
 
     if (tema.id == 0 && isLightMode) {
       Preferences.systemTheme = "1";
@@ -36,10 +79,6 @@ class ThemeViewModel extends ChangeNotifier {
     Preferences.idTheme = tema.id.toString();
 
     notifyListeners();
-
-    if (AppTheme.cambiarTema == 1) {
-      reiniciarTemp(context);
-    }
   }
 
   List<ThemeModel> temasApp(BuildContext context) {

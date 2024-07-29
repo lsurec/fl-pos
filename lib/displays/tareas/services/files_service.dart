@@ -14,8 +14,9 @@ class FilesService {
     List<File> files,
     int tarea,
     int tareaComentario,
+    String urlCarpeta,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Tareas/objetos/comentario");
+    Uri url = Uri.parse("${_baseUrl}FilesComment");
     try {
       var request = http.MultipartRequest('POST', url);
 
@@ -26,6 +27,7 @@ class FilesService {
         "user": user,
         "tarea": tarea.toString(),
         "tareaComentario": tareaComentario.toString(),
+        "urlCarpeta": urlCarpeta
       });
 
       // Agregar archivos a la solicitud
@@ -42,16 +44,14 @@ class FilesService {
 
       // Manejar la respuesta
       if (response.statusCode == 200) {
-        print('Archivos subidos exitosamente');
+        //Archivos subidos exitosamente
         return true;
       } else {
-        print(
-          'Error al subir archivos. Código de estado: ${response.statusCode}',
-        );
+        // 'Error al subir archivos. Código de estado: ${response.statusCode}',
         return false;
       }
     } catch (e) {
-      print('Error al subir archivos: $e');
+      //'Error al subir archivos: $e'
       return false;
     }
   }

@@ -113,12 +113,19 @@ class CrearTareaView extends StatelessWidget {
                             return null;
                           },
                           controller: vm.tituloController,
-                          onChanged: (value) =>
-                              vm.tituloController.text = value,
                           decoration: InputDecoration(
                             labelText: AppLocalizations.of(context)!.translate(
                               BlockTranslate.tareas,
                               'agregaTitulo',
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.border,
+                                ),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),
@@ -251,22 +258,28 @@ class CrearTareaView extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              width: 150,
-                              child: TextFormField(
-                                controller: vm.tiempoController,
-                                onChanged: (value) =>
-                                    vm.tiempoController.text = value,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: 14,
-                                    horizontal: 16,
+                            Container(
+                              padding: const EdgeInsets.all(14),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.border,
                                   ),
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                vm.tiempoController.text,
+                                textAlign: TextAlign.center,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
                                 ),
                               ),
                             ),
+                            const SizedBox(width: 10),
                             SizedBox(
                               width: 175,
                               child: _TiempoEstimado(
@@ -316,7 +329,8 @@ class CrearTareaView extends StatelessWidget {
                                   ),
                                 ),
                                 const Padding(
-                                    padding: EdgeInsets.only(left: 5)),
+                                  padding: EdgeInsets.only(left: 5),
+                                ),
                                 Text(
                                   "*",
                                   style: AppTheme.style(
@@ -453,23 +467,78 @@ class CrearTareaView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 30),
-                                if (vm.idReferencia != null)
-                                  Text(
-                                    vm.idReferencia!.referenciaId,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
-                                  ),
                               ],
                             ),
                             leading: const Icon(Icons.search),
                             contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
+                        if (vm.idReferencia != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tareas,
+                                  'refSelec',
+                                ),
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                ),
+                              ),
+                              ListTile(
+                                contentPadding: const EdgeInsets.all(5),
+                                title: Text(
+                                  vm.idReferencia!.descripcion.isEmpty
+                                      ? "${vm.idReferencia?.referenciaId ?? vm.idReferencia?.referencia}"
+                                      : vm.idReferencia?.referenciaId ??
+                                          "${vm.idReferencia?.referencia ?? vm.idReferencia}",
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.bold,
+                                  ),
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      "${AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.tareas,
+                                        'idRef',
+                                      )}: ",
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.normal,
+                                      ),
+                                    ),
+                                    Text(
+                                      vm.idReferencia?.referenciaId ??
+                                          vm.idReferencia?.referenciaId ??
+                                          "",
+                                      style: AppTheme.style(
+                                        context,
+                                        Styles.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                trailing: GestureDetector(
+                                  child: const Icon(Icons.close),
+                                  onTap: () => vm.eliminarRef(),
+                                ),
+                              ),
+                            ],
+                          ),
                         const Divider(),
                         TextButton(
-                          onPressed: () => vm.irUsuarios(context, 1),
+                          onPressed: () => vm.irUsuarios(
+                            context,
+                            1,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarResponsable',
+                            ),
+                          ),
                           child: ListTile(
                             title: Row(
                               children: [
@@ -492,8 +561,9 @@ class CrearTareaView extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            leading:
-                                const Icon(Icons.person_add_alt_1_outlined),
+                            leading: const Icon(
+                              Icons.person_add_alt_1_outlined,
+                            ),
                             contentPadding: const EdgeInsets.all(0),
                           ),
                         ),
@@ -523,7 +593,14 @@ class CrearTareaView extends StatelessWidget {
                           ),
                         const Divider(),
                         TextButton(
-                          onPressed: () => vm.irUsuarios(context, 2),
+                          onPressed: () => vm.irUsuarios(
+                            context,
+                            2,
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.botones,
+                              'agregarInvitado',
+                            ),
+                          ),
                           child: ListTile(
                             title: Text(
                               AppLocalizations.of(context)!.translate(
@@ -615,46 +692,33 @@ class _TiempoEstimado extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    return DropdownButtonFormField2<PeriodicidadModel>(
-      value: vm.periodicidad,
-      isExpanded: true,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
-        border: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(),
+    // Asegurarse de que la lista no esté vacía
+    if (tiempos.isEmpty) {
+      return Text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'noDisponible',
         ),
-      ),
-      items: tiempos
-          .map(
-            (item) => DropdownMenuItem<PeriodicidadModel>(
-              value: item,
-              child: Text(
-                item.descripcion,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-      onChanged: (value) => vm.periodicidad = value!,
-      buttonStyleData: const ButtonStyleData(
-        padding: EdgeInsets.only(right: 8),
-      ),
-      iconStyleData: const IconStyleData(
-        icon: Icon(
-          Icons.arrow_drop_down,
+      );
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppTheme.color(
+            context,
+            Styles.border,
+          ),
         ),
-        iconSize: 24,
+        borderRadius: BorderRadius.circular(10),
       ),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+      child: Text(
+        vm.periodicidad!.descripcion,
+        style: AppTheme.style(
+          context,
+          Styles.normal,
         ),
-      ),
-      menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }
@@ -669,7 +733,6 @@ class _ObservacionTarea extends StatelessWidget {
 
     return TextFormField(
       controller: vm.observacionController,
-      onChanged: (value) => vm.observacionController.text = value,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return AppLocalizations.of(context)!.translate(
@@ -683,6 +746,15 @@ class _ObservacionTarea extends StatelessWidget {
         labelText: AppLocalizations.of(context)!.translate(
           BlockTranslate.tareas,
           'notaObservacion',
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       maxLines: 5,
@@ -710,6 +782,15 @@ class _PrioridadTarea extends StatelessWidget {
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
       items: prioridades
@@ -765,56 +846,37 @@ class _EstadoTarea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<CrearTareaViewModel>(context);
+    // Asegurarse de que la lista no esté vacía
+    if (estados.isEmpty) {
+      return Text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'noDisponible',
+        ),
+      );
+    }
 
-    return DropdownButtonFormField2<EstadoModel>(
-      value: vm.estado,
-      isExpanded: true,
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.symmetric(vertical: 16),
-        border: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+    // Obtener el primer elemento de la lista
+    final EstadoModel primerEstado = estados.first;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppTheme.color(
+            context,
+            Styles.border,
+          ),
         ),
+        borderRadius: BorderRadius.circular(10),
       ),
-      items: estados
-          .map(
-            (item) => DropdownMenuItem<EstadoModel>(
-              value: item,
-              child: Text(
-                item.descripcion,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          )
-          .toList(),
-      validator: (value) {
-        if (value == null) {
-          return AppLocalizations.of(context)!.translate(
-            BlockTranslate.tareas,
-            'seleccionaEstado',
-          );
-        }
-        return null;
-      },
-      onChanged: (value) => vm.estado = value,
-      buttonStyleData: const ButtonStyleData(
-        padding: EdgeInsets.only(right: 8),
-      ),
-      iconStyleData: const IconStyleData(
-        icon: Icon(
-          Icons.arrow_drop_down,
+      child: Text(
+        primerEstado.descripcion,
+        style: AppTheme.style(
+          context,
+          Styles.subTitle,
         ),
-        iconSize: 24,
-      ),
-      dropdownStyleData: DropdownStyleData(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-        ),
-      ),
-      menuItemStyleData: const MenuItemStyleData(
-        padding: EdgeInsets.symmetric(horizontal: 16),
       ),
     );
   }
@@ -840,6 +902,15 @@ class _TipoTarea extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           borderSide:
               const BorderSide(), // Cambia el color del borde inferior aquí
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
         // Add more decoration..
       ),

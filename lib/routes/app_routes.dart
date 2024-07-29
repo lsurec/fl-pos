@@ -90,7 +90,7 @@ class AppRoutes {
     detailsDestinationDoc: (BuildContext context) =>
         const DetailsDestinationDocView(),
     //Rutas Display Tareas
-    tareas: (BuildContext context) => const TareasView(),
+    tareas: (BuildContext context) => const TareasFiltroView(),
     detailsTask: (BuildContext context) => const DetalleTareaView(),
     viewComments: (BuildContext context) => const ComentariosView(),
     createTask: (BuildContext context) => const CrearTareaView(),

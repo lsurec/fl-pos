@@ -82,7 +82,8 @@
         "agregarResponsable": "Agregar Responsable",
         "eliminar": "Eliminar",
         "adjuntarArchivos": "Adjuntar Archivos",
-        "enviarComentario": "Enviar comentario."
+        "enviarComentario": "Enviar comentario.",
+        "cambiarResponsable": "Actualizar Responsable"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -96,7 +97,10 @@
         "feHoFin": "FECHA Y HORA FINAL: ",
         "fechaHoraInicio": "Fecha y hora inicial",
         "fechaHoraFin": "Fecha y hora final",
-        "hora": "Hora: "
+        "hora": "Hora: ",
+        "completa": "Fecha y hora: ",
+        "entrega": "Fecha Entrega: ",
+        "recoger": "Fecha Recoger: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -189,7 +193,12 @@
         "seleccioneRespo": "Añada un responsable para continuar.",
         "tareaCreada": "Tarea creada correctamente.",
         "horaPosterior": "Selecciona una hora a partir de las: ",
-        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final."
+        "modifiqueFeHofinal": "La hora final no puede ser menor que la fecha y hora inicial. Modifique primero la fecha final.",
+        "responsableActualizado": "Responsable actualizado correctamente.",
+        "asignado": "Usuario asignado anteriormente.",
+        "estadoIgual": "Estado asignado anteriormente.",
+        "prioridadIgual": "Prioridad asignada anteriormente.",
+        "copiado": "Texto copiado al portapapeles."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -297,7 +306,8 @@
         "serie": "Serie",
         "documento": "Documento",
         "detalle": "Detalle",
-        "pago": "Pago"
+        "pago": "Pago",
+        "observaciones": "Observaciones"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -335,7 +345,9 @@
         "cantidad": "Cantidad",
         "docRecientes": "Documentos recientes",
         "skuDesc": "SKU/Descripción",
-        "buscarPro": "Buscar producto"
+        "buscarPro": "Buscar producto",
+        "evento": "Datos del Evento",
+        "opcion": "Selecciona una opción"
     },
     "calculos": {
         "calcular": "Calcular",
@@ -376,7 +388,8 @@
         "docIdRef": "Id Doc Ref: ",
         "consecutivoInter": "Consecutivo interno",
         "idRef": "Id Ref: ",
-        "cuenta": "Cuenta: "
+        "cuenta": "Cuenta: ",
+        "direEntrega": "Dirección Entrega"
     },
     "tareas": {
         "numTarea": "Tarea No: ",
@@ -413,7 +426,13 @@
         "estadoTarea": "Estado",
         "prioridadTarea": "Prioridad",
         "agregarResponsable": "Añadir Responsable",
-        "agregarInvitados": "Añadir Invitados"
+        "agregarInvitados": "Añadir Invitados",
+        "todas": "Todas",
+        "creadas": "Creadas",
+        "asignadas": "Asignadas",
+        "invitaciones": "Invitaciones",
+        "refSelec": "Referencia seleccionada",
+        "ultimoComentario": "Ver último comentario"
     },
     "calendario": {
         "hoy": "Hoy",

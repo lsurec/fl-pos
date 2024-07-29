@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/tareas/services/services.d
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,18 @@ class TareasViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  int todas = 0;
+  int creadas = 1;
+  int invitaciones = 2;
+  int asignadas = 3;
+
+  late TabController tabController;
+
   //formulario para buscar tareas
   GlobalKey<FormState> formKeySearch = GlobalKey<FormState>();
+  GlobalKey<FormState> formCreadasKeySearch = GlobalKey<FormState>();
+  GlobalKey<FormState> formAsignadasKeySearch = GlobalKey<FormState>();
+  GlobalKey<FormState> formInvitacioesKeySearch = GlobalKey<FormState>();
 
   //imput de busqueda de tareas
   final TextEditingController searchController = TextEditingController();
@@ -28,6 +39,11 @@ class TareasViewModel extends ChangeNotifier {
 
   //Lista de tareas
   final List<TareaModel> tareas = [];
+
+  final List<TareaModel> tareasGenerales = [];
+  final List<TareaModel> tareasCreadas = [];
+  final List<TareaModel> tareasInvitaciones = [];
+  final List<TareaModel> tareasAsignadas = [];
 
   //funcion para buscar tareas segun el filtro marcado
   searchText(BuildContext context) {
@@ -42,8 +58,23 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   //Validar formulario barra busqueda
-  bool isValidFormCSearch() {
+  bool isValidFormCSearchAnterior() {
     return formKeySearch.currentState?.validate() ?? false;
+  }
+
+  bool isValidFormCSearch() {
+    switch (tabController.index) {
+      case 0:
+        return formKeySearch.currentState?.validate() ?? false;
+      case 1:
+        return formCreadasKeySearch.currentState?.validate() ?? false;
+      case 2:
+        return formInvitacioesKeySearch.currentState?.validate() ?? false;
+      case 3:
+        return formAsignadasKeySearch.currentState?.validate() ?? false;
+      default:
+        return false;
+    }
   }
 
   //Asignar el valor del filtro seleccionado.
@@ -54,7 +85,10 @@ class TareasViewModel extends ChangeNotifier {
 
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
-    tareas.clear(); //limpiar lista
+    limpiar(0);
+    List<TareaModel> encontradas = [];
+    encontradas.clear(); //limpiar lista
+    searchController.clear();
 
     //obtener token y usuario
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
@@ -76,9 +110,38 @@ class TareasViewModel extends ChangeNotifier {
       return;
     }
     //agregar tareas encontradas a la lista de tareas
-    tareas.addAll(res.response);
+    encontradas.addAll(res.response);
+    //Registros encontrados
+    registros = encontradas.length;
+
+    //tipo 1 = ultimas tareas
+    asignarTareas(encontradas, 0);
 
     isLoading = false; //detener carga
+  }
+
+  asignarTareas(List<TareaModel> tareasEncontradas, int tipo) {
+    if (tipo == 0) {
+      tareasGenerales.addAll(tareasEncontradas);
+      tareasCreadas.addAll(tareasEncontradas);
+      tareasInvitaciones.addAll(tareasEncontradas);
+      tareasAsignadas.addAll(tareasEncontradas);
+    }
+
+    if (tipo == 1) {
+      switch (tabController.index) {
+        case 0:
+          return tareasGenerales.addAll(tareasEncontradas);
+        case 1:
+          return tareasCreadas.addAll(tareasEncontradas);
+        case 2:
+          return tareasInvitaciones.addAll(tareasEncontradas);
+        case 3:
+          return tareasAsignadas.addAll(tareasEncontradas);
+        default:
+          return false;
+      }
+    }
   }
 
   //buscar por filtro: Descripción
@@ -113,6 +176,70 @@ class TareasViewModel extends ChangeNotifier {
 
     //agregar a la lista las tareas encontradas
     tareas.addAll(res.response);
+
+    isLoading = false; //detener carga
+  }
+
+  int registros = 0;
+
+  //buscar por filtro: Descripción
+  Future<void> buscarTareas(
+    BuildContext context,
+    String search,
+    int opcion,
+  ) async {
+    //limpiar listas
+    limpiar(1);
+    //Validar formulario
+    if (!isValidFormCSearch()) return;
+    // tareas.clear(); //limpiar lista
+    List<TareaModel> encontradas = [];
+    encontradas.clear(); //limpiar lista
+
+    //obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    //ocultar teclado
+    FocusScope.of(context).unfocus();
+
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel res = await tareaService.getTareas(
+      user,
+      token,
+      search,
+      tabController.index,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, res);
+      return;
+    }
+
+    //agregar tareas encontradas a la lista de tareas
+    encontradas.addAll(res.response);
+
+    registros = encontradas.length;
+
+    //Tipo 1 = Busqueda
+    asignarTareas(encontradas, 1);
+
+    if (encontradas.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinCoincidencias',
+        ),
+      );
+    }
 
     isLoading = false; //detener carga
   }
@@ -321,5 +448,50 @@ class TareasViewModel extends ChangeNotifier {
 
     //si todo está bien retornar true
     return true;
+  }
+
+  GlobalKey<FormState> getGlobalKey(int keyType) {
+    switch (keyType) {
+      case 0:
+        return formKeySearch;
+      case 1:
+        return formCreadasKeySearch;
+      case 2:
+        return formInvitacioesKeySearch;
+      case 3:
+        return formAsignadasKeySearch;
+      // Puedes agregar más casos según sea necesario
+      default:
+        throw ArgumentError('Invalid key type: $keyType');
+    }
+  }
+
+  limpiarLista(BuildContext context) {
+    // tareas.clear(); //limpiar lista
+    searchController.clear();
+  }
+
+  limpiar(int tipo) {
+    if (tipo == 0) {
+      tareasGenerales.clear();
+      tareasCreadas.clear();
+      tareasInvitaciones.clear();
+      tareasAsignadas.clear();
+    }
+
+    if (tipo == 1) {
+      switch (tabController.index) {
+        case 0:
+          return tareasGenerales.clear();
+        case 1:
+          return tareasCreadas.clear();
+        case 2:
+          return tareasInvitaciones.clear();
+        case 3:
+          return tareasAsignadas.clear();
+        default:
+          return false;
+      }
+    }
   }
 }

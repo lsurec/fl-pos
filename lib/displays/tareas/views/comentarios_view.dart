@@ -6,11 +6,11 @@ import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 
-import '../../../widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ComentariosView extends StatelessWidget {
@@ -62,19 +62,27 @@ class ComentariosView extends StatelessWidget {
                           Styles.bold,
                         ),
                       ),
-                      Text(
-                        vm.vistaTarea == 1
-                            ? vmTarea.tarea!.tareaObservacion1 ??
-                                AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.general,
-                                  'noDisponible',
-                                )
-                            : vmTareaCalendario.tarea!.texto,
-                        style: AppTheme.style(
+                      GestureDetector(
+                        onLongPress: () => Utilities.copyToClipboard(
                           context,
-                          Styles.normal,
+                          vm.vistaTarea == 1
+                              ? vmTarea.tarea!.tareaObservacion1 ?? ''
+                              : vmTareaCalendario.tarea!.texto,
                         ),
-                        textAlign: TextAlign.justify,
+                        child: Text(
+                          vm.vistaTarea == 1
+                              ? vmTarea.tarea!.tareaObservacion1 ??
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.general,
+                                    'noDisponible',
+                                  )
+                              : vmTareaCalendario.tarea!.observacion1,
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -184,44 +192,67 @@ class _NuevoComentario extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ComentariosViewModel>(context);
 
-    return TextFormField(
-      controller: vm.comentarioController,
-      onChanged: (value) => vm.comentarioController.text = value,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            width: 1,
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      key: vm.formKeyComment,
+      child: TextFormField(
+        controller: vm.comentarioController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'requerido',
+            );
+          }
+          return null;
+        },
+        maxLines: 3,
+        textInputAction: TextInputAction.send,
+        onFieldSubmitted: (value) => vm.comentar(context),
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 1,
+            ),
           ),
-        ),
-        labelText: AppLocalizations.of(context)!.translate(
-          BlockTranslate.tareas,
-          'nuevoComentario',
-        ),
-        suffixIcon: SizedBox(
-          width: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.botones,
-                  'adjuntarArchivos',
-                ),
-                onPressed: () => vm.selectFiles(),
-                icon: const Icon(Icons.attach_file_outlined),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: AppTheme.color(
+                context,
+                Styles.border,
               ),
-              IconButton(
-                tooltip: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.botones,
-                  'enviarComentario',
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          labelText: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tareas,
+            'nuevoComentario',
+          ),
+          suffixIcon: SizedBox(
+            width: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'adjuntarArchivos',
+                  ),
+                  onPressed: () => vm.selectFiles(),
+                  icon: const Icon(Icons.attach_file_outlined),
                 ),
-                onPressed: () => vm.comentar(
-                  context,
-                  vm.comentarioController.text,
+                IconButton(
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'enviarComentario',
+                  ),
+                  onPressed: () => vm.comentar(
+                    context,
+                  ),
+                  icon: const Icon(Icons.send),
                 ),
-                icon: const Icon(Icons.send),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -287,15 +318,6 @@ class _Comentario extends StatelessWidget {
                   Styles.bold,
                 ),
               ),
-              Text(
-                Utilities.formatearFecha(
-                  comentario.comentario.fechaHora,
-                ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
             ],
           ),
         ),
@@ -317,13 +339,34 @@ class _Comentario extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                comentario.comentario.comentario,
-                style: AppTheme.style(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    Utilities.formatearFechaHora(
+                      comentario.comentario.fechaHora,
+                    ),
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              GestureDetector(
+                onLongPress: () => Utilities.copyToClipboard(
                   context,
-                  Styles.normal,
+                  comentario.comentario.comentario,
                 ),
-                textAlign: TextAlign.justify,
+                child: Text(
+                  comentario.comentario.comentario,
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
               ),
               ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -333,11 +376,17 @@ class _Comentario extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   final ObjetoComentarioModel objeto = objetos[index];
                   return ListTile(
-                    title: Text(
-                      objeto.objetoNombre,
-                      style: AppTheme.style(
+                    title: GestureDetector(
+                      onLongPress: () => Utilities.copyToClipboard(
                         context,
-                        Styles.normal,
+                        objeto.objetoUrl,
+                      ),
+                      child: Text(
+                        objeto.objetoNombre,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
                       ),
                     ),
                     leading: const Icon(Icons.insert_photo_outlined),
