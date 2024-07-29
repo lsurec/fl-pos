@@ -210,7 +210,7 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                         ],
                       ),
-                    if (docVM.valueParametro(44))
+                    if (docVM.valueParametro(58))
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
