@@ -652,7 +652,7 @@ class ProductViewModel extends ChangeNotifier {
         producto: product,
         precio: selectedPrice,
         cantidad: (int.tryParse(controllerNum.text) ?? 0),
-        total: total,
+        total: docVM.valueParametro(44) ? precioDias : total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
