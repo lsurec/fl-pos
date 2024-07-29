@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/fel/models/credencial_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -842,9 +843,99 @@ class DocumentViewModel extends ChangeNotifier {
       fechaInicial.minute,
     );
 
+    //Recalcular precios cuando se cambia la fechas Inicio
+    validarFecha(context);
+
     fechaFinal = fechaInicial;
 
     notifyListeners();
+  }
+
+  validarFecha(BuildContext context) async {
+    final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
+
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final String token = loginVM.token;
+
+    if (valueParametro(44)) {
+      if (Utilities.fechaIgualOMayorSinSegundos(fechaFinal, fechaInicial)) {
+        //
+        if (vmDetails.traInternas.isNotEmpty) {
+          // Calcular nuevos totales
+          for (int i = 0; i < vmDetails.traInternas.length; i++) {
+            var tra = vmDetails.traInternas[i];
+            int count = 0;
+
+            vmFactura.isLoading = true;
+
+            ProductService productService = ProductService();
+
+            // Suponiendo que getFormulaPrecioU es una función asíncrona que devuelve un Future<ResApiInterface>
+            ApiResModel res = await productService.getFormulaPrecioU(
+              token,
+              fechaInicial,
+              fechaFinal,
+              tra.precioCantidad!.toString(),
+            );
+
+            vmFactura.isLoading = false;
+
+            if (!res.succes) {
+              NotificationService.showSnackbar(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  'No se están obteniendo valores del procedimiento almacenado', //TODO: traducir
+                ),
+              );
+
+              return;
+            }
+
+            List<PrecioDiaModel> calculoDias = res.response;
+
+            if (calculoDias.isEmpty) {
+              res.response =
+                  "No se están obteniendo valores del procedimiento almacenado";
+
+              NotificationService.showSnackbar(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  'noCalculoDias',
+                ),
+              );
+
+              return;
+            }
+
+            vmDetails.traInternas[count].precioDia =
+                calculoDias[0].montoCalculado;
+            vmDetails.traInternas[count].total = calculoDias[0].montoCalculado;
+            vmDetails.traInternas[count].cantidadDias =
+                calculoDias[0].cantidadDia;
+
+            count++;
+          }
+
+          vmDetails.calculateTotales(context); //actualizar totales
+
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'recalcularFechas',
+            ),
+          );
+        }
+      } else {
+        //Fechas invalidas
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'restriccion',
+          ),
+        );
+      }
+    }
   }
 
   //Abrir y seleccionar hora inicial
@@ -908,6 +999,9 @@ class DocumentViewModel extends ChangeNotifier {
       fechaFinal.hour,
       fechaFinal.minute,
     );
+
+    //Recalcular precios cuando se cambia la fecha Fin
+    validarFecha(context);
 
     notifyListeners();
   }
@@ -975,10 +1069,6 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRefIni.hour,
       fechaRefIni.minute,
     );
-
-    fechaRefFin = fechaRefIni;
-    fechaInicial = fechaRefFin;
-    fechaFinal = fechaInicial;
 
     notifyListeners();
   }

@@ -63,7 +63,7 @@ class DocEstructuraModel {
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
         docLatitdud: json["docLatitdud"],
-        docLongitud: json["docLongitud"] ?? 0,
+        docLongitud: json["docLongitud"] ?? "",
         consecutivoInterno: json["Consecutivo_Interno"] ?? 0,
         docTraMonto: json["Doc_Tra_Monto"].toDouble(),
         docCaMonto: json["Doc_CA_Monto"].toDouble(),

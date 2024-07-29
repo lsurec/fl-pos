@@ -201,7 +201,9 @@
         "prioridadIgual": "Previously assigned priority.",
         "copiado": "Text copied to clipboard.",
         "precioDiasNoCalculado": "The price per day was not calculated. Verify that the dates are valid.",
-        "seleccioneTipoRef": "You must select a reference type."
+        "seleccioneTipoRef": "You must select a reference type.",
+        "noCalculoDias": "The price per day could not be calculated.",
+        "recalcularFechas": "Prices per day recalculated due to date modification."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
