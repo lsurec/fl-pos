@@ -200,7 +200,8 @@
         "estadoIgual": "Previously assigned status.",
         "prioridadIgual": "Previously assigned priority.",
         "copiado": "Text copied to clipboard.",
-        "precioDiasNoCalculado": "The price per day was not calculated. Verify that the dates are valid."
+        "precioDiasNoCalculado": "The price per day was not calculated. Verify that the dates are valid.",
+        "seleccioneTipoRef": "You must select a reference type."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
@@ -291,7 +292,11 @@
         "imprimir": "Print document after confirming.",
         "mesa": "Table",
         "atencion": "Served by",
-        "serie": "Internal series:"
+        "serie": "Internal series:",
+        "latitud": "Latitude: ",
+        "longitud": "Longitude: ",
+        "consInt": "Internal Cons.: ",
+        "sinObtener": "Not obtained."
     },
     "generales": {
         "registro": "Records",

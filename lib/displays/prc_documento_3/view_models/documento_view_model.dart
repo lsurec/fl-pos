@@ -143,6 +143,32 @@ class DocumentoViewModel extends ChangeNotifier {
       }
     }
 
+    //verificar el tipo de referencia
+    if (documentVM.valueParametro(58)) {
+      if (documentVM.referenciaSelect == null) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'seleccioneTipoRef',
+          ),
+        );
+        return;
+      }
+    }
+
+    //verificar las fechas
+    if (documentVM.valueParametro(44)) {
+      if (!documentVM.validateDates()) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.fecha,
+            'restriccion',
+          ),
+        );
+        return;
+      }
+    }
+
     //si no hay transacciones mostrar mensaje
     if (detailsVM.traInternas.isEmpty) {
       NotificationService.showSnackbar(
@@ -174,18 +200,6 @@ class DocumentoViewModel extends ChangeNotifier {
           AppLocalizations.of(context)!.translate(
             BlockTranslate.notificacion,
             'saldoPendiente',
-          ),
-        );
-        return;
-      }
-    }
-
-    if (documentVM.valueParametro(44)) {
-      if (!documentVM.validateDates()) {
-        NotificationService.showSnackbar(
-          AppLocalizations.of(context)!.translate(
-            BlockTranslate.fecha,
-            'restriccion',
           ),
         );
         return;

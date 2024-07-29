@@ -111,8 +111,10 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            //TODO:Translate
-                            text: 'Latitud: ',
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tiket,
+                              'latitud',
+                            ),
                             style: AppTheme.style(
                               context,
                               Styles.title,
@@ -120,7 +122,10 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                           TextSpan(
                             text: vm.currentPosition?.latitude.toString() ??
-                                "Sin obtener.",
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tiket,
+                                  'sinObtnener',
+                                ),
                             style: AppTheme.style(
                               context,
                               Styles.normal,
@@ -138,8 +143,10 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            //TODO:Translate
-                            text: 'Longitud: ',
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tiket,
+                              'longitud',
+                            ),
                             style: AppTheme.style(
                               context,
                               Styles.title,
@@ -147,7 +154,10 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                           TextSpan(
                             text: vm.currentPosition?.longitude.toString() ??
-                                "Sin obtener.",
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tiket,
+                                  'sinObtner',
+                                ),
                             style: AppTheme.style(
                               context,
                               Styles.normal,

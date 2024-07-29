@@ -885,9 +885,11 @@ class PrintViewModel extends ChangeNotifier {
       )} ${docPrintModel.documento.noInterno}",
       styles: center,
     );
-    //TODO:Translate
     bytes += generator.text(
-      "Cons. Interno: ${docPrintModel.documento.consecutivoInterno}",
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        'consInt',
+      )} ${docPrintModel.documento.consecutivoInterno}",
       styles: center,
     );
     bytes += generator.emptyLines(1);

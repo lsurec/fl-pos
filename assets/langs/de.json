@@ -200,7 +200,8 @@
         "estadoIgual": "Zuvor zugewiesener Status.",
         "prioridadIgual": "Zuvor zugewiesene Priorität.",
         "copiado": "Text in die Zwischenablage kopiert.",
-        "precioDiasNoCalculado": "Der Preis pro Tag wurde nicht berechnet. Überprüfen Sie, ob die Daten gültig sind."
+        "precioDiasNoCalculado": "Der Preis pro Tag wurde nicht berechnet. Überprüfen Sie, ob die Daten gültig sind.",
+        "seleccioneTipoRef": "Sie müssen einen Referenztyp auswählen."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -291,7 +292,11 @@
         "imprimir": "Dokument nach Bestätigung drucken.",
         "mesa": "Tisch",
         "atencion": "Bedient von",
-        "serie": "Interne Serie:"
+        "serie": "Interne Serie:",
+        "latitud": "Breitengrad: ",
+        "longitud": "Längengrad: ",
+        "consInt": "Interne Kons.: ",
+        "sinObtener": "Nicht erhalten."
     },
     "generales": {
         "registro": "Einträge",

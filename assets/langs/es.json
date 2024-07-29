@@ -200,7 +200,8 @@
         "estadoIgual": "Estado asignado anteriormente.",
         "prioridadIgual": "Prioridad asignada anteriormente.",
         "copiado": "Texto copiado al portapapeles.",
-        "precioDiasNoCalculado": "No se calculó el precio por día. Verifica que las fechas sean válidas."
+        "precioDiasNoCalculado": "No se calculó el precio por día. Verifica que las fechas sean válidas.",
+        "seleccioneTipoRef": "Debes seleccionar un tipo de referencia."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -291,7 +292,11 @@
         "imprimir": "Imprimir documento después de confirmar.",
         "mesa": "Mesa",
         "atencion": "Le atendió",
-        "serie": "Serie interna:"
+        "serie": "Serie interna:",
+        "latitud": "Latitud: ",
+        "longitud": "Longitud: ",
+        "consInt": "Cons. Interno: ",
+        "sinObtener": "Sin obtener."
     },
     "generales": {
         "registro": "Registros",
