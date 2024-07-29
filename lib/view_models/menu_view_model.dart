@@ -71,27 +71,32 @@ class MenuViewModel extends ChangeNotifier {
     //Restaurante
     //TODO:Parametrizar nombre del diplay
     if (nameDisplay.toLowerCase() == "restaurante") {
-      final vmLoc = Provider.of<LocationsViewModel>(context, listen: false);
-
-      //Cargar datos
       vmHome.isLoading = true;
 
-      final ApiResModel resLocations = await vmLoc.loadLocations(context);
+      //cargar series
+      final vmHomeRestaurant = Provider.of<HomeRestaurantViewModel>(
+        context,
+        listen: false,
+      );
 
-      if (!resLocations.succes) {
+      final ApiResModel resSeries = await vmHomeRestaurant.loadSeries(context);
+
+      if (!resSeries.succes) {
         vmHome.isLoading = false;
-        NotificationService.showErrorView(context, resLocations);
+        NotificationService.showErrorView(context, resSeries);
         return;
       }
 
-      final List<LocationModel> locations = resLocations.response;
+      vmHomeRestaurant.series.clear();
+      vmHomeRestaurant.series.addAll(resSeries.response);
 
-      vmLoc.locations.clear();
-      vmLoc.locations.addAll(locations);
-
-      vmHome.isLoading = false;
+      if (vmHomeRestaurant.series.length == 1) {
+        vmHomeRestaurant.changeSerie(vmHomeRestaurant.series.first, context);
+      }
 
       Navigator.pushNamed(context, AppRoutes.homeRestaurant);
+
+      vmHome.isLoading = false;
 
       return;
     }
