@@ -91,7 +91,7 @@ class MenuViewModel extends ChangeNotifier {
 
       vmHome.isLoading = false;
 
-      Navigator.pushNamed(context, AppRoutes.locations);
+      Navigator.pushNamed(context, AppRoutes.homeRestaurant);
 
       return;
     }
