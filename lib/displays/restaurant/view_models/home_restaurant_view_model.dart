@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/models.d
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -117,6 +118,7 @@ class HomeRestaurantViewModel extends ChangeNotifier {
     vmLoc.locations.clear();
     vmLoc.locations.addAll(locations);
 
+    Navigator.pushNamed(context, AppRoutes.locations);
     isLoading = false;
   }
 }

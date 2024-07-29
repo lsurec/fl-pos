@@ -136,7 +136,7 @@ class _AccesTab extends StatelessWidget {
                   ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () => vm.navigateLoc(context),
                   style: AppTheme.button(
                     context,
                     Styles.buttonStyle,
