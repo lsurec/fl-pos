@@ -37,6 +37,33 @@ class HomeRestaurantViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadData(BuildContext context) async {
+    //cargar series
+    final vmHomeRestaurant = Provider.of<HomeRestaurantViewModel>(
+      context,
+      listen: false,
+    );
+
+    isLoading = true;
+
+    final ApiResModel resSeries = await vmHomeRestaurant.loadSeries(context);
+
+    if (!resSeries.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resSeries);
+      return;
+    }
+
+    vmHomeRestaurant.series.clear();
+    vmHomeRestaurant.series.addAll(resSeries.response);
+
+    if (vmHomeRestaurant.series.length == 1) {
+      vmHomeRestaurant.changeSerie(vmHomeRestaurant.series.first, context);
+    }
+
+    isLoading = false;
+  }
+
   Future<ApiResModel> loadSeries(BuildContext context) async {
     final vmLogin = Provider.of<LoginViewModel>(
       context,

@@ -49,7 +49,7 @@ class HomeRestaurantView extends StatelessWidget {
             body: TabBarView(
               children: [
                 // Contenido de la primera pestaña
-                _AccesTab(),
+                const _AccesTab(),
                 Container(),
                 // Contenido de la segunda pestaña
               ],
@@ -80,82 +80,85 @@ class _AccesTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<HomeRestaurantViewModel>(context);
 
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.general,
-                  'serie',
-                ),
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
-              ),
-              if (vm.series.isEmpty)
-                NotFoundWidget(
-                  text: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.notificacion,
-                    'sinElementos',
+    return RefreshIndicator(
+      onRefresh: () => vm.loadData(context),
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.general,
+                    'serie',
                   ),
-                  icon: const Icon(
-                    Icons.browser_not_supported_outlined,
-                    size: 50,
-                  ),
-                ),
-              if (vm.series.isNotEmpty)
-                DropdownButton<SerieModel>(
-                  isExpanded: true,
-                  dropdownColor: AppTheme.color(
+                  style: AppTheme.style(
                     context,
-                    Styles.background,
+                    Styles.title,
                   ),
-                  hint: Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'opcion',
+                ),
+                if (vm.series.isEmpty)
+                  NotFoundWidget(
+                    text: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.notificacion,
+                      'sinElementos',
+                    ),
+                    icon: const Icon(
+                      Icons.browser_not_supported_outlined,
+                      size: 50,
                     ),
                   ),
-                  value: vm.serieSelect,
-                  onChanged: (value) => vm.changeSerie(value, context),
-                  items: vm.series.map(
-                    (serie) {
-                      return DropdownMenuItem<SerieModel>(
-                        value: serie,
-                        child: Text(serie.descripcion!),
-                      );
-                    },
-                  ).toList(),
-                ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => {},
-                style: AppTheme.button(
-                  context,
-                  Styles.buttonStyle,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      "Empezar",
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteBoldStyle,
+                if (vm.series.isNotEmpty)
+                  DropdownButton<SerieModel>(
+                    isExpanded: true,
+                    dropdownColor: AppTheme.color(
+                      context,
+                      Styles.background,
+                    ),
+                    hint: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'opcion',
+                      ),
+                    ),
+                    value: vm.serieSelect,
+                    onChanged: (value) => vm.changeSerie(value, context),
+                    items: vm.series.map(
+                      (serie) {
+                        return DropdownMenuItem<SerieModel>(
+                          value: serie,
+                          child: Text(serie.descripcion!),
+                        );
+                      },
+                    ).toList(),
+                  ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () => {},
+                  style: AppTheme.button(
+                    context,
+                    Styles.buttonStyle,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        "Empezar",
+                        style: AppTheme.style(
+                          context,
+                          Styles.whiteBoldStyle,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
