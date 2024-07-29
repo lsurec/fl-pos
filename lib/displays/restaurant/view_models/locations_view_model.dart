@@ -43,11 +43,17 @@ class LocationsViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmHomeRest = Provider.of<HomeRestaurantViewModel>(
+      context,
+      listen: false,
+    );
+
     final int empresa = vmLocal.selectedEmpresa!.empresa;
     final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
     final String user = vmLogin.user;
     final String token = vmLogin.token;
     final int tipoDocumento = vmMenu.documento!;
+    final String serie = vmHomeRest.serieSelect!.serieDocumento!;
 
     RestaurantService restaurantService = RestaurantService();
 
@@ -55,7 +61,7 @@ class LocationsViewModel extends ChangeNotifier {
       tipoDocumento,
       empresa,
       estacion,
-      "1", //TODO:Preguntar -serie
+      serie,
       user,
       token,
     );

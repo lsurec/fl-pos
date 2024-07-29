@@ -50,7 +50,15 @@ class HomeRestaurantView extends StatelessWidget {
               children: [
                 // Contenido de la primera pestaña
                 const _AccesTab(),
-                Container(),
+                ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: _CardDoc(),
+                    );
+                  },
+                ),
                 // Contenido de la segunda pestaña
               ],
             ),
@@ -159,6 +167,146 @@ class _AccesTab extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _CardDoc extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 10,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.home,
+                  'idDoc',
+                )} 45",
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                ),
+              ),
+              Text(
+                "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.general,
+                  'usuario',
+                )}: sa",
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () => {},
+          child: CardWidget(
+            color: AppTheme.color(
+              context,
+              Styles.secondBackground,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextsWidget(
+                    title: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.cotizacion,
+                      'idRef',
+                    ),
+                    text: '5451515',
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.cotizacion,
+                      'cuenta',
+                    ),
+                    text: 'Juan Hernandez',
+                  ),
+                  const SizedBox(height: 5),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'fechaHora',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                        ),
+                      ),
+                      Text(
+                        '12/12/2012 12:12:12',
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.fecha,
+                          'fechaDoc',
+                        ),
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                        ),
+                      ),
+                      Text(
+                        '12/12/2012 12:12:12',
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                      title: "${AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'serieDoc',
+                      )}: ",
+                      text: "COT (1)"),
+                  const SizedBox(height: 5),
+
+                  // if (document.observacion1 != null ||
+                  //     document.observacion1 != "")
+                  //   TextsWidget(
+                  //     title: "${AppLocalizations.of(context)!.translate(
+                  //       BlockTranslate.general,
+                  //       'observacion',
+                  //     )}: ",
+                  //     text: document.observacion1 ?? "",
+                  //   ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(),
+      ],
     );
   }
 }
