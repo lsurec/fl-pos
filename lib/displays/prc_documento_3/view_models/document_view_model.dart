@@ -819,12 +819,13 @@ class DocumentViewModel extends ChangeNotifier {
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
+    fechaActual = DateTime.now();
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaRefIni,
-      firstDate: fechaRefIni,
-      lastDate: fechaRefFin,
+      initialDate: fechaInicial,
+      firstDate: fechaActual,
+      lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
         'aceptar',
@@ -885,7 +886,7 @@ class DocumentViewModel extends ChangeNotifier {
               NotificationService.showSnackbar(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.notificacion,
-                  'No se están obteniendo valores del procedimiento almacenado', //TODO: traducir
+                  'noCalculoDias',
                 ),
               );
 
@@ -930,7 +931,7 @@ class DocumentViewModel extends ChangeNotifier {
         //Fechas invalidas
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
+            BlockTranslate.fecha,
             'restriccion',
           ),
         );
@@ -976,12 +977,13 @@ class DocumentViewModel extends ChangeNotifier {
 
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
+    fechaActual = DateTime.now();
+
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaInicial, //finalizo despues de iniciar
-      //fecha minima es la inicial
-      firstDate: fechaInicial,
-      lastDate: fechaRefFin, //no puedo finalizar despues de recoger
+      initialDate: fechaFinal,
+      firstDate: fechaActual,
+      lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
         'aceptar',
@@ -1044,7 +1046,7 @@ class DocumentViewModel extends ChangeNotifier {
   //Fecha entrega
   //Abrir picker de fecha entrega
   Future<void> abrirFechaEntrega(BuildContext context) async {
-    DateTime fechaActual = DateTime.now();
+    fechaActual = DateTime.now();
 
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
@@ -1110,11 +1112,13 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   Future<void> abrirFechaRecoger(BuildContext context) async {
+    fechaActual = DateTime.now();
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaFinal,
-      firstDate: fechaFinal,
+      initialDate: fechaRefFin,
+      firstDate: fechaActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
