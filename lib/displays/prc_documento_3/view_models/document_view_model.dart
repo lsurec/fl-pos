@@ -1214,8 +1214,6 @@ class DocumentViewModel extends ChangeNotifier {
   DateTime fechaActual = DateTime.now();
 
   bool validateDates() {
-    fechaActual = DateTime.now();
-
     // Remover los segundos de las fechas para la comparación
     fechaActual = DateTime(
       fechaActual.year,

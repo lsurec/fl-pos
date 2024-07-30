@@ -409,7 +409,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           docVM.getTextParam(382) ??
                               AppLocalizations.of(context)!.translate(
                                 BlockTranslate.fecha,
-                                'entrega',
+                                'recoger',
                               ),
                           style: AppTheme.style(
                             context,
