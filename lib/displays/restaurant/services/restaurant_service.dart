@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -9,6 +8,69 @@ import 'package:http/http.dart' as http;
 
 class RestaurantService {
   final String _baseUrl = Preferences.urlApi;
+
+  //Obtner empresas
+  Future<ApiResModel> getGarnish(
+    int product,
+    int um,
+    String user,
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Restaurant/product/garnish");
+    try {
+      //url completa
+
+      //configuracion del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "product": "$product",
+          "um": "$um",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Empresas disponuibles
+      List<GarnishModel> garnishs = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = GarnishModel.fromMap(item);
+        //agregar item a la lista
+        garnishs.add(responseFinally);
+      }
+
+      //Respuesta corerecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: garnishs,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
 
   Future<ApiResModel> getProducts(
     int classification,
