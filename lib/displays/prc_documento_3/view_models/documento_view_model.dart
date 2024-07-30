@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -159,12 +159,8 @@ class DocumentoViewModel extends ChangeNotifier {
     //verificar las fechas
     if (documentVM.valueParametro(44)) {
       if (!documentVM.validateDates()) {
-        NotificationService.showSnackbar(
-          AppLocalizations.of(context)!.translate(
-            BlockTranslate.fecha,
-            'restriccion',
-          ),
-        );
+        //Mostrar los mensajes indicando cual es la fecha incorrecta
+        documentVM.notificacionFechas(context);
         return;
       }
     }

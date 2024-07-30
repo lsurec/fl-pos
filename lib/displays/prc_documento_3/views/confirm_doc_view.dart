@@ -126,7 +126,7 @@ class ConfirmDocView extends StatelessWidget {
                             text: vm.currentPosition?.latitude.toString() ??
                                 AppLocalizations.of(context)!.translate(
                                   BlockTranslate.tiket,
-                                  'sinObtnener',
+                                  'sinObtener',
                                 ),
                             style: AppTheme.style(
                               context,
@@ -158,7 +158,7 @@ class ConfirmDocView extends StatelessWidget {
                             text: vm.currentPosition?.longitude.toString() ??
                                 AppLocalizations.of(context)!.translate(
                                   BlockTranslate.tiket,
-                                  'sinObtner',
+                                  'sinObtener',
                                 ),
                             style: AppTheme.style(
                               context,
@@ -1163,6 +1163,7 @@ class _Transaction extends StatelessWidget {
     final detailsVM = Provider.of<DetailsViewModel>(context);
 
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -1231,16 +1232,19 @@ class _Transaction extends StatelessWidget {
                     ),
                   ),
 
-                Text(
-                  '${AppLocalizations.of(context)!.translate(
-                    BlockTranslate.calcular,
-                    'total',
-                  )}: ${transaction.total.toStringAsFixed(2)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
+//Cantidad dias
+                if (docVM.valueParametro(44))
+                  Text(
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'cantDias',
+                    )}: ${transaction.cantidadDias}',
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
                   ),
-                ),
+
                 if (transaction.cargo != 0)
                   Text(
                     '${AppLocalizations.of(context)!.translate(
@@ -1264,6 +1268,28 @@ class _Transaction extends StatelessWidget {
                       Styles.normal,
                     ),
                   ),
+//Total por cantidad
+                if (docVM.valueParametro(44))
+                  Text(
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'precioTotalCant',
+                    )}: ${currencyFormat.format(transaction.precioCantidad)}',
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  ),
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'total',
+                  )}: ${transaction.total.toStringAsFixed(2)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
             ),

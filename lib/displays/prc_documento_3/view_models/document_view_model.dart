@@ -1214,6 +1214,8 @@ class DocumentViewModel extends ChangeNotifier {
   DateTime fechaActual = DateTime.now();
 
   bool validateDates() {
+    fechaActual = DateTime.now();
+
     // Remover los segundos de las fechas para la comparación
     fechaActual = DateTime(
       fechaActual.year,
@@ -1256,7 +1258,7 @@ class DocumentViewModel extends ChangeNotifier {
     );
 
     // Validaciones según las condiciones especificadas
-    if (fechaRefIni.isAfter(fechaActual) &&
+    if (validarFechas(fechaActual, fechaRefIni) &&
         fechaRefIni.isBefore(fechaRefFin) &&
         fechaRefFin.isAfter(fechaRefIni) &&
         fechaInicial.isAfter(fechaRefIni) &&
@@ -1264,6 +1266,69 @@ class DocumentViewModel extends ChangeNotifier {
         fechaFinal.isAfter(fechaInicial) &&
         fechaFinal.isBefore(fechaRefFin)) {
       return true;
+    }
+    return false;
+  }
+
+
+//TODO: traducir
+  notificacionFechas(BuildContext context) {
+    //fecha ref inicial no puede ser menor a la fecha actual
+    if (!validarFechas(fechaActual, fechaRefIni)) {
+      NotificationService.showSnackbar(
+        "Las fechas no son válidas. Modifique la fecha de entrega, no puede ser menor a la fecha actual",
+      );
+      return;
+    }
+
+    //fecha ref inicial no puede ser menor a la fecha final
+    if (!fechaRefIni.isBefore(fechaRefFin)) {
+      NotificationService.showSnackbar(
+        "Las fechas no son válidas. Modifique la fecha recoger, no puede ser menor a la fecha de entrega",
+      );
+      return;
+    }
+
+    //fecha inicial debe ser mayor a la fecha ref inicial
+    if (!fechaInicial.isAfter(fechaRefIni)) {
+      NotificationService.showSnackbar(
+        "Las fechas no son válidas. Modifique la fecha inicial, no puede ser menor a la fecha de entrega",
+      );
+      return;
+    }
+
+    //la fecha inicial no puede ser mayor a la fecha ref fin
+    if (!fechaInicial.isBefore(fechaRefFin)) {
+      NotificationService.showSnackbar(
+        "Las fechas no son válidas. Modifique la fecha recoger, no puede ser menor a la fecha inicial",
+      );
+      return;
+    }
+
+    //la fecha final debe ser mayor a la fecha inicial
+    if (!fechaFinal.isAfter(fechaInicial)) {
+      NotificationService.showSnackbar(
+        "Las fechas no son válidas. Modifique la fecha final, no puede ser menor a la fecha inicial",
+      );
+      return;
+    }
+
+    //la fecha final debe ser menor a la fecha ref final
+    if (!fechaFinal.isBefore(fechaRefFin)) {
+      NotificationService.showSnackbar(
+        "Las fechas no son válidas. Modifique la fecha recoger, no puede ser menor a la fecha final",
+      );
+      return;
+    }
+  }
+
+  bool validarFechas(DateTime fechaActual, DateTime fechaRecibida) {
+    // Comparar día, mes y año
+    if (fechaActual.year == fechaRecibida.year &&
+        fechaActual.month == fechaRecibida.month &&
+        fechaActual.day == fechaRecibida.day) {
+      // Verificar si fechaRecibida es igual o mayor a fechaActual
+      return !fechaRecibida.isBefore(fechaActual);
     }
     return false;
   }
