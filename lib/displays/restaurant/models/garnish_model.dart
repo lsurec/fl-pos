@@ -80,3 +80,17 @@ class GarnishModel {
         "nom_Bodega": nomBodega,
       };
 }
+
+class GarnishTree {
+  int? idFather;
+  int? idChild;
+  List<GarnishTree> children;
+  GarnishModel? item;
+
+  GarnishTree({
+    this.idChild,
+    this.idFather,
+    required this.children,
+    required this.item,
+  });
+}

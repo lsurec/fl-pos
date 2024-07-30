@@ -51,7 +51,14 @@ class ProductsClassViewModel extends ChangeNotifier {
     vmGarnish.garnishs.clear();
     vmGarnish.garnishs.addAll(resGarnish.response);
 
-    print(vmGarnish.garnishs.length);
+    if (vmGarnish.garnishs.isNotEmpty) {
+      vmGarnish.orederTreeGarnish();
+
+      Navigator.pushNamed(context, AppRoutes.garnish);
+
+      isLoading = false;
+      return;
+    }
 
     final vmDetails =
         Provider.of<DetailsRestaurantViewModel>(context, listen: false);
