@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/home_restaurant_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -151,11 +152,17 @@ class ClassificationViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmHomeRestaurant = Provider.of<HomeRestaurantViewModel>(
+      context,
+      listen: false,
+    );
+
     final int empresa = vmLocal.selectedEmpresa!.empresa;
     final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
     final String user = vmLogin.user;
     final String token = vmLogin.token;
     final int tipoDocumento = vmMenu.documento!;
+    final String serie = vmHomeRestaurant.serieSelect!.serieDocumento!;
 
     RestaurantService restaurantService = RestaurantService();
 
@@ -164,7 +171,7 @@ class ClassificationViewModel extends ChangeNotifier {
       tipoDocumento,
       empresa,
       estacion,
-      "1", //TODO:Restaurante
+      serie,
       user,
       token,
     );
