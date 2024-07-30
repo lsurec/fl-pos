@@ -101,7 +101,13 @@
         "completa": "Date et Heure: ",
         "entrega": "Date de Livraison: ",
         "recoger": "Date de Ramassage: ",
-        "restriccionFechas": "Les dates ne sont pas valides. Veuillez vérifier les restrictions."
+        "restriccionFechas": "Les dates ne sont pas valides. Veuillez vérifier les restrictions.",
+        "fechaEntregaNoActual": "Les dates ne sont pas valides. Ajustez la date de livraison, elle ne peut pas être antérieure à la date actuelle.",
+        "fechaRecogerNoEntrega": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date de livraison.",
+        "fechaInicialNoEntrega": "Les dates ne sont pas valides. Ajustez la date initiale, elle ne peut pas être antérieure à la date de livraison.",
+        "fechaRecogerNoInicial": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date initiale.",
+        "fechaFinalNoInicial": "Les dates ne sont pas valides. Ajustez la date finale, elle ne peut pas être antérieure à la date initiale.",
+        "fechaRecogerNoFinal": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date finale."
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",

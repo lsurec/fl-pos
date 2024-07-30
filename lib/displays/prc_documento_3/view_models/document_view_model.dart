@@ -1270,13 +1270,15 @@ class DocumentViewModel extends ChangeNotifier {
     return false;
   }
 
-
 //TODO: traducir
   notificacionFechas(BuildContext context) {
     //fecha ref inicial no puede ser menor a la fecha actual
     if (!validarFechas(fechaActual, fechaRefIni)) {
       NotificationService.showSnackbar(
-        "Las fechas no son válidas. Modifique la fecha de entrega, no puede ser menor a la fecha actual",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'fechaEntregaNoActual',
+        ),
       );
       return;
     }
@@ -1284,7 +1286,10 @@ class DocumentViewModel extends ChangeNotifier {
     //fecha ref inicial no puede ser menor a la fecha final
     if (!fechaRefIni.isBefore(fechaRefFin)) {
       NotificationService.showSnackbar(
-        "Las fechas no son válidas. Modifique la fecha recoger, no puede ser menor a la fecha de entrega",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'fechaRecogerNoEntrega',
+        ),
       );
       return;
     }
@@ -1292,7 +1297,10 @@ class DocumentViewModel extends ChangeNotifier {
     //fecha inicial debe ser mayor a la fecha ref inicial
     if (!fechaInicial.isAfter(fechaRefIni)) {
       NotificationService.showSnackbar(
-        "Las fechas no son válidas. Modifique la fecha inicial, no puede ser menor a la fecha de entrega",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'fechaInicialNoEntrega',
+        ),
       );
       return;
     }
@@ -1300,7 +1308,10 @@ class DocumentViewModel extends ChangeNotifier {
     //la fecha inicial no puede ser mayor a la fecha ref fin
     if (!fechaInicial.isBefore(fechaRefFin)) {
       NotificationService.showSnackbar(
-        "Las fechas no son válidas. Modifique la fecha recoger, no puede ser menor a la fecha inicial",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'fechaRecogerNoInicial',
+        ),
       );
       return;
     }
@@ -1308,7 +1319,10 @@ class DocumentViewModel extends ChangeNotifier {
     //la fecha final debe ser mayor a la fecha inicial
     if (!fechaFinal.isAfter(fechaInicial)) {
       NotificationService.showSnackbar(
-        "Las fechas no son válidas. Modifique la fecha final, no puede ser menor a la fecha inicial",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'fechaFinalNoInicial',
+        ),
       );
       return;
     }
@@ -1316,7 +1330,10 @@ class DocumentViewModel extends ChangeNotifier {
     //la fecha final debe ser menor a la fecha ref final
     if (!fechaFinal.isBefore(fechaRefFin)) {
       NotificationService.showSnackbar(
-        "Las fechas no son válidas. Modifique la fecha recoger, no puede ser menor a la fecha final",
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'fechaRecogerNoFinal',
+        ),
       );
       return;
     }

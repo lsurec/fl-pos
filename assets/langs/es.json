@@ -101,7 +101,13 @@
         "completa": "Fecha y hora: ",
         "entrega": "Fecha Entrega: ",
         "recoger": "Fecha Recoger: ",
-        "restriccion": "Las fechas no son válidas. Por favor, revisa las restricciones"
+        "restriccion": "Las fechas no son válidas. Por favor, revisa las restricciones",
+        "fechaEntregaNoActual": "Las fechas no son válidas. Modifique la fecha de entrega, no puede ser menor a la fecha actual.",
+        "fechaRecogerNoEntrega": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha de entrega.",
+        "fechaInicialNoEntrega": "Las fechas no son válidas. Modifique la fecha inicial, no puede ser menor a la fecha de entrega.",
+        "fechaRecogerNoInicial": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha inicial.",
+        "fechaFinalNoInicial": "Las fechas no son válidas. Modifique la fecha final, no puede ser menor a la fecha inicial.",
+        "fechaRecogerNoFinal": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha final."
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
