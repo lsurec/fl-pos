@@ -11,7 +11,7 @@ class GarnishModel {
   int? fProducto;
   int? fUnidadMedida;
   int? fBodega;
-  int? cantidad;
+  double? cantidad;
   String desProducto;
   String desUnidadMedida;
   String? fDesProducto;

@@ -34,6 +34,25 @@ class ProductsClassViewModel extends ChangeNotifier {
 
     product = pProduct;
 
+    final vmGarnish = Provider.of<GarnishViewModel>(context, listen: false);
+
+    final ApiResModel resGarnish = await vmGarnish.loadGarnish(
+      context,
+      product!.producto,
+      product!.unidadMedida,
+    );
+
+    if (!resGarnish.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resGarnish);
+      return;
+    }
+
+    vmGarnish.garnishs.clear();
+    vmGarnish.garnishs.addAll(resGarnish.response);
+
+    print(vmGarnish.garnishs.length);
+
     final vmDetails =
         Provider.of<DetailsRestaurantViewModel>(context, listen: false);
 
