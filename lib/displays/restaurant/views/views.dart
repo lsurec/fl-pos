@@ -1,5 +1,5 @@
+export 'package:flutter_post_printer_example/displays/restaurant/views/garnish_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/view_models/products_class_view_model.dart';
-
 export 'package:flutter_post_printer_example/displays/restaurant/views/pin_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/tables_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/locations_view.dart';
