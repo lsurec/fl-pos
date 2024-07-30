@@ -1184,6 +1184,17 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docElementoAsignado: 1, //TODO:preguntar,
       docTransaccion: transactions,
       docCargoAbono: payments,
+      docRefTipoReferencia: docVM.valueParametro(58)
+          ? docVM.referenciaSelect?.tipoReferencia
+          : null,
+      docFechaIni: docVM.valueParametro(44) ? docVM.fechaInicial : null,
+      docFechaFin: docVM.valueParametro(44) ? docVM.fechaFinal : null,
+      docRefFechaIni: docVM.valueParametro(381) ? docVM.fechaRefIni : null,
+      docRefFechaFin: docVM.valueParametro(382) ? docVM.fechaRefFin : null,
+      docRefObservacion: docVM.valueParametro(383) ? docVM.refObservacionParam383.text : null,
+      docRefDescripcion: docVM.valueParametro(384) ? docVM.refDescripcionParam384.text : null,
+      docRefObservacion2: docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
+      docRefObservacion3: docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
     );
 
     //objeto enviar documento

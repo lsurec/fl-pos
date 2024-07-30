@@ -338,7 +338,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          document.seller!,
+                          document.seller ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
                           style: AppTheme.style(
                             context,
                             Styles.normal,
@@ -346,7 +350,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         ),
                       ],
                     ),
-                  if (docVM.valueParametro(58))
+//Tipo Referencia: 58
+                  if (document.docRefTipoReferencia != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -365,7 +370,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          docVM.referenciaSelect?.descripcion ?? "",
+                          "${document.docRefTipoReferencia}",
                           style: AppTheme.style(
                             context,
                             Styles.normal,
@@ -373,7 +378,140 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         ),
                       ],
                     ),
-                  if (docVM.valueParametro(381) || docVM.valueParametro(382))
+//Contacto: 385
+                  if (document.docRefObservacion2!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(385) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'contacto',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefObservacion2 ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Descripcion: 383
+                  if (document.docRefObservacion!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(383) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'descripcion',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefObservacion ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Direccion Entrega: 386
+                  if (document.docRefObservacion3!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(386) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.cotizacion,
+                                'direEntrega',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefObservacion3 ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Observacion: 384
+                  if (document.docRefDescripcion!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(384) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'observacion',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefDescripcion ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (document.docRefFechaIni != null ||
+                      document.docRefFechaFin != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -427,7 +565,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         ),
                       ],
                     ),
-                  if (docVM.valueParametro(44))
+                  if (document.docFechaIni != null ||
+                      document.docFechaFin != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

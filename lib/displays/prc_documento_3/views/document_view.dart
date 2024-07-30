@@ -475,7 +475,7 @@ class DocumentView extends StatelessWidget {
 //parametro 385 = Contacto
                 if (vm.valueParametro(385))
                   _Observacion(
-                    controller: vm.contacto,
+                    controller: vm.refContactoParam385,
                     labelText: vm.getTextParam(385) ??
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.factura,
@@ -485,7 +485,7 @@ class DocumentView extends StatelessWidget {
 //parametro 383 = Descripcion
                 if (vm.valueParametro(383))
                   _Observacion(
-                    controller: vm.contacto,
+                    controller: vm.refObservacionParam383,
                     labelText: vm.getTextParam(383) ??
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.general,
@@ -495,7 +495,7 @@ class DocumentView extends StatelessWidget {
 //parametro 386 = Direccion de entrega
                 if (vm.valueParametro(386))
                   _Observacion(
-                    controller: vm.contacto,
+                    controller: vm.refDirecEntregaParam386,
                     labelText: vm.getTextParam(386) ??
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
@@ -505,7 +505,7 @@ class DocumentView extends StatelessWidget {
 //parametro 384 = Observacion
                 if (vm.valueParametro(384))
                   _Observacion(
-                    controller: vm.contacto,
+                    controller: vm.refDescripcionParam384,
                     labelText: vm.getTextParam(384) ??
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.general,

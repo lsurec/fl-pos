@@ -17,17 +17,17 @@ class DocumentViewModel extends ChangeNotifier {
   //Controlador input buscar cliente
   final TextEditingController client = TextEditingController();
 
-  //input contacto
-  final TextEditingController contacto = TextEditingController();
-
   //input descipcion
-  final TextEditingController descipcion = TextEditingController();
-
-  //input direccion de entrega
-  final TextEditingController direcEntrega = TextEditingController();
+  final TextEditingController refObservacionParam383 = TextEditingController();
 
   //input observaciones
-  final TextEditingController observaciones = TextEditingController();
+  final TextEditingController refDescripcionParam384 = TextEditingController();
+
+  //input contacto parametro: 385
+  final TextEditingController refContactoParam385 = TextEditingController();
+
+  //input direccion de entrega
+  final TextEditingController refDirecEntregaParam386 = TextEditingController();
 
   //Seleccionar consummidor final
   bool cf = false;
@@ -61,6 +61,13 @@ class DocumentViewModel extends ChangeNotifier {
     clienteSelect = null;
     vendedorSelect = null;
     cf = false;
+    serieSelect = null;
+    referenciaSelect = null;
+    refObservacionParam383.text = "";
+    refDescripcionParam384.text = "";
+    refContactoParam385.text = "";
+    refDirecEntregaParam386.text = "";
+
     notifyListeners();
   }
 
@@ -1268,13 +1275,12 @@ class DocumentViewModel extends ChangeNotifier {
     return false;
   }
 
-//TODO: traducir
   notificacionFechas(BuildContext context) {
     //fecha ref inicial no puede ser menor a la fecha actual
     if (!validarFechas(fechaActual, fechaRefIni)) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
+          BlockTranslate.fecha,
           'fechaEntregaNoActual',
         ),
       );
@@ -1285,7 +1291,7 @@ class DocumentViewModel extends ChangeNotifier {
     if (!fechaRefIni.isBefore(fechaRefFin)) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
+          BlockTranslate.fecha,
           'fechaRecogerNoEntrega',
         ),
       );
@@ -1296,7 +1302,7 @@ class DocumentViewModel extends ChangeNotifier {
     if (!fechaInicial.isAfter(fechaRefIni)) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
+          BlockTranslate.fecha,
           'fechaInicialNoEntrega',
         ),
       );
@@ -1307,7 +1313,7 @@ class DocumentViewModel extends ChangeNotifier {
     if (!fechaInicial.isBefore(fechaRefFin)) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
+          BlockTranslate.fecha,
           'fechaRecogerNoInicial',
         ),
       );
@@ -1318,7 +1324,7 @@ class DocumentViewModel extends ChangeNotifier {
     if (!fechaFinal.isAfter(fechaInicial)) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
+          BlockTranslate.fecha,
           'fechaFinalNoInicial',
         ),
       );
@@ -1329,7 +1335,7 @@ class DocumentViewModel extends ChangeNotifier {
     if (!fechaFinal.isBefore(fechaRefFin)) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
+          BlockTranslate.fecha,
           'fechaRecogerNoFinal',
         ),
       );

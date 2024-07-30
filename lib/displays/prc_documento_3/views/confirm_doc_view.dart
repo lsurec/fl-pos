@@ -237,6 +237,122 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                         ],
                       ),
+//Contacto: 385
+                    if (docVM.valueParametro(385))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(385) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.factura,
+                                  'contacto',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refContactoParam385.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Descripcion: 383
+                    if (docVM.valueParametro(383))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(383) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'descripcion',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refObservacionParam383.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Direccion Entrega: 386
+                    if (docVM.valueParametro(386))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(386) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.cotizacion,
+                                  'direEntrega',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refDirecEntregaParam386.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Observacion: 384
+                    if (docVM.valueParametro(384))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(384) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'observacion',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refDescripcionParam384.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
                     if (docVM.valueParametro(381) || docVM.valueParametro(382))
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
