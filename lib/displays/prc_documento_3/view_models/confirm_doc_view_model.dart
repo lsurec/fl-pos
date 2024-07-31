@@ -1193,14 +1193,16 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docRefFechaIni: docVM.valueParametro(381) ? docVM.fechaRefIni : null,
       docRefFechaFin: docVM.valueParametro(382) ? docVM.fechaRefFin : null,
       docRefObservacion:
-          docVM.valueParametro(383) ? docVM.refObservacionParam383.text : null,
+          docVM.valueParametro(383) ? docVM.refObservacionParam384.text : null,
       docRefDescripcion:
-          docVM.valueParametro(384) ? docVM.refDescripcionParam384.text : null,
+          docVM.valueParametro(384) ? docVM.refDescripcionParam383.text : null,
       docRefObservacion2:
           docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
       docRefObservacion3:
           docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
     );
+
+    print(docGlobal?.docTraMonto ?? "");
 
     //objeto enviar documento
     PostDocumentModel document = PostDocumentModel(

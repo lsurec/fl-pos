@@ -485,7 +485,7 @@ class DocumentView extends StatelessWidget {
 //parametro 383 = Descripcion
                 if (vm.valueParametro(383))
                   _Observacion(
-                    controller: vm.refObservacionParam383,
+                    controller: vm.refDescripcionParam383,
                     labelText: vm.getTextParam(383) ??
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.general,
@@ -505,7 +505,7 @@ class DocumentView extends StatelessWidget {
 //parametro 384 = Observacion
                 if (vm.valueParametro(384))
                   _Observacion(
-                    controller: vm.refDescripcionParam384,
+                    controller: vm.refObservacionParam384,
                     labelText: vm.getTextParam(384) ??
                         AppLocalizations.of(context)!.translate(
                           BlockTranslate.general,

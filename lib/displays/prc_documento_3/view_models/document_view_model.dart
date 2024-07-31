@@ -18,10 +18,10 @@ class DocumentViewModel extends ChangeNotifier {
   final TextEditingController client = TextEditingController();
 
   //input descipcion
-  final TextEditingController refObservacionParam383 = TextEditingController();
+  final TextEditingController refObservacionParam384 = TextEditingController();
 
   //input observaciones
-  final TextEditingController refDescripcionParam384 = TextEditingController();
+  final TextEditingController refDescripcionParam383 = TextEditingController();
 
   //input contacto parametro: 385
   final TextEditingController refContactoParam385 = TextEditingController();
@@ -63,8 +63,8 @@ class DocumentViewModel extends ChangeNotifier {
     cf = false;
     serieSelect = null;
     referenciaSelect = null;
-    refObservacionParam383.text = "";
-    refDescripcionParam384.text = "";
+    refObservacionParam384.text = "";
+    refDescripcionParam383.text = "";
     refContactoParam385.text = "";
     refDirecEntregaParam386.text = "";
 

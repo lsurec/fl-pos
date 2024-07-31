@@ -179,6 +179,8 @@ class PrintViewModel extends ChangeNotifier {
       );
     }
 
+//TODO: Corregor y verificar en donde está el error de los subtotales y el totol
+
     Montos montos = Montos(
       subtotal: encabezado.subTotal ?? 0,
       cargos: 0,
@@ -1498,6 +1500,8 @@ class PrintViewModel extends ChangeNotifier {
       totalLetras: encabezado.montoLetras!.toUpperCase(),
     );
 
+    print(montos.total);
+
     List<Pago> pagos = [];
 
     for (var pago in pagosTemplate) {
@@ -1568,11 +1572,6 @@ class PrintViewModel extends ChangeNotifier {
 
     PosStyles center = const PosStyles(
       align: PosAlign.center,
-    );
-
-    //alinear a la izquierda
-    PosStyles left = const PosStyles(
-      align: PosAlign.left,
     );
 
     PosStyles centerBold = const PosStyles(
@@ -1727,34 +1726,12 @@ class PrintViewModel extends ChangeNotifier {
 
 //Nuevos campos
 
-    //vendedor
-    if (docPrintModel.vendedor.isNotEmpty) {
-      bytes += generator.text(
-        "${AppLocalizations.of(context)!.translate(
-          BlockTranslate.tiket,
-          'vendedor',
-        )} ${docPrintModel.vendedor}",
-        styles: center,
-      );
-    }
-
-    //email vendedor
-    if (docPrintModel.emailVendedor != null) {
-      bytes += generator.text(
-        "${AppLocalizations.of(context)!.translate(
-          BlockTranslate.cuenta,
-          'correo',
-        )} ${docPrintModel.emailVendedor}",
-        styles: center,
-      );
-    }
-
     //Evento tipo ref
     bytes += generator.text(
       "${AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
         'tipoRef',
-      )} ${docPrintModel.evento}",
+      )}: ${docPrintModel.evento}",
       styles: center,
     );
 
@@ -1765,114 +1742,53 @@ class PrintViewModel extends ChangeNotifier {
       "${AppLocalizations.of(context)!.translate(
         BlockTranslate.calcular,
         'cantDias',
-      )} ${docPrintModel.cantidadDias}",
-      styles: left,
+      )}: ${docPrintModel.cantidadDias}",
+      styles: center,
     );
 
     bytes += generator.emptyLines(1);
 
+    //fecha evento
+    bytes += generator.text(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.fecha,
+        'eventoF',
+      ),
+      styles: center,
+    );
+
+    //fecha inicio - fin evento
+    bytes += generator.text(
+      "${Utilities.formatoFechaString(docPrintModel.fechas?.fechaInicio)} - ${Utilities.formatoFechaString(docPrintModel.fechas?.fechaFin)}",
+      styles: center,
+    );
+
     //Fecha entrega
     bytes += generator.text(
-      "${AppLocalizations.of(context)!.translate(
+      AppLocalizations.of(context)!.translate(
         BlockTranslate.fecha,
         'entrega',
-      )} ${Utilities.formatoFechaString(docPrintModel.fechas?.fechaInicioRef)}",
-      styles: left,
+      ),
+      styles: center,
+    );
+
+    bytes += generator.text(
+      Utilities.formatoFechaString(docPrintModel.fechas?.fechaInicioRef),
+      styles: center,
     );
 
     //Fecha recoger
     bytes += generator.text(
-      "${AppLocalizations.of(context)!.translate(
+      AppLocalizations.of(context)!.translate(
         BlockTranslate.fecha,
         'recoger',
-      )} ${Utilities.formatoFechaString(docPrintModel.fechas?.fechaFinRef)}",
-      styles: left,
-    );
-
-    //fecha inicio
-    bytes += generator.text(
-      "${AppLocalizations.of(context)!.translate(
-        BlockTranslate.fecha,
-        'inicio',
-      )} ${Utilities.formatoFechaString(docPrintModel.fechas?.fechaInicio)}",
-      styles: left,
-    );
-
-    //fecha fin
-    bytes += generator.text(
-      "${AppLocalizations.of(context)!.translate(
-        BlockTranslate.fecha,
-        'fin',
-      )} ${Utilities.formatoFechaString(docPrintModel.fechas?.fechaFin)}",
-      styles: left,
-    );
-
-    bytes += generator.emptyLines(1);
-
-    //Descripcion
-    bytes += generator.text(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.general,
-        'descripcion',
       ),
-      styles: left,
+      styles: center,
     );
 
-    //contenido descrioxion
     bytes += generator.text(
-      "${docPrintModel.refObservaciones?.descripcion}",
-      styles: left,
-    );
-
-    bytes += generator.emptyLines(1);
-
-    //Observacion
-    bytes += generator.text(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.general,
-        'observacion',
-      ),
-      styles: left,
-    );
-
-    //contenido obsercacion
-    bytes += generator.text(
-      "${docPrintModel.refObservaciones?.observacion}",
-      styles: left,
-    );
-
-    bytes += generator.emptyLines(1);
-
-    //Observacion 2 = Contacto
-    bytes += generator.text(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.tiket,
-        'contacto',
-      ),
-      styles: left,
-    );
-
-    //contenido contato
-    bytes += generator.text(
-      "${docPrintModel.refObservaciones?.observacion2}",
-      styles: left,
-    );
-
-    bytes += generator.emptyLines(1);
-
-    //Observacion 3 = Direccion entrega
-    bytes += generator.text(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.cotizacion,
-        'direEntrega',
-      ),
-      styles: left,
-    );
-
-    //contenido dreccio entrega
-    bytes += generator.text(
-      "${docPrintModel.refObservaciones?.observacion3}",
-      styles: left,
+      Utilities.formatoFechaString(docPrintModel.fechas?.fechaFinRef),
+      styles: center,
     );
 
     bytes += generator.emptyLines(1);
@@ -2003,19 +1919,21 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
+    print(docPrintModel.montos.total);
     bytes += generator.row(
       [
         PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'totalT',
-            ),
-            styles: const PosStyles(
-              bold: true,
-              width: PosTextSize.size2,
-            ),
-            width: 6,
-            containsChinese: false),
+          text: AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'totalT',
+          ),
+          styles: const PosStyles(
+            bold: true,
+            width: PosTextSize.size2,
+          ),
+          width: 6,
+          containsChinese: false,
+        ),
         PosColumn(
           text: currencyFormat.format(docPrintModel.montos.total),
           styles: const PosStyles(
@@ -2119,15 +2037,108 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.emptyLines(1);
 
     //Si la lista de vendedores no está vacia imprimir
+    //vendedor
+    if (docPrintModel.vendedor.isNotEmpty) {
+      bytes += generator.text(
+        "${AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          'vendedor',
+        )} ${docPrintModel.vendedor}",
+        styles: center,
+      );
+    }
+
+    //email vendedor
+    if (docPrintModel.emailVendedor != null &&
+        docPrintModel.emailVendedor!.isNotEmpty) {
+      bytes += generator.text(
+        "${AppLocalizations.of(context)!.translate(
+          BlockTranslate.cuenta,
+          'correo',
+        )} ${docPrintModel.emailVendedor}",
+        styles: center,
+      );
+    }
+
+    bytes += generator.emptyLines(1);
+
+    //Descripcion
     bytes += generator.text(
-      "${AppLocalizations.of(context)!.translate(
-        BlockTranslate.tiket,
-        'vendedor',
-      )} ${docPrintModel.vendedor}",
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.general,
+        'descripcion',
+      ),
+      styles: center,
+    );
+
+    //contenido descrioxion
+    bytes += generator.text(
+      "${docPrintModel.refObservaciones?.descripcion}",
       styles: center,
     );
 
     bytes += generator.emptyLines(1);
+
+    //Observacion
+    if (docPrintModel.refObservaciones?.observacion != null &&
+        docPrintModel.refObservaciones!.observacion.isNotEmpty) {
+      bytes += generator.text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'observacion',
+        ),
+        styles: center,
+      );
+
+      //contenido obsercacion
+      bytes += generator.text(
+        "${docPrintModel.refObservaciones?.observacion}",
+        styles: center,
+      );
+
+      bytes += generator.emptyLines(1);
+    }
+
+    //Observacion 2 = Contacto
+    if (docPrintModel.refObservaciones?.observacion2 != null &&
+        docPrintModel.refObservaciones!.observacion2.isNotEmpty) {
+      bytes += generator.text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          'contacto',
+        ),
+        styles: center,
+      );
+
+      //contenido contato
+      bytes += generator.text(
+        "${docPrintModel.refObservaciones?.observacion2}",
+        styles: center,
+      );
+
+      bytes += generator.emptyLines(1);
+    }
+
+    //Observacion 3 = Direccion entrega
+
+    if (docPrintModel.refObservaciones?.observacion3 != null &&
+        docPrintModel.refObservaciones!.observacion3.isNotEmpty) {
+      bytes += generator.text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.cotizacion,
+          'direEntrega',
+        ),
+        styles: center,
+      );
+
+      //contenido dreccio entrega
+      bytes += generator.text(
+        "${docPrintModel.refObservaciones?.observacion3}",
+        styles: center,
+      );
+
+      bytes += generator.emptyLines(1);
+    }
 
     for (var mensaje in docPrintModel.mensajes) {
       bytes += generator.text(
