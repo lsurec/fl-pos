@@ -3,7 +3,6 @@
 import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/views/classification_view.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/products_class_view.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
