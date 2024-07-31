@@ -210,7 +210,7 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                         ],
                       ),
-                    if (docVM.valueParametro(58))
+                    if (docVM.referenciaSelect?.descripcion != null)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -238,7 +238,7 @@ class ConfirmDocView extends StatelessWidget {
                         ],
                       ),
 //Contacto: 385
-                    if (docVM.valueParametro(385))
+                    if (docVM.refContactoParam385.text.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -267,7 +267,7 @@ class ConfirmDocView extends StatelessWidget {
                         ],
                       ),
 //Descripcion: 383
-                    if (docVM.valueParametro(383))
+                    if (docVM.refObservacionParam383.text.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -296,7 +296,7 @@ class ConfirmDocView extends StatelessWidget {
                         ],
                       ),
 //Direccion Entrega: 386
-                    if (docVM.valueParametro(386))
+                    if (docVM.refDirecEntregaParam386.text.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -325,7 +325,7 @@ class ConfirmDocView extends StatelessWidget {
                         ],
                       ),
 //Observacion: 384
-                    if (docVM.valueParametro(384))
+                    if (docVM.refDescripcionParam384.text.isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
