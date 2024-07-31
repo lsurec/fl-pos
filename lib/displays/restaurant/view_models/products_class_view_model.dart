@@ -110,20 +110,11 @@ class ProductsClassViewModel extends ChangeNotifier {
 
     final ApiResModel resClassProduct = await loadProducts(context);
 
-    if (!resClassProduct.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, resClassProduct);
-      return;
-    }
-
-    List<ProductRestaurantModel> productsRes = resClassProduct.response;
-
-    products.clear();
-    products.addAll(productsRes);
-
-    orderMenu();
-
     isLoading = false;
+
+    if (!resClassProduct.succes) {
+      NotificationService.showErrorView(context, resClassProduct);
+    }
   }
 
   orderMenu() {
@@ -198,6 +189,13 @@ class ProductsClassViewModel extends ChangeNotifier {
       user,
       token,
     );
+
+    if (!res.succes) return res;
+
+    product = null;
+    products.clear();
+    products.addAll(res.response);
+    orderMenu();
 
     return res;
   }

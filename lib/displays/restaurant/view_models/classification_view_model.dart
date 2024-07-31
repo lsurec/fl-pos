@@ -57,12 +57,6 @@ class ClassificationViewModel extends ChangeNotifier {
       return;
     }
 
-    vmProdClass.products.clear();
-
-    vmProdClass.products.addAll(res.response);
-
-    vmProdClass.orderMenu();
-
     Navigator.pushNamed(context, AppRoutes.productsClass);
 
     isLoading = false;
@@ -73,20 +67,11 @@ class ClassificationViewModel extends ChangeNotifier {
 
     final ApiResModel resClassification = await loadClassification(context);
 
-    if (!resClassification.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, resClassification);
-      return;
-    }
-
-    List<ClassificationModel> classificationsRes = resClassification.response;
-
-    classifications.clear();
-    classifications.addAll(classificationsRes);
-
-    orderMenu();
-
     isLoading = false;
+
+    if (!resClassification.succes) {
+      NotificationService.showErrorView(context, resClassification);
+    }
   }
 
   orderMenu() {
