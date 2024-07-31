@@ -90,6 +90,7 @@ class HomeRestaurantViewModel extends ChangeNotifier {
     if (!res.succes) return res;
 
     series.clear();
+    serieSelect = null;
     series.addAll(res.response);
 
     if (series.length == 1) {
