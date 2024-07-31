@@ -1,9 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class DetailsRestaurantView extends StatelessWidget {
@@ -19,279 +18,65 @@ class DetailsRestaurantView extends StatelessWidget {
     final ProductRestaurantModel product = vmProduct.product!;
 
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.description_outlined,
-            ),
-            padding: const EdgeInsets.only(right: 20),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
               children: [
-                Text(
-                  product.desProducto,
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  product.productoId,
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  padding: const EdgeInsets.all(30),
-                  height: 300,
-                  width: double.infinity,
-                  child: const FadeInImage(
-                    placeholder: AssetImage('assets/load.gif'),
-                    image: NetworkImage(
-                      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
-                    ),
-                    height: 150,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: vm.types.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            vm.types[index].precio.desTipoPrecio,
-                            style: const TextStyle(
-                              fontSize: 20,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Q.${vm.types[index].precio.precioUnidad}",
-                            style: const TextStyle(
-                              fontSize: 20,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 10),
-                          _ButtonIncrement(indice: index),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                // _ListPrecios(),
-                // _ButtonIncrement(),
-                const SizedBox(height: 20),
-                InputWidget(
-                  labelText: "Observacion",
-                  hintText: "Observacion",
-                  maxLines: 3,
-                  formProperty: "observacion",
-                  formValues: vm.formValues,
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        height: 1,
-                        color: Colors.grey,
+                const ProductImage(
+                    url:
+                        'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg'),
+                Positioned(
+                  top: 60,
+                  left: 20,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.black,
                       ),
                     ),
-                    const SizedBox(width: 10),
-                    Text(
-                      "Cuentas",
-                      style: AppTheme.style(context, Styles.normal),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Container(
-                        width: double.infinity,
-                        height: 1,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                const _Accounts(),
-                const _NewAccount(),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _NewAccount extends StatelessWidget {
-  const _NewAccount({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<AccountsViewModel>(context);
-
-    return Row(
-      children: [
-        Expanded(
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: vm.formKey,
-            child: InputWidget(
-              hintText: "Nombre Cuenta",
-              labelText: "Nueva Cuenta",
-              maxLines: 1,
-              formProperty: "cuenta",
-              formValues: vm.formValueAccount,
-            ),
-          ),
+          ],
         ),
-        IconButton(
-          onPressed: () => vm.addNewAccount(context),
-          icon: const Icon(Icons.add),
-        ),
-      ],
+      ),
     );
   }
 }
 
-class _Accounts extends StatefulWidget {
-  const _Accounts({
+class ProductImage extends StatelessWidget {
+  const ProductImage({
     Key? key,
+    this.url,
   }) : super(key: key);
+  final String? url;
 
-  @override
-  State<_Accounts> createState() => _AccountsState();
-}
-
-class _AccountsState extends State<_Accounts> {
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<AccountsViewModel>(context);
-
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemCount: vm.orders.length,
-      itemBuilder: (BuildContext context, int index) {
-        OrderModel cuenta = vm.orders[index];
-
-        return RadioListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 0),
-          controlAffinity: ListTileControlAffinity.trailing,
-          activeColor: AppTheme.primary,
-          title: Text(cuenta.nombre),
-          value: index,
-          groupValue: vm.formValueAccount['option'],
-          onChanged: (value) {
-            setState(() {
-              vm.formValueAccount['option'] = value as int?;
-            });
-          },
-        );
-      },
-    );
+    return getImage(url);
   }
-}
 
-class _ButtonIncrement extends StatelessWidget {
-  const _ButtonIncrement({
-    Key? key,
-    required this.indice,
-  }) : super(key: key);
+  Widget getImage(String? picture) {
+    if (picture == null || picture.isEmpty) {
+      return const Image(
+        image: AssetImage("assets/placeimg.jpg"),
+        fit: BoxFit.cover,
+      );
+    }
 
-  final int indice;
-
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<DetailsRestaurantViewModel>(context);
-
-    final _size = MediaQuery.of(context).size;
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 2, color: Colors.grey),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      height: 50,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: _size.width * 0.25,
-            child: IconButton(
-              icon: const Icon(
-                Icons.remove,
-                color: AppTheme.primary,
-                size: 20,
-              ),
-              onPressed: () => vm.decrement(indice),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  right: BorderSide(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                  left: BorderSide(
-                    width: 2,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  vm.types[indice].cantidad.toString(),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: AppTheme.primary,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: _size.width * 0.25,
-            child: IconButton(
-              icon: const Icon(
-                Icons.add,
-                color: AppTheme.primary,
-                size: 20,
-              ),
-              onPressed: () => vm.increment(indice),
-            ),
-          )
-        ],
-      ),
+    return FadeInImage(
+      placeholder: const AssetImage('assets/load.gif'),
+      image: NetworkImage(url!),
+      fit: BoxFit.cover,
     );
   }
 }
