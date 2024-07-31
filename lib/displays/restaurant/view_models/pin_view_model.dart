@@ -88,13 +88,6 @@ class PinViewModel extends ChangeNotifier {
       return;
     }
 
-    List<ClassificationModel> classifications = resClassification.response;
-
-    vmClass.classifications.clear();
-    vmClass.classifications.addAll(classifications);
-
-    vmClass.orderMenu();
-
     Navigator.pushNamed(context, AppRoutes.classification);
 
     isLoading = false;

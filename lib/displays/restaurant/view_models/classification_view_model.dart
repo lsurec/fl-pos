@@ -176,6 +176,13 @@ class ClassificationViewModel extends ChangeNotifier {
       token,
     );
 
+    if (!resClassification.succes) return resClassification;
+
+    classification = null;
+    classifications.clear();
+    classifications.addAll(resClassification.response);
+    orderMenu();
+
     return resClassification;
   }
 }

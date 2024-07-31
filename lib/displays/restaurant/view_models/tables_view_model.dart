@@ -116,6 +116,7 @@ class TablesViewModel extends ChangeNotifier {
 
     final List<TableModel> tablesRes = resTables.response;
 
+    table = null;
     tables.clear();
     tables.addAll(tablesRes);
 
