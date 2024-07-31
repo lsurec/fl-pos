@@ -21,7 +21,7 @@ class DetailsRestaurantView extends StatelessWidget {
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
 
       body: RefreshIndicator(
-        onRefresh: () => vm.loadPrice(context),
+        onRefresh: () => vm.loadBodega(context),
         child: ListView(
           children: [
             Stack(

@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -64,16 +65,40 @@ class ProductsClassViewModel extends ChangeNotifier {
     final vmDetails =
         Provider.of<DetailsRestaurantViewModel>(context, listen: false);
 
-    final ApiResModel resPrices = await vmDetails.loadPrice(context);
+    final ApiResModel resBodega = await vmDetails.loadBodega(context);
 
-    if (!resPrices.succes) {
+    if (!resBodega.succes) {
       isLoading = false;
-      NotificationService.showErrorView(context, resPrices);
+      NotificationService.showErrorView(context, resBodega);
       return;
     }
 
-    vmDetails.prices.clear();
-    vmDetails.prices.addAll(resPrices.response);
+    vmDetails.bodegas.clear();
+    vmDetails.bodegas.addAll(resBodega.response);
+
+    //si no se encontrarin bodegas mostrar mensaje
+    if (vmDetails.bodegas.isEmpty) {
+      isLoading = false;
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinBodegaP',
+      ));
+      return;
+    }
+
+    if (vmDetails.bodegas.length == 1) {
+      vmDetails.bodega = vmDetails.bodegas.first;
+
+      //cargar precios
+
+      final ApiResModel resPrices = await vmDetails.loadPrecioUnitario(context);
+
+      if (!resPrices.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(context, resPrices);
+        return;
+      }
+    }
 
     Navigator.pushNamed(context, AppRoutes.detailsRestaurant);
 
