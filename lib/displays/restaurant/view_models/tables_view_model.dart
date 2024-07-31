@@ -46,19 +46,11 @@ class TablesViewModel extends ChangeNotifier {
       vmLoc.location!.elementoAsignado,
     );
 
-    if (!resTables.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, resTables);
-      return;
-    }
-
-    final List<TableModel> tablesRes = resTables.response;
-
-    tables.clear();
-    tables.addAll(tablesRes);
-    updateOrdersTable(context);
-
     isLoading = false;
+
+    if (!resTables.succes) {
+      NotificationService.showErrorView(context, resTables);
+    }
   }
 
   updateOrdersTable(BuildContext context) {
@@ -119,6 +111,15 @@ class TablesViewModel extends ChangeNotifier {
       user,
       token,
     );
+
+    if (!resTables.succes) return resTables;
+
+    final List<TableModel> tablesRes = resTables.response;
+
+    tables.clear();
+    tables.addAll(tablesRes);
+
+    updateOrdersTable(context);
 
     return resTables;
   }

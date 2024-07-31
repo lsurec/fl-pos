@@ -106,14 +106,6 @@ class LocationsViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<TableModel> tablesRes = resTables.response;
-
-    vmTables.tables.clear();
-    vmTables.tables.addAll(tablesRes);
-
-    vmTables.updateOrdersTable(context);
-
-    location = null;
     location = locationParam;
 
     Navigator.pushNamed(context, AppRoutes.tables);
