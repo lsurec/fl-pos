@@ -54,10 +54,10 @@ class ProductsClassViewModel extends ChangeNotifier {
     if (vmGarnish.garnishs.isNotEmpty) {
       vmGarnish.orederTreeGarnish();
 
-      Navigator.pushNamed(context, AppRoutes.garnish);
+      // Navigator.pushNamed(context, AppRoutes.garnish);
 
-      isLoading = false;
-      return;
+      // isLoading = false;
+      // return;
     }
 
     final vmDetails =
