@@ -282,6 +282,16 @@ class Utilities {
     return fechaHoraFormateada;
   }
 
+  static String formatoFechaString(String? fechaHora) {
+    DateTime dateTime = DateTime.parse(fechaHora ?? "");
+    return '${dateTime.day.toString().padLeft(2, '0')}/'
+        '${dateTime.month.toString().padLeft(2, '0')}/'
+        '${dateTime.year} '
+        '${dateTime.hour.toString().padLeft(2, '0')}:'
+        '${dateTime.minute.toString().padLeft(2, '0')}:'
+        '${dateTime.second.toString().padLeft(2, '0')}';
+  }
+
   static String formatearFechaString(String fecha) {
     // Parsear la cadena de fecha
     DateTime fechaParseada = DateTime.parse(fecha);

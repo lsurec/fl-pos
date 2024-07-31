@@ -305,7 +305,8 @@
         "longitud": "Longitude: ",
         "consInt": "Cons. Interne: ",
         "sinObtener": "Non obtenu.",
-        "tipoRef": "Type de référence"
+        "tipoRef": "Type de référence",
+        "contacto": "Contact"
     },
     "generales": {
         "registro": "Enregistrements",

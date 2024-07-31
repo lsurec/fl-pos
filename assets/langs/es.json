@@ -305,7 +305,8 @@
         "longitud": "Longitud: ",
         "consInt": "Cons. Interno: ",
         "sinObtener": "Sin obtener.",
-        "tipoRef": "Tipo de referencia"
+        "tipoRef": "Tipo de referencia",
+        "contacto": "Contacto:"
     },
     "generales": {
         "registro": "Registros",

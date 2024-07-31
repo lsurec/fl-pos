@@ -305,7 +305,8 @@
         "longitud": "Longitude: ",
         "consInt": "Internal Cons.: ",
         "sinObtener": "Not obtained.",
-        "tipoRef": "Reference Type"
+        "tipoRef": "Reference Type",
+        "contacto": "Contact"
     },
     "generales": {
         "registro": "Records",

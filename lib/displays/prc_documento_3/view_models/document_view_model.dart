@@ -826,12 +826,12 @@ class DocumentViewModel extends ChangeNotifier {
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
-    fechaActual = DateTime.now();
+    DateTime fechaHoraActual = DateTime.now();
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaInicial,
-      firstDate: fechaActual,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -982,12 +982,12 @@ class DocumentViewModel extends ChangeNotifier {
 
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
-    fechaActual = DateTime.now();
+    DateTime fechaHoraActual = DateTime.now();
 
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaFinal,
-      firstDate: fechaActual,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -1051,13 +1051,13 @@ class DocumentViewModel extends ChangeNotifier {
   //Fecha entrega
   //Abrir picker de fecha entrega
   Future<void> abrirFechaEntrega(BuildContext context) async {
-    fechaActual = DateTime.now();
+    DateTime fechaHoraActual = DateTime.now();
 
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaRefIni,
-      firstDate: fechaActual,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -1117,13 +1117,13 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   Future<void> abrirFechaRecoger(BuildContext context) async {
-    fechaActual = DateTime.now();
+    DateTime fechaHoraActual = DateTime.now();
 
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaRefFin,
-      firstDate: fechaActual,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,

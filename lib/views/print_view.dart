@@ -249,6 +249,19 @@ class _SettingsFromState extends State<SettingsFrom> {
 
                                 _printerEscPos(print.bytes, print.generator);
                                 break;
+                              case 4:
+                                //4: cotizacion
+                                PrintModel print =
+                                    await printVM.printDocumentAlfayOmega(
+                                  context,
+                                  paperDefault,
+                                  settings.consecutivoDoc!,
+                                  settings.cuentaCorrentistaRef ?? "",
+                                  settings.client!,
+                                );
+
+                                _printerEscPos(print.bytes, print.generator);
+                                break;
                               default:
                             }
                           }
@@ -432,6 +445,10 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           ),
                                         );
                                       },
+                                      style: AppTheme.button(
+                                        context,
+                                        Styles.buttonStyle,
+                                      ),
                                       child: Text(
                                         AppLocalizations.of(context)!.translate(
                                           BlockTranslate.botones,
@@ -439,7 +456,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                         ),
                                         style: AppTheme.style(
                                           context,
-                                          Styles.textButtonStyle,
+                                          Styles.whiteBoldStyle,
                                         ),
                                       ),
                                     )

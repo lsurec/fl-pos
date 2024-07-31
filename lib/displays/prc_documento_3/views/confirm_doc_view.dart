@@ -89,7 +89,7 @@ class ConfirmDocView extends StatelessWidget {
                             ),
                             style: AppTheme.style(
                               context,
-                              Styles.title,
+                              Styles.bold,
                             ),
                           ),
                           TextSpan(
@@ -119,7 +119,7 @@ class ConfirmDocView extends StatelessWidget {
                             ),
                             style: AppTheme.style(
                               context,
-                              Styles.title,
+                              Styles.bold,
                             ),
                           ),
                           TextSpan(
@@ -151,7 +151,7 @@ class ConfirmDocView extends StatelessWidget {
                             ),
                             style: AppTheme.style(
                               context,
-                              Styles.title,
+                              Styles.bold,
                             ),
                           ),
                           TextSpan(

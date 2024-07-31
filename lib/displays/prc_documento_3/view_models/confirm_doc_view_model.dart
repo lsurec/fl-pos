@@ -419,12 +419,13 @@ class ConfirmDocViewModel extends ChangeNotifier {
   //Navgar a pantalla de impresion
   navigatePrint(BuildContext context) {
     final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
       arguments: PrintDocSettingsModel(
-        opcion: 2,
+        opcion: menuVM.documento == 20 ? 4 : 2, //TODO: Parametrizar con Alfa y Omega
         consecutivoDoc: consecutivoDoc,
         cuentaCorrentistaRef: vmDoc.vendedorSelect?.nomCuentaCorrentista,
         client: vmDoc.clienteSelect,
@@ -1191,10 +1192,14 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docFechaFin: docVM.valueParametro(44) ? docVM.fechaFinal : null,
       docRefFechaIni: docVM.valueParametro(381) ? docVM.fechaRefIni : null,
       docRefFechaFin: docVM.valueParametro(382) ? docVM.fechaRefFin : null,
-      docRefObservacion: docVM.valueParametro(383) ? docVM.refObservacionParam383.text : null,
-      docRefDescripcion: docVM.valueParametro(384) ? docVM.refDescripcionParam384.text : null,
-      docRefObservacion2: docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
-      docRefObservacion3: docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
+      docRefObservacion:
+          docVM.valueParametro(383) ? docVM.refObservacionParam383.text : null,
+      docRefDescripcion:
+          docVM.valueParametro(384) ? docVM.refDescripcionParam384.text : null,
+      docRefObservacion2:
+          docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
+      docRefObservacion3:
+          docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
     );
 
     //objeto enviar documento

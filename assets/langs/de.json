@@ -305,7 +305,8 @@
         "longitud": "Längengrad: ",
         "consInt": "Interne Kons.: ",
         "sinObtener": "Nicht erhalten.",
-        "tipoRef": "Referenztyp"
+        "tipoRef": "Referenztyp",
+        "contacto": "Kontakt"
     },
     "generales": {
         "registro": "Einträge",
