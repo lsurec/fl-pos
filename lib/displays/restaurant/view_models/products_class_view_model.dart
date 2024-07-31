@@ -34,9 +34,10 @@ class ProductsClassViewModel extends ChangeNotifier {
 
     product = pProduct;
 
-    final vmGarnish = Provider.of<GarnishViewModel>(context, listen: false);
+    final vDetailsRestaurant =
+        Provider.of<DetailsRestaurantViewModel>(context, listen: false);
 
-    final ApiResModel resGarnish = await vmGarnish.loadGarnish(
+    final ApiResModel resGarnish = await vDetailsRestaurant.loadGarnish(
       context,
       product!.producto,
       product!.unidadMedida,
@@ -48,11 +49,11 @@ class ProductsClassViewModel extends ChangeNotifier {
       return;
     }
 
-    vmGarnish.garnishs.clear();
-    vmGarnish.garnishs.addAll(resGarnish.response);
+    vDetailsRestaurant.garnishs.clear();
+    vDetailsRestaurant.garnishs.addAll(resGarnish.response);
 
-    if (vmGarnish.garnishs.isNotEmpty) {
-      vmGarnish.orederTreeGarnish();
+    if (vDetailsRestaurant.garnishs.isNotEmpty) {
+      vDetailsRestaurant.orederTreeGarnish();
 
       // Navigator.pushNamed(context, AppRoutes.garnish);
 

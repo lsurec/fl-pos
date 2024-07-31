@@ -1,8 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:provider/provider.dart';
 
 class DetailsRestaurantView extends StatelessWidget {
@@ -20,8 +20,9 @@ class DetailsRestaurantView extends StatelessWidget {
     return Scaffold(
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
 
-      body: SingleChildScrollView(
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () => vm.loadPrice(context),
+        child: ListView(
           children: [
             Stack(
               children: [
@@ -45,6 +46,29 @@ class DetailsRestaurantView extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.desProducto,
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    product.productoId,
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
