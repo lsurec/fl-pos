@@ -86,13 +86,6 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
-      vmHomeRestaurant.series.clear();
-      vmHomeRestaurant.series.addAll(resSeries.response);
-
-      if (vmHomeRestaurant.series.length == 1) {
-        vmHomeRestaurant.changeSerie(vmHomeRestaurant.series.first, context);
-      }
-
       Navigator.pushNamed(context, AppRoutes.homeRestaurant);
 
       vmHome.isLoading = false;

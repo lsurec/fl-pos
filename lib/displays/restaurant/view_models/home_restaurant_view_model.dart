@@ -49,20 +49,11 @@ class HomeRestaurantViewModel extends ChangeNotifier {
 
     final ApiResModel resSeries = await vmHomeRestaurant.loadSeries(context);
 
-    if (!resSeries.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, resSeries);
-      return;
-    }
-
-    vmHomeRestaurant.series.clear();
-    vmHomeRestaurant.series.addAll(resSeries.response);
-
-    if (vmHomeRestaurant.series.length == 1) {
-      vmHomeRestaurant.changeSerie(vmHomeRestaurant.series.first, context);
-    }
-
     isLoading = false;
+
+    if (!resSeries.succes) {
+      NotificationService.showErrorView(context, resSeries);
+    }
   }
 
   Future<ApiResModel> loadSeries(BuildContext context) async {
@@ -95,6 +86,15 @@ class HomeRestaurantViewModel extends ChangeNotifier {
       user,
       token,
     );
+
+    if (!res.succes) return res;
+
+    series.clear();
+    series.addAll(res.response);
+
+    if (series.length == 1) {
+      changeSerie(series.first, context);
+    }
 
     return res;
   }
