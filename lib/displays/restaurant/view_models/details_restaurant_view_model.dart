@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/product_service.dart';
@@ -8,10 +10,21 @@ import 'package:flutter_post_printer_example/displays/restaurant/view_models/vie
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 class DetailsRestaurantViewModel extends ChangeNotifier {
+  //controlar procesos
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   //valores globales
   double total = 0; //total transaccion
   double price = 0; //Precio unitario seleccionado
@@ -188,6 +201,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
 
     final List<PrecioModel> precios = resPrices.response;
 
+    selectedPrice = null;
     unitarios.clear();
 
     for (var precio in precios) {
@@ -269,5 +283,72 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     }
 
     return resFactores;
+  }
+
+  //Seleccioanr bodega
+  void changeBodega(
+    BodegaProductoModel? value,
+    BuildContext context,
+  ) async {
+    //agregar bodega seleccionada
+    bodega = value;
+
+    //iniciar proceso
+    isLoading = true;
+
+    ApiResModel precios = await loadPrecioUnitario(context);
+
+    isLoading = false;
+
+    if (!precios.succes) {
+      NotificationService.showErrorView(
+        context,
+        precios,
+      );
+      return;
+    }
+
+    if (unitarios.isEmpty) {
+      calculateTotal();
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinPrecioP',
+        ),
+      );
+    }
+  }
+
+  //calcular total transaccion
+  void calculateTotal() {
+    //si no hay cantidad seleccioanda
+    if (selectedPrice == null) {
+      total = 0;
+      notifyListeners();
+      return;
+    }
+
+    //str to int
+    int parsedValue = int.tryParse(controllerNum.text) ?? 0;
+
+    //calcular total
+    total = parsedValue * selectedPrice!.precioU;
+
+    notifyListeners();
+  }
+
+  void chanchePrice(String value) {
+    double parsedValue = double.tryParse(value) ?? 0;
+
+    selectedPrice!.precioU = parsedValue;
+    calculateTotal();
+  }
+
+  //Seleccioanr tipo rpecio
+  void changePrice(UnitarioModel? value) {
+    selectedPrice = value;
+    price = selectedPrice!.precioU;
+    controllerPrice.text = "$price";
+    calculateTotal(); //calcular total
   }
 }
