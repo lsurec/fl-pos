@@ -114,11 +114,6 @@ class HomeRestaurantViewModel extends ChangeNotifier {
       return;
     }
 
-    final List<LocationModel> locations = resLocations.response;
-
-    vmLoc.locations.clear();
-    vmLoc.locations.addAll(locations);
-
     Navigator.pushNamed(context, AppRoutes.locations);
     isLoading = false;
   }

@@ -66,6 +66,12 @@ class LocationsViewModel extends ChangeNotifier {
       token,
     );
 
+    if (!resLocations.succes) return resLocations;
+
+    location = null;
+    locations.clear();
+    locations.addAll(resLocations.response);
+
     return resLocations;
   }
 
@@ -74,18 +80,11 @@ class LocationsViewModel extends ChangeNotifier {
 
     final ApiResModel resLocations = await loadLocations(context);
 
-    if (!resLocations.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, resLocations);
-      return;
-    }
-
-    final List<LocationModel> locationRes = resLocations.response;
-
-    locations.clear();
-    locations.addAll(locationRes);
-
     isLoading = false;
+
+    if (!resLocations.succes) {
+      NotificationService.showErrorView(context, resLocations);
+    }
   }
 
   Future<void> navigateTables(
