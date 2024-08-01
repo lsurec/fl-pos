@@ -107,7 +107,8 @@
         "fechaInicialNoEntrega": "The dates are not valid. Adjust the initial date; it cannot be earlier than the delivery date.",
         "fechaRecogerNoInicial": "The dates are not valid. Adjust the pick-up date; it cannot be earlier than the initial date.",
         "fechaFinalNoInicial": "The dates are not valid. Adjust the final date; it cannot be earlier than the initial date.",
-        "fechaRecogerNoFinal": "The dates are not valid. Adjust the pick-up date; it cannot be earlier than the final date."
+        "fechaRecogerNoFinal": "The dates are not valid. Adjust the pick-up date; it cannot be earlier than the final date.",
+        "eventoF": "Event Date: "
     },
     "notificaciones": {
         "reiniciar": "To view the changes, first restart the application.",

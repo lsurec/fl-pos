@@ -107,7 +107,8 @@
         "fechaInicialNoEntrega": "Les dates ne sont pas valides. Ajustez la date initiale, elle ne peut pas être antérieure à la date de livraison.",
         "fechaRecogerNoInicial": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date initiale.",
         "fechaFinalNoInicial": "Les dates ne sont pas valides. Ajustez la date finale, elle ne peut pas être antérieure à la date initiale.",
-        "fechaRecogerNoFinal": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date finale."
+        "fechaRecogerNoFinal": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date finale.",
+        "eventoF": "Date de l'événement: "
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",

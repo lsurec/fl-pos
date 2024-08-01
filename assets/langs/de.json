@@ -107,7 +107,8 @@
         "fechaInicialNoEntrega": "Die Daten sind ungültig. Ändern Sie das Anfangsdatum; es darf nicht vor dem Lieferdatum liegen.",
         "fechaRecogerNoInicial": "Die Daten sind ungültig. Ändern Sie das Abholdatum; es darf nicht vor dem Anfangsdatum liegen.",
         "fechaFinalNoInicial": "Die Daten sind ungültig. Ändern Sie das Enddatum; es darf nicht vor dem Anfangsdatum liegen.",
-        "fechaRecogerNoFinal": "Die Daten sind ungültig. Ändern Sie das Abholdatum; es darf nicht vor dem Enddatum liegen."
+        "fechaRecogerNoFinal": "Die Daten sind ungültig. Ändern Sie das Abholdatum; es darf nicht vor dem Enddatum liegen.",
+        "eventoF": "Veranstaltungsdatum: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
