@@ -47,15 +47,28 @@ class DetailsDocViewModel extends ChangeNotifier {
     DetailDocModel doc,
   ) async {
     final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
     isLoading = true;
-    await vmShare.sheredDoc(
-      context,
-      doc.consecutivo,
-      doc.seller,
-      doc.client!,
-      doc.total,
-    );
-    isLoading = false;
+
+    if (menuVM.documento == 20) {
+      await vmShare.sheredDocCotiAlfayOmega(
+        context,
+        doc.consecutivo,
+        doc.seller,
+        doc.client,
+        doc.total,
+      );
+      isLoading = false;
+    } else {
+      await vmShare.sheredDoc(
+        context,
+        doc.consecutivo,
+        doc.seller,
+        doc.client,
+        doc.total,
+      );
+      isLoading = false;
+    }
   }
 }

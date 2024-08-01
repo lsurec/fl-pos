@@ -133,11 +133,28 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //generar formato pdf para compartir
-  Future<void> sheredDoc(BuildContext context) async {
+  Future<void> sheredDoc(
+    BuildContext context,
+    int tipoDoc,
+  ) async {
     final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
     final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
     final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
     isLoading = true;
+
+    if (tipoDoc == 20) {
+      print("tipo doc Cotizacoin de alfa y omega");
+
+      await vmShare.sheredDocCotiAlfayOmega(
+        context,
+        consecutivoDoc,
+        vmDoc.vendedorSelect?.nomCuentaCorrentista,
+        vmDoc.clienteSelect,
+        vmDetails.total,
+      );
+      isLoading = false;
+    }
+
     await vmShare.sheredDoc(
       context,
       consecutivoDoc,
