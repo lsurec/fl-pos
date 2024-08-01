@@ -1158,7 +1158,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
-                                  "${detalle.precioReposicion}",
+                                  "${detalle.precioReposicion ?? "00.00"}",
                                   textAlign: pw.TextAlign.center,
                                   style: font8,
                                 ),
