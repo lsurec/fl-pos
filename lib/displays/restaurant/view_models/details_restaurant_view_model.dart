@@ -72,6 +72,33 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     return apiResModel;
   }
 
+  //valor del input en numero
+  int valueNum = 0;
+  //incrementrar cantidad
+  void incrementNum() {
+    valueNum++;
+    controllerNum.text = valueNum.toString();
+    calculateTotal();
+  }
+
+  //disminuir cantidad del input
+  void decrementNum() {
+    //La cantidad no puede ser menor a 0
+    if (valueNum > 0) {
+      valueNum--;
+      controllerNum.text = valueNum.toString();
+      calculateTotal(); //Calcualr total
+    }
+  }
+
+  changeGarnish(
+    int index,
+    GarnishModel garnish,
+  ) {
+    treeGarnish[index].selected = garnish;
+    notifyListeners();
+  }
+
   orederTreeGarnish() {
     //nodo 1 (displays)
     List<GarnishTree> padres = [];
@@ -79,11 +106,11 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     List<GarnishTree> hijos = [];
     for (var garnish in garnishs) {
       final GarnishTree item = GarnishTree(
-        idChild: garnish.productoCaracteristica,
-        idFather: garnish.productoCaracteristicaPadre,
-        children: [],
-        item: garnish,
-      );
+          idChild: garnish.productoCaracteristica,
+          idFather: garnish.productoCaracteristicaPadre,
+          children: [],
+          item: garnish,
+          selected: null);
 
       if (garnish.productoCaracteristicaPadre == null) {
         padres.add(item);

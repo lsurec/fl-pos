@@ -39,12 +39,18 @@ class DetailsRestaurantView extends StatelessWidget {
     return Scaffold(
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Color.fromARGB(255, 228, 225, 225),
+            ),
+          ),
+        ),
         padding: const EdgeInsets.symmetric(
           vertical: 10,
           horizontal: 20,
         ),
         height: 110,
-        color: Colors.white,
         child: Column(
           children: [
             Row(
@@ -77,20 +83,21 @@ class DetailsRestaurantView extends StatelessWidget {
                     height: 50,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => vm.decrementNum(),
                           icon: const Icon(Icons.remove),
                         ),
                         Text(
-                          "1",
+                          vm.controllerNum.text,
                           style: AppTheme.style(context, Styles.bold),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => vm.incrementNum(),
                           icon: const Icon(Icons.add),
                         )
                       ],
@@ -300,25 +307,74 @@ class DetailsRestaurantView extends StatelessWidget {
                     ),
                   if (vm.unitarios.isNotEmpty && !docVM.editPrice())
                     Text(currencyFormat.format(vm.price)),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.calcular,
-                          'total',
-                        )}: ${currencyFormat.format(vm.total)}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
+            Container(
+              color: const Color.fromARGB(255, 227, 226, 226),
+              height: 10,
+            ),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: vm.treeGarnish.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return Container(
+                  color: const Color.fromARGB(255, 227, 226, 226),
+                  height: 10,
+                );
+              },
+              itemBuilder: (BuildContext context, int index) {
+                final GarnishTree garnishNode = vm.treeGarnish[index];
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        garnishNode.item!.descripcion,
+                        style: AppTheme.style(
+                          context,
+                          Styles.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Elige una opcion",
+                        style: AppTheme.style(context, Styles.normal),
+                      ),
+                      const SizedBox(height: 5),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: garnishNode.children.length,
+                        itemBuilder: (BuildContext context, int j) {
+                          final GarnishModel garnish =
+                              garnishNode.children[j].item!;
+                          return RadioListTile(
+                            activeColor: AppTheme.primary,
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(garnish.descripcion),
+                            value: garnish,
+                            groupValue: vm.treeGarnish[index].selected,
+                            onChanged: (value) => vm.changeGarnish(
+                              index,
+                              value!,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
