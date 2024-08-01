@@ -19,7 +19,6 @@ class DetailsRestaurantView extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeVM = Provider.of<HomeViewModel>(
       context,
-      listen: false,
     );
 
     // Crear una instancia de NumberFormat para el formato de moneda
@@ -31,15 +30,103 @@ class DetailsRestaurantView extends StatelessWidget {
 
     final vmProduct = Provider.of<ProductsClassViewModel>(
       context,
-      listen: false,
     );
 
-    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
-    final vm = Provider.of<DetailsRestaurantViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context);
+    final vm = Provider.of<DetailsRestaurantViewModel>(context);
     final ProductRestaurantModel product = vmProduct.product!;
 
     return Scaffold(
       // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 20,
+        ),
+        height: 110,
+        color: Colors.white,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'total',
+                  )}:",
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
+                  ),
+                ),
+                Text(
+                  currencyFormat.format(vm.total),
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.remove),
+                        ),
+                        Text(
+                          "1",
+                          style: AppTheme.style(context, Styles.bold),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.add),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: SizedBox(
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () => {},
+                      style: AppTheme.button(
+                        context,
+                        Styles.buttonStyle,
+                      ),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Center(
+                          child: Text(
+                            "Agregar", //TODO:Translate
+                            style: AppTheme.style(
+                              context,
+                              Styles.whiteBoldStyle,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
 
       body: RefreshIndicator(
         onRefresh: () => vm.loadBodega(context),
@@ -97,7 +184,7 @@ class DetailsRestaurantView extends StatelessWidget {
                     ),
                     style: AppTheme.style(
                       context,
-                      Styles.blueText,
+                      Styles.bold,
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -141,7 +228,7 @@ class DetailsRestaurantView extends StatelessWidget {
                                 ),
                           style: AppTheme.style(
                             context,
-                            Styles.blueText,
+                            Styles.bold,
                           ),
                         ),
                         const SizedBox(height: 5),
@@ -205,7 +292,7 @@ class DetailsRestaurantView extends StatelessWidget {
                           ),
                           style: AppTheme.style(
                             context,
-                            Styles.blueText,
+                            Styles.bold,
                           ),
                         ),
                         const SizedBox(height: 5),

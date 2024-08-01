@@ -153,7 +153,7 @@ class _AccesTab extends StatelessWidget {
                     width: double.infinity,
                     child: Center(
                       child: Text(
-                        "Empezar",
+                        "Empezar", //TODO:Translate
                         style: AppTheme.style(
                           context,
                           Styles.whiteBoldStyle,

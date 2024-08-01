@@ -543,7 +543,6 @@ class AppTheme {
       Styles.user: DarkTheme.user,
       Styles.blueTitle: LightTheme.blueTitle,
       Styles.diaHoy: LightTheme.diaHoy,
-
     };
 
     final darkThemeStyles = {
@@ -577,7 +576,6 @@ class AppTheme {
       Styles.user: DarkTheme.user,
       Styles.blueTitle: DarkTheme.blueTitle,
       Styles.diaHoy: LightTheme.diaHoy,
-
     };
 
     // Selecciona el mapa correspondiente al tema utilizando un switch-case
