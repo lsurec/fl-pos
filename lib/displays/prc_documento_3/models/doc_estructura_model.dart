@@ -246,6 +246,7 @@ class DocTransaccion {
   int? traFactorConversion;
   int traTipoTransaccion;
   double traMonto;
+  double? traMontoDias;
 
   DocTransaccion({
     required this.traConsecutivoInterno,
@@ -257,10 +258,11 @@ class DocTransaccion {
     required this.traCantidad,
     required this.traTipoCambio,
     required this.traMoneda,
-    required this.traTipoPrecio,
-    required this.traFactorConversion,
+    this.traTipoPrecio,
+    this.traFactorConversion,
     required this.traTipoTransaccion,
     required this.traMonto,
+    this.traMontoDias,
   });
 
   factory DocTransaccion.fromJson(String str) =>
@@ -282,6 +284,7 @@ class DocTransaccion {
         traFactorConversion: json["Tra_Factor_Conversion"],
         traTipoTransaccion: json["Tra_Tipo_Transaccion"],
         traMonto: json["Tra_Monto"].toDouble(),
+        traMontoDias: json["Tra_Monto_Dias"]?.toDouble(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -298,5 +301,6 @@ class DocTransaccion {
         "Tra_Factor_Conversion": traFactorConversion,
         "Tra_Tipo_Transaccion": traTipoTransaccion,
         "Tra_Monto": traMonto,
+        "Tra_Monto_Dias": traMontoDias,
       };
 }

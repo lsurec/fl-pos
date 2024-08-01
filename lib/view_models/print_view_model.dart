@@ -1453,39 +1453,40 @@ class PrintViewModel extends ChangeNotifier {
     double subtotal = 0;
     double total = 0;
 
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+
     List<Item> items = [];
 
     for (var detail in detallesTemplate) {
-      int tipoTra = findTipoProducto(
-        context,
-        detail.tipoTransaccion,
-      );
-
-      if (tipoTra == 4) {
+      if (detail.cantidad == 0 && detail.monto > 0) {
         //4 cargo
         cargo += detail.monto;
-      } else if (tipoTra == 3) {
+      } else if (detail.cantidad == 0 && detail.monto < 0) {
         //5 descuento
         descuento += detail.monto;
       } else {
         //cualquier otro
         subtotal += detail.monto;
+
       }
+
+      double precioUni = menuVM.documento! == 20
+          ? detail.cantidad > 0
+              ? (detail.monto / encabezado.cantidadDiasFechaIniFin) /
+                  detail.cantidad
+              : detail.monto
+          : detail.cantidad > 0
+              ? detail.monto / detail.cantidad
+              : detail.monto;
 
       items.add(
         Item(
           descripcion: detail.desProducto,
           cantidad: detail.cantidad,
-          unitario: tipoTra == 3
-              ? "- ${detail.montoUMTipoMoneda}"
-              : detail.montoUMTipoMoneda,
-          total: tipoTra == 3
-              ? "- ${detail.montoTotalTipoMoneda}"
-              : detail.montoTotalTipoMoneda,
+          unitario: precioUni.toString(),
+          total: detail.monto.toString(),
           sku: detail.productoId,
-          precioDia: tipoTra == 3
-              ? "- ${detail.montoTotalTipoMoneda}"
-              : detail.montoTotalTipoMoneda,
+          precioDia: detail.monto.toString(),
         ),
       );
     }
@@ -1500,7 +1501,6 @@ class PrintViewModel extends ChangeNotifier {
       totalLetras: encabezado.montoLetras!.toUpperCase(),
     );
 
-    print(montos.total);
 
     List<Pago> pagos = [];
 
@@ -1919,7 +1919,6 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    print(" que paso ${docPrintModel.montos.total}");
     bytes += generator.row(
       [
         PosColumn(

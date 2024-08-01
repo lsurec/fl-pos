@@ -425,7 +425,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
       context,
       AppRoutes.printer,
       arguments: PrintDocSettingsModel(
-        opcion: menuVM.documento == 20 ? 4 : 2, //TODO: Parametrizar con Alfa y Omega
+        opcion: menuVM.documento == 20
+            ? 4
+            : 2, //TODO: Parametrizar con Alfa y Omega
         consecutivoDoc: consecutivoDoc,
         cuentaCorrentistaRef: vmDoc.vendedorSelect?.nomCuentaCorrentista,
         client: vmDoc.clienteSelect,
@@ -1112,7 +1114,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
               !transaction.precio!.precio ? transaction.precio!.id : null,
           traTipoTransaccion: resolveTipoTransaccion(
               transaction.producto.tipoProducto, scaffoldKey.currentContext!),
-          traMonto: transaction.cantidad * transaction.precio!.precioU,
+          traMonto: transaction.total,
+          traMontoDias: transaction.precioDia,
         ),
       );
 
@@ -1201,8 +1204,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docRefObservacion3:
           docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
     );
-
-    print(docGlobal?.docTraMonto ?? "");
 
     //objeto enviar documento
     PostDocumentModel document = PostDocumentModel(
