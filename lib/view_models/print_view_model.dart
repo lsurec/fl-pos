@@ -179,8 +179,6 @@ class PrintViewModel extends ChangeNotifier {
       );
     }
 
-//TODO: Corregor y verificar en donde está el error de los subtotales y el totol
-
     Montos montos = Montos(
       subtotal: encabezado.subTotal ?? 0,
       cargos: 0,
