@@ -985,6 +985,81 @@ class ShareDocViewModel extends ChangeNotifier {
                   ),
                 ),
                 pw.SizedBox(height: 20),
+
+                //Contacto parametro: 385
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.tiket,
+                        'contacto',
+                      ),
+                      style: font8,
+                    ),
+                    pw.Text(
+                      encabezado.refObservacion2,
+                      style: font8,
+                    ),
+                  ],
+                ),
+
+                //Direccion entrega parametro: 386
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.cotizacion,
+                        'direEntrega',
+                      ),
+                      style: font8,
+                    ),
+                    pw.Text(
+                      encabezado.refObservacion3,
+                      style: font8,
+                    ),
+                  ],
+                ),
+
+                //Descripcion: 383
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.general,
+                        'descripcion',
+                      ),
+                      style: font8,
+                    ),
+                    pw.Text(
+                      encabezado.refDescripcion,
+                      style: font8,
+                    ),
+                  ],
+                ),
+
+                //Descripcion: 383
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      AppLocalizations.of(contextP)!.translate(
+                        BlockTranslate.general,
+                        'observacion',
+                      ),
+                      style: font8,
+                    ),
+                    pw.Text(
+                      encabezado.refObservacion,
+                      style: font8,
+                    ),
+                  ],
+                ),
+
+                pw.SizedBox(height: 20),
+
                 //Detalles del documento
                 pw.Container(
                   decoration: pw.BoxDecoration(
