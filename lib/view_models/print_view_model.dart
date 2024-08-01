@@ -329,6 +329,10 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.row(
       [
         PosColumn(
+          text: "Pre Repo.",
+          width: 2,
+        ),
+        PosColumn(
           text: AppLocalizations.of(context)!.translate(
             BlockTranslate.tiket,
             'cantidad',
@@ -1465,7 +1469,6 @@ class PrintViewModel extends ChangeNotifier {
       } else {
         //cualquier otro
         subtotal += detail.monto;
-
       }
 
       double precioUni = menuVM.documento! == 20
@@ -1485,6 +1488,7 @@ class PrintViewModel extends ChangeNotifier {
           total: detail.monto.toString(),
           sku: detail.productoId,
           precioDia: detail.monto.toString(),
+          precioReposicion: detail.precioReposicion.toString().isNotEmpty && detail.precioReposicion != null ? detail.precioReposicion.toString() : "00.00"
         ),
       );
     }
@@ -1498,7 +1502,6 @@ class PrintViewModel extends ChangeNotifier {
       total: total,
       totalLetras: encabezado.montoLetras!.toUpperCase(),
     );
-
 
     List<Pago> pagos = [];
 
@@ -1793,14 +1796,12 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.row(
       [
+        PosColumn(text: 'P.Repo', width: 2), // Ancho 1
         PosColumn(text: 'Cant.', width: 2), // Ancho 2
-        PosColumn(text: 'Descripcion', width: 4), // Ancho 6
+        PosColumn(text: 'Descripcion', width: 3), // Ancho 6
         PosColumn(
-          text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tiket,
-            'precioU',
-          ),
-          width: 3,
+          text: 'P/U',
+          width: 2,
           styles: const PosStyles(
             align: PosAlign.right,
           ),
@@ -1822,16 +1823,20 @@ class PrintViewModel extends ChangeNotifier {
       bytes += generator.row(
         [
           PosColumn(
+            text: "${transaction.precioReposicion}",
+            width: 2,
+          ),
+          PosColumn(
             text: "${transaction.cantidad}",
             width: 2,
           ), // Ancho 2
           PosColumn(
             text: transaction.descripcion,
-            width: 4,
+            width: 3,
           ), // Ancho 6
           PosColumn(
             text: transaction.unitario,
-            width: 3,
+            width: 2,
             styles: const PosStyles(
               align: PosAlign.right,
             ),

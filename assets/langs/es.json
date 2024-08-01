@@ -108,7 +108,7 @@
         "fechaRecogerNoInicial": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha inicial.",
         "fechaFinalNoInicial": "Las fechas no son válidas. Modifique la fecha final, no puede ser menor a la fecha inicial.",
         "fechaRecogerNoFinal": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha final.",
-        "eventoF": "Fecha Evento: TODO: traducir"
+        "eventoF": "Fecha Evento: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
