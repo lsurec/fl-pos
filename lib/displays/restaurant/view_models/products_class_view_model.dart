@@ -50,6 +50,7 @@ class ProductsClassViewModel extends ChangeNotifier {
       return;
     }
 
+    vDetailsRestaurant.treeGarnish.clear();
     vDetailsRestaurant.garnishs.clear();
     vDetailsRestaurant.garnishs.addAll(resGarnish.response);
 

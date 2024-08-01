@@ -57,6 +57,13 @@ class ClassificationViewModel extends ChangeNotifier {
       return;
     }
 
+    if (vmProdClass.totalLength == 0) {
+      isLoading = false;
+      //TODO:Translate
+      NotificationService.showSnackbar("No hay productos disponibles");
+      return;
+    }
+
     Navigator.pushNamed(context, AppRoutes.productsClass);
 
     isLoading = false;

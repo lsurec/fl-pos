@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/widgets/input_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -310,10 +311,11 @@ class DetailsRestaurantView extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              color: const Color.fromARGB(255, 227, 226, 226),
-              height: 10,
-            ),
+            if (vm.treeGarnish.isNotEmpty)
+              Container(
+                color: const Color.fromARGB(255, 227, 226, 226),
+                height: 10,
+              ),
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
@@ -374,6 +376,33 @@ class DetailsRestaurantView extends StatelessWidget {
                   ),
                 );
               },
+            ),
+            Container(
+              color: const Color.fromARGB(255, 227, 226, 226),
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Notas para este producto", //TODO:Translate
+                    style: AppTheme.style(context, Styles.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  InputWidget(
+                    maxLines: 2,
+                    formProperty: vm.formValues["observacion"],
+                    formValues: vm.formValues,
+                    hintText:
+                        "Escriba las instrucciones necesarias.", //TODO:Translate
+                  ),
+                ],
+              ),
             )
           ],
         ),
