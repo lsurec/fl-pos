@@ -1919,7 +1919,7 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    print(docPrintModel.montos.total);
+    print(" que paso ${docPrintModel.montos.total}");
     bytes += generator.row(
       [
         PosColumn(
@@ -1954,87 +1954,90 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    bytes += generator.text(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.tiket,
-        'detallePago',
-      ),
-      styles: center,
-    );
+    //si hay pagos
+    if (docPrintModel.pagos.isNotEmpty) {
+      bytes += generator.text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          'detallePago',
+        ),
+        styles: center,
+      );
 
-    for (var pago in docPrintModel.pagos) {
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: "",
-            width: 6,
-          ),
-          PosColumn(
-            text: pago.tipoPago,
-            styles: const PosStyles(
-              align: PosAlign.right,
+      for (var pago in docPrintModel.pagos) {
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: "",
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'recibido',
+            PosColumn(
+              text: pago.tipoPago,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-          PosColumn(
-            text: currencyFormat.format(pago.pago),
-            styles: const PosStyles(
-              align: PosAlign.right,
+          ],
+        );
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'recibido',
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'monto',
+            PosColumn(
+              text: currencyFormat.format(pago.pago),
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-          PosColumn(
-            text: currencyFormat.format(pago.monto),
-            styles: const PosStyles(
-              align: PosAlign.right,
+          ],
+        );
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'monto',
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'cambio',
+            PosColumn(
+              text: currencyFormat.format(pago.monto),
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-          PosColumn(
-            text: currencyFormat.format(pago.cambio),
-            styles: const PosStyles(
-              align: PosAlign.right,
+          ],
+        );
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'cambio',
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
+            PosColumn(
+              text: currencyFormat.format(pago.cambio),
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
+            ),
+          ],
+        );
+      }
+
+      bytes += generator.emptyLines(1);
     }
-
-    bytes += generator.emptyLines(1);
 
     //Si la lista de vendedores no está vacia imprimir
     //vendedor
@@ -2063,21 +2066,25 @@ class PrintViewModel extends ChangeNotifier {
     bytes += generator.emptyLines(1);
 
     //Descripcion
-    bytes += generator.text(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.general,
-        'descripcion',
-      ),
-      styles: center,
-    );
 
-    //contenido descrioxion
-    bytes += generator.text(
-      "${docPrintModel.refObservaciones?.descripcion}",
-      styles: center,
-    );
+    if (docPrintModel.refObservaciones?.descripcion != null &&
+        docPrintModel.refObservaciones!.descripcion.isNotEmpty) {
+      bytes += generator.text(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.general,
+          'descripcion',
+        ),
+        styles: center,
+      );
 
-    bytes += generator.emptyLines(1);
+      //contenido descrioxion
+      bytes += generator.text(
+        "${docPrintModel.refObservaciones?.descripcion}",
+        styles: center,
+      );
+
+      bytes += generator.emptyLines(1);
+    }
 
     //Observacion
     if (docPrintModel.refObservaciones?.observacion != null &&
@@ -2140,13 +2147,16 @@ class PrintViewModel extends ChangeNotifier {
       bytes += generator.emptyLines(1);
     }
 
-    for (var mensaje in docPrintModel.mensajes) {
-      bytes += generator.text(
-        mensaje,
-        styles: centerBold,
-      );
+    //no utulizar el espacion en la impresion si mensajes está vacio
+    if (docPrintModel.mensajes.isNotEmpty) {
+      for (var mensaje in docPrintModel.mensajes) {
+        bytes += generator.text(
+          mensaje,
+          styles: centerBold,
+        );
+      }
+      bytes += generator.emptyLines(1);
     }
-    bytes += generator.emptyLines(1);
 
     if (isFel) {
       bytes += generator.text(
@@ -2163,8 +2173,9 @@ class PrintViewModel extends ChangeNotifier {
         docPrintModel.certificador.nit,
         styles: center,
       );
+
+      bytes += generator.emptyLines(1);
     }
-    bytes += generator.emptyLines(1);
 
     bytes += generator.text(
       "--------------------",
