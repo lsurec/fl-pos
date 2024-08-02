@@ -986,6 +986,87 @@ class ShareDocViewModel extends ChangeNotifier {
                 ),
                 pw.SizedBox(height: 20),
 
+//Observaciones TODO: aqui me quedé
+                pw.Container(
+                  // decoration: pw.BoxDecoration(
+                  //   border: pw.Border.all(
+                  //     color: PdfColors.black, // Color del borde
+                  //     width: 0.5, // Ancho del borde
+                  //   ),
+                  // ),
+                  width: double.infinity,
+                  child: pw.Row(
+                    children: [
+                      pw.Container(
+                        padding: const pw.EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        width: PdfPageFormat.letter.width * 0.50,
+                        decoration: const pw.BoxDecoration(
+                          border: pw.Border(
+                            right: pw.BorderSide(
+                              color: PdfColors.black, // Color del borde
+                              width: 1.0, // Ancho del borde
+                            ),
+                          ),
+                        ),
+                        child: pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.Text(
+                              AppLocalizations.of(contextP)!.translate(
+                                BlockTranslate.tiket,
+                                'contacto',
+                              ),
+                              style: font8Bold,
+                            ),
+                            pw.SizedBox(width: 5),
+                            pw.Text(
+                              encabezado.refObservacion2,
+                              style: font8,
+                            ),
+                          ],
+                        ),
+                      ),
+                      pw.Container(
+                        padding: const pw.EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
+                        width: PdfPageFormat.letter.width * 0.50,
+                        decoration: const pw.BoxDecoration(
+                          border: pw.Border(
+                            right: pw.BorderSide(
+                              color: PdfColors.black, // Color del borde
+                              width: 1.0, // Ancho del borde
+                            ),
+                          ),
+                        ),
+                        child: pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.Text(
+                              AppLocalizations.of(contextP)!.translate(
+                                BlockTranslate.general,
+                                'descripcion',
+                              ),
+                              style: font8Bold,
+                            ),
+                            pw.SizedBox(width: 5),
+                            pw.Text(
+                              encabezado.refDescripcion,
+                              style: font8,
+                              textAlign: pw.TextAlign.justify,
+                              softWrap: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
                 //Contacto parametro: 385
                 pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
