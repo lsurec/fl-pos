@@ -29,11 +29,15 @@ class DetailsDocViewModel extends ChangeNotifier {
     BuildContext context,
     DetailDocModel doc,
   ) {
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
       arguments: PrintDocSettingsModel(
-        opcion: 2,
+        opcion: menuVM.documento == 20
+            ? 4
+            : 2, //TODO: Parametrizar con Alfa y Omega
         consecutivoDoc: doc.consecutivo,
         cuentaCorrentistaRef: doc.seller,
         client: doc.client,

@@ -104,7 +104,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           ),
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -134,7 +134,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           )} ",
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -164,7 +164,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           )}: ",
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -195,7 +195,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           )}: ",
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(

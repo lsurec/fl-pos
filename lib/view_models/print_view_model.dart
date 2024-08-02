@@ -1280,7 +1280,7 @@ class PrintViewModel extends ChangeNotifier {
     int paperDefault,
     int consecutivoDoc,
     String? cuentaCorrentistaRef,
-    ClientModel clinetDoc,
+    ClientModel? clinetDoc,
   ) async {
     //instancia del servicio
     DocumentService documentService = DocumentService();
@@ -1442,11 +1442,11 @@ class PrintViewModel extends ChangeNotifier {
         "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
 
     Cliente cliente = Cliente(
-      nombre: clinetDoc.facturaNombre,
-      direccion: clinetDoc.facturaDireccion,
-      nit: clinetDoc.facturaNit,
+      nombre: clinetDoc?.facturaNombre ?? "",
+      direccion: clinetDoc?.facturaDireccion ?? "",
+      nit: clinetDoc?.facturaNit ?? "",
       fecha: formattedDate,
-      tel: clinetDoc.telefono,
+      tel: clinetDoc?.telefono ?? "",
     );
 
     //totales
@@ -2152,7 +2152,12 @@ class PrintViewModel extends ChangeNotifier {
     }
 
     bytes += generator.text(
-      "CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACION",
+      "CONTRATO DE TERMINOS Y CONDICIONES",
+      styles: center,
+    );
+
+    bytes += generator.text(
+      " DE LA COTIZACION",
       styles: center,
     );
 
