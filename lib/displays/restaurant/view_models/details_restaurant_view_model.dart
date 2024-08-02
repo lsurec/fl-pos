@@ -47,6 +47,73 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
   final List<BodegaProductoModel> bodegas = [];
   BodegaProductoModel? bodega;
 
+  Future<void> loadData(BuildContext context) async {
+    isLoading = true;
+
+    final vmProductRestaurant = Provider.of<ProductsClassViewModel>(
+      context,
+      listen: false,
+    );
+
+    ProductRestaurantModel product = vmProductRestaurant.product!;
+
+    final ApiResModel resGarnish = await loadGarnish(
+      context,
+      product.producto,
+      product.unidadMedida,
+    );
+
+    if (!resGarnish.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resGarnish);
+      return;
+    }
+
+    if (garnishs.isNotEmpty) orederTreeGarnish();
+
+    final vmDetails = Provider.of<DetailsRestaurantViewModel>(
+      context,
+      listen: false,
+    );
+
+    final ApiResModel resBodega = await vmDetails.loadBodega(context);
+
+    if (!resBodega.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resBodega);
+      return;
+    }
+
+    //si no se encontrarin bodegas mostrar mensaje
+    if (vmDetails.bodegas.isEmpty) {
+      isLoading = false;
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinBodegaP',
+      ));
+      return;
+    }
+
+    if (vmDetails.bodegas.length == 1) {
+      vmDetails.bodega = vmDetails.bodegas.first;
+
+      //cargar precios
+
+      final ApiResModel resPrices = await vmDetails.loadPrecioUnitario(context);
+
+      if (!resPrices.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(context, resPrices);
+        return;
+      }
+    }
+
+    vmDetails.valueNum = 1;
+    vmDetails.controllerNum.text = "1";
+
+    isLoading = false;
+  }
+
   Future<ApiResModel> loadGarnish(
     BuildContext context,
     int product,
@@ -62,14 +129,20 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
 
     final RestaurantService restaurantService = RestaurantService();
 
-    final ApiResModel apiResModel = await restaurantService.getGarnish(
+    final ApiResModel res = await restaurantService.getGarnish(
       product,
       um,
       user,
       token,
     );
 
-    return apiResModel;
+    if (!res.succes) return res;
+
+    treeGarnish.clear();
+    garnishs.clear();
+    garnishs.addAll(res.response);
+
+    return res;
   }
 
   //valor del input en numero
@@ -184,6 +257,11 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       product.unidadMedida,
       token,
     );
+
+    if (!res.succes) return res;
+
+    bodegas.clear();
+    bodegas.addAll(res.response);
 
     return res;
   }

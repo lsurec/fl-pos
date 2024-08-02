@@ -50,21 +50,14 @@ class ProductsClassViewModel extends ChangeNotifier {
       return;
     }
 
-    vDetailsRestaurant.treeGarnish.clear();
-    vDetailsRestaurant.garnishs.clear();
-    vDetailsRestaurant.garnishs.addAll(resGarnish.response);
-
     if (vDetailsRestaurant.garnishs.isNotEmpty) {
       vDetailsRestaurant.orederTreeGarnish();
-
-      // Navigator.pushNamed(context, AppRoutes.garnish);
-
-      // isLoading = false;
-      // return;
     }
 
-    final vmDetails =
-        Provider.of<DetailsRestaurantViewModel>(context, listen: false);
+    final vmDetails = Provider.of<DetailsRestaurantViewModel>(
+      context,
+      listen: false,
+    );
 
     final ApiResModel resBodega = await vmDetails.loadBodega(context);
 
@@ -73,9 +66,6 @@ class ProductsClassViewModel extends ChangeNotifier {
       NotificationService.showErrorView(context, resBodega);
       return;
     }
-
-    vmDetails.bodegas.clear();
-    vmDetails.bodegas.addAll(resBodega.response);
 
     //si no se encontrarin bodegas mostrar mensaje
     if (vmDetails.bodegas.isEmpty) {
