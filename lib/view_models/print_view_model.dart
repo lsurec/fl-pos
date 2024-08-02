@@ -1482,14 +1482,16 @@ class PrintViewModel extends ChangeNotifier {
 
       items.add(
         Item(
-          descripcion: detail.desProducto,
-          cantidad: detail.cantidad,
-          unitario: precioUni.toString(),
-          total: detail.monto.toString(),
-          sku: detail.productoId,
-          precioDia: detail.monto.toString(),
-          precioReposicion: detail.precioReposicion.toString().isNotEmpty && detail.precioReposicion != null ? detail.precioReposicion.toString() : "00.00"
-        ),
+            descripcion: detail.desProducto,
+            cantidad: detail.cantidad,
+            unitario: precioUni.toString(),
+            total: detail.monto.toString(),
+            sku: detail.productoId,
+            precioDia: detail.monto.toString(),
+            precioReposicion: detail.precioReposicion.toString().isNotEmpty &&
+                    detail.precioReposicion != null
+                ? detail.precioReposicion.toString()
+                : "00.00"),
       );
     }
 
@@ -1684,9 +1686,9 @@ class PrintViewModel extends ChangeNotifier {
         docPrintModel.documento.autorizacion,
         styles: centerBold,
       );
-    }
 
-    bytes += generator.emptyLines(1);
+      bytes += generator.emptyLines(1);
+    }
 
     bytes += generator.text(
       AppLocalizations.of(context)!.translate(
@@ -1738,17 +1740,6 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    //Cantidad de dias
-    bytes += generator.text(
-      "${AppLocalizations.of(context)!.translate(
-        BlockTranslate.calcular,
-        'cantDias',
-      )}: ${docPrintModel.cantidadDias}",
-      styles: center,
-    );
-
-    bytes += generator.emptyLines(1);
-
     //fecha evento
     bytes += generator.text(
       AppLocalizations.of(context)!.translate(
@@ -1789,6 +1780,17 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.text(
       Utilities.formatoFechaString(docPrintModel.fechas?.fechaFinRef),
+      styles: center,
+    );
+
+    bytes += generator.emptyLines(1);
+
+    //Cantidad de dias
+    bytes += generator.text(
+      "${AppLocalizations.of(context)!.translate(
+        BlockTranslate.calcular,
+        'cantDias',
+      )}: ${docPrintModel.cantidadDias}",
       styles: center,
     );
 
@@ -2149,35 +2151,42 @@ class PrintViewModel extends ChangeNotifier {
       bytes += generator.emptyLines(1);
     }
 
-    //no utulizar el espacion en la impresion si mensajes está vacio
-    if (docPrintModel.mensajes.isNotEmpty) {
-      for (var mensaje in docPrintModel.mensajes) {
-        bytes += generator.text(
-          mensaje,
-          styles: centerBold,
-        );
-      }
-      bytes += generator.emptyLines(1);
-    }
+    bytes += generator.text(
+      "CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACION",
+      styles: center,
+    );
 
-    if (isFel) {
-      bytes += generator.text(
-        "Ceritificador:",
-        styles: center,
-      );
-
-      bytes += generator.text(
-        docPrintModel.certificador.nombre,
-        styles: center,
-      );
-
-      bytes += generator.text(
-        docPrintModel.certificador.nit,
-        styles: center,
-      );
-
-      bytes += generator.emptyLines(1);
-    }
+    bytes += generator.emptyLines(1);
+    //1:
+    bytes += generator.text(
+      "1. Esta Cotización no es reservación.",
+      styles: center,
+    );
+    //2:
+    bytes += generator.text(
+      "2. Al confrmar su cotizacion se requiere de contrato firmado.",
+      styles: center,
+    );
+    //3:
+    bytes += generator.text(
+      "3. Los precios cotizados estan sujetos a cambios.",
+      styles: center,
+    );
+    //4:
+    bytes += generator.text(
+      "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+      styles: center,
+    );
+    //5:
+    bytes += generator.text(
+      "5. Se solicitara cheque de garantía.",
+      styles: center,
+    );
+    //6:
+    bytes += generator.text(
+      "6. Se cobrará por daños al mobiliario y equipo según contrato.",
+      styles: center,
+    );
 
     bytes += generator.text(
       "--------------------",
