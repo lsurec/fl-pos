@@ -9,7 +9,6 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/input_widget.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +112,7 @@ class DetailsRestaurantView extends StatelessWidget {
                       child: SizedBox(
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () => {},
+                          onPressed: () => vm.addProduct(context),
                           style: AppTheme.button(
                             context,
                             Styles.buttonStyle,

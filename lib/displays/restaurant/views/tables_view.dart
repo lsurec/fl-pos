@@ -79,6 +79,7 @@ class TablesView extends StatelessWidget {
                           onTap: () => vm.navigateClassifications(
                             context,
                             table,
+                            index,
                           ),
                           child: _CardTable(
                             mesa: table,

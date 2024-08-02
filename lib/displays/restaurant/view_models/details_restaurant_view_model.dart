@@ -47,6 +47,170 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
   final List<BodegaProductoModel> bodegas = [];
   BodegaProductoModel? bodega;
 
+  Future<void> addProduct(BuildContext context) async {
+    //si no hay bodega seleccionada
+    if (bodega == null) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaBodega',
+        ),
+      );
+      return;
+    }
+
+    // si no hay precios seleccionados
+    if (prices.isNotEmpty && selectedPrice == null) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccionaTipoPrecio',
+        ),
+      );
+      return;
+    }
+
+    //si el monto es 0 o menor a 0 mostar menaje
+    if ((int.tryParse(controllerNum.text) ?? 0) == 0) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cantidadMayorCero',
+        ),
+      );
+      return;
+    }
+
+    if ((double.tryParse(controllerPrice.text) ?? 0) < price) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'precioNoMenorAutorizado',
+        ),
+      );
+      return;
+    }
+
+    //TODO:Preguntar si se validan existencias con validar1
+    // final vmProductRestaurant = Provider.of<ProductsClassViewModel>(
+    //   context,
+    //   listen: false,
+    // );
+
+    // ProductRestaurantModel product = vmProductRestaurant.product!;
+
+    // //Validacion de producto
+
+    // TipoTransaccionModel tipoTra =
+    //     getTipoTransaccion(product.tipoProducto, context);
+
+    // if (tipoTra.altCantidad) {
+    //   //iniciar proceso
+
+    //   ProductService productService = ProductService();
+
+    //   //consumo del api
+    //   ApiResModel res = await productService.getValidateProducts(
+    //     user,
+    //     serieDocumento,
+    //     tipoDocumento,
+    //     estacion,
+    //     empresa,
+    //     selectedBodega!.bodega,
+    //     tipoTra.tipoTransaccion,
+    //     product.unidadMedida,
+    //     product.producto,
+    //     (int.tryParse(controllerNum.text) ?? 0),
+    //     8, //TODO:Parametrizar
+    //     selectedPrice!.moneda,
+    //     selectedPrice!.id,
+    //     token,
+    //   );
+
+    //   //valid succes response
+    //   if (!res.succes) {
+    //     //si algo salio mal mostrar alerta
+
+    //     await NotificationService.showErrorView(
+    //       context,
+    //       res,
+    //     );
+    //     return;
+    //   }
+
+    //   //agreagar bodegas encontradas
+
+    //   final List<String> mensajes = res.response;
+
+    //   if (mensajes.isNotEmpty) {
+    //     NotificationService.showSnackbar(mensajes[0]);
+    //     return;
+    //   }
+    // }
+
+    //TODO:Buscar orden correspondinete
+    final vmTable = Provider.of<TablesViewModel>(context, listen: false);
+    int table = vmTable.indexTable!;
+
+    if ( vmTable.tables[table].orders.i  detailsVM.traInternas.isNotEmpty) {
+      int monedaDoc = 0;
+      int monedaTra = 0;
+
+      TraInternaModel fistTra = detailsVM.traInternas.first;
+
+      monedaDoc = fistTra.precio!.moneda;
+
+      monedaTra = selectedPrice!.moneda;
+
+      if (monedaDoc != monedaTra) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'monedaDistinta',
+          ),
+        );
+        return;
+      }
+    }
+
+    //Validar guarniciones
+    for (var i = 0; i < treeGarnish.length; i++) {
+      final GarnishTree node = treeGarnish[i];
+
+      if (node.children.isNotEmpty) {
+        if (node.selected == null) {
+          NotificationService.showSnackbar(
+              "Selecciona una opcion (${node.item?.descripcion})");
+          return;
+        }
+      }
+    }
+  }
+
+  //devuelve el tipo de transaccion que se va a usar
+  TipoTransaccionModel getTipoTransaccion(
+    int tipo,
+    BuildContext context,
+  ) {
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+
+    for (var i = 0; i < docVM.tiposTransaccion.length; i++) {
+      final TipoTransaccionModel tipoTra = docVM.tiposTransaccion[i];
+
+      if (tipo == tipoTra.tipo) {
+        return tipoTra;
+      }
+    }
+
+    //si no encunetra el tipo
+    return TipoTransaccionModel(
+      tipoTransaccion: 0,
+      descripcion: "descripcion",
+      tipo: tipo,
+      altCantidad: true,
+    );
+  }
+
   Future<void> loadData(BuildContext context) async {
     isLoading = true;
 

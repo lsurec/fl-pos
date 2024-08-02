@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/garnish_model.dart';
 
 class TraInternaModel {
   TraInternaModel({
@@ -13,6 +14,8 @@ class TraInternaModel {
     required this.cargo,
     required this.operaciones,
     required this.bodega,
+    this.garnishs,
+    this.observacion,
   });
 
   bool isChecked;
@@ -24,6 +27,8 @@ class TraInternaModel {
   List<TraInternaModel> operaciones;
   double descuento;
   double cargo;
+  GarnishModel? garnishs;
+  String? observacion;
 
   factory TraInternaModel.fromJson(String str) =>
       TraInternaModel.fromMap(json.decode(str));
