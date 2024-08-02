@@ -21,7 +21,6 @@ class ConfirmDocView extends StatelessWidget {
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
     final vmDoc = Provider.of<DocumentoViewModel>(context);
     final paymentsVM = Provider.of<PaymentViewModel>(context);
-    final menuVM = Provider.of<MenuViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vmDoc.backTabs(context),
@@ -45,7 +44,6 @@ class ConfirmDocView extends StatelessWidget {
                   IconButton(
                     onPressed: () => vm.sheredDoc(
                       context,
-                      menuVM.documento ?? 0,
                     ),
                     icon: const Icon(
                       Icons.share,

@@ -1394,7 +1394,7 @@ class ShareDocViewModel extends ChangeNotifier {
           ];
         },
         //encabezado
-        header: (pw.Context context) => buildHeader(
+        header: (pw.Context context) => buildAlfayOmegaHeader(
           contextP,
           logoData,
           empresa,
@@ -1591,6 +1591,187 @@ class ShareDocViewModel extends ChangeNotifier {
                       ),
                     ],
                   ),
+          ),
+        ],
+      ),
+    );
+  }
+
+//encabezado del pdf
+  pw.Widget buildAlfayOmegaHeader(
+    BuildContext context,
+    Uint8List logo,
+    Empresa empresa,
+    Documento documento,
+    bool isFel,
+  ) {
+    return pw.Container(
+      margin: const pw.EdgeInsets.only(bottom: 10),
+      child: pw.Row(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          // Item 1 (35%)
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.35,
+            height: 115,
+            child: pw.Image(
+              pw.MemoryImage(logo),
+              width: 125,
+            ),
+          ),
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.05,
+          ),
+          // Item 2 (30%)
+          pw.Container(
+            alignment: pw.Alignment.centerRight,
+            padding: const pw.EdgeInsets.only(top: 10),
+            width: PdfPageFormat.letter.width * 0.30,
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              mainAxisAlignment: pw.MainAxisAlignment.center,
+              children: [
+                pw.Text(
+                  empresa.razonSocial,
+                  style: pw.TextStyle(
+                    fontSize: 12,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  empresa.nombre,
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  empresa.direccion,
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  "NIT: ${empresa.nit}",
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  "${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.tiket,
+                    'tel',
+                  )} ${empresa.tel}",
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.05,
+          ),
+          // Item 3 (35%)
+          pw.Container(
+            padding: const pw.EdgeInsets.only(top: 10),
+            width: PdfPageFormat.letter.width * 0.35,
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(5),
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border.all(
+                      width: 0.5,
+                      color: PdfColors.black,
+                    ),
+                  ),
+                  child: pw.Text(
+                    "COTIZACION",
+                    style: pw.TextStyle(
+                      fontSize: 13,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
+                pw.SizedBox(height: 5),
+                pw.Row(
+                  mainAxisAlignment: pw.MainAxisAlignment.center,
+                  children: [
+                    pw.Column(
+                      mainAxisAlignment: pw.MainAxisAlignment.center,
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      children: [
+                        pw.Container(
+                          padding: const pw.EdgeInsets.all(3),
+                          decoration: pw.BoxDecoration(
+                            border: pw.Border.all(
+                              width: 0.5,
+                              color: PdfColors.black,
+                            ),
+                          ),
+                          child: pw.Text(
+                            "NO. COTIZACION",
+                            style: pw.TextStyle(
+                              fontSize: 7,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                        pw.SizedBox(height: 2),
+                        pw.Text(
+                          documento.noInterno,
+                          style: pw.TextStyle(
+                            fontSize: 6,
+                            fontWeight: pw.FontWeight.normal,
+                          ),
+                          textAlign: pw.TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    pw.SizedBox(width: 10),
+                    pw.Column(
+                      mainAxisAlignment: pw.MainAxisAlignment.center,
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      children: [
+                        pw.Container(
+                          padding: const pw.EdgeInsets.all(3),
+                          decoration: pw.BoxDecoration(
+                            border: pw.Border.all(
+                              width: 0.5,
+                              color: PdfColors.black,
+                            ),
+                          ),
+                          child: pw.Text(
+                            "FECHA DE COTIZACION",
+                            style: pw.TextStyle(
+                              fontSize: 7,
+                              fontWeight: pw.FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                        pw.SizedBox(height: 2),
+                        pw.Text(
+                          documento.fechaCert.isNotEmpty
+                              ? documento.fechaCert
+                              : "01/01/2024",
+                          style: pw.TextStyle(
+                            fontSize: 6,
+                            fontWeight: pw.FontWeight.normal,
+                          ),
+                          textAlign: pw.TextAlign.center,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
