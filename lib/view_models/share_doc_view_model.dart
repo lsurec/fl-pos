@@ -811,14 +811,8 @@ class ShareDocViewModel extends ChangeNotifier {
       fontWeight: pw.FontWeight.bold,
     );
 
-    pw.TextStyle font8BoldWhite = pw.TextStyle(
-      color: PdfColors.white,
-      fontSize: 8,
-      fontWeight: pw.FontWeight.bold,
-    );
-
+    //color tabla
     PdfColor backCell = PdfColor.fromHex("b2b2b2");
-
 
     //Docuemnto pdf nuevo
     final pdf = pw.Document();
@@ -1322,8 +1316,8 @@ class ShareDocViewModel extends ChangeNotifier {
                               padding: const pw.EdgeInsets.all(5),
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
-                                'P Reposicion',
-                                style: font8BoldWhite,
+                                'P REPOSICION',
+                                style: font8Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -1343,7 +1337,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   BlockTranslate.tiket,
                                   'codigo',
                                 ),
-                                style: font8BoldWhite,
+                                style: font8Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -1363,7 +1357,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   BlockTranslate.tiket,
                                   'cantidadT',
                                 ),
-                                style: font8BoldWhite,
+                                style: font8Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -1384,7 +1378,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   'uniMedida',
                                 ),
                                 textAlign: pw.TextAlign.center,
-                                style: font8BoldWhite,
+                                style: font8Bold,
                               ),
                             ),
                             pw.Container(
@@ -1403,7 +1397,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   BlockTranslate.general,
                                   'descripcion',
                                 ),
-                                style: font8BoldWhite,
+                                style: font8Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -1424,7 +1418,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   'unitario',
                                 ),
                                 textAlign: pw.TextAlign.center,
-                                style: font8BoldWhite,
+                                style: font8Bold,
                               ),
                             ),
                             pw.Container(
@@ -1436,7 +1430,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   'totalT',
                                 ),
                                 textAlign: pw.TextAlign.center,
-                                style: font8BoldWhite,
+                                style: font8Bold,
                               ),
                             ),
                           ],
@@ -1547,7 +1541,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               width: PdfPageFormat.letter.width * 0.80,
                               child: pw.Text(
                                 "TOTAL:",
-                                style: font8BoldWhite,
+                                style: font8Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -1587,30 +1581,40 @@ class ShareDocViewModel extends ChangeNotifier {
                     ],
                   ),
                 ),
-                //TODO: Mostrar frase
-                // pw.SizedBox(height: 10),
-                // pw.Center(
-                //   child: pw.Text(
-                //     "**SUJETO A PAGOS TRIMESTRALES**",
-                //     style: pw.TextStyle(
-                //       fontSize: 9,
-                //       fontWeight: pw.FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
                 pw.SizedBox(height: 5),
-                pw.Center(
-                  child: pw.Text(
-                    AppLocalizations.of(contextP)!.translate(
-                      BlockTranslate.tiket,
-                      'sinCambios',
+
+                pw.Text(
+                  "CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACION",
+                  style: font8Bold,
+                ),
+                pw.Column(
+                  children: [
+                    pw.Text(
+                      "1. Esta Cotización no es reservación.",
+                      style: font8Bold,
                     ),
-                    style: pw.TextStyle(
-                      fontSize: 9,
-                      fontWeight: pw.FontWeight.bold,
+                    pw.Text(
+                      "2. Al confirmar su cotización se requiere de contrato firmado.",
+                      style: font8Bold,
                     ),
-                  ),
-                )
+                    pw.Text(
+                      "3. Los precios cotizados están sujetos a cambios.",
+                      style: font8Bold,
+                    ),
+                    pw.Text(
+                      "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+                      style: font8Bold,
+                    ),
+                    pw.Text(
+                      "5. Se solicitara cheque de garantía.",
+                      style: font8Bold,
+                    ),
+                    pw.Text(
+                      "6. Se cobrará por daños al mobiliario y equipo según contrato.",
+                      style: font8Bold,
+                    ),
+                  ],
+                ),
               ],
             ),
           ];
