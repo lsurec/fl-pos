@@ -14,8 +14,6 @@ class TraInternaModel {
     required this.cargo,
     required this.operaciones,
     required this.bodega,
-    this.garnishs,
-    this.observacion,
   });
 
   bool isChecked;
@@ -27,8 +25,6 @@ class TraInternaModel {
   List<TraInternaModel> operaciones;
   double descuento;
   double cargo;
-  GarnishModel? garnishs;
-  String? observacion;
 
   factory TraInternaModel.fromJson(String str) =>
       TraInternaModel.fromMap(json.decode(str));

@@ -19,5 +19,24 @@ class OrderModel {
   String nombre;
   LocationModel ubicacion;
   TableModel mesa;
-  List<TraInternaModel> transacciones;
+  List<TraRestaurantModel> transacciones;
+}
+
+//estructura transaccion de una orden
+class TraRestaurantModel {
+  TraRestaurantModel({
+    required this.id,
+    required this.cantidad,
+    required this.precio,
+    required this.producto,
+    required this.observacion,
+    required this.guarniciones,
+  });
+
+  int id;
+  int cantidad;
+  UnitarioModel precio;
+  ProductRestaurantModel producto;
+  String observacion;
+  List<GarnishModel> guarniciones;
 }

@@ -148,31 +148,32 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     // }
 
     //TODO:Buscar orden correspondinete
-    final vmTable = Provider.of<TablesViewModel>(
+    final vmOrders = Provider.of<OrderViewModel>(
       context,
       listen: false,
     );
 
-    // if ( vmTable.tables[table].orders.i  detailsVM.traInternas.isNotEmpty) {
-    //   int monedaDoc = 0;
-    //   int monedaTra = 0;
+//     if (vmOrders.orders.isNotEmpty) {
+//       int monedaDoc = 0;
+//       int monedaTra = 0;
 
-    //   TraInternaModel fistTra = detailsVM.traInternas.first;
+// //TODO:Buscar
+//       TraInternaModel fistTra = detailsVM.traInternas.first;
 
-    //   monedaDoc = fistTra.precio!.moneda;
+//       monedaDoc = fistTra.precio!.moneda;
 
-    //   monedaTra = selectedPrice!.moneda;
+//       monedaTra = selectedPrice!.moneda;
 
-    //   if (monedaDoc != monedaTra) {
-    //     NotificationService.showSnackbar(
-    //       AppLocalizations.of(context)!.translate(
-    //         BlockTranslate.notificacion,
-    //         'monedaDistinta',
-    //       ),
-    //     );
-    //     return;
-    //   }
-    // }
+//       if (monedaDoc != monedaTra) {
+//         NotificationService.showSnackbar(
+//           AppLocalizations.of(context)!.translate(
+//             BlockTranslate.notificacion,
+//             'monedaDistinta',
+//           ),
+//         );
+//         return;
+//       }
+//     }
 
     //Validar guarniciones
     for (var i = 0; i < treeGarnish.length; i++) {
@@ -185,6 +186,44 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
           return;
         }
       }
+    }
+
+    final pinVM = Provider.of<PinViewModel>(context, listen: false);
+    final locationVM = Provider.of<LocationsViewModel>(context, listen: false);
+    final tableVM = Provider.of<TablesViewModel>(context, listen: false);
+    final productRestaurantVM =
+        Provider.of<ProductsClassViewModel>(context, listen: false);
+
+    final List<GarnishModel> selectGarnishs = [];
+
+    for (var element in treeGarnish) {
+      selectGarnishs.add(element.selected!);
+    }
+
+    if (vmOrders.orders.isEmpty) {
+      vmOrders.orders.add(
+        OrderModel(
+          mesero: pinVM.waitress!,
+          id: vmOrders.orders.length + 1,
+          nombre: "Cuenta 1", //TODO: Rebombrar
+          ubicacion: locationVM.location!,
+          mesa: tableVM.table!,
+          transacciones: [
+            TraRestaurantModel(
+              id: 1,
+              cantidad: int.tryParse(controllerNum.text) ?? 0,
+              precio: selectedPrice!,
+              producto: productRestaurantVM.product!,
+              observacion: formValues["observacion"],
+              guarniciones: selectGarnishs,
+            ),
+          ],
+        ),
+      );
+
+      Navigator.pop(context);
+
+      return;
     }
   }
 
