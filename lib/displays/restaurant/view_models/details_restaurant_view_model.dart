@@ -7,7 +7,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -149,29 +148,31 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     // }
 
     //TODO:Buscar orden correspondinete
-    final vmTable = Provider.of<TablesViewModel>(context, listen: false);
-    int table = vmTable.indexTable!;
+    final vmTable = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
 
-    if ( vmTable.tables[table].orders.i  detailsVM.traInternas.isNotEmpty) {
-      int monedaDoc = 0;
-      int monedaTra = 0;
+    // if ( vmTable.tables[table].orders.i  detailsVM.traInternas.isNotEmpty) {
+    //   int monedaDoc = 0;
+    //   int monedaTra = 0;
 
-      TraInternaModel fistTra = detailsVM.traInternas.first;
+    //   TraInternaModel fistTra = detailsVM.traInternas.first;
 
-      monedaDoc = fistTra.precio!.moneda;
+    //   monedaDoc = fistTra.precio!.moneda;
 
-      monedaTra = selectedPrice!.moneda;
+    //   monedaTra = selectedPrice!.moneda;
 
-      if (monedaDoc != monedaTra) {
-        NotificationService.showSnackbar(
-          AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'monedaDistinta',
-          ),
-        );
-        return;
-      }
-    }
+    //   if (monedaDoc != monedaTra) {
+    //     NotificationService.showSnackbar(
+    //       AppLocalizations.of(context)!.translate(
+    //         BlockTranslate.notificacion,
+    //         'monedaDistinta',
+    //       ),
+    //     );
+    //     return;
+    //   }
+    // }
 
     //Validar guarniciones
     for (var i = 0; i < treeGarnish.length; i++) {

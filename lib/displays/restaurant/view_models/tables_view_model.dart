@@ -23,7 +23,6 @@ class TablesViewModel extends ChangeNotifier {
 
   final List<TableModel> tables = [];
   TableModel? table;
-  int? indexTable;
 
   backTablesView(BuildContext context) {
     Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
@@ -34,7 +33,6 @@ class TablesViewModel extends ChangeNotifier {
     TableModel tableParam,
     int index,
   ) {
-    indexTable = index;
     table = tableParam;
     Navigator.pushNamed(context, AppRoutes.pin);
   }
@@ -119,7 +117,6 @@ class TablesViewModel extends ChangeNotifier {
 
     final List<TableModel> tablesRes = resTables.response;
 
-    indexTable = 0;
     table = null;
     tables.clear();
     tables.addAll(tablesRes);
