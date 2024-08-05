@@ -14,11 +14,56 @@ class ProductClassView extends StatelessWidget {
     final vmLoc = Provider.of<LocationsViewModel>(context);
     final vmTables = Provider.of<TablesViewModel>(context);
     final vmClass = Provider.of<ClassificationViewModel>(context);
+    final vmOrder = Provider.of<OrderViewModel>(context);
     final vm = Provider.of<ProductsClassViewModel>(context);
 
     return Stack(
       children: [
         Scaffold(
+          bottomNavigationBar: vmOrder.orders.isEmpty
+              ? null
+              : Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: Color.fromARGB(255, 228, 225, 225),
+                      ),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 20,
+                  ),
+                  height: 80,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () => {},
+                            style: AppTheme.button(
+                              context,
+                              Styles.buttonStyle,
+                            ),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  "Detalles", //TODO:Translate
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.whiteBoldStyle,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
           appBar: AppBar(
             title: Text(
               vmClass.classification!.desClasificacion,

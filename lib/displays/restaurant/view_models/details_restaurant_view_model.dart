@@ -201,7 +201,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     }
 
     if (vmOrders.orders.isEmpty) {
-      vmOrders.orders.add(
+      vmOrders.addFirst(
+        context,
         OrderModel(
           mesero: pinVM.waitress!,
           id: vmOrders.orders.length + 1,
@@ -220,7 +221,6 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
           ],
         ),
       );
-
       Navigator.pop(context);
 
       return;
