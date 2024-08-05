@@ -221,6 +221,7 @@ class DetailsDestinationDocViewModel extends ChangeNotifier {
       nit: encabezado.documentoNit ?? "",
       fecha: formattedDate,
       tel: encabezado.documentoTelefono ?? "",
+      email: "", //Cambiar aqui,
     );
 
     String vendedor = encabezado.atendio ?? "";

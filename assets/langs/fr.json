@@ -325,7 +325,8 @@
         "documento": "Document",
         "detalle": "Détail",
         "pago": "Paiement",
-        "observaciones": "Observations"
+        "observaciones": "Observations",
+        "noRegistrado": "Non enregistré."
     },
     "cuenta": {
         "nueva": "Nouveau compte",

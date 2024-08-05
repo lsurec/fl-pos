@@ -157,12 +157,14 @@ class PrintViewModel extends ChangeNotifier {
         "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}";
 
     Cliente cliente = Cliente(
-      nombre: encabezado.documentoNombre ?? "",
-      direccion: encabezado.documentoDireccion ?? "",
-      nit: encabezado.documentoNit ?? "",
-      fecha: formattedDate,
-      tel: encabezado.documentoTelefono ?? "",
-    );
+        nombre: encabezado.documentoNombre ?? "",
+        direccion: encabezado.documentoDireccion ?? "",
+        nit: encabezado.documentoNit ?? "",
+        fecha: formattedDate,
+        tel: encabezado.documentoTelefono ?? "",
+        email: "" //Cambiar aqui,
+
+        );
 
     List<Item> items = [];
 
@@ -715,6 +717,7 @@ class PrintViewModel extends ChangeNotifier {
       nit: clinetDoc.facturaNit,
       fecha: formattedDate,
       tel: clinetDoc.telefono,
+      email: clinetDoc.eMail ?? "", //Cambiar aqui,
     );
 
     //totales
@@ -1447,6 +1450,7 @@ class PrintViewModel extends ChangeNotifier {
       nit: clinetDoc?.facturaNit ?? "",
       fecha: formattedDate,
       tel: clinetDoc?.telefono ?? "",
+      email: clinetDoc?.eMail ?? "", //Cambiar aqui,
     );
 
     //totales

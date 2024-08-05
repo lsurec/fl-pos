@@ -122,6 +122,7 @@ class Cliente {
   String nit;
   String fecha;
   String tel;
+  String email;
 
   Cliente({
     required this.nombre,
@@ -129,6 +130,7 @@ class Cliente {
     required this.nit,
     required this.fecha,
     required this.tel,
+    required this.email,
   });
 
   factory Cliente.fromJson(String str) => Cliente.fromMap(json.decode(str));
@@ -141,6 +143,7 @@ class Cliente {
         nit: json["nit"],
         fecha: json["fecha"],
         tel: json["tel"],
+        email: json["email"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -149,6 +152,7 @@ class Cliente {
         "nit": nit,
         "fecha": fecha,
         "tel": tel,
+        "email": email,
       };
 }
 

@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -126,6 +127,7 @@ class ShareDocViewModel extends ChangeNotifier {
       nit: clientDoc?.facturaNit ?? "",
       fecha: formattedDate,
       tel: clientDoc?.telefono ?? "",
+      email: clientDoc?.eMail ?? "",
     );
 
     // Crear una instancia de NumberFormat para el formato de moneda
@@ -781,6 +783,7 @@ class ShareDocViewModel extends ChangeNotifier {
       nit: clientDoc?.facturaNit ?? "",
       fecha: formattedDate,
       tel: clientDoc?.telefono ?? "",
+      email: clientDoc?.eMail ?? "",
     );
 
     // Crear una instancia de NumberFormat para el formato de moneda
@@ -814,9 +817,8 @@ class ShareDocViewModel extends ChangeNotifier {
       fontWeight: pw.FontWeight.bold,
     );
 
-    PdfColor backCell = PdfColor.fromHex("134895");
+    PdfColor backCell = PdfColor.fromHex("b2b2b2");
 
-    bool isFel = documento.autorizacion.isNotEmpty ? true : false;
 
     //Docuemnto pdf nuevo
     final pdf = pw.Document();
@@ -836,101 +838,151 @@ class ShareDocViewModel extends ChangeNotifier {
             pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-                pw.SizedBox(height: 20),
-                //No interno y vendedor
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                  children: [
-                    pw.Text(
-                      '${AppLocalizations.of(contextP)!.translate(
-                        BlockTranslate.tiket,
-                        'interno',
-                      )} ${documento.noInterno}',
-                      style: font8,
-                    ),
-                    pw.Text(
-                      '${AppLocalizations.of(contextP)!.translate(
-                        BlockTranslate.tiket,
-                        'vendedor',
-                      )} ${vendedorDoc ?? ""} '
-                      '',
-                      style: font8,
-                    ),
-                  ],
-                ),
                 pw.SizedBox(height: 10),
-                //Datos del cliente
+//informacion del cliente y fechas
                 pw.Container(
-                  decoration: pw.BoxDecoration(
-                    border: pw.Border.all(
-                      color: PdfColors.black, // Color del borde
-                      width: 1, // Ancho del borde
-                    ),
-                  ),
                   width: double.infinity,
                   child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Container(
-                        padding: const pw.EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
+                        padding: const pw.EdgeInsets.only(
+                          left: 0,
+                          right: 10,
+                          bottom: 5,
                         ),
-                        width: PdfPageFormat.letter.width * 0.70,
-                        decoration: const pw.BoxDecoration(
-                          border: pw.Border(
-                            right: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
+                        width: PdfPageFormat.letter.width * 0.45,
                         child: pw.Column(
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
+                            //titulos e informacion
                             pw.Row(
                               children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.tiket,
-                                    'nombre',
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.10,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!
+                                        .translate(
+                                          BlockTranslate.tiket,
+                                          'cliente',
+                                        )
+                                        .toUpperCase(),
+                                    style: font8Bold,
                                   ),
-                                  style: font8Bold,
                                 ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.nombre,
-                                  style: font8,
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.35,
+                                  child: pw.Text(
+                                    cliente.nombre,
+                                    style: font8,
+                                  ),
                                 ),
                               ],
                             ),
-                            pw.SizedBox(height: 2),
+
+                            //telefono
                             pw.Row(
                               children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.tiket,
-                                    'direccion',
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.10,
+                                  child: pw.Text(
+                                    '${AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.cuenta,
+                                      'telefono',
+                                    )}: '
+                                        .toUpperCase(),
+                                    style: font8Bold,
                                   ),
-                                  style: font8Bold,
                                 ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.direccion,
-                                  style: font8,
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.35,
+                                  child: pw.Text(
+                                    cliente.tel.isNotEmpty
+                                        ? cliente.tel
+                                        : AppLocalizations.of(contextP)!
+                                            .translate(
+                                              BlockTranslate.general,
+                                              'noRegistrado',
+                                            )
+                                            .toUpperCase(),
+                                    style: font8,
+                                  ),
                                 ),
                               ],
                             ),
-                            pw.SizedBox(height: 2),
+
+                            //nit
                             pw.Row(
                               children: [
-                                pw.Text(
-                                  "NIT:",
-                                  style: font8Bold,
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.10,
+                                  child: pw.Text(
+                                    'NIT: ',
+                                    style: font8Bold,
+                                  ),
                                 ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.nit,
-                                  style: font8,
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.35,
+                                  child: pw.Text(
+                                    cliente.nit,
+                                    style: font8,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            //email
+                            pw.Row(
+                              children: [
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.10,
+                                  child: pw.Text(
+                                    '${AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.cuenta,
+                                      'correo',
+                                    )}: '
+                                        .toUpperCase(),
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.35,
+                                  child: pw.Text(
+                                    cliente.email.isNotEmpty
+                                        ? cliente.email
+                                        : AppLocalizations.of(contextP)!
+                                            .translate(
+                                              BlockTranslate.general,
+                                              'noRegistrado',
+                                            )
+                                            .toUpperCase(),
+                                    style: font8,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            //direccion
+                            pw.Row(
+                              children: [
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.10,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!
+                                        .translate(
+                                          BlockTranslate.tiket,
+                                          'direccion',
+                                        )
+                                        .toUpperCase(),
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.35,
+                                  child: pw.Text(
+                                    cliente.direccion,
+                                    style: font8,
+                                  ),
                                 ),
                               ],
                             ),
@@ -938,43 +990,137 @@ class ShareDocViewModel extends ChangeNotifier {
                         ),
                       ),
                       pw.Container(
-                        padding: const pw.EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
+                        width: PdfPageFormat.letter.width * 0.03,
+                      ),
+                      pw.Container(
+                        padding: const pw.EdgeInsets.only(
+                          left: 0,
+                          right: 10,
+                          bottom: 5,
                         ),
+                        width: PdfPageFormat.letter.width * 0.45,
                         child: pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
+                            //vendedor
                             pw.Row(
                               children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.fecha,
-                                    'fecha',
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.tiket,
+                                      'vendedor',
+                                    ),
+                                    style: font8Bold,
                                   ),
-                                  style: font8Bold,
                                 ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.fecha,
-                                  style: font8,
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.30,
+                                  child: pw.Text(
+                                    vendedorDoc ??
+                                        AppLocalizations.of(contextP)!
+                                            .translate(
+                                          BlockTranslate.general,
+                                          'noDisponible',
+                                        ),
+                                    style: font8,
+                                  ),
                                 ),
                               ],
                             ),
-                            pw.SizedBox(height: 2),
+                            //correo vendedor
                             pw.Row(
                               children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.tiket,
-                                    'tel',
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    '${AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.cuenta,
+                                      'correo',
+                                    )}: ',
+                                    style: font8Bold,
                                   ),
-                                  style: font8Bold,
                                 ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  cliente.tel,
-                                  style: font8,
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.30,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.general,
+                                      'noRegistrado',
+                                    ),
+                                    style: font8,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //evento
+                            pw.Row(
+                              children: [
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.fecha,
+                                      'eventoF',
+                                    ),
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.30,
+                                  child: pw.Text(
+                                    '${Utilities.formatoFechaString(encabezado.fechaIni)} - ${Utilities.formatoFechaString(encabezado.refFechaFin)}',
+                                    style: font8,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //entrega
+                            pw.Row(
+                              children: [
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.fecha,
+                                      'entrega',
+                                    ),
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.30,
+                                  child: pw.Text(
+                                    Utilities.formatoFechaString(
+                                      encabezado.refFechaIni,
+                                    ),
+                                    style: font8,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //recoger
+                            pw.Row(
+                              children: [
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.fecha,
+                                      'recoger',
+                                    ),
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                pw.Container(
+                                  width: PdfPageFormat.letter.width * 0.30,
+                                  child: pw.Text(
+                                    Utilities.formatoFechaString(
+                                      encabezado.refFechaFin,
+                                    ),
+                                    style: font8,
+                                  ),
                                 ),
                               ],
                             ),
@@ -984,9 +1130,7 @@ class ShareDocViewModel extends ChangeNotifier {
                     ],
                   ),
                 ),
-                pw.SizedBox(height: 20),
-
-//Observaciones TODO: aqui me quedé
+//Observaciones
                 pw.Container(
                   width: double.infinity,
                   child: pw.Column(
@@ -1051,9 +1195,6 @@ class ShareDocViewModel extends ChangeNotifier {
                             ),
                           ),
                         ],
-                      ),
-                      pw.Container(
-                        height: 5,
                       ),
                       //Segunda fila de observaciones
                       pw.Row(
@@ -1121,7 +1262,25 @@ class ShareDocViewModel extends ChangeNotifier {
                   ),
                 ),
 
-                pw.SizedBox(height: 20),
+                pw.Row(
+                  children: [
+                    pw.Container(
+                      width: PdfPageFormat.letter.width * 0.10,
+                      child: pw.Text(
+                        '${AppLocalizations.of(contextP)!.translate(
+                          BlockTranslate.calcular,
+                          'cantDias',
+                        )}: ',
+                        style: font8Bold,
+                      ),
+                    ),
+                    pw.Text(
+                      "${encabezado.cantidadDiasFechaIniFin}",
+                      style: font8,
+                    ),
+                  ],
+                ),
+                pw.SizedBox(height: 10),
 
                 //Detalles del documento
                 pw.Container(
@@ -1462,7 +1621,7 @@ class ShareDocViewModel extends ChangeNotifier {
           logoData,
           empresa,
           documento,
-          isFel,
+          cliente.fecha,
         ),
         //pie de pagina
         footer: (pw.Context context) => buildFooter(
@@ -1470,7 +1629,7 @@ class ShareDocViewModel extends ChangeNotifier {
           logoDemo,
           logoFel,
           encabezado,
-          isFel,
+          false,
         ),
       ),
     );
@@ -1666,7 +1825,7 @@ class ShareDocViewModel extends ChangeNotifier {
     Uint8List logo,
     Empresa empresa,
     Documento documento,
-    bool isFel,
+    String fechaClientDoc,
   ) {
     return pw.Container(
       margin: const pw.EdgeInsets.only(bottom: 10),
@@ -1820,9 +1979,7 @@ class ShareDocViewModel extends ChangeNotifier {
                         ),
                         pw.SizedBox(height: 2),
                         pw.Text(
-                          documento.fechaCert.isNotEmpty
-                              ? documento.fechaCert
-                              : "01/01/2024",
+                          (fechaClientDoc),
                           style: pw.TextStyle(
                             fontSize: 6,
                             fontWeight: pw.FontWeight.normal,
