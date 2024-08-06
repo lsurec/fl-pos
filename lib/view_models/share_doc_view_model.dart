@@ -1162,129 +1162,137 @@ class ShareDocViewModel extends ChangeNotifier {
                   width: double.infinity,
                   child: pw.Column(
                     children: [
-                      pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.start,
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          pw.Container(
-                            padding: const pw.EdgeInsets.only(
-                              left: 0,
-                              right: 10,
-                              bottom: 5,
-                            ),
-                            width: PdfPageFormat.letter.width * 0.45,
-                            child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.tiket,
-                                    'contacto',
+                      if (encabezado.refObservacion2.isNotEmpty &&
+                              encabezado.refObservacion2 != null ||
+                          encabezado.refDescripcion.isNotEmpty &&
+                              encabezado.refDescripcion != null)
+                        pw.Row(
+                          mainAxisAlignment: pw.MainAxisAlignment.start,
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.Container(
+                              padding: const pw.EdgeInsets.only(
+                                left: 0,
+                                right: 10,
+                                bottom: 5,
+                              ),
+                              width: PdfPageFormat.letter.width * 0.45,
+                              child: pw.Column(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.tiket,
+                                      'contacto',
+                                    ),
+                                    style: font8Bold,
                                   ),
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  encabezado.refObservacion2,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            width: PdfPageFormat.letter.width * 0.03,
-                          ),
-                          pw.Container(
-                            padding: const pw.EdgeInsets.only(
-                              left: 0,
-                              right: 10,
-                              bottom: 5,
-                            ),
-                            width: PdfPageFormat.letter.width * 0.45,
-                            child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.general,
-                                    'descripcion',
+                                  pw.SizedBox(width: 5),
+                                  pw.Text(
+                                    encabezado.refObservacion2,
+                                    style: font8,
                                   ),
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  encabezado.refDescripcion,
-                                  style: font8,
-                                  textAlign: pw.TextAlign.justify,
-                                  softWrap: true,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                            pw.Container(
+                              width: PdfPageFormat.letter.width * 0.03,
+                            ),
+                            pw.Container(
+                              padding: const pw.EdgeInsets.only(
+                                left: 0,
+                                right: 10,
+                                bottom: 5,
+                              ),
+                              width: PdfPageFormat.letter.width * 0.45,
+                              child: pw.Column(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.general,
+                                      'descripcion',
+                                    ),
+                                    style: font8Bold,
+                                  ),
+                                  pw.SizedBox(width: 5),
+                                  pw.Text(
+                                    encabezado.refDescripcion,
+                                    style: font8,
+                                    textAlign: pw.TextAlign.justify,
+                                    softWrap: true,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       //Segunda fila de observaciones
-                      pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.start,
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          pw.Container(
-                            padding: const pw.EdgeInsets.only(
-                              left: 0,
-                              right: 10,
-                              bottom: 5,
-                            ),
-                            width: PdfPageFormat.letter.width * 0.45,
-                            child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.cotizacion,
-                                    'direEntrega',
+                      if (encabezado.refObservacion3.isNotEmpty &&
+                              encabezado.refObservacion3 != null ||
+                          encabezado.refObservacion.isNotEmpty &&
+                              encabezado.refObservacion != null)
+                        pw.Row(
+                          mainAxisAlignment: pw.MainAxisAlignment.start,
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.Container(
+                              padding: const pw.EdgeInsets.only(
+                                left: 0,
+                                right: 10,
+                                bottom: 5,
+                              ),
+                              width: PdfPageFormat.letter.width * 0.45,
+                              child: pw.Column(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.cotizacion,
+                                      'direEntrega',
+                                    ),
+                                    style: font8Bold,
                                   ),
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  encabezado.refObservacion3,
-                                  style: font8,
-                                ),
-                              ],
-                            ),
-                          ),
-                          pw.Container(
-                            width: PdfPageFormat.letter.width * 0.03,
-                          ),
-                          pw.Container(
-                            padding: const pw.EdgeInsets.only(
-                              left: 0,
-                              right: 10,
-                              bottom: 5,
-                            ),
-                            width: PdfPageFormat.letter.width * 0.45,
-                            child: pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.start,
-                              children: [
-                                pw.Text(
-                                  AppLocalizations.of(contextP)!.translate(
-                                    BlockTranslate.general,
-                                    'observacion',
+                                  pw.SizedBox(width: 5),
+                                  pw.Text(
+                                    encabezado.refObservacion3,
+                                    style: font8,
                                   ),
-                                  style: font8Bold,
-                                ),
-                                pw.SizedBox(width: 5),
-                                pw.Text(
-                                  encabezado.refObservacion,
-                                  style: font8,
-                                  textAlign: pw.TextAlign.justify,
-                                  softWrap: true,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                            pw.Container(
+                              width: PdfPageFormat.letter.width * 0.03,
+                            ),
+                            pw.Container(
+                              padding: const pw.EdgeInsets.only(
+                                left: 0,
+                                right: 10,
+                                bottom: 5,
+                              ),
+                              width: PdfPageFormat.letter.width * 0.45,
+                              child: pw.Column(
+                                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                                children: [
+                                  pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.general,
+                                      'observacion',
+                                    ),
+                                    style: font8Bold,
+                                  ),
+                                  pw.SizedBox(width: 5),
+                                  pw.Text(
+                                    encabezado.refObservacion,
+                                    style: font8,
+                                    textAlign: pw.TextAlign.justify,
+                                    softWrap: true,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),
@@ -1364,7 +1372,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                 ),
                               ),
                               padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
+                              width: PdfPageFormat.letter.width * 0.08,
                               child: pw.Text(
                                 AppLocalizations.of(contextP)!.translate(
                                   BlockTranslate.tiket,
@@ -1404,7 +1412,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                 ),
                               ),
                               padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
+                              width: PdfPageFormat.letter.width * 0.06,
                               child: pw.Text(
                                 AppLocalizations.of(contextP)!.translate(
                                   BlockTranslate.tiket,
@@ -1424,12 +1432,30 @@ class ShareDocViewModel extends ChangeNotifier {
                                 ),
                               ),
                               padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.30,
+                              width: PdfPageFormat.letter.width * 0.25,
                               child: pw.Text(
                                 AppLocalizations.of(contextP)!.translate(
                                   BlockTranslate.general,
                                   'descripcion',
                                 ),
+                                style: font8Bold,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                            ),
+                            //columna imagenes
+                            pw.Container(
+                              decoration: const pw.BoxDecoration(
+                                border: pw.Border(
+                                  right: pw.BorderSide(
+                                    color: PdfColors.black, // Color del borde
+                                    width: 1.0, // Ancho del borde
+                                  ),
+                                ),
+                              ),
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.11,
+                              child: pw.Text(
+                                "Imagen",
                                 style: font8Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
@@ -1489,7 +1515,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               ),
                               pw.Container(
                                 padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
+                                width: PdfPageFormat.letter.width * 0.08,
                                 child: pw.Text(
                                   detalle.productoId,
                                   textAlign: pw.TextAlign.center,
@@ -1507,7 +1533,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               ),
                               pw.Container(
                                 padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
+                                width: PdfPageFormat.letter.width * 0.06,
                                 child: pw.Text(
                                   detalle.simbolo,
                                   textAlign: pw.TextAlign.center,
@@ -1516,9 +1542,18 @@ class ShareDocViewModel extends ChangeNotifier {
                               ),
                               pw.Container(
                                 padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.30,
+                                width: PdfPageFormat.letter.width * 0.25,
                                 child: pw.Text(
                                   detalle.desProducto,
+                                  textAlign: pw.TextAlign.left,
+                                  style: font8,
+                                ),
+                              ),
+                              pw.Container(
+                                padding: const pw.EdgeInsets.all(5),
+                                width: PdfPageFormat.letter.width * 0.11,
+                                child: pw.Text(
+                                  detalle.imgProducto,
                                   textAlign: pw.TextAlign.left,
                                   style: font8,
                                 ),
