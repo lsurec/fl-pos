@@ -795,19 +795,21 @@ class ShareDocViewModel extends ChangeNotifier {
 
     //Logos para el pdf
     final ByteData logoEmpresa = await rootBundle.load('assets/empresa.png');
-    final ByteData imgFel = await rootBundle.load('assets/fel.png');
-    final ByteData imgDemo = await rootBundle.load('assets/logo_demosoft.png');
 
     //formato de imagenes valido
     Uint8List logoData = (logoEmpresa).buffer.asUint8List();
-    Uint8List logoFel = (imgFel).buffer.asUint8List();
-    Uint8List logoDemo = (imgDemo).buffer.asUint8List();
 
     //Estilos para el pdf
     pw.TextStyle font8 = const pw.TextStyle(fontSize: 8);
 
     pw.TextStyle font8Bold = pw.TextStyle(
       fontSize: 8,
+      fontWeight: pw.FontWeight.bold,
+    );
+
+    //font
+    pw.TextStyle font12Bold = pw.TextStyle(
+      fontSize: 12,
       fontWeight: pw.FontWeight.bold,
     );
 
@@ -1064,7 +1066,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                 pw.Container(
                                   width: PdfPageFormat.letter.width * 0.30,
                                   child: pw.Text(
-                                    '${Utilities.formatoFechaString(encabezado.fechaIni)} - ${Utilities.formatoFechaString(encabezado.refFechaFin)}',
+                                    '${Utilities.formatoFechaString(encabezado.fechaIni)} - ${Utilities.formatoFechaString(encabezado.fechaFin)}',
                                     style: font8,
                                   ),
                                 ),
@@ -1585,33 +1587,114 @@ class ShareDocViewModel extends ChangeNotifier {
 
                 pw.Text(
                   "CONTRATO DE TERMINOS Y CONDICIONES DE LA COTIZACION",
-                  style: font8Bold,
+                  style: font12Bold,
                 ),
+                pw.SizedBox(height: 5),
                 pw.Column(
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    pw.Text(
-                      "1. Esta Cotización no es reservación.",
-                      style: font8Bold,
+                    pw.Container(
+                      width: PdfPageFormat.letter.width,
+                      padding: const pw.EdgeInsets.all(3),
+                      margin: const pw.EdgeInsets.only(
+                        bottom: 3,
+                      ),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(
+                          width: 0.5,
+                          color: PdfColors.black,
+                        ),
+                      ),
+                      child: pw.Text(
+                        "1. Esta Cotización no es reservación.",
+                        style: font8,
+                      ),
                     ),
-                    pw.Text(
-                      "2. Al confirmar su cotización se requiere de contrato firmado.",
-                      style: font8Bold,
+                    pw.Container(
+                      width: PdfPageFormat.letter.width,
+                      padding: const pw.EdgeInsets.all(3),
+                      margin: const pw.EdgeInsets.only(
+                        bottom: 3,
+                      ),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(
+                          width: 0.5,
+                          color: PdfColors.black,
+                        ),
+                      ),
+                      child: pw.Text(
+                        "2. Al confirmar su cotización se requiere de contrato firmado.",
+                        style: font8,
+                      ),
                     ),
-                    pw.Text(
-                      "3. Los precios cotizados están sujetos a cambios.",
-                      style: font8Bold,
+                    pw.Container(
+                      width: PdfPageFormat.letter.width,
+                      padding: const pw.EdgeInsets.all(3),
+                      margin: const pw.EdgeInsets.only(
+                        bottom: 3,
+                      ),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(
+                          width: 0.5,
+                          color: PdfColors.black,
+                        ),
+                      ),
+                      child: pw.Text(
+                        "3. Los precios cotizados están sujetos a cambios.",
+                        style: font8,
+                      ),
                     ),
-                    pw.Text(
-                      "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
-                      style: font8Bold,
+                    pw.Container(
+                      width: PdfPageFormat.letter.width,
+                      padding: const pw.EdgeInsets.all(3),
+                      margin: const pw.EdgeInsets.only(
+                        bottom: 3,
+                      ),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(
+                          width: 0.5,
+                          color: PdfColors.black,
+                        ),
+                      ),
+                      child: pw.Text(
+                        "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+                        style: font8,
+                      ),
                     ),
-                    pw.Text(
-                      "5. Se solicitara cheque de garantía.",
-                      style: font8Bold,
+                    pw.Container(
+                      width: PdfPageFormat.letter.width,
+                      padding: const pw.EdgeInsets.all(3),
+                      margin: const pw.EdgeInsets.only(
+                        bottom: 3,
+                      ),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(
+                          width: 0.5,
+                          color: PdfColors.black,
+                        ),
+                      ),
+                      child: pw.Text(
+                        "5. Se solicitara cheque de garantía.",
+                        style: font8,
+                      ),
                     ),
-                    pw.Text(
-                      "6. Se cobrará por daños al mobiliario y equipo según contrato.",
-                      style: font8Bold,
+                    pw.Container(
+                      width: PdfPageFormat.letter.width,
+                      padding: const pw.EdgeInsets.all(3),
+                      margin: const pw.EdgeInsets.only(
+                        bottom: 3,
+                      ),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border.all(
+                          width: 0.5,
+                          color: PdfColors.black,
+                        ),
+                      ),
+                      child: pw.Text(
+                        "6. Se cobrará por daños al mobiliario y equipo según contrato.",
+                        style: font8,
+                      ),
                     ),
                   ],
                 ),
@@ -1628,12 +1711,8 @@ class ShareDocViewModel extends ChangeNotifier {
           cliente.fecha,
         ),
         //pie de pagina
-        footer: (pw.Context context) => buildFooter(
-          contextP,
-          logoDemo,
-          logoFel,
-          encabezado,
-          false,
+        footer: (pw.Context context) => buildAlfayOmegaFooter(
+          context,
         ),
       ),
     );
@@ -1983,7 +2062,7 @@ class ShareDocViewModel extends ChangeNotifier {
                         ),
                         pw.SizedBox(height: 2),
                         pw.Text(
-                          (fechaClientDoc),
+                          fechaClientDoc,
                           style: pw.TextStyle(
                             fontSize: 6,
                             fontWeight: pw.FontWeight.normal,
@@ -2096,6 +2175,44 @@ class ShareDocViewModel extends ChangeNotifier {
             child: pw.Image(
               pw.MemoryImage(logoDemo),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  //alfa y OMEGA
+
+  pw.Widget buildAlfayOmegaFooter(
+    pw.Context context,
+  ) {
+    DateTime fecha = DateTime.now();
+    int currentPage = context.pageNumber; // Número de página actual
+    int totalPages = context.pagesCount; // Total de páginas
+
+    return pw.Container(
+      margin: const pw.EdgeInsets.only(top: 10),
+      child: pw.Row(
+        children: [
+          // Item 2 (25%)
+          pw.Text(
+            Utilities.formatoFechaString(fecha.toString()),
+            style: const pw.TextStyle(
+              fontSize: 8,
+              color: PdfColors.grey,
+            ),
+            textAlign: pw.TextAlign.center,
+          ),
+          pw.SizedBox(
+            width: 5,
+          ),
+          pw.Text(
+            "Página $currentPage de $totalPages",
+            style: const pw.TextStyle(
+              fontSize: 8,
+              color: PdfColors.black,
+            ),
+            textAlign: pw.TextAlign.center,
           ),
         ],
       ),
