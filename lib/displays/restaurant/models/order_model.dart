@@ -38,5 +38,15 @@ class TraRestaurantModel {
   UnitarioModel precio;
   ProductRestaurantModel producto;
   String observacion;
-  List<GarnishModel> guarniciones;
+  List<GarnishTra> guarniciones;
+}
+
+class GarnishTra {
+  GarnishModel garnish;
+  GarnishModel selected;
+
+  GarnishTra({
+    required this.garnish,
+    required this.selected,
+  });
 }

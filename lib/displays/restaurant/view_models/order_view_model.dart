@@ -15,4 +15,15 @@ class OrderViewModel extends ChangeNotifier {
     vmTable.updateOrdersTable(context);
     notifyListeners();
   }
+
+  getGuarniciones(int indexOrder, int indexTra) {
+    return orders[indexOrder]
+        .transacciones[indexTra]
+        .guarniciones
+        .map(
+          (guarnicion) =>
+              "${guarnicion.garnish.descripcion} ${guarnicion.selected.descripcion}",
+        )
+        .join(", ");
+  }
 }

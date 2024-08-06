@@ -194,10 +194,11 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     final productRestaurantVM =
         Provider.of<ProductsClassViewModel>(context, listen: false);
 
-    final List<GarnishModel> selectGarnishs = [];
+    final List<GarnishTra> selectGarnishs = [];
 
     for (var element in treeGarnish) {
-      selectGarnishs.add(element.selected!);
+      selectGarnishs
+          .add(GarnishTra(garnish: element.item!, selected: element.selected!));
     }
 
     if (vmOrders.orders.isEmpty) {
