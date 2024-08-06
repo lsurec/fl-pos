@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/widgets/button_details_widget.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/classification_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/locations_view_model.dart';
@@ -24,50 +25,8 @@ class ClassificationView extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
-            bottomNavigationBar: vmOrder.orders.isEmpty
-                ? null
-                : Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: Color.fromARGB(255, 228, 225, 225),
-                        ),
-                      ),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 20,
-                    ),
-                    height: 80,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () => {},
-                              style: AppTheme.button(
-                                context,
-                                Styles.buttonStyle,
-                              ),
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: Center(
-                                  child: Text(
-                                    "Detalles", //TODO:Translate
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.whiteBoldStyle,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+            bottomNavigationBar:
+                vmOrder.orders.isEmpty ? null : const ButtonDetailsWidget(),
             appBar: AppBar(
               title: Text(
                 vmTables.table!.descripcion,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -20,50 +21,8 @@ class ProductClassView extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          bottomNavigationBar: vmOrder.orders.isEmpty
-              ? null
-              : Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color.fromARGB(255, 228, 225, 225),
-                      ),
-                    ),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  height: 80,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () => {},
-                            style: AppTheme.button(
-                              context,
-                              Styles.buttonStyle,
-                            ),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Center(
-                                child: Text(
-                                  "Detalles", //TODO:Translate
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.whiteBoldStyle,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+          bottomNavigationBar:
+              vmOrder.orders.isEmpty ? null : const ButtonDetailsWidget(),
           appBar: AppBar(
             title: Text(
               vmClass.classification!.desClasificacion,
