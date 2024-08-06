@@ -30,11 +30,8 @@ class OrderView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: ListView.separated(
+        child: ListView.builder(
           itemCount: vm.orders[0].transacciones.length,
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider();
-          },
           itemBuilder: (BuildContext context, int index) {
             final TraRestaurantModel transaction =
                 vm.orders[0].transacciones[index];
@@ -42,27 +39,74 @@ class OrderView extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    transaction.producto.desProducto,
-                    style: AppTheme.style(context, Styles.normal),
-                  ),
-                  subtitle: Text(vm.getGuarniciones(0, index)),
-                  trailing: Text(
-                    currencyFormat.format(
-                      transaction.cantidad * transaction.precio.precioU,
+                Row(
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: _ProductImage(
+                        url:
+                            'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg',
+                      ),
                     ),
-                    style: AppTheme.style(context, Styles.bold),
-                  ),
-                  leading: const SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: _ProductImage(
-                      url:
-                          'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg',
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            transaction.producto.desProducto,
+                            style: AppTheme.style(context, Styles.normal),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            vm.getGuarniciones(0, index),
+                            style: AppTheme.style(context, Styles.versionStyle),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
+                    const SizedBox(width: 20),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          currencyFormat.format(
+                            transaction.cantidad * transaction.precio.precioU,
+                          ),
+                          style: AppTheme.style(context, Styles.bold),
+                        ),
+                        const SizedBox(height: 5),
+                        Container(
+                          height: 45,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppTheme.primary),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                onPressed: () => {},
+                                icon: transaction.cantidad == 1
+                                    ? const Icon(Icons.delete_outline)
+                                    : const Icon(Icons.remove),
+                              ),
+                              Text(
+                                "${transaction.cantidad}",
+                                style: AppTheme.style(context, Styles.bold),
+                              ),
+                              IconButton(
+                                onPressed: () => {},
+                                icon: const Icon(Icons.add),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 5),
                 if (transaction.observacion.isNotEmpty)
@@ -73,32 +117,7 @@ class OrderView extends StatelessWidget {
                       const SizedBox(height: 10),
                     ],
                   ),
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppTheme.primary),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                        onPressed: () => {},
-                        icon: transaction.cantidad == 1
-                            ? const Icon(Icons.delete_outline)
-                            : const Icon(Icons.remove),
-                      ),
-                      Text(
-                        "${transaction.cantidad}",
-                        style: AppTheme.style(context, Styles.bold),
-                      ),
-                      IconButton(
-                        onPressed: () => {},
-                        icon: const Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
+                const Divider(),
               ],
             );
           },
