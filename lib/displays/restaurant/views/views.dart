@@ -5,3 +5,4 @@ export 'package:flutter_post_printer_example/displays/restaurant/views/locations
 export 'package:flutter_post_printer_example/displays/restaurant/views/classification_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/details_restaurant_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/home_restaurant_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/order_view.dart';
