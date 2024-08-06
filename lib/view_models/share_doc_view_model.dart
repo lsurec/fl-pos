@@ -1,10 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -16,7 +18,7 @@ import 'package:pdf/pdf.dart';
 import 'package:provider/provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:share/share.dart';
-
+import 'package:http/http.dart' as http;
 import '../displays/prc_documento_3/services/services.dart';
 
 class ShareDocViewModel extends ChangeNotifier {
@@ -675,6 +677,20 @@ class ShareDocViewModel extends ChangeNotifier {
     );
   }
 
+  // Función para descargar una imagen desde una URL
+  Future<Uint8List?> downloadImage(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      // Maneja el error si ocurre
+      print('Error downloading image: $e');
+    }
+    return null; // Devuelve null si hay algún error
+  }
+
   //para crear pdf de cotizacoin
 
   Future<void> sheredDocCotiAlfayOmega(
@@ -753,7 +769,6 @@ class ShareDocViewModel extends ChangeNotifier {
       tel: encabezado.empresaTelefono!,
     );
 
-    //TODO: Remplazar datos de certificacion
     Documento documento = Documento(
       consecutivoInterno: consecutivoDoc,
       titulo: encabezado.tipoDocumento!,
@@ -793,11 +808,27 @@ class ShareDocViewModel extends ChangeNotifier {
       decimalDigits: 2, // Número de decimales a mostrar
     );
 
-    //Logos para el pdf
-    final ByteData logoEmpresa = await rootBundle.load('assets/empresa.png');
+    //Nuevo para el logo
+    final vmLocal = Provider.of<LocalSettingsViewModel>(
+      contextP,
+      listen: false,
+    );
 
-    //formato de imagenes valido
-    Uint8List logoData = (logoEmpresa).buffer.asUint8List();
+    //obtener la empresa de seleccionada
+    final EmpresaModel imgEmpresa = vmLocal.selectedEmpresa!;
+
+    // Logotipo por defecto
+    final ByteData defaultLogoData = await rootBundle.load(
+      'assets/empresa.png',
+    );
+    Uint8List defaultLogo = defaultLogoData.buffer.asUint8List();
+
+    // URL de la imagen que quieres mostrar
+    // Descarga la imagen de la URL
+    Uint8List? downloadedImage = await downloadImage(imgEmpresa.empresaImg);
+
+    // Usa la imagen descargada si existe, de lo contrario usa el logotipo por defecto
+    Uint8List imageToShow = downloadedImage ?? defaultLogo;
 
     //Estilos para el pdf
     pw.TextStyle font8 = const pw.TextStyle(fontSize: 8);
@@ -1705,7 +1736,7 @@ class ShareDocViewModel extends ChangeNotifier {
         //encabezado
         header: (pw.Context context) => buildAlfayOmegaHeader(
           contextP,
-          logoData,
+          imageToShow,
           empresa,
           documento,
           cliente.fecha,
