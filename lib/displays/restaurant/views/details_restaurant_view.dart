@@ -398,7 +398,7 @@ class DetailsRestaurantView extends StatelessWidget {
                       const SizedBox(height: 10),
                       InputWidget(
                         maxLines: 2,
-                        formProperty: vm.formValues["observacion"],
+                        formProperty: "observacion",
                         formValues: vm.formValues,
                         hintText:
                             "Escriba las instrucciones necesarias.", //TODO:Translate

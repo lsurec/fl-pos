@@ -36,9 +36,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
   final List<UnitarioModel> unitarios = [];
   UnitarioModel? selectedPrice;
 
-  final Map<String, dynamic> formValues = {
-    'observacion': '',
-  };
+  final Map<String, dynamic> formValues = {'observacion': ''};
 
   final List<GarnishModel> garnishs = [];
   final List<GarnishTree> treeGarnish = [];
@@ -222,6 +220,9 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
           ],
         ),
       );
+
+      formValues["observacion"] = "";
+
       Navigator.pop(context);
 
       return;
