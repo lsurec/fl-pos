@@ -21,6 +21,7 @@ class OrderView extends StatelessWidget {
           .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
       decimalDigits: 2, // Número de decimales a mostrar
     );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -37,6 +38,7 @@ class OrderView extends StatelessWidget {
                 vm.orders[0].transacciones[index];
 
             return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -52,6 +54,7 @@ class OrderView extends StatelessWidget {
                     const SizedBox(width: 20),
                     Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -63,11 +66,21 @@ class OrderView extends StatelessWidget {
                             vm.getGuarniciones(0, index),
                             style: AppTheme.style(context, Styles.versionStyle),
                           ),
+                          if (transaction.observacion.isNotEmpty)
+                            Column(
+                              children: [
+                                const SizedBox(height: 5),
+                                TextsWidget(
+                                    title: "Notas: ",
+                                    text: transaction.observacion),
+                              ],
+                            ),
                         ],
                       ),
                     ),
                     const SizedBox(width: 20),
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
@@ -109,14 +122,6 @@ class OrderView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 5),
-                if (transaction.observacion.isNotEmpty)
-                  Column(
-                    children: [
-                      TextsWidget(
-                          title: "Notas: ", text: transaction.observacion),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
                 const Divider(),
               ],
             );

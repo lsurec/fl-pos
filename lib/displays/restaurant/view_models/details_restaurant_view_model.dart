@@ -199,6 +199,15 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
           .add(GarnishTra(garnish: element.item!, selected: element.selected!));
     }
 
+    TraRestaurantModel transaction = TraRestaurantModel(
+      id: 1,
+      cantidad: int.tryParse(controllerNum.text) ?? 0,
+      precio: selectedPrice!,
+      producto: productRestaurantVM.product!,
+      observacion: formValues["observacion"],
+      guarniciones: selectGarnishs,
+    );
+
     if (vmOrders.orders.isEmpty) {
       vmOrders.addFirst(
         context,
@@ -208,18 +217,19 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
           nombre: "Cuenta 1", //TODO: Rebombrar
           ubicacion: locationVM.location!,
           mesa: tableVM.table!,
-          transacciones: [
-            TraRestaurantModel(
-              id: 1,
-              cantidad: int.tryParse(controllerNum.text) ?? 0,
-              precio: selectedPrice!,
-              producto: productRestaurantVM.product!,
-              observacion: formValues["observacion"],
-              guarniciones: selectGarnishs,
-            ),
-          ],
+          transacciones: [transaction],
         ),
       );
+
+      formValues["observacion"] = "";
+
+      Navigator.pop(context);
+
+      return;
+    }
+
+    if (vmOrders.orders.length == 1) {
+      vmOrders.addTransactionFirst(transaction);
 
       formValues["observacion"] = "";
 
