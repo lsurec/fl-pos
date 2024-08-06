@@ -74,15 +74,6 @@ class ProductClassView extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.description_outlined,
-                ),
-                padding: const EdgeInsets.only(right: 20),
-                onPressed: () {},
-              ),
-            ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(20),

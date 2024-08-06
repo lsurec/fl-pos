@@ -77,13 +77,6 @@ class ClassificationView extends StatelessWidget {
                 ),
               ),
               actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.description_outlined,
-                  ),
-                  padding: const EdgeInsets.only(right: 20),
-                  onPressed: () {},
-                ),
                 PopupMenuButton<int>(
                   itemBuilder: (context) => [
                     const PopupMenuItem(
