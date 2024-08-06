@@ -870,6 +870,11 @@ class ShareDocViewModel extends ChangeNotifier {
       fontWeight: pw.FontWeight.bold,
     );
 
+    pw.TextStyle font7Bold = pw.TextStyle(
+      fontSize: 7,
+      fontWeight: pw.FontWeight.bold,
+    );
+
     //font
     pw.TextStyle font12Bold = pw.TextStyle(
       fontSize: 12,
@@ -885,6 +890,7 @@ class ShareDocViewModel extends ChangeNotifier {
     // Agrega páginas con encabezado y pie de página
     pdf.addPage(
       pw.MultiPage(
+        maxPages: 30,
         pageFormat: PdfPageFormat.letter.copyWith(
           marginBottom: 20,
           marginLeft: 20,
@@ -1351,13 +1357,6 @@ class ShareDocViewModel extends ChangeNotifier {
 
                 //Detalles del documento
                 pw.Container(
-                  decoration: pw.BoxDecoration(
-                    border: pw.Border.all(
-                      color: PdfColors.black, // Color del borde
-                      width: 1, // Ancho del borde
-                    ),
-                    // borderRadius: pw.BorderRadius.circular(8.0),
-                  ),
                   width: double.infinity,
                   child: pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -1367,12 +1366,11 @@ class ShareDocViewModel extends ChangeNotifier {
                       pw.Container(
                         decoration: pw.BoxDecoration(
                           color: backCell,
-                          border: const pw.Border(
-                            bottom: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
+                          border: pw.Border.all(
+                            color: PdfColors.black, // Color del borde
+                            width: 1, // Ancho del borde
                           ),
+                          // borderRadius: pw.BorderRadius.circular(8.0),
                         ),
                         width: PdfPageFormat.letter.width,
                         child: pw.Row(
@@ -1390,7 +1388,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
                                 'P REPOSICION',
-                                style: font8Bold,
+                                style: font7Bold,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -1618,29 +1616,16 @@ class ShareDocViewModel extends ChangeNotifier {
                       pw.SizedBox(height: 5),
                       //Total del documento
                       pw.Container(
-                        decoration: const pw.BoxDecoration(
-                          border: pw.Border(
-                            top: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
                         width: PdfPageFormat.letter.width,
                         child: pw.Row(
                           children: [
                             pw.Container(
+                              width: PdfPageFormat.letter.width * 0.30,
+                            ),
+                            pw.Container(
+                              color: backCell,
                               padding: const pw.EdgeInsets.all(5),
-                              decoration: pw.BoxDecoration(
-                                color: backCell,
-                                border: const pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              width: PdfPageFormat.letter.width * 0.80,
+                              width: PdfPageFormat.letter.width * 0.50,
                               child: pw.Text(
                                 "TOTAL:",
                                 style: font8Bold,
@@ -1649,6 +1634,7 @@ class ShareDocViewModel extends ChangeNotifier {
                             ),
                             pw.Expanded(
                               child: pw.Container(
+                                color: backCell,
                                 padding: const pw.EdgeInsets.all(5),
                                 child: pw.Text(
                                   currencyFormat.format(totalDoc),
@@ -1658,26 +1644,6 @@ class ShareDocViewModel extends ChangeNotifier {
                               ),
                             )
                           ],
-                        ),
-                      ),
-                      pw.Container(
-                        width: PdfPageFormat.letter.width,
-                        padding: const pw.EdgeInsets.all(5),
-                        decoration: const pw.BoxDecoration(
-                          border: pw.Border(
-                            top: pw.BorderSide(
-                              color: PdfColors.black, // Color del borde
-                              width: 1.0, // Ancho del borde
-                            ),
-                          ),
-                        ),
-                        child: pw.Text(
-                          "${AppLocalizations.of(contextP)!.translate(
-                            BlockTranslate.tiket,
-                            'letrasTotal',
-                          )} ${encabezado.montoLetras}."
-                              .toUpperCase(),
-                          style: font8Bold,
                         ),
                       ),
                     ],
