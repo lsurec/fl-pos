@@ -691,6 +691,33 @@ class ShareDocViewModel extends ChangeNotifier {
     return null; // Devuelve null si hay algún error
   }
 
+  Future<Uint8List> obtenerImagen(String url) async {
+    try {
+      if (url.isNotEmpty) {
+        final response = await http.get(Uri.parse(url));
+        if (response.statusCode == 200) {
+          return response.bodyBytes;
+        }
+      }
+    } catch (e) {
+      print('Error downloading image: $e');
+    }
+
+    // Si hay un error o la URL está vacía, cargar la imagen por defecto
+    final ByteData logoEmpresa = await rootBundle.load('assets/placeimg.jpg');
+    return logoEmpresa.buffer.asUint8List();
+  }
+
+  // Función para precargar las imágenes
+  Future<List<Uint8List>> precargarImagenes(
+      List<DetalleModel> detallesTemplate) async {
+    return await Future.wait(
+      detallesTemplate.map((detalle) async {
+        return await obtenerImagen(detalle.imgProducto);
+      }).toList(),
+    );
+  }
+
   //para crear pdf de cotizacoin
 
   Future<void> sheredDocCotiAlfayOmega(
@@ -756,6 +783,11 @@ class ShareDocViewModel extends ChangeNotifier {
 
       return;
     }
+
+    // Pre-cargar imágenes utilizando la función externa
+    List<Uint8List> imagenesProductos = await precargarImagenes(
+      detallesTemplate,
+    );
 
     //Encabezado
     final EncabezadoModel encabezado = encabezadoTemplate.first;
@@ -1502,6 +1534,7 @@ class ShareDocViewModel extends ChangeNotifier {
                         itemBuilder: (context, index) {
                           //Detalle
                           final DetalleModel detalle = detallesTemplate[index];
+                          final imagenProducto = imagenesProductos[index];
                           return pw.Row(
                             children: [
                               pw.Container(
@@ -1550,12 +1583,13 @@ class ShareDocViewModel extends ChangeNotifier {
                                 ),
                               ),
                               pw.Container(
+                                alignment: pw.Alignment.center,
                                 padding: const pw.EdgeInsets.all(5),
                                 width: PdfPageFormat.letter.width * 0.11,
-                                child: pw.Text(
-                                  detalle.imgProducto,
-                                  textAlign: pw.TextAlign.left,
-                                  style: font8,
+                                child: pw.Image(
+                                  pw.MemoryImage(imagenProducto),
+                                  width: 40,
+                                  alignment: pw.Alignment.center,
                                 ),
                               ),
                               pw.Container(
