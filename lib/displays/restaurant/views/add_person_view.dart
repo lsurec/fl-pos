@@ -16,6 +16,9 @@ class AddPersonView extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as TraRestaurantModel;
 
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(context);
+    final LocationsViewModel locatonVM =
+        Provider.of<LocationsViewModel>(context);
 
     return Scaffold(
         appBar: AppBar(),

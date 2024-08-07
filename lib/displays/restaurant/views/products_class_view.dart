@@ -15,14 +15,14 @@ class ProductClassView extends StatelessWidget {
     final vmLoc = Provider.of<LocationsViewModel>(context);
     final vmTables = Provider.of<TablesViewModel>(context);
     final vmClass = Provider.of<ClassificationViewModel>(context);
-    final vmOrder = Provider.of<OrderViewModel>(context);
     final vm = Provider.of<ProductsClassViewModel>(context);
 
     return Stack(
       children: [
         Scaffold(
-          bottomNavigationBar:
-              vmOrder.orders.isEmpty ? null : const ButtonDetailsWidget(),
+          bottomNavigationBar: (vmTables.table?.orders ?? 0) == 0
+              ? null
+              : const ButtonDetailsWidget(),
           appBar: AppBar(
             title: Text(
               vmClass.classification!.desClasificacion,

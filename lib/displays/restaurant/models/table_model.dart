@@ -31,7 +31,7 @@ class TableModel {
   int objHeight;
   int objWidth;
   String objElementoAsignado;
-  int? orders;
+  List<int>? orders;
 
   factory TableModel.fromJson(String str) =>
       TableModel.fromMap(json.decode(str));

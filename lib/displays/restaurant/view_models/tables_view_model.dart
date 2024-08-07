@@ -58,14 +58,20 @@ class TablesViewModel extends ChangeNotifier {
     final vmOrder = Provider.of<OrderViewModel>(context, listen: false);
 
     for (var i = 0; i < tables.length; i++) {
+      tables[i].orders = [];
+
       final TableModel mesa = tables[i];
 
-      tables[i].orders = vmOrder.orders
+      // Verificar si la mesa tiene pedidos que cumplen con la condición
+      bool hasMatchingOrders = vmOrder.orders
           .where((order) => order.mesa.elementoId
               .toLowerCase()
               .contains(mesa.elementoId.toLowerCase()))
-          .toList()
-          .length;
+          .isNotEmpty;
+
+      if (hasMatchingOrders) {
+        tables[i].orders!.add(i);
+      }
     }
 
     notifyListeners();

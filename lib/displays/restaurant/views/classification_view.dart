@@ -18,15 +18,15 @@ class ClassificationView extends StatelessWidget {
     final vmLoc = Provider.of<LocationsViewModel>(context);
     final vmTables = Provider.of<TablesViewModel>(context);
     final vm = Provider.of<ClassificationViewModel>(context);
-    final vmOrder = Provider.of<OrderViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vm.backPage(context),
       child: Stack(
         children: [
           Scaffold(
-            bottomNavigationBar:
-                vmOrder.orders.isEmpty ? null : const ButtonDetailsWidget(),
+            bottomNavigationBar: (vmTables.table?.orders ?? 0) == 0
+                ? null
+                : const ButtonDetailsWidget(),
             appBar: AppBar(
               title: Text(
                 vmTables.table!.descripcion,

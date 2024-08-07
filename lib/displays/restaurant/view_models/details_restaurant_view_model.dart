@@ -213,6 +213,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       guarniciones: selectGarnishs,
     );
 
+    //  (vmTables.table?.orders ?? 0) == 0
+
     if (vmOrders.orders.isEmpty) {
       vmOrders.addFirst(
         context,

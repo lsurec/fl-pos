@@ -158,7 +158,7 @@ class _CardTable extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     //TODO:Translate
-                    "Cuentas: ${mesa.orders}",
+                    "Cuentas: ${mesa.orders!.length}",
                     style: AppTheme.style(
                       context,
                       Styles.bold,
