@@ -164,6 +164,22 @@ class DetailsRestaurantView extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Positioned(
+                      top: 60,
+                      right: 20,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(
+                            Icons.person_add,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 Padding(
