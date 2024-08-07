@@ -40,7 +40,7 @@ class ButtonDetailsWidget extends StatelessWidget {
                       arguments: tablesVM.table!.orders!.first,
                     );
                   } else {
-                    //TODO:navegar
+                    Navigator.pushNamed(context, AppRoutes.accounts);
                   }
                 },
                 style: AppTheme.button(

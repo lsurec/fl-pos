@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class AddPersonView extends StatelessWidget {
-  const AddPersonView({Key? key}) : super(key: key);
+class AccountsView extends StatelessWidget {
+  const AccountsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final TraRestaurantModel transaction =
-        ModalRoute.of(context)!.settings.arguments as TraRestaurantModel;
-
     final TablesViewModel tablesVM = Provider.of<TablesViewModel>(context);
 
     return Scaffold(
@@ -43,7 +40,6 @@ class AddPersonView extends StatelessWidget {
                     if (index < tablesVM.table!.orders!.length) {
                       return _AccountCard(
                         index: tablesVM.table!.orders![index],
-                        transaction: transaction,
                       );
                     } else {
                       return _NewAccountCard();
@@ -95,11 +91,9 @@ class _AccountCard extends StatelessWidget {
   const _AccountCard({
     super.key,
     required this.index,
-    required this.transaction,
   });
 
   final int index;
-  final TraRestaurantModel transaction;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +109,13 @@ class _AccountCard extends StatelessWidget {
       elevation: 2,
       raidus: 10,
       child: InkWell(
-        onTap: () => orderVM.addTransactionToOrder(context, transaction, index),
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            AppRoutes.order,
+            arguments: index,
+          );
+        },
         child: Stack(
           children: [
             Padding(
