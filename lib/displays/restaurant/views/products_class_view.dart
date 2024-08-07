@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/widgets/widgets.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';

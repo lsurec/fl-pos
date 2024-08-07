@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -41,12 +42,12 @@ class AddPersonView extends StatelessWidget {
                   itemCount: tablesVM.table!.orders!.length + 1,
                   itemBuilder: (context, index) {
                     if (index < tablesVM.table!.orders!.length) {
-                      return _AccountCard(
+                      return AccountCardWidget(
                         index: tablesVM.table!.orders![index],
                         transaction: transaction,
                       );
                     } else {
-                      return _NewAccountCard();
+                      return NewAccountCardWidget();
                     }
                   },
                 ),
@@ -57,42 +58,8 @@ class AddPersonView extends StatelessWidget {
   }
 }
 
-class _NewAccountCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
-      elevation: 2,
-      raidus: 10,
-      child: InkWell(
-        onTap: () {},
-        child: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.add,
-                size: 40.0,
-                color: AppTheme.primary,
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                "Nueva cuenta",
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _AccountCard extends StatelessWidget {
-  const _AccountCard({
+class AccountCardWidget extends StatelessWidget {
+  const AccountCardWidget({
     super.key,
     required this.index,
     required this.transaction,
