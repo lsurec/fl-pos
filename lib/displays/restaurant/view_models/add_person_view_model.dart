@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:provider/provider.dart';
 
 class AddPersonViewModel extends ChangeNotifier {
@@ -43,5 +44,9 @@ class AddPersonViewModel extends ChangeNotifier {
     formValues["name"] = "";
 
     vmTable.updateOrdersTable(context);
+
+    NotificationService.showSnackbar("Cuenta agregada");
+
+    Navigator.of(context).pop();
   }
 }

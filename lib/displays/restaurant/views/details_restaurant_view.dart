@@ -198,7 +198,7 @@ class DetailsRestaurantView extends StatelessWidget {
                                       onPressed: () {
                                         // Aquí puedes manejar el valor ingresado
 
-                                        Navigator.of(context).pop();
+                                        vmAddPerson.addPerson(context);
                                       },
                                     ),
                                   ],
