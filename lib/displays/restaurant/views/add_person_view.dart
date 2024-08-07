@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -10,6 +11,9 @@ class AddPersonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TraRestaurantModel transaction =
+        ModalRoute.of(context)!.settings.arguments as TraRestaurantModel;
+
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
 
     return Scaffold(
@@ -39,6 +43,7 @@ class AddPersonView extends StatelessWidget {
                     if (index < orderVM.orders.length) {
                       return _AccountCard(
                         index: index,
+                        transaction: transaction,
                       );
                     } else {
                       return _NewAccountCard();
@@ -87,9 +92,11 @@ class _AccountCard extends StatelessWidget {
   const _AccountCard({
     super.key,
     required this.index,
+    required this.transaction,
   });
 
   final int index;
+  final TraRestaurantModel transaction;
 
   @override
   Widget build(BuildContext context) {
@@ -102,47 +109,50 @@ class _AccountCard extends StatelessWidget {
       ),
       elevation: 2,
       raidus: 10,
-      child: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Center(
-                  child: CircleAvatar(
-                    backgroundColor: AppTheme.primary,
-                    radius: 30.0,
-                    child: Icon(
-                      Icons.person,
-                      size: 30.0,
-                      color: Colors.white,
+      child: InkWell(
+        onTap: () => orderVM.addTransactionToOrder(context, transaction, index),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Center(
+                    child: CircleAvatar(
+                      backgroundColor: AppTheme.primary,
+                      radius: 30.0,
+                      child: Icon(
+                        Icons.person,
+                        size: 30.0,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10.0),
-                Text(
-                  orderVM.orders[index].nombre,
-                  style: const TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 8.0,
-            right: 8.0,
-            child: IconButton(
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.grey,
+                  const SizedBox(height: 10.0),
+                  Text(
+                    orderVM.orders[index].nombre,
+                    style: const TextStyle(
+                        fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              onPressed: () {
-                // Acción al presionar el botón de editar
-              },
             ),
-          ),
-        ],
+            Positioned(
+              top: 8.0,
+              right: 8.0,
+              child: IconButton(
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.grey,
+                ),
+                onPressed: () {
+                  // Acción al presionar el botón de editar
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

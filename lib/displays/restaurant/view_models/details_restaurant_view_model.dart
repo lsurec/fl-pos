@@ -243,7 +243,13 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       return;
     }
 
-    Navigator.pushNamed(context, AppRoutes.addPerson);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.addPerson,
+      arguments: transaction,
+    );
+
+    formValues["observacion"] = "";
   }
 
   //devuelve el tipo de transaccion que se va a usar

@@ -65,7 +65,7 @@ class PinView extends StatelessWidget {
                           Row(
                             children: [
                               Expanded(
-                                child: ElevatedButton(
+                                child: TextButton(
                                   onPressed: () => Navigator.pop(context),
                                   child: const SizedBox(
                                     width: double.infinity,

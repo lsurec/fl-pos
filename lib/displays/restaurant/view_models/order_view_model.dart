@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class OrderViewModel extends ChangeNotifier {
@@ -18,6 +19,17 @@ class OrderViewModel extends ChangeNotifier {
 
   addTransactionFirst(TraRestaurantModel transaction) {
     orders.first.transacciones.add(transaction);
+    notifyListeners();
+  }
+
+  addTransactionToOrder(
+    BuildContext context,
+    TraRestaurantModel transaction,
+    int idexOrder,
+  ) {
+    orders[idexOrder].transacciones.add(transaction);
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.productsClass));
+
     notifyListeners();
   }
 
