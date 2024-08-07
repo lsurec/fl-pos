@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/services/servic
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -195,8 +196,12 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     final List<GarnishTra> selectGarnishs = [];
 
     for (var element in treeGarnish) {
-      selectGarnishs
-          .add(GarnishTra(garnish: element.item!, selected: element.selected!));
+      selectGarnishs.add(
+        GarnishTra(
+          garnish: element.item!,
+          selected: element.selected!,
+        ),
+      );
     }
 
     TraRestaurantModel transaction = TraRestaurantModel(
@@ -237,6 +242,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
 
       return;
     }
+
+    Navigator.pushNamed(context, AppRoutes.addPerson);
   }
 
   //devuelve el tipo de transaccion que se va a usar
