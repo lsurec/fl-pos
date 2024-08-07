@@ -48,4 +48,14 @@ class OrderViewModel extends ChangeNotifier {
         )
         .join(", ");
   }
+
+  getTotal(int idexOrder) {
+    double total = 0;
+
+    for (var element in orders[idexOrder].transacciones) {
+      total += (element.cantidad * element.precio.precioU);
+    }
+
+    return total;
+  }
 }

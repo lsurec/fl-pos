@@ -4,7 +4,9 @@ import 'package:flutter_post_printer_example/displays/restaurant/widgets/new_acc
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AccountsView extends StatelessWidget {
@@ -43,7 +45,7 @@ class AccountsView extends StatelessWidget {
                         index: tablesVM.table!.orders![index],
                       );
                     } else {
-                      return NewAccountCardWidget();
+                      return const NewAccountCardWidget();
                     }
                   },
                 ),
@@ -67,6 +69,13 @@ class _AccountCard extends StatelessWidget {
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
     final AddPersonViewModel vmAddPerson =
         Provider.of<AddPersonViewModel>(context);
+    final HomeViewModel homeVM = Provider.of<HomeViewModel>(context);
+    // Crear una instancia de NumberFormat para el formato de moneda
+    final currencyFormat = NumberFormat.currency(
+      symbol: homeVM
+          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      decimalDigits: 2, // Número de decimales a mostrar
+    );
 
     return CardWidget(
       color: AppTheme.color(
@@ -105,8 +114,18 @@ class _AccountCard extends StatelessWidget {
                   Text(
                     orderVM.orders[index].nombre,
                     style: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.bold),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  const SizedBox(height: 10.0),
+                  Text(
+                    "Total: ${currencyFormat.format(orderVM.getTotal(index))}",
+                    style: AppTheme.style(
+                      context,
+                      Styles.versionStyle,
+                    ),
+                  )
                 ],
               ),
             ),
