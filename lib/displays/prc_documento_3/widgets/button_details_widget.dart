@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:provider/provider.dart';
 
 class ButtonDetailsWidget extends StatelessWidget {
   const ButtonDetailsWidget({super.key});
@@ -27,7 +29,20 @@ class ButtonDetailsWidget extends StatelessWidget {
             child: SizedBox(
               height: 50,
               child: ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, AppRoutes.order),
+                onPressed: () {
+                  final TablesViewModel tablesVM =
+                      Provider.of<TablesViewModel>(context, listen: false);
+
+                  if (tablesVM.table!.orders!.length == 1) {
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.order,
+                      arguments: tablesVM.table!.orders!.first,
+                    );
+                  } else {
+                    //TODO:navegar
+                  }
+                },
                 style: AppTheme.button(
                   context,
                   Styles.buttonStyle,

@@ -22,20 +22,22 @@ class OrderView extends StatelessWidget {
       decimalDigits: 2, // Número de decimales a mostrar
     );
 
+    final indexOrder = ModalRoute.of(context)!.settings.arguments as int;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          vm.orders[0].nombre,
+          vm.orders[indexOrder].nombre,
           style: AppTheme.style(context, Styles.normal),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView.builder(
-          itemCount: vm.orders[0].transacciones.length,
+          itemCount: vm.orders[indexOrder].transacciones.length,
           itemBuilder: (BuildContext context, int index) {
             final TraRestaurantModel transaction =
-                vm.orders[0].transacciones[index];
+                vm.orders[indexOrder].transacciones[index];
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -63,7 +65,7 @@ class OrderView extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
-                            vm.getGuarniciones(0, index),
+                            vm.getGuarniciones(indexOrder, index),
                             style: AppTheme.style(context, Styles.versionStyle),
                           ),
                           if (transaction.observacion.isNotEmpty)
