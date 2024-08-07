@@ -178,6 +178,7 @@ class DetailsRestaurantView extends StatelessWidget {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
+                                  backgroundColor: AppTheme.backroundColor,
                                   title: const Text('Nueva cuenta'),
                                   content: InputWidget(
                                     maxLines: 1,

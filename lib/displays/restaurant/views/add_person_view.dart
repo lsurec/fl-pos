@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/view_models/vie
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class AddPersonView extends StatelessWidget {
@@ -67,21 +68,24 @@ class _NewAccountCard extends StatelessWidget {
       ),
       elevation: 2,
       raidus: 10,
-      child: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add,
-              size: 40.0,
-              color: AppTheme.primary,
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              "Nueva cuenta",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-            ),
-          ],
+      child: InkWell(
+        onTap: () {},
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.add,
+                size: 40.0,
+                color: AppTheme.primary,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                "Nueva cuenta",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -101,6 +105,8 @@ class _AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
+    final AddPersonViewModel vmAddPerson =
+        Provider.of<AddPersonViewModel>(context);
 
     return CardWidget(
       color: AppTheme.color(
@@ -147,7 +153,39 @@ class _AccountCard extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  // Acción al presionar el botón de editar
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: AppTheme.backroundColor,
+                        title: const Text('Renombrar cuenta'), //TODO:Translate
+                        content: InputWidget(
+                          maxLines: 1,
+                          formProperty: "name",
+                          formValues: vmAddPerson.formValues,
+                          hintText: "Nombre", //TODO:Translate
+                          labelText: "Nombre", //TODO:Translate
+                          initialValue: orderVM.orders[index].nombre,
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text('Cancelar'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          ElevatedButton(
+                            child: const Text('Renombrar'),
+                            onPressed: () {
+                              // Aquí puedes manejar el valor ingresado
+
+                              vmAddPerson.renamePerson(context, index);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
             ),

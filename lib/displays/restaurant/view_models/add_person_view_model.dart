@@ -9,6 +9,17 @@ class AddPersonViewModel extends ChangeNotifier {
     'name': '',
   };
 
+  renamePerson(BuildContext context, int indexOrder) {
+    final OrderViewModel vmOrder = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
+    vmOrder.orders[indexOrder].nombre = formValues["name"] ?? "";
+    Navigator.pop(context);
+    notifyListeners();
+  }
+
   addPerson(BuildContext context) {
     final OrderViewModel vmOrder = Provider.of<OrderViewModel>(
       context,
