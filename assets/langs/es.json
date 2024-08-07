@@ -210,7 +210,8 @@
         "precioDiasNoCalculado": "No se calculó el precio por día. Verifica que las fechas sean válidas.",
         "seleccioneTipoRef": "Debes seleccionar un tipo de referencia.",
         "recalcularFechas": "Precios por día recalculados por modificación de fechas.",
-        "noCalculoDias": "No se pudo calcular el precio por días."
+        "noCalculoDias": "No se pudo calcular el precio por días.",
+        "sinImagenes": "No hay imágenes asociadas a este producto."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

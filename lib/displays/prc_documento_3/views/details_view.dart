@@ -423,9 +423,9 @@ class _TransactionCard extends StatelessWidget {
           onChanged: (value) => vm.changeChecked(value, indexTransaction),
         ),
         trailing: IconButton(
-          onPressed: () => productVM.viewImage(
+          onPressed: () => productVM.viewProductImages(
             context,
-            productVM.urls,
+            transaction.producto,
           ),
           icon: const Icon(
             Icons.image,

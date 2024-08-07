@@ -49,9 +49,9 @@ class ProductView extends StatelessWidget {
                   Row(
                     children: [
                       IconButton(
-                        onPressed: () => vm.viewImage(
+                        onPressed: () => vm.viewProductImages(
                           context,
-                          vm.urls,
+                          product,
                         ),
                         icon: const Icon(
                           Icons.image,

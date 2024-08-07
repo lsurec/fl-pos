@@ -210,7 +210,8 @@
         "precioDiasNoCalculado": "Der Preis pro Tag wurde nicht berechnet. Überprüfen Sie, ob die Daten gültig sind.",
         "seleccioneTipoRef": "Sie müssen einen Referenztyp auswählen.",
         "noCalculoDias": "Der Preis pro Tag konnte nicht berechnet werden.",
-        "recalcularFechas": "Preise pro Tag aufgrund der Datumsänderung neu berechnet."
+        "recalcularFechas": "Preise pro Tag aufgrund der Datumsänderung neu berechnet.",
+        "sinImagenes": "Keine Bilder mit diesem Produkt verbunden."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
