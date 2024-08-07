@@ -64,6 +64,7 @@ class DetailsDocViewModel extends ChangeNotifier {
         doc.total,
       );
       isLoading = false;
+      return;
     } else {
       await vmShare.sheredDoc(
         context,
@@ -73,6 +74,7 @@ class DetailsDocViewModel extends ChangeNotifier {
         doc.total,
       );
       isLoading = false;
+      return;
     }
   }
 }

@@ -3,6 +3,7 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/views/product_view.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -702,5 +703,35 @@ class ProductViewModel extends ChangeNotifier {
       tipo: tipo,
       altCantidad: true,
     );
+  }
+
+//TODO: cambiar por las urls de cada producto
+
+  List<String> urls = [
+    "https://guateplast.com/wp-content/uploads/2022/03/Silla-Petatillo-VR.jpg",
+    "https://i.pinimg.com/736x/09/cd/5d/09cd5dde9dd0d270fd02f5a5badde902.jpg"
+  ];
+
+  Future<void> viewImage(
+    BuildContext context,
+    List<String> imageUrls,
+  ) async {
+    if (imageUrls.isEmpty) {
+      return;
+    }
+
+    bool result = await showDialog<bool>(
+          context: context,
+          builder: (context) => ImageCarouselDialog(
+            imageUrls: imageUrls,
+          ),
+        ) ??
+        true;
+
+    //Si quiere verse el error
+    if (!result) {
+      //boton para regresar
+      // Aquí puedes agregar la lógica para el botón de regresar si es necesario
+    }
   }
 }

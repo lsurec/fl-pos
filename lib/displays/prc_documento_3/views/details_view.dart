@@ -304,6 +304,7 @@ class _TransactionCard extends StatelessWidget {
 
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+    final productVM = Provider.of<ProductViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -420,6 +421,15 @@ class _TransactionCard extends StatelessWidget {
           ),
           value: transaction.isChecked,
           onChanged: (value) => vm.changeChecked(value, indexTransaction),
+        ),
+        trailing: IconButton(
+          onPressed: () => productVM.viewImage(
+            context,
+            productVM.urls,
+          ),
+          icon: const Icon(
+            Icons.image,
+          ),
         ),
       ),
     );
