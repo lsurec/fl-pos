@@ -229,6 +229,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       formValues["observacion"] = "";
 
       Navigator.pop(context);
+      NotificationService.showSnackbar("Producto agregado");
 
       return;
     }
@@ -239,6 +240,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       formValues["observacion"] = "";
 
       Navigator.pop(context);
+      NotificationService.showSnackbar("Producto agregado");
 
       return;
     }
