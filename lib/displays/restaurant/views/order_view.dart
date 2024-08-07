@@ -15,8 +15,8 @@ class OrderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = Provider.of<OrderViewModel>(context, listen: false);
-    final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final vm = Provider.of<OrderViewModel>(context);
+    final homeVM = Provider.of<HomeViewModel>(context);
 
     final currencyFormat = NumberFormat.currency(
       symbol: homeVM
@@ -170,7 +170,11 @@ class OrderView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               IconButton(
-                                onPressed: () => {},
+                                onPressed: () => vm.decrement(
+                                  context,
+                                  indexOrder,
+                                  index,
+                                ),
                                 icon: transaction.cantidad == 1
                                     ? const Icon(Icons.delete_outline)
                                     : const Icon(Icons.remove),
@@ -180,7 +184,10 @@ class OrderView extends StatelessWidget {
                                 style: AppTheme.style(context, Styles.bold),
                               ),
                               IconButton(
-                                onPressed: () => {},
+                                onPressed: () => vm.increment(
+                                  indexOrder,
+                                  index,
+                                ),
                                 icon: const Icon(Icons.add),
                               )
                             ],

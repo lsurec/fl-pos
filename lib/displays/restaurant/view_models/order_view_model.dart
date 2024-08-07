@@ -39,8 +39,10 @@ class OrderViewModel extends ChangeNotifier {
         onOk: () {
           //Cerrar sesión, limpiar datos
           Navigator.of(context).pop();
+          Navigator.of(context).pop();
           orders[indexOrder].transacciones.removeAt(indexTra);
           NotificationService.showSnackbar("Transaccion eliminada");
+          notifyListeners();
         },
         onCancel: () => Navigator.pop(context),
       ),
