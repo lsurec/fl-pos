@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/texts_widgets.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +27,71 @@ class OrderView extends StatelessWidget {
     final indexOrder = ModalRoute.of(context)!.settings.arguments as int;
 
     return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Color.fromARGB(255, 228, 225, 225),
+            ),
+          ),
+        ),
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 20,
+        ),
+        height: 110,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'total',
+                  )}:",
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
+                  ),
+                ),
+                Text(
+                  currencyFormat.format(vm.getTotal(indexOrder)),
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            Expanded(
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: AppTheme.button(
+                    context,
+                    Styles.buttonStyle,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        "Confirmar", //TODO:Translate
+                        style: AppTheme.style(
+                          context,
+                          Styles.whiteBoldStyle,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text(
           vm.orders[indexOrder].nombre,
