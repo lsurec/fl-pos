@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/new_account_card_widget.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -86,6 +87,12 @@ class _AccountCard extends StatelessWidget {
       raidus: 10,
       child: InkWell(
         onTap: () {
+          if (orderVM.orders[index].transacciones.isEmpty) {
+            NotificationService.showSnackbar(
+                "No hay transacciones para mostrar"); //TODO:Translate
+            return;
+          }
+
           Navigator.pushNamed(
             context,
             AppRoutes.order,

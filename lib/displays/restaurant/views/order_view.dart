@@ -132,6 +132,11 @@ class OrderView extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           Text(
+                            "${currencyFormat.format(transaction.precio.precioU)} C/U",
+                            style: AppTheme.style(context, Styles.normal),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
                             vm.getGuarniciones(indexOrder, index),
                             style: AppTheme.style(context, Styles.versionStyle),
                           ),
