@@ -3,7 +3,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/widgets/bu
 import 'package:flutter_post_printer_example/displays/restaurant/models/classification_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/locations_view_model.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
