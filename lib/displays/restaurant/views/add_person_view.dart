@@ -15,10 +15,7 @@ class AddPersonView extends StatelessWidget {
     final TraRestaurantModel transaction =
         ModalRoute.of(context)!.settings.arguments as TraRestaurantModel;
 
-    final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
     final TablesViewModel tablesVM = Provider.of<TablesViewModel>(context);
-    final LocationsViewModel locatonVM =
-        Provider.of<LocationsViewModel>(context);
 
     return Scaffold(
         appBar: AppBar(),
@@ -42,11 +39,11 @@ class AddPersonView extends StatelessWidget {
                     crossAxisSpacing: 8.0,
                     mainAxisSpacing: 8.0,
                   ),
-                  itemCount: orderVM.orders.length + 1,
+                  itemCount: tablesVM.table!.orders!.length + 1,
                   itemBuilder: (context, index) {
-                    if (index < orderVM.orders.length) {
+                    if (index < tablesVM.table!.orders!.length) {
                       return _AccountCard(
-                        index: index,
+                        index: tablesVM.table!.orders![index],
                         transaction: transaction,
                       );
                     } else {
