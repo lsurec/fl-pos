@@ -1486,16 +1486,18 @@ class PrintViewModel extends ChangeNotifier {
 
       items.add(
         Item(
-            descripcion: detail.desProducto,
-            cantidad: detail.cantidad,
-            unitario: precioUni.toString(),
-            total: detail.monto.toString(),
-            sku: detail.productoId,
-            precioDia: detail.monto.toString(),
-            precioReposicion: detail.precioReposicion.toString().isNotEmpty &&
-                    detail.precioReposicion != null
-                ? detail.precioReposicion.toString()
-                : "00.00"),
+          descripcion: detail.desProducto,
+          cantidad: detail.cantidad,
+          unitario: precioUni.toString(),
+          total: detail.monto.toString(),
+          sku: detail.productoId,
+          precioDia: detail.monto.toString(),
+          precioReposicion: detail.precioReposicion.toString().isNotEmpty &&
+                  detail.precioReposicion != null
+              ? detail.precioReposicion.toString()
+              : "00.00",
+          imagen64: detail.imgProducto,
+        ),
       );
     }
 
@@ -1508,6 +1510,8 @@ class PrintViewModel extends ChangeNotifier {
       total: total,
       totalLetras: encabezado.montoLetras!.toUpperCase(),
     );
+
+    print("aqui ya paso");
 
     List<Pago> pagos = [];
 
