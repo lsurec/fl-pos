@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PersonAddView extends StatelessWidget {
-  const PersonAddView({Key? key}) : super(key: key);
+class AddPersonView extends StatelessWidget {
+  const AddPersonView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

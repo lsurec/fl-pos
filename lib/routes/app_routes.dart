@@ -112,7 +112,7 @@ class AppRoutes {
     detailsRestaurant: (BuildContext context) => const DetailsRestaurantView(),
     homeRestaurant: (BuildContext context) => const HomeRestaurantView(),
     order: (BuildContext context) => const OrderView(),
-    addPerson: (BuildContext context) => const PersonAddView(),
+    addPerson: (BuildContext context) => const AddPersonView(),
   };
 
   //en caso de ruta incorrecta

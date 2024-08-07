@@ -35,6 +35,7 @@ class DetailsRestaurantView extends StatelessWidget {
 
     final docVM = Provider.of<DocumentViewModel>(context);
     final vm = Provider.of<DetailsRestaurantViewModel>(context);
+    final vmAddPerson = Provider.of<AddPersonViewModel>(context);
     final ProductRestaurantModel product = vmProduct.product!;
 
     return Stack(
@@ -172,7 +173,39 @@ class DetailsRestaurantView extends StatelessWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(5)),
                         child: IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Nueva cuenta'),
+                                  content: InputWidget(
+                                    maxLines: 1,
+                                    formProperty: "name",
+                                    formValues: vmAddPerson.formValues,
+                                    hintText: "Nombre",
+                                    labelText: "Nombre",
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: const Text('Cancelar'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                      child: const Text('Agregar'),
+                                      onPressed: () {
+                                        // Aquí puedes manejar el valor ingresado
+
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                           icon: const Icon(
                             Icons.person_add,
                             color: Colors.black,
