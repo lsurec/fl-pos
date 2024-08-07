@@ -213,9 +213,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       guarniciones: selectGarnishs,
     );
 
-    //  (vmTables.table?.orders ?? 0) == 0
-
-    if (vmOrders.orders.isEmpty) {
+    if (tableVM.table!.orders!.isEmpty) {
       vmOrders.addFirst(
         context,
         OrderModel(
@@ -236,8 +234,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       return;
     }
 
-    if (vmOrders.orders.length == 1) {
-      vmOrders.addTransactionFirst(transaction);
+    if (tableVM.table!.orders!.length == 1) {
+      vmOrders.addTransactionFirst(transaction, tableVM.table!.orders!.first);
 
       formValues["observacion"] = "";
 

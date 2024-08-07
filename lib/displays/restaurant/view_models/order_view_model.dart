@@ -18,8 +18,11 @@ class OrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addTransactionFirst(TraRestaurantModel transaction) {
-    orders.first.transacciones.add(transaction);
+  addTransactionFirst(
+    TraRestaurantModel transaction,
+    int indexOrder,
+  ) {
+    orders[indexOrder].transacciones.add(transaction);
     notifyListeners();
   }
 
