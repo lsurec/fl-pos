@@ -20,7 +20,7 @@ class ProductClassView extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          bottomNavigationBar: (vmTables.table?.orders ?? 0) == 0
+          bottomNavigationBar: vmTables.table!.orders!.isEmpty
               ? null
               : const ButtonDetailsWidget(),
           appBar: AppBar(
