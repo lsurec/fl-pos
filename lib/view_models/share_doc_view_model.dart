@@ -715,61 +715,32 @@ class ShareDocViewModel extends ChangeNotifier {
     return logoEmpresa.buffer.asUint8List();
   }
 
-  // Función para precargar las imágenes
-  Future<List<Uint8List>> precargarImagenes(
-      List<DetalleModel> detallesTemplate) async {
-    return await Future.wait(
-      detallesTemplate.map((detalle) async {
-        return await obtenerImagen(detalle.imgProducto);
-      }).toList(),
-    );
-  }
-
-  Future<pw.MemoryImage> getImageFromBase64(String base64String) async {
-    try {
-      if (base64String.isEmpty) {
-        // Si el string está vacío, carga la imagen por defecto
-        final ByteData bytes = await rootBundle.load(
-          'assets/image-not-found-icon.png',
-        );
-        final Uint8List defaultImage = bytes.buffer.asUint8List();
-        return pw.MemoryImage(defaultImage);
-      }
-
-      // Intenta decodificar la imagen en base64
-      Uint8List bytes = base64Decode(base64String);
-      return pw.MemoryImage(bytes);
-    } catch (e) {
-      // Si ocurre un error, carga la imagen por defecto
-      final ByteData bytes = await rootBundle.load(
-        'assets/image-not-found-icon.png',
-      );
-      final Uint8List defaultImage = bytes.buffer.asUint8List();
-      return pw.MemoryImage(defaultImage);
-    }
-  }
-
   Future<List<pw.MemoryImage>> processImageList(
-      List<DetalleModel> detallesTemplate) async {
+    List<DetalleModel> detallesTemplate,
+  ) async {
     List<pw.MemoryImage> imageList = [];
 
     for (var detalle in detallesTemplate) {
       try {
         if (detalle.imgProducto.isEmpty) {
           // Cargar la imagen por defecto
-          final ByteData bytes =
-              await rootBundle.load('assets/image-not-found-icon.png');
+          final ByteData bytes = await rootBundle.load(
+            'assets/image-not-found-icon.png',
+          );
           final Uint8List defaultImage = bytes.buffer.asUint8List();
           imageList.add(pw.MemoryImage(defaultImage));
         } else {
           // Intenta decodificar imgProducto en base64
-          Uint8List bytes = base64Decode(detalle.imgProducto);
+          Uint8List bytes = base64Decode(
+            detalle.imgProducto,
+          );
           imageList.add(pw.MemoryImage(bytes));
         }
       } catch (e) {
         // Si ocurre un error, carga la imagen por defecto
-        final ByteData bytes =
-            await rootBundle.load('assets/image-not-found-icon.png');
+        final ByteData bytes = await rootBundle.load(
+          'assets/image-not-found-icon.png',
+        );
         final Uint8List defaultImage = bytes.buffer.asUint8List();
         imageList.add(pw.MemoryImage(defaultImage));
       }
