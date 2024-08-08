@@ -31,6 +31,7 @@ class TraRestaurantModel {
     required this.producto,
     required this.observacion,
     required this.guarniciones,
+    required this.selected,
   });
 
   int id;
@@ -39,6 +40,7 @@ class TraRestaurantModel {
   ProductRestaurantModel producto;
   String observacion;
   List<GarnishTra> guarniciones;
+  bool selected;
 }
 
 class GarnishTra {

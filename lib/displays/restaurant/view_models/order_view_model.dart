@@ -7,7 +7,56 @@ import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class OrderViewModel extends ChangeNotifier {
+  //manejar flujo del procesp
+  bool _isSelectedMode = false;
+  bool get isSelectedMode => _isSelectedMode;
+
+  set isSelectedMode(bool value) {
+    _isSelectedMode = value;
+    notifyListeners();
+  }
+
   final List<OrderModel> orders = [];
+  final List<int> selectedTra = [];
+
+  //Salir de la pantalla
+  Future<bool> backPage(
+    BuildContext context,
+    int indexOrder,
+  ) async {
+    if (!isSelectedMode) return true;
+
+    isSelectedMode = false;
+
+    for (var element in orders[indexOrder].transacciones) {
+      element.selected = false;
+    }
+
+    return false;
+  }
+
+  sleectedItem(int indexOrder, indexTra) {
+    orders[indexOrder].transacciones[indexTra].selected =
+        !orders[indexOrder].transacciones[indexTra].selected;
+
+    notifyListeners();
+
+    if (getSelectedItems(indexOrder) == 0) isSelectedMode = false;
+  }
+
+  onLongPress(int indexOrder, indexTra) {
+    orders[indexOrder].transacciones[indexTra].selected = true;
+
+    isSelectedMode = true;
+  }
+
+  getSelectedItems(int indexOrder) {
+    return orders[indexOrder]
+        .transacciones
+        .where((order) => order.selected)
+        .toList()
+        .length;
+  }
 
   //incrementa la cantidad de la transaccion
   increment(int indexOrder, int indexTra) {

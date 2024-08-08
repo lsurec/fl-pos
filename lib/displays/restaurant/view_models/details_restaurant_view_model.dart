@@ -211,6 +211,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       producto: productRestaurantVM.product!,
       observacion: formValues["observacion"],
       guarniciones: selectGarnishs,
+      selected: false,
     );
 
     if (tableVM.table!.orders!.isEmpty) {
