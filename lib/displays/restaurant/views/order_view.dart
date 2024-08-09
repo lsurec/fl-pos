@@ -104,7 +104,7 @@ class OrderView extends StatelessWidget {
           actions: vm.isSelectedMode
               ? [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => vm.selectedAll(indexOrder),
                     icon: const Icon(Icons.select_all),
                   ),
                   IconButton(

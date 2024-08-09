@@ -32,7 +32,17 @@ class OrderViewModel extends ChangeNotifier {
       element.selected = false;
     }
 
+    notifyListeners();
+
     return false;
+  }
+
+  selectedAll(int indexOrder) {
+    for (var element in orders[indexOrder].transacciones) {
+      element.selected = true;
+    }
+
+    notifyListeners();
   }
 
   sleectedItem(int indexOrder, indexTra) {
