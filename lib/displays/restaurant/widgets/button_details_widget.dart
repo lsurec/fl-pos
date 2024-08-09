@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +35,18 @@ class ButtonDetailsWidget extends StatelessWidget {
                   final TablesViewModel tablesVM =
                       Provider.of<TablesViewModel>(context, listen: false);
 
+                  final OrderViewModel orderVM =
+                      Provider.of<OrderViewModel>(context, listen: false);
+
                   if (tablesVM.table!.orders!.length == 1) {
+                    if (orderVM.orders[tablesVM.table!.orders!.first]
+                        .transacciones.isEmpty) {
+                      NotificationService.showSnackbar(
+                        "No hay transacciones para mostrar",
+                      );
+                      return;
+                    }
+
                     Navigator.pushNamed(
                       context,
                       AppRoutes.order,

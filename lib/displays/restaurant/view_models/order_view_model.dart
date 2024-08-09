@@ -86,6 +86,36 @@ class OrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  deleteSelected(int indexOrder, BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertWidget(
+        title: "¿Estás seguro?",
+        description:
+            "Estas a punto de eliminar la transaccion. Esta accion no se puede deshacer.",
+        onOk: () {
+          //Cerrar sesión, limpiar datos
+          Navigator.of(context).pop();
+
+          for (var i = 0; i < orders[indexOrder].transacciones.length; i++) {
+            if (orders[indexOrder].transacciones[i].selected) {
+              orders[indexOrder].transacciones.removeAt(i);
+            }
+          }
+
+          if (orders[indexOrder].transacciones.isEmpty) {
+            Navigator.of(context).pop();
+          }
+
+          isSelectedMode = false;
+          NotificationService.showSnackbar("Transacciones eliminadas");
+          notifyListeners();
+        },
+        onCancel: () => Navigator.pop(context),
+      ),
+    );
+  }
+
   //Eliminar transaccion
   delete(BuildContext context, int indexOrder, int indexTra) {
     //eliminar transaccion
@@ -98,8 +128,14 @@ class OrderViewModel extends ChangeNotifier {
         onOk: () {
           //Cerrar sesión, limpiar datos
           Navigator.of(context).pop();
-          Navigator.of(context).pop();
+
           orders[indexOrder].transacciones.removeAt(indexTra);
+
+          if (orders[indexOrder].transacciones.isEmpty) {
+            Navigator.of(context).pop();
+            isSelectedMode = false;
+          }
+
           NotificationService.showSnackbar("Transaccion eliminada");
           notifyListeners();
         },

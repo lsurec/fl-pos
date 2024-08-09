@@ -108,7 +108,7 @@ class OrderView extends StatelessWidget {
                     icon: const Icon(Icons.select_all),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => vm.deleteSelected(indexOrder, context),
                     icon: const Icon(Icons.delete_outline),
                   ),
                   IconButton(
