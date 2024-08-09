@@ -1,8 +1,14 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +22,99 @@ class OrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   final List<OrderModel> orders = [];
   final List<int> selectedTra = [];
+
+  Future<void> modifyTra(
+    BuildContext context,
+    int indexOrder,
+    int indexTra,
+  ) async {
+    final ProductsClassViewModel productClassVM =
+        Provider.of<ProductsClassViewModel>(
+      context,
+      listen: false,
+    );
+
+    isLoading = true;
+
+    productClassVM.product =
+        orders[indexOrder].transacciones[indexTra].producto;
+
+    final DetailsRestaurantViewModel vDetailsRestaurant =
+        Provider.of<DetailsRestaurantViewModel>(
+      context,
+      listen: false,
+    );
+
+    final ApiResModel resGarnish = await vDetailsRestaurant.loadGarnish(
+      context,
+      productClassVM.product!.producto,
+      productClassVM.product!.unidadMedida,
+    );
+
+    if (!resGarnish.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resGarnish);
+      return;
+    }
+
+    if (vDetailsRestaurant.garnishs.isNotEmpty) {
+      vDetailsRestaurant.orederTreeGarnish();
+    }
+
+    final vmDetails = Provider.of<DetailsRestaurantViewModel>(
+      context,
+      listen: false,
+    );
+
+    final ApiResModel resBodega = await vmDetails.loadBodega(context);
+
+    if (!resBodega.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resBodega);
+      return;
+    }
+
+    //si no se encontrarin bodegas mostrar mensaje
+    if (vmDetails.bodegas.isEmpty) {
+      isLoading = false;
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinBodegaP',
+      ));
+      return;
+    }
+
+    if (vmDetails.bodegas.length == 1) {
+      vmDetails.bodega = vmDetails.bodegas.first;
+
+      //cargar precios
+
+      final ApiResModel resPrices = await vmDetails.loadPrecioUnitario(context);
+
+      if (!resPrices.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(context, resPrices);
+        return;
+      }
+    }
+
+    vmDetails.valueNum = 1;
+    vmDetails.controllerNum.text = "1";
+    Navigator.pushNamed(context, AppRoutes.detailsRestaurant);
+
+    isLoading = false;
+  }
 
   //Salir de la pantalla
   Future<bool> backPage(
