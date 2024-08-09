@@ -109,8 +109,14 @@ class OrderViewModel extends ChangeNotifier {
       }
     }
 
-    vmDetails.valueNum = 1;
-    vmDetails.controllerNum.text = "1";
+    vmDetails.valueNum = orders[indexOrder].transacciones[indexTra].cantidad;
+    vmDetails.controllerNum.text =
+        orders[indexOrder].transacciones[indexTra].cantidad.toString();
+    vmDetails.formValues["observacion"] =
+        orders[indexOrder].transacciones[indexTra].observacion;
+
+    vmDetails.calculateTotal();
+
     Navigator.pushNamed(context, AppRoutes.detailsRestaurant);
 
     isLoading = false;

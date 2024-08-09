@@ -38,439 +38,450 @@ class DetailsRestaurantView extends StatelessWidget {
     final vmAddPerson = Provider.of<AddPersonViewModel>(context);
     final ProductRestaurantModel product = vmProduct.product!;
 
-    return Stack(
-      children: [
-        Scaffold(
-          // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Color.fromARGB(255, 228, 225, 225),
+    return WillPopScope(
+      onWillPop: () async {
+        vm.valueNum = 1;
+        vm.controllerNum.text = "1";
+        vm.formValues["observacion"] = "";
+
+        return true;
+      },
+      child: Stack(
+        children: [
+          Scaffold(
+            // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+            bottomNavigationBar: Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Color.fromARGB(255, 228, 225, 225),
+                  ),
                 ),
               ),
-            ),
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 20,
-            ),
-            height: 110,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${AppLocalizations.of(context)!.translate(
-                        BlockTranslate.calcular,
-                        'total',
-                      )}:",
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
-                    ),
-                    Text(
-                      currencyFormat.format(vm.total),
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                              onPressed: () => vm.decrementNum(),
-                              icon: const Icon(Icons.remove),
-                            ),
-                            Text(
-                              vm.controllerNum.text,
-                              style: AppTheme.style(context, Styles.bold),
-                            ),
-                            IconButton(
-                              onPressed: () => vm.incrementNum(),
-                              icon: const Icon(Icons.add),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () => vm.addProduct(context),
-                          style: AppTheme.button(
-                            context,
-                            Styles.buttonStyle,
-                          ),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Center(
-                              child: Text(
-                                "Agregar", //TODO:Translate
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.whiteBoldStyle,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-
-          body: RefreshIndicator(
-            onRefresh: () => vm.loadData(context),
-            child: ListView(
-              children: [
-                Stack(
-                  children: [
-                    //TODO:Corregir carga
-                    const ProductImage(
-                        url:
-                            'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg'),
-                    Positioned(
-                      top: 60,
-                      left: 20,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: IconButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          icon: const Icon(
-                            Icons.arrow_back_ios_new,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 60,
-                      right: 20,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: IconButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  backgroundColor: AppTheme.backroundColor,
-                                  title: const Text('Nueva cuenta'),
-                                  content: InputWidget(
-                                    maxLines: 1,
-                                    formProperty: "name",
-                                    formValues: vmAddPerson.formValues,
-                                    hintText: "Nombre",
-                                    labelText: "Nombre",
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Text('Cancelar'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    ElevatedButton(
-                                      child: const Text('Agregar'),
-                                      onPressed: () {
-                                        // Aquí puedes manejar el valor ingresado
-
-                                        vmAddPerson.addPerson(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.person_add,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ),
+              height: 110,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        product.desProducto,
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.calcular,
+                          'total',
+                        )}:",
                         style: AppTheme.style(
                           context,
                           Styles.title,
                         ),
                       ),
-                      const SizedBox(height: 5),
                       Text(
-                        product.productoId,
+                        currencyFormat.format(vm.total),
                         style: AppTheme.style(
                           context,
-                          Styles.normal,
+                          Styles.title,
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.factura,
-                          'bodega',
-                        ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      DropdownButton<BodegaProductoModel>(
-                        isExpanded: true,
-                        isDense: true,
-                        dropdownColor: AppTheme.color(
-                          context,
-                          Styles.background,
-                        ),
-                        value: vm.bodega,
-                        onChanged: (value) => vm.changeBodega(value, context),
-                        items: vm.bodegas.map(
-                          (bodega) {
-                            return DropdownMenuItem<BodegaProductoModel>(
-                              value: bodega,
-                              child: Text(
-                                "(${bodega.bodega}) ${bodega.nombre} | ${AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.factura,
-                                  'existencia',
-                                )} (${bodega.existencia.toStringAsFixed(2)})",
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                onPressed: () => vm.decrementNum(),
+                                icon: const Icon(Icons.remove),
                               ),
-                            );
-                          },
-                        ).toList(),
+                              Text(
+                                vm.controllerNum.text,
+                                style: AppTheme.style(context, Styles.bold),
+                              ),
+                              IconButton(
+                                onPressed: () => vm.incrementNum(),
+                                icon: const Icon(Icons.add),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 20),
-                      if (vm.unitarios.isNotEmpty)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              vm.unitarios.first.precio
-                                  ? AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.factura,
-                                      'tipoPrecio',
-                                    )
-                                  : AppLocalizations.of(context)!.translate(
-                                      BlockTranslate.factura,
-                                      'presentaciones',
-                                    ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: SizedBox(
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () => vm.addProduct(context),
+                            style: AppTheme.button(
+                              context,
+                              Styles.buttonStyle,
+                            ),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Center(
+                                child: Text(
+                                  "Agregar", //TODO:Translate
+                                  style: AppTheme.style(
+                                    context,
+                                    Styles.whiteBoldStyle,
+                                  ),
+                                ),
                               ),
                             ),
-                            const SizedBox(height: 5),
-                            const TipoPrecioSelect(),
-                          ],
-                        ),
-                      if (vm.unitarios.isEmpty)
-                        Text(
-                          AppLocalizations.of(context)!.translate(
-                            BlockTranslate.notificacion,
-                            'preciosNoEncontrados',
                           ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+
+            body: RefreshIndicator(
+              onRefresh: () => vm.loadData(context),
+              child: ListView(
+                children: [
+                  Stack(
+                    children: [
+                      //TODO:Corregir carga
+                      const ProductImage(
+                          url:
+                              'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg'),
+                      Positioned(
+                        top: 60,
+                        left: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: IconButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 60,
+                        right: 20,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    backgroundColor: AppTheme.backroundColor,
+                                    title: const Text('Nueva cuenta'),
+                                    content: InputWidget(
+                                      maxLines: 1,
+                                      formProperty: "name",
+                                      formValues: vmAddPerson.formValues,
+                                      hintText: "Nombre",
+                                      labelText: "Nombre",
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text('Cancelar'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      ElevatedButton(
+                                        child: const Text('Agregar'),
+                                        onPressed: () {
+                                          // Aquí puedes manejar el valor ingresado
+
+                                          vmAddPerson.addPerson(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.person_add,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          product.desProducto,
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          product.productoId,
                           style: AppTheme.style(
                             context,
                             Styles.normal,
                           ),
                         ),
-                      const SizedBox(height: 5),
-                      if (vm.unitarios.isNotEmpty && docVM.editPrice())
-                        TextFormField(
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                width: 1,
+                        const SizedBox(height: 20),
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'bodega',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        DropdownButton<BodegaProductoModel>(
+                          isExpanded: true,
+                          isDense: true,
+                          dropdownColor: AppTheme.color(
+                            context,
+                            Styles.background,
+                          ),
+                          value: vm.bodega,
+                          onChanged: (value) => vm.changeBodega(value, context),
+                          items: vm.bodegas.map(
+                            (bodega) {
+                              return DropdownMenuItem<BodegaProductoModel>(
+                                value: bodega,
+                                child: Text(
+                                  "(${bodega.bodega}) ${bodega.nombre} | ${AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.factura,
+                                    'existencia',
+                                  )} (${bodega.existencia.toStringAsFixed(2)})",
+                                ),
+                              );
+                            },
+                          ).toList(),
+                        ),
+                        const SizedBox(height: 20),
+                        if (vm.unitarios.isNotEmpty)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                vm.unitarios.first.precio
+                                    ? AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.factura,
+                                        'tipoPrecio',
+                                      )
+                                    : AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.factura,
+                                        'presentaciones',
+                                      ),
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.bold,
+                                ),
                               ),
+                              const SizedBox(height: 5),
+                              const TipoPrecioSelect(),
+                            ],
+                          ),
+                        if (vm.unitarios.isEmpty)
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.notificacion,
+                              'preciosNoEncontrados',
                             ),
-                            hintText: AppLocalizations.of(context)!.translate(
-                              BlockTranslate.calcular,
-                              'precioU',
-                            ),
-                            hintStyle: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
-                            labelText: AppLocalizations.of(context)!.translate(
-                              BlockTranslate.calcular,
-                              'precioU',
-                            ),
-                            labelStyle: AppTheme.style(
+                            style: AppTheme.style(
                               context,
                               Styles.normal,
                             ),
                           ),
-                          controller: vm.controllerPrice,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                              RegExp(r'^(\d+)?\.?\d{0,2}'),
-                            ),
-                          ],
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) => vm.chanchePrice(value),
-                        ),
-                      if (vm.unitarios.isNotEmpty && !docVM.editPrice())
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.translate(
+                        const SizedBox(height: 5),
+                        if (vm.unitarios.isNotEmpty && docVM.editPrice())
+                          TextFormField(
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1,
+                                ),
+                              ),
+                              hintText: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calcular,
                                 'precioU',
                               ),
+                              hintStyle: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                              labelText:
+                                  AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calcular,
+                                'precioU',
+                              ),
+                              labelStyle: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                            controller: vm.controllerPrice,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^(\d+)?\.?\d{0,2}'),
+                              ),
+                            ],
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => vm.chanchePrice(value),
+                          ),
+                        if (vm.unitarios.isNotEmpty && !docVM.editPrice())
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.calcular,
+                                  'precioU',
+                                ),
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                            ],
+                          ),
+                        if (vm.unitarios.isNotEmpty && !docVM.editPrice())
+                          Text(currencyFormat.format(vm.price)),
+                      ],
+                    ),
+                  ),
+                  if (vm.treeGarnish.isNotEmpty)
+                    Container(
+                      color: const Color.fromARGB(255, 227, 226, 226),
+                      height: 10,
+                    ),
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: vm.treeGarnish.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                        color: const Color.fromARGB(255, 227, 226, 226),
+                        height: 10,
+                      );
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      final GarnishTree garnishNode = vm.treeGarnish[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              garnishNode.item!.descripcion,
                               style: AppTheme.style(
                                 context,
                                 Styles.bold,
                               ),
                             ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Elige una opcion",
+                              style: AppTheme.style(context, Styles.normal),
+                            ),
                             const SizedBox(height: 5),
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: garnishNode.children.length,
+                              itemBuilder: (BuildContext context, int j) {
+                                final GarnishModel garnish =
+                                    garnishNode.children[j].item!;
+                                return RadioListTile(
+                                  activeColor: AppTheme.primary,
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(garnish.descripcion),
+                                  value: garnish,
+                                  groupValue: vm.treeGarnish[index].selected,
+                                  onChanged: (value) => vm.changeGarnish(
+                                    index,
+                                    value!,
+                                  ),
+                                );
+                              },
+                            ),
                           ],
                         ),
-                      if (vm.unitarios.isNotEmpty && !docVM.editPrice())
-                        Text(currencyFormat.format(vm.price)),
-                    ],
+                      );
+                    },
                   ),
-                ),
-                if (vm.treeGarnish.isNotEmpty)
                   Container(
                     color: const Color.fromARGB(255, 227, 226, 226),
                     height: 10,
                   ),
-                ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: vm.treeGarnish.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Container(
-                      color: const Color.fromARGB(255, 227, 226, 226),
-                      height: 10,
-                    );
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    final GarnishTree garnishNode = vm.treeGarnish[index];
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 10,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            garnishNode.item!.descripcion,
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Elige una opcion",
-                            style: AppTheme.style(context, Styles.normal),
-                          ),
-                          const SizedBox(height: 5),
-                          ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemCount: garnishNode.children.length,
-                            itemBuilder: (BuildContext context, int j) {
-                              final GarnishModel garnish =
-                                  garnishNode.children[j].item!;
-                              return RadioListTile(
-                                activeColor: AppTheme.primary,
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(garnish.descripcion),
-                                value: garnish,
-                                groupValue: vm.treeGarnish[index].selected,
-                                onChanged: (value) => vm.changeGarnish(
-                                  index,
-                                  value!,
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                Container(
-                  color: const Color.fromARGB(255, 227, 226, 226),
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 20,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Notas para este producto", //TODO:Translate
-                        style: AppTheme.style(context, Styles.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      InputWidget(
-                        maxLines: 2,
-                        formProperty: "observacion",
-                        formValues: vm.formValues,
-                        hintText:
-                            "Escriba las instrucciones necesarias.", //TODO:Translate
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 20,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Notas para este producto", //TODO:Translate
+                          style: AppTheme.style(context, Styles.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        InputWidget(
+                          initialValue: vm.formValues["observacion"],
+                          maxLines: 2,
+                          formProperty: "observacion",
+                          formValues: vm.formValues,
+                          hintText:
+                              "Escriba las instrucciones necesarias.", //TODO:Translate
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        if (vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
+          if (vm.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.color(
+                context,
+                Styles.loading,
+              ),
             ),
-          ),
-        if (vm.isLoading) const LoadWidget(),
-      ],
+          if (vm.isLoading) const LoadWidget(),
+        ],
+      ),
     );
   }
 }
