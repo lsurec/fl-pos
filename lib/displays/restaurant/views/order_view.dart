@@ -101,6 +101,22 @@ class OrderView extends StatelessWidget {
                 : vm.orders[indexOrder].nombre,
             style: AppTheme.style(context, Styles.normal),
           ),
+          actions: vm.isSelectedMode
+              ? [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.select_all),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.delete_outline),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.more_vert),
+                  ),
+                ]
+              : null,
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
