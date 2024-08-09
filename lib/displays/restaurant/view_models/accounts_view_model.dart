@@ -64,7 +64,7 @@ class AccountsViewModel extends ChangeNotifier {
           }
 
           isSelectedMode = false;
-          NotificationService.showSnackbar("Transacciones eliminadas");
+          NotificationService.showSnackbar("Cuentas eliminadas");
           notifyListeners();
         },
         onCancel: () => Navigator.pop(context),

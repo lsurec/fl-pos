@@ -18,45 +18,76 @@ class AddPersonView extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as TraRestaurantModel;
 
     final TablesViewModel tablesVM = Provider.of<TablesViewModel>(context);
+    final AccountsViewModel vm = Provider.of<AccountsViewModel>(context);
 
-    return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Seleccionar cuenta",
-                  style: AppTheme.style(context, Styles.title),
-                ),
-                const SizedBox(height: 20),
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                  ),
-                  itemCount: tablesVM.table!.orders!.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index < tablesVM.table!.orders!.length) {
-                      return AccountCardWidget(
-                        index: tablesVM.table!.orders![index],
-                        transaction: transaction,
-                      );
-                    } else {
-                      return NewAccountCardWidget();
-                    }
-                  },
-                ),
-              ],
-            ),
+    return WillPopScope(
+      onWillPop: () => vm.backPage(context),
+      child: Scaffold(
+          appBar: AppBar(
+            title: vm.isSelectedMode
+                ? Text(
+                    vm.getSelectedItems(context).toString(),
+                    style: AppTheme.style(context, Styles.normal),
+                  )
+                : null,
+            actions: vm.isSelectedMode
+                ? [
+                    IconButton(
+                      onPressed: () => vm.selectedAll(context),
+                      icon: const Icon(Icons.select_all),
+                      tooltip: "Seleccionar todo", //TODO:Translate
+                    ),
+                    IconButton(
+                      onPressed: () => vm.deleteItems(context),
+                      icon: const Icon(Icons.delete_outline),
+                      tooltip: "Eliminar", //TODO:Translate
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.drive_file_move_outline),
+                      tooltip: "Trasladar", //TODO:Translate
+                    ),
+                  ]
+                : null,
           ),
-        ));
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Seleccionar cuenta",
+                    style: AppTheme.style(context, Styles.title),
+                  ),
+                  const SizedBox(height: 20),
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
+                    ),
+                    itemCount: tablesVM.table!.orders!.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index < tablesVM.table!.orders!.length) {
+                        return AccountCardWidget(
+                          index: tablesVM.table!.orders![index],
+                          transaction: transaction,
+                        );
+                      } else {
+                        return NewAccountCardWidget();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 }
 
@@ -84,6 +115,8 @@ class AccountCardWidget extends StatelessWidget {
       decimalDigits: 2, // Número de decimales a mostrar
     );
 
+    final AccountsViewModel vm = Provider.of<AccountsViewModel>(context);
+
     return CardWidget(
       color: AppTheme.color(
         context,
@@ -92,7 +125,10 @@ class AccountCardWidget extends StatelessWidget {
       elevation: 2,
       raidus: 10,
       child: InkWell(
-        onTap: () => orderVM.addTransactionToOrder(context, transaction, index),
+        onLongPress: () => vm.onLongPress(context, index),
+        onTap: vm.isSelectedMode
+            ? () => vm.selectedItem(context, index)
+            : () => orderVM.addTransactionToOrder(context, transaction, index),
         child: Stack(
           children: [
             Padding(
@@ -173,6 +209,15 @@ class AccountCardWidget extends StatelessWidget {
                 },
               ),
             ),
+            if (vm.isSelectedMode && orderVM.orders[index].selected)
+              const Positioned(
+                left: 10,
+                bottom: 10,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                ),
+              ),
           ],
         ),
       ),
