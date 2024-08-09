@@ -71,6 +71,10 @@ class _AccountCard extends StatelessWidget {
     final AddPersonViewModel vmAddPerson =
         Provider.of<AddPersonViewModel>(context);
     final HomeViewModel homeVM = Provider.of<HomeViewModel>(context);
+
+    final AccountsViewModel accountsVM =
+        Provider.of<AccountsViewModel>(context);
+
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
       symbol: homeVM
@@ -179,6 +183,14 @@ class _AccountCard extends StatelessWidget {
                     },
                   );
                 },
+              ),
+            ),
+            const Positioned(
+              left: 10,
+              bottom: 10,
+              child: Icon(
+                Icons.check_circle,
+                color: Colors.green,
               ),
             ),
           ],
