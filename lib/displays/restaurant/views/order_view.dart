@@ -80,7 +80,7 @@ class OrderView extends StatelessWidget {
                       width: double.infinity,
                       child: Center(
                         child: Text(
-                          "Confirmar", //TODO:Translate
+                          "Comandar", //TODO:Translate
                           style: AppTheme.style(
                             context,
                             Styles.whiteBoldStyle,
@@ -106,14 +106,17 @@ class OrderView extends StatelessWidget {
                   IconButton(
                     onPressed: () => vm.selectedAll(indexOrder),
                     icon: const Icon(Icons.select_all),
+                    tooltip: "Seleccionar todo", //TODO:Translate
                   ),
                   IconButton(
                     onPressed: () => vm.deleteSelected(indexOrder, context),
                     icon: const Icon(Icons.delete_outline),
+                    tooltip: "Eliminar", //TODO:Translate
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.more_vert),
+                    icon: const Icon(Icons.drive_file_move_outline),
+                    tooltip: "Trasladar", //TODO:Translate
                   ),
                 ]
               : null,
