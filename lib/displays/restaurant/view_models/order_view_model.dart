@@ -50,13 +50,13 @@ class OrderViewModel extends ChangeNotifier {
     productClassVM.product =
         orders[indexOrder].transacciones[indexTra].producto;
 
-    final DetailsRestaurantViewModel vDetailsRestaurant =
+    final DetailsRestaurantViewModel vmDetails =
         Provider.of<DetailsRestaurantViewModel>(
       context,
       listen: false,
     );
 
-    final ApiResModel resGarnish = await vDetailsRestaurant.loadGarnish(
+    final ApiResModel resGarnish = await vmDetails.loadGarnish(
       context,
       productClassVM.product!.producto,
       productClassVM.product!.unidadMedida,
@@ -68,14 +68,26 @@ class OrderViewModel extends ChangeNotifier {
       return;
     }
 
-    if (vDetailsRestaurant.garnishs.isNotEmpty) {
-      vDetailsRestaurant.orederTreeGarnish();
+    if (vmDetails.garnishs.isNotEmpty) {
+      vmDetails.orederTreeGarnish();
     }
 
-    final vmDetails = Provider.of<DetailsRestaurantViewModel>(
-      context,
-      listen: false,
-    );
+    //buscar guarniciones
+    for (var element
+        in orders[indexOrder].transacciones[indexTra].guarniciones) {
+      for (var nodo in vmDetails.treeGarnish) {
+        if (element.garnish.productoCaracteristica ==
+            nodo.item!.productoCaracteristica) {
+          for (var i = 0; i < nodo.children.length; i++) {
+            if (nodo.children[i].item!.productoCaracteristica ==
+                element.selected.productoCaracteristica) {
+              nodo.selected = nodo.children[i].item!;
+              break;
+            }
+          }
+        }
+      }
+    }
 
     final ApiResModel resBodega = await vmDetails.loadBodega(context);
 
@@ -106,6 +118,35 @@ class OrderViewModel extends ChangeNotifier {
         isLoading = false;
         NotificationService.showErrorView(context, resPrices);
         return;
+      }
+    } else {
+      for (var i = 0; i < vmDetails.bodegas.length; i++) {
+        if (vmDetails.bodegas[i].bodega ==
+            orders[indexOrder].transacciones[indexTra].bodega.bodega) {
+          vmDetails.bodega = vmDetails.bodegas[i];
+          break;
+        }
+      }
+
+      final ApiResModel resPrices = await vmDetails.loadPrecioUnitario(context);
+
+      if (!resPrices.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(context, resPrices);
+        return;
+      }
+    }
+
+    for (var i = 0; i < vmDetails.unitarios.length; i++) {
+      if (vmDetails.unitarios[i].id ==
+          orders[indexOrder].transacciones[indexTra].precio.id) {
+        vmDetails.selectedPrice = vmDetails.unitarios[i];
+
+        vmDetails.selectedPrice = vmDetails.unitarios[i];
+        vmDetails.total = vmDetails.selectedPrice!.precioU;
+        vmDetails.price = vmDetails.selectedPrice!.precioU;
+        vmDetails.controllerPrice.text = "${vmDetails.price}";
+        break;
       }
     }
 

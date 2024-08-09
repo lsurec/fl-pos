@@ -31,10 +31,12 @@ class TraRestaurantModel {
     required this.observacion,
     required this.guarniciones,
     required this.selected,
+    required this.bodega,
   });
 
   int cantidad;
   UnitarioModel precio;
+  BodegaProductoModel bodega;
   ProductRestaurantModel producto;
   String observacion;
   List<GarnishTra> guarniciones;
