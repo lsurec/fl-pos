@@ -18,6 +18,8 @@ class DetailsRestaurantView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool agregar = ModalRoute.of(context)!.settings.arguments as bool;
+
     final homeVM = Provider.of<HomeViewModel>(
       context,
     );
@@ -121,6 +123,7 @@ class DetailsRestaurantView extends StatelessWidget {
                         child: SizedBox(
                           height: 50,
                           child: ElevatedButton(
+                            //TODO:Modificar ytransaccion
                             onPressed: () => vm.addProduct(context),
                             style: AppTheme.button(
                               context,
@@ -130,7 +133,9 @@ class DetailsRestaurantView extends StatelessWidget {
                               width: double.infinity,
                               child: Center(
                                 child: Text(
-                                  "Agregar", //TODO:Translate
+                                  agregar
+                                      ? "Agregar"
+                                      : "Modificar", //TODO:Translate
                                   style: AppTheme.style(
                                     context,
                                     Styles.whiteBoldStyle,

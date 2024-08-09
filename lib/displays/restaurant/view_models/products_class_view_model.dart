@@ -93,7 +93,11 @@ class ProductsClassViewModel extends ChangeNotifier {
 
     vmDetails.valueNum = 1;
     vmDetails.controllerNum.text = "1";
-    Navigator.pushNamed(context, AppRoutes.detailsRestaurant);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.detailsRestaurant,
+      arguments: true,
+    );
 
     isLoading = false;
   }

@@ -158,7 +158,11 @@ class OrderViewModel extends ChangeNotifier {
 
     vmDetails.calculateTotal();
 
-    Navigator.pushNamed(context, AppRoutes.detailsRestaurant);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.detailsRestaurant,
+      arguments: false,
+    );
 
     isLoading = false;
   }
