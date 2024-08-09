@@ -37,7 +37,7 @@ class AccountsView extends StatelessWidget {
                       tooltip: "Seleccionar todo", //TODO:Translate
                     ),
                     IconButton(
-                      onPressed: () => {},
+                      onPressed: () => vm.deleteItems(context),
                       icon: const Icon(Icons.delete_outline),
                       tooltip: "Eliminar", //TODO:Translate
                     ),

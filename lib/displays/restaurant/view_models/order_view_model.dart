@@ -38,8 +38,17 @@ class OrderViewModel extends ChangeNotifier {
   }
 
   selectedAll(int indexOrder) {
-    for (var element in orders[indexOrder].transacciones) {
-      element.selected = true;
+    if (orders[indexOrder].transacciones.length ==
+        getSelectedItems(indexOrder)) {
+      for (var element in orders[indexOrder].transacciones) {
+        element.selected = false;
+      }
+
+      // isSelectedMode = false;
+    } else {
+      for (var element in orders[indexOrder].transacciones) {
+        element.selected = true;
+      }
     }
 
     notifyListeners();
@@ -86,6 +95,16 @@ class OrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  deleteSelectRecursive(int indexOrder) {
+    for (var i = 0; i < orders[indexOrder].transacciones.length; i++) {
+      if (orders[indexOrder].transacciones[i].selected) {
+        orders[indexOrder].transacciones.removeAt(i);
+        deleteSelectRecursive(indexOrder);
+        break;
+      }
+    }
+  }
+
   deleteSelected(int indexOrder, BuildContext context) {
     showDialog(
       context: context,
@@ -97,11 +116,7 @@ class OrderViewModel extends ChangeNotifier {
           //Cerrar sesión, limpiar datos
           Navigator.of(context).pop();
 
-          for (var i = 0; i < orders[indexOrder].transacciones.length; i++) {
-            if (orders[indexOrder].transacciones[i].selected) {
-              orders[indexOrder].transacciones.removeAt(i);
-            }
-          }
+          deleteSelectRecursive(indexOrder);
 
           if (orders[indexOrder].transacciones.isEmpty) {
             Navigator.of(context).pop();
