@@ -92,7 +92,7 @@ class OrderViewModel extends ChangeNotifier {
       builder: (context) => AlertWidget(
         title: "¿Estás seguro?",
         description:
-            "Estas a punto de eliminar la transaccion. Esta accion no se puede deshacer.",
+            "Estas a punto de eliminar las transacciones seleccionadas. Esta accion no se puede deshacer.",
         onOk: () {
           //Cerrar sesión, limpiar datos
           Navigator.of(context).pop();

@@ -15,45 +15,77 @@ class AccountsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AccountsViewModel vm = Provider.of<AccountsViewModel>(context);
+
     final TablesViewModel tablesVM = Provider.of<TablesViewModel>(context);
 
-    return Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Seleccionar cuenta",
-                  style: AppTheme.style(context, Styles.title),
-                ),
-                const SizedBox(height: 20),
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                  ),
-                  itemCount: tablesVM.table!.orders!.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index < tablesVM.table!.orders!.length) {
-                      return _AccountCard(
-                        index: tablesVM.table!.orders![index],
-                      );
-                    } else {
-                      return const NewAccountCardWidget();
-                    }
-                  },
-                ),
-              ],
-            ),
+    return WillPopScope(
+      onWillPop: () => vm.backPage(context),
+      child: Scaffold(
+          appBar: AppBar(
+            title: vm.isSelectedMode
+                ? Text(
+                    vm.getSelectedItems(context).toString(),
+                    style: AppTheme.style(context, Styles.normal),
+                  )
+                : null,
+            actions: vm.isSelectedMode
+                ? [
+                    IconButton(
+                      onPressed: () => vm.selectedAll(context),
+                      icon: const Icon(Icons.select_all),
+                      tooltip: "Seleccionar todo", //TODO:Translate
+                    ),
+                    IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(Icons.delete_outline),
+                      tooltip: "Eliminar", //TODO:Translate
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.drive_file_move_outline),
+                      tooltip: "Trasladar", //TODO:Translate
+                    ),
+                  ]
+                : null,
           ),
-        ));
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Seleccionar cuenta",
+                    style: AppTheme.style(context, Styles.title),
+                  ),
+                  const SizedBox(height: 20),
+                  GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
+                    ),
+                    itemCount: tablesVM.table!.orders!.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index < tablesVM.table!.orders!.length) {
+                        return _AccountCard(
+                          index: tablesVM.table!.orders![index],
+                        );
+                      } else {
+                        return const NewAccountCardWidget();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          )),
+    );
   }
 }
 
@@ -72,8 +104,7 @@ class _AccountCard extends StatelessWidget {
         Provider.of<AddPersonViewModel>(context);
     final HomeViewModel homeVM = Provider.of<HomeViewModel>(context);
 
-    final AccountsViewModel accountsVM =
-        Provider.of<AccountsViewModel>(context);
+    final AccountsViewModel vm = Provider.of<AccountsViewModel>(context);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -90,19 +121,22 @@ class _AccountCard extends StatelessWidget {
       elevation: 2,
       raidus: 10,
       child: InkWell(
-        onTap: () {
-          if (orderVM.orders[index].transacciones.isEmpty) {
-            NotificationService.showSnackbar(
-                "No hay transacciones para mostrar"); //TODO:Translate
-            return;
-          }
+        onLongPress: () => vm.onLongPress(context, index),
+        onTap: vm.isSelectedMode
+            ? () => vm.selectedItem(context, index)
+            : () {
+                if (orderVM.orders[index].transacciones.isEmpty) {
+                  NotificationService.showSnackbar(
+                      "No hay transacciones para mostrar"); //TODO:Translate
+                  return;
+                }
 
-          Navigator.pushNamed(
-            context,
-            AppRoutes.order,
-            arguments: index,
-          );
-        },
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.order,
+                  arguments: index,
+                );
+              },
         child: Stack(
           children: [
             Padding(
@@ -185,14 +219,15 @@ class _AccountCard extends StatelessWidget {
                 },
               ),
             ),
-            const Positioned(
-              left: 10,
-              bottom: 10,
-              child: Icon(
-                Icons.check_circle,
-                color: Colors.green,
+            if (vm.isSelectedMode && orderVM.orders[index].selected)
+              const Positioned(
+                left: 10,
+                bottom: 10,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                ),
               ),
-            ),
           ],
         ),
       ),

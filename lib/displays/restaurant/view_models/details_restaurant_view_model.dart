@@ -205,7 +205,6 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     }
 
     TraRestaurantModel transaction = TraRestaurantModel(
-      id: 1,
       cantidad: int.tryParse(controllerNum.text) ?? 0,
       precio: selectedPrice!,
       producto: productRestaurantVM.product!,
@@ -218,8 +217,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       vmOrders.addFirst(
         context,
         OrderModel(
+          selected: false,
           mesero: pinVM.waitress!,
-          id: vmOrders.orders.length + 1,
           nombre: "Cuenta 1", //TODO: Rebombrar
           ubicacion: locationVM.location!,
           mesa: tableVM.table!,

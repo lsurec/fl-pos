@@ -6,16 +6,16 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/models/mo
 class OrderModel {
   OrderModel({
     required this.mesero,
-    required this.id,
     required this.nombre,
     required this.ubicacion,
     required this.mesa,
+    required this.selected,
     required this.transacciones,
   });
 
   // CorrentistaModel mesero;
+  bool selected;
   AccountPinModel mesero;
-  int id;
   String nombre;
   LocationModel ubicacion;
   TableModel mesa;
@@ -25,7 +25,6 @@ class OrderModel {
 //estructura transaccion de una orden
 class TraRestaurantModel {
   TraRestaurantModel({
-    required this.id,
     required this.cantidad,
     required this.precio,
     required this.producto,
@@ -34,7 +33,6 @@ class TraRestaurantModel {
     required this.selected,
   });
 
-  int id;
   int cantidad;
   UnitarioModel precio;
   ProductRestaurantModel producto;
