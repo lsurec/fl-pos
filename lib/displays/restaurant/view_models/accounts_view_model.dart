@@ -42,11 +42,6 @@ class AccountsViewModel extends ChangeNotifier {
   }
 
   deleteItems(BuildContext context) {
-    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
-      context,
-      listen: false,
-    );
-
     final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
       context,
       listen: false,
