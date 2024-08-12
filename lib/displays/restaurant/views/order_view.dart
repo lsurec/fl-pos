@@ -257,6 +257,16 @@ class OrderView extends StatelessWidget {
                                   color: Colors.green,
                                 ),
                               ),
+                            if (vm.orders[indexOrder].transacciones[index]
+                                .process)
+                              const Positioned(
+                                left: 40,
+                                bottom: 0,
+                                child: Icon(
+                                  Icons.lock_outline,
+                                  color: Colors.red,
+                                ),
+                              ),
                           ],
                         ),
                       ),

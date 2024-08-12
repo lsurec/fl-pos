@@ -213,6 +213,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       guarniciones: selectGarnishs,
       selected: false,
       bodega: bodega!,
+      process: false,
     );
 
     if (options["modify"]) {
