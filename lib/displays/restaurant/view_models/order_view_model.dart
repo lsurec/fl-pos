@@ -158,10 +158,16 @@ class OrderViewModel extends ChangeNotifier {
 
     vmDetails.calculateTotal();
 
+    final Map<String, dynamic> options = {
+      'modify': true,
+      'indexOrder': indexOrder,
+      'indexTra': indexTra,
+    };
+
     Navigator.pushNamed(
       context,
       AppRoutes.detailsRestaurant,
-      arguments: false,
+      arguments: options,
     );
 
     isLoading = false;

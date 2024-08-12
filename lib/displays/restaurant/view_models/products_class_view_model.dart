@@ -93,10 +93,17 @@ class ProductsClassViewModel extends ChangeNotifier {
 
     vmDetails.valueNum = 1;
     vmDetails.controllerNum.text = "1";
+
+    final Map<String, dynamic> options = {
+      'modify': false,
+      'indexOrder': 0,
+      'indexTra': 0,
+    };
+
     Navigator.pushNamed(
       context,
       AppRoutes.detailsRestaurant,
-      arguments: true,
+      arguments: options,
     );
 
     isLoading = false;
