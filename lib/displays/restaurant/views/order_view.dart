@@ -258,7 +258,7 @@ class OrderView extends StatelessWidget {
                                 ),
                               ),
                             if (vm.orders[indexOrder].transacciones[index]
-                                .process)
+                                .processed)
                               const Positioned(
                                 left: 40,
                                 bottom: 0,

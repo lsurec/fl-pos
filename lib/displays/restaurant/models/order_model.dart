@@ -32,7 +32,7 @@ class TraRestaurantModel {
     required this.guarniciones,
     required this.selected,
     required this.bodega,
-    required this.process,
+    required this.processed,
   });
 
   int cantidad;
@@ -42,7 +42,7 @@ class TraRestaurantModel {
   String observacion;
   List<GarnishTra> guarniciones;
   bool selected;
-  bool process;
+  bool processed;
 }
 
 class GarnishTra {

@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -16,6 +17,67 @@ class OrderViewModel extends ChangeNotifier {
   //manejar flujo del procesp
   bool _isSelectedMode = false;
   bool get isSelectedMode => _isSelectedMode;
+
+  monitorPrint(int indexOrder) {
+    double traTotal = 0;
+    final List<DocTransaccion> transactions = [];
+
+    //Buscar transacciones que van a comandarse
+    for (var tra in orders[indexOrder].transacciones) {
+      if (!tra.processed) {
+        transactions.add(
+          DocTransaccion(
+            traConsecutivoInterno: traConsecutivoInterno,
+            traConsecutivoInternoPadre: traConsecutivoInternoPadre,
+            dConsecutivoInterno: dConsecutivoInterno,
+            traBodega: traBodega,
+            traProducto: traProducto,
+            traUnidadMedida: traUnidadMedida,
+            traCantidad: traCantidad,
+            traTipoCambio: traTipoCambio,
+            traMoneda: traMoneda,
+            traTipoPrecio: traTipoPrecio,
+            traFactorConversion: traFactorConversion,
+            traTipoTransaccion: traTipoTransaccion,
+            traMonto: traMonto,
+          ),
+        );
+      }
+    }
+
+    // Generar dos números aleatorios de 7 dígitos cada uno
+    var random = Random();
+
+    int firstPart = random.nextInt(10000000);
+
+    final DocEstructuraModel doc = DocEstructuraModel(
+      docLatitdud: null,
+      docLongitud: null,
+      consecutivoInterno: firstPart,
+      docTraMonto: docTraMonto,
+      docCaMonto: docCaMonto,
+      docCuentaVendedor: docCuentaVendedor,
+      docIdCertificador: docIdCertificador,
+      docIdDocumentoRef: docIdDocumentoRef,
+      docFelNumeroDocumento: docFelNumeroDocumento,
+      docFelSerie: docFelSerie,
+      docFelUUID: docFelUUID,
+      docFelFechaCertificacion: docFelFechaCertificacion,
+      docFechaDocumento: docFechaDocumento,
+      docCuentaCorrentista: docCuentaCorrentista,
+      docCuentaCta: docCuentaCta,
+      docTipoDocumento: docTipoDocumento,
+      docSerieDocumento: docSerieDocumento,
+      docEmpresa: docEmpresa,
+      docEstacionTrabajo: docEstacionTrabajo,
+      docUserName: docUserName,
+      docObservacion1: docObservacion1,
+      docTipoPago: docTipoPago,
+      docElementoAsignado: docElementoAsignado,
+      docTransaccion: docTransaccion,
+      docCargoAbono: docCargoAbono,
+    );
+  }
 
   set isSelectedMode(bool value) {
     _isSelectedMode = value;
