@@ -323,6 +323,15 @@ class OrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  editTra(
+    int indexOrder,
+    int indexTra,
+    TraRestaurantModel transaction,
+  ) {
+    orders[indexOrder].transacciones[indexTra] = transaction;
+    notifyListeners();
+  }
+
   addTransactionFirst(
     TraRestaurantModel transaction,
     int indexOrder,

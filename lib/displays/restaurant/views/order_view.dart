@@ -139,7 +139,8 @@ class OrderView extends StatelessWidget {
                       InkWell(
                         onTap: () => vm.isSelectedMode
                             ? vm.sleectedItem(indexOrder, index)
-                            : vm.modifyTra(context, indexOrder, index),
+                            : null,
+                        // vm.modifyTra(context, indexOrder, index),
                         onLongPress: () => vm.onLongPress(indexOrder, index),
                         child: Stack(
                           children: [

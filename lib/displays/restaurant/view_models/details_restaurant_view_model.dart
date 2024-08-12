@@ -45,7 +45,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
   final List<BodegaProductoModel> bodegas = [];
   BodegaProductoModel? bodega;
 
-  Future<void> addProduct(BuildContext context) async {
+  Future<void> addProduct(
+      BuildContext context, Map<String, dynamic> options) async {
     //si no hay bodega seleccionada
     if (bodega == null) {
       NotificationService.showSnackbar(
@@ -213,6 +214,16 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       selected: false,
       bodega: bodega!,
     );
+
+    if (options["modify"]) {
+      vmOrders.modifyTra(context, options["indexOrder"], options["indexTra"]);
+
+      formValues["observacion"] = "";
+
+      Navigator.pop(context);
+      NotificationService.showSnackbar("Producto modificado");
+      return;
+    }
 
     if (tableVM.table!.orders!.isEmpty) {
       vmOrders.addFirst(

@@ -125,7 +125,7 @@ class DetailsRestaurantView extends StatelessWidget {
                           height: 50,
                           child: ElevatedButton(
                             //TODO:Modificar ytransaccion
-                            onPressed: () => vm.addProduct(context),
+                            onPressed: () => vm.addProduct(context, options),
                             style: AppTheme.button(
                               context,
                               Styles.buttonStyle,
@@ -134,7 +134,7 @@ class DetailsRestaurantView extends StatelessWidget {
                               width: double.infinity,
                               child: Center(
                                 child: Text(
-                                  options["modify"]
+                                  !options["modify"]
                                       ? "Agregar"
                                       : "Modificar", //TODO:Translate
                                   style: AppTheme.style(
