@@ -259,8 +259,10 @@ class DocTransaccion {
   int traTipoTransaccion;
   double traMonto;
   double? traMontoDias;
+  bool traComandada;
 
   DocTransaccion({
+    required this.traComandada,
     required this.traObservacion,
     required this.traGuarniciones,
     required this.traConsecutivoInterno,
@@ -285,6 +287,7 @@ class DocTransaccion {
   String toJson() => json.encode(toMap());
 
   factory DocTransaccion.fromMap(Map<String, dynamic> json) => DocTransaccion(
+        traComandada: json["Tra_Comandada"],
         traObservacion: json["Tra_Observacion"],
         traGuarniciones: List<GarnishModel>.from(
           json["Tra_Guarniciones"].map((x) => GarnishModel.fromMap(x)),
@@ -306,6 +309,7 @@ class DocTransaccion {
       );
 
   Map<String, dynamic> toMap() => {
+        "Tra_Comandada": traComandada,
         "Tra_Observacion": traGuarniciones,
         "Tra_Guarniciones":
             List<dynamic>.from(traGuarniciones?.map((x) => x.toMap()) ?? []),

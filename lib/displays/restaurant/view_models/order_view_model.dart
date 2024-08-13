@@ -65,29 +65,28 @@ class OrderViewModel extends ChangeNotifier {
     //Buscar transacciones que van a comandarse
     for (var tra in orders[indexOrder].transacciones) {
       int consecutivo = random.nextInt(10000000);
-      if (!tra.processed) {
-        transactions.add(
-          DocTransaccion(
-            traGuarniciones: tra.guarniciones.map((e) => e.selected).toList(),
-            traObservacion: tra.observacion,
-            traConsecutivoInterno: firstPart,
-            traConsecutivoInternoPadre: 0,
-            dConsecutivoInterno: consecutivo,
-            traBodega: tra.bodega.bodega,
-            traProducto: tra.producto.producto,
-            traUnidadMedida: tra.producto.unidadMedida,
-            traCantidad: tra.cantidad,
-            traTipoCambio: menuVM.tipoCambio,
-            traMoneda: tra.precio.moneda,
-            traTipoPrecio: tra.precio.precio ? tra.precio.id : null,
-            traFactorConversion: !tra.precio.precio ? tra.precio.id : null,
-            traTipoTransaccion: 1, //TODO:Hace falta
-            traMonto: (tra.cantidad * tra.precio.precioU),
-          ),
-        );
+      transactions.add(
+        DocTransaccion(
+          traComandada: false,
+          traGuarniciones: tra.guarniciones.map((e) => e.selected).toList(),
+          traObservacion: tra.observacion,
+          traConsecutivoInterno: firstPart,
+          traConsecutivoInternoPadre: 0,
+          dConsecutivoInterno: consecutivo,
+          traBodega: tra.bodega.bodega,
+          traProducto: tra.producto.producto,
+          traUnidadMedida: tra.producto.unidadMedida,
+          traCantidad: tra.cantidad,
+          traTipoCambio: menuVM.tipoCambio,
+          traMoneda: tra.precio.moneda,
+          traTipoPrecio: tra.precio.precio ? tra.precio.id : null,
+          traFactorConversion: !tra.precio.precio ? tra.precio.id : null,
+          traTipoTransaccion: 1, //TODO:Hace falta
+          traMonto: (tra.cantidad * tra.precio.precioU),
+        ),
+      );
 
-        traTotal += (tra.cantidad * tra.precio.precioU);
-      }
+      traTotal += (tra.cantidad * tra.precio.precioU);
     }
 
 // Combinar los dos números para formar uno de 14 dígitos
@@ -152,8 +151,6 @@ class OrderViewModel extends ChangeNotifier {
     );
 
     if (orders[indexOrder].consecutivo == 0) {
-      //Crear
-
       //objeto enviar documento
       PostDocumentModel document = PostDocumentModel(
         estructura: doc.toJson(),
@@ -177,7 +174,27 @@ class OrderViewModel extends ChangeNotifier {
 
       orders[indexOrder].consecutivo = res.response["data"];
     } else {
+      final PostDocumentModel estructuraupdate = PostDocumentModel(
+        estructura: doc.toJson(),
+        user: user,
+        estado: 1, //1 pemd 11 loisto para migrar
+      );
+
       //Actualizar
+      final DocumentService documentService = DocumentService();
+
+      final ApiResModel resUpdateEstructura =
+          await documentService.updateDocument(
+        estructuraupdate,
+        tokenUser,
+        orders[indexOrder].consecutivo,
+      );
+
+      if (!resUpdateEstructura.succes) {
+        NotificationService.showSnackbar(
+          "No se pudo actalizar documento estructura",
+        );
+      }
     }
   }
 
