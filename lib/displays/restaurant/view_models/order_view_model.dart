@@ -3,6 +3,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
@@ -15,11 +17,32 @@ import 'package:flutter_post_printer_example/utilities/translate_block_utilities
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_post_printer_example/libraries/app_data.dart'
+    as AppData;
 
 class OrderViewModel extends ChangeNotifier {
+  final PrinterManager instanceManager = PrinterManager.instance;
+
   //manejar flujo del procesp
   bool _isSelectedMode = false;
   bool get isSelectedMode => _isSelectedMode;
+
+  set isSelectedMode(bool value) {
+    _isSelectedMode = value;
+    notifyListeners();
+  }
+
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
+  final List<OrderModel> orders = [];
+  final List<int> selectedTra = [];
 
   Future<void> monitorPrint(
     BuildContext context,
@@ -215,27 +238,263 @@ class OrderViewModel extends ChangeNotifier {
       }
     }
 
+    for (var element in orders[indexOrder].transacciones) {
+      element.processed = true;
+    }
+
     isLoading = false;
 
     NotificationService.showSnackbar("Comanda enviada");
   }
 
-  set isSelectedMode(bool value) {
-    _isSelectedMode = value;
-    notifyListeners();
+  printNetwork(
+    BuildContext context,
+    int indexOrder,
+  ) async {
+    //Proveedor de datos externo
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.user;
+    String tokenUser = loginVM.token;
+
+    isLoading = true;
+
+    final DocumentService documentService = DocumentService();
+
+    final ApiResModel res = await documentService.getDataComanda(
+      user, // user,
+      tokenUser, // token,
+      orders[indexOrder].consecutivo, // consecutivo,
+    );
+
+    if (!res.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(
+        context,
+        res,
+      );
+
+      return;
+    }
+
+    final List<PrintDataComandaModel> detalles = res.response;
+
+    final List<FormatoComanda> formats = [];
+
+    for (var detalle in detalles) {
+      if (formats.isEmpty) {
+        formats.add(
+          FormatoComanda(
+            ipAdress: detalle.printerName,
+            bodega: detalle.bodega,
+            detalles: [detalle],
+          ),
+        );
+      } else {
+        int indexBodega = -1;
+
+        for (var i = 0; i < formats.length; i++) {
+          final FormatoComanda formato = formats[i];
+          if (detalle.bodega == formato.bodega) {
+            indexBodega = i;
+            break;
+          }
+        }
+
+        if (indexBodega == -1) {
+          formats.add(
+            FormatoComanda(
+              ipAdress: detalle.printerName,
+              bodega: detalle.bodega,
+              detalles: [detalle],
+            ),
+          );
+        } else {
+          formats[indexBodega].detalles.add(detalle);
+        }
+      }
+    }
+
+    int paperDefault = 80; //58 //72 //80
+
+    PosStyles center = const PosStyles(
+      align: PosAlign.center,
+    );
+
+    // final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
+    // final Uint8List bytesImg = data.buffer.asUint8List();
+    // final img.Image? image = decodeImage(bytesImg);
+
+    for (var element in formats) {
+      try {
+        List<int> bytes = [];
+        final generator = Generator(
+          AppData.paperSize[paperDefault],
+          await CapabilityProfile.load(),
+        );
+
+        bytes += generator.setGlobalCodeTable('CP1252');
+
+        // bytes += generator.image(
+        //   img.copyResize(image!, height: 200, width: 250),
+        // );
+        bytes += generator.text(
+          element.detalles[0].desUbicacion,
+          styles: const PosStyles(
+            bold: true,
+            align: PosAlign.center,
+            height: PosTextSize.size2,
+          ),
+        );
+
+        bytes += generator.text(
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'mesa',
+          )}: ${element.detalles[0].desMesa.toUpperCase()}",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].idDocumento}",
+          styles: const PosStyles(
+            bold: true,
+            align: PosAlign.center,
+            height: PosTextSize.size2,
+          ),
+        );
+
+        bytes += generator.emptyLines(1);
+
+        //Incio del formato
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'cantidad',
+              ),
+              width: 2,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+            ),
+            PosColumn(
+              text: '',
+              width: 1,
+              styles: const PosStyles(
+                align: PosAlign.left,
+              ),
+            ),
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.general,
+                'descripcion',
+              ),
+              width: 9,
+              styles: const PosStyles(
+                align: PosAlign.left,
+              ),
+            ),
+          ],
+        );
+
+        for (var tra in element.detalles) {
+          bytes += generator.row(
+            [
+              PosColumn(
+                text: "${tra.cantidad}",
+                width: 2,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.right,
+                ),
+              ),
+              PosColumn(
+                text: "",
+                width: 1,
+              ), // Anc/ Ancho 2
+              PosColumn(
+                text: tra.desProducto,
+                width: 9,
+                styles: const PosStyles(
+                  height: PosTextSize.size2,
+                  align: PosAlign.left,
+                ),
+              ), // Ancho 6
+            ],
+          );
+        }
+
+        bytes += generator.emptyLines(1);
+
+        bytes += generator.text(
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.tiket,
+            'atencion',
+          )}: ${element.detalles[0].userName.toUpperCase()}",
+          styles: center,
+        );
+
+        final now = element.detalles[0].fechaHora;
+
+        bytes += generator.text(
+          "${now.day}/${now.month}/${now.year} ${now.hour}:${now.minute}:${now.second}",
+          styles: center,
+        );
+
+        bytes += generator.emptyLines(2);
+
+        bytes += generator.text(
+          "----------------------------",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "Powered By:",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "Desarrollo Moderno de Software S.A.",
+          styles: center,
+        );
+        bytes += generator.text(
+          "www.demosoft.com.gt",
+          styles: center,
+        );
+
+        bytes += generator.cut();
+
+        await PrinterManager.instance.connect(
+          type: PrinterType.network,
+          model: TcpPrinterInput(
+            ipAddress: element.ipAdress,
+          ),
+        );
+
+        await instanceManager.send(
+          type: PrinterType.network,
+          bytes: bytes,
+        );
+      } catch (e) {
+        isLoading = false;
+        NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noImprimio',
+        ));
+        return;
+      }
+    }
+
+    isLoading = false;
   }
-
-  //manejar flujo del procesp
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
-  set isLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  final List<OrderModel> orders = [];
-  final List<int> selectedTra = [];
 
   Future<void> modifyTra(
     BuildContext context,
