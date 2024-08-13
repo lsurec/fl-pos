@@ -31,7 +31,7 @@ class OrderViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final docVM = Provider.of<DocumentViewModel>(
+    final homeResVM = Provider.of<HomeRestaurantViewModel>(
       context,
       listen: false,
     );
@@ -50,7 +50,7 @@ class OrderViewModel extends ChangeNotifier {
     String user = loginVM.user;
     String tokenUser = loginVM.token;
     int tipoDocumento = menuVM.documento!;
-    String serieDocumento = docVM.serieSelect!.serieDocumento!;
+    String serieDocumento = homeResVM.serieSelect!.serieDocumento!;
     int empresa = localVM.selectedEmpresa!.empresa;
     int estacion = localVM.selectedEstacion!.estacionTrabajo;
 
@@ -65,11 +65,20 @@ class OrderViewModel extends ChangeNotifier {
     //Buscar transacciones que van a comandarse
     for (var tra in orders[indexOrder].transacciones) {
       int consecutivo = random.nextInt(10000000);
+
       transactions.add(
         DocTransaccion(
           traMontoDias: null,
           traComandada: tra.processed,
-          traGuarniciones: tra.guarniciones.map((e) => e.selected).toList(),
+          traGuarniciones: tra.guarniciones
+              .map(
+                (e) => GuarnicionModel(
+                  productoCaracteristica: e.selected.productoCaracteristica,
+                  productoCaracteristicaPadre:
+                      e.selected.productoCaracteristicaPadre,
+                ),
+              )
+              .toList(),
           traObservacion: tra.observacion,
           traConsecutivoInterno: firstPart,
           traConsecutivoInternoPadre: 0,
@@ -152,6 +161,7 @@ class OrderViewModel extends ChangeNotifier {
       docCargoAbono: [],
     );
 
+    // if (true) {
     if (orders[indexOrder].consecutivo == 0) {
       //objeto enviar documento
       PostDocumentModel document = PostDocumentModel(
@@ -162,6 +172,8 @@ class OrderViewModel extends ChangeNotifier {
 
       //instancia del servicio
       DocumentService documentService = DocumentService();
+
+      isLoading = true;
 
       //consumo del api
       ApiResModel res = await documentService.postDocument(document, tokenUser);
@@ -185,6 +197,8 @@ class OrderViewModel extends ChangeNotifier {
       //Actualizar
       final DocumentService documentService = DocumentService();
 
+      isLoading = true;
+
       final ApiResModel resUpdateEstructura =
           await documentService.updateDocument(
         estructuraupdate,
@@ -193,11 +207,17 @@ class OrderViewModel extends ChangeNotifier {
       );
 
       if (!resUpdateEstructura.succes) {
+        isLoading = false;
+
         NotificationService.showSnackbar(
           "No se pudo actalizar documento estructura",
         );
       }
     }
+
+    isLoading = false;
+
+    NotificationService.showSnackbar("Comanda enviada");
   }
 
   set isSelectedMode(bool value) {

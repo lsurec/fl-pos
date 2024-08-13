@@ -248,7 +248,7 @@ class DocCargoAbono {
 
 class DocTransaccion {
   String? traObservacion;
-  List<GarnishModel>? traGuarniciones;
+  List<GuarnicionModel>? traGuarniciones;
   int traConsecutivoInterno;
   int? traConsecutivoInternoPadre;
   int dConsecutivoInterno;
@@ -293,8 +293,8 @@ class DocTransaccion {
   factory DocTransaccion.fromMap(Map<String, dynamic> json) => DocTransaccion(
         traComandada: json["Tra_Comandada"],
         traObservacion: json["Tra_Observacion"],
-        traGuarniciones: List<GarnishModel>.from(
-          json["Tra_Guarniciones"].map((x) => GarnishModel.fromMap(x)),
+        traGuarniciones: List<GuarnicionModel>.from(
+          json["Tra_Guarniciones"].map((x) => GuarnicionModel.fromMap(x)),
         ),
         traConsecutivoInterno: json["Tra_Consecutivo_Interno"],
         traConsecutivoInternoPadre: json["Tra_Consecutivo_Interno_Padre"],
@@ -314,7 +314,7 @@ class DocTransaccion {
 
   Map<String, dynamic> toMap() => {
         "Tra_Comandada": traComandada,
-        "Tra_Observacion": traGuarniciones,
+        "Tra_Observacion": traObservacion,
         "Tra_Guarniciones":
             List<dynamic>.from(traGuarniciones?.map((x) => x.toMap()) ?? []),
         "Tra_Consecutivo_Interno": traConsecutivoInterno,
@@ -331,5 +331,30 @@ class DocTransaccion {
         "Tra_Tipo_Transaccion": traTipoTransaccion,
         "Tra_Monto": traMonto,
         "Tra_Monto_Dias": traMontoDias,
+      };
+}
+
+class GuarnicionModel {
+  int productoCaracteristica;
+  int? productoCaracteristicaPadre;
+
+  GuarnicionModel({
+    required this.productoCaracteristica,
+    required this.productoCaracteristicaPadre,
+  });
+
+  factory GuarnicionModel.fromJson(String str) =>
+      GuarnicionModel.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory GuarnicionModel.fromMap(Map<String, dynamic> json) => GuarnicionModel(
+        productoCaracteristica: json["productoCaracteristica"],
+        productoCaracteristicaPadre: json["productoCaracteristicaPadre"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "productoCaracteristica": productoCaracteristica,
+        "productoCaracteristicaPadre": productoCaracteristicaPadre,
       };
 }
