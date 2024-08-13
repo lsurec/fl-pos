@@ -39,8 +39,10 @@ class DocEstructuraModel {
   String? docRefDescripcion;
   String? docRefObservacion3;
   String? docRefObservacion;
+  String? docComanda;
 
   DocEstructuraModel({
+    required this.docComanda,
     required this.docMesa,
     required this.docUbicacion,
     required this.docLatitdud,
@@ -86,6 +88,7 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
+        docComanda: json["Doc_Comanda"],
         docMesa: json["Doc_Mesa"],
         docUbicacion: json["Doc_Ubicacion"],
         docLatitdud: json["Doc_Latitdud"] ?? 0,
@@ -136,6 +139,7 @@ class DocEstructuraModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "Doc_Comanda": docComanda,
         "Doc_Mesa": docMesa,
         "Doc_Ubicacion": docUbicacion,
         "Doc_Latitdud": docLatitdud,
@@ -274,11 +278,11 @@ class DocTransaccion {
     required this.traCantidad,
     required this.traTipoCambio,
     required this.traMoneda,
-    this.traTipoPrecio,
-    this.traFactorConversion,
+    required this.traTipoPrecio,
+    required this.traFactorConversion,
     required this.traTipoTransaccion,
     required this.traMonto,
-    this.traMontoDias,
+    required this.traMontoDias,
   });
 
   factory DocTransaccion.fromJson(String str) =>

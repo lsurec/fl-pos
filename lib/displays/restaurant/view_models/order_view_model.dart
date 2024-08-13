@@ -67,7 +67,8 @@ class OrderViewModel extends ChangeNotifier {
       int consecutivo = random.nextInt(10000000);
       transactions.add(
         DocTransaccion(
-          traComandada: false,
+          traMontoDias: null,
+          traComandada: tra.processed,
           traGuarniciones: tra.guarniciones.map((e) => e.selected).toList(),
           traObservacion: tra.observacion,
           traConsecutivoInterno: firstPart,
@@ -110,6 +111,7 @@ class OrderViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
 
     final DocEstructuraModel doc = DocEstructuraModel(
+      docComanda: orders[indexOrder].nombre,
       docFechaFin: null,
       docFechaIni: null,
       docRefDescripcion: null,

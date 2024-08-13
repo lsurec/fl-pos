@@ -1069,6 +1069,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
           consectivo++;
           cargos.add(
             DocTransaccion(
+              traMontoDias: null,
               traComandada: false,
               traGuarniciones: null,
               traObservacion: null,
@@ -1098,6 +1099,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
           descuentos.add(
             DocTransaccion(
+              traMontoDias: null,
               traComandada: false,
               traGuarniciones: null,
               traObservacion: null,
@@ -1191,6 +1193,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     docGlobal = DocEstructuraModel(
+      docComanda: null,
       docMesa: null,
       docUbicacion: null,
       docLatitdud: currentPosition?.latitude.toString(),
