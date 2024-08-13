@@ -110,6 +110,15 @@ class OrderViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
 
     final DocEstructuraModel doc = DocEstructuraModel(
+      docFechaFin: null,
+      docFechaIni: null,
+      docRefDescripcion: null,
+      docRefFechaFin: null,
+      docRefFechaIni: null,
+      docRefObservacion2: null,
+      docRefObservacion3: null,
+      docRefObservacion: null,
+      docRefTipoReferencia: null,
       docMesa: orders[indexOrder].mesa.elementoAsignado,
       docUbicacion: orders[indexOrder].ubicacion.elementoAsignado,
       docLatitdud: null,
