@@ -101,9 +101,9 @@ class OrderViewModel extends ChangeNotifier {
               )
               .toList(),
           traObservacion: tra.observacion,
-          traConsecutivoInterno: firstPart,
+          traConsecutivoInterno: consecutivo,
           traConsecutivoInternoPadre: 0,
-          dConsecutivoInterno: consecutivo,
+          dConsecutivoInterno: firstPart,
           traBodega: tra.bodega.bodega,
           traProducto: tra.producto.producto,
           traUnidadMedida: tra.producto.unidadMedida,
@@ -243,6 +243,8 @@ class OrderViewModel extends ChangeNotifier {
     }
 
     isLoading = false;
+
+    // await printNetwork(context, indexOrder);
 
     NotificationService.showSnackbar("Comanda enviada");
   }
