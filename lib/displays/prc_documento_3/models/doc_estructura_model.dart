@@ -1,6 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter_post_printer_example/displays/restaurant/models/garnish_model.dart';
+
 class DocEstructuraModel {
+  int? docMesa;
+  int? docUbicacion;
   String? docLatitdud;
   String? docLongitud;
   int consecutivoInterno;
@@ -28,6 +32,8 @@ class DocEstructuraModel {
   List<DocCargoAbono> docCargoAbono;
 
   DocEstructuraModel({
+    required this.docMesa,
+    required this.docUbicacion,
     required this.docLatitdud,
     required this.docLongitud,
     required this.consecutivoInterno,
@@ -62,8 +68,10 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
-        docLatitdud: json["docLatitdud"],
-        docLongitud: json["docLongitud"] ?? 0,
+        docMesa: json["Doc_Mesa"],
+        docUbicacion: json["Doc_Ubicacion"],
+        docLatitdud: json["Doc_Latitdud"],
+        docLongitud: json["Doc_Longitud"] ?? 0,
         consecutivoInterno: json["Consecutivo_Interno"] ?? 0,
         docTraMonto: json["Doc_Tra_Monto"].toDouble(),
         docCaMonto: json["Doc_CA_Monto"].toDouble(),
@@ -93,8 +101,10 @@ class DocEstructuraModel {
       );
 
   Map<String, dynamic> toMap() => {
-        "docLatitdud": docLatitdud,
-        "docLongitud": docLongitud,
+        "Doc_Mesa": docMesa,
+        "Doc_Ubicacion": docUbicacion,
+        "Doc_Latitdud": docLatitdud,
+        "Doc_Longitud": docLongitud,
         "Consecutivo_Interno": consecutivoInterno,
         "Doc_Tra_Monto": docTraMonto,
         "Doc_CA_Monto": docCaMonto,
@@ -189,6 +199,8 @@ class DocCargoAbono {
 }
 
 class DocTransaccion {
+  String? traObservacion;
+  List<GarnishModel>? traGuarniciones;
   int traConsecutivoInterno;
   int? traConsecutivoInternoPadre;
   int dConsecutivoInterno;
@@ -204,6 +216,8 @@ class DocTransaccion {
   double traMonto;
 
   DocTransaccion({
+    required this.traObservacion,
+    required this.traGuarniciones,
     required this.traConsecutivoInterno,
     required this.traConsecutivoInternoPadre,
     required this.dConsecutivoInterno,
@@ -225,6 +239,10 @@ class DocTransaccion {
   String toJson() => json.encode(toMap());
 
   factory DocTransaccion.fromMap(Map<String, dynamic> json) => DocTransaccion(
+        traObservacion: json["Tra_Observacion"],
+        traGuarniciones: List<GarnishModel>.from(
+          json["Tra_Guarniciones"].map((x) => GarnishModel.fromMap(x)),
+        ),
         traConsecutivoInterno: json["Tra_Consecutivo_Interno"],
         traConsecutivoInternoPadre: json["Tra_Consecutivo_Interno_Padre"],
         dConsecutivoInterno: json["D_Consecutivo_Interno"] ?? 0,
@@ -241,6 +259,9 @@ class DocTransaccion {
       );
 
   Map<String, dynamic> toMap() => {
+        "Tra_Observacion": traGuarniciones,
+        "Tra_Guarniciones":
+            List<dynamic>.from(traGuarniciones?.map((x) => x.toMap()) ?? []),
         "Tra_Consecutivo_Interno": traConsecutivoInterno,
         "Tra_Consecutivo_Interno_Padre": traConsecutivoInternoPadre,
         "D_Consecutivo_Interno": dConsecutivoInterno,

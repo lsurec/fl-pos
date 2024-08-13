@@ -230,6 +230,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       vmOrders.addFirst(
         context,
         OrderModel(
+          consecutivo: 0,
           selected: false,
           mesero: pinVM.waitress!,
           nombre: "Cuenta 1", //TODO: Rebombrar

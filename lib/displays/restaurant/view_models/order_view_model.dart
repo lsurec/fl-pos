@@ -4,12 +4,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -18,64 +22,124 @@ class OrderViewModel extends ChangeNotifier {
   bool _isSelectedMode = false;
   bool get isSelectedMode => _isSelectedMode;
 
-  monitorPrint(int indexOrder) {
+  monitorPrint(
+    BuildContext context,
+    int indexOrder,
+  ) {
+    final MenuViewModel menuVM = Provider.of<MenuViewModel>(
+      context,
+      listen: false,
+    );
+
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final localVM = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.user;
+    String tokenUser = loginVM.token;
+    int tipoDocumento = menuVM.documento!;
+    String serieDocumento = docVM.serieSelect!.serieDocumento!;
+    int empresa = localVM.selectedEmpresa!.empresa;
+    int estacion = localVM.selectedEstacion!.estacionTrabajo;
+
     double traTotal = 0;
     final List<DocTransaccion> transactions = [];
-
-    //Buscar transacciones que van a comandarse
-    for (var tra in orders[indexOrder].transacciones) {
-      if (!tra.processed) {
-        transactions.add(
-          DocTransaccion(
-            traConsecutivoInterno: traConsecutivoInterno,
-            traConsecutivoInternoPadre: traConsecutivoInternoPadre,
-            dConsecutivoInterno: dConsecutivoInterno,
-            traBodega: traBodega,
-            traProducto: traProducto,
-            traUnidadMedida: traUnidadMedida,
-            traCantidad: traCantidad,
-            traTipoCambio: traTipoCambio,
-            traMoneda: traMoneda,
-            traTipoPrecio: traTipoPrecio,
-            traFactorConversion: traFactorConversion,
-            traTipoTransaccion: traTipoTransaccion,
-            traMonto: traMonto,
-          ),
-        );
-      }
-    }
 
     // Generar dos números aleatorios de 7 dígitos cada uno
     var random = Random();
 
     int firstPart = random.nextInt(10000000);
 
+    //Buscar transacciones que van a comandarse
+    for (var tra in orders[indexOrder].transacciones) {
+      int consecutivo = random.nextInt(10000000);
+      if (!tra.processed) {
+        transactions.add(
+          DocTransaccion(
+            traGuarniciones: tra.guarniciones.map((e) => e.selected).toList(),
+            traObservacion: tra.observacion,
+            traConsecutivoInterno: firstPart,
+            traConsecutivoInternoPadre: 0,
+            dConsecutivoInterno: consecutivo,
+            traBodega: tra.bodega.bodega,
+            traProducto: tra.producto.producto,
+            traUnidadMedida: tra.producto.unidadMedida,
+            traCantidad: tra.cantidad,
+            traTipoCambio: menuVM.tipoCambio,
+            traMoneda: tra.precio.moneda,
+            traTipoPrecio: tra.precio.precio ? tra.precio.id : null,
+            traFactorConversion: !tra.precio.precio ? tra.precio.id : null,
+            traTipoTransaccion: 1, //TODO:Hace falta
+            traMonto: (tra.cantidad * tra.precio.precioU),
+          ),
+        );
+
+        traTotal += (tra.cantidad * tra.precio.precioU);
+      }
+    }
+
+// Combinar los dos números para formar uno de 14 dígitos
+
+    DateTime dateConsecutivo = DateTime.now();
+    int randomNumber1 = Random().nextInt(900) + 100;
+
+    String strNum1 = randomNumber1.toString();
+    String combinedStr = strNum1 +
+        dateConsecutivo.day.toString().padLeft(2, '0') +
+        dateConsecutivo.month.toString().padLeft(2, '0') +
+        dateConsecutivo.year.toString() +
+        dateConsecutivo.hour.toString().padLeft(2, '0') +
+        dateConsecutivo.minute.toString().padLeft(2, '0') +
+        dateConsecutivo.second.toString().padLeft(2, '0');
+
+    // ref id
+    final int idDocumentoRef = int.parse(combinedStr);
+
+    DateTime myDateTime = DateTime.now();
+    String serializedDateTime = myDateTime.toIso8601String();
+
     final DocEstructuraModel doc = DocEstructuraModel(
+      docMesa: orders[indexOrder].mesa.elementoAsignado,
+      docUbicacion: orders[indexOrder].ubicacion.elementoAsignado,
       docLatitdud: null,
       docLongitud: null,
       consecutivoInterno: firstPart,
-      docTraMonto: docTraMonto,
-      docCaMonto: docCaMonto,
-      docCuentaVendedor: docCuentaVendedor,
-      docIdCertificador: docIdCertificador,
-      docIdDocumentoRef: docIdDocumentoRef,
-      docFelNumeroDocumento: docFelNumeroDocumento,
-      docFelSerie: docFelSerie,
-      docFelUUID: docFelUUID,
-      docFelFechaCertificacion: docFelFechaCertificacion,
-      docFechaDocumento: docFechaDocumento,
-      docCuentaCorrentista: docCuentaCorrentista,
-      docCuentaCta: docCuentaCta,
-      docTipoDocumento: docTipoDocumento,
-      docSerieDocumento: docSerieDocumento,
-      docEmpresa: docEmpresa,
-      docEstacionTrabajo: docEstacionTrabajo,
-      docUserName: docUserName,
-      docObservacion1: docObservacion1,
-      docTipoPago: docTipoPago,
-      docElementoAsignado: docElementoAsignado,
-      docTransaccion: docTransaccion,
-      docCargoAbono: docCargoAbono,
+      docTraMonto: traTotal,
+      docCaMonto: 0,
+      docCuentaVendedor: orders[indexOrder]
+          .mesero
+          .cuentaCorrentista, //Preguntar si es el mesero
+      docIdCertificador: 0,
+      docIdDocumentoRef: idDocumentoRef,
+      docFelNumeroDocumento: null,
+      docFelSerie: null,
+      docFelUUID: null,
+      docFelFechaCertificacion: null,
+      docFechaDocumento: serializedDateTime,
+      docCuentaCorrentista: 1,
+      docCuentaCta: "1",
+      docTipoDocumento: tipoDocumento,
+      docSerieDocumento: serieDocumento,
+      docEmpresa: empresa,
+      docEstacionTrabajo: estacion,
+      docUserName: user,
+      docObservacion1: "",
+      docTipoPago: 1, //TODO:preguntar
+      docElementoAsignado: 1, //TODO:Preguntar
+      docTransaccion: transactions,
+      docCargoAbono: [],
     );
   }
 

@@ -43,6 +43,7 @@ class AddPersonViewModel extends ChangeNotifier {
 
     vmOrder.orders.add(
       OrderModel(
+        consecutivo: 0,
         selected: false,
         mesero: vmPin.waitress!,
         nombre: formValues["name"]!,
