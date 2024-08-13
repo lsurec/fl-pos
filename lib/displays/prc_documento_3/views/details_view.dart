@@ -303,6 +303,8 @@ class _TransactionCard extends StatelessWidget {
     final vm = Provider.of<DetailsViewModel>(context);
 
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+    final productVM = Provider.of<ProductViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -340,6 +342,19 @@ class _TransactionCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+//Cantidad dias
+            if (docVM.valueParametro(44))
+              Text(
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'cantDias',
+                )}: ${transaction.cantidadDias}',
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
+
             if (transaction.precio != null)
               Text(
                 '${AppLocalizations.of(context)!.translate(
@@ -351,7 +366,18 @@ class _TransactionCard extends StatelessWidget {
                   Styles.normal,
                 ),
               ),
-
+//Total por cantidad
+            if (docVM.valueParametro(44))
+              Text(
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'precioTotalCant',
+                )}: ${currencyFormat.format(transaction.precioCantidad)}',
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
             Text(
               '${AppLocalizations.of(context)!.translate(
                 BlockTranslate.calcular,
@@ -395,6 +421,15 @@ class _TransactionCard extends StatelessWidget {
           ),
           value: transaction.isChecked,
           onChanged: (value) => vm.changeChecked(value, indexTransaction),
+        ),
+        trailing: IconButton(
+          onPressed: () => productVM.viewProductImages(
+            context,
+            transaction.producto,
+          ),
+          icon: const Icon(
+            Icons.image,
+          ),
         ),
       ),
     );

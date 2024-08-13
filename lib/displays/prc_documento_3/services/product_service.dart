@@ -322,6 +322,65 @@ class ProductService {
     }
   }
 
+  //calcular precio por dias
+  Future<ApiResModel> getFormulaPrecioU(
+    String token,
+    DateTime fechaIni,
+    DateTime fechaFin,
+    String precioU,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Producto/formula/precio/unitario");
+    try {
+      //url completa
+
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "fechaIni": fechaIni.toIso8601String(),
+          "fechaFin": fechaFin.toIso8601String(),
+          "precioU": precioU
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      List<PrecioDiaModel> precios = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = PrecioDiaModel.fromMap(item);
+        //agregar item a la lista
+        precios.add(responseFinally);
+      }
+
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: precios,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        storeProcedure: null,
+        response: e.toString(),
+      );
+    }
+  }
+
   Future<ApiResModel> getFactorConversion(
     int bodega,
     int producto,
@@ -373,6 +432,67 @@ class ProductService {
         storeProcedure: null,
       );
     } catch (e) {
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //obtener las imagenes de cada producto
+  Future<ApiResModel> getObjetosProducto(
+    String token,
+    int product,
+    int um,
+    int empresa,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Producto/imagenes/$product/$um/$empresa");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //img empresa disponibles
+      List<ObjetoProductoModel> imgProductos = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ObjetoProductoModel.fromMap(item);
+
+        //agregar item a la lista
+        imgProductos.add(responseFinally);
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: imgProductos,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
       return ApiResModel(
         url: url.toString(),
         succes: false,

@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:intl/intl.dart';
@@ -26,6 +27,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
         ModalRoute.of(context)?.settings.arguments as DetailDocModel;
 
     final vm = Provider.of<DetailsDocViewModel>(context);
+    final docVM = Provider.of<DocumentViewModel>(context);
+    final paymentsVM = Provider.of<PaymentViewModel>(context);
 
     return Stack(
       children: [
@@ -101,7 +104,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           ),
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -131,7 +134,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           )} ",
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -161,7 +164,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           )}: ",
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -192,7 +195,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                           )}: ",
                           style: AppTheme.style(
                             context,
-                            Styles.title,
+                            Styles.bold,
                           ),
                         ),
                         TextSpan(
@@ -335,7 +338,279 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          document.seller!,
+                          document.seller ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Tipo Referencia: 58
+                  if (document.docRefTipoReferencia != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.tiket,
+                            'tipoRef',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          "${document.docRefTipoReferencia}",
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Contacto: 385
+                  if (document.docRefObservacion2!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(385) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'contacto',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefObservacion2 ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Descripcion: 383
+                  if (document.docRefObservacion!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(383) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'descripcion',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefObservacion ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Direccion Entrega: 386
+                  if (document.docRefObservacion3!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(386) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.cotizacion,
+                                'direEntrega',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefObservacion3 ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+//Observacion: 384
+                  if (document.docRefDescripcion!.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(384) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'observacion',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          document.docRefDescripcion ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'noDisponible',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (document.docRefFechaIni != null ||
+                      document.docRefFechaFin != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+//Fecha Ref Ini
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(381) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'entrega',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        Text(
+                          Utilities.formatearFechaHora(
+                            docVM.fechaRefIni,
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+//Fecha Ref Fin
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          docVM.getTextParam(382) ??
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.fecha,
+                                'recoger',
+                              ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        Text(
+                          Utilities.formatearFechaHora(
+                            docVM.fechaRefFin,
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (document.docFechaIni != null ||
+                      document.docFechaFin != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+//Fecha Ini
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.fecha,
+                            'inicio',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        Text(
+                          Utilities.formatearFechaHora(
+                            docVM.fechaInicial,
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+//Fecha Fin
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.fecha,
+                            'fin',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        Text(
+                          Utilities.formatearFechaHora(
+                            docVM.fechaFinal,
+                          ),
                           style: AppTheme.style(
                             context,
                             Styles.normal,
@@ -360,21 +635,28 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   _Transaction(
                     transactions: document.transactions,
                   ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'formasPago',
+                  if (paymentsVM.paymentList.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 5),
+                        const Divider(),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.factura,
+                            'formasPago',
+                          ),
+                          style: AppTheme.style(
+                            context,
+                            Styles.title,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        _Pyments(amounts: document.payments),
+                      ],
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  _Pyments(amounts: document.payments),
+
                   const SizedBox(height: 5),
                   const Divider(),
                   const SizedBox(height: 5),

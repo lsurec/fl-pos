@@ -46,12 +46,25 @@ class ProductView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "SKU: ${product.productoId}",
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => vm.viewProductImages(
+                          context,
+                          product,
+                        ),
+                        icon: const Icon(
+                          Icons.image,
+                        ),
+                      ),
+                      Text(
+                        "SKU: ${product.productoId}",
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   _NumericField(),
@@ -390,6 +403,71 @@ class _NumericField extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+class ImageCarouselDialog extends StatelessWidget {
+  final List<String> imageUrls;
+
+  const ImageCarouselDialog({
+    super.key,
+    required this.imageUrls,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    PageController pageController = PageController(initialPage: 0);
+
+    return Dialog(
+      child: SizedBox(
+        height: 350,
+        child: PageView.builder(
+          controller: pageController,
+          itemCount: imageUrls.length,
+          itemBuilder: (context, index) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    Image.network(
+                      imageUrls[index],
+                      height: 300,
+                    ),
+                    Positioned(
+                      bottom: 5,
+                      left: 0, // Establece el margen izquierdo
+                      right: 0, // Establece el margen derecho
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          color: AppTheme.color(
+                            context,
+                            Styles.grey,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          child: Text(
+                            "${index + 1}/${imageUrls.length}",
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

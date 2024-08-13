@@ -13,6 +13,8 @@ class DetalleModel {
   int moneda;
   String simboloMoneda;
   int tipoTransaccion;
+  dynamic imgProducto;
+  dynamic precioReposicion;
 
   DetalleModel({
     required this.productoId,
@@ -27,6 +29,8 @@ class DetalleModel {
     required this.moneda,
     required this.simboloMoneda,
     required this.tipoTransaccion,
+    this.imgProducto,
+    this.precioReposicion,
   });
 
   factory DetalleModel.fromJson(String str) =>
@@ -47,6 +51,8 @@ class DetalleModel {
         moneda: json["moneda"],
         simboloMoneda: json["simbolo_Moneda"],
         tipoTransaccion: json["tipo_Transaccion"],
+        imgProducto: json["img_Producto"],
+        precioReposicion: json["precio_Reposicion"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -62,5 +68,7 @@ class DetalleModel {
         "moneda": moneda,
         "simbolo_Moneda": simboloMoneda,
         "tipo_Transaccion": tipoTransaccion,
+        "img_Producto": imgProducto,
+        "precio_Reposicion": precioReposicion,
       };
 }

@@ -30,6 +30,15 @@ class DocEstructuraModel {
   int docElementoAsignado;
   List<DocTransaccion> docTransaccion;
   List<DocCargoAbono> docCargoAbono;
+  int? docRefTipoReferencia;
+  DateTime? docRefFechaIni;
+  DateTime? docRefFechaFin;
+  DateTime? docFechaIni;
+  DateTime? docFechaFin;
+  String? docRefObservacion2;
+  String? docRefDescripcion;
+  String? docRefObservacion3;
+  String? docRefObservacion;
 
   DocEstructuraModel({
     required this.docMesa,
@@ -59,6 +68,15 @@ class DocEstructuraModel {
     required this.docElementoAsignado,
     required this.docTransaccion,
     required this.docCargoAbono,
+    this.docRefTipoReferencia,
+    this.docRefFechaIni,
+    this.docRefFechaFin,
+    this.docFechaIni,
+    this.docFechaFin,
+    this.docRefObservacion2,
+    this.docRefDescripcion,
+    this.docRefObservacion3,
+    this.docRefObservacion,
   });
 
   factory DocEstructuraModel.fromJson(String str) =>
@@ -70,7 +88,7 @@ class DocEstructuraModel {
       DocEstructuraModel(
         docMesa: json["Doc_Mesa"],
         docUbicacion: json["Doc_Ubicacion"],
-        docLatitdud: json["Doc_Latitdud"],
+        docLatitdud: json["Doc_Latitdud"] ?? 0,
         docLongitud: json["Doc_Longitud"] ?? 0,
         consecutivoInterno: json["Consecutivo_Interno"] ?? 0,
         docTraMonto: json["Doc_Tra_Monto"].toDouble(),
@@ -98,6 +116,23 @@ class DocEstructuraModel {
         ),
         docCargoAbono: List<DocCargoAbono>.from(
             json["Doc_Cargo_Abono"].map((x) => DocCargoAbono.fromMap(x))),
+        docRefTipoReferencia: json["Doc_Ref_Tipo_Referencia"],
+        docRefFechaIni: json["Doc_Ref_Fecha_Ini"] != null
+            ? DateTime.parse(json["Doc_Ref_Fecha_Ini"])
+            : null,
+        docRefFechaFin: json["Doc_Ref_Fecha_Fin"] != null
+            ? DateTime.parse(json["Doc_Ref_Fecha_Fin"])
+            : null,
+        docFechaIni: json["Doc_Fecha_Ini"] != null
+            ? DateTime.parse(json["Doc_Fecha_Ini"])
+            : null,
+        docFechaFin: json["Doc_Fecha_Fin"] != null
+            ? DateTime.parse(json["Doc_Fecha_Fin"])
+            : null,
+        docRefObservacion2: json["Doc_Ref_Observacion_2"],
+        docRefDescripcion: json["Doc_Ref_Descripcion"],
+        docRefObservacion3: json["Doc_Ref_Observacion_3"],
+        docRefObservacion: json["Doc_Ref_Observacion"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -130,6 +165,15 @@ class DocEstructuraModel {
             List<dynamic>.from(docTransaccion.map((x) => x.toMap())),
         "Doc_Cargo_Abono":
             List<dynamic>.from(docCargoAbono.map((x) => x.toMap())),
+        "Doc_Ref_Tipo_Referencia": docRefTipoReferencia,
+        "Doc_Ref_Fecha_Ini": docRefFechaIni?.toIso8601String(),
+        "Doc_Ref_Fecha_Fin": docRefFechaFin?.toIso8601String(),
+        "Doc_Fecha_Ini": docFechaIni?.toIso8601String(),
+        "Doc_Fecha_Fin": docFechaFin?.toIso8601String(),
+        "Doc_Ref_Observacion_2": docRefObservacion2,
+        "Doc_Ref_Descripcion": docRefDescripcion,
+        "Doc_Ref_Observacion_3": docRefObservacion3,
+        "Doc_Ref_Observacion": docRefObservacion,
       };
 }
 
@@ -214,6 +258,7 @@ class DocTransaccion {
   int? traFactorConversion;
   int traTipoTransaccion;
   double traMonto;
+  double? traMontoDias;
 
   DocTransaccion({
     required this.traObservacion,
@@ -227,10 +272,11 @@ class DocTransaccion {
     required this.traCantidad,
     required this.traTipoCambio,
     required this.traMoneda,
-    required this.traTipoPrecio,
-    required this.traFactorConversion,
+    this.traTipoPrecio,
+    this.traFactorConversion,
     required this.traTipoTransaccion,
     required this.traMonto,
+    this.traMontoDias,
   });
 
   factory DocTransaccion.fromJson(String str) =>
@@ -256,6 +302,7 @@ class DocTransaccion {
         traFactorConversion: json["Tra_Factor_Conversion"],
         traTipoTransaccion: json["Tra_Tipo_Transaccion"],
         traMonto: json["Tra_Monto"].toDouble(),
+        traMontoDias: json["Tra_Monto_Dias"]?.toDouble(),
       );
 
   Map<String, dynamic> toMap() => {
@@ -275,5 +322,6 @@ class DocTransaccion {
         "Tra_Factor_Conversion": traFactorConversion,
         "Tra_Tipo_Transaccion": traTipoTransaccion,
         "Tra_Monto": traMonto,
+        "Tra_Monto_Dias": traMontoDias,
       };
 }

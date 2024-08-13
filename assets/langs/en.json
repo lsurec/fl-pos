@@ -100,7 +100,15 @@
         "hora": "Time: ",
         "completa": "Date and Time: ",
         "entrega": "Delivery Date: ",
-        "recoger": "Pick-up Date: "
+        "recoger": "Pick-up Date: ",
+        "restriccionFechas": "The dates are not valid. Please check the restrictions.",
+        "fechaEntregaNoActual": "The dates are not valid. Adjust the delivery date; it cannot be earlier than the current date.",
+        "fechaRecogerNoEntrega": "The dates are not valid. Adjust the pick-up date; it cannot be earlier than the delivery date.",
+        "fechaInicialNoEntrega": "The dates are not valid. Adjust the initial date; it cannot be earlier than the delivery date.",
+        "fechaRecogerNoInicial": "The dates are not valid. Adjust the pick-up date; it cannot be earlier than the initial date.",
+        "fechaFinalNoInicial": "The dates are not valid. Adjust the final date; it cannot be earlier than the initial date.",
+        "fechaRecogerNoFinal": "The dates are not valid. Adjust the pick-up date; it cannot be earlier than the final date.",
+        "eventoF": "Event Date: "
     },
     "notificaciones": {
         "reiniciar": "To view the changes, first restart the application.",
@@ -198,7 +206,12 @@
         "asignado": "Previously assigned user.",
         "estadoIgual": "Previously assigned status.",
         "prioridadIgual": "Previously assigned priority.",
-        "copiado": "Text copied to clipboard."
+        "copiado": "Text copied to clipboard.",
+        "precioDiasNoCalculado": "The price per day was not calculated. Verify that the dates are valid.",
+        "seleccioneTipoRef": "You must select a reference type.",
+        "noCalculoDias": "The price per day could not be calculated.",
+        "recalcularFechas": "Prices per day recalculated due to date modification.",
+        "sinImagenes": "No images associated with this product."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
@@ -289,7 +302,13 @@
         "imprimir": "Print document after confirming.",
         "mesa": "Table",
         "atencion": "Served by",
-        "serie": "Internal series:"
+        "serie": "Internal series:",
+        "latitud": "Latitude: ",
+        "longitud": "Longitude: ",
+        "consInt": "Internal Cons.: ",
+        "sinObtener": "Not obtained.",
+        "tipoRef": "Reference Type",
+        "contacto": "Contact"
     },
     "generales": {
         "registro": "Records",
@@ -307,7 +326,8 @@
         "documento": "Document",
         "detalle": "Detail",
         "pago": "Payment",
-        "observaciones": "Observations"
+        "observaciones": "Observations",
+        "noRegistrado": "Not Registered."
     },
     "cuenta": {
         "nueva": "New Account",
@@ -367,9 +387,11 @@
         "diferencia": "Difference",
         "pagoTotal": "Total payment",
         "porcentaje": "Percentage",
-        "cargAgregado": "Charge added.",
+        "cargoAgregado": "Charge added.",
         "descAgregado": "Discount added.",
-        "saldo": "Balance"
+        "saldo": "Balance",
+        "cantDias": "Number of days",
+        "precioTotalCant": "Total price per quantity"
     },
     "cotizacion": {
         "convertirDoc": "Convert Document",
@@ -389,7 +411,8 @@
         "consecutivoInter": "Internal Consecutive",
         "idRef": "ID Ref: ",
         "cuenta": "Account: ",
-        "direEntrega": "Delivery Address"
+        "direEntrega": "Delivery Address",
+        "tipoRef": "Reference Type"
     },
     "tareas": {
         "numTarea": "Task No: ",

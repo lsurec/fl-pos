@@ -13,6 +13,11 @@ class TraInternaModel {
     required this.cargo,
     required this.operaciones,
     required this.bodega,
+    required this.cantidadDias,
+    required this.precioDia,
+    required this.precioCantidad,
+    required this.consecutivo,
+    required this.estadoTra,
   });
 
   bool isChecked;
@@ -24,6 +29,11 @@ class TraInternaModel {
   List<TraInternaModel> operaciones;
   double descuento;
   double cargo;
+  int cantidadDias;
+  double? precioDia;
+  double? precioCantidad;
+  int consecutivo;
+  int estadoTra;
 
   factory TraInternaModel.fromJson(String str) =>
       TraInternaModel.fromMap(json.decode(str));
@@ -46,6 +56,11 @@ class TraInternaModel {
         bodega: json["bodega"] == null
             ? null
             : BodegaProductoModel.fromMap(json["bodega"]),
+        cantidadDias: json["cantidadDias"],
+        precioDia: json["precioDia"]?.toDouble(),
+        precioCantidad: json["precioCantidad"]?.toDouble(),
+        consecutivo: json["consecutivo"],
+        estadoTra: json["estadoTra"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -58,5 +73,10 @@ class TraInternaModel {
         "cargo": cargo,
         "operaciones": List<dynamic>.from(operaciones.map((x) => x.toMap())),
         "bodega": bodega?.toMap(),
+        "cantidadDias": cantidadDias,
+        "precioDia": precioDia,
+        "precioCantidad": precioCantidad,
+        "consecutivo": consecutivo,
+        "estadoTra": estadoTra,
       };
 }

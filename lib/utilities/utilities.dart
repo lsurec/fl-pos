@@ -282,6 +282,16 @@ class Utilities {
     return fechaHoraFormateada;
   }
 
+  static String formatoFechaString(String? fechaHora) {
+    DateTime dateTime = DateTime.parse(fechaHora ?? "");
+    return '${dateTime.day.toString().padLeft(2, '0')}/'
+        '${dateTime.month.toString().padLeft(2, '0')}/'
+        '${dateTime.year} '
+        '${dateTime.hour.toString().padLeft(2, '0')}:'
+        '${dateTime.minute.toString().padLeft(2, '0')}:'
+        '${dateTime.second.toString().padLeft(2, '0')}';
+  }
+
   static String formatearFechaString(String fecha) {
     // Parsear la cadena de fecha
     DateTime fechaParseada = DateTime.parse(fecha);
@@ -355,5 +365,28 @@ class Utilities {
         );
       },
     );
+  }
+
+  static bool fechaIgualOMayorSinSegundos(DateTime date1, DateTime date2) {
+    // Crear nuevas instancias de fechas sin segundos
+    DateTime dateWithoutSeconds1 = DateTime(
+      date1.year,
+      date1.month,
+      date1.day,
+      date1.hour,
+      date1.minute,
+    );
+
+    DateTime dateWithoutSeconds2 = DateTime(
+      date2.year,
+      date2.month,
+      date2.day,
+      date2.hour,
+      date2.minute,
+    );
+
+    // Comparar las fechas
+    return dateWithoutSeconds1.isAtSameMomentAs(dateWithoutSeconds2) ||
+        dateWithoutSeconds1.isAfter(dateWithoutSeconds2);
   }
 }

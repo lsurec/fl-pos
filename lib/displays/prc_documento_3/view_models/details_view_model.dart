@@ -539,6 +539,11 @@ class DetailsViewModel extends ChangeNotifier {
       //Elemento que se va a agregar
       if (element.isChecked) {
         TraInternaModel transaction = TraInternaModel(
+          cantidadDias: 0,
+          consecutivo: 0,
+          estadoTra: 0,
+          precioCantidad: null,
+          precioDia: null,
           isChecked: false,
           producto: element.producto,
           precio: null,

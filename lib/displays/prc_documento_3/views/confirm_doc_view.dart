@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class ConfirmDocView extends StatelessWidget {
     final vm = Provider.of<ConfirmDocViewModel>(context);
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
     final vmDoc = Provider.of<DocumentoViewModel>(context);
+    final paymentsVM = Provider.of<PaymentViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vmDoc.backTabs(context),
@@ -40,7 +42,9 @@ class ConfirmDocView extends StatelessWidget {
               actions: [
                 if (vm.showPrint)
                   IconButton(
-                    onPressed: () => vm.sheredDoc(context),
+                    onPressed: () => vm.sheredDoc(
+                      context,
+                    ),
                     icon: const Icon(
                       Icons.share,
                     ),
@@ -87,7 +91,7 @@ class ConfirmDocView extends StatelessWidget {
                             ),
                             style: AppTheme.style(
                               context,
-                              Styles.title,
+                              Styles.bold,
                             ),
                           ),
                           TextSpan(
@@ -111,16 +115,21 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            //TODO:Translate
-                            text: 'Latitud: ',
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tiket,
+                              'latitud',
+                            ),
                             style: AppTheme.style(
                               context,
-                              Styles.title,
+                              Styles.bold,
                             ),
                           ),
                           TextSpan(
                             text: vm.currentPosition?.latitude.toString() ??
-                                "Sin obtener.",
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tiket,
+                                  'sinObtener',
+                                ),
                             style: AppTheme.style(
                               context,
                               Styles.normal,
@@ -138,16 +147,21 @@ class ConfirmDocView extends StatelessWidget {
                         ),
                         children: [
                           TextSpan(
-                            //TODO:Translate
-                            text: 'Longitud: ',
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tiket,
+                              'longitud',
+                            ),
                             style: AppTheme.style(
                               context,
-                              Styles.title,
+                              Styles.bold,
                             ),
                           ),
                           TextSpan(
                             text: vm.currentPosition?.longitude.toString() ??
-                                "Sin obtener.",
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.tiket,
+                                  'sinObtener',
+                                ),
                             style: AppTheme.style(
                               context,
                               Styles.normal,
@@ -198,6 +212,255 @@ class ConfirmDocView extends StatelessWidget {
                           ),
                         ],
                       ),
+                    if (docVM.referenciaSelect?.descripcion != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.tiket,
+                              'tipoRef',
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.referenciaSelect?.descripcion ?? "",
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Contacto: 385
+                    if (docVM.refContactoParam385.text.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(385) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.factura,
+                                  'contacto',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refContactoParam385.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Descripcion: 383
+                    if (docVM.refDescripcionParam383.text.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(383) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'descripcion',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refDescripcionParam383.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Direccion Entrega: 386
+                    if (docVM.refDirecEntregaParam386.text.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(386) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.cotizacion,
+                                  'direEntrega',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refDirecEntregaParam386.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+//Observacion: 384
+                    if (docVM.refObservacionParam384.text.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(384) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.general,
+                                  'observacion',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.refObservacionParam384.text,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (docVM.valueParametro(381) || docVM.valueParametro(382))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+//Fecha Ref Ini
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(381) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.fecha,
+                                  'entrega',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          Text(
+                            Utilities.formatearFechaHora(
+                              docVM.fechaRefIni,
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+//Fecha Ref Fin
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            docVM.getTextParam(382) ??
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.fecha,
+                                  'entrega',
+                                ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          Text(
+                            Utilities.formatearFechaHora(
+                              docVM.fechaRefFin,
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (docVM.valueParametro(44))
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+//Fecha Ini
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.fecha,
+                              'inicio',
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          Text(
+                            Utilities.formatearFechaHora(
+                              docVM.fechaInicial,
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+//Fecha Fin
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.fecha,
+                              'fin',
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          Text(
+                            Utilities.formatearFechaHora(
+                              docVM.fechaFinal,
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
                     const SizedBox(height: 5),
                     const Divider(),
                     const SizedBox(height: 5),
@@ -215,22 +478,28 @@ class ConfirmDocView extends StatelessWidget {
                     _Transaction(),
                     const SizedBox(height: 5),
                     const Divider(),
-                    const SizedBox(height: 5),
-                    Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.factura,
-                        'formasPago',
+                    if (paymentsVM.paymentList.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 5),
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'formasPago',
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          _Pyments(),
+                          const SizedBox(height: 5),
+                          const Divider(),
+                          const SizedBox(height: 5),
+                        ],
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    _Pyments(),
-                    const SizedBox(height: 5),
-                    const Divider(),
-                    const SizedBox(height: 5),
                     _Totals(),
                     const SizedBox(height: 5),
                     _TotalsPayment(),
@@ -481,6 +750,15 @@ class _Observacion extends StatelessWidget {
         hintText: AppLocalizations.of(context)!.translate(
           BlockTranslate.general,
           'observacion',
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.color(
+              context,
+              Styles.border,
+            ),
+          ),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );
@@ -1003,6 +1281,7 @@ class _Transaction extends StatelessWidget {
     final detailsVM = Provider.of<DetailsViewModel>(context);
 
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -1071,16 +1350,19 @@ class _Transaction extends StatelessWidget {
                     ),
                   ),
 
-                Text(
-                  '${AppLocalizations.of(context)!.translate(
-                    BlockTranslate.calcular,
-                    'total',
-                  )}: ${transaction.total.toStringAsFixed(2)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
+//Cantidad dias
+                if (docVM.valueParametro(44))
+                  Text(
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'cantDias',
+                    )}: ${transaction.cantidadDias}',
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
                   ),
-                ),
+
                 if (transaction.cargo != 0)
                   Text(
                     '${AppLocalizations.of(context)!.translate(
@@ -1104,6 +1386,28 @@ class _Transaction extends StatelessWidget {
                       Styles.normal,
                     ),
                   ),
+//Total por cantidad
+                if (docVM.valueParametro(44))
+                  Text(
+                    '${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'precioTotalCant',
+                    )}: ${currencyFormat.format(transaction.precioCantidad)}',
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  ),
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'total',
+                  )}: ${transaction.total.toStringAsFixed(2)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
             ),

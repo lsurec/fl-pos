@@ -3,10 +3,13 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/views/product_view.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -347,6 +350,56 @@ class ProductViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //obtener imagenes
+
+  Future<List<ObjetoProductoModel>> obtenerImagenesProductos(
+    BuildContext context,
+    ProductModel product,
+  ) async {
+    List<ObjetoProductoModel> urls = [];
+
+    urls.clear(); //Limpiar lista de imagenes
+
+    //View model de login para obtener usuario y token
+    final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+
+    //View model para obtenerla empresa
+    EmpresaModel empresa = vmLocal.selectedEmpresa!;
+
+    //Instancia del servico
+    ProductService productService = ProductService();
+
+    isLoading = true; //cargar pantalla
+
+    //Consumo de api
+    final ApiResModel res = await productService.getObjetosProducto(
+      token,
+      product.producto,
+      product.unidadMedida,
+      empresa.empresa,
+    );
+
+    //si el consumo salió mal
+    if (!res.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(context, res);
+
+      //retornar false si algo salio mal
+      return [];
+    }
+
+    //Agregar respuesta de api a la lista de tipos de tarea
+    urls.addAll(res.response);
+
+    isLoading = false; //detener carga
+
+    //retorar true si todo está correcto
+    return urls;
+  }
+
   //cambiar el texto dek input cantidad
   void changeTextNum(String value) {
     //asiganar valores
@@ -519,11 +572,10 @@ class ProductViewModel extends ChangeNotifier {
 
     TipoTransaccionModel tipoTra =
         getTipoTransaccion(product.tipoProducto, context);
+    ProductService productService = ProductService();
 
     if (tipoTra.altCantidad) {
       //iniciar proceso
-
-      ProductService productService = ProductService();
 
       //consumo del api
       ApiResModel res = await productService.getValidateProducts(
@@ -585,18 +637,80 @@ class ProductViewModel extends ChangeNotifier {
       }
     }
 
+    //calcular precio por dias
+
+    double precioDias = 0;
+    int cantidadDias = 0;
+
+    if (docVM.valueParametro(44)) {
+      if (Utilities.fechaIgualOMayorSinSegundos(
+          docVM.fechaFinal, docVM.fechaInicial)) {
+        //formular precios por dias
+        ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
+          token,
+          docVM.fechaInicial,
+          docVM.fechaFinal,
+          total.toString(),
+        );
+
+        //valid succes response
+        if (!resFormPrecio.succes) {
+          //si algo salio mal mostrar alerta
+
+          await NotificationService.showErrorView(
+            context,
+            resFormPrecio,
+          );
+          return;
+        }
+
+        List<PrecioDiaModel> preciosDia = resFormPrecio.response;
+
+        if (preciosDia.isEmpty) {
+          isLoading = false;
+          resFormPrecio.response =
+              'No fue posible obtner los valores calculados para el precio dia';
+
+          NotificationService.showErrorView(context, resFormPrecio);
+
+          return;
+        }
+
+        precioDias = preciosDia[0].montoCalculado;
+        cantidadDias = preciosDia[0].cantidadDia;
+      } else {
+        isLoading = false;
+        precioDias = total;
+        cantidadDias = 1;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'precioDiasNoCalculado',
+          ),
+        );
+      }
+    }
+
+//aqui termina lo que agregue..
+
     //agregar transacion al documento
     detailsVM.addTransaction(
       TraInternaModel(
+        consecutivo: 0,
+        estadoTra: 1,
         isChecked: false,
         bodega: selectedBodega!,
         producto: product,
         precio: selectedPrice,
         cantidad: (int.tryParse(controllerNum.text) ?? 0),
-        total: total,
+        total: docVM.valueParametro(44) ? precioDias : total,
         cargo: 0,
         descuento: 0,
         operaciones: [],
+        precioCantidad: docVM.valueParametro(44) ? total : null,
+        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        precioDia: docVM.valueParametro(44) ? precioDias : null,
       ),
       context,
     );
@@ -640,5 +754,67 @@ class ProductViewModel extends ChangeNotifier {
       tipo: tipo,
       altCantidad: true,
     );
+  }
+
+  //ver imagenes
+  Future<void> viewProductImages(
+    BuildContext context,
+    ProductModel product,
+  ) async {
+    List<ObjetoProductoModel> imageUrls = await obtenerImagenesProductos(
+      context,
+      product,
+    );
+
+    // Verificar si se obtuvieron imágenes
+    if (imageUrls.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinImagenes',
+        ),
+      );
+      return;
+    }
+
+    bool result = await showDialog<bool>(
+          context: context,
+          builder: (context) => ImageCarouselDialog(
+            imageUrls: imageUrls
+                .map(
+                  (e) => e.urlImg,
+                )
+                .toList(), // Mapear a una lista de URLs si es necesario
+          ),
+        ) ??
+        true;
+
+    // Si quiere verse el error
+    if (!result) {
+      // Aquí puedes agregar la lógica para el botón de regresar si es necesario
+    }
+  }
+
+  Future<void> viewImages(
+    BuildContext context,
+    List<String> imageUrls,
+  ) async {
+    if (imageUrls.isEmpty) {
+      return;
+    }
+
+    bool result = await showDialog<bool>(
+          context: context,
+          builder: (context) => ImageCarouselDialog(
+            imageUrls: imageUrls,
+          ),
+        ) ??
+        true;
+
+    //Si quiere verse el error
+    if (!result) {
+      //boton para regresar
+      // Aquí puedes agregar la lógica para el botón de regresar si es necesario
+    }
   }
 }
