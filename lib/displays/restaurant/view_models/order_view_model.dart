@@ -141,6 +141,12 @@ class OrderViewModel extends ChangeNotifier {
       docTransaccion: transactions,
       docCargoAbono: [],
     );
+
+    if (orders[indexOrder].consecutivo == 0) {
+      //Crear
+    } else {
+      //Actualizar
+    }
   }
 
   set isSelectedMode(bool value) {
