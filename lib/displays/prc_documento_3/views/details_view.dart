@@ -18,6 +18,7 @@ class DetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetailsViewModel>(context);
+    final vmProducto = Provider.of<ProductViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -29,13 +30,51 @@ class DetailsView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.20,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1,
+                              ),
+                            ),
+                            hintText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'cantidad',
+                            ),
+                            hintStyle: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                            labelText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'cantidad',
+                            ),
+                            labelStyle: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                          controller: vmProducto.controllerNum,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^(\d+)?\.?\d{0,2}'),
+                            ),
+                          ],
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) => vmProducto.changeTextNum(value),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Form(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           key: vm.formKeySearch,
                           child: TextFormField(
-                            onFieldSubmitted: (value) =>
-                                vm.performSearch(context),
+                            onFieldSubmitted: (value) => vm.performSearch(
+                              context,
+                            ),
                             textInputAction: TextInputAction.search,
                             controller: vm.searchController,
                             validator: (value) {
