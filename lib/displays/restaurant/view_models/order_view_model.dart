@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
@@ -21,10 +22,10 @@ class OrderViewModel extends ChangeNotifier {
   bool _isSelectedMode = false;
   bool get isSelectedMode => _isSelectedMode;
 
-  monitorPrint(
+  Future<void> monitorPrint(
     BuildContext context,
     int indexOrder,
-  ) {
+  ) async {
     final MenuViewModel menuVM = Provider.of<MenuViewModel>(
       context,
       listen: false,
@@ -152,6 +153,29 @@ class OrderViewModel extends ChangeNotifier {
 
     if (orders[indexOrder].consecutivo == 0) {
       //Crear
+
+      //objeto enviar documento
+      PostDocumentModel document = PostDocumentModel(
+        estructura: doc.toJson(),
+        user: user,
+        estado: 1, //1 sin mihrar 11 listo parta migrar
+      );
+
+      //instancia del servicio
+      DocumentService documentService = DocumentService();
+
+      //consumo del api
+      ApiResModel res = await documentService.postDocument(document, tokenUser);
+
+      if (!res.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(context, res);
+
+        return;
+      }
+
+      orders[indexOrder].consecutivo = res.response["data"];
     } else {
       //Actualizar
     }
