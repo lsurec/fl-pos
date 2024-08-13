@@ -68,7 +68,6 @@ class OrderViewModel extends ChangeNotifier {
       transactions.add(
         DocTransaccion(
           traMontoDias: null,
-          traComandada: tra.processed,
           traGuarniciones: tra.guarniciones
               .map(
                 (e) => GuarnicionModel(
@@ -211,6 +210,8 @@ class OrderViewModel extends ChangeNotifier {
         NotificationService.showSnackbar(
           "No se pudo actalizar documento estructura",
         );
+
+        return;
       }
     }
 
