@@ -7,6 +7,8 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/views/prod
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
+// import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -82,71 +84,83 @@ class ProductViewModel extends ChangeNotifier {
     price = 0;
     controllerPrice.text = "$price";
 
-    //inciiar proceso
-    isLoading = true;
+    // //inciiar proceso
+    // isLoading = true;
 
-    //cargar podegas del producto seleccionado
-    await loadBodegaProducto(
+    // //cargar podegas del producto seleccionado
+    // await loadBodegaProducto(
+    //   context,
+    //   product.producto,
+    //   product.unidadMedida,
+    // );
+
+    // // si no hay bodegas mostrar mensaje
+    // if (bodegas.isEmpty) {
+    //   isLoading = false;
+    //   NotificationService.showSnackbar(
+    //     AppLocalizations.of(context)!.translate(
+    //       BlockTranslate.notificacion,
+    //       'sinBodegaP',
+    //     ),
+    //   );
+    //   return;
+    // }
+
+    // //si solo hay una bodega buscar precios
+    // if (bodegas.length == 1) {
+    //   //consumir api
+
+    //   ApiResModel precios = await loadPrecioUnitario(
+    //     context,
+    //     product.producto,
+    //     product.unidadMedida,
+    //     bodegas.first.bodega,
+    //   );
+
+    //   isLoading = false;
+
+    //   if (!precios.succes) {
+    //     NotificationService.showErrorView(
+    //       context,
+    //       precios,
+    //     );
+    //     return;
+    //   }
+
+    //   prices = precios.response;
+
+    //   if (prices.isEmpty) {
+    //     NotificationService.showSnackbar(
+    //       AppLocalizations.of(context)!.translate(
+    //         BlockTranslate.notificacion,
+    //         'sinPrecioP',
+    //       ),
+    //     );
+    //     return;
+    //   }
+    // }
+
+    // //finalizar proceso
+    // isLoading = false;
+
+    final vmProduct = Provider.of<DetailsViewModel>(
       context,
-      product.producto,
-      product.unidadMedida,
+      listen: false,
     );
 
-    // si no hay bodegas mostrar mensaje
-    if (bodegas.isEmpty) {
-      isLoading = false;
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'sinBodegaP',
-        ),
-      );
-      return;
-    }
+    //asignar el valor para producto
+    vmProduct.producto = product;
+    //valor para regresae
+    vmProduct.navegarProduct = 2;
 
-    //si solo hay una bodega buscar precios
-    if (bodegas.length == 1) {
-      //consumir api
-
-      ApiResModel precios = await loadPrecioUnitario(
-        context,
-        product.producto,
-        product.unidadMedida,
-        bodegas.first.bodega,
-      );
-
-      isLoading = false;
-
-      if (!precios.succes) {
-        NotificationService.showErrorView(
-          context,
-          precios,
-        );
-        return;
-      }
-
-      prices = precios.response;
-
-      if (prices.isEmpty) {
-        NotificationService.showSnackbar(
-          AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'sinPrecioP',
-          ),
-        );
-        return;
-      }
-    }
-
-    //finalizar proceso
-    isLoading = false;
+    notifyListeners();
 
     //navegar a pantalla pregunta
-    Navigator.pushNamed(
-      context,
-      "product",
-      arguments: [product, 2],
-    );
+    // Navigator.pushNamed(
+    //   context,
+    //   AppRoutes.product,
+    //   arguments: [product, 2],
+    // );
   }
 
   Future<ApiResModel> loadPrecioUnitario(
@@ -406,6 +420,28 @@ class ProductViewModel extends ChangeNotifier {
     int parsedValue = int.tryParse(value) ?? 0;
     valueNum = parsedValue;
     calculateTotal(); //calcuar total
+  }
+
+  int convertirTextNum2(String value) {
+    // Convertir el texto a número
+    int parsedValue = int.tryParse(value) ?? 0;
+
+    // Retornar el valor numérico
+    return parsedValue;
+  }
+
+  // Convierte un string a número entero si es válido
+  int? convertirTextNum(String texto) {
+    // Verificar si la cadena es un número entero
+    final esNumeroEntero = RegExp(r'^\d+$').hasMatch(texto);
+
+    if (esNumeroEntero) {
+      // Realizar la conversión a número entero
+      return int.parse(texto);
+    } else {
+      // Retornar null si la cadena no es un número entero
+      return null;
+    }
   }
 
   void chanchePrice(String value) {
@@ -725,6 +761,8 @@ class ProductViewModel extends ChangeNotifier {
 
     //regresar a pantallas anteriroeres
     if (back == 2) {
+      // Navigator.popUntil(context, ModalRoute.withName(AppRoutes.detailsDoc));
+
       Navigator.pop(context);
       Navigator.pop(context);
     } else {

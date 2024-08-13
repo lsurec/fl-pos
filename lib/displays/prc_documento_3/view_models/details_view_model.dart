@@ -4,7 +4,9 @@ import 'dart:async';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -80,6 +82,11 @@ class DetailsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //declarar una propiedad de producto
+  ProductModel? producto;
+
+  int navegarProduct = 1;
+
   //Buscar con input
   Future<void> performSearch(BuildContext context) async {
     final docVM = Provider.of<DocumentViewModel>(
@@ -126,14 +133,48 @@ class DetailsViewModel extends ChangeNotifier {
       listen: false,
     ); //producto
 
+    final vmPayment = Provider.of<PaymentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final localVM = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    //Validar que el campo de cantidad que no sea nullo
+    if (productVM.convertirTextNum(productVM.controllerNum.text) == null) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cantidadPositiva',
+        ),
+      );
+      return;
+    }
+
+    //Validar que el campo de cantidad sea una cantidad positiva
+    if (productVM.convertirTextNum(productVM.controllerNum.text)! <= 0) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cantidadNumerica',
+        ),
+      );
+      return;
+    }
+
     //instacia del servicio
     ProductService productService = ProductService();
 
     //load prosses
     vmFactura.isLoading = true;
 
-    final ApiResModel resDesc =
-        await productService.getProduct(searchText, loginVM.token);
+    final ApiResModel resDesc = await productService.getProduct(
+      searchText,
+      loginVM.token,
+    );
 
     //valid succes response
     if (!resDesc.succes) {
@@ -148,15 +189,29 @@ class DetailsViewModel extends ChangeNotifier {
       return;
     }
 
+    //añadir la repuesta
     products.addAll(resDesc.response);
 
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
       vmFactura.isLoading = false;
-      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'sinCoincidencias',
-      ));
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinCoincidencias',
+        ),
+      );
+      return;
+    }
+
+    //si hay formas de pago agregadas mostrar mensaje
+    if (vmPayment.amounts.isNotEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'eliminaFormaPago',
+        ),
+      );
       return;
     }
 
@@ -170,79 +225,184 @@ class DetailsViewModel extends ChangeNotifier {
     productVM.valueNum = 1;
     productVM.price = 0;
 
-    //si solo hay una concidencia (producto encontrado)
+    //si solo hay uno seleccionarlo
     if (products.length == 1) {
-      //Buscar bodegas del producto
-      await productVM.loadBodegaProducto(
-        context,
-        products[0].producto,
-        products[0].unidadMedida,
-      );
+      producto = products[0];
+    } else {
+      //cartar
+      vmFactura.isLoading = true;
 
-      //si no se encontrarin bodegas mostrar mensaje
-      if (productVM.bodegas.isEmpty) {
-        vmFactura.isLoading = false;
-        NotificationService.showSnackbar(
-            AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'sinBodegaP',
-        ));
-        return;
-      }
-
-      //si hay mas de 1 bodega no buscar precios
-      if (productVM.bodegas.length == 1) {
-        ApiResModel precios = await productVM.loadPrecioUnitario(
-          context,
-          products[0].producto,
-          products[0].unidadMedida,
-          productVM.bodegas.first.bodega,
-        );
-
-        vmFactura.isLoading = false;
-
-        if (!precios.succes) {
-          // ErrorModel error = precios.message;
-
-          NotificationService.showErrorView(
-            context,
-            precios,
-          );
-          return;
-        }
-        productVM.prices = precios.response;
-
-        if (productVM.prices.isEmpty) {
-          NotificationService.showSnackbar(
-              AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'sinPrecioP',
-          ));
-          return;
-        }
-      }
-
-      //finalizar proceso
-      vmFactura.isLoading = false;
-
-      //Navegar a vista producto
+      //navegar a pantalla de coincidencias
       Navigator.pushNamed(
         context,
-        "product",
-        arguments: [
-          products[0],
-          1, //de que pantalla se navego (1: detalles, 2: seleccionar producto)
-        ],
+        AppRoutes.selectProduct,
+        arguments: products,
       );
 
+      //el producto que se selecciona en la pantalla de coincidecias se asigna a producto
+    }
+
+    //ya teniendo producto seleccionado realizar la busqueda de bodega
+
+    //consumo de bodegas
+
+    //limpiar bodegas
+    productVM.selectedBodega = null;
+    productVM.bodegas.clear();
+
+    //consumo del api
+    ApiResModel resBodegas = await productService.getBodegaProducto(
+      loginVM.user, // user,
+      localVM.selectedEmpresa!.empresa, // empresa,
+      localVM.selectedEstacion!.estacionTrabajo, // estacion,
+      producto!.producto, // producto,
+      producto!.unidadMedida, // um,
+      loginVM.token, // token,
+    );
+
+    //valid succes response
+    if (!resBodegas.succes) {
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resBodegas,
+      );
       return;
     }
+
+    //agreagar bodegas encontradas
+    productVM.bodegas.addAll(resBodegas.response);
+
+    //si no se encontrarin bodegas mostrar mensaje
+    if (productVM.bodegas.isEmpty) {
+      vmFactura.isLoading = false;
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+      return;
+    }
+
+    //TODO: aqui estpy
+
+    //si solo hay una bodega seleccionarla por defecto
+    if (productVM.bodegas.length == 1) {
+      productVM.selectedBodega = productVM.bodegas.first;
+    }
+
+    //hay que guardar las bodegas
+
+    //si hay mas de 1 bodega no buscar precios
+    if (productVM.bodegas.length == 1) {
+      ApiResModel precios = await productVM.loadPrecioUnitario(
+        context,
+        producto!.producto,
+        producto!.unidadMedida,
+        productVM.bodegas.first.bodega,
+      );
+
+      vmFactura.isLoading = false;
+
+      if (!precios.succes) {
+        // ErrorModel error = precios.message;
+
+        NotificationService.showErrorView(
+          context,
+          precios,
+        );
+        return;
+      }
+      productVM.prices = precios.response;
+
+      if (productVM.prices.isEmpty) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinPrecioP',
+          ),
+        );
+        return;
+      }
+    }
+
+    // //si solo hay una concidencia (producto encontrado)
+    // if (products.length == 1) {
+    //   //Buscar bodegas del producto
+    //   await productVM.loadBodegaProducto(
+    //     context,
+    //     products[0].producto,
+    //     products[0].unidadMedida,
+    //   );
+
+    //   //si no se encontrarin bodegas mostrar mensaje
+    //   if (productVM.bodegas.isEmpty) {
+    //     vmFactura.isLoading = false;
+    //     NotificationService.showSnackbar(
+    //       AppLocalizations.of(context)!.translate(
+    //         BlockTranslate.notificacion,
+    //         'sinBodegaP',
+    //       ),
+    //     );
+    //     return;
+    //   }
+
+    //   //si hay mas de 1 bodega no buscar precios
+    //   if (productVM.bodegas.length == 1) {
+    //     ApiResModel precios = await productVM.loadPrecioUnitario(
+    //       context,
+    //       products[0].producto,
+    //       products[0].unidadMedida,
+    //       productVM.bodegas.first.bodega,
+    //     );
+
+    //     vmFactura.isLoading = false;
+
+    //     if (!precios.succes) {
+    //       // ErrorModel error = precios.message;
+
+    //       NotificationService.showErrorView(
+    //         context,
+    //         precios,
+    //       );
+    //       return;
+    //     }
+    //     productVM.prices = precios.response;
+
+    //     if (productVM.prices.isEmpty) {
+    //       NotificationService.showSnackbar(
+    //         AppLocalizations.of(context)!.translate(
+    //           BlockTranslate.notificacion,
+    //           'sinPrecioP',
+    //         ),
+    //       );
+    //       return;
+    //     }
+    //   }
+
+    //   //finalizar proceso
+    //   vmFactura.isLoading = false;
+
+    //   //Navegar a vista producto
+    //   Navigator.pushNamed(
+    //     context,
+    //     AppRoutes.product,
+    //     arguments: [
+    //       products[0],
+    //       navegarProduct, //de que pantalla se navego (1: detalles, 2: seleccionar producto)
+    //     ],
+    //   );
+
+    //   return;
+    // }
 
     //finalizar proceso
     vmFactura.isLoading = false;
 
-    //navegar a lista sleccionar productos si hay varias coincidencias
-    Navigator.pushNamed(context, "selectProduct", arguments: products);
+    // //navegar a lista sleccionar productos si hay varias coincidencias
+    // Navigator.pushNamed(context, "selectProduct", arguments: products);
   }
 
   //Obtener y escanear codico de barras
