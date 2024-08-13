@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_post_printer_example/displays/restaurant/models/garnish_model.dart';
-
 class DocEstructuraModel {
   int? docMesa;
   int? docUbicacion;
