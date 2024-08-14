@@ -62,6 +62,11 @@ class DetailsViewModel extends ChangeNotifier {
 
   //limpiar los campos de la vista del usuario
   void clearView(BuildContext context) {
+    final vmProducto = Provider.of<ProductViewModel>(context, listen: false);
+
+    vmProducto.controllerNum.text = "1";
+    searchController.text = "";
+
     traInternas.clear(); //limpuar lista
     calculateTotales(context); //actualizar totales
   }
@@ -211,6 +216,8 @@ class DetailsViewModel extends ChangeNotifier {
     //añadir la repuesta
     products.addAll(resDesc.response);
 
+    print(products.length);
+
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
       vmFactura.isLoading = false;
@@ -240,7 +247,7 @@ class DetailsViewModel extends ChangeNotifier {
     productVM.selectedBodega = null;
     productVM.bodegas.clear();
     productVM.prices.clear();
-    productVM.controllerNum.text = "1";
+    // productVM.controllerNum.text = "1";
     productVM.valueNum = 1;
     productVM.price = 0;
 
@@ -252,11 +259,14 @@ class DetailsViewModel extends ChangeNotifier {
       vmFactura.isLoading = true;
 
       //navegar a pantalla de coincidencias
-      // Navigator.pushNamed(
-      //   context,
-      //   AppRoutes.selectProduct,
-      //   arguments: products,
-      // );
+      Navigator.pushNamed(
+        context,
+        AppRoutes.selectProduct,
+        arguments: products,
+      );
+
+      vmFactura.isLoading = false;
+      return;
 
       //TODO: hace falta la navegacion hacia aquí
 
@@ -550,7 +560,7 @@ class DetailsViewModel extends ChangeNotifier {
           token,
           docVM.fechaInicial,
           docVM.fechaFinal,
-          total.toString(),
+          productVM.total.toString(),
         );
 
         //valid succes response
@@ -581,6 +591,9 @@ class DetailsViewModel extends ChangeNotifier {
 
         precioDias = preciosDia[0].montoCalculado;
         cantidadDias = preciosDia[0].cantidadDia;
+
+        print(precioDias);
+        print(cantidadDias);
       } else {
         vmFactura.isLoading = false;
 
@@ -778,6 +791,8 @@ class DetailsViewModel extends ChangeNotifier {
     traInternas.removeWhere((document) => document.isChecked == true);
     //calcular totoles
     calculateTotales(context);
+
+    selectAll = false;
   }
 
   //eliminar cargo descuento sleccionado

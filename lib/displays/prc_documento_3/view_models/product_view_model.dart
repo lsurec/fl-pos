@@ -78,72 +78,64 @@ class ProductViewModel extends ChangeNotifier {
     BuildContext context,
     ProductModel product,
   ) async {
-    //reiniciar valores
-    total = 0;
-    selectedPrice = null;
-    controllerNum.text = "1";
-    valueNum = 1;
-    price = 0;
-    controllerPrice.text = "$price";
+    //inciiar proceso
+    isLoading = true;
 
-    // //inciiar proceso
-    // isLoading = true;
+    //cargar podegas del producto seleccionado
+    await loadBodegaProducto(
+      context,
+      product.producto,
+      product.unidadMedida,
+    );
 
-    // //cargar podegas del producto seleccionado
-    // await loadBodegaProducto(
-    //   context,
-    //   product.producto,
-    //   product.unidadMedida,
-    // );
+    // si no hay bodegas mostrar mensaje
+    if (bodegas.isEmpty) {
+      isLoading = false;
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+      return;
+    }
 
-    // // si no hay bodegas mostrar mensaje
-    // if (bodegas.isEmpty) {
-    //   isLoading = false;
-    //   NotificationService.showSnackbar(
-    //     AppLocalizations.of(context)!.translate(
-    //       BlockTranslate.notificacion,
-    //       'sinBodegaP',
-    //     ),
-    //   );
-    //   return;
-    // }
+    //si solo hay una bodega buscar precios
+    if (bodegas.length == 1) {
+      //consumir api
 
-    // //si solo hay una bodega buscar precios
-    // if (bodegas.length == 1) {
-    //   //consumir api
+      ApiResModel precios = await loadPrecioUnitario(
+        context,
+        product.producto,
+        product.unidadMedida,
+        bodegas.first.bodega,
+      );
 
-    //   ApiResModel precios = await loadPrecioUnitario(
-    //     context,
-    //     product.producto,
-    //     product.unidadMedida,
-    //     bodegas.first.bodega,
-    //   );
+      isLoading = false;
 
-    //   isLoading = false;
+      if (!precios.succes) {
+        NotificationService.showErrorView(
+          context,
+          precios,
+        );
+        return;
+      }
 
-    //   if (!precios.succes) {
-    //     NotificationService.showErrorView(
-    //       context,
-    //       precios,
-    //     );
-    //     return;
-    //   }
+      prices = precios.response;
 
-    //   prices = precios.response;
+      if (prices.isEmpty) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinPrecioP',
+          ),
+        );
+        return;
+      }
+    }
 
-    //   if (prices.isEmpty) {
-    //     NotificationService.showSnackbar(
-    //       AppLocalizations.of(context)!.translate(
-    //         BlockTranslate.notificacion,
-    //         'sinPrecioP',
-    //       ),
-    //     );
-    //     return;
-    //   }
-    // }
-
-    // //finalizar proceso
-    // isLoading = false;
+    //finalizar proceso
+    isLoading = false;
 
     final vmProduct = Provider.of<DetailsViewModel>(
       context,
@@ -158,11 +150,11 @@ class ProductViewModel extends ChangeNotifier {
     notifyListeners();
 
     //navegar a pantalla pregunta
-    // Navigator.pushNamed(
-    //   context,
-    //   AppRoutes.product,
-    //   arguments: [product, 2],
-    // );
+    Navigator.pushNamed(
+      context,
+      AppRoutes.product,
+      arguments: [product, 2],
+    );
   }
 
   Future<ApiResModel> loadPrecioUnitario(
@@ -753,6 +745,10 @@ class ProductViewModel extends ChangeNotifier {
       ),
       context,
     );
+
+    //actualizar el campo cantidad
+
+    controllerNum.text = "1";
 
     //mensaje de confirmacion
     NotificationService.showSnackbar(
