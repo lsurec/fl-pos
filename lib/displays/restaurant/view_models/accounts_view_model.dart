@@ -30,9 +30,19 @@ class AccountsViewModel extends ChangeNotifier {
 
     for (var i = 0; i < orderVM.orders.length; i++) {
       if (orderVM.orders[i].selected) {
-        orderVM.orders.removeAt(i);
-        deleteItemsRecursive(context);
-        break;
+        int comandada = 0;
+
+        for (var element in orderVM.orders[i].transacciones) {
+          if (element.processed) {
+            comandada++;
+          }
+        }
+
+        if (comandada == 0) {
+          orderVM.orders.removeAt(i);
+          deleteItemsRecursive(context);
+          break;
+        }
       }
     }
 
@@ -47,6 +57,11 @@ class AccountsViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
     showDialog(
       context: context,
       builder: (context) => AlertWidget(
@@ -57,6 +72,17 @@ class AccountsViewModel extends ChangeNotifier {
           //Cerrar sesión, limpiar datos
           Navigator.of(context).pop();
 
+          int comandada = 0;
+
+          for (var element in orderVM.orders) {
+            for (var i = 0; i < element.transacciones.length; i++) {
+              if (element.transacciones[i].processed) {
+                comandada++;
+                break;
+              }
+            }
+          }
+
           deleteItemsRecursive(context);
 
           if (tablesVM.table!.orders!.isEmpty) {
@@ -64,8 +90,15 @@ class AccountsViewModel extends ChangeNotifier {
           }
 
           isSelectedMode = false;
-          NotificationService.showSnackbar("Cuentas eliminadas");
           notifyListeners();
+
+          if (comandada != 0) {
+            NotificationService.showSnackbar(
+                "Cuentas comandadas no se pueden modificar.");
+            return;
+          }
+
+          NotificationService.showSnackbar("Cuentas eliminadas");
         },
         onCancel: () => Navigator.pop(context),
       ),
