@@ -21,6 +21,8 @@ class ProductViewModel extends ChangeNotifier {
   double total = 0; //total transaccion
   double price = 0; //Precio unitario seleccionado
 
+  int indexEdit = -1;
+
   //controlar procesos
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -646,6 +648,7 @@ class ProductViewModel extends ChangeNotifier {
 
       final List<String> mensajes = res.response;
 
+      //aqui abre una norificacion
       if (mensajes.isNotEmpty) {
         NotificationService.showSnackbar(mensajes[0]);
         return;
