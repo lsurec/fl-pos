@@ -186,20 +186,6 @@ class OrderView extends StatelessWidget {
                                                 text: transaction.observacion),
                                           ],
                                         ),
-                                      if (vm.orders[indexOrder]
-                                          .transacciones[index].processed)
-                                        Column(
-                                          children: [
-                                            const SizedBox(height: 5),
-                                            Text(
-                                              "Comandada",
-                                              style: AppTheme.style(
-                                                context,
-                                                Styles.red,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
                                     ],
                                   ),
                                 ),
@@ -230,11 +216,16 @@ class OrderView extends StatelessWidget {
                                             MainAxisAlignment.spaceAround,
                                         children: [
                                           IconButton(
-                                            onPressed: () => vm.decrement(
-                                              context,
-                                              indexOrder,
-                                              index,
-                                            ),
+                                            onPressed: vm
+                                                    .orders[indexOrder]
+                                                    .transacciones[index]
+                                                    .processed
+                                                ? null
+                                                : () => vm.decrement(
+                                                      context,
+                                                      indexOrder,
+                                                      index,
+                                                    ),
                                             icon: transaction.cantidad == 1
                                                 ? const Icon(
                                                     Icons.delete_outline)
@@ -242,19 +233,45 @@ class OrderView extends StatelessWidget {
                                           ),
                                           Text(
                                             "${transaction.cantidad}",
-                                            style: AppTheme.style(
-                                                context, Styles.bold),
+                                            style: vm
+                                                    .orders[indexOrder]
+                                                    .transacciones[index]
+                                                    .processed
+                                                ? const TextStyle(
+                                                    fontSize: 17,
+                                                    color: Colors.grey)
+                                                : AppTheme.style(
+                                                    context, Styles.bold),
                                           ),
                                           IconButton(
-                                            onPressed: () => vm.increment(
-                                              indexOrder,
-                                              index,
-                                            ),
+                                            onPressed: vm
+                                                    .orders[indexOrder]
+                                                    .transacciones[index]
+                                                    .processed
+                                                ? null
+                                                : () => vm.increment(
+                                                      indexOrder,
+                                                      index,
+                                                    ),
                                             icon: const Icon(Icons.add),
                                           )
                                         ],
                                       ),
                                     ),
+                                    if (vm.orders[indexOrder]
+                                        .transacciones[index].processed)
+                                      Column(
+                                        children: [
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            "Comandada",
+                                            style: AppTheme.style(
+                                              context,
+                                              Styles.red,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ],
