@@ -11,6 +11,7 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -148,7 +149,15 @@ class DetailsViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
+    final confirmVM = Provider.of<ConfirmDocViewModel>(
+      context,
+      listen: false,
+    );
+
+    final detailsVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
 
     String token = loginVM.token;
     String user = loginVM.user;
@@ -495,116 +504,106 @@ class DetailsViewModel extends ChangeNotifier {
       return;
     }
 
-    // TODO: aqui voy 10:35
+    //convertir cantidad de texto a numerica
+    int cantidad = productVM.convertirTextNum(productVM.controllerNum.text)!;
 
-    //si hay mas de 1 bodega no buscar precios
-    if (productVM.bodegas.length == 1) {
-      ApiResModel precios = await productVM.loadPrecioUnitario(
-        context,
-        producto!.producto,
-        producto!.unidadMedida,
-        productVM.bodegas.first.bodega,
-      );
+    //Calcular el total (cantidad * precio seleccionado)
+    productVM.total = cantidad * productVM.selectedPrice!.precioU;
 
-      vmFactura.isLoading = false;
+    double precioDias = 0;
+    int cantidadDias = 0;
 
-      if (!precios.succes) {
-        // ErrorModel error = precios.message;
+    //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
+    if (docVM.valueParametro(44)) {
+      //vobtener fechas
 
-        NotificationService.showErrorView(
-          context,
-          precios,
+      if (Utilities.fechaIgualOMayorSinSegundos(
+        docVM.fechaFinal,
+        docVM.fechaInicial,
+      )) {
+        //formular precios por dias
+        ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
+          token,
+          docVM.fechaInicial,
+          docVM.fechaFinal,
+          total.toString(),
         );
-        return;
-      }
-      productVM.prices = precios.response;
 
-      if (productVM.prices.isEmpty) {
+        //valid succes response
+        if (!resFormPrecio.succes) {
+          //si algo salio mal mostrar alerta
+
+          await NotificationService.showErrorView(
+            context,
+            resFormPrecio,
+          );
+          return;
+        }
+
+        List<PrecioDiaModel> preciosDia = resFormPrecio.response;
+
+        if (preciosDia.isEmpty) {
+          vmFactura.isLoading = false;
+
+          resFormPrecio.response =
+              'No fue posible obtner los valores calculados para el precio dia';
+
+          NotificationService.showErrorView(context, resFormPrecio);
+
+          return;
+        }
+
+        precioDias = preciosDia[0].montoCalculado;
+        cantidadDias = preciosDia[0].cantidadDia;
+      } else {
+        vmFactura.isLoading = false;
+
+        precioDias = total;
+        cantidadDias = 1;
+
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
             BlockTranslate.notificacion,
-            'sinPrecioP',
+            'precioDiasNoCalculado',
           ),
         );
-        return;
       }
     }
 
-    // //si solo hay una concidencia (producto encontrado)
-    // if (products.length == 1) {
-    //   //Buscar bodegas del producto
-    //   await productVM.loadBodegaProducto(
-    //     context,
-    //     products[0].producto,
-    //     products[0].unidadMedida,
-    //   );
+    //agregar transacion al documento
+    detailsVM.addTransaction(
+      TraInternaModel(
+        consecutivo: 0,
+        estadoTra: 1,
+        isChecked: false,
+        bodega: productVM.selectedBodega!,
+        producto: producto!,
+        precio: productVM.selectedPrice,
+        cantidad: (int.tryParse(productVM.controllerNum.text) ?? 0),
+        total: docVM.valueParametro(44) ? precioDias : total,
+        cargo: 0,
+        descuento: 0,
+        operaciones: [],
+        precioCantidad: docVM.valueParametro(44) ? total : null,
+        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        precioDia: docVM.valueParametro(44) ? precioDias : null,
+      ),
+      context,
+    );
 
-    //   //si no se encontrarin bodegas mostrar mensaje
-    //   if (productVM.bodegas.isEmpty) {
-    //     vmFactura.isLoading = false;
-    //     NotificationService.showSnackbar(
-    //       AppLocalizations.of(context)!.translate(
-    //         BlockTranslate.notificacion,
-    //         'sinBodegaP',
-    //       ),
-    //     );
-    //     return;
-    //   }
+    //campo de cantidad = "1"
+    productVM.controllerNum.text = "1";
 
-    //   //si hay mas de 1 bodega no buscar precios
-    //   if (productVM.bodegas.length == 1) {
-    //     ApiResModel precios = await productVM.loadPrecioUnitario(
-    //       context,
-    //       products[0].producto,
-    //       products[0].unidadMedida,
-    //       productVM.bodegas.first.bodega,
-    //     );
+    //mensaje de confirmacion
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'transaccionAgregada',
+      ),
+    );
 
-    //     vmFactura.isLoading = false;
-
-    //     if (!precios.succes) {
-    //       // ErrorModel error = precios.message;
-
-    //       NotificationService.showErrorView(
-    //         context,
-    //         precios,
-    //       );
-    //       return;
-    //     }
-    //     productVM.prices = precios.response;
-
-    //     if (productVM.prices.isEmpty) {
-    //       NotificationService.showSnackbar(
-    //         AppLocalizations.of(context)!.translate(
-    //           BlockTranslate.notificacion,
-    //           'sinPrecioP',
-    //         ),
-    //       );
-    //       return;
-    //     }
-    //   }
-
-    //   //finalizar proceso
-    //   vmFactura.isLoading = false;
-
-    //   //Navegar a vista producto
-    //   Navigator.pushNamed(
-    //     context,
-    //     AppRoutes.product,
-    //     arguments: [
-    //       products[0],
-    //       navegarProduct, //de que pantalla se navego (1: detalles, 2: seleccionar producto)
-    //     ],
-    //   );
-
-    //   return;
-    // }
-
-    //finalizar proceso
+    //detener carga
     vmFactura.isLoading = false;
-
-    // //navegar a lista sleccionar productos si hay varias coincidencias
-    // Navigator.pushNamed(context, "selectProduct", arguments: products);
   }
 
   //Obtener y escanear codico de barras
