@@ -186,6 +186,20 @@ class OrderView extends StatelessWidget {
                                                 text: transaction.observacion),
                                           ],
                                         ),
+                                      if (vm.orders[indexOrder]
+                                          .transacciones[index].processed)
+                                        Column(
+                                          children: [
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              "Comandada",
+                                              style: AppTheme.style(
+                                                context,
+                                                Styles.red,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -256,16 +270,16 @@ class OrderView extends StatelessWidget {
                                   color: Colors.green,
                                 ),
                               ),
-                            if (vm.orders[indexOrder].transacciones[index]
-                                .processed)
-                              const Positioned(
-                                left: 40,
-                                bottom: 0,
-                                child: Icon(
-                                  Icons.lock_outline,
-                                  color: Colors.red,
-                                ),
-                              ),
+                            // if (vm.orders[indexOrder].transacciones[index]
+                            //     .processed)
+                            //   const Positioned(
+                            //     left: 0,
+                            //     bottom: 0,
+                            //     child: Icon(
+                            //       Icons.lock_outline,
+                            //       color: Colors.red,
+                            //     ),
+                            //   ),
                           ],
                         ),
                       ),
