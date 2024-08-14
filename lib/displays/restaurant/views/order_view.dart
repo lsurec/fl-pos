@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -119,7 +120,12 @@ class OrderView extends StatelessWidget {
                         tooltip: "Eliminar", //TODO:Translate
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.permisions,
+                          arguments:
+                              45, //Tipo de accion para trasladar transacciones
+                        ),
                         icon: const Icon(Icons.drive_file_move_outline),
                         tooltip: "Trasladar", //TODO:Translate
                       ),
