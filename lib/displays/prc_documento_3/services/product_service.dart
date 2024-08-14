@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -19,11 +21,22 @@ class ProductService {
     int unidadMedida,
     int producto,
     int cantidad,
-    double tipoCambio,
+    int tipoCambio,
     int moneda,
     int tipoPrecio,
     String token,
   ) async {
+    print("Serie: $serie");
+    print("TipoDoc: $tipoDocumento");
+    print("Bodega: $bodega");
+    print("TipoTra: $tipoTransaccion");
+    print("UniMedida: $unidadMedida");
+    print("Producto: $producto");
+    print("Cantidad: $cantidad");
+    print("TipoCambio: $tipoCambio");
+    print("Moneda: $moneda");
+    print("TipoPrecio: $tipoPrecio");
+
     //url completa
     Uri url = Uri.parse("${_baseUrl}Producto/validate");
 

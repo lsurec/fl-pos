@@ -23,13 +23,13 @@ class BodegaProductoModel {
         bodega: json["bodega"],
         nombre: json["nombre"],
         existencia: json["existencia"],
-        poseeComponente: json["poseeComponente"],
+        poseeComponente: json["posee_Componente"],
       );
 
   Map<String, dynamic> toMap() => {
         "bodega": bodega,
         "nombre": nombre,
         "existencia": existencia,
-        "poseeComponente": poseeComponente,
+        "posee_Componente": poseeComponente,
       };
 }
