@@ -65,6 +65,7 @@ class DetailsViewModel extends ChangeNotifier {
     final vmProducto = Provider.of<ProductViewModel>(context, listen: false);
 
     vmProducto.controllerNum.text = "1";
+    vmProducto.valueNum = 1;
     searchController.text = "";
 
     traInternas.clear(); //limpuar lista
@@ -216,8 +217,6 @@ class DetailsViewModel extends ChangeNotifier {
     //añadir la repuesta
     products.addAll(resDesc.response);
 
-    print(products.length);
-
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
       vmFactura.isLoading = false;
@@ -248,7 +247,7 @@ class DetailsViewModel extends ChangeNotifier {
     productVM.bodegas.clear();
     productVM.prices.clear();
     // productVM.controllerNum.text = "1";
-    productVM.valueNum = 1;
+    // productVM.valueNum = 1;
     productVM.price = 0;
 
     //si solo hay uno seleccionarlo
@@ -632,6 +631,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     //campo de cantidad = "1"
     productVM.controllerNum.text = "1";
+    productVM.valueNum = 1;
 
     //mensaje de confirmacion
     NotificationService.showSnackbar(
