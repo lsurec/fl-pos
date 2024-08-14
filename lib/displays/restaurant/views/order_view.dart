@@ -31,71 +31,74 @@ class OrderView extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
-            bottomNavigationBar: Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: Color.fromARGB(255, 228, 225, 225),
-                  ),
-                ),
-              ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ),
-              height: 110,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.calcular,
-                          'total',
-                        )}:",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
+            bottomNavigationBar: vm.isSelectedMode
+                ? null
+                : Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: Color.fromARGB(255, 228, 225, 225),
                         ),
                       ),
-                      Text(
-                        currencyFormat.format(vm.getTotal(indexOrder)),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: SizedBox(
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () => vm.monitorPrint(context, indexOrder),
-                        style: AppTheme.button(
-                          context,
-                          Styles.buttonStyle,
-                        ),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(
-                              "Comandar", //TODO:Translate
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 20,
+                    ),
+                    height: 110,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calcular,
+                                'total',
+                              )}:",
                               style: AppTheme.style(
                                 context,
-                                Styles.whiteBoldStyle,
+                                Styles.title,
+                              ),
+                            ),
+                            Text(
+                              currencyFormat.format(vm.getTotal(indexOrder)),
+                              style: AppTheme.style(
+                                context,
+                                Styles.title,
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () =>
+                                  vm.monitorPrint(context, indexOrder),
+                              style: AppTheme.button(
+                                context,
+                                Styles.buttonStyle,
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Center(
+                                  child: Text(
+                                    "Comandar", //TODO:Translate
+                                    style: AppTheme.style(
+                                      context,
+                                      Styles.whiteBoldStyle,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
             appBar: AppBar(
               title: Text(
                 vm.isSelectedMode
