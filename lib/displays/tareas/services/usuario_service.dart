@@ -14,6 +14,7 @@ class UsuarioService {
     String filtro,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Usuarios");
+
     try {
       //url completa
       //Configuraciones del api

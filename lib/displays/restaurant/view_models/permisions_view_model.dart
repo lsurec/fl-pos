@@ -14,12 +14,6 @@ class PermisionsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //token del usuario
-  String token = "";
-  //nombre del usuario
-  String user = "";
-  //Cadena de conexion
-  String conStr = "";
   //conytrolar seion permanente
   bool isSliderDisabledSession = false;
   //ocultar y mostrar contraseña
@@ -44,51 +38,48 @@ class PermisionsViewModel extends ChangeNotifier {
     FocusScope.of(context).unfocus();
 
     LoginService loginService = LoginService();
+    if (!isValidForm()) return;
 
     //validate form
     // Navigator.pushNamed(context, "home");
-    if (isValidForm()) {
-      //code if valid true
-      LoginModel loginModel = LoginModel(
-        user: formValues["user"]!,
-        pass: formValues["pass"]!,
+    //code if valid true
+    LoginModel loginModel = LoginModel(
+      user: formValues["user"]!,
+      pass: formValues["pass"]!,
+    );
+
+    //iniciar proceso
+    isLoading = true;
+
+    //uso servicio login
+    ApiResModel res = await loginService.postLogin(loginModel);
+
+    //validar respuesta del servico, si es incorrecta
+    if (!res.succes) {
+      //finalizar proceso
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        res,
       );
+      return;
+    }
 
-      //iniciar proceso
-      isLoading = true;
+    //mapear respuesta servicio
+    AccessModel respLogin = res.response;
 
-      //uso servicio login
-      ApiResModel res = await loginService.postLogin(loginModel);
+    //si el usuaro es correcto
+    if (respLogin.success) {
+      //guardar token y nombre de usuario
+      print("ok");
 
-      //validar respuesta del servico, si es incorrecta
-      if (!res.succes) {
-        //finalizar proceso
-        isLoading = false;
-
-        await NotificationService.showErrorView(
-          context,
-          res,
-        );
-        return;
-      }
-
-      //mapear respuesta servicio
-      AccessModel respLogin = res.response;
-
-      //si el usuaro es correcto
-      if (respLogin.success) {
-        //guardar token y nombre de usuario
-        token = respLogin.message;
-        user = respLogin.user;
-        conStr = respLogin.con;
-
-        isLoading = false;
-      } else {
-        //finalizar proceso
-        isLoading = false;
-        //si el usuario es incorrecto
-        NotificationService.showSnackbar(respLogin.message);
-      }
+      isLoading = false;
+    } else {
+      //finalizar proceso
+      isLoading = false;
+      //si el usuario es incorrecto
+      NotificationService.showSnackbar(respLogin.message);
     }
   }
 }
