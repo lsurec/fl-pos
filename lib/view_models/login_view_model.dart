@@ -44,12 +44,6 @@ class LoginViewModel extends ChangeNotifier {
     return formKey.currentState?.validate() ?? false;
   }
 
-  // Toggles the password show status
-  void toggle() {
-    obscureText = !obscureText;
-    notifyListeners();
-  }
-
   //disableSession
   void disableSession(bool value) {
     isSliderDisabledSession = value;
