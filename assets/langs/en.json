@@ -83,7 +83,8 @@
         "eliminar": "Delete",
         "adjuntarArchivos": "Attach Files",
         "enviarComentario": "Send comment",
-        "cambiarResponsable": "Update Responsible Person"
+        "cambiarResponsable": "Update Responsible Person",
+        "modificar": "Modify"
     },
     "fechas": {
         "fecha": "Date: ",
@@ -211,7 +212,10 @@
         "seleccioneTipoRef": "You must select a reference type.",
         "noCalculoDias": "The price per day could not be calculated.",
         "recalcularFechas": "Prices per day recalculated due to date modification.",
-        "sinImagenes": "No images associated with this product."
+        "sinImagenes": "No images associated with this product.",
+        "cantidadPositiva": "The quantity must be numeric and positive.",
+        "cantidadNumerica": "The quantity must be numeric.",
+        "cantidadMayor": "The quantity must be greater than 0."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

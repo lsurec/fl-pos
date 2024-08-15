@@ -19,6 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetailsViewModel extends ChangeNotifier {
+  //llave global del scaffold
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   //Valores globales
   double subtotal = 0;
   double cargo = 0;

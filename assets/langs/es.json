@@ -83,7 +83,8 @@
         "eliminar": "Eliminar",
         "adjuntarArchivos": "Adjuntar Archivos",
         "enviarComentario": "Enviar comentario.",
-        "cambiarResponsable": "Actualizar Responsable"
+        "cambiarResponsable": "Actualizar Responsable",
+        "modificar": "Modificar"
     },
     "fechas": {
         "fecha": "Fecha: ",

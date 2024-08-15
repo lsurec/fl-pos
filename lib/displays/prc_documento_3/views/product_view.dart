@@ -294,30 +294,58 @@ class _BottomBar extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => vm.addTransaction(context, product, back),
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'agregar',
-                    ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
+          //agregar transaccion
+          if (vm.accion == 0)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => vm.addTransaction(context, product, back),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'agregar',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.whiteStyle,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+          //modificar transaccion
+          if (vm.accion == 1)
+            Expanded(
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'modificar',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.whiteStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

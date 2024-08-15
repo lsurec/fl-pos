@@ -23,6 +23,8 @@ class ProductViewModel extends ChangeNotifier {
 
   int indexEdit = -1;
 
+  int accion = 0; // Agregar = 0; Editar = 1;
+
   //controlar procesos
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -319,6 +321,7 @@ class ProductViewModel extends ChangeNotifier {
 
   //editar la transaccion
   editarTran(BuildContext context, int indexTra) async {
+    accion = 1;
     //View Models a utilizar
     final detailsVM = Provider.of<DetailsViewModel>(
       context,
@@ -348,8 +351,9 @@ class ProductViewModel extends ChangeNotifier {
     //Limpiar precios
     prices.clear();
 
-    //Asignar cantidad de la transaccion
+    //Asignar cantidad de la transaccion a las variables correspondientes
     controllerNum.text = detailsVM.traInternas[indexTra].cantidad.toString();
+    valueNum = detailsVM.traInternas[indexTra].cantidad;
 
     //obtener el producto
     ProductModel productoTra = detailsVM.traInternas[indexTra].producto;
@@ -569,14 +573,14 @@ class ProductViewModel extends ChangeNotifier {
 
     //abrir pantalla producto con lo datos cargados
 
-    // Navigator.pushNamed(
-    //   context,
-    //   AppRoutes.product,
-    //   arguments: [
-    //     productoTra,
-    //     2,
-    //   ],
-    // );
+    Navigator.pushNamed(
+      detailsVM.scaffoldKey.currentState!.context,
+      AppRoutes.product,
+      arguments: [
+        productoTra,
+        2,
+      ],
+    );
 
     //aun no pasa aqui
     return;
