@@ -262,12 +262,9 @@ class DetailsView extends StatelessWidget {
                             Icons.delete,
                           ),
                         ),
-                        child: GestureDetector(
-                          onTap: () => vm.navigatorDetails(context, index),
-                          child: _TransactionCard(
-                            transaction: vm.traInternas[index],
-                            indexTransaction: index,
-                          ),
+                        child: _TransactionCard(
+                          transaction: vm.traInternas[index],
+                          indexTransaction: index,
                         ),
                       );
                     },
@@ -357,117 +354,126 @@ class _TransactionCard extends StatelessWidget {
         context,
         Styles.transaction,
       ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(10),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${transaction.cantidad} x ${transaction.producto.desProducto}',
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
-            ),
-            Text(
-              'SKU: ${transaction.producto.productoId}',
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
-            )
-          ],
+      child: InkWell(
+        onTap: () => vm.navigatorDetails(
+          context,
+          indexTransaction,
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-//Cantidad dias
-            if (docVM.valueParametro(44))
+        onDoubleTap: () {
+          //editar transaccion
+        },
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(10),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'cantDias',
-                )}: ${transaction.cantidadDias}',
+                '${transaction.cantidad} x ${transaction.producto.desProducto}',
                 style: AppTheme.style(
                   context,
-                  Styles.normal,
+                  Styles.bold,
                 ),
               ),
-
-            if (transaction.precio != null)
               Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'precioU',
-                )}: ${currencyFormat.format(transaction.precio!.precioU)}',
+                'SKU: ${transaction.producto.productoId}',
                 style: AppTheme.style(
                   context,
-                  Styles.normal,
+                  Styles.bold,
                 ),
-              ),
-//Total por cantidad
-            if (docVM.valueParametro(44))
-              Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'precioTotalCant',
-                )}: ${currencyFormat.format(transaction.precioCantidad)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-            Text(
-              '${AppLocalizations.of(context)!.translate(
-                BlockTranslate.calcular,
-                'precioT',
-              )}: ${currencyFormat.format(transaction.total)}',
-              style: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
-            ),
-            if (transaction.cargo != 0)
-              Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'cargo',
-                )}: ${currencyFormat.format(transaction.cargo)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-
-            if (transaction.descuento != 0)
-              Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'descuento',
-                )}: ${currencyFormat.format(transaction.descuento)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-            // Text('Detalles: ${transaction.detalles}'),
-          ],
-        ),
-        leading: Checkbox(
-          activeColor: AppTheme.color(
-            context,
-            Styles.darkPrimary,
+              )
+            ],
           ),
-          value: transaction.isChecked,
-          onChanged: (value) => vm.changeChecked(value, indexTransaction),
-        ),
-        trailing: IconButton(
-          onPressed: () => productVM.viewProductImages(
-            context,
-            transaction.producto,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Cantidad dias
+              if (docVM.valueParametro(44))
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'cantDias',
+                  )}: ${transaction.cantidadDias}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+
+              if (transaction.precio != null)
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'precioU',
+                  )}: ${currencyFormat.format(transaction.precio!.precioU)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+              //Total por cantidad
+              if (docVM.valueParametro(44))
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'precioTotalCant',
+                  )}: ${currencyFormat.format(transaction.precioCantidad)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+              Text(
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'precioT',
+                )}: ${currencyFormat.format(transaction.total)}',
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
+              if (transaction.cargo != 0)
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'cargo',
+                  )}: ${currencyFormat.format(transaction.cargo)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+
+              if (transaction.descuento != 0)
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'descuento',
+                  )}: ${currencyFormat.format(transaction.descuento)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+              // Text('Detalles: ${transaction.detalles}'),
+            ],
           ),
-          icon: const Icon(
-            Icons.image,
+          leading: Checkbox(
+            activeColor: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+            ),
+            value: transaction.isChecked,
+            onChanged: (value) => vm.changeChecked(value, indexTransaction),
+          ),
+          trailing: IconButton(
+            onPressed: () => productVM.viewProductImages(
+              context,
+              transaction.producto,
+            ),
+            icon: const Icon(
+              Icons.image,
+            ),
           ),
         ),
       ),
