@@ -78,6 +78,29 @@ class ProductViewModel extends ChangeNotifier {
     BuildContext context,
     ProductModel product,
   ) async {
+    //View models a utilizar
+
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final detailsVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    ); //lo
+
+    String token = loginVM.token;
+    // String user = loginVM.user;
+
+    //instacia del servicio
+    ProductService productService = ProductService();
+
     //inciiar proceso
     isLoading = true;
 
@@ -134,27 +157,164 @@ class ProductViewModel extends ChangeNotifier {
       }
     }
 
-    //finalizar proceso
+    //print(bodegas.length);
+    //print(prices.length);
+    //print(docVM.valueParametro(351));
+
+    //si hay mas de una bodega, mas de un precio o existe e parametro 351
+    if (bodegas.length > 1 || prices.length > 1 || docVM.valueParametro(351)) {
+      //Calcular totral de la transaccion
+      //SI no hau precio seleccionado no calcular
+      if (price == 0) {
+        total = 0;
+        return;
+      }
+
+      //convertir cantidad de texto a numerica
+      int cantidad = convertirTextNum(controllerNum.text)!;
+
+      //Calcular el total (cantidad * precio seleccionado)
+      total = cantidad * selectedPrice!.precioU;
+
+      //detener carga
+      isLoading = false;
+
+      //navegar y verificar que ocurre
+
+      Navigator.pushNamed(
+        context,
+        AppRoutes.product,
+        arguments: [
+          product,
+          2,
+        ],
+      );
+
+      return;
+
+      //si de vuelve errores de api o de las validaciones
+    }
+
+    if (!selectedBodega!.poseeComponente) {
+      //realizar las validaciones
+    }
+
+    //Calcular totral de la transaccion
+    //SI no hau precio seleccionado no calcular
+    if (price == 0) {
+      total = 0;
+      return;
+    }
+
+    //convertir cantidad de texto a numerica
+    int cantidad = convertirTextNum(controllerNum.text)!;
+
+    //Calcular el total (cantidad * precio seleccionado)
+    total = cantidad * selectedPrice!.precioU;
+
+    double precioDias = 0;
+    int cantidadDias = 0;
+
+    //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
+    if (docVM.valueParametro(44)) {
+      //vobtener fechas
+
+      if (Utilities.fechaIgualOMayorSinSegundos(
+        docVM.fechaFinal,
+        docVM.fechaInicial,
+      )) {
+        //formular precios por dias
+        ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
+          token,
+          docVM.fechaInicial,
+          docVM.fechaFinal,
+          total.toString(),
+        );
+
+        //valid succes response
+        if (!resFormPrecio.succes) {
+          isLoading = false;
+
+          //si algo salio mal mostrar alerta
+
+          await NotificationService.showErrorView(
+            context,
+            resFormPrecio,
+          );
+          return;
+        }
+
+        List<PrecioDiaModel> preciosDia = resFormPrecio.response;
+
+        if (preciosDia.isEmpty) {
+          isLoading = false;
+
+          resFormPrecio.response =
+              'No fue posible obtner los valores calculados para el precio dia';
+
+          NotificationService.showErrorView(context, resFormPrecio);
+
+          return;
+        }
+        //asignar valores
+        precioDias = preciosDia[0].montoCalculado;
+        cantidadDias = preciosDia[0].cantidadDia;
+      } else {
+        isLoading = false;
+
+        precioDias = total;
+        cantidadDias = 1;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'precioDiasNoCalculado',
+          ),
+        );
+      }
+    }
+
+    //agregar transacion al documento
+    detailsVM.addTransaction(
+      TraInternaModel(
+        bodega: selectedBodega!,
+        cantidad: (int.tryParse(controllerNum.text) ?? 0),
+        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        cargo: 0,
+        consecutivo: 0,
+        descuento: 0,
+        estadoTra: 1,
+        isChecked: false,
+        operaciones: [],
+        precio: selectedPrice,
+        precioCantidad: docVM.valueParametro(44) ? total : null,
+        precioDia: docVM.valueParametro(44) ? precioDias : null,
+        producto: product,
+        total: docVM.valueParametro(44) ? precioDias : total,
+      ),
+      context,
+    );
+
+    //campo de cantidad = "1"
+    controllerNum.text = "1";
+    valueNum = 1;
+
+    //mensaje de confirmacion
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'transaccionAgregada',
+      ),
+    );
+
+    //regresar a detalle
+    Navigator.pop(context);
+
+    //detener carga
     isLoading = false;
 
-    final vmProduct = Provider.of<DetailsViewModel>(
-      context,
-      listen: false,
-    );
-
-    //asignar el valor para producto
-    vmProduct.producto = product;
     //valor para regresae
-    vmProduct.navegarProduct = 2;
-
-    notifyListeners();
-
-    //navegar a pantalla pregunta
-    Navigator.pushNamed(
-      context,
-      AppRoutes.product,
-      arguments: [product, 2],
-    );
+    detailsVM.navegarProduct = 2;
   }
 
   Future<ApiResModel> loadPrecioUnitario(
