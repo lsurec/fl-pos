@@ -317,6 +317,271 @@ class ProductViewModel extends ChangeNotifier {
     detailsVM.navegarProduct = 2;
   }
 
+  //editar la transaccion
+  editarTran(BuildContext context, int indexTra) async {
+    //View Models a utilizar
+    final detailsVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final localVM = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = loginVM.token;
+    String user = loginVM.user;
+
+    //limpiar bodegas
+    bodegas.clear();
+    //Limpiar precios
+    prices.clear();
+
+    //Asignar cantidad de la transaccion
+    controllerNum.text = detailsVM.traInternas[indexTra].cantidad.toString();
+
+    //obtener el producto
+    ProductModel productoTra = detailsVM.traInternas[indexTra].producto;
+    //obtener la bodega
+    BodegaProductoModel bodegaTra = detailsVM.traInternas[indexTra].bodega!;
+    //obtener el precio
+    UnitarioModel precioTra = detailsVM.traInternas[indexTra].precio!;
+
+    //inciiar proceso
+    isLoading = true;
+
+    //cargar podegas del producto seleccionado
+    //instancia del servicio
+    ProductService productService = ProductService();
+
+    //consumo del api
+    ApiResModel resBodega = await productService.getBodegaProducto(
+      user,
+      localVM.selectedEmpresa!.empresa,
+      localVM.selectedEstacion!.estacionTrabajo,
+      productoTra.producto,
+      productoTra.unidadMedida,
+      token,
+    );
+
+    //valid succes response
+    if (!resBodega.succes) {
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resBodega,
+      );
+      return;
+    }
+
+    //agreagar bodegas encontradas
+    bodegas.addAll(resBodega.response);
+
+    //si solo hay una bodega seleccionarla por defecto
+    if (bodegas.length == 1) {
+      selectedBodega = bodegas.first;
+    }
+
+    // si no hay bodegas mostrar mensaje
+    if (bodegas.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+      return;
+    }
+
+    //si solo hay una bodega buscar precios
+    if (bodegas.length == 1) {
+      //evaluar los precios
+      selectedBodega = bodegas.first;
+
+      int bodega = bodegas.first.bodega;
+
+      ApiResModel resPrecio = await productService.getPrecios(
+        bodega,
+        productoTra.producto,
+        productoTra.unidadMedida,
+        user,
+        token,
+        docVM.clienteSelect?.cuentaCorrentista ?? 0,
+        docVM.clienteSelect?.cuentaCta ?? "0",
+      );
+
+      if (!resPrecio.succes) {
+        isLoading = false;
+
+        //si algo salio mal mostrar alerta
+        await NotificationService.showErrorView(
+          context,
+          resPrecio,
+        );
+        return;
+      }
+
+      //almacenar respuesta de precios
+
+      final List<PrecioModel> precios = resPrecio.response;
+
+      if (precios.isEmpty) {
+        //"no hay precios
+        return;
+      }
+
+      for (var precio in precios) {
+        final UnitarioModel unitario = UnitarioModel(
+          id: precio.tipoPrecio,
+          precioU: precio.precioUnidad,
+          descripcion: precio.desTipoPrecio,
+          precio: true, //true Tipo precio; false Factor conversion
+          moneda: precio.moneda,
+          orden: precio.tipoPrecioOrden,
+        );
+
+        prices.add(unitario);
+      }
+
+      //si no hay precios buscar factor conversion
+      if (prices.isEmpty) {
+        ApiResModel resFactores = await productService.getFactorConversion(
+          bodega,
+          productoTra.producto,
+          productoTra.unidadMedida,
+          user,
+          token,
+        );
+
+        if (!resFactores.succes) {
+          isLoading = false;
+
+          //si algo salio mal mostrar alerta
+          await NotificationService.showErrorView(
+            context,
+            resFactores,
+          );
+          return;
+        }
+
+        final List<FactorConversionModel> factores = resFactores.response;
+
+        for (var factor in factores) {
+          final UnitarioModel unitario = UnitarioModel(
+            id: factor.factorConversion,
+            precioU: factor.precioUnidad,
+            descripcion: factor.presentacion,
+            precio: false, //true Tipo precio; false Factor conversion
+            moneda: factor.moneda,
+            orden: factor.tipoPrecioOrden,
+          );
+
+          prices.add(unitario);
+        }
+      }
+
+      //si solo existe un precio
+
+      if (prices.length == 1) {
+        //
+        UnitarioModel precioU = prices.first;
+
+        selectedPrice = precioU;
+        total = precioU.precioU;
+        price = precioU.precioU;
+        controllerPrice.text = precioU.precioU.toString();
+      } else if (prices.length > 1) {
+        //
+        for (var i = 0; i < prices.length; i++) {
+          final UnitarioModel unit = prices[i];
+
+          if (unit.orden != null) {
+            selectedPrice = unit;
+            total = unit.precioU;
+            price = unit.precioU;
+            controllerPrice.text = unit.precioU.toString();
+            break;
+          }
+        }
+
+        //si no se selecciono precio
+        if (selectedPrice == null) {
+          //obtener el primer registro y seleccionarlo
+          UnitarioModel precioU = prices.first;
+
+          selectedPrice = precioU;
+          total = precioU.precioU;
+          price = precioU.precioU;
+          controllerPrice.text = precioU.precioU.toString();
+        }
+      }
+    } //fin validacion de una bodega
+
+    //detener carga
+    isLoading = false;
+
+    //buscar bodega de la transaccion
+    int existBodega = -1;
+
+    for (int i = 0; i < bodegas.length; i++) {
+      final BodegaProductoModel traBodega = bodegas[i];
+      if (traBodega.bodega == selectedBodega!.bodega) {
+        existBodega = i;
+        break;
+      }
+    }
+
+    //si no se ecnotro la bodega crearla internamente y asiganrla
+    if (existBodega == -1) {
+      bodegas.add(bodegaTra);
+      selectedBodega = bodegas[bodegas.length - 1];
+    } else {
+      //asiganar bodega de la transaccion
+      selectedBodega = bodegas[existBodega];
+    }
+
+    //buscar precio del producto de la transaccion
+    int existPrecio = -1;
+
+    //si no se encontro el procuto crearlo unetnamente
+    if (existPrecio == -1) {
+      prices.add(precioTra);
+      selectedPrice = prices[prices.length - 1];
+    } else {
+      //asignar precio del producto de la transaccion
+      selectedPrice = prices[existPrecio];
+    }
+
+    //enviar indice de la transaccion para poder editarla despues
+    indexEdit = indexTra;
+
+    //abrir pantalla producto con lo datos cargados
+
+    // Navigator.pushNamed(
+    //   context,
+    //   AppRoutes.product,
+    //   arguments: [
+    //     productoTra,
+    //     2,
+    //   ],
+    // );
+
+    //aun no pasa aqui
+    return;
+  }
+
   Future<ApiResModel> loadPrecioUnitario(
     BuildContext context,
     int product,

@@ -355,13 +355,14 @@ class _TransactionCard extends StatelessWidget {
         Styles.transaction,
       ),
       child: InkWell(
-        onTap: () => vm.navigatorDetails(
+        onDoubleTap: () => vm.navigatorDetails(
           context,
           indexTransaction,
         ),
-        onDoubleTap: () {
-          //editar transaccion
-        },
+        onTap: () => productVM.editarTran(
+          context,
+          indexTransaction,
+        ),
         child: ListTile(
           contentPadding: const EdgeInsets.all(10),
           title: Column(
