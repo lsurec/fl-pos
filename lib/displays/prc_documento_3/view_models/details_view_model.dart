@@ -349,7 +349,7 @@ class DetailsViewModel extends ChangeNotifier {
       final List<PrecioModel> precios = resPrecio.response;
 
       if (precios.isEmpty) {
-        print("no hay precios");
+        //"no hay precios
         return;
       }
 
@@ -587,16 +587,13 @@ class DetailsViewModel extends ChangeNotifier {
 
           return;
         }
-
+        //asignar valores
         precioDias = preciosDia[0].montoCalculado;
         cantidadDias = preciosDia[0].cantidadDia;
-
-        print(precioDias);
-        print(cantidadDias);
       } else {
         vmFactura.isLoading = false;
 
-        precioDias = total;
+        precioDias = productVM.total;
         cantidadDias = 1;
 
         NotificationService.showSnackbar(
@@ -611,20 +608,20 @@ class DetailsViewModel extends ChangeNotifier {
     //agregar transacion al documento
     detailsVM.addTransaction(
       TraInternaModel(
+        bodega: productVM.selectedBodega!,
+        cantidad: (int.tryParse(productVM.controllerNum.text) ?? 0),
+        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        cargo: 0,
         consecutivo: 0,
+        descuento: 0,
         estadoTra: 1,
         isChecked: false,
-        bodega: productVM.selectedBodega!,
-        producto: producto!,
-        precio: productVM.selectedPrice,
-        cantidad: (int.tryParse(productVM.controllerNum.text) ?? 0),
-        total: docVM.valueParametro(44) ? precioDias : total,
-        cargo: 0,
-        descuento: 0,
         operaciones: [],
-        precioCantidad: docVM.valueParametro(44) ? total : null,
-        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        precio: productVM.selectedPrice,
+        precioCantidad: docVM.valueParametro(44) ? productVM.total : null,
         precioDia: docVM.valueParametro(44) ? precioDias : null,
+        producto: producto!,
+        total: docVM.valueParametro(44) ? precioDias : productVM.total,
       ),
       context,
     );
