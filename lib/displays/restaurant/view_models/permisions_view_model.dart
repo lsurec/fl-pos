@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 
@@ -33,7 +34,7 @@ class PermisionsViewModel extends ChangeNotifier {
   }
 
   //init Session
-  Future<void> login(BuildContext context) async {
+  Future<void> login(BuildContext context, int tipoAccion) async {
     //ocultar tecladp
     FocusScope.of(context).unfocus();
 
@@ -73,6 +74,35 @@ class PermisionsViewModel extends ChangeNotifier {
     if (respLogin.success) {
       //guardar token y nombre de usuario
       print("ok");
+
+      TipoAccionService tipoAccionService = TipoAccionService();
+
+      final ApiResModel resTipoAccion =
+          await tipoAccionService.validaTipoAccion(
+        tipoAccion,
+        respLogin.user,
+        respLogin.message,
+      );
+
+      //validar respuesta del servico, si es incorrecta
+      if (!resTipoAccion.succes) {
+        //finalizar proceso
+        isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resTipoAccion,
+        );
+        return;
+      }
+
+      RespLogin accionValida = resTipoAccion.response;
+      if (!accionValida.data) {
+        NotificationService.showSnackbar("message");
+
+        isLoading = false;
+        return;
+      }
 
       isLoading = false;
     } else {
