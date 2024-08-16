@@ -417,6 +417,16 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  loadFirstharnish() {
+    for (var element in treeGarnish) {
+      if (element.children.isEmpty) {
+        element.route.add(element);
+      } else {
+        element.route.add(element.children.first);
+      }
+    }
+  }
+
   orederTreeGarnish() {
     //nodo 1 (displays)
     List<GarnishTree> padres = [];
@@ -424,11 +434,13 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     List<GarnishTree> hijos = [];
     for (var garnish in garnishs) {
       final GarnishTree item = GarnishTree(
-          idChild: garnish.productoCaracteristica,
-          idFather: garnish.productoCaracteristicaPadre,
-          children: [],
-          item: garnish,
-          selected: null);
+        idChild: garnish.productoCaracteristica,
+        idFather: garnish.productoCaracteristicaPadre,
+        children: [],
+        item: garnish,
+        selected: null,
+        route: [],
+      );
 
       if (garnish.productoCaracteristicaPadre == null) {
         padres.add(item);

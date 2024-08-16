@@ -85,6 +85,7 @@ class GarnishTree {
   int? idFather;
   int? idChild;
   List<GarnishTree> children;
+  List<GarnishTree> route;
   GarnishModel? item;
   GarnishModel? selected;
 
@@ -92,6 +93,7 @@ class GarnishTree {
     this.idChild,
     this.idFather,
     required this.children,
+    required this.route,
     required this.item,
     required this.selected,
   });
