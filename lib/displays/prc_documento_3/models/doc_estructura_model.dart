@@ -246,7 +246,6 @@ class DocCargoAbono {
 
 class DocTransaccion {
   String? traObservacion;
-  List<GuarnicionModel>? traGuarniciones;
   int traConsecutivoInterno;
   int? traConsecutivoInternoPadre;
   int dConsecutivoInterno;
@@ -264,7 +263,6 @@ class DocTransaccion {
 
   DocTransaccion({
     required this.traObservacion,
-    required this.traGuarniciones,
     required this.traConsecutivoInterno,
     required this.traConsecutivoInternoPadre,
     required this.dConsecutivoInterno,
@@ -288,9 +286,6 @@ class DocTransaccion {
 
   factory DocTransaccion.fromMap(Map<String, dynamic> json) => DocTransaccion(
         traObservacion: json["Tra_Observacion"],
-        traGuarniciones: List<GuarnicionModel>.from(
-          json["Tra_Guarniciones"].map((x) => GuarnicionModel.fromMap(x)),
-        ),
         traConsecutivoInterno: json["Tra_Consecutivo_Interno"],
         traConsecutivoInternoPadre: json["Tra_Consecutivo_Interno_Padre"],
         dConsecutivoInterno: json["D_Consecutivo_Interno"] ?? 0,
@@ -309,8 +304,6 @@ class DocTransaccion {
 
   Map<String, dynamic> toMap() => {
         "Tra_Observacion": traObservacion,
-        "Tra_Guarniciones":
-            List<dynamic>.from(traGuarniciones?.map((x) => x.toMap()) ?? []),
         "Tra_Consecutivo_Interno": traConsecutivoInterno,
         "Tra_Consecutivo_Interno_Padre": traConsecutivoInternoPadre,
         "D_Consecutivo_Interno": dConsecutivoInterno,

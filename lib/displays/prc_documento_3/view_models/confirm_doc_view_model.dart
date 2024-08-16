@@ -1070,7 +1070,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
           cargos.add(
             DocTransaccion(
               traMontoDias: null,
-              traGuarniciones: null,
               traObservacion: null,
               dConsecutivoInterno: firstPart,
               traConsecutivoInterno: consectivo,
@@ -1099,7 +1098,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
           descuentos.add(
             DocTransaccion(
               traMontoDias: null,
-              traGuarniciones: null,
               traObservacion: null,
               dConsecutivoInterno: firstPart,
               traConsecutivoInterno: consectivo,
@@ -1124,7 +1122,6 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       transactions.add(
         DocTransaccion(
-          traGuarniciones: null,
           traObservacion: null,
           dConsecutivoInterno: firstPart,
           traConsecutivoInterno: padre,

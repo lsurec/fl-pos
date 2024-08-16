@@ -97,7 +97,8 @@ class PermisionsView extends StatelessWidget {
                               const SizedBox(width: 20),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () => vm.login(context),
+                                  onPressed: () => vm.login(context,
+                                      45), //32 trasladar mesa; 45 trasladar transaccion
                                   child: const SizedBox(
                                     width: double.infinity,
                                     child: Center(

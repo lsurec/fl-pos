@@ -84,25 +84,45 @@ class OrderViewModel extends ChangeNotifier {
 
     int firstPart = random.nextInt(10000000);
 
+    int consecutivo = 1;
+
     //Buscar transacciones que van a comandarse
     for (var tra in orders[indexOrder].transacciones) {
-      int consecutivo = random.nextInt(10000000);
+      int padre = consecutivo;
+
+      //guarniciones
+
+      for (var element in tra.guarniciones) {
+        consecutivo++;
+
+        transactions.add(
+          DocTransaccion(
+              traObservacion: element.selected.descripcion,
+              traConsecutivoInterno: consecutivo,
+              traConsecutivoInternoPadre: padre,
+              dConsecutivoInterno: firstPart,
+              traBodega: element.garnish.fBodega!,
+              traProducto: element.garnish.fProducto!,
+              traUnidadMedida: element.garnish.fUnidadMedida!,
+              traCantidad: element.garnish.cantidad!.toInt(),
+              traTipoCambio: menuVM.tipoCambio,
+              traMoneda: tra.precio.moneda,
+              traTipoPrecio:
+                  tra.precio.precio ? tra.precio.id : null, //TODO:Preguntar
+              traFactorConversion:
+                  !tra.precio.precio ? tra.precio.id : null, //TODO:Preguntar
+              traTipoTransaccion: 1, //TODO:Hace falta,
+              traMonto: (tra.cantidad * tra.precio.precioU), //pregunatr
+              traMontoDias: null),
+        );
+      }
 
       transactions.add(
         DocTransaccion(
           traMontoDias: null,
-          traGuarniciones: tra.guarniciones
-              .map(
-                (e) => GuarnicionModel(
-                  productoCaracteristica: e.selected.productoCaracteristica,
-                  productoCaracteristicaPadre:
-                      e.selected.productoCaracteristicaPadre,
-                ),
-              )
-              .toList(),
           traObservacion: tra.observacion,
-          traConsecutivoInterno: consecutivo,
-          traConsecutivoInternoPadre: 0,
+          traConsecutivoInterno: padre,
+          traConsecutivoInternoPadre: null,
           dConsecutivoInterno: firstPart,
           traBodega: tra.bodega.bodega,
           traProducto: tra.producto.producto,
@@ -118,6 +138,8 @@ class OrderViewModel extends ChangeNotifier {
       );
 
       traTotal += (tra.cantidad * tra.precio.precioU);
+
+      consecutivo++;
     }
 
 // Combinar los dos números para formar uno de 14 dígitos
