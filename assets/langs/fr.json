@@ -84,8 +84,7 @@
         "adjuntarArchivos": "Joindre des fichiers",
         "enviarComentario": "Envoyer un commentaire.",
         "cambiarResponsable": "Mettre à jour la personne responsable",
-        "modificar": "Modifier",
-        "traModificada": "Transaction modifiée."
+        "modificar": "Modifier"
     },
     "fechas": {
         "fecha": "Date:",
@@ -216,7 +215,10 @@
         "sinImagenes": "Aucune image associée à ce produit.",
         "cantidadPositiva": "La quantité doit être numérique et positive.",
         "cantidadNumerica": "La quantité doit être numérique.",
-        "cantidadMayor": "La quantité doit être supérieure à 0."
+        "cantidadMayor": "La quantité doit être supérieure à 0.",
+        "traModificada": "Transaction modifiée.",
+        "advertencia": "Avertissement",
+        "productosNoDisponibles": "Un ou plusieurs produits ne sont pas disponibles."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",

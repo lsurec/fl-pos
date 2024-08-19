@@ -529,13 +529,10 @@ class DetailsViewModel extends ChangeNotifier {
         );
 
         //aqui abre una norificacion
-        if (mensajes.isNotEmpty) {
-          NotificationService.showSnackbar(validaciones.mensajes[0]);
-          return;
-        }
-
-        //TODO: abrir un dialogo con la informacion obtenida en los mensajes
-
+        NotificationService.showMessageValidations(
+          context,
+          validaciones,
+        );
         return;
       }
     }

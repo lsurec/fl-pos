@@ -216,7 +216,9 @@
         "cantidadPositiva": "Die Menge muss numerisch und positiv sein.",
         "cantidadNumerica": "Die Menge muss numerisch sein.",
         "cantidadMayor": "Die Menge muss größer als 0 sein.",
-        "traModificada": "Transaktion geändert."
+        "traModificada": "Transaktion geändert.",
+        "advertencia": "Warnung",
+        "productosNoDisponibles": "Ein oder mehrere Produkte sind nicht verfügbar."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",

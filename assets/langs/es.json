@@ -216,7 +216,9 @@
         "cantidadPositiva": "La cantidad debe ser numérica o positiva.",
         "cantidadNumerica": "La cantidad debe ser numérica.",
         "cantidadMayor": "La cantidad debe ser mayor a 0.",
-        "traModificada": "Transacción modificada."
+        "traModificada": "Transacción modificada.",
+        "advertencia": "Advertencia",
+        "productosNoDisponibles": "Uno o más productos no están disponibles."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

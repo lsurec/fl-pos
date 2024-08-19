@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -139,6 +140,158 @@ class NotificationService {
             //   },
             //   child: Text('Contactar Soporte'),
             // ),
+          ],
+        );
+      },
+    );
+  }
+
+  static showMessage(
+    BuildContext context,
+    List<String> mensajes,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              "advertencia",
+            ),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  "productosNoDisponibles",
+                ),
+              ),
+              const SizedBox(height: 8),
+              ListView.builder(
+                itemCount: mensajes.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final String mensaje = mensajes[index];
+                  return Text(
+                    mensaje,
+                  );
+                },
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  "cerrar",
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // Aquí puedes agregar lógica adicional, como redirigir a la sección de soporte.
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'informe',
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static showMessageValidations(
+    BuildContext context,
+    ValidateProductModel validacion,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              "advertencia",
+            ),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  "productosNoDisponibles",
+                ),
+              ),
+              const SizedBox(height: 8),
+              CardWidget(
+                child: Column(
+                  children: [
+                    Text(
+                      "(${validacion.sku}) ${validacion.productoDesc}",
+                    ),
+                    const Divider(),
+                    Text(
+                      "Bodega: ${validacion.bodega}",
+                    ),
+                    Text(
+                      "Serie: ${validacion.serie}",
+                    ),
+                    Text(
+                      "Documento: ${validacion.tipoDoc}",
+                    ),
+                    const Divider(),
+                    ListView.builder(
+                      itemCount: validacion.mensajes.length,
+                      itemBuilder: (BuildContext context, int indexM) {
+                        final String mensaje = validacion.mensajes[indexM];
+                        return Text(
+                          mensaje,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  "cerrar",
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // Aquí puedes agregar lógica adicional, como redirigir a la sección de soporte.
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'informe',
+                ),
+              ),
+            ),
           ],
         );
       },
