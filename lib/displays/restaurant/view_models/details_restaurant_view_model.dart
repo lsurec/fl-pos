@@ -409,6 +409,20 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     }
   }
 
+  changeGarnishActive(
+    int index,
+    GarnishTree garnish,
+  ) {
+    if (garnish.children.isNotEmpty) {
+      treeGarnish[index].route.add(garnish);
+    } else {
+      treeGarnish[index].selected = garnish.item;
+    }
+    notifyListeners();
+    // treeGarnish[index].selected = garnish;
+    // notifyListeners();
+  }
+
   changeGarnish(
     int index,
     GarnishModel garnish,
@@ -419,11 +433,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
 
   loadFirstharnish() {
     for (var element in treeGarnish) {
-      if (element.children.isEmpty) {
-        element.route.add(element);
-      } else {
-        element.route.add(element.children.first);
-      }
+      element.route.add(element);
     }
   }
 
@@ -452,6 +462,8 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     treeGarnish.clear();
 
     treeGarnish.addAll(ordenarNodos(padres, hijos));
+
+    loadFirstharnish();
   }
 
   // Función recursiva para ordenar nodos infinitos, recibe nodos principales y nodos a ordenar

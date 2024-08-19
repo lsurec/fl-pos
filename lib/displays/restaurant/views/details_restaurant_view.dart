@@ -383,6 +383,110 @@ class DetailsRestaurantView extends StatelessWidget {
                       color: const Color.fromARGB(255, 227, 226, 226),
                       height: 10,
                     ),
+                  Container(
+                    color: Colors.red,
+                    height: 10,
+                  ),
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: vm.treeGarnish.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Container(
+                        color: const Color.fromARGB(255, 227, 226, 226),
+                        height: 10,
+                      );
+                    },
+                    itemBuilder: (BuildContext context, int index) {
+                      final GarnishTree node = vm.treeGarnish[index];
+
+                      return Column(
+                        children: [
+                          Container(
+                            height: 50,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: node.route.length,
+                              itemBuilder: (BuildContext context, int jj) {
+                                return GestureDetector(
+                                  onTap: () {}, //TODO:rreegrear rutra
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        node.route[jj].item!.descripcion,
+                                        style: jj == node.route.length - 1
+                                            ? const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 17,
+                                              )
+                                            : const TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 17,
+                                              ),
+                                      ),
+                                      if (jj != node.route.length - 1)
+                                        const Icon(
+                                          Icons.arrow_right,
+                                          color: Colors.grey,
+                                        ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          Text(
+                            node.route.last.item?.descripcion ??
+                                "Sin Descripcion",
+                          ), //TODO:translate
+                          if (node.children.isEmpty)
+                            RadioListTile(
+                              activeColor: AppTheme.primary,
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(
+                                node.route.last.item?.descripcion ??
+                                    "Sin Descripcion",
+                              ),
+                              value: node.route.last.item,
+                              groupValue: vm.treeGarnish[index].selected,
+                              onChanged: (value) => vm.changeGarnish(
+                                index,
+                                value!,
+                              ),
+                            ),
+                          if (node.children.isNotEmpty)
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: node.route.last.children.length,
+                              itemBuilder: (BuildContext context, int j) {
+                                return RadioListTile(
+                                  activeColor: AppTheme.primary,
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(
+                                    node.route.last.children[j].item
+                                            ?.descripcion ??
+                                        "Sin Descripcion",
+                                  ),
+                                  value: node.route.last.children[j],
+                                  groupValue: vm.treeGarnish[index].selected,
+                                  onChanged: (value) => vm.changeGarnishActive(
+                                    index,
+                                    value! as GarnishTree,
+                                  ),
+                                );
+                              },
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                  Container(
+                    color: Colors.red,
+                    height: 10,
+                  ),
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
