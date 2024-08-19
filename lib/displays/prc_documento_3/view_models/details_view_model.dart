@@ -257,7 +257,7 @@ class DetailsViewModel extends ChangeNotifier {
       producto = products[0];
     } else {
       //cartar
-      vmFactura.isLoading = true;
+      vmFactura.isLoading = false;
 
       //navegar a pantalla de coincidencias
       Navigator.pushNamed(

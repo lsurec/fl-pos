@@ -519,17 +519,6 @@ class ProductViewModel extends ChangeNotifier {
             break;
           }
         }
-
-        //si no se selecciono precio
-        if (selectedPrice == null) {
-          //obtener el primer registro y seleccionarlo
-          UnitarioModel precioU = prices.first;
-
-          selectedPrice = precioU;
-          total = precioU.precioU;
-          price = precioU.precioU;
-          controllerPrice.text = precioU.precioU.toString();
-        }
       }
     } //fin validacion de una bodega
 
@@ -570,6 +559,9 @@ class ProductViewModel extends ChangeNotifier {
 
     //enviar indice de la transaccion para poder editarla despues
     indexEdit = indexTra;
+
+    //calcular el total
+    total = valueNum * selectedPrice!.precioU;
 
     //abrir pantalla producto con lo datos cargados
 
