@@ -197,9 +197,15 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     final List<GarnishTra> selectGarnishs = [];
 
     for (var element in treeGarnish) {
+      final List<GarnishModel> routes = [];
+
+      for (var item in element.route) {
+        routes.add(item.item!);
+      }
+
       selectGarnishs.add(
         GarnishTra(
-          garnish: element.item!,
+          garnishs: routes,
           selected: element.selected!,
         ),
       );
@@ -409,25 +415,33 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     }
   }
 
-  changeGarnishActive(
-    int index,
-    GarnishTree garnish,
+  //Cambiar rutas (Agragar)
+  void changeRoute(
+    int indexTree,
+    int indexRoute,
   ) {
-    if (garnish.children.isNotEmpty) {
-      treeGarnish[index].route.add(garnish);
-    } else {
-      treeGarnish[index].selected = garnish.item;
-    }
+    treeGarnish[indexTree].route.removeRange(
+          indexRoute + 1,
+          treeGarnish[indexTree].route.length,
+        );
+
+    treeGarnish[indexTree].selected = null;
+
     notifyListeners();
-    // treeGarnish[index].selected = garnish;
-    // notifyListeners();
   }
 
-  changeGarnish(
+  changeGarnishActive(
     int index,
-    GarnishModel garnish,
+    GarnishTree node,
   ) {
-    treeGarnish[index].selected = garnish;
+    if (node.children.isNotEmpty) {
+      treeGarnish[index].route.add(node);
+
+      notifyListeners();
+      return;
+    }
+
+    treeGarnish[index].selected = node.item;
     notifyListeners();
   }
 

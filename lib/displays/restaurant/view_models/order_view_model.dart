@@ -95,16 +95,21 @@ class OrderViewModel extends ChangeNotifier {
       for (var element in tra.guarniciones) {
         consecutivo++;
 
+        int fBodega = 0;
+        int fProducto = 0;
+        int fUnidadMedida = 0;
+        int cantidad = 0;
+
         transactions.add(
           DocTransaccion(
               traObservacion: element.selected.descripcion,
               traConsecutivoInterno: consecutivo,
               traConsecutivoInternoPadre: padre,
               dConsecutivoInterno: firstPart,
-              traBodega: element.garnish.fBodega!,
-              traProducto: element.garnish.fProducto!,
-              traUnidadMedida: element.garnish.fUnidadMedida!,
-              traCantidad: element.garnish.cantidad!.toInt(),
+              traBodega: cantidad,
+              traProducto: cantidad,
+              traUnidadMedida: cantidad,
+              traCantidad: cantidad,
               traTipoCambio: menuVM.tipoCambio,
               traMoneda: tra.precio.moneda,
               traTipoPrecio:
@@ -559,21 +564,21 @@ class OrderViewModel extends ChangeNotifier {
     }
 
     //buscar guarniciones
-    for (var element
-        in orders[indexOrder].transacciones[indexTra].guarniciones) {
-      for (var nodo in vmDetails.treeGarnish) {
-        if (element.garnish.productoCaracteristica ==
-            nodo.item!.productoCaracteristica) {
-          for (var i = 0; i < nodo.children.length; i++) {
-            if (nodo.children[i].item!.productoCaracteristica ==
-                element.selected.productoCaracteristica) {
-              nodo.selected = nodo.children[i].item!;
-              break;
-            }
-          }
-        }
-      }
-    }
+    // for (var element
+    //     in orders[indexOrder].transacciones[indexTra].guarniciones) {
+    //   for (var nodo in vmDetails.treeGarnish) {
+    //     if (element.garnish.productoCaracteristica ==
+    //         nodo.item!.productoCaracteristica) {
+    //       for (var i = 0; i < nodo.children.length; i++) {
+    //         if (nodo.children[i].item!.productoCaracteristica ==
+    //             element.selected.productoCaracteristica) {
+    //           nodo.selected = nodo.children[i].item!;
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     final ApiResModel resBodega = await vmDetails.loadBodega(context);
 
@@ -862,10 +867,8 @@ class OrderViewModel extends ChangeNotifier {
     return orders[indexOrder]
         .transacciones[indexTra]
         .guarniciones
-        .map(
-          (guarnicion) =>
-              "${guarnicion.garnish.descripcion} ${guarnicion.selected.descripcion}",
-        )
+        .map((e) =>
+            "${e.garnishs.map((guarnicion) => guarnicion.descripcion).join(" ")} ${e.selected.descripcion}")
         .join(", ");
   }
 

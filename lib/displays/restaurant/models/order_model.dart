@@ -48,11 +48,11 @@ class TraRestaurantModel {
 }
 
 class GarnishTra {
-  GarnishModel garnish;
+  List<GarnishModel> garnishs;
   GarnishModel selected;
 
   GarnishTra({
-    required this.garnish,
+    required this.garnishs,
     required this.selected,
   });
 }
