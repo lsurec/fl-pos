@@ -298,7 +298,12 @@ class _BottomBar extends StatelessWidget {
           if (vm.accion == 0)
             Expanded(
               child: GestureDetector(
-                onTap: () => vm.addTransaction(context, product, back),
+                onTap: () => vm.addTransaction(
+                  context,
+                  product,
+                  back,
+                  0,
+                ),
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   color: AppTheme.color(
@@ -324,7 +329,12 @@ class _BottomBar extends StatelessWidget {
           if (vm.accion == 1)
             Expanded(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => vm.addTransaction(
+                  context,
+                  product,
+                  back,
+                  1,
+                ),
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   color: AppTheme.color(

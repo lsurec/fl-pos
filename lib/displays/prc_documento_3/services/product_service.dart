@@ -10,7 +10,7 @@ class ProductService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-  Future<ApiResModel> getValidateProducts(
+  Future<ApiResModel> getValidaProducto(
     String user,
     String serie,
     int tipoDocumento,
@@ -26,20 +26,8 @@ class ProductService {
     int tipoPrecio,
     String token,
   ) async {
-    print("Serie: $serie");
-    print("TipoDoc: $tipoDocumento");
-    print("Bodega: $bodega");
-    print("TipoTra: $tipoTransaccion");
-    print("UniMedida: $unidadMedida");
-    print("Producto: $producto");
-    print("Cantidad: $cantidad");
-    print("TipoCambio: $tipoCambio");
-    print("Moneda: $moneda");
-    print("TipoPrecio: $tipoPrecio");
-
-    //url completa
+    //URL completa
     Uri url = Uri.parse("${_baseUrl}Producto/validate");
-
     try {
       //Configuraciones del api
       final response = await http.get(
@@ -74,7 +62,7 @@ class ProductService {
         );
       }
 
-      //bodegas disponibles
+      //Lista para almacenar la respuesta del api
       List<String> mensajes = [];
 
       //recorrer lista api Y  agregar a lista local
@@ -83,8 +71,7 @@ class ProductService {
         //agregar item a la lista
         mensajes.add(item);
       }
-
-      //respuesta correcta
+      //retornar respuesta correcta del api
       return ApiResModel(
         url: url.toString(),
         succes: true,
@@ -92,7 +79,7 @@ class ProductService {
         storeProcedure: null,
       );
     } catch (e) {
-      //respuesta incorrecta
+      //en caso de error retornar el error
       return ApiResModel(
         url: url.toString(),
         succes: false,

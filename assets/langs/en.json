@@ -215,7 +215,8 @@
         "sinImagenes": "No images associated with this product.",
         "cantidadPositiva": "The quantity must be numeric and positive.",
         "cantidadNumerica": "The quantity must be numeric.",
-        "cantidadMayor": "The quantity must be greater than 0."
+        "cantidadMayor": "The quantity must be greater than 0.",
+        "traModificada": "Transaction modified."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

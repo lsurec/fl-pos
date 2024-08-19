@@ -152,15 +152,15 @@ class DetailsViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    // final menuVM = Provider.of<MenuViewModel>(
-    //   context,
-    //   listen: false,
-    // );
+    final menuVM = Provider.of<MenuViewModel>(
+      context,
+      listen: false,
+    );
 
-    // final confirmVM = Provider.of<ConfirmDocViewModel>(
-    //   context,
-    //   listen: false,
-    // );
+    final confirmVM = Provider.of<ConfirmDocViewModel>(
+      context,
+      listen: false,
+    );
 
     final detailsVM = Provider.of<DetailsViewModel>(
       context,
@@ -268,8 +268,6 @@ class DetailsViewModel extends ChangeNotifier {
 
       vmFactura.isLoading = false;
       return;
-
-      //TODO: hace falta la navegacion hacia aquí
 
       //el producto que se selecciona en la pantalla de coincidecias se asigna a producto
     }
@@ -449,6 +447,13 @@ class DetailsViewModel extends ChangeNotifier {
         docVM.valueParametro(351)) {
       //detener carga
       vmFactura.isLoading = false;
+      productVM.accion = 0;
+
+      //convertir cantidad de texto a numerica
+      int cantidad = productVM.convertirTextNum(productVM.controllerNum.text)!;
+
+      //Calcular el total (cantidad * precio seleccionado)
+      productVM.total = cantidad * productVM.selectedPrice!.precioU;
 
       //navegar y verificar que ocurre
 
@@ -472,64 +477,67 @@ class DetailsViewModel extends ChangeNotifier {
     if (!productVM.selectedBodega!.poseeComponente) {
       //validar el producto
 
-      // //consumo del api
-      // ApiResModel resDisponibiladProducto =
-      //     await productService.getValidateProducts(
-      //   user,
-      //   docVM.serieSelect!.serieDocumento!,
-      //   menuVM.documento!,
-      //   localVM.selectedEmpresa!.empresa,
-      //   localVM.selectedEstacion!.estacionTrabajo,
-      //   productVM.selectedBodega!.bodega,
-      //   confirmVM.resolveTipoTransaccion(
-      //     producto!.tipoProducto,
-      //     context,
-      //   ),
-      //   producto!.unidadMedida,
-      //   producto!.producto,
-      //   (int.tryParse(productVM.controllerNum.text) ?? 0),
-      //   menuVM.tipoCambio.toInt(),
-      //   productVM.selectedPrice!.moneda,
-      //   productVM.selectedPrice!.id,
-      //   token,
-      // );
+      //consumo del api
+      ApiResModel resDisponibiladProducto =
+          await productService.getValidaProducto(
+        user,
+        docVM.serieSelect!.serieDocumento!,
+        menuVM.documento!,
+        localVM.selectedEstacion!.estacionTrabajo,
+        localVM.selectedEmpresa!.empresa,
+        productVM.selectedBodega!.bodega,
+        confirmVM.resolveTipoTransaccion(
+          producto!.tipoProducto,
+          context,
+        ),
+        producto!.unidadMedida,
+        producto!.producto,
+        (int.tryParse(productVM.controllerNum.text) ?? 0),
+        menuVM.tipoCambio.toInt(),
+        productVM.selectedPrice!.moneda,
+        productVM.selectedPrice!.id,
+        token,
+      );
 
-      // if (!resDisponibiladProducto.succes) {
-      //   vmFactura.isLoading = false;
+      if (!resDisponibiladProducto.succes) {
+        vmFactura.isLoading = false;
 
-      //   //si algo salio mal mostrar alerta
-      //   await NotificationService.showErrorView(
-      //     context,
-      //     resDisponibiladProducto,
-      //   );
-      //   return;
-      // }
+        //si algo salio mal mostrar alerta
+        await NotificationService.showErrorView(
+          context,
+          resDisponibiladProducto,
+        );
+        return;
+      }
 
-      // //almacenar los mensajes
-      // List<String> mensajes = resDisponibiladProducto.response;
+      //almacenar los mensajes
+      List<String> mensajes = resDisponibiladProducto.response;
 
-      // if (mensajes.isNotEmpty) {
-      //   //detener carga
-      //   vmFactura.isLoading = false;
+      if (mensajes.isNotEmpty) {
+        //detener carga
+        vmFactura.isLoading = false;
 
-      //   ValidateProductModel validaciones = ValidateProductModel(
-      //     sku: producto!.productoId,
-      //     productoDesc: producto!.desProducto,
-      //     bodega:
-      //         "${productVM.selectedBodega!.nombre} (${productVM.selectedBodega!.bodega})",
-      //     tipoDoc: "${menuVM.name} (${menuVM.documento!})",
-      //     serie:
-      //         "${docVM.serieSelect!.descripcion!} (${docVM.serieSelect!.serieDocumento!})",
-      //     mensajes: mensajes,
-      //   );
+        ValidateProductModel validaciones = ValidateProductModel(
+          sku: producto!.productoId,
+          productoDesc: producto!.desProducto,
+          bodega:
+              "${productVM.selectedBodega!.nombre} (${productVM.selectedBodega!.bodega})",
+          tipoDoc: "${menuVM.name} (${menuVM.documento!})",
+          serie:
+              "${docVM.serieSelect!.descripcion!} (${docVM.serieSelect!.serieDocumento!})",
+          mensajes: mensajes,
+        );
 
-      //   print(validaciones.mensajes); //borar print
+        //aqui abre una norificacion
+        if (mensajes.isNotEmpty) {
+          NotificationService.showSnackbar(validaciones.mensajes[0]);
+          return;
+        }
 
-      //   //TODO: abrir un dialogo con la informacion obtenida en los mensajes
+        //TODO: abrir un dialogo con la informacion obtenida en los mensajes
 
-      //   // NotificationService.showSnackbar(mensajes[0]);
-      //   return;
-      // }
+        return;
+      }
     }
 
     //Calcular totral de la transaccion
@@ -631,6 +639,7 @@ class DetailsViewModel extends ChangeNotifier {
     //campo de cantidad = "1"
     productVM.controllerNum.text = "1";
     productVM.valueNum = 1;
+    productVM.accion = 0;
 
     //mensaje de confirmacion
     NotificationService.showSnackbar(

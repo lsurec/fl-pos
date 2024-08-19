@@ -84,7 +84,8 @@
         "adjuntarArchivos": "Joindre des fichiers",
         "enviarComentario": "Envoyer un commentaire.",
         "cambiarResponsable": "Mettre à jour la personne responsable",
-        "modificar": "Modifier"
+        "modificar": "Modifier",
+        "traModificada": "Transaction modifiée."
     },
     "fechas": {
         "fecha": "Date:",

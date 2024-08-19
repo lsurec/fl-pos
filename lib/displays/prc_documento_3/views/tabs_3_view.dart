@@ -49,12 +49,14 @@ class _Tabs3ViewState extends State<Tabs3View>
     final vm = Provider.of<DocumentoViewModel>(context);
     final vmMenu = Provider.of<MenuViewModel>(context);
     final vmDoc = Provider.of<DocumentViewModel>(context);
+    final vmDetalle = Provider.of<DetailsViewModel>(context);
 
     return Stack(
       children: [
         DefaultTabController(
           length: 3, // Número de pestañas
           child: Scaffold(
+            key: vmDetalle.scaffoldKey,
             appBar: AppBar(
               title: Text(
                 vmMenu.name,

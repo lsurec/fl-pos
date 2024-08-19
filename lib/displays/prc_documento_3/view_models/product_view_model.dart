@@ -80,6 +80,7 @@ class ProductViewModel extends ChangeNotifier {
     BuildContext context,
     ProductModel product,
   ) async {
+    accion = 0;
     //View models a utilizar
 
     final docVM = Provider.of<DocumentViewModel>(
@@ -570,7 +571,7 @@ class ProductViewModel extends ChangeNotifier {
       AppRoutes.product,
       arguments: [
         productoTra,
-        2,
+        1,
       ],
     );
 
@@ -939,6 +940,7 @@ class ProductViewModel extends ChangeNotifier {
     BuildContext context,
     ProductModel product,
     int back,
+    int opcion,
   ) async {
     //vire model externo
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
@@ -1019,17 +1021,19 @@ class ProductViewModel extends ChangeNotifier {
     //   return;
     // }
 
-    //TODO:Validacion de producto
+    //Validacion de producto
 
-    TipoTransaccionModel tipoTra =
-        getTipoTransaccion(product.tipoProducto, context);
+    TipoTransaccionModel tipoTra = getTipoTransaccion(
+      product.tipoProducto,
+      context,
+    );
     ProductService productService = ProductService();
 
     if (tipoTra.altCantidad) {
       //iniciar proceso
 
       //consumo del api
-      ApiResModel res = await productService.getValidateProducts(
+      ApiResModel res = await productService.getValidaProducto(
         user,
         serieDocumento,
         tipoDocumento,
@@ -1040,7 +1044,7 @@ class ProductViewModel extends ChangeNotifier {
         product.unidadMedida,
         product.producto,
         (int.tryParse(controllerNum.text) ?? 0),
-        8, //TODO:Parametrizar
+        menuVM.tipoCambio.toInt(),
         selectedPrice!.moneda,
         selectedPrice!.id,
         token,
@@ -1146,9 +1150,44 @@ class ProductViewModel extends ChangeNotifier {
 
 //aqui termina lo que agregue..
 
-    //agregar transacion al documento
-    detailsVM.addTransaction(
-      TraInternaModel(
+//Opcion 1 = Agregar nueva transaccion
+    if (opcion == 0) {
+      //agregar transacion al documento
+      detailsVM.addTransaction(
+        TraInternaModel(
+          consecutivo: 0,
+          estadoTra: 1,
+          isChecked: false,
+          bodega: selectedBodega!,
+          producto: product,
+          precio: selectedPrice,
+          cantidad: (int.tryParse(controllerNum.text) ?? 0),
+          total: docVM.valueParametro(44) ? precioDias : total,
+          cargo: 0,
+          descuento: 0,
+          operaciones: [],
+          precioCantidad: docVM.valueParametro(44) ? total : null,
+          cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+          precioDia: docVM.valueParametro(44) ? precioDias : null,
+        ),
+        context,
+      );
+
+      //actualizar el campo cantidad
+
+      controllerNum.text = "1";
+
+      //mensaje de confirmacion
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'transaccionAgregada',
+        ),
+      );
+    }
+
+    if (opcion == 1) {
+      detailsVM.traInternas[indexEdit] = TraInternaModel(
         consecutivo: 0,
         estadoTra: 1,
         isChecked: false,
@@ -1163,21 +1202,57 @@ class ProductViewModel extends ChangeNotifier {
         precioCantidad: docVM.valueParametro(44) ? total : null,
         cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
         precioDia: docVM.valueParametro(44) ? precioDias : null,
-      ),
-      context,
-    );
+      );
 
-    //actualizar el campo cantidad
+      detailsVM.calculateTotales(context);
 
-    controllerNum.text = "1";
+      //campo de cantidad = "1"
+      controllerNum.text = "1";
+      valueNum = 1;
 
-    //mensaje de confirmacion
-    NotificationService.showSnackbar(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'transaccionAgregada',
-      ),
-    );
+      notifyListeners();
+
+      //mensaje de confirmacion
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'traModificada',
+        ),
+      );
+    }
+
+    // //agregar transacion al documento
+    // detailsVM.addTransaction(
+    //   TraInternaModel(
+    //     consecutivo: 0,
+    //     estadoTra: 1,
+    //     isChecked: false,
+    //     bodega: selectedBodega!,
+    //     producto: product,
+    //     precio: selectedPrice,
+    //     cantidad: (int.tryParse(controllerNum.text) ?? 0),
+    //     total: docVM.valueParametro(44) ? precioDias : total,
+    //     cargo: 0,
+    //     descuento: 0,
+    //     operaciones: [],
+    //     precioCantidad: docVM.valueParametro(44) ? total : null,
+    //     cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+    //     precioDia: docVM.valueParametro(44) ? precioDias : null,
+    //   ),
+    //   context,
+    // );
+
+    // //actualizar el campo cantidad
+
+    // controllerNum.text = "1";
+
+    // //mensaje de confirmacion
+    // NotificationService.showSnackbar(
+    //   AppLocalizations.of(context)!.translate(
+    //     BlockTranslate.notificacion,
+    //     'transaccionAgregada',
+    //   ),
+    // );
 
     //regresar a pantallas anteriroeres
     if (back == 2) {
