@@ -2592,7 +2592,7 @@ class ShareDocViewModel extends ChangeNotifier {
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.Text(
-                          "Mensajes",
+                          "Mensajes: ",
                           style: font10Bold,
                           textAlign: pw.TextAlign.justify,
                         ),
