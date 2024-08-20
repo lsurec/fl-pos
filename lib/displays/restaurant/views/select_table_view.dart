@@ -75,14 +75,7 @@ class SelectTableView extends StatelessWidget {
                       itemCount: vm.tables.length,
                       itemBuilder: (BuildContext context, int index) {
                         TableModel table = vm.tables[index];
-                        return CardTableWidget(
-                          mesa: table,
-                          onTap: () => vm.navigateClassifications(
-                            context,
-                            table,
-                            index,
-                          ),
-                        );
+                        return CardTableWidget(mesa: table, onTap: () {});
                       },
                     ),
                   ),
