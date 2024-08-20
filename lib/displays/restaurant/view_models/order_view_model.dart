@@ -87,7 +87,9 @@ class OrderViewModel extends ChangeNotifier {
     int consecutivo = 1;
 
     //Buscar transacciones que van a comandarse
-    for (var tra in orders[indexOrder].transacciones) {
+    for (var entry in orders[indexOrder].transacciones.asMap().entries) {
+      var index = entry.key; // Este es el índice
+      var tra = entry.value; // Este es el valor (transacción)
       int padre = consecutivo;
 
       //guarniciones
@@ -98,18 +100,36 @@ class OrderViewModel extends ChangeNotifier {
         int fBodega = 0;
         int fProducto = 0;
         int fUnidadMedida = 0;
-        int cantidad = 0;
+        int fCantidad = 0;
+
+        if (element.selected.fProducto != null) {
+          fBodega = element.selected.fBodega!;
+          fProducto = element.selected.fProducto!;
+          fUnidadMedida = element.selected.fUnidadMedida!;
+          fCantidad = element.selected.cantidad?.toInt() ?? 0;
+        } else {
+          for (var i = 0; i < element.garnishs.length; i++) {
+            if (element.garnishs[i].fProducto != null) {
+              fBodega = element.garnishs[i].fBodega!;
+              fProducto = element.garnishs[i].fProducto!;
+              fUnidadMedida = element.garnishs[i].fUnidadMedida!;
+              fCantidad = element.garnishs[i].cantidad?.toInt() ?? 0;
+              break;
+            }
+          }
+        }
 
         transactions.add(
           DocTransaccion(
-              traObservacion: element.selected.descripcion,
+              traObservacion:
+                  "${element.garnishs.map((e) => e.descripcion).join(" ")} ${element.selected.descripcion}",
               traConsecutivoInterno: consecutivo,
               traConsecutivoInternoPadre: padre,
               dConsecutivoInterno: firstPart,
-              traBodega: cantidad,
-              traProducto: cantidad,
-              traUnidadMedida: cantidad,
-              traCantidad: cantidad,
+              traBodega: fBodega,
+              traProducto: fProducto,
+              traUnidadMedida: fUnidadMedida,
+              traCantidad: fCantidad,
               traTipoCambio: menuVM.tipoCambio,
               traMoneda: tra.precio.moneda,
               traTipoPrecio:
