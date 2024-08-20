@@ -1,5 +1,4 @@
 export 'package:flutter_post_printer_example/displays/restaurant/view_models/products_class_view_model.dart';
-export 'package:flutter_post_printer_example/displays/restaurant/view_models/select_table_view_model.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/view_models/permisions_view_model.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/view_models/accounts_view_model.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/view_models/add_person_view_model.dart';

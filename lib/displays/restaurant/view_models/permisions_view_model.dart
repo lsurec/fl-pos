@@ -104,7 +104,7 @@ class PermisionsViewModel extends ChangeNotifier {
         return;
       }
 
-      print("Tipo accion valida");
+      //Navegar a select ubicacion
 
       isLoading = false;
     } else {
