@@ -8,7 +8,9 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class NotificationService {
   //Key dcaffkod global
@@ -214,10 +216,13 @@ class NotificationService {
 
   static showMessageValidations(
     BuildContext context,
-    ValidateProductModel validacion,
+    List<ValidateProductModel> validaciones,
     // ProductModel producto,
     // List<String> mensajes,
   ) {
+    final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
+
+    final ValidateProductModel validacion = validaciones[0];
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -326,23 +331,50 @@ class NotificationService {
               const SizedBox(height: 5),
               const Divider(),
               const SizedBox(height: 5),
-              ...validacion.mensajes
-                  .map(
-                    (mensaje) => Column(
-                      children: [
-                        const SizedBox(height: 5),
-                        Text(
-                          "- $mensaje",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
+
+              SizedBox(
+                height: 120.0, // Limita la altura máxima del área de mensajes
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: validacion.mensajes
+                        .map(
+                          (mensaje) => Column(
+                            children: [
+                              const SizedBox(height: 5),
+                              Text(
+                                mensaje,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                            ],
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                      ],
-                    ),
-                  )
-                  .toList(),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+
+              // ...validacion.mensajes
+              //     .map(
+              //       (mensaje) => Column(
+              //         children: [
+              //           const SizedBox(height: 5),
+              //           Text(
+              //             "- $mensaje",
+              //             style: AppTheme.style(
+              //               context,
+              //               Styles.normal,
+              //             ),
+              //           ),
+              //           const SizedBox(height: 5),
+              //         ],
+              //       ),
+              //     )
+              //     .toList(),
               // Muestra cada mensaje en una nueva línea
             ],
           ),
@@ -359,9 +391,10 @@ class NotificationService {
               ),
             ),
             TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => vmShare.sharedDocInformeAyO(
+                context,
+                validaciones,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.botones,

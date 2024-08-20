@@ -2318,7 +2318,7 @@ class ShareDocViewModel extends ChangeNotifier {
 
   //Iforme de productos
 
-  Future<void> sheredDocInformeAyO(
+  Future<void> sharedDocInformeAyO(
     BuildContext contextP,
     List<ValidateProductModel> validaciones,
   ) async {
@@ -2386,140 +2386,143 @@ class ShareDocViewModel extends ChangeNotifier {
         ),
         build: (pw.Context context) {
           return [
-            // Contenido de la página 1
-            pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.SizedBox(height: 10),
-                //Detalles del documento
-                pw.Container(
-                  width: double.infinity,
-                  child: pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                    mainAxisAlignment: pw.MainAxisAlignment.start,
-                    children: [
-                      //Titulos de las columnas
-                      pw.Container(
-                        decoration: pw.BoxDecoration(
-                          color: backCell,
-                          border: pw.Border.all(
-                            color: PdfColors.black, // Color del borde
-                            width: 1, // Ancho del borde
+            pw.ListView.builder(
+              itemCount: validaciones.length,
+              itemBuilder: (context, index) {
+                //Detalle
+                final ValidateProductModel validacion = validaciones[index];
+                return pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  mainAxisAlignment: pw.MainAxisAlignment.start,
+                  children: [
+                    pw.SizedBox(height: 10),
+                    //Detalles del documento
+                    pw.Container(
+                      width: double.infinity,
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                        children: [
+                          //Titulos de las columnas
+                          pw.Container(
+                            decoration: pw.BoxDecoration(
+                              color: backCell,
+                              border: pw.Border.all(
+                                color: PdfColors.black, // Color del borde
+                                width: 1, // Ancho del borde
+                              ),
+                              // borderRadius: pw.BorderRadius.circular(8.0),
+                            ),
+                            width: PdfPageFormat.letter.width,
+                            child: pw.Row(
+                              children: [
+                                //Codigo
+                                pw.Container(
+                                  decoration: const pw.BoxDecoration(
+                                    border: pw.Border(
+                                      right: pw.BorderSide(
+                                        color:
+                                            PdfColors.black, // Color del borde
+                                        width: 1.0, // Ancho del borde
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const pw.EdgeInsets.all(5),
+                                  width: PdfPageFormat.letter.width * 0.10,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.tiket,
+                                      'codigo',
+                                    ),
+                                    style: font8Bold,
+                                    textAlign: pw.TextAlign.center,
+                                  ),
+                                ),
+                                //Descripcion
+                                pw.Container(
+                                  decoration: const pw.BoxDecoration(
+                                    border: pw.Border(
+                                      right: pw.BorderSide(
+                                        color:
+                                            PdfColors.black, // Color del borde
+                                        width: 1.0, // Ancho del borde
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const pw.EdgeInsets.all(5),
+                                  width: PdfPageFormat.letter.width * 0.30,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.general,
+                                      'descripcion',
+                                    ),
+                                    style: font8Bold,
+                                    textAlign: pw.TextAlign.center,
+                                  ),
+                                ),
+                                //Bodega
+                                pw.Container(
+                                  decoration: const pw.BoxDecoration(
+                                    border: pw.Border(
+                                      right: pw.BorderSide(
+                                        color:
+                                            PdfColors.black, // Color del borde
+                                        width: 1.0, // Ancho del borde
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const pw.EdgeInsets.all(5),
+                                  width: PdfPageFormat.letter.width * 0.20,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.factura,
+                                      'bodega',
+                                    ),
+                                    textAlign: pw.TextAlign.center,
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                //Tipo Documento
+                                pw.Container(
+                                  decoration: const pw.BoxDecoration(
+                                    border: pw.Border(
+                                      right: pw.BorderSide(
+                                        color:
+                                            PdfColors.black, // Color del borde
+                                        width: 1.0, // Ancho del borde
+                                      ),
+                                    ),
+                                  ),
+                                  padding: const pw.EdgeInsets.all(5),
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.factura,
+                                      'tipoDoc',
+                                    ),
+                                    textAlign: pw.TextAlign.center,
+                                    style: font8Bold,
+                                  ),
+                                ),
+                                //Serie documento
+                                pw.Container(
+                                  padding: const pw.EdgeInsets.all(5),
+                                  width: PdfPageFormat.letter.width * 0.15,
+                                  child: pw.Text(
+                                    AppLocalizations.of(contextP)!.translate(
+                                      BlockTranslate.general,
+                                      'serie',
+                                    ),
+                                    textAlign: pw.TextAlign.center,
+                                    style: font8Bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          // borderRadius: pw.BorderRadius.circular(8.0),
-                        ),
-                        width: PdfPageFormat.letter.width,
-                        child: pw.Row(
-                          children: [
-                            //Codigo
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.10,
-                              child: pw.Text(
-                                AppLocalizations.of(contextP)!.translate(
-                                  BlockTranslate.tiket,
-                                  'codigo',
-                                ),
-                                style: font8Bold,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                            ),
-                            //Descripcion
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.30,
-                              child: pw.Text(
-                                AppLocalizations.of(contextP)!.translate(
-                                  BlockTranslate.general,
-                                  'descripcion',
-                                ),
-                                style: font8Bold,
-                                textAlign: pw.TextAlign.center,
-                              ),
-                            ),
-                            //Bodega
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.20,
-                              child: pw.Text(
-                                AppLocalizations.of(contextP)!.translate(
-                                  BlockTranslate.factura,
-                                  'bodega',
-                                ),
-                                textAlign: pw.TextAlign.center,
-                                style: font8Bold,
-                              ),
-                            ),
-                            //Tipo Documento
-                            pw.Container(
-                              decoration: const pw.BoxDecoration(
-                                border: pw.Border(
-                                  right: pw.BorderSide(
-                                    color: PdfColors.black, // Color del borde
-                                    width: 1.0, // Ancho del borde
-                                  ),
-                                ),
-                              ),
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.15,
-                              child: pw.Text(
-                                AppLocalizations.of(contextP)!.translate(
-                                  BlockTranslate.factura,
-                                  'tipoDoc',
-                                ),
-                                textAlign: pw.TextAlign.center,
-                                style: font8Bold,
-                              ),
-                            ),
-                            //Serie documento
-                            pw.Container(
-                              padding: const pw.EdgeInsets.all(5),
-                              width: PdfPageFormat.letter.width * 0.15,
-                              child: pw.Text(
-                                AppLocalizations.of(contextP)!.translate(
-                                  BlockTranslate.general,
-                                  'serie',
-                                ),
-                                textAlign: pw.TextAlign.center,
-                                style: font8Bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      pw.SizedBox(height: 5),
-                      //Deatlles (Prductos/transacciones)
-                      pw.ListView.builder(
-                        itemCount: validaciones.length,
-                        itemBuilder: (context, index) {
-                          //Detalle
-                          final ValidateProductModel validacion =
-                              validaciones[index];
-                          return pw.Row(
+                          pw.SizedBox(height: 5),
+                          //Detalles (Prductos/)
+                          pw.Row(
                             children: [
                               //ID producto
                               pw.Container(
@@ -2572,15 +2575,44 @@ class ShareDocViewModel extends ChangeNotifier {
                                 ),
                               ),
                             ],
-                          );
-                        },
+                          ),
+                        ],
                       ),
-                      pw.SizedBox(height: 5),
-                    ],
-                  ),
-                ),
-                pw.SizedBox(height: 5),
-              ],
+                    ),
+                    pw.SizedBox(height: 5),
+                    //Lista de mensajes
+                    pw.Column(
+                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        pw.Text(
+                          "Mensajes",
+                          style: font8,
+                          textAlign: pw.TextAlign.justify,
+                        ),
+                        pw.SizedBox(height: 5),
+                        //Lista de mensajes
+                        pw.ListView.builder(
+                          itemCount: validaciones[index].mensajes.length,
+                          itemBuilder: (context, indexM) {
+                            //Mensajes
+                            final String mensaje =
+                                validaciones[index].mensajes[indexM];
+                            return pw.Container(
+                              alignment: pw.Alignment.centerLeft,
+                              child: pw.Text(
+                                mensaje,
+                                style: font8,
+                                textAlign: pw.TextAlign.justify,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
             ),
           ];
         },

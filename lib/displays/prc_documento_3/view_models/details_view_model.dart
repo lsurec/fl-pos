@@ -514,6 +514,8 @@ class DetailsViewModel extends ChangeNotifier {
       List<String> mensajes = resDisponibiladProducto.response;
 
       if (mensajes.isNotEmpty) {
+        //Lista para agregar las validaciones
+        List<ValidateProductModel> validaciones = [];
         //detener carga
         vmFactura.isLoading = false;
 
@@ -528,12 +530,15 @@ class DetailsViewModel extends ChangeNotifier {
           mensajes: mensajes,
         );
 
+        //insertar registros
+        validaciones.add(validacion);
+
         //aqui abre un dialogo con notificacion
         await NotificationService.showMessageValidations(
           context,
-          validacion,
+          validaciones,
         );
-        
+
         return;
       }
     }

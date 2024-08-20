@@ -1067,6 +1067,9 @@ class ProductViewModel extends ChangeNotifier {
 
       //aqui abre una norificacion
       if (mensajes.isNotEmpty) {
+        //Lista para agregar las validaciones
+        List<ValidateProductModel> validaciones = [];
+
         //detener carga
         isLoading = false;
 
@@ -1080,10 +1083,12 @@ class ProductViewModel extends ChangeNotifier {
           mensajes: mensajes,
         );
 
+        validaciones.add(validacion);
+
         //aqui abre un dialogo con notificacion
         await NotificationService.showMessageValidations(
           context,
-          validacion,
+          validaciones,
         );
 
         return;
@@ -1369,12 +1374,4 @@ class ProductViewModel extends ChangeNotifier {
     }
   }
 
-  verInforme(
-    BuildContext context,
-    ValidateProductModel validacion,
-  ) {
-    //compartir el informe
-
-    
-  }
 }
