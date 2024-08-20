@@ -517,7 +517,7 @@ class DetailsViewModel extends ChangeNotifier {
         //detener carga
         vmFactura.isLoading = false;
 
-        ValidateProductModel validaciones = ValidateProductModel(
+        ValidateProductModel validacion = ValidateProductModel(
           sku: producto!.productoId,
           productoDesc: producto!.desProducto,
           bodega:
@@ -528,11 +528,12 @@ class DetailsViewModel extends ChangeNotifier {
           mensajes: mensajes,
         );
 
-        //aqui abre una norificacion
-        NotificationService.showMessageValidations(
+        //aqui abre un dialogo con notificacion
+        await NotificationService.showMessageValidations(
           context,
-          validaciones,
+          validacion,
         );
+        
         return;
       }
     }

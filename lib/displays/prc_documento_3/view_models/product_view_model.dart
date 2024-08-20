@@ -1067,7 +1067,25 @@ class ProductViewModel extends ChangeNotifier {
 
       //aqui abre una norificacion
       if (mensajes.isNotEmpty) {
-        NotificationService.showSnackbar(mensajes[0]);
+        //detener carga
+        isLoading = false;
+
+        ValidateProductModel validacion = ValidateProductModel(
+          sku: product.productoId,
+          productoDesc: product.desProducto,
+          bodega: "${selectedBodega!.nombre} (${selectedBodega!.bodega})",
+          tipoDoc: "${menuVM.name} (${menuVM.documento!})",
+          serie:
+              "${docVM.serieSelect!.descripcion!} (${docVM.serieSelect!.serieDocumento!})",
+          mensajes: mensajes,
+        );
+
+        //aqui abre un dialogo con notificacion
+        await NotificationService.showMessageValidations(
+          context,
+          validacion,
+        );
+
         return;
       }
     }

@@ -215,57 +215,135 @@ class NotificationService {
   static showMessageValidations(
     BuildContext context,
     ValidateProductModel validacion,
+    // ProductModel producto,
+    // List<String> mensajes,
   ) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            AppLocalizations.of(context)!.translate(
-              BlockTranslate.notificacion,
-              "advertencia",
-            ),
+          title: Column(
+            children: [
+              Text(
+                AppLocalizations.of(context)!
+                    .translate(
+                      BlockTranslate.notificacion,
+                      "advertencia",
+                    )
+                    .toUpperCase(),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  "productosNoDisponibles",
+                ),
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
+              const Divider(),
+            ],
+          ),
+          titlePadding: const EdgeInsets.only(
+            // bottom: 10,
+            top: 15,
+          ),
+          contentPadding: const EdgeInsets.only(
+            top: 5,
+            bottom: 0,
+            left: 25,
+            right: 25,
           ),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.notificacion,
-                  "productosNoDisponibles",
+                "(${validacion.sku}) ${validacion.productoDesc}",
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
                 ),
               ),
-              const SizedBox(height: 8),
-              CardWidget(
-                child: Column(
-                  children: [
-                    Text(
-                      "(${validacion.sku}) ${validacion.productoDesc}",
-                    ),
-                    const Divider(),
-                    Text(
-                      "Bodega: ${validacion.bodega}",
-                    ),
-                    Text(
-                      "Serie: ${validacion.serie}",
-                    ),
-                    Text(
-                      "Documento: ${validacion.tipoDoc}",
-                    ),
-                    const Divider(),
-                    ListView.builder(
-                      itemCount: validacion.mensajes.length,
-                      itemBuilder: (BuildContext context, int indexM) {
-                        final String mensaje = validacion.mensajes[indexM];
-                        return Text(
-                          mensaje,
-                        );
-                      },
-                    ),
-                  ],
-                ),
+              const Divider(),
+              const SizedBox(
+                height: 10,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'serie',
+                        )}:",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                      Text(
+                        validacion.serie,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'tipoDoc',
+                        )}:",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                      Text(
+                        validacion.tipoDoc,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(height: 5),
+              const Divider(),
+              const SizedBox(height: 5),
+              ...validacion.mensajes
+                  .map(
+                    (mensaje) => Column(
+                      children: [
+                        const SizedBox(height: 5),
+                        Text(
+                          "- $mensaje",
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                      ],
+                    ),
+                  )
+                  .toList(),
+              // Muestra cada mensaje en una nueva línea
             ],
           ),
           actions: <Widget>[
@@ -282,7 +360,6 @@ class NotificationService {
             ),
             TextButton(
               onPressed: () {
-                // Aquí puedes agregar lógica adicional, como redirigir a la sección de soporte.
                 Navigator.of(context).pop();
               },
               child: Text(
