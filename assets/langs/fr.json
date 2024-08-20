@@ -84,7 +84,8 @@
         "adjuntarArchivos": "Joindre des fichiers",
         "enviarComentario": "Envoyer un commentaire.",
         "cambiarResponsable": "Mettre à jour la personne responsable",
-        "modificar": "Modifier"
+        "modificar": "Modifier",
+        "compartirInforme": "Partager le rapport"
     },
     "fechas": {
         "fecha": "Date:",
@@ -420,7 +421,8 @@
         "cuenta": "Compte: ",
         "direEntrega": "Adresse de Livraison",
         "tipoRef": "Type de référence",
-        "codigo": "Code"
+        "codigo": "Code",
+        "mensajes": "Messages: "
     },
     "tareas": {
         "numTarea": "Tâche No : ",

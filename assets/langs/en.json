@@ -84,7 +84,8 @@
         "adjuntarArchivos": "Attach Files",
         "enviarComentario": "Send comment",
         "cambiarResponsable": "Update Responsible Person",
-        "modificar": "Modify"
+        "modificar": "Modify",
+        "compartirInforme": "Share report"
     },
     "fechas": {
         "fecha": "Date: ",
@@ -420,7 +421,8 @@
         "cuenta": "Account: ",
         "direEntrega": "Delivery Address",
         "tipoRef": "Reference Type",
-        "codigo": "Code"
+        "codigo": "Code",
+        "mensajes": "Messages: "
     },
     "tareas": {
         "numTarea": "Task No: ",

@@ -84,7 +84,8 @@
         "adjuntarArchivos": "Adjuntar Archivos",
         "enviarComentario": "Enviar comentario.",
         "cambiarResponsable": "Actualizar Responsable",
-        "modificar": "Modificar"
+        "modificar": "Modificar",
+        "compartirInforme": "Compartir informe"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -420,7 +421,8 @@
         "cuenta": "Cuenta: ",
         "direEntrega": "Dirección Entrega",
         "tipoRef": "Tipo de referencia",
-        "codigo": "Código"
+        "codigo": "Código",
+        "mensajes": "Mensajes: "
     },
     "tareas": {
         "numTarea": "Tarea No: ",

@@ -364,7 +364,7 @@ class NotificationService {
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.botones,
-                  "cerrar",
+                  "aceptar",
                 ),
               ),
             ),
@@ -376,7 +376,7 @@ class NotificationService {
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.botones,
-                  'informe',
+                  'compartirInforme',
                 ),
               ),
             ),

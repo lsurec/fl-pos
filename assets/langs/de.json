@@ -84,7 +84,8 @@
         "adjuntarArchivos": "Dateien anhängen",
         "enviarComentario": "Kommentar senden.",
         "cambiarResponsable": "Verantwortliche Person aktualisieren",
-        "modificar": "Ändern"
+        "modificar": "Ändern",
+        "compartirInforme": "Bericht teilen"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -420,7 +421,8 @@
         "cuenta": "Konto: ",
         "direEntrega": "Lieferadresse",
         "tipoRef": "Referenztyp",
-        "codigo": "Code"
+        "codigo": "Code",
+        "mensajes": "Nachrichten: "
     },
     "tareas": {
         "numTarea": "Aufgabe Nr: ",

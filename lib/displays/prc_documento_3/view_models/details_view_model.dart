@@ -533,6 +533,10 @@ class DetailsViewModel extends ChangeNotifier {
         //insertar registros
         validaciones.add(validacion);
 
+        validaciones.add(validacion);
+
+        validaciones.add(validacion);
+
         //aqui abre un dialogo con notificacion
         await NotificationService.showMessageValidations(
           context,

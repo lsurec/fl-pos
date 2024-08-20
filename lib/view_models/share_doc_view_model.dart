@@ -2592,7 +2592,10 @@ class ShareDocViewModel extends ChangeNotifier {
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
                         pw.Text(
-                          "Mensajes: ",
+                          AppLocalizations.of(contextP)!.translate(
+                            BlockTranslate.cotizacion,
+                            'mensajes',
+                          ),
                           style: font10Bold,
                           textAlign: pw.TextAlign.justify,
                         ),
@@ -2616,6 +2619,8 @@ class ShareDocViewModel extends ChangeNotifier {
                         ),
                       ],
                     ),
+
+                    pw.SizedBox(height: 10),
                   ],
                 );
               },
