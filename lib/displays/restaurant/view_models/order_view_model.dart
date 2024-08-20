@@ -87,9 +87,7 @@ class OrderViewModel extends ChangeNotifier {
     int consecutivo = 1;
 
     //Buscar transacciones que van a comandarse
-    for (var entry in orders[indexOrder].transacciones.asMap().entries) {
-      var index = entry.key; // Este es el índice
-      var tra = entry.value; // Este es el valor (transacción)
+    for (var tra in orders[indexOrder].transacciones) {
       int padre = consecutivo;
 
       //guarniciones
