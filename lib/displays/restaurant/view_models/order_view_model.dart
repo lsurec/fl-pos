@@ -9,7 +9,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
