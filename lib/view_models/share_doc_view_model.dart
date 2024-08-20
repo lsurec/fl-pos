@@ -2363,8 +2363,15 @@ class ShareDocViewModel extends ChangeNotifier {
     //Estilos para el pdf
     pw.TextStyle font8 = const pw.TextStyle(fontSize: 8);
 
+    pw.TextStyle font10 = const pw.TextStyle(fontSize: 10);
+
     pw.TextStyle font8Bold = pw.TextStyle(
       fontSize: 8,
+      fontWeight: pw.FontWeight.bold,
+    );
+
+    pw.TextStyle font10Bold = pw.TextStyle(
+      fontSize: 10,
       fontWeight: pw.FontWeight.bold,
     );
 
@@ -2431,7 +2438,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                   width: PdfPageFormat.letter.width * 0.10,
                                   child: pw.Text(
                                     AppLocalizations.of(contextP)!.translate(
-                                      BlockTranslate.tiket,
+                                      BlockTranslate.cotizacion,
                                       'codigo',
                                     ),
                                     style: font8Bold,
@@ -2494,7 +2501,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                     ),
                                   ),
                                   padding: const pw.EdgeInsets.all(5),
-                                  width: PdfPageFormat.letter.width * 0.15,
+                                  width: PdfPageFormat.letter.width * 0.20,
                                   child: pw.Text(
                                     AppLocalizations.of(contextP)!.translate(
                                       BlockTranslate.factura,
@@ -2520,7 +2527,6 @@ class ShareDocViewModel extends ChangeNotifier {
                               ],
                             ),
                           ),
-                          pw.SizedBox(height: 5),
                           //Detalles (Prductos/)
                           pw.Row(
                             children: [
@@ -2530,7 +2536,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
                                   validacion.sku,
-                                  textAlign: pw.TextAlign.center,
+                                  textAlign: pw.TextAlign.left,
                                   style: font8,
                                 ),
                               ),
@@ -2550,17 +2556,17 @@ class ShareDocViewModel extends ChangeNotifier {
                                 width: PdfPageFormat.letter.width * 0.20,
                                 child: pw.Text(
                                   validacion.bodega,
-                                  textAlign: pw.TextAlign.right,
+                                  textAlign: pw.TextAlign.left,
                                   style: font8,
                                 ),
                               ),
                               //Tipo documento
                               pw.Container(
                                 padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.15,
+                                width: PdfPageFormat.letter.width * 0.20,
                                 child: pw.Text(
                                   validacion.tipoDoc,
-                                  textAlign: pw.TextAlign.right,
+                                  textAlign: pw.TextAlign.left,
                                   style: font8,
                                 ),
                               ),
@@ -2570,7 +2576,7 @@ class ShareDocViewModel extends ChangeNotifier {
                                 width: PdfPageFormat.letter.width * 0.15,
                                 child: pw.Text(
                                   validacion.serie,
-                                  textAlign: pw.TextAlign.right,
+                                  textAlign: pw.TextAlign.left,
                                   style: font8,
                                 ),
                               ),
@@ -2587,7 +2593,7 @@ class ShareDocViewModel extends ChangeNotifier {
                       children: [
                         pw.Text(
                           "Mensajes",
-                          style: font8,
+                          style: font10Bold,
                           textAlign: pw.TextAlign.justify,
                         ),
                         pw.SizedBox(height: 5),
@@ -2602,7 +2608,7 @@ class ShareDocViewModel extends ChangeNotifier {
                               alignment: pw.Alignment.centerLeft,
                               child: pw.Text(
                                 mensaje,
-                                style: font8,
+                                style: font10,
                                 textAlign: pw.TextAlign.justify,
                               ),
                             );

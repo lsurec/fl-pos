@@ -217,8 +217,6 @@ class NotificationService {
   static showMessageValidations(
     BuildContext context,
     List<ValidateProductModel> validaciones,
-    // ProductModel producto,
-    // List<String> mensajes,
   ) {
     final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
 
@@ -331,7 +329,6 @@ class NotificationService {
               const SizedBox(height: 5),
               const Divider(),
               const SizedBox(height: 5),
-
               SizedBox(
                 height: 120.0, // Limita la altura máxima del área de mensajes
                 child: SingleChildScrollView(
@@ -357,25 +354,6 @@ class NotificationService {
                   ),
                 ),
               ),
-
-              // ...validacion.mensajes
-              //     .map(
-              //       (mensaje) => Column(
-              //         children: [
-              //           const SizedBox(height: 5),
-              //           Text(
-              //             "- $mensaje",
-              //             style: AppTheme.style(
-              //               context,
-              //               Styles.normal,
-              //             ),
-              //           ),
-              //           const SizedBox(height: 5),
-              //         ],
-              //       ),
-              //     )
-              //     .toList(),
-              // Muestra cada mensaje en una nueva línea
             ],
           ),
           actions: <Widget>[

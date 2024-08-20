@@ -419,7 +419,8 @@
         "idRef": "ID Ref: ",
         "cuenta": "Account: ",
         "direEntrega": "Delivery Address",
-        "tipoRef": "Reference Type"
+        "tipoRef": "Reference Type",
+        "codigo": "Code"
     },
     "tareas": {
         "numTarea": "Task No: ",

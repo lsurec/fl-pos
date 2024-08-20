@@ -419,7 +419,8 @@
         "idRef": "Réf ID: ",
         "cuenta": "Compte: ",
         "direEntrega": "Adresse de Livraison",
-        "tipoRef": "Type de référence"
+        "tipoRef": "Type de référence",
+        "codigo": "Code"
     },
     "tareas": {
         "numTarea": "Tâche No : ",

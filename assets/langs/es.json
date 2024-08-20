@@ -419,7 +419,8 @@
         "idRef": "Id Ref: ",
         "cuenta": "Cuenta: ",
         "direEntrega": "Dirección Entrega",
-        "tipoRef": "Tipo de referencia"
+        "tipoRef": "Tipo de referencia",
+        "codigo": "Código"
     },
     "tareas": {
         "numTarea": "Tarea No: ",
