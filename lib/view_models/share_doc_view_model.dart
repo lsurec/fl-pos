@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -2309,6 +2310,430 @@ class ShareDocViewModel extends ChangeNotifier {
               color: PdfColors.black,
             ),
             textAlign: pw.TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  //Iforme de productos
+
+  Future<void> sheredDocInformeAyO(
+    BuildContext contextP,
+    List<ValidateProductModel> validaciones,
+  ) async {
+    //Nuevo para el logo
+    final vmLocal = Provider.of<LocalSettingsViewModel>(
+      contextP,
+      listen: false,
+    );
+
+    final vmDoc = Provider.of<DocumentViewModel>(
+      contextP,
+      listen: false,
+    );
+
+    EmpresaModel empresaSeleccionada = vmLocal.selectedEmpresa!;
+
+    //Empresa (impresion)
+    Empresa empresa = Empresa(
+      razonSocial: empresaSeleccionada.razonSocial,
+      nombre: empresaSeleccionada.empresaNombre,
+      direccion: empresaSeleccionada.empresaDireccion,
+      nit: empresaSeleccionada.empresaNit,
+      tel: vmDoc.serieSelect?.campo05 ?? "",
+    );
+
+    //obtener la empresa de seleccionada
+    final EmpresaModel imgEmpresa = vmLocal.selectedEmpresa!;
+
+    // Logotipo por defecto
+    final ByteData defaultLogoData = await rootBundle.load(
+      'assets/empresa.png',
+    );
+    Uint8List defaultLogo = defaultLogoData.buffer.asUint8List();
+
+    // URL de la imagen que quieres mostrar
+    // Descarga la imagen de la URL
+    Uint8List? downloadedImage = await downloadImage(imgEmpresa.empresaImg);
+
+    // Usa la imagen descargada si existe, de lo contrario usa el logotipo por defecto
+    Uint8List imageToShow = downloadedImage ?? defaultLogo;
+
+    //Estilos para el pdf
+    pw.TextStyle font8 = const pw.TextStyle(fontSize: 8);
+
+    pw.TextStyle font8Bold = pw.TextStyle(
+      fontSize: 8,
+      fontWeight: pw.FontWeight.bold,
+    );
+
+    //color tabla
+    PdfColor backCell = PdfColor.fromHex("b2b2b2");
+
+    //Docuemnto pdf nuevo
+    final pdf = pw.Document();
+
+    // Agrega páginas con encabezado y pie de página
+    pdf.addPage(
+      pw.MultiPage(
+        maxPages: 30,
+        pageFormat: PdfPageFormat.letter.copyWith(
+          marginBottom: 20,
+          marginLeft: 20,
+          marginTop: 20,
+          marginRight: 20,
+        ),
+        build: (pw.Context context) {
+          return [
+            // Contenido de la página 1
+            pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.SizedBox(height: 10),
+                //Detalles del documento
+                pw.Container(
+                  width: double.infinity,
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    mainAxisAlignment: pw.MainAxisAlignment.start,
+                    children: [
+                      //Titulos de las columnas
+                      pw.Container(
+                        decoration: pw.BoxDecoration(
+                          color: backCell,
+                          border: pw.Border.all(
+                            color: PdfColors.black, // Color del borde
+                            width: 1, // Ancho del borde
+                          ),
+                          // borderRadius: pw.BorderRadius.circular(8.0),
+                        ),
+                        width: PdfPageFormat.letter.width,
+                        child: pw.Row(
+                          children: [
+                            //Codigo
+                            pw.Container(
+                              decoration: const pw.BoxDecoration(
+                                border: pw.Border(
+                                  right: pw.BorderSide(
+                                    color: PdfColors.black, // Color del borde
+                                    width: 1.0, // Ancho del borde
+                                  ),
+                                ),
+                              ),
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.10,
+                              child: pw.Text(
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.tiket,
+                                  'codigo',
+                                ),
+                                style: font8Bold,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                            ),
+                            //Descripcion
+                            pw.Container(
+                              decoration: const pw.BoxDecoration(
+                                border: pw.Border(
+                                  right: pw.BorderSide(
+                                    color: PdfColors.black, // Color del borde
+                                    width: 1.0, // Ancho del borde
+                                  ),
+                                ),
+                              ),
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.30,
+                              child: pw.Text(
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.general,
+                                  'descripcion',
+                                ),
+                                style: font8Bold,
+                                textAlign: pw.TextAlign.center,
+                              ),
+                            ),
+                            //Bodega
+                            pw.Container(
+                              decoration: const pw.BoxDecoration(
+                                border: pw.Border(
+                                  right: pw.BorderSide(
+                                    color: PdfColors.black, // Color del borde
+                                    width: 1.0, // Ancho del borde
+                                  ),
+                                ),
+                              ),
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.20,
+                              child: pw.Text(
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.factura,
+                                  'bodega',
+                                ),
+                                textAlign: pw.TextAlign.center,
+                                style: font8Bold,
+                              ),
+                            ),
+                            //Tipo Documento
+                            pw.Container(
+                              decoration: const pw.BoxDecoration(
+                                border: pw.Border(
+                                  right: pw.BorderSide(
+                                    color: PdfColors.black, // Color del borde
+                                    width: 1.0, // Ancho del borde
+                                  ),
+                                ),
+                              ),
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.15,
+                              child: pw.Text(
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.factura,
+                                  'tipoDoc',
+                                ),
+                                textAlign: pw.TextAlign.center,
+                                style: font8Bold,
+                              ),
+                            ),
+                            //Serie documento
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.15,
+                              child: pw.Text(
+                                AppLocalizations.of(contextP)!.translate(
+                                  BlockTranslate.general,
+                                  'serie',
+                                ),
+                                textAlign: pw.TextAlign.center,
+                                style: font8Bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      pw.SizedBox(height: 5),
+                      //Deatlles (Prductos/transacciones)
+                      pw.ListView.builder(
+                        itemCount: validaciones.length,
+                        itemBuilder: (context, index) {
+                          //Detalle
+                          final ValidateProductModel validacion =
+                              validaciones[index];
+                          return pw.Row(
+                            children: [
+                              //ID producto
+                              pw.Container(
+                                padding: const pw.EdgeInsets.all(5),
+                                width: PdfPageFormat.letter.width * 0.10,
+                                child: pw.Text(
+                                  validacion.sku,
+                                  textAlign: pw.TextAlign.center,
+                                  style: font8,
+                                ),
+                              ),
+                              //Descripcion producto
+                              pw.Container(
+                                padding: const pw.EdgeInsets.all(5),
+                                width: PdfPageFormat.letter.width * 0.30,
+                                child: pw.Text(
+                                  validacion.productoDesc,
+                                  textAlign: pw.TextAlign.left,
+                                  style: font8,
+                                ),
+                              ),
+                              //Bodega
+                              pw.Container(
+                                padding: const pw.EdgeInsets.all(5),
+                                width: PdfPageFormat.letter.width * 0.20,
+                                child: pw.Text(
+                                  validacion.bodega,
+                                  textAlign: pw.TextAlign.right,
+                                  style: font8,
+                                ),
+                              ),
+                              //Tipo documento
+                              pw.Container(
+                                padding: const pw.EdgeInsets.all(5),
+                                width: PdfPageFormat.letter.width * 0.15,
+                                child: pw.Text(
+                                  validacion.tipoDoc,
+                                  textAlign: pw.TextAlign.right,
+                                  style: font8,
+                                ),
+                              ),
+                              //Serie documento
+                              pw.Container(
+                                padding: const pw.EdgeInsets.all(5),
+                                width: PdfPageFormat.letter.width * 0.15,
+                                child: pw.Text(
+                                  validacion.serie,
+                                  textAlign: pw.TextAlign.right,
+                                  style: font8,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      pw.SizedBox(height: 5),
+                    ],
+                  ),
+                ),
+                pw.SizedBox(height: 5),
+              ],
+            ),
+          ];
+        },
+        //encabezado
+        header: (pw.Context context) => buildInformeAyOHeader(
+          contextP,
+          imageToShow,
+          empresa,
+        ),
+        //pie de pagina
+        footer: (pw.Context context) => buildAlfayOmegaFooter(
+          context,
+        ),
+      ),
+    );
+
+    //Crear y guardar el pdf
+    final directory = await getTemporaryDirectory();
+    final filePath = '${directory.path}/${DateTime.now().toString()}.pdf';
+    final file = File(filePath);
+    await file.writeAsBytes(await pdf.save());
+
+    //Detener proceso de carag
+    //compartir documento
+    Share.shareFiles(
+      [filePath],
+      text: AppLocalizations.of(contextP)!.translate(
+        BlockTranslate.tiket,
+        'pdf',
+      ),
+    );
+  }
+
+  //Encabezados
+  pw.Widget buildInformeAyOHeader(
+    BuildContext context,
+    Uint8List logo,
+    Empresa empresa,
+  ) {
+    return pw.Container(
+      margin: const pw.EdgeInsets.only(bottom: 10),
+      child: pw.Row(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          // Item 1 (35%)
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.35,
+            height: 115,
+            child: pw.Image(
+              pw.MemoryImage(logo),
+              width: 125,
+            ),
+          ),
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.05,
+          ),
+          // Item 2 (30%)
+          pw.Container(
+            alignment: pw.Alignment.centerRight,
+            padding: const pw.EdgeInsets.only(top: 10),
+            width: PdfPageFormat.letter.width * 0.30,
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              mainAxisAlignment: pw.MainAxisAlignment.center,
+              children: [
+                pw.Text(
+                  empresa.razonSocial,
+                  style: pw.TextStyle(
+                    fontSize: 12,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  empresa.nombre,
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  empresa.direccion,
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  "NIT: ${empresa.nit}",
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                pw.Text(
+                  "${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.tiket,
+                    'tel',
+                  )} ${empresa.tel}",
+                  style: const pw.TextStyle(
+                    fontSize: 10,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.075,
+          ),
+          // Item 3 (35%)
+          pw.Container(
+            alignment: pw.Alignment.centerRight,
+            padding: const pw.EdgeInsets.only(top: 10),
+            width: PdfPageFormat.letter.width * 0.25,
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.center,
+              children: [
+                pw.Container(
+                  padding: const pw.EdgeInsets.all(5),
+                  decoration: pw.BoxDecoration(
+                    border: pw.Border.all(
+                      width: 0.5,
+                      color: PdfColors.black,
+                    ),
+                  ),
+                  child: pw.Column(
+                    children: [
+                      pw.Text(
+                        "DISPONIBILIDAD",
+                        style: pw.TextStyle(
+                          fontSize: 11,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        textAlign: pw.TextAlign.center,
+                      ),
+                      pw.Text(
+                        "DE PRODUCTOS",
+                        style: pw.TextStyle(
+                          fontSize: 11,
+                          fontWeight: pw.FontWeight.bold,
+                        ),
+                        textAlign: pw.TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+                pw.SizedBox(height: 5),
+              ],
+            ),
+          ),
+          pw.Container(
+            width: PdfPageFormat.letter.width * 0.075,
           ),
         ],
       ),

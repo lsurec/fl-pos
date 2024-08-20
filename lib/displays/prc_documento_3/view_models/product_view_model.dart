@@ -1368,4 +1368,13 @@ class ProductViewModel extends ChangeNotifier {
       // Aquí puedes agregar la lógica para el botón de regresar si es necesario
     }
   }
+
+  verInforme(
+    BuildContext context,
+    ValidateProductModel validacion,
+  ) {
+    //compartir el informe
+
+    
+  }
 }
