@@ -73,7 +73,6 @@ class PermisionsViewModel extends ChangeNotifier {
     //si el usuaro es correcto
     if (respLogin.success) {
       //guardar token y nombre de usuario
-      print("ok");
 
       TipoAccionService tipoAccionService = TipoAccionService();
 
@@ -98,11 +97,14 @@ class PermisionsViewModel extends ChangeNotifier {
 
       RespLogin accionValida = resTipoAccion.response;
       if (!accionValida.data) {
-        NotificationService.showSnackbar("message");
+        NotificationService.showSnackbar(
+            "El usuario ${respLogin.user} no posee permisos para esta acción.");
 
         isLoading = false;
         return;
       }
+
+      print("Tipo accion valida");
 
       isLoading = false;
     } else {
