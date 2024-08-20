@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 
 class PermisionsViewModel extends ChangeNotifier {
@@ -105,6 +106,7 @@ class PermisionsViewModel extends ChangeNotifier {
       }
 
       //Navegar a select ubicacion
+      Navigator.pushNamed(context, AppRoutes.selectLocation);
 
       isLoading = false;
     } else {
