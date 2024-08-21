@@ -289,7 +289,7 @@ class OrderViewModel extends ChangeNotifier {
 
     isLoading = false;
 
-    // await printNetwork(context, indexOrder);
+    await printNetwork(context, indexOrder);
 
     NotificationService.showSnackbar("Comanda enviada");
   }
@@ -521,7 +521,8 @@ class OrderViewModel extends ChangeNotifier {
         await PrinterManager.instance.connect(
           type: PrinterType.network,
           model: TcpPrinterInput(
-            ipAddress: element.ipAdress,
+            // ipAddress: element.ipAdress,
+            ipAddress: "192.168.0.10",
           ),
         );
 

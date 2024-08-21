@@ -14,13 +14,7 @@ class TransferSummaryView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Datos simulados para el origen y el destino
     final String originLocation = "Balcón";
-    final String originTable = "Mesa 1";
-    final String originAccount = "Cuenta de Juan";
-    final List<String> originTransactions = ["1 Café", "2 Sándwiches de jamón"];
 
-    final String destinationLocation = "Patio";
-    final String destinationTable = "Mesa 2";
-    final String destinationAccount = "Cuenta de Pedro";
     return Scaffold(
       appBar: AppBar(
         title: Text(
