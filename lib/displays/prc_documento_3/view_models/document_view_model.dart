@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'dart:js';
+
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -88,9 +90,13 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   //Seleccioanr una referencia
-  void changeRef(TipoReferenciaModel? value) {
+  void changeRef(
+    BuildContext context,
+    TipoReferenciaModel? value,
+  ) {
     referenciaSelect = value;
     notifyListeners();
+    DocumentService.saveDocumentLocal(context);
   }
 
   bool monitorPrint() {

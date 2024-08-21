@@ -331,7 +331,10 @@ class DocumentView extends StatelessWidget {
                           ),
                         ),
                         value: vm.referenciaSelect,
-                        onChanged: (value) => vm.changeRef(value),
+                        onChanged: (value) => vm.changeRef(
+                          context,
+                          value,
+                        ),
                         items: vm.referencias.map(
                           (tipoRef) {
                             return DropdownMenuItem<TipoReferenciaModel>(

@@ -88,7 +88,7 @@ class SaveDocModel {
         "tipoDocumento": tipoDocumento,
         "detalles": List<dynamic>.from(detalles.map((x) => x.toMap())),
         "pagos": List<dynamic>.from(pagos.map((x) => x.toMap())),
-        "tipoRef": tipoRef,
+        "tipoRef": tipoRef?.toMap(),
         "refFechaEntrega": refFechaEntrega,
         "refFechaRecoger": refFechaRecoger,
         "refFechaInicio": refFechaInicio,
