@@ -183,7 +183,7 @@ class CardImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GestureDetector(
+      child: InkWell(
         onTap: () => onTap(),
         child: Container(
           height: 250,
