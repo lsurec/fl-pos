@@ -310,6 +310,8 @@ class ProductViewModel extends ChangeNotifier {
       ),
     );
 
+    DocumentService.saveDocumentLocal(context);
+
     //regresar a detalle
     Navigator.pop(context);
 
@@ -1207,6 +1209,8 @@ class ProductViewModel extends ChangeNotifier {
           'transaccionAgregada',
         ),
       );
+
+      DocumentService.saveDocumentLocal(context);
     }
 
     if (opcion == 1) {
@@ -1373,5 +1377,4 @@ class ProductViewModel extends ChangeNotifier {
       // Aquí puedes agregar la lógica para el botón de regresar si es necesario
     }
   }
-
 }

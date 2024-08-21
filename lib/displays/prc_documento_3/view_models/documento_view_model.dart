@@ -3,6 +3,7 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -254,6 +255,9 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     await vmPayment.loadPayments(context);
+
+    //limpiar la prefenncia del documentio
+    Preferences.clearDocument();
 
     //finalizar proceso
     isLoading = false;

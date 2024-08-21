@@ -654,6 +654,8 @@ class DetailsViewModel extends ChangeNotifier {
 
     //detener carga
     vmFactura.isLoading = false;
+
+    DocumentService.saveDocumentLocal(context);
   }
 
   //Obtener y escanear codico de barras

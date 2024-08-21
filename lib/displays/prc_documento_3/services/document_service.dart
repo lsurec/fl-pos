@@ -462,8 +462,6 @@ class DocumentService {
 
     //Guardar el documento en memoria del telefono
     Preferences.document = saveDocument.toJson();
-
-    print(Preferences.document);
   }
 
   //Obtener documento guardado en permanencia de datos
@@ -478,7 +476,6 @@ class DocumentService {
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
     final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
-    print(Preferences.document);
     //No hacer nada si no hay un documento guardado
     if (Preferences.document.isEmpty) return;
 
@@ -512,8 +509,8 @@ class DocumentService {
     //si no se encontró la serie del documento en las series de la sesion no hacer nada
     if (counter == -1) return;
 
-    //si no hay transacciones o pagos agregados no hacer nada
-    if (saveDocument.detalles.isEmpty && saveDocument.pagos.isEmpty) return;
+    //si no hay transacciones no hacer nada
+    // if (saveDocument.detalles.isEmpty) return;
 
     //mostrar dialogo de confirmacion
     bool result = await showDialog(

@@ -272,6 +272,8 @@ class DocumentViewModel extends ChangeNotifier {
     //finalizar proceso
     vmFactura.isLoading = false;
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -496,6 +498,7 @@ class DocumentViewModel extends ChangeNotifier {
     //si solo hay un vendedor agregarlo por defecto
     if (cuentasCorrentistasRef.length == 1) {
       vendedorSelect = cuentasCorrentistasRef.first;
+      DocumentService.saveDocumentLocal(context);
     }
 
     notifyListeners();
@@ -532,9 +535,12 @@ class DocumentViewModel extends ChangeNotifier {
           'clienteSelec',
         ),
       );
+
+      DocumentService.saveDocumentLocal(context);
     } else {
       //no seleccionar
       clienteSelect = null;
+      DocumentService.saveDocumentLocal(context);
     }
 
     notifyListeners();
@@ -766,6 +772,8 @@ class DocumentViewModel extends ChangeNotifier {
           ),
         );
 
+        DocumentService.saveDocumentLocal(context);
+
         return;
       }
 
@@ -814,6 +822,9 @@ class DocumentViewModel extends ChangeNotifier {
     BuildContext context,
   ) {
     clienteSelect = client;
+
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
     if (back) Navigator.pop(context);
   }
@@ -853,6 +864,8 @@ class DocumentViewModel extends ChangeNotifier {
 
     //Recalcular precios cuando se cambia la fechas Inicio
     validarFecha(context);
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -977,6 +990,8 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -1009,6 +1024,8 @@ class DocumentViewModel extends ChangeNotifier {
 
     //Recalcular precios cuando se cambia la fecha Fin
     validarFecha(context);
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -1045,6 +1062,8 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -1076,6 +1095,8 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRefIni.hour,
       fechaRefIni.minute,
     );
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -1113,6 +1134,8 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    DocumentService.saveDocumentLocal(context);
+
     notifyListeners();
   }
 
@@ -1142,6 +1165,8 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRefFin.hour,
       fechaRefFin.minute,
     );
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
@@ -1184,6 +1209,8 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.hour,
       pickedTime.minute,
     );
+
+    DocumentService.saveDocumentLocal(context);
 
     notifyListeners();
   }
