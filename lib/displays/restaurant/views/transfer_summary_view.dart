@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class TransferSummaryView extends StatelessWidget {
   const TransferSummaryView({Key? key}) : super(key: key);
@@ -16,49 +23,99 @@ class TransferSummaryView extends StatelessWidget {
     final String destinationAccount = "Cuenta de Pedro";
     return Scaffold(
       appBar: AppBar(
-        title: Text('Resumen de Traslado'),
+        title: Text(
+          'Resumen de Traslado',
+          style: AppTheme.style(
+            context,
+            Styles.title,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Confirma los detalles del traslado antes de proceder.',
-              style: TextStyle(fontSize: 16.0, color: Colors.grey[600]),
-            ),
-            SizedBox(height: 20.0),
-            // Tarjeta de Origen
-            TransferCard(
-              title: "Origen",
-              location: originLocation,
-              table: originTable,
-              account: originAccount,
-              transactions: originTransactions,
-            ),
-            SizedBox(height: 20.0),
-            // Tarjeta de Destino
-            TransferCard(
-              title: "Destino",
-              location: destinationLocation,
-              table: destinationTable,
-              account: destinationAccount,
-              transactions: null, // El destino no tiene transacciones aún
-            ),
-            Spacer(),
-            // Botón de Confirmación
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Aquí puedes implementar la acción de confirmación
-                  print("Traslado confirmado");
-                },
-                child: Text('Confirmar Traslado'),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Origen",
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Divider(),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Ubicacion: ",
+                    text: originLocation,
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Mesa: ",
+                    text: originLocation,
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Cuenta: ",
+                    text: originLocation,
+                  ),
+                ],
               ),
             ),
+            Container(
+              color: const Color.fromARGB(255, 227, 226, 226),
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Destino",
+                    style: AppTheme.style(
+                      context,
+                      Styles.title,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  const Divider(),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Ubicacion: ",
+                    text: originLocation,
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Mesa: ",
+                    text: originLocation,
+                  ),
+                  const SizedBox(height: 5),
+                  TextsWidget(
+                    title: "Cuenta: ",
+                    text: originLocation,
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
+              child: _Options(),
+            )
           ],
         ),
       ),
@@ -66,48 +123,62 @@ class TransferSummaryView extends StatelessWidget {
   }
 }
 
-class TransferCard extends StatelessWidget {
-  final String title;
-  final String location;
-  final String table;
-  final String account;
-  final List<String>? transactions;
-
-  const TransferCard({
-    required this.title,
-    required this.location,
-    required this.table,
-    required this.account,
-    this.transactions,
-  });
-
+class _Options extends StatelessWidget {
+  const _Options();
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+    return SizedBox(
+      height: 50,
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppTheme.primary),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'cancelar',
+                    ),
+                    style: const TextStyle(
+                      color: AppTheme.primary,
+                      fontSize: 17,
+                    )),
+              ),
             ),
-            SizedBox(height: 10.0),
-            Text('Ubicación: $location'),
-            Text('Mesa: $table'),
-            Text('Cuenta: $account'),
-            if (transactions != null) ...[
-              SizedBox(height: 10.0),
-              Text('Transacciones:'),
-              for (var transaction in transactions!) Text('- $transaction'),
-            ]
-          ],
-        ),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: InkWell(
+              // onTap: () => vm.sendDocument(),
+              onTap: () {},
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'confirmar',
+                    ),
+                    style: AppTheme.style(
+                      context,
+                      Styles.whiteStyle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
