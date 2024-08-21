@@ -23,6 +23,18 @@ class TablesViewModel extends ChangeNotifier {
 
   final List<TableModel> tables = [];
   TableModel? table;
+  TableModel? tableCopy;
+
+  selectNewtable(TableModel tableParam) {
+    tableCopy = table;
+    table = tableParam;
+    notifyListeners();
+  }
+
+  restartTable() {
+    table = tableCopy;
+    notifyListeners();
+  }
 
   backTablesView(BuildContext context) {
     Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));

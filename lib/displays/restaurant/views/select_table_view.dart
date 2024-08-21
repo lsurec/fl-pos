@@ -80,6 +80,16 @@ class SelectTableView extends StatelessWidget {
                             mesa: table,
                             onTap: () {
                               //TODO: validar si hay cunetas o no
+                              //Al terminar restaurar mesa
+
+                              final TablesViewModel tableVM =
+                                  Provider.of<TablesViewModel>(
+                                context,
+                                listen: false,
+                              );
+
+                              tableVM.selectNewtable(table);
+
                               Navigator.pushNamed(
                                 context,
                                 AppRoutes.selectAccount,
