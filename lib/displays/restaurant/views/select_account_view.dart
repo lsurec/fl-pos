@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -145,13 +146,7 @@ class _AccountCard extends StatelessWidget {
         onLongPress: screen == 3 ? null : () => vm.onLongPress(context, index),
         onTap: vm.isSelectedMode
             ? () => vm.selectedItem(context, index)
-            : () => screen == 1
-                ? orderVM.addTransactionToOrder(context, transaction!, index)
-                : screen == 2
-                    ? vm.navigateDetails(context, index)
-                    : () {
-                        //TODO: Seleccionar para traslado
-                      },
+            : () => vm.tapCard(context, screen, index, transaction),
         child: Stack(
           children: [
             Padding(

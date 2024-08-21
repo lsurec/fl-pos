@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -31,6 +32,31 @@ class SelectAccountViewModel extends ChangeNotifier {
       AppRoutes.order,
       arguments: index,
     );
+  }
+
+  tapCard(
+    BuildContext context,
+    int screen,
+    int index,
+    TraRestaurantModel? transaction,
+  ) {
+    final OrderViewModel orderVM =
+        Provider.of<OrderViewModel>(context, listen: false);
+
+    switch (screen) {
+      case 1: //Agreagr Transacion
+        orderVM.addTransactionToOrder(context, transaction!, index);
+        break;
+
+      case 2: //Detalles
+        navigateDetails(context, index);
+        break;
+
+      case 3: //traslado
+        Navigator.pushNamed(context, AppRoutes.transferSummary);
+        break;
+      default:
+    }
   }
 
   selectedItem(BuildContext context, int indexOrder) {
