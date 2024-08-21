@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/displays/restaurant/views/transfer_summary_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/select_account_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/select_location_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/select_table_view.dart';

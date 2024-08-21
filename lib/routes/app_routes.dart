@@ -63,6 +63,7 @@ class AppRoutes {
   static const selectTable = 'selectTable';
   static const selectLocation = 'selectLocation';
   static const selectAccount = 'selectAccount';
+  static const transferSummary = 'transferSummary';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -119,6 +120,7 @@ class AppRoutes {
     selectTable: (BuildContext context) => const SelectTableView(),
     selectLocation: (BuildContext context) => const SelectLocationView(),
     selectAccount: (BuildContext context) => const SelectAccountView(),
+    transferSummary: (BuildContext context) => const TransferSummaryView(),
   };
 
   //en caso de ruta incorrecta
