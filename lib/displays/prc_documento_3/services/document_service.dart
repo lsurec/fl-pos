@@ -438,10 +438,32 @@ class DocumentService {
       tipoDocumento: menuVM.documento!,
       detalles: detailsVM.traInternas,
       pagos: paymentVM.amounts,
+      tipoRef: docVM.valueParametro(58) ? docVM.referenciaSelect : null,
+      refFechaEntrega: docVM.valueParametro(381)
+          ? docVM.fechaRefIni.toIso8601String()
+          : null,
+      refFechaRecoger: docVM.valueParametro(382)
+          ? docVM.fechaRefFin.toIso8601String()
+          : null,
+      refFechaInicio: docVM.valueParametro(44)
+          ? docVM.fechaInicial.toIso8601String()
+          : null,
+      refFechaFin:
+          docVM.valueParametro(44) ? docVM.fechaFinal.toIso8601String() : null,
+      refContacto:
+          docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
+      refDescripcion:
+          docVM.valueParametro(383) ? docVM.refDescripcionParam383.text : null,
+      refDireccionEntrega:
+          docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
+      refObservacion:
+          docVM.valueParametro(384) ? docVM.refObservacionParam384.text : null,
     );
 
     //Guardar el documento en memoria del telefono
     Preferences.document = saveDocument.toJson();
+
+    print(Preferences.document);
   }
 
   //Obtener documento guardado en permanencia de datos
@@ -456,6 +478,7 @@ class DocumentService {
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
     final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
+    print(Preferences.document);
     //No hacer nada si no hay un documento guardado
     if (Preferences.document.isEmpty) return;
 

@@ -992,7 +992,7 @@ class DetailsViewModel extends ChangeNotifier {
 
   //Calcular totales
   void calculateTotales(BuildContext context) {
-    DocumentService.saveDocumentLocal(context);
+    //Borré la funcion que guarda el documento
 
     //Reiniciar valores
     subtotal = 0;

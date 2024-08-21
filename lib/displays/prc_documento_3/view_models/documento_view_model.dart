@@ -21,6 +21,12 @@ class DocumentoViewModel extends ChangeNotifier {
 
   late TabController tabController;
 
+  //Regresar a la pantalla anterior y limpiar
+  Future<bool> back(BuildContext context) async {
+    setValuesNewDoc(context);
+    return true;
+  }
+
   //nuevo documento
   Future<void> newDocument(BuildContext context) async {
     //mostrar dialogo de confirmacion
