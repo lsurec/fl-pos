@@ -64,6 +64,7 @@ class AppRoutes {
   static const permisions = 'permisions';
   static const selectTable = 'selectTable';
   static const selectLocation = 'selectLocation';
+  static const selectAccount = 'selectAccount';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -121,6 +122,7 @@ class AppRoutes {
     permisions: (BuildContext context) => const PermisionsView(),
     selectTable: (BuildContext context) => const SelectTableView(),
     selectLocation: (BuildContext context) => const SelectLocationView(),
+    selectAccount: (BuildContext context) => const SelectAccountView(),
   };
 
   //en caso de ruta incorrecta
