@@ -267,8 +267,11 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
 
     Navigator.pushNamed(
       context,
-      AppRoutes.addPerson,
-      arguments: transaction,
+      AppRoutes.selectAccount,
+      arguments: {
+        "screen": 1,
+        "transaction": transaction,
+      },
     );
 
     formValues["observacion"] = "";

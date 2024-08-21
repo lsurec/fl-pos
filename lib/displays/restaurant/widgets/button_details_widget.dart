@@ -53,7 +53,13 @@ class ButtonDetailsWidget extends StatelessWidget {
                       arguments: tablesVM.table!.orders!.first,
                     );
                   } else {
-                    Navigator.pushNamed(context, AppRoutes.accounts);
+                    Navigator.pushNamed(
+                      context,
+                      AppRoutes.selectAccount,
+                      arguments: {
+                        "screen": 2,
+                      },
+                    );
                   }
                 },
                 style: AppTheme.button(

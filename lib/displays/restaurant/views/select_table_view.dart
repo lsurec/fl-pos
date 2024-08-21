@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -75,7 +76,18 @@ class SelectTableView extends StatelessWidget {
                       itemCount: vm.tables.length,
                       itemBuilder: (BuildContext context, int index) {
                         TableModel table = vm.tables[index];
-                        return CardTableWidget(mesa: table, onTap: () {});
+                        return CardTableWidget(
+                            mesa: table,
+                            onTap: () {
+                              //TODO: validar si hay cunetas o no
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.selectAccount,
+                                arguments: {
+                                  "screen": 3,
+                                },
+                              );
+                            });
                       },
                     ),
                   ),

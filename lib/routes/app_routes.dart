@@ -59,8 +59,6 @@ class AppRoutes {
   static const homeRestaurant = 'homeRestaurant';
   static const garnish = 'garnish';
   static const order = 'order';
-  static const addPerson = 'addPerson';
-  static const accounts = 'accounts';
   static const permisions = 'permisions';
   static const selectTable = 'selectTable';
   static const selectLocation = 'selectLocation';
@@ -117,8 +115,6 @@ class AppRoutes {
     detailsRestaurant: (BuildContext context) => const DetailsRestaurantView(),
     homeRestaurant: (BuildContext context) => const HomeRestaurantView(),
     order: (BuildContext context) => const OrderView(),
-    addPerson: (BuildContext context) => const AddPersonView(),
-    accounts: (BuildContext context) => const AccountsView(),
     permisions: (BuildContext context) => const PermisionsView(),
     selectTable: (BuildContext context) => const SelectTableView(),
     selectLocation: (BuildContext context) => const SelectLocationView(),
