@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -131,32 +132,43 @@ class _Options extends StatelessWidget {
                 border: Border.all(color: AppTheme.primary),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Center(
-                child: Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'cancelar',
-                    ),
-                    style: const TextStyle(
-                      color: AppTheme.primary,
-                      fontSize: 17,
-                    )),
+              child: InkWell(
+                onTap: () {
+                  final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+                    context,
+                    listen: false,
+                  );
+
+                  tablesVM.restartTable();
+                  Navigator.popUntil(
+                      context, ModalRoute.withName(AppRoutes.order));
+                },
+                child: Center(
+                  child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'cancelar',
+                      ),
+                      style: const TextStyle(
+                        color: AppTheme.primary,
+                        fontSize: 17,
+                      )),
+                ),
               ),
             ),
           ),
           const SizedBox(width: 20),
           Expanded(
-            child: InkWell(
-              // onTap: () => vm.sendDocument(),
-              onTap: () {},
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppTheme.color(
-                    context,
-                    Styles.primary,
-                  ),
-                  borderRadius: BorderRadius.circular(10),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppTheme.color(
+                  context,
+                  Styles.primary,
                 ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: InkWell(
+                onTap: () {},
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(

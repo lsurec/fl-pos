@@ -44,6 +44,37 @@ class OrderViewModel extends ChangeNotifier {
   final List<OrderModel> orders = [];
   final List<int> selectedTra = [];
 
+  navigatePermisionView(
+    BuildContext context,
+    int indexOrder,
+  ) {
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
+    final LocationsViewModel locVM = Provider.of<LocationsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final TransferSummaryViewModel transerVM =
+        Provider.of<TransferSummaryViewModel>(
+      context,
+      listen: false,
+    );
+
+    transerVM.indexOrderOrigin = indexOrder;
+    transerVM.tableOrigin = tablesVM.table;
+    transerVM.locationOrigin = locVM.location;
+
+    Navigator.pushNamed(
+      context,
+      AppRoutes.permisions,
+      arguments: 45,
+    );
+  }
+
   Future<void> monitorPrint(
     BuildContext context,
     int indexOrder,

@@ -120,12 +120,8 @@ class OrderView extends StatelessWidget {
                         tooltip: "Eliminar", //TODO:Translate
                       ),
                       IconButton(
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          AppRoutes.permisions,
-                          arguments:
-                              45, //Tipo de accion para trasladar transacciones
-                        ),
+                        onPressed: () =>
+                            vm.navigatePermisionView(context, indexOrder),
                         icon: const Icon(Icons.drive_file_move_outline),
                         tooltip: "Trasladar", //TODO:Translate
                       ),
