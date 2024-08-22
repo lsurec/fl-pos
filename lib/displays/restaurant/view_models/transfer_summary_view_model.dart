@@ -9,4 +9,12 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
   int indexOrderOrigin = -1;
   int indexOrderDesr = -1;
+
+  setLocationDest(LocationModel location) {
+    locationDest = location;
+  }
+
+  setTableDest(TableModel table) {
+    tableDest = table;
+  }
 }

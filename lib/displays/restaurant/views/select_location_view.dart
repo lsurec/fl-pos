@@ -14,6 +14,8 @@ class SelectLocationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<LocationsViewModel>(context);
+    final TransferSummaryViewModel transferVM =
+        Provider.of<TransferSummaryViewModel>(context);
 
     return Stack(
       children: [
@@ -38,10 +40,11 @@ class SelectLocationView extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: vm.locations.length,
                       itemBuilder: (BuildContext context, int index) {
-                        LocationModel ubicacion = vm.locations[index];
+                        LocationModel location = vm.locations[index];
                         return CardLocationsWidget(
-                          ubicacion: ubicacion,
+                          ubicacion: location,
                           onTap: () {
+                            transferVM.setLocationDest(location);
                             Navigator.pushNamed(context, AppRoutes.selectTable);
                           },
                         );
