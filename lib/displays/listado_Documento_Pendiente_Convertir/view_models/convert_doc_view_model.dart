@@ -1,8 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -373,5 +375,83 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     //Detener proceso
     isLoading = false;
+  }
+
+  int tipoDocEdit = 0;
+  String serieDocEdit = "";
+  int empresaDocEdit = 0;
+
+  editarDocumento(
+    BuildContext context,
+    OriginDocModel originalDoc,
+  ) async {
+    isLoading = true;
+
+    //View models externos
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmPayment = Provider.of<PaymentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
+    vmFactura.editDoc = true;
+
+    // final String user = vmLogin.user;
+    final String token = vmLogin.token;
+
+    //Navegar a POS
+
+    //Tipo del documento
+    tipoDocEdit = originalDoc.tipoDocumento;
+    serieDocEdit = originalDoc.serieDocumento;
+    empresaDocEdit = originalDoc.empresa;
+
+    //instancia del servicio
+    PagoService pagoService = PagoService();
+
+    //Consumo del servicio
+    ApiResModel resPayments = await pagoService.getFormas(
+      tipoDocEdit, // doc,
+      serieDocEdit, // serie,
+      empresaDocEdit, // empresa,
+      token, // token,
+    );
+
+    //valid succes response
+    if (!resPayments.succes) {
+      //si algo salio mal mostrar alerta
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        resPayments,
+      );
+      return;
+    }
+
+    //agregar formas de pago encontradas
+    vmPayment.paymentList.addAll(resPayments.response);
+
+    if (vmPayment.paymentList.isEmpty) {
+      Navigator.pushNamed(context, AppRoutes.withoutPayment);
+      isLoading = false;
+
+      return;
+    }
+
+    Navigator.pushNamed(context, AppRoutes.withPayment);
+    //-----------------------------------
+    //Detener carga
+    isLoading = false;
+    return;
   }
 }

@@ -32,9 +32,15 @@ class _Tabs2ViewState extends State<Tabs2View>
   }
 
   loadData(BuildContext context) {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
     //cargar documento guardado en el dispositivo
     DocumentService documentService = DocumentService();
-    documentService.loadDocumentSave(context);
+
+    if (!vmFactura.editDoc) {
+      documentService.loadDocumentSave(context);
+    }
+
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
     vmConfirm.setIdDocumentoRef();
   }

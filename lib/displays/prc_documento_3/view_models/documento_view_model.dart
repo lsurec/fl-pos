@@ -15,6 +15,8 @@ class DocumentoViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  bool editDoc = false;
+
   set isLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -25,6 +27,13 @@ class DocumentoViewModel extends ChangeNotifier {
   //Regresar a la pantalla anterior y limpiar
   Future<bool> back(BuildContext context) async {
     setValuesNewDoc(context);
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+    //al momento de regresar de editar documento pasa a falso para que cuando vuelva
+    //al modulo del pos pueda recuperar el documento que tenia pendiente de confirmar
+    if (vmFactura.editDoc) {
+      vmFactura.editDoc = false;
+    }
+
     return true;
   }
 

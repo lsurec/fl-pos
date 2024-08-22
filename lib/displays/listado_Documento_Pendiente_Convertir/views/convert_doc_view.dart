@@ -39,19 +39,51 @@ class ConvertDocView extends StatelessWidget {
             ),
             // actions: const [_Actions()],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => vm.convertirDocumento(
-              context,
-              docOrigen,
-              docDestino,
-            ),
-            child: Icon(
-              Icons.check,
-              color: AppTheme.color(
-                context,
-                Styles.white,
+          floatingActionButton: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Positioned(
+                bottom: 70, // Ajusta esta posición según lo que necesites
+                right: 10,
+                child: FloatingActionButton(
+                  heroTag: 'button1', // Tag único para el primer botón
+                  onPressed: () => vm.convertirDocumento(
+                    context,
+                    docOrigen,
+                    docDestino,
+                  ),
+                  child: Icon(
+                    Icons.check,
+                    color: AppTheme.color(
+                      context,
+                      Styles.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                bottom: 10,
+                right: 10,
+                child: FloatingActionButton(
+                  heroTag: 'button2', // Tag único para el segundo botón
+                  onPressed: () {
+                    //editar
+
+                    vm.editarDocumento(
+                      context,
+                      docOrigen,
+                    );
+                  },
+                  child: Icon(
+                    Icons.edit,
+                    color: AppTheme.color(
+                      context,
+                      Styles.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           body: RefreshIndicator(
             onRefresh: () => vm.loadData(context, docOrigen),
