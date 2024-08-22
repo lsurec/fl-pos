@@ -125,12 +125,13 @@ class ConvertDocView extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: vm.detalles.length,
+                        itemCount: vm.detailsOrigin.length,
                         itemBuilder: (BuildContext context, int index) {
-                          OriginDetailInterModel detallle = vm.detalles[index];
+                          DetailOriginDocInterModel detallle =
+                              vm.detailsOrigin[index];
 
                           return _CardDetalle(
-                            detalle: detallle,
+                            documento: detallle,
                             index: index,
                           );
                         },
@@ -217,11 +218,11 @@ class _Actions extends StatelessWidget {
 
 class _CardDetalle extends StatelessWidget {
   const _CardDetalle({
-    required this.detalle,
+    required this.documento,
     required this.index,
   });
 
-  final OriginDetailInterModel detalle;
+  final DetailOriginDocInterModel documento;
   final int index;
 
   @override
@@ -265,7 +266,7 @@ class _CardDetalle extends StatelessWidget {
                     'cantidad',
                   ),
                 ),
-                initialValue: "${detalle.disponibleMod}",
+                initialValue: "${documento.detalle.disponible}",
                 onChanged: (value) => vm.textoInput = value,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
@@ -321,7 +322,7 @@ class _CardDetalle extends StatelessWidget {
         ),
         child: ListTile(
           leading: Checkbox(
-            value: detalle.checked,
+            value: documento.checked,
             onChanged: (value) => vm.selectTra(
               context,
               index,
@@ -338,7 +339,7 @@ class _CardDetalle extends StatelessWidget {
             children: [
               TextsWidget(
                 title: "Id: ",
-                text: detalle.id,
+                text: documento.detalle.id,
               ),
               const SizedBox(height: 5),
               TextsWidget(
@@ -346,7 +347,7 @@ class _CardDetalle extends StatelessWidget {
                   BlockTranslate.cotizacion,
                   'producto',
                 )}: ",
-                text: detalle.producto,
+                text: documento.detalle.productoDescripcion,
               ),
               const SizedBox(height: 5),
               TextsWidget(
@@ -354,7 +355,7 @@ class _CardDetalle extends StatelessWidget {
                   BlockTranslate.factura,
                   'cantidad',
                 )}: ",
-                text: "${detalle.cantidad}",
+                text: "${documento.detalle.cantidad}",
               ),
               const SizedBox(height: 5),
               TextsWidget(
@@ -362,7 +363,7 @@ class _CardDetalle extends StatelessWidget {
                   BlockTranslate.cotizacion,
                   'disponible',
                 )}: ",
-                text: "${detalle.disponible}",
+                text: "${documento.detalle.disponible}",
               ),
               const SizedBox(height: 5),
               TextsWidget(
@@ -370,7 +371,7 @@ class _CardDetalle extends StatelessWidget {
                   BlockTranslate.cotizacion,
                   'autorizar',
                 )}: ",
-                text: "${detalle.disponibleMod}",
+                text: "${documento.detalle.disponible}",
               ),
             ],
           ),

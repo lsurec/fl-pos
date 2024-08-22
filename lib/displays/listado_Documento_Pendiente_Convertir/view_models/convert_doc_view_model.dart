@@ -59,6 +59,8 @@ class ConvertDocViewModel extends ChangeNotifier {
 
   //Detalles del documeto origen
   final List<OriginDetailInterModel> detalles = [];
+  //Detalles dle docuemtno origen
+  List<DetailOriginDocInterModel> detailsOrigin = [];
 
   //Input para la cantidad que se autoriza
   String textoInput = "";
@@ -112,25 +114,38 @@ class ConvertDocViewModel extends ChangeNotifier {
     //Asiganr detalles encontrados
     List<OriginDetailModel> details = res.response;
 
+    detailsOrigin.clear();
+
     //Recorrer todos los detalles para crear una nueva lista
+    // Crear nuevos objetos para los detalles para poder seleccionarlos
     for (var element in details) {
-      //Detalles
-      detalles.add(
-        //Nuevo objeto con datos para el control interno
-        OriginDetailInterModel(
-          consecutivoInterno: element.consecutivoInterno,
-          disponible: element.disponible,
-          clase: element.clase,
-          marca: element.marca,
-          id: element.id,
-          producto: element.producto,
-          bodega: element.bodega,
-          cantidad: element.cantidad,
-          disponibleMod: element.disponible,
+      detailsOrigin.add(
+        DetailOriginDocInterModel(
           checked: false,
+          detalle: element,
+          disponibleMod: element.disponible,
         ),
       );
     }
+
+    // for (var element in details) {
+    //   //Detalles
+    //   detalles.add(
+    //     //Nuevo objeto con datos para el control interno
+    //     OriginDetailInterModel(
+    //       consecutivoInterno: element.consecutivoInterno,
+    //       disponible: element.disponible,
+    //       clase: element.clase,
+    //       marca: element.marca,
+    //       id: element.id,
+    //       producto: element.producto,
+    //       bodega: element.bodega,
+    //       cantidad: element.cantidad,
+    //       disponibleMod: element.disponible,
+    //       checked: false,
+    //     ),
+    //   );
+    // }
   }
 
   //seleccioanr una transaccion
