@@ -231,7 +231,7 @@ class _CardDetalle extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        if (vm.detalles[index].disponible == 0) {
+        if (vm.detailsOrigin[index].detalle.disponible == 0) {
           NotificationService.showSnackbar(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.notificacion,
