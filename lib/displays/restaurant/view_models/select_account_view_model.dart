@@ -15,6 +15,35 @@ class SelectAccountViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  navigatePermisionView(
+    BuildContext context,
+  ) {
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
+    final LocationsViewModel locVM = Provider.of<LocationsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final TransferSummaryViewModel transerVM =
+        Provider.of<TransferSummaryViewModel>(
+      context,
+      listen: false,
+    );
+
+    transerVM.tableOrigin = tablesVM.table;
+    transerVM.locationOrigin = locVM.location;
+
+    Navigator.pushNamed(
+      context,
+      AppRoutes.permisions,
+      arguments: 32, // 45 trasladar transaccion
+    );
+  }
+
   navigateDetails(BuildContext context, int index) {
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(
       context,

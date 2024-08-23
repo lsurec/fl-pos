@@ -27,7 +27,7 @@ class PermisionsView extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
                       tipoAccion == 32
-                          ? "Trasladar Mesa"
+                          ? "Trasladar Mesa (Cuenta)"
                           : "Trasladar Transaccion",
                       style: const TextStyle(
                         fontSize: 30,

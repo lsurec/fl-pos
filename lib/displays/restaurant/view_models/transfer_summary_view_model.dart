@@ -1,15 +1,29 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 class TransferSummaryViewModel extends ChangeNotifier {
+  //manejar flujo del procesp
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   LocationModel? locationOrigin;
   LocationModel? locationDest;
   TableModel? tableOrigin;
@@ -17,6 +31,31 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
   int indexOrderOrigin = -1;
   int indexOrderDest = -1;
+
+  cancelTransfer(BuildContext context) {
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
+    tablesVM.restartTable();
+
+    for (var traInter in orderVM.orders[indexOrderOrigin].transacciones) {
+      traInter.selected = false;
+    }
+
+    orderVM.isSelectedMode = false;
+
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName(AppRoutes.order),
+    );
+  }
 
   setLocationDest(LocationModel location) {
     locationDest = location;
@@ -26,7 +65,45 @@ class TransferSummaryViewModel extends ChangeNotifier {
     tableDest = table;
   }
 
-  moveTransaction(BuildContext context) {
+  finishProcess(BuildContext context) {
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
+    for (var traInter in orderVM.orders[indexOrderOrigin].transacciones) {
+      traInter.selected = false;
+    }
+
+    for (var traInter in orderVM.orders[indexOrderDest].transacciones) {
+      traInter.selected = false;
+    }
+
+    orderVM.isSelectedMode = false;
+
+    tablesVM.restartTable();
+
+    NotificationService.showSnackbar(
+        "Trnsacciones trsaladadas correctamente."); //TODO:Translate
+
+    //si en dcouemnto rorigen hay transacciones regresar,
+    if (orderVM.orders[indexOrderOrigin].transacciones.isNotEmpty) {
+      Navigator.popUntil(context, ModalRoute.withName(AppRoutes.order));
+      return;
+    }
+    //si no hay transacciones regresar a la pantalla de seleccion de orden
+    //si solo hay una orden regresar a mesa
+
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
+    return;
+  }
+
+  Future<void> moveTransaction(BuildContext context) async {
     //buscar taransacciones que van a moverse
     //Buscar trasacciones totales de la orden en la que se estan moviendo
     //si hay una trabnsacion que se va a amover esta comandada crear nuevo dumcumento
@@ -42,11 +119,132 @@ class TransferSummaryViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
     //Recorrer las transacciones
+    //Si los cambios son solo locales
+    int comandadas = 0;
+
+    for (var element in orderVM.orders[indexOrderOrigin].transacciones) {
+      if (element.selected && element.processed) {
+        comandadas++;
+      }
+    }
 
     addTraToDoc(context, orderVM.orders[indexOrderOrigin].transacciones);
 
+    if (comandadas == 0) {
+      finishProcess(context);
+    }
+
     //Generar documento estructura para origen y destino
+    final DocEstructuraModel docOrigin =
+        getDocumentoEstructura(context, indexOrderOrigin);
+    final DocEstructuraModel docDestino =
+        getDocumentoEstructura(context, indexOrderDest);
+
+    //origen, destino
+    int consOrigen = orderVM.orders[indexOrderOrigin].consecutivo;
+    int consDest = orderVM.orders[indexOrderDest].consecutivo;
+
+    isLoading = true;
+
+    ApiResModel resOrigen =
+        await updateEstructura(context, docOrigin, consOrigen);
+
+    ApiResModel resDest;
+    if (consDest > 0) {
+      resDest = await updateEstructura(context, docDestino, consDest);
+    } else {
+      resDest = await createEstructura(context, docDestino);
+
+      if (resDest.succes) {
+        orderVM.orders[indexOrderDest].consecutivo = resDest.response["data"];
+      }
+    }
+
+    if (!resDest.succes || !resOrigen.succes) {
+      if (!resDest.succes && !resOrigen.succes) {
+        NotificationService.showSnackbar(
+            "El documento origen y destino no se actualizó.");
+        return;
+      }
+
+      if (!resDest.succes) {
+        NotificationService.showSnackbar(
+            "El documento  destino no se actualizó.");
+        return;
+      }
+
+      NotificationService.showSnackbar("El documento origen no se actualizó.");
+      return;
+    }
+
+    finishProcess(context);
+  }
+
+  Future<ApiResModel> createEstructura(
+    BuildContext context,
+    DocEstructuraModel doc,
+  ) async {
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.user;
+    String tokenUser = loginVM.token;
+
+    //objeto enviar documento
+    PostDocumentModel document = PostDocumentModel(
+      estructura: doc.toJson(),
+      user: user,
+      estado: 1, //1 sin mihrar 11 listo parta migrar
+    );
+
+    //instancia del servicio
+    DocumentService documentService = DocumentService();
+
+    //consumo del api
+    ApiResModel res = await documentService.postDocument(document, tokenUser);
+
+    return res;
+  }
+
+  Future<ApiResModel> updateEstructura(
+    BuildContext context,
+    DocEstructuraModel doc,
+    int consecutivo,
+  ) async {
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    //usuario token y cadena de conexion
+    String user = loginVM.user;
+    String tokenUser = loginVM.token;
+
+    final PostDocumentModel estructuraupdate = PostDocumentModel(
+      estructura: doc.toJson(),
+      user: user,
+      estado: 1, //1 pemd 11 loisto para migrar
+    );
+
+    //Actualizar
+    final DocumentService documentService = DocumentService();
+
+    final ApiResModel res = await documentService.updateDocument(
+      estructuraupdate,
+      tokenUser,
+      consecutivo,
+    );
+
+    return res;
   }
 
   getDocumentoEstructura(
@@ -80,7 +278,6 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
     //usuario token y cadena de conexion
     String user = loginVM.user;
-    String tokenUser = loginVM.token;
     int tipoDocumento = menuVM.documento!;
     String serieDocumento = homeResVM.serieSelect!.serieDocumento!;
     int empresa = localVM.selectedEmpresa!.empresa;
@@ -104,7 +301,7 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
     //Buscar transacciones que van a comandarse
     for (var tra in orderVM.orders[indexOrder].transacciones) {
-      if (tra.selected) {
+      if (tra.processed) {
         int padre = consecutivo;
 
         //guarniciones
@@ -266,8 +463,4 @@ class TransferSummaryViewModel extends ChangeNotifier {
       }
     }
   }
-
-  updateEstructura() {}
-
-  createEstructura() {}
 }

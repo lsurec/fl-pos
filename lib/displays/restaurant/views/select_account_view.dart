@@ -56,7 +56,7 @@ class SelectAccountView extends StatelessWidget {
                       tooltip: "Eliminar", //TODO:Translate
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => vm.navigatePermisionView(context),
                       icon: const Icon(Icons.drive_file_move_outline),
                       tooltip: "Trasladar", //TODO:Translate
                     ),

@@ -21,104 +21,118 @@ class TransferSummaryView extends StatelessWidget {
 
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Resumen de Traslado',
-          style: AppTheme.style(
-            context,
-            Styles.title,
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'Resumen de Traslado',
+              style: AppTheme.style(
+                context,
+                Styles.title,
+              ),
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Origen",
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      const Divider(),
+                      const SizedBox(height: 5),
+                      TextsWidget(
+                        title: "Ubicacion: ",
+                        text: vm.locationOrigin!.descripcion,
+                      ),
+                      const SizedBox(height: 5),
+                      TextsWidget(
+                        title: "Mesa: ",
+                        text: vm.tableOrigin!.descripcion,
+                      ),
+                      const SizedBox(height: 5),
+                      TextsWidget(
+                        title: "Cuenta: ",
+                        text: orderVM.orders[vm.indexOrderOrigin].nombre,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  color: const Color.fromARGB(255, 227, 226, 226),
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Destino",
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      const Divider(),
+                      const SizedBox(height: 5),
+                      TextsWidget(
+                        title: "Ubicacion: ",
+                        text: vm.locationDest!.descripcion,
+                      ),
+                      const SizedBox(height: 5),
+                      TextsWidget(
+                        title: "Mesa: ",
+                        text: vm.tableDest!.descripcion,
+                      ),
+                      const SizedBox(height: 5),
+                      TextsWidget(
+                        title: "Cuenta: ",
+                        text: orderVM.orders[vm.indexOrderDest].nombre,
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
+                  child: _Options(),
+                )
+              ],
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Origen",
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: "Ubicacion: ",
-                    text: vm.locationOrigin!.descripcion,
-                  ),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: "Mesa: ",
-                    text: vm.tableOrigin!.descripcion,
-                  ),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: "Cuenta: ",
-                    text: orderVM.orders[vm.indexOrderOrigin].nombre,
-                  ),
-                ],
-              ),
+        if (vm.isLoading)
+          ModalBarrier(
+            dismissible: false,
+            // color: Colors.black.withOpacity(0.3),
+            color: AppTheme.color(
+              context,
+              Styles.loading,
             ),
-            Container(
-              color: const Color.fromARGB(255, 227, 226, 226),
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Destino",
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: "Ubicacion: ",
-                    text: vm.locationDest!.descripcion,
-                  ),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: "Mesa: ",
-                    text: vm.tableDest!.descripcion,
-                  ),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: "Cuenta: ",
-                    text: orderVM.orders[vm.indexOrderDest].nombre,
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: _Options(),
-            )
-          ],
-        ),
-      ),
+          ),
+        if (vm.isLoading) const LoadWidget(),
+      ],
     );
   }
 }
@@ -127,6 +141,8 @@ class _Options extends StatelessWidget {
   const _Options();
   @override
   Widget build(BuildContext context) {
+    final TransferSummaryViewModel vm =
+        Provider.of<TransferSummaryViewModel>(context);
     return SizedBox(
       height: 50,
       child: Row(
@@ -138,18 +154,7 @@ class _Options extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: InkWell(
-                onTap: () {
-                  final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
-                    context,
-                    listen: false,
-                  );
-
-                  tablesVM.restartTable();
-                  Navigator.popUntil(
-                    context,
-                    ModalRoute.withName(AppRoutes.order),
-                  );
-                },
+                onTap: () => vm.cancelTransfer(context),
                 child: Center(
                   child: Text(
                       AppLocalizations.of(context)!.translate(
@@ -175,7 +180,7 @@ class _Options extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: () => vm.moveTransaction(context),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(

@@ -71,7 +71,7 @@ class OrderViewModel extends ChangeNotifier {
     Navigator.pushNamed(
       context,
       AppRoutes.permisions,
-      arguments: 45,
+      arguments: 45, // 32 trasladar mesa
     );
   }
 
