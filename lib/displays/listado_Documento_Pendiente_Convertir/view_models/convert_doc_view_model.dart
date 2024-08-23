@@ -513,6 +513,11 @@ class ConvertDocViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final detalleVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
     final loginVM = Provider.of<LoginViewModel>(
       context,
       listen: false,
@@ -530,7 +535,7 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
-    // int estacion = localVM.selectedEstacion!.estacionTrabajo;
+    int estacion = localVM.selectedEstacion!.estacionTrabajo;
     String user = loginVM.user;
     String token = loginVM.token;
 
@@ -677,6 +682,245 @@ class ConvertDocViewModel extends ChangeNotifier {
     confimlVM.observacion.text = observacion;
 
 //___________________________________
+
+    for (var tra in detailsOrigin) {
+      //instacia del servicio
+      ProductService productService = ProductService();
+
+      ApiResModel resProduct = await productService.getProduct(
+        tra.detalle.id,
+        token,
+      );
+
+      if (!resProduct.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          resProduct,
+        );
+
+        return;
+      }
+
+      List<ProductModel> productSearch = resProduct.response;
+
+      int iProd = -1;
+
+      for (int i = 0; i < productSearch.length; i++) {
+        ProductModel element = productSearch[i];
+
+        if (element.productoId == tra.detalle.id) {
+          iProd = i;
+          break;
+        }
+      } //fin for
+
+      if (iProd == -1) {
+        isLoading = false;
+
+        resProduct.response =
+            "Error al cargar las transacciones, no se encontró un producto";
+
+        NotificationService.showErrorView(
+          context,
+          resProduct,
+        );
+
+        return;
+      }
+
+      ProductModel prod = productSearch[iProd];
+
+      //buscar bodegas del producto
+      ApiResModel resBodega = await productService.getBodegaProducto(
+        user,
+        empresa,
+        estacion,
+        prod.producto,
+        prod.unidadMedida,
+        token,
+      );
+
+      if (!resBodega.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          resBodega,
+        );
+
+        return;
+      }
+
+      List<BodegaProductoModel> bodegas = resBodega.response;
+
+      int existBodega = -1;
+
+      //Search bodega
+      for (int i = 0; i < bodegas.length; i++) {
+        BodegaProductoModel element = bodegas[i];
+        if (element.bodega == tra.detalle.bodega) {
+          existBodega = i;
+          break;
+        }
+      }
+
+      BodegaProductoModel bodega;
+
+      if (existBodega == -1) {
+        //No hay bodegas
+        bodega = BodegaProductoModel(
+          bodega: tra.detalle.bodega,
+          existencia: 0,
+          nombre: tra.detalle.bodegaDescripcion,
+          poseeComponente: false,
+        );
+      } else {
+        //Asignar la bodega
+        bodega = bodegas[existBodega];
+      }
+
+      //buscar precios
+      ApiResModel resPrecio = await productService.getPrecios(
+        bodega.bodega,
+        prod.producto,
+        prod.unidadMedida,
+        user,
+        token,
+        vmDocumento.clienteSelect?.cuentaCorrentista ?? 0,
+        vmDocumento.clienteSelect?.cuentaCta ?? "0",
+      );
+
+      if (!resPrecio.succes) {
+        isLoading = false;
+
+        NotificationService.showErrorView(
+          context,
+          resPrecio,
+        );
+
+        return;
+      }
+
+      List<PrecioModel> precios = resPrecio.response;
+
+      int existPrecio = -1;
+
+      for (int i = 0; i < precios.length; i++) {
+        PrecioModel element = precios[i];
+        if (element.tipoPrecio == tra.detalle.tipoPrecio) {
+          existPrecio = i;
+          break;
+        }
+      }
+
+      UnitarioModel precioSelect;
+
+      if (existPrecio == -1) {
+        //Seacrh factor de conversion
+
+        precioSelect = UnitarioModel(
+          descripcion: "Precio",
+          id: tra.detalle.tipoPrecio,
+          moneda: 1,
+          orden: 1,
+          precio: true,
+          precioU: tra.detalle.disponible > 0
+              ? 0
+              : tra.detalle.monto / tra.detalle.disponible,
+        );
+      } else {
+        precioSelect = UnitarioModel(
+          descripcion: precios[existPrecio].desTipoPrecio,
+          id: precios[existPrecio].tipoPrecio,
+          moneda: precios[existPrecio].moneda,
+          orden: precios[existPrecio].precioOrden,
+          precio: true,
+          precioU: precios[existPrecio].precioUnidad,
+        );
+      }
+
+      double precioDias = 0;
+      int cantidadDias = 0;
+
+      if (vmDocumento.valueParametro(351)) {
+        ApiResModel resFormulaPrecio = await productService.getFormulaPrecioU(
+          token,
+          vmDocumento.fechaInicial,
+          vmDocumento.fechaFinal,
+          precioSelect.precioU.toString(),
+        );
+
+        if (!resFormulaPrecio.succes) {
+          //Traducir
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'noCalculoDias',
+            ),
+          );
+
+          NotificationService.showErrorView(
+            context,
+            resFormulaPrecio,
+          );
+
+          return;
+        }
+
+        List<PrecioDiaModel> calculoDias = resFormulaPrecio.response;
+
+        if (calculoDias.isEmpty) {
+          resFormulaPrecio.response =
+              "No se pudo obtener los resultados al hacer el calculo de precio por dias, verifica el procedimeinto.";
+
+          //Traducir
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'noCalculoDias',
+            ),
+          );
+
+          NotificationService.showErrorView(
+            context,
+            resFormulaPrecio,
+          );
+
+          return;
+        }
+
+        precioDias = calculoDias[0].montoCalculado;
+        cantidadDias = calculoDias[0].cantidadDia;
+      }
+
+      //Agregar las transacciones
+
+      detalleVM.traInternas.add(
+        //Agregar montos por dia
+
+        TraInternaModel(
+          consecutivo: tra.detalle.transaccionConsecutivoInterno,
+          estadoTra: 0,
+          precioCantidad: precioSelect.precioU * tra.detalle.disponible,
+          precioDia: precioDias,
+          isChecked: false,
+          bodega: bodega,
+          producto: prod,
+          precio: precioSelect,
+          cantidad: tra.detalle.disponible.toInt(),
+          total: tra.detalle.monto,
+          cargo: 0,
+          cantidadDias: cantidadDias,
+          descuento: 0,
+          operaciones: [],
+        ),
+      );
+    } //Fin For
+
+    //limpiar transacciones pendientes
+    detalleVM.transaccionesPorEliminar.clear();
 
     isLoading = false;
   }

@@ -31,6 +31,8 @@ class DetailsViewModel extends ChangeNotifier {
   //Transacciones del docummento
   final List<TraInternaModel> traInternas = [];
 
+  final List<TraInternaModel> transaccionesPorEliminar = [];
+
   //Contorlador input busqueda
   final TextEditingController searchController = TextEditingController();
 
