@@ -223,11 +223,6 @@ class TransferSummaryViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
-      context,
-      listen: false,
-    );
-
     //Recorrer las transacciones
     //Si los cambios son solo locales
     int comandadas = 0;
