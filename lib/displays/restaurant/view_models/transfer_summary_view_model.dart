@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
@@ -126,6 +127,78 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
     Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
     return;
+  }
+
+  Future<void> moveTable(BuildContext context) async {
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
+    final SelectAccountViewModel selectAccountVM =
+        Provider.of<SelectAccountViewModel>(
+      context,
+      listen: false,
+    );
+
+    //TODO:Espicidicar ordenes que no se pudieron actualizar
+    int error = 0;
+
+    isLoading = true;
+
+    for (var i = 0; i < orderVM.orders.length; i++) {
+      final OrderModel order = orderVM.orders[i];
+
+      if (order.selected) {
+        order.mesa = tableDest!;
+        order.ubicacion = locationDest!;
+
+        int contador = 0;
+
+        for (var tra in order.transacciones) {
+          if (tra.processed) {
+            contador++;
+          }
+        }
+
+        if (contador > 0) {
+          //Actualizar documento
+          final doc = await getDocumentoEstructura(context, i);
+
+          final ApiResModel res = await updateEstructura(
+            context,
+            doc,
+            order.consecutivo,
+          );
+
+          if (!res.succes) {
+            error++;
+          }
+        }
+
+        order.selected = false;
+      }
+    }
+
+    isLoading = false;
+
+    tablesVM.restartTable();
+    tablesVM.updateOrdersTable(context);
+    selectAccountVM.isSelectedMode = false;
+
+    if (error > 0) {
+      NotificationService.showSnackbar(
+          "Algunas cuentas no se pudieron tranferir en el servidor.");
+    } else {
+      NotificationService.showSnackbar("Cuentas tranferidas con éxito");
+    }
+
+    Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
   }
 
   Future<void> moveTransaction(BuildContext context) async {
