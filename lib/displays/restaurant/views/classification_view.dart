@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/button_details_widget.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/classification_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
@@ -17,6 +18,8 @@ class ClassificationView extends StatelessWidget {
     final vmLoc = Provider.of<LocationsViewModel>(context);
     final vmTables = Provider.of<TablesViewModel>(context);
     final vm = Provider.of<ClassificationViewModel>(context);
+    final SelectAccountViewModel selectAccountVM =
+        Provider.of<SelectAccountViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vm.backPage(context),
@@ -45,7 +48,8 @@ class ClassificationView extends StatelessWidget {
                   // color: AppTheme.backroundColor,
                   elevation: 2,
                   // on selected we show the dialog box
-                  onSelected: (value) => {},
+                  onSelected: (value) =>
+                      selectAccountVM.navigatePermisionView(context),
                 )
               ],
             ),

@@ -146,6 +146,12 @@ class TransferSummaryViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    if (!selectAccountVM.isSelectedMode) {
+      for (var i = 0; i < tableOrigin!.orders!.length; i++) {
+        orderVM.orders[tableOrigin!.orders![i]].selected = true;
+      }
+    }
+
     //TODO:Espicidicar ordenes que no se pudieron actualizar
     int error = 0;
 
