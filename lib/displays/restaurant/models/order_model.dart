@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/models/mo
 class OrderModel {
   OrderModel({
     required this.consecutivo,
+    required this.consecutivoRef,
     required this.mesero,
     required this.nombre,
     required this.ubicacion,
@@ -16,6 +17,7 @@ class OrderModel {
 
   // CorrentistaModel mesero;
   int consecutivo;
+  int consecutivoRef;
   bool selected;
   AccountPinModel mesero;
   String nombre;

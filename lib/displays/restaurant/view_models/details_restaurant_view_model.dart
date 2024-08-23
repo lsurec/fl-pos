@@ -236,6 +236,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       vmOrders.addFirst(
         context,
         OrderModel(
+          consecutivoRef: 0,
           consecutivo: 0,
           selected: false,
           mesero: pinVM.waitress!,

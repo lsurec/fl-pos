@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/transfer_summary_view_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -14,7 +16,10 @@ class TransferSummaryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Datos simulados para el origen y el destino
-    final String originLocation = "Balcón";
+    final TransferSummaryViewModel vm =
+        Provider.of<TransferSummaryViewModel>(context);
+
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,17 +55,17 @@ class TransferSummaryView extends StatelessWidget {
                   const SizedBox(height: 5),
                   TextsWidget(
                     title: "Ubicacion: ",
-                    text: originLocation,
+                    text: vm.locationOrigin!.descripcion,
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
                     title: "Mesa: ",
-                    text: originLocation,
+                    text: vm.tableOrigin!.descripcion,
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
                     title: "Cuenta: ",
-                    text: originLocation,
+                    text: orderVM.orders[vm.indexOrderOrigin].nombre,
                   ),
                 ],
               ),
@@ -89,17 +94,17 @@ class TransferSummaryView extends StatelessWidget {
                   const SizedBox(height: 5),
                   TextsWidget(
                     title: "Ubicacion: ",
-                    text: originLocation,
+                    text: vm.locationDest!.descripcion,
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
                     title: "Mesa: ",
-                    text: originLocation,
+                    text: vm.tableDest!.descripcion,
                   ),
                   const SizedBox(height: 5),
                   TextsWidget(
                     title: "Cuenta: ",
-                    text: originLocation,
+                    text: orderVM.orders[vm.indexOrderDest].nombre,
                   ),
                 ],
               ),
@@ -141,7 +146,9 @@ class _Options extends StatelessWidget {
 
                   tablesVM.restartTable();
                   Navigator.popUntil(
-                      context, ModalRoute.withName(AppRoutes.order));
+                    context,
+                    ModalRoute.withName(AppRoutes.order),
+                  );
                 },
                 child: Center(
                   child: Text(

@@ -53,6 +53,26 @@ class SelectAccountViewModel extends ChangeNotifier {
         break;
 
       case 3: //traslado
+
+        final TransferSummaryViewModel transferVM =
+            Provider.of<TransferSummaryViewModel>(
+          context,
+          listen: false,
+        );
+
+        if (transferVM.tableOrigin!.elementoAsignado ==
+                transferVM.tableDest!.elementoAsignado &&
+            transferVM.locationOrigin!.elementoAsignado ==
+                transferVM.locationDest!.elementoAsignado &&
+            transferVM.indexOrderOrigin == index) {
+          //TODO: Translate
+          NotificationService.showSnackbar(
+              "La transaccion ya existe en esta cuenta");
+          return;
+        }
+
+        transferVM.indexOrderDest = index;
+
         Navigator.pushNamed(context, AppRoutes.transferSummary);
         break;
       default:

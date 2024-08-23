@@ -113,7 +113,13 @@ class OrderViewModel extends ChangeNotifier {
     // Generar dos números aleatorios de 7 dígitos cada uno
     var random = Random();
 
-    int firstPart = random.nextInt(10000000);
+    int firstPart = 0;
+
+    if (orders[indexOrder].consecutivoRef != 0) {
+      firstPart = orders[indexOrder].consecutivoRef;
+    } else {
+      firstPart = random.nextInt(10000000);
+    }
 
     int consecutivo = 1;
 
