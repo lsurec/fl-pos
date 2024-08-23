@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/view_models/transfer_summary_view_model.dart';
-import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
@@ -20,6 +17,7 @@ class TransferSummaryView extends StatelessWidget {
         Provider.of<TransferSummaryViewModel>(context);
 
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
+    final int tipoAccion = ModalRoute.of(context)!.settings.arguments as int;
 
     return Stack(
       children: [
@@ -65,10 +63,11 @@ class TransferSummaryView extends StatelessWidget {
                         text: vm.tableOrigin!.descripcion,
                       ),
                       const SizedBox(height: 5),
-                      TextsWidget(
-                        title: "Cuenta: ",
-                        text: orderVM.orders[vm.indexOrderOrigin].nombre,
-                      ),
+                      if (tipoAccion == 45)
+                        TextsWidget(
+                          title: "Cuenta: ",
+                          text: orderVM.orders[vm.indexOrderOrigin].nombre,
+                        ),
                     ],
                   ),
                 ),
@@ -104,19 +103,20 @@ class TransferSummaryView extends StatelessWidget {
                         text: vm.tableDest!.descripcion,
                       ),
                       const SizedBox(height: 5),
-                      TextsWidget(
-                        title: "Cuenta: ",
-                        text: orderVM.orders[vm.indexOrderDest].nombre,
-                      ),
+                      if (tipoAccion == 45)
+                        TextsWidget(
+                          title: "Cuenta: ",
+                          text: orderVM.orders[vm.indexOrderDest].nombre,
+                        ),
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
+                Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 10,
                   ),
-                  child: _Options(),
+                  child: _Options(tipoAccion: tipoAccion),
                 )
               ],
             ),
@@ -138,7 +138,10 @@ class TransferSummaryView extends StatelessWidget {
 }
 
 class _Options extends StatelessWidget {
-  const _Options();
+  final int tipoAccion;
+
+  const _Options({super.key, required this.tipoAccion});
+
   @override
   Widget build(BuildContext context) {
     final TransferSummaryViewModel vm =
@@ -154,7 +157,8 @@ class _Options extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: InkWell(
-                onTap: () => vm.cancelTransfer(context),
+                onTap:
+                    tipoAccion == 45 ? () => vm.cancelTransfer(context) : null,
                 child: Center(
                   child: Text(
                       AppLocalizations.of(context)!.translate(
@@ -180,7 +184,8 @@ class _Options extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: InkWell(
-                onTap: () => vm.moveTransaction(context),
+                onTap:
+                    tipoAccion == 45 ? () => vm.moveTransaction(context) : null,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(

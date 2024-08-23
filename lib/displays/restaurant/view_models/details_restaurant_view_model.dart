@@ -272,6 +272,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       arguments: {
         "screen": 1,
         "transaction": transaction,
+        "action": 0,
       },
     );
 

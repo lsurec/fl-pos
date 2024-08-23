@@ -68,6 +68,7 @@ class SelectAccountViewModel extends ChangeNotifier {
     int screen,
     int index,
     TraRestaurantModel? transaction,
+    int tipoAccion,
   ) {
     final OrderViewModel orderVM =
         Provider.of<OrderViewModel>(context, listen: false);
@@ -102,7 +103,11 @@ class SelectAccountViewModel extends ChangeNotifier {
 
         transferVM.indexOrderDest = index;
 
-        Navigator.pushNamed(context, AppRoutes.transferSummary);
+        Navigator.pushNamed(
+          context,
+          AppRoutes.transferSummary,
+          arguments: tipoAccion,
+        );
         break;
       default:
     }

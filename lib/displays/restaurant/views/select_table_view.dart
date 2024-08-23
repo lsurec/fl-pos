@@ -3,7 +3,6 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/models.d
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -13,6 +12,8 @@ class SelectTableView extends StatelessWidget {
   const SelectTableView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final int tipoAccion = ModalRoute.of(context)!.settings.arguments as int;
+
     final vm = Provider.of<TablesViewModel>(context);
     final vmLoc = Provider.of<LocationsViewModel>(context);
 
@@ -33,43 +34,14 @@ class SelectTableView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 60,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () => Navigator.pop(context),
-                              //TODO:Verificar estilos
-                              child: const Text(
-                                "Ubicaciones/", //TODO:Translate
-                                //TODO;Styles
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              vmLoc.location!.descripcion,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      RegisterCountWidget(count: vm.tables.length),
-                    ],
+                Text(
+                  "Nueva Mesa",
+                  style: AppTheme.style(
+                    context,
+                    Styles.title,
                   ),
                 ),
+                RegisterCountWidget(count: vm.tables.length),
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () => vm.loadData(context),
@@ -80,7 +52,6 @@ class SelectTableView extends StatelessWidget {
                         return CardTableWidget(
                             mesa: table,
                             onTap: () {
-                              //TODO: validar si hay cunetas o no
                               //Al terminar restaurar mesa
 
                               final TablesViewModel tableVM =
@@ -99,13 +70,25 @@ class SelectTableView extends StatelessWidget {
 
                               transferVM.setTableDest(table);
 
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.selectAccount,
-                                arguments: {
-                                  "screen": 3,
-                                },
-                              );
+                              if (tipoAccion == 45) {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.selectAccount,
+                                  arguments: {
+                                    "screen": 3,
+                                    "action": tipoAccion,
+                                  },
+                                );
+                                return;
+                              }
+
+                              //TODO:validar que ubicacion y mesa no sean la misma
+
+                              if (tipoAccion == 32) {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.transferSummary,
+                                    arguments: tipoAccion);
+                              }
                             });
                       },
                     ),

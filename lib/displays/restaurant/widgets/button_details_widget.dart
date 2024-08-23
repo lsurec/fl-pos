@@ -58,6 +58,7 @@ class ButtonDetailsWidget extends StatelessWidget {
                       AppRoutes.selectAccount,
                       arguments: {
                         "screen": 2,
+                        "action": 0,
                       },
                     );
                   }

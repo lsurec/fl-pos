@@ -13,6 +13,8 @@ class SelectLocationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int tipoAccion = ModalRoute.of(context)!.settings.arguments as int;
+
     final vm = Provider.of<LocationsViewModel>(context);
     final TransferSummaryViewModel transferVM =
         Provider.of<TransferSummaryViewModel>(context);
@@ -45,7 +47,11 @@ class SelectLocationView extends StatelessWidget {
                           ubicacion: location,
                           onTap: () {
                             transferVM.setLocationDest(location);
-                            Navigator.pushNamed(context, AppRoutes.selectTable);
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.selectTable,
+                              arguments: tipoAccion,
+                            );
                           },
                         );
                       },

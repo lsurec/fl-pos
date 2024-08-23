@@ -106,7 +106,8 @@ class PermisionsViewModel extends ChangeNotifier {
       }
 
       //Navegar a select ubicacion
-      Navigator.pushNamed(context, AppRoutes.selectLocation);
+      Navigator.pushNamed(context, AppRoutes.selectLocation,
+          arguments: tipoAccion);
 
       isLoading = false;
     } else {

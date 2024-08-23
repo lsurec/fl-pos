@@ -20,6 +20,7 @@ class SelectAccountView extends StatelessWidget {
 
     //1 agreagr transaccion, 2 detalles, 3 traslados
     final int screen = data["screen"];
+    final int tipoAccion = data["action"];
 
     TraRestaurantModel? transaction;
 
@@ -88,6 +89,7 @@ class SelectAccountView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       if (index < tablesVM.table!.orders!.length) {
                         return _AccountCard(
+                          tipoAccion: tipoAccion,
                           screen: screen,
                           index: tablesVM.table!.orders![index],
                           transaction: transaction,
@@ -110,11 +112,12 @@ class _AccountCard extends StatelessWidget {
     required this.index,
     this.transaction,
     required this.screen,
+    required this.tipoAccion,
   });
 
   //1 agreagr transaccion, 2 detalles, 3 traslados
   final int screen;
-
+  final int tipoAccion;
   final int index;
   final TraRestaurantModel? transaction;
 
@@ -146,7 +149,13 @@ class _AccountCard extends StatelessWidget {
         onLongPress: screen == 3 ? null : () => vm.onLongPress(context, index),
         onTap: vm.isSelectedMode
             ? () => vm.selectedItem(context, index)
-            : () => vm.tapCard(context, screen, index, transaction),
+            : () => vm.tapCard(
+                  context,
+                  screen,
+                  index,
+                  transaction,
+                  tipoAccion,
+                ),
         child: Stack(
           children: [
             Padding(
