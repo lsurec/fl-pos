@@ -157,8 +157,9 @@ class _Options extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: InkWell(
-                onTap:
-                    tipoAccion == 45 ? () => vm.cancelTransfer(context) : null,
+                onTap: tipoAccion == 45
+                    ? () => vm.cancelTransfer(context)
+                    : () => vm.cancelAccount(context),
                 child: Center(
                   child: Text(
                       AppLocalizations.of(context)!.translate(

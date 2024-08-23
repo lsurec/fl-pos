@@ -96,6 +96,8 @@ class PermisionsViewModel extends ChangeNotifier {
         return;
       }
 
+      isLoading = false;
+
       RespLogin accionValida = resTipoAccion.response;
       if (!accionValida.data) {
         NotificationService.showSnackbar(

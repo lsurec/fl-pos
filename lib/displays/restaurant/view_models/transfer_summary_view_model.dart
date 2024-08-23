@@ -32,6 +32,31 @@ class TransferSummaryViewModel extends ChangeNotifier {
   int indexOrderOrigin = -1;
   int indexOrderDest = -1;
 
+  cancelAccount(BuildContext context) {
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
+    );
+
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
+    tablesVM.restartTable();
+
+    for (var element in orderVM.orders) {
+      element.selected = false;
+    }
+
+    orderVM.isSelectedMode = false;
+
+    Navigator.popUntil(
+      context,
+      ModalRoute.withName(AppRoutes.selectAccount),
+    );
+  }
+
   cancelTransfer(BuildContext context) {
     final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
       context,
