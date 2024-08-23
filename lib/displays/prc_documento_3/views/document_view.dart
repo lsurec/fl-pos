@@ -22,7 +22,10 @@ class DocumentView extends StatelessWidget {
     final vmConvert = Provider.of<ConvertDocViewModel>(context);
 
     return RefreshIndicator(
-      onRefresh: () => vmFactura.loadData(context),
+      onRefresh: () => vmFactura.loadNewData(
+        context,
+        1,
+      ),
       child: ListView(
         children: [
           Padding(

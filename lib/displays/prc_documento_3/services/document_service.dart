@@ -878,7 +878,8 @@ class DocumentService {
 
     vmDoc.clienteSelect = saveDocument.cliente; //asignar cliente
 
-    if(saveDocument.cliente!.facturaNit == "C/F"){
+    if (saveDocument.cliente != null &&
+        saveDocument.cliente!.facturaNit.toLowerCase() == "c/f") {
       vmDoc.cf = true;
     }
 

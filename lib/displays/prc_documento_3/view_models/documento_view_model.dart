@@ -1,11 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
-import 'package:flutter_post_printer_example/view_models/menu_view_model.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -269,6 +272,310 @@ class DocumentoViewModel extends ChangeNotifier {
     Preferences.clearDocument();
 
     //finalizar proceso
+    isLoading = false;
+  }
+
+  Future<void> loadNewData(
+    BuildContext context,
+    int opcion,
+  ) async {
+    //view model externo
+    final vmMenu = Provider.of<MenuViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmPayment = Provider.of<PaymentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmDoc = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmLocal = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final int empresa = vmLocal.selectedEmpresa!.empresa;
+    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+    final String user = vmLogin.user;
+    final String token = vmLogin.token;
+
+    //Verificar que extsa tipo de documento
+    if (vmMenu.documento == null) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinDocumento',
+        ),
+      );
+      return;
+    }
+
+    isLoading = true;
+    //Load data
+
+    TipoCambioService tipoCambioService = TipoCambioService();
+
+    final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
+      empresa,
+      user,
+      token,
+    );
+
+    if (!resCambio.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(context, resCambio);
+      return;
+    }
+
+    final List<TipoCambioModel> cambios = resCambio.response;
+
+    if (cambios.isNotEmpty) {
+      vmMenu.tipoCambio = cambios[0].tipoCambio;
+    } else {
+      isLoading = false;
+
+      resCambio.response = AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'sinTipoCambio',
+      );
+
+      NotificationService.showErrorView(context, resCambio);
+
+      return;
+    }
+
+    //limpiar serie seleccionada
+    vmDoc.serieSelect = null;
+    //simpiar lista serie
+    vmDoc.series.clear();
+
+    //instancia del servicio
+    SerieService serieService = SerieService();
+
+    //consumo del api
+    ApiResModel resSeries = await serieService.getSerie(
+      vmMenu.documento!, // documento,
+      empresa, // empresa,
+      estacion, // estacion,
+      user, // user,
+      token, // token,
+    );
+
+    //valid succes response
+    if (!resSeries.succes) {
+      //si algo salio mal mostrar alerta
+      isLoading = false;
+
+      await NotificationService.showErrorView(
+        context,
+        resSeries,
+      );
+      return;
+    }
+
+    //Agregar series encontradas
+    vmDoc.series.addAll(resSeries.response);
+
+    // si sololo hay una serie seleccionarla por defecto
+    if (vmDoc.series.length == 1) {
+      vmDoc.serieSelect = vmDoc.series.first;
+    }
+
+    // si hay solo una serie buscar vendedores
+    if (vmDoc.series.length == 1) {
+      //limpiar vendedor seleccionado
+      vmDoc.vendedorSelect = null;
+
+      //limmpiar lista vendedor
+      vmDoc.cuentasCorrentistasRef.clear();
+
+      //instancia del servicio
+      CuentaService cuentaService = CuentaService();
+
+      //Consummo del api
+      ApiResModel resCuentRef = await cuentaService.getCeuntaCorrentistaRef(
+        user, // user,
+        vmMenu.documento!, // doc,
+        vmDoc.serieSelect!.serieDocumento!, // serie,
+        empresa, // empresa,
+        token, // token,
+      );
+
+      //valid succes response
+      if (!resCuentRef.succes) {
+        //si algo salio mal mostrar alerta
+
+        isLoading = false;
+        await NotificationService.showErrorView(
+          context,
+          resCuentRef,
+        );
+        return;
+      }
+
+      //agregar vendedores
+      vmDoc.cuentasCorrentistasRef.addAll(resCuentRef.response);
+
+      //si solo hay un vendedor agregarlo por defecto
+      if (vmDoc.cuentasCorrentistasRef.length == 1) {
+        vmDoc.vendedorSelect = vmDoc.cuentasCorrentistasRef.first;
+      }
+
+      //instancia del servicio
+      vmDoc.tiposTransaccion.clear();
+      TipoTransaccionService tipoTransaccionService = TipoTransaccionService();
+
+      //consumo del api
+      ApiResModel resTiposTra = await tipoTransaccionService.getTipoTransaccion(
+        vmMenu.documento!, // documento,
+        vmDoc.serieSelect!.serieDocumento!, // serie,
+        empresa, // empresa,
+        token, // token,
+        user, // user,
+      );
+
+      //valid succes response
+      if (!resTiposTra.succes) {
+        //si algo salio mal mostrar alerta
+        isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resTiposTra,
+        );
+        return;
+      }
+
+      //Agregar series encontradas
+      vmDoc.tiposTransaccion.addAll(resTiposTra.response);
+
+      vmDoc.parametros.clear();
+
+      ParametroService parametroService = ParametroService();
+
+      ApiResModel resParams = await parametroService.getParametro(
+        user,
+        vmMenu.documento!,
+        vmDoc.serieSelect!.serieDocumento!,
+        empresa,
+        estacion,
+        token,
+      );
+
+      //valid succes response
+      if (!resParams.succes) {
+        //si algo salio mal mostrar alerta
+        isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resParams,
+        );
+        return;
+      }
+
+      //Agregar series encontradas
+      vmDoc.parametros.addAll(resParams.response);
+
+      //evaluar el parametro 58
+      TipoReferenciaService referenciaService = TipoReferenciaService();
+
+      if (vmDoc.valueParametro(58)) {
+        vmDoc.referencias.clear();
+        vmDoc.referenciaSelect = null;
+
+        //Consumo del servicio
+        ApiResModel resTiposRef = await referenciaService.getTiposReferencia(
+          user, //user
+          token, // token,
+        );
+
+        //valid succes response
+        if (!resTiposRef.succes) {
+          //si algo salio mal mostrar alerta
+          isLoading = false;
+
+          await NotificationService.showErrorView(
+            context,
+            resTiposRef,
+          );
+          return;
+        }
+
+        //agregar formas de pago encontradas
+        vmDoc.referencias.addAll(resTiposRef.response);
+      }
+    }
+
+    //limpiar lista
+    vmPayment.paymentList.clear();
+
+    //si ahay varias series no se carga los pagos y no hay pagos
+    if (vmDoc.serieSelect != null) {
+      //instancia del servicio
+      PagoService pagoService = PagoService();
+
+      //Consumo del servicio
+      ApiResModel resPayments = await pagoService.getFormas(
+        vmMenu.documento!, // doc,
+        vmDoc.serieSelect!.serieDocumento!, // serie,
+        empresa, // empresa,
+        token, // token,
+      );
+
+      //valid succes response
+      if (!resPayments.succes) {
+        //si algo salio mal mostrar alerta
+        isLoading = false;
+
+        await NotificationService.showErrorView(
+          context,
+          resPayments,
+        );
+        return;
+      }
+
+      //agregar formas de pago encontradas
+      vmPayment.paymentList.addAll(resPayments.response);
+    }
+
+    if (vmPayment.paymentList.isEmpty && opcion == 0) {
+      print("NO hay formas de pago");
+
+      Navigator.pushNamed(context, AppRoutes.withoutPayment);
+      isLoading = false;
+
+      return;
+    }
+
+    if (vmPayment.paymentList.isNotEmpty && opcion == 0) {
+      print("si hay formas de pago");
+
+      Navigator.pushNamed(context, AppRoutes.withPayment);
+      isLoading = false;
+      return;
+    }
+
+    //limpiar la prefenncia del documentio
+    if (opcion == 1) {
+      Preferences.clearDocument();
+      //Limpiar la cuenta
+      // vmDoc.cf = false;
+      // vmDoc.clienteSelect = null;
+      // vmDetalle.traInternas.clear();
+    }
+
     isLoading = false;
   }
 }
