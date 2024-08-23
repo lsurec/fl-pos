@@ -69,7 +69,7 @@ class ConvertDocView extends StatelessWidget {
                   onPressed: () {
                     //editar
 
-                    vm.editarDocumento(
+                    vm.editarNewDocumento(
                       context,
                       docOrigen,
                     );

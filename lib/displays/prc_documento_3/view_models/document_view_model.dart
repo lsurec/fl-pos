@@ -530,6 +530,9 @@ class DocumentViewModel extends ChangeNotifier {
         telefono: "",
         limiteCredito: 0,
         permitirCxC: false,
+        celular: null,
+        desGrupoCuenta: null,
+        grupoCuenta: 0,
       );
       //Mensaje de confirmacion
       NotificationService.showSnackbar(

@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
@@ -77,43 +77,59 @@ class _Tabs2ViewState extends State<Tabs2View>
                   ),
                 ),
                 actions: [
-                  IconButton(
-                    tooltip: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.factura,
-                      'docRecientes',
-                    ),
-                    onPressed: () => Navigator.pushNamed(context, "recent"),
-                    icon: const Icon(Icons.schedule),
-                  ),
-                  IconButton(
-                    tooltip: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'nuevoDoc',
-                    ),
-                    onPressed: () => vm.newDocument(context),
-                    icon: const Icon(Icons.note_add_outlined),
-                  ),
-                  if (vmDoc.monitorPrint())
+                  if (!vm.editDoc)
                     IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'docRecientes',
+                      ),
+                      onPressed: () => Navigator.pushNamed(context, "recent"),
+                      icon: const Icon(Icons.schedule),
+                    ),
+                  if (!vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'nuevoDoc',
+                      ),
+                      onPressed: () => vm.newDocument(context),
+                      icon: const Icon(Icons.note_add_outlined),
+                    ),
+                  if (!vm.editDoc)
+                    if (vmDoc.monitorPrint())
+                      IconButton(
+                        onPressed: () => vm.sendDocumnet(
+                          context,
+                          2,
+                        ),
+                        icon: const Icon(
+                          Icons.desktop_windows_outlined,
+                        ),
+                      ),
+                  if (!vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'imprimir',
+                      ),
                       onPressed: () => vm.sendDocumnet(
                         context,
-                        2,
+                        1,
                       ),
-                      icon: const Icon(
-                        Icons.desktop_windows_outlined,
+                      icon: const Icon(Icons.print_outlined),
+                    ),
+                  if (vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'guardar',
                       ),
+                      onPressed: () {
+                        //guardar los cambios
+                        print("Aqui para guardar los cambios");
+                      },
+                      icon: const Icon(Icons.save_outlined),
                     ),
-                  IconButton(
-                    tooltip: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'imprimir',
-                    ),
-                    onPressed: () => vm.sendDocumnet(
-                      context,
-                      1,
-                    ),
-                    icon: const Icon(Icons.print_outlined),
-                  ),
                   UserWidget(
                     child: Column(
                       children: [
