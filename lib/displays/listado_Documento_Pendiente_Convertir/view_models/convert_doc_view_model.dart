@@ -3,6 +3,7 @@
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -36,8 +37,8 @@ class ConvertDocViewModel extends ChangeNotifier {
     //Contador de transacciones no seleccionada
     int cont = 0;
 
-    for (var element in detalles) {
-      if (element.disponible == 0) {
+    for (var element in detailsOrigin) {
+      if (element.detalle.disponible == 0) {
         //no seleccionar si no hay cantidad disponible
         cont++;
       } else {
@@ -157,7 +158,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     bool value, //valor asignado
   ) {
     //si la transaccion no tioene cantidad siponoble no se selecciona
-    if (detalles[index].disponible == 0) {
+    if (detailsOrigin[index].detalle.disponible == 0) {
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
@@ -168,7 +169,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     //selccioanr transaccion
-    detalles[index].checked = value;
+    detailsOrigin[index].checked = value;
     notifyListeners();
   }
 
@@ -379,7 +380,11 @@ class ConvertDocViewModel extends ChangeNotifier {
 
   int tipoDocEdit = 0;
   String serieDocEdit = "";
+  String descSerieDocEdit = "";
   int empresaDocEdit = 0;
+  int estacionDocEdit = 0;
+
+  ClientModel? cliente;
 
   editarDocumento(
     BuildContext context,
@@ -403,6 +408,11 @@ class ConvertDocViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmDoc = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
     vmFactura.editDoc = true;
 
     // final String user = vmLogin.user;
@@ -414,6 +424,34 @@ class ConvertDocViewModel extends ChangeNotifier {
     tipoDocEdit = originalDoc.tipoDocumento;
     serieDocEdit = originalDoc.serieDocumento;
     empresaDocEdit = originalDoc.empresa;
+    descSerieDocEdit = originalDoc.serie;
+    estacionDocEdit = originalDoc.estacionTrabajo;
+
+    //asignar valores
+
+    vmDoc.serieSelect?.serieDocumento = serieDocEdit;
+
+    cliente = ClientModel(
+      cuentaCorrentista: originalDoc.cuentaCorrentista,
+      cuentaCta: originalDoc.cuentaCta,
+      facturaNombre: originalDoc.cliente,
+      facturaNit: originalDoc.nit,
+      facturaDireccion: originalDoc.direccion,
+      cCDireccion: null,
+      desCuentaCta: "",
+      direccion1CuentaCta: null,
+      eMail: null,
+      telefono: null,
+      permitirCxC: false,
+      limiteCredito: 0,
+    );
+
+    vmDoc.clienteSelect = cliente;
+
+    //Si la cuenta es Consumidor Final activar el swich
+    if (vmDoc.clienteSelect?.facturaNit.toLowerCase() == "c/f") {
+      vmDoc.cf = true;
+    }
 
     //instancia del servicio
     PagoService pagoService = PagoService();

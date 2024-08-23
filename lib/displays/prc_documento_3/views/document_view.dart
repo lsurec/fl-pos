@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -18,6 +19,7 @@ class DocumentView extends StatelessWidget {
     final vm = Provider.of<DocumentViewModel>(context);
     final vmFactura = Provider.of<DocumentoViewModel>(context);
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context);
+    final vmConvert = Provider.of<ConvertDocViewModel>(context);
 
     return RefreshIndicator(
       onRefresh: () => vmFactura.loadData(context),
@@ -57,7 +59,7 @@ class DocumentView extends StatelessWidget {
                     Styles.title,
                   ),
                 ),
-                if (vm.series.isEmpty)
+                if (vm.series.isEmpty && !vmFactura.editDoc)
                   NotFoundWidget(
                     text: AppLocalizations.of(context)!.translate(
                       BlockTranslate.notificacion,
@@ -66,6 +68,14 @@ class DocumentView extends StatelessWidget {
                     icon: const Icon(
                       Icons.browser_not_supported_outlined,
                       size: 50,
+                    ),
+                  ),
+                if (vmFactura.editDoc && vmConvert.serieDocEdit.isNotEmpty)
+                  Text(
+                    "${vmConvert.descSerieDocEdit} (${vmConvert.serieDocEdit})",
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
                     ),
                   ),
                 if (vm.series.isNotEmpty)
@@ -227,22 +237,34 @@ class DocumentView extends StatelessWidget {
                           Styles.normal,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        vm.clienteSelect!.facturaDireccion,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
+                      if (vm.clienteSelect!.facturaDireccion.isNotEmpty &&
+                          vmFactura.editDoc)
+                        Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              vm.clienteSelect!.facturaDireccion,
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "(${vm.clienteSelect!.desCuentaCta})",
-                        style: AppTheme.style(
-                          context,
-                          Styles.inactive,
+                      if (vm.clienteSelect!.desCuentaCta.isNotEmpty &&
+                          vmFactura.editDoc)
+                        Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              "(${vm.clienteSelect!.desCuentaCta})",
+                              style: AppTheme.style(
+                                context,
+                                Styles.inactive,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
                     ],
                   ),
                 if (vm.cuentasCorrentistasRef.isNotEmpty)
