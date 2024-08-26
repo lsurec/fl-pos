@@ -7,11 +7,22 @@ import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class SelectAccountViewModel extends ChangeNotifier {
-  bool _isSelectedMode = false;
-  bool get isSelectedMode => _isSelectedMode;
+  bool isSelectedMode = false;
 
-  set isSelectedMode(bool value) {
-    _isSelectedMode = value;
+  setIsSelectedMode(BuildContext context, bool value) {
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+      context,
+      listen: false,
+    );
+
+    if (!value) {
+      for (var i = 0; i < orderVM.orders.length; i++) {
+        orderVM.orders[i].selected = value;
+      }
+    }
+
+    isSelectedMode = value;
+
     notifyListeners();
   }
 
@@ -122,7 +133,7 @@ class SelectAccountViewModel extends ChangeNotifier {
     orderVM.orders[indexOrder].selected = !orderVM.orders[indexOrder].selected;
     notifyListeners();
 
-    if (getSelectedItems(context) == 0) isSelectedMode = false;
+    if (getSelectedItems(context) == 0) setIsSelectedMode(context, false);
   }
 
   onLongPress(
@@ -136,7 +147,7 @@ class SelectAccountViewModel extends ChangeNotifier {
 
     orderVM.orders[indexOrder].selected = true;
 
-    isSelectedMode = true;
+    setIsSelectedMode(context, true);
   }
 
   deleteItemsRecursive(BuildContext context) {
@@ -211,7 +222,7 @@ class SelectAccountViewModel extends ChangeNotifier {
             Navigator.of(context).pop();
           }
 
-          isSelectedMode = false;
+          setIsSelectedMode(context, false);
           notifyListeners();
 
           if (comandada != 0) {
@@ -273,7 +284,7 @@ class SelectAccountViewModel extends ChangeNotifier {
 
     if (!isSelectedMode) return true;
 
-    isSelectedMode = false;
+    setIsSelectedMode(context, false);
 
     for (var element in orderVM.orders) {
       element.selected = false;

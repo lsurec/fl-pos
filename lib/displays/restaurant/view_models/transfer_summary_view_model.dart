@@ -195,7 +195,7 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
     tablesVM.restartTable();
     tablesVM.updateOrdersTable(context);
-    selectAccountVM.isSelectedMode = false;
+    selectAccountVM.setIsSelectedMode(context, false);
 
     if (error > 0) {
       NotificationService.showSnackbar(
