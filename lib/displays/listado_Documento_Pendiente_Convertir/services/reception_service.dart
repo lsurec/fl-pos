@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:http/http.dart' as http;
@@ -516,6 +517,198 @@ class ReceptionService {
       );
     } catch (e) {
       //respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Guadar cambios
+  Future<ApiResModel> updateDoc(
+    String token,
+    UpdateDocModel doc,
+  ) async {
+    //url completa
+    Uri url = Uri.parse("${_baseUrl}Recepcion/modify/doc");
+    try {
+      // Configurar Api y consumirla
+      final response = await http.post(
+        body: doc.toJson(),
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: "ok",
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  Future<ApiResModel> updateDocRef(
+    String token,
+    UpdateRefModel refModify,
+  ) async {
+    //url completa
+    Uri url = Uri.parse("${_baseUrl}Recepcion/modify/doc/ref");
+    try {
+      // Configurar Api y consumirla
+      final response = await http.post(
+        body: refModify.toJson(),
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: "ok",
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //anular transaccion
+  Future<ApiResModel> anularTransaccion(
+    String token,
+    NewTransactionModel transaction,
+  ) async {
+    //url completa
+    Uri url = Uri.parse("${_baseUrl}Recepcion/doc/anular/transaccion");
+    try {
+      // Configurar Api y consumirla
+      final response = await http.post(
+        body: transaction.toJson(),
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: "ok",
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Insertar transaccion
+
+  Future<ApiResModel> insertarTransaccion(
+    String token,
+    NewTransactionModel transaction,
+  ) async {
+    //url completa
+    Uri url = Uri.parse("${_baseUrl}Recepcion/doc/insertar/transaccion");
+    try {
+      // Configurar Api y consumirla
+      final response = await http.post(
+        body: transaction.toJson(),
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: "ok",
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
       return ApiResModel(
         url: url.toString(),
         succes: false,

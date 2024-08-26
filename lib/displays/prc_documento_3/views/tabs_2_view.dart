@@ -125,8 +125,9 @@ class _Tabs2ViewState extends State<Tabs2View>
                         'guardar',
                       ),
                       onPressed: () {
+                        vm.modifyDoc(context);
                         //guardar los cambios
-                        print("Aqui para guardar los cambios");
+                        // print("Aqui para guardar los cambios");
                       },
                       icon: const Icon(Icons.save_outlined),
                     ),

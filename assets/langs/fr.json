@@ -219,7 +219,9 @@
         "cantidadMayor": "La quantité doit être supérieure à 0.",
         "traModificada": "Transaction modifiée.",
         "advertencia": "Avertissement",
-        "productosNoDisponibles": "Un ou plusieurs produits ne sont pas disponibles."
+        "productosNoDisponibles": "Un ou plusieurs produits ne sont pas disponibles.",
+        "aplicaranCambios": "Les modifications seront appliquées au document.",
+        "docEditado": "Document édité avec succès."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",

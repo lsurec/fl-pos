@@ -30,3 +30,4 @@ export 'package:flutter_post_printer_example/displays/prc_documento_3/models/bod
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/data_fel_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/precio_dia_model.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/models/validate_product_model.dart';
+export 'package:flutter_post_printer_example/displays/prc_documento_3/models/new_transaccion_model.dart';

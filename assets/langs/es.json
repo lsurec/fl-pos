@@ -219,7 +219,9 @@
         "cantidadMayor": "La cantidad debe ser mayor a 0.",
         "traModificada": "Transacción modificada.",
         "advertencia": "Advertencia",
-        "productosNoDisponibles": "Uno o más productos no están disponibles."
+        "productosNoDisponibles": "Uno o más productos no están disponibles.",
+        "aplicaranCambios": "Se aplicaran los cambios al documento.",
+        "docEditado": "Documento editado correctamente."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

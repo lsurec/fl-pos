@@ -219,7 +219,8 @@
         "cantidadMayor": "The quantity must be greater than 0.",
         "traModificada": "Transaction modified.",
         "advertencia": "Warning",
-        "productosNoDisponibles": "One or more products are unavailable."
+        "productosNoDisponibles": "One or more products are unavailable.",
+        "aplicaranCambios": "Se aplicaran los cambios al documento."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",

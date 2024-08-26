@@ -91,9 +91,17 @@ class DocumentViewModel extends ChangeNotifier {
     BuildContext context,
     TipoReferenciaModel? value,
   ) {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     referenciaSelect = value;
     notifyListeners();
-    DocumentService.saveDocumentLocal(context);
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
   }
 
   bool monitorPrint() {
@@ -275,7 +283,9 @@ class DocumentViewModel extends ChangeNotifier {
     //finalizar proceso
     vmFactura.isLoading = false;
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
@@ -466,6 +476,7 @@ class DocumentViewModel extends ChangeNotifier {
     //View models externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
@@ -501,7 +512,9 @@ class DocumentViewModel extends ChangeNotifier {
     //si solo hay un vendedor agregarlo por defecto
     if (cuentasCorrentistasRef.length == 1) {
       vendedorSelect = cuentasCorrentistasRef.first;
-      DocumentService.saveDocumentLocal(context);
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
     }
 
     notifyListeners();
@@ -512,6 +525,11 @@ class DocumentViewModel extends ChangeNotifier {
     BuildContext context,
     bool value,
   ) {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     cf = value;
 
     //si cf es verdadero
@@ -542,11 +560,15 @@ class DocumentViewModel extends ChangeNotifier {
         ),
       );
 
-      DocumentService.saveDocumentLocal(context);
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
     } else {
       //no seleccionar
       clienteSelect = null;
-      DocumentService.saveDocumentLocal(context);
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
     }
 
     notifyListeners();
@@ -778,7 +800,9 @@ class DocumentViewModel extends ChangeNotifier {
           ),
         );
 
-        DocumentService.saveDocumentLocal(context);
+        if (!vmFactura.editDoc) {
+          DocumentService.saveDocumentLocal(context);
+        }
 
         return;
       }
@@ -827,9 +851,16 @@ class DocumentViewModel extends ChangeNotifier {
     ClientModel client,
     BuildContext context,
   ) {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     clienteSelect = client;
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
     if (back) Navigator.pop(context);
@@ -843,7 +874,19 @@ class DocumentViewModel extends ChangeNotifier {
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     DateTime fechaHoraActual = DateTime.now();
+
+    if (compararFechas(fechaHoraActual, fechaInicial)) {
+      fechaInicial = addDate30Min(fechaActual);
+      fechaFinal = addDate30Min(fechaInicial);
+      fechaRefFin = addDate30Min(fechaFinal);
+    }
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -871,7 +914,9 @@ class DocumentViewModel extends ChangeNotifier {
     //Recalcular precios cuando se cambia la fechas Inicio
     validarFecha(context);
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
@@ -965,6 +1010,7 @@ class DocumentViewModel extends ChangeNotifier {
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaInicial.hour,
@@ -996,14 +1042,23 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
     DateTime fechaHoraActual = DateTime.now();
+
+    if (compararFechas(fechaHoraActual, fechaFinal)) {
+      fechaFinal = addDate30Min(fechaInicial);
+      fechaRefFin = addDate30Min(fechaFinal);
+    }
 
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -1031,13 +1086,17 @@ class DocumentViewModel extends ChangeNotifier {
     //Recalcular precios cuando se cambia la fecha Fin
     validarFecha(context);
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   //Abrir picker de la fecha final
   Future<void> abrirHoraFinal(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaFinal.hour,
       minute: fechaFinal.minute,
@@ -1068,7 +1127,9 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
@@ -1076,6 +1137,8 @@ class DocumentViewModel extends ChangeNotifier {
   //Fecha entrega
   //Abrir picker de fecha entrega
   Future<void> abrirFechaEntrega(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
     DateTime fechaHoraActual = DateTime.now();
 
     //abrir picker de la fecha inicial con la fecha actual
@@ -1102,13 +1165,19 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRefIni.minute,
     );
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraEntrega(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaRefIni.hour,
@@ -1140,12 +1209,19 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   Future<void> abrirFechaRecoger(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     DateTime fechaHoraActual = DateTime.now();
 
     //abrir picker de la fecha inicial con la fecha actual
@@ -1172,13 +1248,20 @@ class DocumentViewModel extends ChangeNotifier {
       fechaRefFin.minute,
     );
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraRecoger(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     DateTime fechaHoraActual = DateTime.now();
 
     //inicializar picker de la hora con la hora recibida
@@ -1216,7 +1299,9 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
-    DocumentService.saveDocumentLocal(context);
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }

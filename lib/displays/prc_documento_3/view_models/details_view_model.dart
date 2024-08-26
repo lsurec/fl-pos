@@ -739,7 +739,14 @@ class DetailsViewModel extends ChangeNotifier {
   //elimminar transacciones sleccionadas
   Future<void> deleteTransaction(BuildContext context) async {
     //view model externo
-    final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
+    final vmPayment = Provider.of<PaymentViewModel>(
+      context,
+      listen: false,
+    );
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
 
     //si hay formas de pago agregadas mostrar mensaje
     if (vmPayment.amounts.isNotEmpty) {
@@ -801,6 +808,17 @@ class DetailsViewModel extends ChangeNotifier {
 
     //cancelar
     if (!result) return;
+
+    // Guardar transacciones que se van a eliminar
+    if (vmFactura.editDoc) {
+      traInternas
+          .where((transaction) => transaction.isChecked)
+          .forEach((element) {
+        if (element.consecutivo != 0) {
+          transaccionesPorEliminar.add(element);
+        }
+      });
+    }
 
     //elimminar las transacciones seleccionadas
     traInternas.removeWhere((document) => document.isChecked == true);

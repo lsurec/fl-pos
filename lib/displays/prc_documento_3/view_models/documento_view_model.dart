@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/services/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
@@ -617,5 +618,349 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     isLoading = false;
+  }
+
+  modifyDoc(
+    BuildContext context,
+  ) async {
+    //View models
+    final vmConvert = Provider.of<ConvertDocViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmMenu = Provider.of<MenuViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmDoc = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmConfirm = Provider.of<ConfirmDocViewModel>(
+      context,
+      listen: false,
+    );
+
+    final detalleVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String user = vmLogin.user;
+    final String token = vmLogin.token;
+
+    OriginDocModel docOriginSlect = vmConvert.docOriginSelect!;
+
+    //verificar el tipo de referencia
+    if (vmDoc.valueParametro(58)) {
+      if (vmDoc.referenciaSelect == null) {
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'seleccioneTipoRef',
+          ),
+        );
+        return;
+      }
+    }
+
+    //verificar las fechas
+    if (vmDoc.valueParametro(44)) {
+      if (!vmDoc.validateDates()) {
+        //Mostrar los mensajes indicando cual es la fecha incorrecta
+        vmDoc.notificacionFechas(context);
+        return;
+      }
+    }
+
+    //mostrar dialogo de confirmacion
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'aplicaranCambios',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    if (!result) return;
+
+    // Suponiendo que fechaDocumento es de tipo String
+    String fechaDocumento = docOriginSlect.fechaDocumento;
+
+    // Divide la fecha en partes (día, mes, año)
+    List<String> partesFecha = fechaDocumento.split('/');
+    String dia = partesFecha[0];
+    String mes = partesFecha[1];
+    String anio = partesFecha[2];
+
+    // Crea un objeto DateTime con el formato esperado ('YYYY-MM-DD')
+    DateTime fechaFormateada = DateTime.parse('$anio-$mes-$dia');
+
+    UpdateDocModel docModify = UpdateDocModel(
+      consecutivoInterno: vmConvert.docOriginSelect!.consecutivoInterno,
+      cuentaCorrentista: vmDoc.clienteSelect!.cuentaCorrentista,
+      cuentaCorrentistaRef: vmDoc.cuentasCorrentistasRef.isNotEmpty
+          ? vmDoc.vendedorSelect?.cuentaCorrentista
+          : null,
+      cuentaCuenta: vmDoc.clienteSelect!.cuentaCta,
+      documentoDireccion: vmDoc.clienteSelect!.facturaDireccion,
+      documentoNit: vmDoc.clienteSelect!.facturaNit,
+      documentoNombre: vmDoc.clienteSelect!.facturaNombre,
+      empresa: vmConvert.docOriginSelect!.empresa,
+      estacionTrabajo: vmConvert.docOriginSelect!.estacionTrabajo,
+      fechaDocumento: fechaFormateada,
+      fechaFin: vmDoc.fechaFinal,
+      fechaHora: DateTime.parse(vmConvert.docOriginSelect!.fechaHora),
+      fechaIni: vmDoc.fechaInicial,
+      idDocumento: vmConvert.docOriginSelect!.iDDocumento.toString(),
+      localizacion: vmConvert.docOriginSelect!.localizacion,
+      mUser: user,
+      observacion: vmConfirm.observacion.text,
+      referencia: vmConvert.docOriginSelect!.referencia ??
+          vmDoc.referenciaSelect?.tipoReferencia,
+      serieDocumento: vmConvert.docOriginSelect!.serieDocumento,
+      tipoDocumento: vmConvert.docOriginSelect!.tipoDocumento,
+      user: vmConvert.docOriginSelect!.usuario,
+    );
+
+    //TODO: Aqui ya no pasó! :(
+    ReceptionService receptionService = ReceptionService();
+
+    ApiResModel resUpdateEncabezado = await receptionService.updateDoc(
+      token,
+      docModify,
+    );
+
+    if (!resUpdateEncabezado.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(
+        context,
+        resUpdateEncabezado,
+      );
+      return;
+    }
+
+    UpdateRefModel refModify = UpdateRefModel(
+      descripcion: vmDoc.refDescripcionParam383.text,
+      empresa: vmConvert.docOriginSelect!.empresa,
+      fechaFin: vmDoc.fechaRefFin,
+      fechaIni: vmDoc.fechaRefIni,
+      mUser: user,
+      observacion: vmDoc.refObservacionParam384.text,
+      observacion2: vmDoc.refContactoParam385.text,
+      observacion3: vmDoc.refDirecEntregaParam386.text,
+      referencia: vmConvert.docOriginSelect!.referencia!,
+      referenciaID: '92144684365752', //TODO:Preguntar
+      tipoReferencia: vmDoc.referenciaSelect?.tipoReferencia,
+    );
+
+    ApiResModel resRefUpdate = await receptionService.updateDocRef(
+      token,
+      refModify,
+    );
+
+    if (!resRefUpdate.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(
+        context,
+        resRefUpdate,
+      );
+      return;
+    }
+
+    //eliminar transacciones
+    for (TraInternaModel eliminar in detalleVM.transaccionesPorEliminar) {
+      //
+
+      NewTransactionModel transactionEliminar = NewTransactionModel(
+        bodega: eliminar.bodega!.bodega,
+        cantidad: eliminar.cantidad,
+        documentoConsecutivoInterno:
+            vmConvert.docOriginSelect!.consecutivoInterno,
+        empresa: vmConvert.docOriginSelect!.empresa,
+        estacionTrabajo: vmConvert.docOriginSelect!.estacionTrabajo,
+        localizacion: vmConvert.docOriginSelect!.localizacion,
+        moneda: eliminar.precio!.moneda,
+        monto: eliminar.total,
+        montoMoneda: eliminar.total / vmMenu.tipoCambio,
+        producto: eliminar.producto.producto,
+        tipoCambio: vmMenu.tipoCambio,
+        tipoPrecio: eliminar.precio!.id,
+        tipoTransaccion: vmConfirm.resolveTipoTransaccion(
+          eliminar.producto.tipoProducto,
+          context,
+        ),
+        transaccionConsecutivoInterno: eliminar.consecutivo,
+        unidadMedida: eliminar.producto.unidadMedida,
+        usuario: user,
+      );
+
+      ApiResModel resTransDelete = await receptionService.anularTransaccion(
+        token,
+        transactionEliminar,
+      );
+
+      if (!resTransDelete.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(
+          context,
+          resTransDelete,
+        );
+        return;
+      }
+    } // fin for
+
+    //limpiar lista de eliminados
+    detalleVM.transaccionesPorEliminar.clear();
+
+    int indexUpdate = 0;
+
+    //Actualizar transacciones
+    for (TraInternaModel actualizar in detalleVM.transaccionesPorEliminar) {
+      //
+      if (actualizar.estadoTra != 0 && actualizar.consecutivo != 0) {
+        ///Anular y actualizar
+
+        NewTransactionModel transactionActualizar = NewTransactionModel(
+          bodega: actualizar.bodega!.bodega,
+          cantidad: actualizar.cantidad,
+          documentoConsecutivoInterno:
+              vmConvert.docOriginSelect!.consecutivoInterno,
+          empresa: vmConvert.docOriginSelect!.empresa,
+          estacionTrabajo: vmConvert.docOriginSelect!.estacionTrabajo,
+          localizacion: vmConvert.docOriginSelect!.localizacion,
+          moneda: actualizar.precio!.moneda,
+          monto: actualizar.total,
+          montoMoneda: actualizar.total / vmMenu.tipoCambio,
+          producto: actualizar.producto.producto,
+          tipoCambio: vmMenu.tipoCambio,
+          tipoPrecio: actualizar.precio!.id,
+          tipoTransaccion: vmConfirm.resolveTipoTransaccion(
+            actualizar.producto.tipoProducto,
+            context,
+          ),
+          transaccionConsecutivoInterno: actualizar.consecutivo,
+          unidadMedida: actualizar.producto.unidadMedida,
+          usuario: user,
+        );
+
+        ApiResModel resTransDelete = await receptionService.anularTransaccion(
+          token,
+          transactionActualizar,
+        );
+
+        if (!resTransDelete.succes) {
+          isLoading = false;
+          NotificationService.showErrorView(
+            context,
+            resTransDelete,
+          );
+          return;
+        }
+
+        ApiResModel resActualizarTransaccion =
+            await receptionService.insertarTransaccion(
+          token,
+          transactionActualizar,
+        );
+
+        if (!resActualizarTransaccion.succes) {
+          isLoading = false;
+          NotificationService.showErrorView(
+            context,
+            resActualizarTransaccion,
+          );
+          return;
+        }
+
+        detalleVM.traInternas[indexUpdate].consecutivo =
+            resActualizarTransaccion.response;
+
+        indexUpdate++;
+      } //fin if
+    } //fin for
+
+    int indexInsert = 0;
+
+    for (TraInternaModel nueva in detalleVM.transaccionesPorEliminar) {
+      if (nueva.estadoTra != 0 && nueva.consecutivo != 0) {
+        NewTransactionModel transactionNueva = NewTransactionModel(
+          bodega: nueva.bodega!.bodega,
+          cantidad: nueva.cantidad,
+          documentoConsecutivoInterno:
+              vmConvert.docOriginSelect!.consecutivoInterno,
+          empresa: vmConvert.docOriginSelect!.empresa,
+          estacionTrabajo: vmConvert.docOriginSelect!.estacionTrabajo,
+          localizacion: vmConvert.docOriginSelect!.localizacion,
+          moneda: nueva.precio!.moneda,
+          monto: nueva.total,
+          montoMoneda: nueva.total / vmMenu.tipoCambio,
+          producto: nueva.producto.producto,
+          tipoCambio: vmMenu.tipoCambio,
+          tipoPrecio: nueva.precio!.id,
+          tipoTransaccion: vmConfirm.resolveTipoTransaccion(
+            nueva.producto.tipoProducto,
+            context,
+          ),
+          transaccionConsecutivoInterno: nueva.consecutivo,
+          unidadMedida: nueva.producto.unidadMedida,
+          usuario: user,
+        );
+
+        ApiResModel resActualizarTransaccion =
+            await receptionService.insertarTransaccion(
+          token,
+          transactionNueva,
+        );
+
+        if (!resActualizarTransaccion.succes) {
+          isLoading = false;
+          NotificationService.showErrorView(
+            context,
+            resActualizarTransaccion,
+          );
+          return;
+        }
+
+        detalleVM.traInternas[indexInsert].consecutivo =
+            resActualizarTransaccion.response;
+
+        indexInsert++;
+      } //fin if
+    } // fin for
+
+    isLoading = false;
+
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'docEditado',
+      ),
+    );
   }
 }
