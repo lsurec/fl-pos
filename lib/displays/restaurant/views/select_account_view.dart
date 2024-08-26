@@ -60,6 +60,11 @@ class SelectAccountView extends StatelessWidget {
                       icon: const Icon(Icons.drive_file_move_outline),
                       tooltip: "Trasladar", //TODO:Translate
                     ),
+                    IconButton(
+                      onPressed: () => {},
+                      icon: const Icon(Icons.print_outlined),
+                      tooltip: "Estado de cuenta", //TODO:Translate
+                    ),
                   ]
                 : null,
           ),
