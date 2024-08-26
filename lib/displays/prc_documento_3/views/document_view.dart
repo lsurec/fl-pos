@@ -73,15 +73,15 @@ class DocumentView extends StatelessWidget {
                       size: 50,
                     ),
                   ),
-                if (vmFactura.editDoc && vmConvert.serieDocEdit.isNotEmpty)
+                if (vmFactura.editDoc)
                   Text(
-                    "${vmConvert.descSerieDocEdit} (${vmConvert.serieDocEdit})",
+                    "${vmConvert.docOriginSelect!.serie} (${vmConvert.docOriginSelect!.serieDocumento})",
                     style: AppTheme.style(
                       context,
                       Styles.normal,
                     ),
                   ),
-                if (vm.series.isNotEmpty)
+                if (vm.series.isNotEmpty && !vmFactura.editDoc)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
                     dropdownColor: AppTheme.color(

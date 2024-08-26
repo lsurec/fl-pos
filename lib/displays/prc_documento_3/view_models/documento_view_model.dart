@@ -1,5 +1,8 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -305,6 +308,16 @@ class DocumentoViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmConvert = Provider.of<ConvertDocViewModel>(
+      context,
+      listen: false,
+    );
+
     final int empresa = vmLocal.selectedEmpresa!.empresa;
     final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
     final String user = vmLogin.user;
@@ -392,8 +405,21 @@ class DocumentoViewModel extends ChangeNotifier {
       vmDoc.serieSelect = vmDoc.series.first;
     }
 
+    //verificar que exista una serie
+    if (vmFactura.editDoc) {
+      OriginDocModel docOriginSlect = vmConvert.docOriginSelect!;
+
+      for (int i = 0; i < vmDoc.series.length; i++) {
+        SerieModel element = vmDoc.series[i];
+        if (docOriginSlect.serieDocumento == element.serieDocumento) {
+          vmDoc.serieSelect = element;
+          break;
+        }
+      }
+    }
+
     // si hay solo una serie buscar vendedores
-    if (vmDoc.series.length == 1) {
+    if (vmDoc.serieSelect != null) {
       //limpiar vendedor seleccionado
       vmDoc.vendedorSelect = null;
 
@@ -515,6 +541,18 @@ class DocumentoViewModel extends ChangeNotifier {
 
         //agregar formas de pago encontradas
         vmDoc.referencias.addAll(resTiposRef.response);
+
+        if (vmFactura.editDoc) {
+          OriginDocModel docOriginSlect = vmConvert.docOriginSelect!;
+
+          for (int i = 0; i < vmDoc.referencias.length; i++) {
+            TipoReferenciaModel element = vmDoc.referencias[i];
+            if (docOriginSlect.tipoReferencia == element.tipoReferencia) {
+              vmDoc.referenciaSelect = element;
+              break;
+            }
+          }
+        }
       }
     }
 
@@ -551,18 +589,20 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     if (vmPayment.paymentList.isEmpty && opcion == 0) {
-      print("NO hay formas de pago");
-
-      Navigator.pushNamed(context, AppRoutes.withoutPayment);
+      Navigator.pushNamed(
+        context,
+        AppRoutes.withoutPayment,
+      );
       isLoading = false;
 
       return;
     }
 
     if (vmPayment.paymentList.isNotEmpty && opcion == 0) {
-      print("si hay formas de pago");
-
-      Navigator.pushNamed(context, AppRoutes.withPayment);
+      Navigator.pushNamed(
+        context,
+        AppRoutes.withPayment,
+      );
       isLoading = false;
       return;
     }

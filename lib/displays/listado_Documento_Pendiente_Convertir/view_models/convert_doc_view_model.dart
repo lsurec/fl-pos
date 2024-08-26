@@ -19,6 +19,10 @@ import 'package:provider/provider.dart';
 class ConvertDocViewModel extends ChangeNotifier {
   //llave global del scaffold
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //Documento origen
+  OriginDocModel? docOriginSelect;
+
   //controlar procesos
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -501,6 +505,8 @@ class ConvertDocViewModel extends ChangeNotifier {
     BuildContext context,
     OriginDocModel originalDoc,
   ) async {
+    docOriginSelect = originalDoc;
+
     //llamar a load data
 
     final vmFactura = Provider.of<DocumentoViewModel>(
@@ -550,54 +556,59 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     //Cargar datos del docuemnto origen
 
-    OriginDocModel docOrigin = originalDoc;
+    //si la referencia es distinta de null
+    if (docOriginSelect!.tipoReferencia != null) {
+      int existRef = -1;
 
-    int existRef = -1;
+      //recorrer lista de vendedores
+      for (int i = 0; i < vmDocumento.referencias.length; i++) {
+        TipoReferenciaModel element = vmDocumento.referencias[i];
+        if (element.tipoReferencia == docOriginSelect!.tipoReferencia) {
+          existRef = i;
+          break;
+        }
+      }
 
-    for (int i = 0; i < vmDocumento.referencias.length; i++) {
-      TipoReferenciaModel element = vmDocumento.referencias[i];
-      if (element.tipoReferencia == docOrigin.tipoReferencia) {
-        existRef = i;
-        break;
+      //No se encontró la referencia
+      if (existRef == -1) {
+        //Traducir
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'tipoRefNoEncontrado',
+          ),
+        );
+      } else {
+        //Guardar la referencia
+        vmDocumento.referenciaSelect = vmDocumento.referencias[existRef];
       }
     }
 
-    //No se encontró la referencia
-    if (existRef == -1) {
-      //Traducir
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'tipoRefNoEncontrado',
-        ),
-      );
-    } else {
-      //Guardar la referencia
-      vmDocumento.referenciaSelect = vmDocumento.referencias[existRef];
-    }
+    //si la lista de vendedores no está vacia
+    if (vmDocumento.cuentasCorrentistasRef.isNotEmpty) {
+      int existCuentaRef = -1;
 
-    int existCuentaRef = -1;
-
-    for (int i = 0; i < vmDocumento.cuentasCorrentistasRef.length; i++) {
-      SellerModel element = vmDocumento.cuentasCorrentistasRef[i];
-      if (element.cuentaCorrentista == docOrigin.cuentaCorrentista) {
-        existCuentaRef = i;
-        break;
+      for (int i = 0; i < vmDocumento.cuentasCorrentistasRef.length; i++) {
+        SellerModel element = vmDocumento.cuentasCorrentistasRef[i];
+        if (element.cuentaCorrentista == docOriginSelect!.cuentaCorrentista) {
+          existCuentaRef = i;
+          break;
+        }
       }
-    }
 
-    if (existCuentaRef == -1) {
-      //Traducir
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'cuentaNoEncontrada',
-        ),
-      );
-    } else {
-      //Guardar el vendedor
-      vmDocumento.vendedorSelect =
-          vmDocumento.cuentasCorrentistasRef[existCuentaRef];
+      if (existCuentaRef == -1) {
+        //Traducir
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'cuentaNoEncontrada',
+          ),
+        );
+      } else {
+        //Guardar el vendedor
+        vmDocumento.vendedorSelect =
+            vmDocumento.cuentasCorrentistasRef[existCuentaRef];
+      }
     }
 
     //Servicios
@@ -607,7 +618,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     //Cargar cliente
     ApiResModel resClient = await cuentaService.getCuentaCorrentista(
       empresa,
-      docOrigin.nit,
+      docOriginSelect!.nit,
       user,
       token,
     );
@@ -631,7 +642,7 @@ class ConvertDocViewModel extends ChangeNotifier {
 
     for (int i = 0; i < clients.length; i++) {
       ClientModel element = clients[i];
-      if (element.cuentaCorrentista == docOrigin.cuentaCorrentista) {
+      if (element.cuentaCorrentista == docOriginSelect!.cuentaCorrentista) {
         existClient = i;
         break;
       }
@@ -640,13 +651,13 @@ class ConvertDocViewModel extends ChangeNotifier {
     if (existClient == -1) {
       vmDocumento.clienteSelect = ClientModel(
         cuentaCorrentista: 1,
-        cuentaCta: docOrigin.cuentaCta,
-        facturaNombre: docOrigin.cliente,
-        facturaNit: docOrigin.nit,
-        facturaDireccion: docOrigin.direccion,
-        cCDireccion: docOrigin,
-        desCuentaCta: docOrigin.nit,
-        direccion1CuentaCta: docOrigin.direccion,
+        cuentaCta: docOriginSelect!.cuentaCta,
+        facturaNombre: docOriginSelect!.cliente,
+        facturaNit: docOriginSelect!.nit,
+        facturaDireccion: docOriginSelect!.direccion,
+        cCDireccion: docOriginSelect!,
+        desCuentaCta: docOriginSelect!.nit,
+        direccion1CuentaCta: docOriginSelect!.direccion,
         eMail: "",
         telefono: "",
         permitirCxC: false,
@@ -662,17 +673,22 @@ class ConvertDocViewModel extends ChangeNotifier {
     DateTime dateDefault = DateTime.now();
 
     //load dates
-    vmDocumento.fechaRefIni = docOrigin.referenciaDFechaIni ?? dateDefault;
-    vmDocumento.fechaRefFin = docOrigin.referenciaDFechaFin ?? dateDefault;
-    vmDocumento.fechaInicial = docOrigin.fechaIni ?? dateDefault;
-    vmDocumento.fechaFinal = docOrigin.fechaFin ?? dateDefault;
+    vmDocumento.fechaRefIni =
+        docOriginSelect!.referenciaDFechaIni ?? dateDefault;
+    vmDocumento.fechaRefFin =
+        docOriginSelect!.referenciaDFechaFin ?? dateDefault;
+    vmDocumento.fechaInicial = docOriginSelect!.fechaIni ?? dateDefault;
+    vmDocumento.fechaFinal = docOriginSelect!.fechaFin ?? dateDefault;
 
     //Observaciones
-    String refContactoParam385 = docOrigin.referenciaDObservacion2 ?? "";
-    String refDescripcionParam383 = docOrigin.referenciaDDescripcion ?? "";
-    String refDirecEntregaParam386 = docOrigin.referenciaDObservacion3 ?? "";
-    String refObservacionParam384 = docOrigin.referenciaDObservacion ?? "";
-    String observacion = docOrigin.observacion1 ?? "";
+    String refContactoParam385 = docOriginSelect!.referenciaDObservacion2 ?? "";
+    String refDescripcionParam383 =
+        docOriginSelect!.referenciaDDescripcion ?? "";
+    String refDirecEntregaParam386 =
+        docOriginSelect!.referenciaDObservacion3 ?? "";
+    String refObservacionParam384 =
+        docOriginSelect!.referenciaDObservacion ?? "";
+    String observacion = docOriginSelect!.observacion1 ?? "";
 
     //Asignar observaciones
     vmDocumento.refContactoParam385.text = refContactoParam385;
