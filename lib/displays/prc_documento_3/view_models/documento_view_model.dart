@@ -724,9 +724,7 @@ class DocumentoViewModel extends ChangeNotifier {
     UpdateDocModel docModify = UpdateDocModel(
       consecutivoInterno: vmConvert.docOriginSelect!.consecutivoInterno,
       cuentaCorrentista: vmDoc.clienteSelect!.cuentaCorrentista,
-      cuentaCorrentistaRef: vmDoc.cuentasCorrentistasRef.isNotEmpty
-          ? vmDoc.vendedorSelect?.cuentaCorrentista
-          : null,
+      cuentaCorrentistaRef: vmDoc.vendedorSelect?.cuentaCorrentista,
       cuentaCuenta: vmDoc.clienteSelect!.cuentaCta,
       documentoDireccion: vmDoc.clienteSelect!.facturaDireccion,
       documentoNit: vmDoc.clienteSelect!.facturaNit,
@@ -749,6 +747,10 @@ class DocumentoViewModel extends ChangeNotifier {
     );
 
     //TODO: Aqui ya no pasó! :(
+
+//Migrar cotizaciones para que aparezcan enel listado de cotizaciones
+//Mostrar el error
+
     ReceptionService receptionService = ReceptionService();
 
     ApiResModel resUpdateEncabezado = await receptionService.updateDoc(
