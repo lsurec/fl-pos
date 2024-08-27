@@ -65,6 +65,18 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
                   Styles.title,
                 ),
               ),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.search,
+                  ),
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'buscar',
+                  ),
+                ),
+              ],
               bottom: TabBar(
                 onTap: (index) => vmTarea.limpiarLista(context),
                 controller: vmTarea.tabController,

@@ -11,3 +11,5 @@ export 'package:flutter_post_printer_example/widgets/input_widget.dart';
 export 'package:flutter_post_printer_example/widgets/card_widget.dart';
 export 'package:flutter_post_printer_example/widgets/load_widget.dart';
 export 'package:flutter_post_printer_example/widgets/alert_info_widgets.dart';
+export 'package:flutter_post_printer_example/widgets/search_task_widget.dart';
+export 'package:flutter_post_printer_example/widgets/card_task_widgets.dart';

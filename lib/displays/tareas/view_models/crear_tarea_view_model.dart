@@ -282,6 +282,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
     //Crear modelo de Tarea para agregarla a la lista de tareas
     TareaModel resCreada = TareaModel(
+      id: 0,
       tarea: tarea,
       iDTarea: creada.tarea,
       usuarioCreador: user,
@@ -307,6 +308,11 @@ class CrearTareaViewModel extends ChangeNotifier {
       backColor: "#F4FA58",
       nivelPrioridad: prioridad!.nivelPrioridad,
       nomNivelPrioridad: prioridad!.nombre,
+      registros: 0,
+      filtroTodasTareas: false,
+      filtroMisTareas: false,
+      filtroMisResponsabilidades: false,
+      filtroMisInvitaciones: false,
     );
 
     //Usuario responsable de la tarea

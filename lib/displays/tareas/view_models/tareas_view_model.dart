@@ -244,6 +244,107 @@ class TareasViewModel extends ChangeNotifier {
     isLoading = false; //detener carga
   }
 
+  //Rangos
+
+  int rangoIni = 1;
+  int rangoFin = 10;
+  int rangoTodasIni = 1;
+  int rangoTodasFin = 10;
+  int rangoCreadasIni = 1;
+  int rangoCreadasFin = 10;
+  int rangoAsignadasIni = 1;
+  int rangoAsignadasFin = 10;
+  int rangoInvitacionesIni = 1;
+  int rangoInvitacionesFin = 10;
+  int intervaloRegistros = 10;
+
+  //Buscar tareas por rango
+  Future<void> buscarRangoTareas(
+    BuildContext context,
+    String search,
+    int opcion,
+    int vermas,
+  ) async {
+    //obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    //Validar formulario
+    if (!isValidFormCSearch()) return;
+
+    //si tareas está vacio, reestablecer los rangos
+    if (tareas.isEmpty) {
+      rangoIni = 1;
+      rangoFin = intervaloRegistros;
+    }
+
+    // Realiza la búsqueda
+    //si ver mas es = 1 aumenta los rangos
+    if (vermas == 1) {
+      isLoading = true; //cargar pantalla
+
+      //consumo de api
+      final ApiResModel res = await tareaService.getTareas(
+        user,
+        token,
+        search,
+        tabController.index,
+      );
+
+      //si el consumo salió mal
+      if (!res.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(
+          context,
+          res,
+        );
+        return;
+      }
+
+      tareas.addAll(res.response);
+
+      rangoIni = tareas.length + 1;
+      rangoFin = rangoIni + intervaloRegistros;
+
+      //sino
+    } else {
+      rangoIni = 1;
+      rangoFin = 10;
+
+      isLoading = true;
+
+      //consumo de api
+      final ApiResModel resTarea = await tareaService.getTareas(
+        user,
+        token,
+        search,
+        tabController.index,
+      );
+
+      //si el consumo salió mal
+      if (!resTarea.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(
+          context,
+          resTarea,
+        );
+        return;
+      }
+
+      //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+      tareas.addAll(resTarea.response);
+
+      isLoading = false;
+
+      rangoIni += intervaloRegistros;
+      rangoFin += intervaloRegistros;
+    }
+  }
+
   //Buscar por filtro: Id de referencia
   Future<void> buscarTareasIdReferencia(
     BuildContext context,
