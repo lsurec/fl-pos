@@ -595,4 +595,14 @@ class TareasViewModel extends ChangeNotifier {
       }
     }
   }
+
+  navegarBusqueda(
+    BuildContext context,
+  ) {
+    //Navegar a la vista de crear tareas
+    Navigator.pushNamed(
+      context,
+      AppRoutes.searchTask,
+    );
+  }
 }

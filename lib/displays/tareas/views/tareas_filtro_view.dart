@@ -67,7 +67,9 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
               ),
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    vmTarea.navegarBusqueda(context);
+                  },
                   icon: const Icon(
                     Icons.search,
                   ),
