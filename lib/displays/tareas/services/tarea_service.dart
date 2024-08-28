@@ -194,8 +194,8 @@ class TareaService {
   //Consumo api para obtener tareas de la busqueda por descripción.
   Future<ApiResModel> getRangoTareas(
     String user,
-    String filtro,
     String token,
+    String filtro,
     int rangoIni,
     int rangoFin,
   ) async {

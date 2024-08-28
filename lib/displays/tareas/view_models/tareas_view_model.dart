@@ -85,39 +85,39 @@ class TareasViewModel extends ChangeNotifier {
 
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
-    limpiar(0);
-    List<TareaModel> encontradas = [];
-    encontradas.clear(); //limpiar lista
-    searchController.clear();
+    // limpiar(0);
+    // List<TareaModel> encontradas = [];
+    // encontradas.clear(); //limpiar lista
+    // searchController.clear();
 
-    //obtener token y usuario
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.user;
+    // //obtener token y usuario
+    // final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    // String token = vmLogin.token;
+    // String user = vmLogin.user;
 
-    //instancia del servicio
-    final TareaService tareaService = TareaService();
+    // //instancia del servicio
+    // final TareaService tareaService = TareaService();
 
-    isLoading = true; //cargar pantalla
+    // isLoading = true; //cargar pantalla
 
-    //consumo de api
-    final ApiResModel res = await tareaService.getTopTareas(user, token);
+    // //consumo de api
+    // final ApiResModel res = await tareaService.getTopTareas(user, token);
 
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, res);
-      return;
-    }
-    //agregar tareas encontradas a la lista de tareas
-    encontradas.addAll(res.response);
-    //Registros encontrados
-    registros = encontradas.length;
+    // //si el consumo salió mal
+    // if (!res.succes) {
+    //   isLoading = false;
+    //   NotificationService.showErrorView(context, res);
+    //   return;
+    // }
+    // //agregar tareas encontradas a la lista de tareas
+    // encontradas.addAll(res.response);
+    // //Registros encontrados
+    // registros = encontradas.length;
 
-    //tipo 1 = ultimas tareas
-    asignarTareas(encontradas, 0);
+    // //tipo 1 = ultimas tareas
+    // asignarTareas(encontradas, 0);
 
-    isLoading = false; //detener carga
+    // isLoading = false; //detener carga
   }
 
   asignarTareas(List<TareaModel> tareasEncontradas, int tipo) {
@@ -220,7 +220,10 @@ class TareasViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      NotificationService.showErrorView(context, res);
+      NotificationService.showErrorView(
+        context,
+        res,
+      );
       return;
     }
 
@@ -245,7 +248,7 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   //Rangos
-
+  int vermas = 0;
   int rangoIni = 1;
   int rangoFin = 10;
   int rangoTodasIni = 1;
@@ -262,7 +265,6 @@ class TareasViewModel extends ChangeNotifier {
   Future<void> buscarRangoTareas(
     BuildContext context,
     String search,
-    int opcion,
     int vermas,
   ) async {
     //obtener usuario y token
@@ -288,11 +290,12 @@ class TareasViewModel extends ChangeNotifier {
       isLoading = true; //cargar pantalla
 
       //consumo de api
-      final ApiResModel res = await tareaService.getTareas(
+      final ApiResModel res = await tareaService.getRangoTareas(
         user,
         token,
         search,
-        tabController.index,
+        rangoIni,
+        rangoFin,
       );
 
       //si el consumo salió mal
@@ -307,22 +310,28 @@ class TareasViewModel extends ChangeNotifier {
 
       tareas.addAll(res.response);
 
+      isLoading = false; //detener cargar pantalla
+
       rangoIni = tareas.length + 1;
       rangoFin = rangoIni + intervaloRegistros;
 
       //sino
     } else {
+      //Limpiar lista
+      tareas.clear();
+
       rangoIni = 1;
       rangoFin = 10;
 
       isLoading = true;
 
       //consumo de api
-      final ApiResModel resTarea = await tareaService.getTareas(
+      final ApiResModel resTarea = await tareaService.getRangoTareas(
         user,
         token,
         search,
-        tabController.index,
+        rangoIni,
+        rangoFin,
       );
 
       //si el consumo salió mal
