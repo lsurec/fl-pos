@@ -46,24 +46,38 @@ class ProductView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "SKU: ${product.productoId}",
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => vm.viewProductImages(
+                          context,
+                          product,
+                        ),
+                        icon: const Icon(
+                          Icons.image,
+                        ),
+                      ),
+                      Text(
+                        "SKU: ${product.productoId}",
+                        style: AppTheme.style(
+                          context,
+                          Styles.title,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   _NumericField(),
                   Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'descripcion',
-                      ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.blueText,
-                      )),
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.general,
+                      'descripcion',
+                    ),
+                    style: AppTheme.style(
+                      context,
+                      Styles.blueText,
+                    ),
+                  ),
                   const SizedBox(height: 5),
                   Text(
                     product.desProducto,
@@ -192,7 +206,9 @@ class ProductView extends StatelessWidget {
                       ],
                     ),
                   if (vm.prices.isNotEmpty && !docVM.editPrice())
-                    Text(currencyFormat.format(vm.price)),
+                    Text(
+                      currencyFormat.format(vm.price),
+                    ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -278,30 +294,68 @@ class _BottomBar extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => vm.addTransaction(context, product, back),
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                color: AppTheme.color(
+          //agregar transaccion
+          if (vm.accion == 0)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => vm.addTransaction(
                   context,
-                  Styles.primary,
+                  product,
+                  back,
+                  0,
                 ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'agregar',
-                    ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'agregar',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.whiteStyle,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+          //modificar transaccion
+          if (vm.accion == 1)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => vm.addTransaction(
+                  context,
+                  product,
+                  back,
+                  1,
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'modificar',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.whiteStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -346,27 +400,28 @@ class _NumericField extends StatelessWidget {
         Expanded(
           child: TextFormField(
             decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                  ),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  width: 1,
                 ),
-                hintText: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.factura,
-                  'cantidad',
-                ),
-                hintStyle: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-                labelText: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.factura,
-                  'cantidad',
-                ),
-                labelStyle: AppTheme.style(
-                  context,
-                  Styles.normal,
-                )),
+              ),
+              hintText: AppLocalizations.of(context)!.translate(
+                BlockTranslate.factura,
+                'cantidad',
+              ),
+              hintStyle: AppTheme.style(
+                context,
+                Styles.normal,
+              ),
+              labelText: AppLocalizations.of(context)!.translate(
+                BlockTranslate.factura,
+                'cantidad',
+              ),
+              labelStyle: AppTheme.style(
+                context,
+                Styles.normal,
+              ),
+            ),
             controller: vm.controllerNum,
             inputFormatters: [
               FilteringTextInputFormatter.allow(
@@ -390,6 +445,71 @@ class _NumericField extends StatelessWidget {
           ],
         )
       ],
+    );
+  }
+}
+
+class ImageCarouselDialog extends StatelessWidget {
+  final List<String> imageUrls;
+
+  const ImageCarouselDialog({
+    super.key,
+    required this.imageUrls,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    PageController pageController = PageController(initialPage: 0);
+
+    return Dialog(
+      child: SizedBox(
+        height: 350,
+        child: PageView.builder(
+          controller: pageController,
+          itemCount: imageUrls.length,
+          itemBuilder: (context, index) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    Image.network(
+                      imageUrls[index],
+                      height: 300,
+                    ),
+                    Positioned(
+                      bottom: 5,
+                      left: 0, // Establece el margen izquierdo
+                      right: 0, // Establece el margen derecho
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          color: AppTheme.color(
+                            context,
+                            Styles.grey,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          child: Text(
+                            "${index + 1}/${imageUrls.length}",
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

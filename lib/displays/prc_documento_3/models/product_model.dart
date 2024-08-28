@@ -40,3 +40,41 @@ class ProductModel {
         "tipo_Producto": tipoProducto,
       };
 }
+
+class ObjetoProductoModel {
+  int productoObjeto;
+  int producto;
+  int unidadMedida;
+  int consecutivoInterno;
+  String urlImg;
+
+  ObjetoProductoModel({
+    required this.productoObjeto,
+    required this.producto,
+    required this.unidadMedida,
+    required this.consecutivoInterno,
+    required this.urlImg,
+  });
+
+  factory ObjetoProductoModel.fromJson(String str) =>
+      ObjetoProductoModel.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ObjetoProductoModel.fromMap(Map<String, dynamic> json) =>
+      ObjetoProductoModel(
+        productoObjeto: json["producto_Objeto"],
+        producto: json["producto"],
+        unidadMedida: json["unidad_Medida"],
+        consecutivoInterno: json["consecutivo_Interno"],
+        urlImg: json["url_Img"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "producto_Objeto": productoObjeto,
+        "producto": producto,
+        "unidad_Medida": unidadMedida,
+        "consecutivo_Interno": consecutivoInterno,
+        "url_Img": urlImg,
+      };
+}

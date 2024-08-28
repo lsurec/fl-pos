@@ -133,11 +133,30 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   //generar formato pdf para compartir
-  Future<void> sheredDoc(BuildContext context) async {
+  Future<void> sheredDoc(
+    BuildContext context,
+  ) async {
     final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
     final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
     final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+
     isLoading = true;
+
+    if (menuVM.documento == 20) {
+      print("tipo doc Cotizacoin de alfa y omega");
+
+      await vmShare.sheredDocCotiAlfayOmega(
+        context,
+        consecutivoDoc,
+        vmDoc.vendedorSelect?.nomCuentaCorrentista,
+        vmDoc.clienteSelect,
+        vmDetails.total,
+      );
+      isLoading = false;
+      return;
+    }
+
     await vmShare.sheredDoc(
       context,
       consecutivoDoc,
@@ -419,12 +438,15 @@ class ConfirmDocViewModel extends ChangeNotifier {
   //Navgar a pantalla de impresion
   navigatePrint(BuildContext context) {
     final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
       arguments: PrintDocSettingsModel(
-        opcion: 2,
+        opcion: menuVM.documento == 20
+            ? 4
+            : 2, //TODO: Parametrizar con Alfa y Omega
         consecutivoDoc: consecutivoDoc,
         cuentaCorrentistaRef: vmDoc.vendedorSelect?.nomCuentaCorrentista,
         client: vmDoc.clienteSelect,
@@ -1111,7 +1133,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
               !transaction.precio!.precio ? transaction.precio!.id : null,
           traTipoTransaccion: resolveTipoTransaccion(
               transaction.producto.tipoProducto, scaffoldKey.currentContext!),
-          traMonto: transaction.cantidad * transaction.precio!.precioU,
+          traMonto: transaction.total,
+          traMontoDias: transaction.precioDia,
         ),
       );
 
@@ -1184,6 +1207,21 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docElementoAsignado: 1, //TODO:preguntar,
       docTransaccion: transactions,
       docCargoAbono: payments,
+      docRefTipoReferencia: docVM.valueParametro(58)
+          ? docVM.referenciaSelect?.tipoReferencia
+          : null,
+      docFechaIni: docVM.valueParametro(44) ? docVM.fechaInicial : null,
+      docFechaFin: docVM.valueParametro(44) ? docVM.fechaFinal : null,
+      docRefFechaIni: docVM.valueParametro(381) ? docVM.fechaRefIni : null,
+      docRefFechaFin: docVM.valueParametro(382) ? docVM.fechaRefFin : null,
+      docRefObservacion:
+          docVM.valueParametro(383) ? docVM.refObservacionParam384.text : null,
+      docRefDescripcion:
+          docVM.valueParametro(384) ? docVM.refDescripcionParam383.text : null,
+      docRefObservacion2:
+          docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
+      docRefObservacion3:
+          docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
     );
 
     //objeto enviar documento

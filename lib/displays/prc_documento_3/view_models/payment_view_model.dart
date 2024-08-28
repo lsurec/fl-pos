@@ -436,7 +436,7 @@ class PaymentViewModel extends ChangeNotifier {
 
   //Calcular totales
   void calculateTotales(BuildContext context) {
-    DocumentService.saveDocumentLocal(context);
+    //Borré la funcion que guarda el documento
 
     //View models externos
     final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);

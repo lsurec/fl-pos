@@ -406,6 +406,15 @@ class RecentViewModel extends ChangeNotifier {
       serie: serieDoc,
       documentoDesc: documentoDesc,
       serieDesc: serieDesc,
+      docRefTipoReferencia: doc.estructura.docRefTipoReferencia,
+      docFechaIni: doc.estructura.docFechaIni,
+      docFechaFin: doc.estructura.docFechaFin,
+      docRefFechaIni: doc.estructura.docRefFechaIni,
+      docRefFechaFin: doc.estructura.docRefFechaFin,
+      docRefDescripcion: doc.estructura.docRefDescripcion,
+      docRefObservacion: doc.estructura.docRefObservacion,
+      docRefObservacion2: doc.estructura.docRefObservacion2,
+      docRefObservacion3: doc.estructura.docRefObservacion3,
     );
 
     Navigator.pushNamed(

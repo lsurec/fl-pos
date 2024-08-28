@@ -13,6 +13,9 @@ class ClientModel {
   dynamic telefono;
   bool permitirCxC;
   double limiteCredito;
+  dynamic celular;
+  int grupoCuenta;
+  dynamic desGrupoCuenta;
 
   ClientModel({
     required this.cuentaCorrentista,
@@ -27,6 +30,9 @@ class ClientModel {
     required this.telefono,
     required this.permitirCxC,
     required this.limiteCredito,
+    required this.celular,
+    required this.grupoCuenta,
+    required this.desGrupoCuenta,
   });
 
   factory ClientModel.fromJson(String str) =>
@@ -47,6 +53,9 @@ class ClientModel {
         telefono: json["telefono"],
         permitirCxC: json["permitir_CxC"],
         limiteCredito: json["limite_Credito"] ?? 0,
+        celular: json["celular"],
+        grupoCuenta: json["grupo_Cuenta"],
+        desGrupoCuenta: json["des_Grupo_Cuenta"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -62,5 +71,8 @@ class ClientModel {
         "telefono": telefono,
         "permitir_CxC": permitirCxC,
         "limite_Credito": limiteCredito,
+        "celular": celular,
+        "grupo_Cuenta": grupoCuenta,
+        "des_Grupo_Cuenta": desGrupoCuenta,
       };
 }

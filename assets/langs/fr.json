@@ -83,7 +83,9 @@
         "eliminar": "Supprimer",
         "adjuntarArchivos": "Joindre des fichiers",
         "enviarComentario": "Envoyer un commentaire.",
-        "cambiarResponsable": "Mettre à jour la personne responsable"
+        "cambiarResponsable": "Mettre à jour la personne responsable",
+        "modificar": "Modifier",
+        "compartirInforme": "Partager le rapport"
     },
     "fechas": {
         "fecha": "Date:",
@@ -100,7 +102,15 @@
         "hora": "Heure : ",
         "completa": "Date et Heure: ",
         "entrega": "Date de Livraison: ",
-        "recoger": "Date de Ramassage: "
+        "recoger": "Date de Ramassage: ",
+        "restriccionFechas": "Les dates ne sont pas valides. Veuillez vérifier les restrictions.",
+        "fechaEntregaNoActual": "Les dates ne sont pas valides. Ajustez la date de livraison, elle ne peut pas être antérieure à la date actuelle.",
+        "fechaRecogerNoEntrega": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date de livraison.",
+        "fechaInicialNoEntrega": "Les dates ne sont pas valides. Ajustez la date initiale, elle ne peut pas être antérieure à la date de livraison.",
+        "fechaRecogerNoInicial": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date initiale.",
+        "fechaFinalNoInicial": "Les dates ne sont pas valides. Ajustez la date finale, elle ne peut pas être antérieure à la date initiale.",
+        "fechaRecogerNoFinal": "Les dates ne sont pas valides. Ajustez la date de ramassage, elle ne peut pas être antérieure à la date finale.",
+        "eventoF": "Date de l'événement: "
     },
     "notificaciones": {
         "reiniciar": "Pour visualiser les changements, redémarrez d'abord l'application.",
@@ -198,7 +208,20 @@
         "asignado": "Utilisateur précédemment assigné.",
         "estadoIgual": "État précédemment assigné.",
         "prioridadIgual": "Priorité précédemment assignée.",
-        "copiado": "Texte copié dans le presse-papiers."
+        "copiado": "Texte copié dans le presse-papiers.",
+        "precioDiasNoCalculado": "Le prix par jour n'a pas été calculé. Vérifiez que les dates sont valides.",
+        "seleccioneTipoRef": "Vous devez sélectionner un type de référence.",
+        "noCalculoDias": "Le prix par jour n'a pas pu être calculé.",
+        "recalcularFechas": "Prix par jour recalculés en raison de la modification des dates.",
+        "sinImagenes": "Aucune image associée à ce produit.",
+        "cantidadPositiva": "La quantité doit être numérique et positive.",
+        "cantidadNumerica": "La quantité doit être numérique.",
+        "cantidadMayor": "La quantité doit être supérieure à 0.",
+        "traModificada": "Transaction modifiée.",
+        "advertencia": "Avertissement",
+        "productosNoDisponibles": "Un ou plusieurs produits ne sont pas disponibles.",
+        "aplicaranCambios": "Les modifications seront appliquées au document.",
+        "docEditado": "Document édité avec succès."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
@@ -289,7 +312,13 @@
         "imprimir": "Imprimer le document après confirmation.",
         "mesa": "Table",
         "atencion": "Vous a servi",
-        "serie": "Série interne :"
+        "serie": "Série interne :",
+        "latitud": "Latitude: ",
+        "longitud": "Longitude: ",
+        "consInt": "Cons. Interne: ",
+        "sinObtener": "Non obtenu.",
+        "tipoRef": "Type de référence",
+        "contacto": "Contact"
     },
     "generales": {
         "registro": "Enregistrements",
@@ -307,7 +336,8 @@
         "documento": "Document",
         "detalle": "Détail",
         "pago": "Paiement",
-        "observaciones": "Observations"
+        "observaciones": "Observations",
+        "noRegistrado": "Non enregistré."
     },
     "cuenta": {
         "nueva": "Nouveau compte",
@@ -367,9 +397,11 @@
         "diferencia": "Différence",
         "pagoTotal": "Paiement total",
         "porcentaje": "Pourcentage",
-        "cargAgregado": "Frais ajouté.",
+        "cargoAgregado": "Frais ajouté.",
         "descAgregado": "Remise ajoutée.",
-        "saldo": "Solde"
+        "saldo": "Solde",
+        "cantDias": "Nombre de jours",
+        "precioTotalCant": "Prix total par quantité"
     },
     "cotizacion": {
         "convertirDoc": "Convertir le document",
@@ -389,7 +421,10 @@
         "consecutivoInter": "Consécutif Interne",
         "idRef": "Réf ID: ",
         "cuenta": "Compte: ",
-        "direEntrega": "Adresse de Livraison"
+        "direEntrega": "Adresse de Livraison",
+        "tipoRef": "Type de référence",
+        "codigo": "Code",
+        "mensajes": "Messages: "
     },
     "tareas": {
         "numTarea": "Tâche No : ",

@@ -83,7 +83,9 @@
         "eliminar": "Eliminar",
         "adjuntarArchivos": "Adjuntar Archivos",
         "enviarComentario": "Enviar comentario.",
-        "cambiarResponsable": "Actualizar Responsable"
+        "cambiarResponsable": "Actualizar Responsable",
+        "modificar": "Modificar",
+        "compartirInforme": "Compartir informe"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -100,7 +102,15 @@
         "hora": "Hora: ",
         "completa": "Fecha y hora: ",
         "entrega": "Fecha Entrega: ",
-        "recoger": "Fecha Recoger: "
+        "recoger": "Fecha Recoger: ",
+        "restriccion": "Las fechas no son válidas. Por favor, revisa las restricciones",
+        "fechaEntregaNoActual": "Las fechas no son válidas. Modifique la fecha de entrega, no puede ser menor a la fecha actual.",
+        "fechaRecogerNoEntrega": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha de entrega.",
+        "fechaInicialNoEntrega": "Las fechas no son válidas. Modifique la fecha inicial, no puede ser menor a la fecha de entrega.",
+        "fechaRecogerNoInicial": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha inicial.",
+        "fechaFinalNoInicial": "Las fechas no son válidas. Modifique la fecha final, no puede ser menor a la fecha inicial.",
+        "fechaRecogerNoFinal": "Las fechas no son válidas. Modifique la fecha de recoger, no puede ser menor a la fecha final.",
+        "eventoF": "Fecha Evento: "
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
@@ -198,7 +208,20 @@
         "asignado": "Usuario asignado anteriormente.",
         "estadoIgual": "Estado asignado anteriormente.",
         "prioridadIgual": "Prioridad asignada anteriormente.",
-        "copiado": "Texto copiado al portapapeles."
+        "copiado": "Texto copiado al portapapeles.",
+        "precioDiasNoCalculado": "No se calculó el precio por día. Verifica que las fechas sean válidas.",
+        "seleccioneTipoRef": "Debes seleccionar un tipo de referencia.",
+        "recalcularFechas": "Precios por día recalculados por modificación de fechas.",
+        "noCalculoDias": "No se pudo calcular el precio por días.",
+        "sinImagenes": "No hay imágenes asociadas a este producto.",
+        "cantidadPositiva": "La cantidad debe ser numérica o positiva.",
+        "cantidadNumerica": "La cantidad debe ser numérica.",
+        "cantidadMayor": "La cantidad debe ser mayor a 0.",
+        "traModificada": "Transacción modificada.",
+        "advertencia": "Advertencia",
+        "productosNoDisponibles": "Uno o más productos no están disponibles.",
+        "aplicaranCambios": "Se aplicaran los cambios al documento.",
+        "docEditado": "Documento editado correctamente."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -289,7 +312,13 @@
         "imprimir": "Imprimir documento después de confirmar.",
         "mesa": "Mesa",
         "atencion": "Le atendió",
-        "serie": "Serie interna:"
+        "serie": "Serie interna:",
+        "latitud": "Latitud: ",
+        "longitud": "Longitud: ",
+        "consInt": "Cons. Interno: ",
+        "sinObtener": "Sin obtener.",
+        "tipoRef": "Tipo de referencia",
+        "contacto": "Contacto:"
     },
     "generales": {
         "registro": "Registros",
@@ -307,7 +336,8 @@
         "documento": "Documento",
         "detalle": "Detalle",
         "pago": "Pago",
-        "observaciones": "Observaciones"
+        "observaciones": "Observaciones",
+        "noRegistrado": "No Registrado."
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -367,9 +397,11 @@
         "diferencia": "Diferencia",
         "pagoTotal": "Pago total",
         "porcentaje": "Porcentaje",
-        "cargAgregado": "Cargo agregado.",
+        "cargoAgregado": "Cargo agregado.",
         "descAgregado": "Descuento agregado.",
-        "saldo": "Saldo"
+        "saldo": "Saldo",
+        "cantDias": "Cantidad días",
+        "precioTotalCant": "Precio total por cantidad"
     },
     "cotizacion": {
         "convertirDoc": "Convertir Documento",
@@ -389,7 +421,10 @@
         "consecutivoInter": "Consecutivo interno",
         "idRef": "Id Ref: ",
         "cuenta": "Cuenta: ",
-        "direEntrega": "Dirección Entrega"
+        "direEntrega": "Dirección Entrega",
+        "tipoRef": "Tipo de referencia",
+        "codigo": "Código",
+        "mensajes": "Mensajes: "
     },
     "tareas": {
         "numTarea": "Tarea No: ",

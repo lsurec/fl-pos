@@ -18,6 +18,7 @@ class DetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetailsViewModel>(context);
+    final vmProducto = Provider.of<ProductViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -29,13 +30,51 @@ class DetailsView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.20,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1,
+                              ),
+                            ),
+                            hintText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'cantidad',
+                            ),
+                            hintStyle: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                            labelText: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.factura,
+                              'cantidad',
+                            ),
+                            labelStyle: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                          controller: vmProducto.controllerNum,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^(\d+)?\.?\d{0,2}'),
+                            ),
+                          ],
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) => vmProducto.changeTextNum(value),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: Form(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           key: vm.formKeySearch,
                           child: TextFormField(
-                            onFieldSubmitted: (value) =>
-                                vm.performSearch(context),
+                            onFieldSubmitted: (value) => vm.performSearch(
+                              context,
+                            ),
                             textInputAction: TextInputAction.search,
                             controller: vm.searchController,
                             validator: (value) {
@@ -223,12 +262,9 @@ class DetailsView extends StatelessWidget {
                             Icons.delete,
                           ),
                         ),
-                        child: GestureDetector(
-                          onTap: () => vm.navigatorDetails(context, index),
-                          child: _TransactionCard(
-                            transaction: vm.traInternas[index],
-                            indexTransaction: index,
-                          ),
+                        child: _TransactionCard(
+                          transaction: vm.traInternas[index],
+                          indexTransaction: index,
                         ),
                       );
                     },
@@ -303,6 +339,8 @@ class _TransactionCard extends StatelessWidget {
     final vm = Provider.of<DetailsViewModel>(context);
 
     final homeVM = Provider.of<HomeViewModel>(context, listen: false);
+    final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+    final productVM = Provider.of<ProductViewModel>(context, listen: false);
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
@@ -316,85 +354,128 @@ class _TransactionCard extends StatelessWidget {
         context,
         Styles.transaction,
       ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(10),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${transaction.cantidad} x ${transaction.producto.desProducto}',
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
-            ),
-            Text(
-              'SKU: ${transaction.producto.productoId}',
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
-            )
-          ],
+      child: InkWell(
+        onDoubleTap: () => vm.navigatorDetails(
+          context,
+          indexTransaction,
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (transaction.precio != null)
-              Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'precioU',
-                )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-
-            Text(
-              '${AppLocalizations.of(context)!.translate(
-                BlockTranslate.calcular,
-                'precioT',
-              )}: ${currencyFormat.format(transaction.total)}',
-              style: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
-            ),
-            if (transaction.cargo != 0)
-              Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'cargo',
-                )}: ${currencyFormat.format(transaction.cargo)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-
-            if (transaction.descuento != 0)
-              Text(
-                '${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.calcular,
-                  'descuento',
-                )}: ${currencyFormat.format(transaction.descuento)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-              ),
-            // Text('Detalles: ${transaction.detalles}'),
-          ],
+        onTap: () => productVM.editarTran(
+          context,
+          indexTransaction,
         ),
-        leading: Checkbox(
-          activeColor: AppTheme.color(
-            context,
-            Styles.darkPrimary,
+        child: ListTile(
+          contentPadding: const EdgeInsets.all(10),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${transaction.cantidad} x ${transaction.producto.desProducto}',
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                ),
+              ),
+              Text(
+                'SKU: ${transaction.producto.productoId}',
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                ),
+              )
+            ],
           ),
-          value: transaction.isChecked,
-          onChanged: (value) => vm.changeChecked(value, indexTransaction),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Cantidad dias
+              if (docVM.valueParametro(44))
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'cantDias',
+                  )}: ${transaction.cantidadDias}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+
+              if (transaction.precio != null)
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'precioU',
+                  )}: ${currencyFormat.format(transaction.precio!.precioU)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+              //Total por cantidad
+              if (docVM.valueParametro(44))
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'precioTotalCant',
+                  )}: ${currencyFormat.format(transaction.precioCantidad)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+              Text(
+                '${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.calcular,
+                  'precioT',
+                )}: ${currencyFormat.format(transaction.total)}',
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
+              if (transaction.cargo != 0)
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'cargo',
+                  )}: ${currencyFormat.format(transaction.cargo)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+
+              if (transaction.descuento != 0)
+                Text(
+                  '${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.calcular,
+                    'descuento',
+                  )}: ${currencyFormat.format(transaction.descuento)}',
+                  style: AppTheme.style(
+                    context,
+                    Styles.normal,
+                  ),
+                ),
+              // Text('Detalles: ${transaction.detalles}'),
+            ],
+          ),
+          leading: Checkbox(
+            activeColor: AppTheme.color(
+              context,
+              Styles.darkPrimary,
+            ),
+            value: transaction.isChecked,
+            onChanged: (value) => vm.changeChecked(value, indexTransaction),
+          ),
+          trailing: IconButton(
+            onPressed: () => productVM.viewProductImages(
+              context,
+              transaction.producto,
+            ),
+            icon: const Icon(
+              Icons.image,
+            ),
+          ),
         ),
       ),
     );

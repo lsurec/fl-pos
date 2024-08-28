@@ -12,6 +12,13 @@ class DocPrintModel {
   String observacion;
   List<String> mensajes;
   PoweredBy poweredBy;
+  String noDoc;
+  String? evento;
+  String? emailVendedor;
+  Fechas? fechas;
+  int? cantidadDias;
+  ObservacionesRef? refObservaciones;
+  String? image64Empresa;
 
   DocPrintModel({
     required this.empresa,
@@ -25,6 +32,13 @@ class DocPrintModel {
     required this.observacion,
     required this.mensajes,
     required this.poweredBy,
+    required this.noDoc,
+    this.evento,
+    this.emailVendedor,
+    this.fechas,
+    this.cantidadDias,
+    this.refObservaciones,
+    this.image64Empresa,
   });
 
   factory DocPrintModel.fromJson(String str) =>
@@ -44,6 +58,15 @@ class DocPrintModel {
         observacion: json["observacion"],
         mensajes: List<String>.from(json["mensajes"].map((x) => x)),
         poweredBy: PoweredBy.fromMap(json["poweredBy"]),
+        noDoc: json["noDoc"],
+        evento: json["evento"],
+        emailVendedor: json["emailVendedor"],
+        fechas: json["fechas"] != null ? Fechas.fromMap(json["fechas"]) : null,
+        cantidadDias: json["cantidadDias"],
+        refObservaciones: json["refObservaciones"] != null
+            ? ObservacionesRef.fromMap(json["refObservaciones"])
+            : null,
+        image64Empresa: json["image64Empresa"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -58,6 +81,13 @@ class DocPrintModel {
         "observacion": observacion,
         "mensajes": List<dynamic>.from(mensajes.map((x) => x)),
         "poweredBy": poweredBy.toMap(),
+        "noDoc": noDoc,
+        "evento": evento,
+        "emailVendedor": emailVendedor,
+        "fechas": fechas?.toMap(),
+        "cantidadDias": cantidadDias,
+        "refObservaciones": refObservaciones?.toMap(),
+        "image64Empresa": image64Empresa,
       };
 }
 
@@ -92,6 +122,7 @@ class Cliente {
   String nit;
   String fecha;
   String tel;
+  String email;
 
   Cliente({
     required this.nombre,
@@ -99,6 +130,7 @@ class Cliente {
     required this.nit,
     required this.fecha,
     required this.tel,
+    required this.email,
   });
 
   factory Cliente.fromJson(String str) => Cliente.fromMap(json.decode(str));
@@ -111,6 +143,7 @@ class Cliente {
         nit: json["nit"],
         fecha: json["fecha"],
         tel: json["tel"],
+        email: json["email"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -119,6 +152,7 @@ class Cliente {
         "nit": nit,
         "fecha": fecha,
         "tel": tel,
+        "email": email,
       };
 }
 
@@ -215,12 +249,20 @@ class Item {
   double cantidad;
   String unitario;
   String total;
+  String sku;
+  String precioDia;
+  String? precioReposicion;
+  String? imagen64;
 
   Item({
     required this.descripcion,
     required this.cantidad,
     required this.unitario,
     required this.total,
+    required this.sku,
+    required this.precioDia,
+    this.precioReposicion,
+    this.imagen64,
   });
 
   factory Item.fromJson(String str) => Item.fromMap(json.decode(str));
@@ -232,6 +274,10 @@ class Item {
         cantidad: json["cantidad"],
         unitario: json["precioUnitario"]?.toDouble(),
         total: json["precioUnitario"]?.toDouble(),
+        sku: json["sku"],
+        precioDia: json["precioDia"],
+        precioReposicion: json["precioReposicion"],
+        imagen64: json["imagen64"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -239,6 +285,10 @@ class Item {
         "cantidad": cantidad,
         "unitario": unitario,
         "total": total,
+        "sku": sku,
+        "precioDia": precioDia,
+        "precioReposicion": precioReposicion,
+        "imagen64": imagen64,
       };
 }
 
@@ -331,5 +381,73 @@ class PoweredBy {
   Map<String, dynamic> toMap() => {
         "nombre": nombre,
         "website": website,
+      };
+}
+
+//Fechas
+class Fechas {
+  String? fechaInicio;
+  String? fechaFin;
+  String? fechaInicioRef;
+  String? fechaFinRef;
+
+  Fechas({
+    this.fechaInicio,
+    this.fechaFin,
+    this.fechaInicioRef,
+    this.fechaFinRef,
+  });
+
+  factory Fechas.fromJson(String str) => Fechas.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Fechas.fromMap(Map<String, dynamic> json) => Fechas(
+        fechaInicio: json["fechaInicio"] as String?,
+        fechaFin: json["fechaFin"] as String?,
+        fechaInicioRef: json["fechaInicioRef"] as String?,
+        fechaFinRef: json["fechaFinRef"] as String?,
+      );
+
+  Map<String, dynamic> toMap() => {
+        "fechaInicio": fechaInicio,
+        "fechaFin": fechaFin,
+        "fechaInicioRef": fechaInicioRef,
+        "fechaFinRef": fechaFinRef,
+      };
+}
+
+//Observaciones
+class ObservacionesRef {
+  String observacion2; // contacto
+  String descripcion; // Descripcion
+  String observacion3; // direccion entrega
+  String observacion; // observacion
+
+  ObservacionesRef({
+    required this.observacion2,
+    required this.descripcion,
+    required this.observacion3,
+    required this.observacion,
+  });
+
+  factory ObservacionesRef.fromJson(String str) =>
+      ObservacionesRef.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory ObservacionesRef.fromMap(Map<String, dynamic> json) =>
+      ObservacionesRef(
+        observacion2: json["observacion2"],
+        descripcion: json["descripcion"],
+        observacion3: json["observacion3"],
+        observacion: json["observacion"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "observacion2": observacion2,
+        "descripcion": descripcion,
+        "observacion3": observacion3,
+        "observacion": observacion,
       };
 }

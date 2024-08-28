@@ -27,6 +27,22 @@ class EncabezadoModel {
   dynamic feLUuid;
   dynamic feLFechaCertificacion;
   String? montoLetras;
+  int preview;
+  dynamic impresora;
+  dynamic copias;
+  dynamic formato;
+  dynamic refTipoReferencia;
+  dynamic refFechaIni;
+  dynamic refFechaFin;
+  dynamic fechaIni;
+  dynamic fechaFin;
+  dynamic refObservacion2;
+  dynamic refDescripcion;
+  dynamic refObservacion3;
+  dynamic refObservacion;
+  dynamic fDesTipoReferencia;
+  dynamic cuentaCorrentistaRefEMail;
+  dynamic cantidadDiasFechaIniFin;
 
   EncabezadoModel({
     required this.idDocumento,
@@ -55,6 +71,22 @@ class EncabezadoModel {
     required this.feLUuid,
     required this.feLFechaCertificacion,
     required this.montoLetras,
+    required this.preview,
+    required this.impresora,
+    required this.copias,
+    required this.formato,
+    required this.refTipoReferencia,
+    required this.refFechaIni,
+    required this.refFechaFin,
+    required this.fechaIni,
+    required this.fechaFin,
+    required this.refObservacion2,
+    required this.refDescripcion,
+    required this.refObservacion3,
+    required this.refObservacion,
+    required this.fDesTipoReferencia,
+    required this.cuentaCorrentistaRefEMail,
+    required this.cantidadDiasFechaIniFin,
   });
 
   factory EncabezadoModel.fromJson(String str) =>
@@ -89,6 +121,22 @@ class EncabezadoModel {
         feLUuid: json["feL_UUID"],
         feLFechaCertificacion: json["feL_fechaCertificacion"],
         montoLetras: json["monto_Letras"],
+        preview: json["preview"],
+        impresora: json["impresora"],
+        copias: json["copias"],
+        formato: json["formato"],
+        refTipoReferencia: json["ref_Tipo_Referencia"],
+        refFechaIni: json["ref_Fecha_Ini"],
+        refFechaFin: json["ref_Fecha_Fin"],
+        fechaIni: json["fecha_Ini"],
+        fechaFin: json["fecha_Fin"],
+        refObservacion2: json["ref_Observacion_2"],
+        refDescripcion: json["ref_Descripcion"],
+        refObservacion3: json["ref_Observacion_3"],
+        refObservacion: json["ref_Observacion"],
+        fDesTipoReferencia: json["fDes_Tipo_Referencia"],
+        cuentaCorrentistaRefEMail: json["cuenta_Correntista_Ref_EMail"],
+        cantidadDiasFechaIniFin: json["cantidad_Dias_Fecha_Ini_Fin"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -118,5 +166,21 @@ class EncabezadoModel {
         "feL_UUID": feLUuid,
         "feL_fechaCertificacion": feLFechaCertificacion,
         "monto_Letras": montoLetras,
+        "preview": preview,
+        "impresora": impresora,
+        "copias": copias,
+        "formato": formato,
+        "ref_Tipo_Referencia": refTipoReferencia,
+        "ref_Fecha_Ini": refFechaIni,
+        "ref_Fecha_Fin": refFechaFin,
+        "fecha_Ini": fechaIni,
+        "fecha_Fin": fechaFin,
+        "ref_Observacion_2": refObservacion2,
+        "ref_Descripcion": refDescripcion,
+        "ref_Observacion_3": refObservacion3,
+        "ref_Observacion": refObservacion,
+        "fDes_Tipo_Referencia": fDesTipoReferencia,
+        "cuenta_Correntista_Ref_EMail": cuentaCorrentistaRefEMail,
+        "cantidad_Dias_Fecha_Ini_Fin": cantidadDiasFechaIniFin,
       };
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -8,7 +10,7 @@ class ProductService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-  Future<ApiResModel> getValidateProducts(
+  Future<ApiResModel> getValidaProducto(
     String user,
     String serie,
     int tipoDocumento,
@@ -19,14 +21,13 @@ class ProductService {
     int unidadMedida,
     int producto,
     int cantidad,
-    double tipoCambio,
+    int tipoCambio,
     int moneda,
     int tipoPrecio,
     String token,
   ) async {
-    //url completa
+    //URL completa
     Uri url = Uri.parse("${_baseUrl}Producto/validate");
-
     try {
       //Configuraciones del api
       final response = await http.get(
@@ -61,7 +62,7 @@ class ProductService {
         );
       }
 
-      //bodegas disponibles
+      //Lista para almacenar la respuesta del api
       List<String> mensajes = [];
 
       //recorrer lista api Y  agregar a lista local
@@ -70,8 +71,7 @@ class ProductService {
         //agregar item a la lista
         mensajes.add(item);
       }
-
-      //respuesta correcta
+      //retornar respuesta correcta del api
       return ApiResModel(
         url: url.toString(),
         succes: true,
@@ -79,7 +79,7 @@ class ProductService {
         storeProcedure: null,
       );
     } catch (e) {
-      //respuesta incorrecta
+      //en caso de error retornar el error
       return ApiResModel(
         url: url.toString(),
         succes: false,
@@ -322,6 +322,65 @@ class ProductService {
     }
   }
 
+  //calcular precio por dias
+  Future<ApiResModel> getFormulaPrecioU(
+    String token,
+    DateTime fechaIni,
+    DateTime fechaFin,
+    String precioU,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Producto/formula/precio/unitario");
+    try {
+      //url completa
+
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "fechaIni": fechaIni.toIso8601String(),
+          "fechaFin": fechaFin.toIso8601String(),
+          "precioU": precioU
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      List<PrecioDiaModel> precios = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = PrecioDiaModel.fromMap(item);
+        //agregar item a la lista
+        precios.add(responseFinally);
+      }
+
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: precios,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        storeProcedure: null,
+        response: e.toString(),
+      );
+    }
+  }
+
   Future<ApiResModel> getFactorConversion(
     int bodega,
     int producto,
@@ -373,6 +432,67 @@ class ProductService {
         storeProcedure: null,
       );
     } catch (e) {
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //obtener las imagenes de cada producto
+  Future<ApiResModel> getObjetosProducto(
+    String token,
+    int product,
+    int um,
+    int empresa,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Producto/imagenes/$product/$um/$empresa");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //img empresa disponibles
+      List<ObjetoProductoModel> imgProductos = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = ObjetoProductoModel.fromMap(item);
+
+        //agregar item a la lista
+        imgProductos.add(responseFinally);
+      }
+
+      //respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: imgProductos,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
       return ApiResModel(
         url: url.toString(),
         succes: false,

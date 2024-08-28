@@ -1,13 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class NotificationService {
   //Key dcaffkod global
@@ -139,6 +142,244 @@ class NotificationService {
             //   },
             //   child: Text('Contactar Soporte'),
             // ),
+          ],
+        );
+      },
+    );
+  }
+
+  static showMessage(
+    BuildContext context,
+    List<String> mensajes,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              "advertencia",
+            ),
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  "productosNoDisponibles",
+                ),
+              ),
+              const SizedBox(height: 8),
+              ListView.builder(
+                itemCount: mensajes.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final String mensaje = mensajes[index];
+                  return Text(
+                    mensaje,
+                  );
+                },
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  "cerrar",
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // Aquí puedes agregar lógica adicional, como redirigir a la sección de soporte.
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'informe',
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static showMessageValidations(
+    BuildContext context,
+    List<ValidateProductModel> validaciones,
+  ) {
+    final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
+
+    final ValidateProductModel validacion = validaciones[0];
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              Text(
+                AppLocalizations.of(context)!
+                    .translate(
+                      BlockTranslate.notificacion,
+                      "advertencia",
+                    )
+                    .toUpperCase(),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  "productosNoDisponibles",
+                ),
+                style: AppTheme.style(
+                  context,
+                  Styles.normal,
+                ),
+              ),
+              const Divider(),
+            ],
+          ),
+          titlePadding: const EdgeInsets.only(
+            // bottom: 10,
+            top: 15,
+          ),
+          contentPadding: const EdgeInsets.only(
+            top: 5,
+            bottom: 0,
+            left: 25,
+            right: 25,
+          ),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "(${validacion.sku}) ${validacion.productoDesc}",
+                style: AppTheme.style(
+                  context,
+                  Styles.bold,
+                ),
+              ),
+              const Divider(),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.general,
+                          'serie',
+                        )}:",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                      Text(
+                        validacion.serie,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      )
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${AppLocalizations.of(context)!.translate(
+                          BlockTranslate.factura,
+                          'tipoDoc',
+                        )}:",
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      ),
+                      Text(
+                        validacion.tipoDoc,
+                        style: AppTheme.style(
+                          context,
+                          Styles.normal,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(height: 5),
+              const Divider(),
+              const SizedBox(height: 5),
+              SizedBox(
+                height: 120.0, // Limita la altura máxima del área de mensajes
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: validacion.mensajes
+                        .map(
+                          (mensaje) => Column(
+                            children: [
+                              const SizedBox(height: 5),
+                              Text(
+                                mensaje,
+                                style: AppTheme.style(
+                                  context,
+                                  Styles.normal,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  "aceptar",
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () => vmShare.sharedDocInformeAyO(
+                context,
+                validaciones,
+              ),
+              child: Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.botones,
+                  'compartirInforme',
+                ),
+              ),
+            ),
           ],
         );
       },

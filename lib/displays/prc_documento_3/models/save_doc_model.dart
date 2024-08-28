@@ -14,6 +14,15 @@ class SaveDocModel {
     required this.tipoDocumento,
     required this.detalles,
     required this.pagos,
+    required this.tipoRef,
+    required this.refFechaEntrega,
+    required this.refFechaRecoger,
+    required this.refFechaInicio,
+    required this.refFechaFin,
+    required this.refContacto,
+    required this.refDescripcion,
+    required this.refDireccionEntrega,
+    required this.refObservacion,
   });
 
   String user;
@@ -25,6 +34,15 @@ class SaveDocModel {
   int tipoDocumento;
   List<TraInternaModel> detalles;
   List<AmountModel> pagos;
+  TipoReferenciaModel? tipoRef;
+  String? refFechaEntrega;
+  String? refFechaRecoger;
+  String? refFechaInicio;
+  String? refFechaFin;
+  String? refContacto;
+  String? refDescripcion;
+  String? refDireccionEntrega;
+  String? refObservacion;
 
   factory SaveDocModel.fromJson(String str) =>
       SaveDocModel.fromMap(json.decode(str));
@@ -47,6 +65,17 @@ class SaveDocModel {
             json["detalles"].map((x) => TraInternaModel.fromMap(x))),
         pagos: List<AmountModel>.from(
             json["pagos"].map((x) => AmountModel.fromMap(x))),
+        tipoRef: json["tipoRef"] != null
+            ? TipoReferenciaModel.fromMap(json["tipoRef"])
+            : null,
+        refFechaEntrega: json["refFechaEntrega"],
+        refFechaRecoger: json["refFechaRecoger"],
+        refFechaInicio: json["refFechaInicio"],
+        refFechaFin: json["refFechaFin"],
+        refContacto: json["refContacto"],
+        refDescripcion: json["refDescripcion"],
+        refDireccionEntrega: json["refDireccionEntrega"],
+        refObservacion: json["refObservacion"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -59,5 +88,14 @@ class SaveDocModel {
         "tipoDocumento": tipoDocumento,
         "detalles": List<dynamic>.from(detalles.map((x) => x.toMap())),
         "pagos": List<dynamic>.from(pagos.map((x) => x.toMap())),
+        "tipoRef": tipoRef?.toMap(),
+        "refFechaEntrega": refFechaEntrega,
+        "refFechaRecoger": refFechaRecoger,
+        "refFechaInicio": refFechaInicio,
+        "refFechaFin": refFechaFin,
+        "refContacto": refContacto,
+        "refDescripcion": refDescripcion,
+        "refDireccionEntrega": refDireccionEntrega,
+        "refObservacion": refObservacion,
       };
 }

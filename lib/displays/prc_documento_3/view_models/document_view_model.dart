@@ -1,5 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
-
+// ignore_for_file: use_build_context_synchronously, avoid_print
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_post_printer_example/fel/models/credencial_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,17 +16,17 @@ class DocumentViewModel extends ChangeNotifier {
   //Controlador input buscar cliente
   final TextEditingController client = TextEditingController();
 
-  //input contacto
-  final TextEditingController contacto = TextEditingController();
-
   //input descipcion
-  final TextEditingController descipcion = TextEditingController();
-
-  //input direccion de entrega
-  final TextEditingController direcEntrega = TextEditingController();
+  final TextEditingController refObservacionParam384 = TextEditingController();
 
   //input observaciones
-  final TextEditingController observaciones = TextEditingController();
+  final TextEditingController refDescripcionParam383 = TextEditingController();
+
+  //input contacto parametro: 385
+  final TextEditingController refContactoParam385 = TextEditingController();
+
+  //input direccion de entrega
+  final TextEditingController refDirecEntregaParam386 = TextEditingController();
 
   //Seleccionar consummidor final
   bool cf = false;
@@ -60,6 +60,13 @@ class DocumentViewModel extends ChangeNotifier {
     clienteSelect = null;
     vendedorSelect = null;
     cf = false;
+    serieSelect = null;
+    referenciaSelect = null;
+    refObservacionParam384.text = "";
+    refDescripcionParam383.text = "";
+    refContactoParam385.text = "";
+    refDirecEntregaParam386.text = "";
+
     notifyListeners();
   }
 
@@ -80,9 +87,21 @@ class DocumentViewModel extends ChangeNotifier {
   }
 
   //Seleccioanr una referencia
-  void changeRef(TipoReferenciaModel? value) {
+  void changeRef(
+    BuildContext context,
+    TipoReferenciaModel? value,
+  ) {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     referenciaSelect = value;
     notifyListeners();
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
   }
 
   bool monitorPrint() {
@@ -249,6 +268,7 @@ class DocumentViewModel extends ChangeNotifier {
     final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
     final vmMenu = Provider.of<MenuViewModel>(context, listen: false);
     final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
+    final vmDoc = Provider.of<DocumentViewModel>(context, listen: false);
 
     //niciar proceso
     vmFactura.isLoading = true;
@@ -259,9 +279,13 @@ class DocumentViewModel extends ChangeNotifier {
     await loadParametros(context);
     await obtenerReferencias(context); //cargar las referencias
     await vmPayment.loadPayments(context);
-
+    vmDoc.restaurarFechas();
     //finalizar proceso
     vmFactura.isLoading = false;
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
@@ -452,6 +476,7 @@ class DocumentViewModel extends ChangeNotifier {
     //View models externos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
 
     //Datos necesarios
     int empresa = localVM.selectedEmpresa!.empresa;
@@ -487,6 +512,9 @@ class DocumentViewModel extends ChangeNotifier {
     //si solo hay un vendedor agregarlo por defecto
     if (cuentasCorrentistasRef.length == 1) {
       vendedorSelect = cuentasCorrentistasRef.first;
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
     }
 
     notifyListeners();
@@ -497,6 +525,11 @@ class DocumentViewModel extends ChangeNotifier {
     BuildContext context,
     bool value,
   ) {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     cf = value;
 
     //si cf es verdadero
@@ -515,6 +548,9 @@ class DocumentViewModel extends ChangeNotifier {
         telefono: "",
         limiteCredito: 0,
         permitirCxC: false,
+        celular: null,
+        desGrupoCuenta: null,
+        grupoCuenta: 0,
       );
       //Mensaje de confirmacion
       NotificationService.showSnackbar(
@@ -523,9 +559,16 @@ class DocumentViewModel extends ChangeNotifier {
           'clienteSelec',
         ),
       );
+
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
     } else {
       //no seleccionar
       clienteSelect = null;
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
     }
 
     notifyListeners();
@@ -757,6 +800,10 @@ class DocumentViewModel extends ChangeNotifier {
           ),
         );
 
+        if (!vmFactura.editDoc) {
+          DocumentService.saveDocumentLocal(context);
+        }
+
         return;
       }
 
@@ -804,7 +851,17 @@ class DocumentViewModel extends ChangeNotifier {
     ClientModel client,
     BuildContext context,
   ) {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
     clienteSelect = client;
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
+
     notifyListeners();
     if (back) Navigator.pop(context);
   }
@@ -812,16 +869,29 @@ class DocumentViewModel extends ChangeNotifier {
   //Fechas
   DateTime fechaInicial = DateTime.now();
   DateTime fechaFinal = DateTime.now();
-  DateTime fechaEntrega = DateTime.now();
-  DateTime fechaRecoger = DateTime.now();
+  DateTime fechaRefIni = DateTime.now();
+  DateTime fechaRefFin = DateTime.now();
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
+    DateTime fechaHoraActual = DateTime.now();
+
+    if (compararFechas(fechaHoraActual, fechaInicial)) {
+      fechaInicial = addDate30Min(fechaActual);
+      fechaFinal = addDate30Min(fechaInicial);
+      fechaRefFin = addDate30Min(fechaFinal);
+    }
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaInicial,
-      firstDate: fechaInicial,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -841,11 +911,106 @@ class DocumentViewModel extends ChangeNotifier {
       fechaInicial.minute,
     );
 
+    //Recalcular precios cuando se cambia la fechas Inicio
+    validarFecha(context);
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
+
     notifyListeners();
+  }
+
+  validarFecha(BuildContext context) async {
+    final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
+
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final String token = loginVM.token;
+
+    if (valueParametro(44)) {
+      if (Utilities.fechaIgualOMayorSinSegundos(fechaFinal, fechaInicial)) {
+        //
+        if (vmDetails.traInternas.isNotEmpty) {
+          // Calcular nuevos totales
+          for (int i = 0; i < vmDetails.traInternas.length; i++) {
+            var tra = vmDetails.traInternas[i];
+            int count = 0;
+
+            vmFactura.isLoading = true;
+
+            ProductService productService = ProductService();
+
+            // Suponiendo que getFormulaPrecioU es una función asíncrona que devuelve un Future<ResApiInterface>
+            ApiResModel res = await productService.getFormulaPrecioU(
+              token,
+              fechaInicial,
+              fechaFinal,
+              tra.precioCantidad!.toString(),
+            );
+
+            vmFactura.isLoading = false;
+
+            if (!res.succes) {
+              NotificationService.showSnackbar(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  'noCalculoDias',
+                ),
+              );
+
+              return;
+            }
+
+            List<PrecioDiaModel> calculoDias = res.response;
+
+            if (calculoDias.isEmpty) {
+              res.response =
+                  "No se están obteniendo valores del procedimiento almacenado";
+
+              NotificationService.showSnackbar(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.notificacion,
+                  'noCalculoDias',
+                ),
+              );
+
+              return;
+            }
+
+            vmDetails.traInternas[count].precioDia =
+                calculoDias[0].montoCalculado;
+            vmDetails.traInternas[count].total = calculoDias[0].montoCalculado;
+            vmDetails.traInternas[count].cantidadDias =
+                calculoDias[0].cantidadDia;
+
+            count++;
+          }
+
+          vmDetails.calculateTotales(context); //actualizar totales
+
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'recalcularFechas',
+            ),
+          );
+        }
+      } else {
+        //Fechas invalidas
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.fecha,
+            'restriccion',
+          ),
+        );
+      }
+    }
   }
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraInicial(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaInicial.hour,
@@ -877,16 +1042,28 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
+
     notifyListeners();
   }
 
   //para la final
   Future<void> abrirFechaFinal(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
+    DateTime fechaHoraActual = DateTime.now();
+
+    if (compararFechas(fechaHoraActual, fechaFinal)) {
+      fechaFinal = addDate30Min(fechaInicial);
+      fechaRefFin = addDate30Min(fechaFinal);
+    }
+
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: fechaFinal,
-      //fecha minima es la inicial
-      firstDate: fechaInicial,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -906,11 +1083,20 @@ class DocumentViewModel extends ChangeNotifier {
       fechaFinal.minute,
     );
 
+    //Recalcular precios cuando se cambia la fecha Fin
+    validarFecha(context);
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
+
     notifyListeners();
   }
 
   //Abrir picker de la fecha final
   Future<void> abrirHoraFinal(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
     TimeOfDay? initialTime = TimeOfDay(
       hour: fechaFinal.hour,
       minute: fechaFinal.minute,
@@ -941,17 +1127,25 @@ class DocumentViewModel extends ChangeNotifier {
       pickedTime.minute,
     );
 
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
+
     notifyListeners();
   }
 
   //Fecha entrega
   //Abrir picker de fecha entrega
   Future<void> abrirFechaEntrega(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
+    DateTime fechaHoraActual = DateTime.now();
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaEntrega,
-      firstDate: fechaEntrega,
+      initialDate: fechaRefIni,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -963,23 +1157,31 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedDate == null) return;
 
     //armar fecha con la fecha seleccionada en el picker
-    fechaEntrega = DateTime(
+    fechaRefIni = DateTime(
       pickedDate.year,
       pickedDate.month,
       pickedDate.day,
-      fechaEntrega.hour,
-      fechaEntrega.minute,
+      fechaRefIni.hour,
+      fechaRefIni.minute,
     );
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraEntrega(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
-      hour: fechaEntrega.hour,
-      minute: fechaEntrega.minute,
+      hour: fechaRefIni.hour,
+      minute: fechaRefIni.minute,
     );
 
     //abre el time picker con la hora inicial
@@ -999,23 +1201,34 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedTime == null) return;
 
     //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
-    fechaEntrega = DateTime(
-      fechaEntrega.year,
-      fechaEntrega.month,
-      fechaEntrega.day,
+    fechaRefIni = DateTime(
+      fechaRefIni.year,
+      fechaRefIni.month,
+      fechaRefIni.day,
       pickedTime.hour,
       pickedTime.minute,
     );
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   Future<void> abrirFechaRecoger(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
+    DateTime fechaHoraActual = DateTime.now();
+
     //abrir picker de la fecha inicial con la fecha actual
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: fechaRecoger,
-      firstDate: fechaRecoger,
+      initialDate: fechaRefFin,
+      firstDate: fechaHoraActual,
       lastDate: DateTime(2100),
       confirmText: AppLocalizations.of(context)!.translate(
         BlockTranslate.botones,
@@ -1027,23 +1240,34 @@ class DocumentViewModel extends ChangeNotifier {
     if (pickedDate == null) return;
 
     //armar fecha con la fecha seleccionada en el picker
-    fechaRecoger = DateTime(
+    fechaRefFin = DateTime(
       pickedDate.year,
       pickedDate.month,
       pickedDate.day,
-      fechaRecoger.hour,
-      fechaRecoger.minute,
+      fechaRefFin.hour,
+      fechaRefFin.minute,
     );
+
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
 
     notifyListeners();
   }
 
   //Abrir y seleccionar hora inicial
   Future<void> abrirHoraRecoger(BuildContext context) async {
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+
+    DateTime fechaHoraActual = DateTime.now();
+
     //inicializar picker de la hora con la hora recibida
     TimeOfDay? initialTime = TimeOfDay(
-      hour: fechaRecoger.hour,
-      minute: fechaRecoger.minute,
+      hour: fechaRefFin.hour,
+      minute: fechaRefFin.minute,
     );
 
     //abre el time picker con la hora inicial
@@ -1062,15 +1286,189 @@ class DocumentViewModel extends ChangeNotifier {
     //si la hora seleccionada es null, no hacer nada.
     if (pickedTime == null) return;
 
+    if (compararFechas(fechaHoraActual, fechaHoraActual)) {
+      print("no ${compararFechas(fechaRefIni, fechaHoraActual)}");
+    }
+
     //armar fecha inicial con la fecha inicial y hora seleccionada en los picker
-    fechaRecoger = DateTime(
-      fechaRecoger.year,
-      fechaRecoger.month,
-      fechaRecoger.day,
+    fechaRefFin = DateTime(
+      fechaRefFin.year,
+      fechaRefFin.month,
+      fechaRefFin.day,
       pickedTime.hour,
       pickedTime.minute,
     );
 
+    if (!vmFactura.editDoc) {
+      DocumentService.saveDocumentLocal(context);
+    }
+
     notifyListeners();
+  }
+
+  //Recibe una fecha y le asigna 10 minutos más.
+  DateTime addDate30Min(DateTime fecha) {
+    return fecha.add(
+      const Duration(
+        minutes: 30,
+      ),
+    );
+  }
+
+  restaurarFechas() {
+    fechaRefIni = DateTime.now();
+    fechaInicial = addDate30Min(fechaRefIni);
+    fechaFinal = addDate30Min(fechaInicial);
+    fechaRefFin = addDate30Min(fechaFinal);
+    // fechaInicial = DateTime.now();
+    // fechaFinal = DateTime.now();
+    // fechaRecoger = DateTime.now();
+
+    notifyListeners();
+  }
+
+  bool compararFechas(
+    DateTime fechaInicial,
+    DateTime fechaFinal,
+  ) {
+    return fechaInicial.isAfter(fechaFinal);
+  }
+
+  //Funcion para validar las fechas
+
+  DateTime fechaActual = DateTime.now();
+
+  bool validateDates() {
+    // Remover los segundos de las fechas para la comparación
+    fechaActual = DateTime(
+      fechaActual.year,
+      fechaActual.month,
+      fechaActual.day,
+      fechaActual.hour,
+      fechaActual.minute,
+    );
+
+    fechaRefIni = DateTime(
+      fechaRefIni.year,
+      fechaRefIni.month,
+      fechaRefIni.day,
+      fechaRefIni.hour,
+      fechaRefIni.minute,
+    );
+
+    fechaRefFin = DateTime(
+      fechaRefFin.year,
+      fechaRefFin.month,
+      fechaRefFin.day,
+      fechaRefFin.hour,
+      fechaRefFin.minute,
+    );
+
+    fechaInicial = DateTime(
+      fechaInicial.year,
+      fechaInicial.month,
+      fechaInicial.day,
+      fechaInicial.hour,
+      fechaInicial.minute,
+    );
+
+    fechaFinal = DateTime(
+      fechaFinal.year,
+      fechaFinal.month,
+      fechaFinal.day,
+      fechaFinal.hour,
+      fechaFinal.minute,
+    );
+
+    // Validaciones según las condiciones especificadas
+    if (validarFechas(fechaActual, fechaRefIni) &&
+        fechaRefIni.isBefore(fechaRefFin) &&
+        fechaRefFin.isAfter(fechaRefIni) &&
+        fechaInicial.isAfter(fechaRefIni) &&
+        fechaInicial.isBefore(fechaRefFin) &&
+        fechaFinal.isAfter(fechaInicial) &&
+        fechaFinal.isBefore(fechaRefFin)) {
+      return true;
+    }
+    return false;
+  }
+
+  notificacionFechas(BuildContext context) {
+    //fecha ref inicial no puede ser menor a la fecha actual
+    if (!validarFechas(fechaActual, fechaRefIni)) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.fecha,
+          'fechaEntregaNoActual',
+        ),
+      );
+      return;
+    }
+
+    //fecha ref inicial no puede ser menor a la fecha final
+    if (!fechaRefIni.isBefore(fechaRefFin)) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.fecha,
+          'fechaRecogerNoEntrega',
+        ),
+      );
+      return;
+    }
+
+    //fecha inicial debe ser mayor a la fecha ref inicial
+    if (!fechaInicial.isAfter(fechaRefIni)) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.fecha,
+          'fechaInicialNoEntrega',
+        ),
+      );
+      return;
+    }
+
+    //la fecha inicial no puede ser mayor a la fecha ref fin
+    if (!fechaInicial.isBefore(fechaRefFin)) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.fecha,
+          'fechaRecogerNoInicial',
+        ),
+      );
+      return;
+    }
+
+    //la fecha final debe ser mayor a la fecha inicial
+    if (!fechaFinal.isAfter(fechaInicial)) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.fecha,
+          'fechaFinalNoInicial',
+        ),
+      );
+      return;
+    }
+
+    //la fecha final debe ser menor a la fecha ref final
+    if (!fechaFinal.isBefore(fechaRefFin)) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.fecha,
+          'fechaRecogerNoFinal',
+        ),
+      );
+      return;
+    }
+  }
+
+  bool validarFechas(DateTime fechaActual, DateTime fechaRecibida) {
+    // Comparar día, mes y año
+    if (fechaActual.year == fechaRecibida.year &&
+        fechaActual.month == fechaRecibida.month &&
+        fechaActual.day == fechaRecibida.day) {
+      // Verificar si fechaRecibida es igual o mayor a fechaActual
+      return !fechaRecibida.isBefore(fechaActual);
+    }
+    return false;
   }
 }

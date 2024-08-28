@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -30,9 +32,15 @@ class _Tabs2ViewState extends State<Tabs2View>
   }
 
   loadData(BuildContext context) {
+    final vmFactura = Provider.of<DocumentoViewModel>(context, listen: false);
+
     //cargar documento guardado en el dispositivo
     DocumentService documentService = DocumentService();
-    documentService.loadDocumentSave(context);
+
+    if (!vmFactura.editDoc) {
+      documentService.loadDocumentSave(context);
+    }
+
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
     vmConfirm.setIdDocumentoRef();
   }
@@ -50,153 +58,175 @@ class _Tabs2ViewState extends State<Tabs2View>
     final vm = Provider.of<DocumentoViewModel>(context);
     final vmMenu = Provider.of<MenuViewModel>(context);
     final vmDoc = Provider.of<DocumentViewModel>(context);
+    final vmDetalle = Provider.of<DetailsViewModel>(context);
 
-    return Stack(
-      children: [
-        DefaultTabController(
-          length: 2, // Número de pestañas
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                vmMenu.name,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
-              ),
-              actions: [
-                IconButton(
-                  tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.factura,
-                    'docRecientes',
-                  ),
-                  onPressed: () => Navigator.pushNamed(context, "recent"),
-                  icon: const Icon(Icons.schedule),
-                ),
-                IconButton(
-                  tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.botones,
-                    'nuevoDoc',
-                  ),
-                  onPressed: () => vm.newDocument(context),
-                  icon: const Icon(Icons.note_add_outlined),
-                ),
-                if (vmDoc.monitorPrint())
-                  IconButton(
-                    onPressed: () => vm.sendDocumnet(
-                      context,
-                      2,
-                    ),
-                    icon: const Icon(
-                      Icons.desktop_windows_outlined,
-                    ),
-                  ),
-                IconButton(
-                  tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.botones,
-                    'imprimir',
-                  ),
-                  onPressed: () => vm.sendDocumnet(
+    return WillPopScope(
+      onWillPop: () => vm.back(context),
+      child: Stack(
+        children: [
+          DefaultTabController(
+            length: 2, // Número de pestañas
+            child: Scaffold(
+              key: vmDetalle.scaffoldKey,
+              appBar: AppBar(
+                title: Text(
+                  vmMenu.name,
+                  style: AppTheme.style(
                     context,
-                    1,
-                  ),
-                  icon: const Icon(Icons.print_outlined),
-                ),
-                UserWidget(
-                  child: Column(
-                    children: [
-                      if (vmMenu.documento != null)
-                        ListTile(
-                          title: Text(
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.factura,
-                              'tipoDoc',
-                            ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "${vmMenu.documentoName} (${vmMenu.documento})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
-                          ),
-                        ),
-                      if (vmDoc.serieSelect != null)
-                        ListTile(
-                          title: Text(
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.general,
-                              'serie',
-                            ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "${vmDoc.serieSelect!.descripcion} (${vmDoc.serieSelect!.serieDocumento})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
-                          ),
-                        ),
-                    ],
+                    Styles.title,
                   ),
                 ),
-              ],
-              bottom: TabBar(
-                controller: vm.tabController,
-                labelColor: AppTheme.color(
-                  context,
-                  Styles.normal,
-                ),
-                indicatorColor: AppTheme.color(
-                  context,
-                  Styles.darkPrimary,
-                ),
-                tabs: [
-                  Tab(
-                    text: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.general,
-                      'documento',
+                actions: [
+                  if (!vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.factura,
+                        'docRecientes',
+                      ),
+                      onPressed: () => Navigator.pushNamed(context, "recent"),
+                      icon: const Icon(Icons.schedule),
                     ),
-                  ),
-                  Tab(
-                    text: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.general,
-                      'detalle',
+                  if (!vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'nuevoDoc',
+                      ),
+                      onPressed: () => vm.newDocument(context),
+                      icon: const Icon(Icons.note_add_outlined),
+                    ),
+                  if (!vm.editDoc)
+                    if (vmDoc.monitorPrint())
+                      IconButton(
+                        onPressed: () => vm.sendDocumnet(
+                          context,
+                          2,
+                        ),
+                        icon: const Icon(
+                          Icons.desktop_windows_outlined,
+                        ),
+                      ),
+                  if (!vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'imprimir',
+                      ),
+                      onPressed: () => vm.sendDocumnet(
+                        context,
+                        1,
+                      ),
+                      icon: const Icon(Icons.print_outlined),
+                    ),
+                  if (vm.editDoc)
+                    IconButton(
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'guardar',
+                      ),
+                      onPressed: () {
+                        vm.modifyDoc(context);
+                        //guardar los cambios
+                        // print("Aqui para guardar los cambios");
+                      },
+                      icon: const Icon(Icons.save_outlined),
+                    ),
+                  UserWidget(
+                    child: Column(
+                      children: [
+                        if (vmMenu.documento != null)
+                          ListTile(
+                            title: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.factura,
+                                'tipoDoc',
+                              ),
+                              style: AppTheme.style(
+                                context,
+                                Styles.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "${vmMenu.documentoName} (${vmMenu.documento})",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ),
+                        if (vmDoc.serieSelect != null)
+                          ListTile(
+                            title: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'serie',
+                              ),
+                              style: AppTheme.style(
+                                context,
+                                Styles.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "${vmDoc.serieSelect!.descripcion} (${vmDoc.serieSelect!.serieDocumento})",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
                 ],
+                bottom: TabBar(
+                  controller: vm.tabController,
+                  labelColor: AppTheme.color(
+                    context,
+                    Styles.normal,
+                  ),
+                  indicatorColor: AppTheme.color(
+                    context,
+                    Styles.darkPrimary,
+                  ),
+                  tabs: [
+                    Tab(
+                      text: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'documento',
+                      ),
+                    ),
+                    Tab(
+                      text: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.general,
+                        'detalle',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              body: TabBarView(
+                controller: vm.tabController,
+                children: const [
+                  // Contenido de la primera pestaña
+                  DocumentView(),
+                  // Contenido de la segunda pestaña
+                  DetailsView(),
+                ],
               ),
             ),
-            body: TabBarView(
-              controller: vm.tabController,
-              children: const [
-                // Contenido de la primera pestaña
-                DocumentView(),
-                // Contenido de la segunda pestaña
-                DetailsView(),
-              ],
-            ),
           ),
-        ),
-        if (vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
+          if (vm.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.color(
+                context,
+                Styles.loading,
+              ),
             ),
-          ),
-        if (vm.isLoading) const LoadWidget(),
-      ],
+          if (vm.isLoading) const LoadWidget(),
+        ],
+      ),
     );
   }
 }

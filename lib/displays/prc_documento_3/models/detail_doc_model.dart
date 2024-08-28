@@ -21,6 +21,15 @@ class DetailDocModel {
   double cargo;
   double descuento;
   String observacion;
+  int? docRefTipoReferencia;
+  DateTime? docRefFechaIni;
+  DateTime? docRefFechaFin;
+  DateTime? docFechaIni;
+  DateTime? docFechaFin;
+  String? docRefObservacion2;
+  String? docRefDescripcion;
+  String? docRefObservacion3;
+  String? docRefObservacion;
 
   DetailDocModel({
     required this.idRef,
@@ -41,6 +50,15 @@ class DetailDocModel {
     required this.documentoDesc,
     required this.serie,
     required this.serieDesc,
+    this.docRefTipoReferencia,
+    this.docRefFechaIni,
+    this.docRefFechaFin,
+    this.docFechaIni,
+    this.docFechaFin,
+    this.docRefObservacion2,
+    this.docRefDescripcion,
+    this.docRefObservacion3,
+    this.docRefObservacion,
   });
 }
 

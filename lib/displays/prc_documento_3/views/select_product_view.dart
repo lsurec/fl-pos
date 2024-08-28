@@ -75,6 +75,15 @@ class SelectProductView extends StatelessWidget {
                         context,
                         products[index],
                       ),
+                      trailing: IconButton(
+                        onPressed: () => vm.viewProductImages(
+                          context,
+                          products[index],
+                        ),
+                        icon: const Icon(
+                          Icons.image,
+                        ),
+                      ),
                     );
                   },
                 ),

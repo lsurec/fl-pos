@@ -83,7 +83,9 @@
         "eliminar": "Löschen",
         "adjuntarArchivos": "Dateien anhängen",
         "enviarComentario": "Kommentar senden.",
-        "cambiarResponsable": "Verantwortliche Person aktualisieren"
+        "cambiarResponsable": "Verantwortliche Person aktualisieren",
+        "modificar": "Ändern",
+        "compartirInforme": "Bericht teilen"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -100,7 +102,15 @@
         "hora": "Uhrzeit: ",
         "completa": "Datum und Uhrzeit: ",
         "entrega": "Lieferdatum: ",
-        "recoger": "Abholdatum: "
+        "recoger": "Abholdatum: ",
+        "restriccionFechas": "Die Daten sind ungültig. Bitte überprüfen Sie die Einschränkungen.",
+        "fechaEntregaNoActual": "Die Daten sind ungültig. Ändern Sie das Lieferdatum; es darf nicht vor dem aktuellen Datum liegen.",
+        "fechaRecogerNoEntrega": "Die Daten sind ungültig. Ändern Sie das Abholdatum; es darf nicht vor dem Lieferdatum liegen.",
+        "fechaInicialNoEntrega": "Die Daten sind ungültig. Ändern Sie das Anfangsdatum; es darf nicht vor dem Lieferdatum liegen.",
+        "fechaRecogerNoInicial": "Die Daten sind ungültig. Ändern Sie das Abholdatum; es darf nicht vor dem Anfangsdatum liegen.",
+        "fechaFinalNoInicial": "Die Daten sind ungültig. Ändern Sie das Enddatum; es darf nicht vor dem Anfangsdatum liegen.",
+        "fechaRecogerNoFinal": "Die Daten sind ungültig. Ändern Sie das Abholdatum; es darf nicht vor dem Enddatum liegen.",
+        "eventoF": "Veranstaltungsdatum: "
     },
     "notificaciones": {
         "reiniciar": "Um die Änderungen anzuzeigen, starten Sie die Anwendung neu.",
@@ -198,7 +208,20 @@
         "asignado": "Zuvor zugewiesener Benutzer.",
         "estadoIgual": "Zuvor zugewiesener Status.",
         "prioridadIgual": "Zuvor zugewiesene Priorität.",
-        "copiado": "Text in die Zwischenablage kopiert."
+        "copiado": "Text in die Zwischenablage kopiert.",
+        "precioDiasNoCalculado": "Der Preis pro Tag wurde nicht berechnet. Überprüfen Sie, ob die Daten gültig sind.",
+        "seleccioneTipoRef": "Sie müssen einen Referenztyp auswählen.",
+        "noCalculoDias": "Der Preis pro Tag konnte nicht berechnet werden.",
+        "recalcularFechas": "Preise pro Tag aufgrund der Datumsänderung neu berechnet.",
+        "sinImagenes": "Keine Bilder mit diesem Produkt verbunden.",
+        "cantidadPositiva": "Die Menge muss numerisch und positiv sein.",
+        "cantidadNumerica": "Die Menge muss numerisch sein.",
+        "cantidadMayor": "Die Menge muss größer als 0 sein.",
+        "traModificada": "Transaktion geändert.",
+        "advertencia": "Warnung",
+        "productosNoDisponibles": "Ein oder mehrere Produkte sind nicht verfügbar.",
+        "aplicaranCambios": "Die Änderungen werden am Dokument vorgenommen.",
+        "docEditado": "Dokument erfolgreich bearbeitet."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -289,7 +312,13 @@
         "imprimir": "Dokument nach Bestätigung drucken.",
         "mesa": "Tisch",
         "atencion": "Bedient von",
-        "serie": "Interne Serie:"
+        "serie": "Interne Serie:",
+        "latitud": "Breitengrad: ",
+        "longitud": "Längengrad: ",
+        "consInt": "Interne Kons.: ",
+        "sinObtener": "Nicht erhalten.",
+        "tipoRef": "Referenztyp",
+        "contacto": "Kontakt"
     },
     "generales": {
         "registro": "Einträge",
@@ -307,7 +336,8 @@
         "documento": "Dokument",
         "detalle": "Detail",
         "pago": "Zahlung",
-        "observaciones": "Bemerkungen"
+        "observaciones": "Bemerkungen",
+        "noRegistrado": "Nicht registriert."
     },
     "cuenta": {
         "nueva": "Neues Konto",
@@ -367,9 +397,11 @@
         "diferencia": "Differenz",
         "pagoTotal": "Gesamtzahlung",
         "porcentaje": "Prozentsatz",
-        "cargAgregado": "Gebühr hinzugefügt.",
+        "cargoAgregado": "Gebühr hinzugefügt.",
         "descAgregado": "Rabatt hinzugefügt.",
-        "saldo": "Saldo"
+        "saldo": "Saldo",
+        "cantDias": "Anzahl der Tage",
+        "precioTotalCant": "Gesamtpreis pro Menge"
     },
     "cotizacion": {
         "convertirDoc": "Dokument konvertieren",
@@ -389,7 +421,10 @@
         "consecutivoInter": "Interne Folge",
         "idRef": "ID-Ref: ",
         "cuenta": "Konto: ",
-        "direEntrega": "Lieferadresse"
+        "direEntrega": "Lieferadresse",
+        "tipoRef": "Referenztyp",
+        "codigo": "Code",
+        "mensajes": "Nachrichten: "
     },
     "tareas": {
         "numTarea": "Aufgabe Nr: ",

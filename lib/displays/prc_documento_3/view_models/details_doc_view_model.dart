@@ -29,11 +29,15 @@ class DetailsDocViewModel extends ChangeNotifier {
     BuildContext context,
     DetailDocModel doc,
   ) {
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
+
     Navigator.pushNamed(
       context,
       AppRoutes.printer,
       arguments: PrintDocSettingsModel(
-        opcion: 2,
+        opcion: menuVM.documento == 20
+            ? 4
+            : 2, //TODO: Parametrizar con Alfa y Omega
         consecutivoDoc: doc.consecutivo,
         cuentaCorrentistaRef: doc.seller,
         client: doc.client,
@@ -47,15 +51,30 @@ class DetailsDocViewModel extends ChangeNotifier {
     DetailDocModel doc,
   ) async {
     final vmShare = Provider.of<ShareDocViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
     isLoading = true;
-    await vmShare.sheredDoc(
-      context,
-      doc.consecutivo,
-      doc.seller,
-      doc.client!,
-      doc.total,
-    );
-    isLoading = false;
+
+    if (menuVM.documento == 20) {
+      await vmShare.sheredDocCotiAlfayOmega(
+        context,
+        doc.consecutivo,
+        doc.seller,
+        doc.client,
+        doc.total,
+      );
+      isLoading = false;
+      return;
+    } else {
+      await vmShare.sheredDoc(
+        context,
+        doc.consecutivo,
+        doc.seller,
+        doc.client,
+        doc.total,
+      );
+      isLoading = false;
+      return;
+    }
   }
 }
