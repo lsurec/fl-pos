@@ -251,6 +251,10 @@ class RecentViewModel extends ChangeNotifier {
       final ApiResModel resProduct = await productService.getProduct(
         sku.data,
         token,
+        user,
+        estacionid,
+        0,
+        100,
       );
 
       //Si el api para  falló

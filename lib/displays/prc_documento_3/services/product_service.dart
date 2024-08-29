@@ -208,8 +208,12 @@ class ProductService {
   Future<ApiResModel> getProduct(
     String search,
     String token,
+    String user,
+    int station,
+    int start,
+    int end,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/buscar/$search");
+    Uri url = Uri.parse("${_baseUrl}Producto/buscar");
     try {
       //url completa
 
@@ -217,6 +221,11 @@ class ProductService {
         url,
         headers: {
           "Authorization": "bearer $token",
+          "user": user,
+          "station": "$station",
+          "search": search,
+          "start": "$start",
+          "end": "$end",
         },
       );
 

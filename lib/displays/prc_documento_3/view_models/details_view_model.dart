@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/estacion_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -169,6 +170,7 @@ class DetailsViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    EstacionModel station = localVM.selectedEstacion!;
     String token = loginVM.token;
     String user = loginVM.user;
 
@@ -203,6 +205,10 @@ class DetailsViewModel extends ChangeNotifier {
     final ApiResModel resDesc = await productService.getProduct(
       searchText,
       token,
+      user,
+      station.estacionTrabajo,
+      0,
+      100,
     );
 
     //valid succes response

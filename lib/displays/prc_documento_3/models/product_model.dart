@@ -1,20 +1,26 @@
 import 'dart:convert';
 
 class ProductModel {
+  int id;
   int producto;
   int unidadMedida;
   String productoId;
   String desProducto;
   String desUnidadMedida;
   int tipoProducto;
+  dynamic orden;
+  int rows;
 
   ProductModel({
+    required this.id,
     required this.producto,
     required this.unidadMedida,
     required this.productoId,
     required this.desProducto,
     required this.desUnidadMedida,
     required this.tipoProducto,
+    required this.orden,
+    required this.rows,
   });
 
   factory ProductModel.fromJson(String str) =>
@@ -23,6 +29,9 @@ class ProductModel {
   String toJson() => json.encode(toMap());
 
   factory ProductModel.fromMap(Map<String, dynamic> json) => ProductModel(
+        rows: json["rows"],
+        id: json["id"],
+        orden: json["orden"],
         producto: json["producto"],
         unidadMedida: json["unidad_Medida"],
         productoId: json["producto_Id"],
@@ -32,6 +41,9 @@ class ProductModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "rows": rows,
+        "id": id,
+        "orden": orden,
         "producto": producto,
         "unidad_Medida": unidadMedida,
         "producto_Id": productoId,
