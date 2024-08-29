@@ -614,4 +614,13 @@ class TareasViewModel extends ChangeNotifier {
       AppRoutes.searchTask,
     );
   }
+
+  //Regresar a la pantalla anterior y limpiar
+  Future<bool> back() async {
+    searchController.clear();
+    rangoIni = 0;
+    rangoFin = 0;
+    tareas.clear();
+    return true;
+  }
 }
