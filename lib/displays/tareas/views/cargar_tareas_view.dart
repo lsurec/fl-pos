@@ -17,7 +17,7 @@ class CargarTareasView extends StatefulWidget {
 
 class _CargarTareasViewState extends State<CargarTareasView> {
   final ScrollController _scrollController = ScrollController();
-  bool _isLoading = false;
+  bool cargarTodas = false;
 
   @override
   void initState() {
@@ -35,23 +35,25 @@ class _CargarTareasViewState extends State<CargarTareasView> {
   void _onScroll() {
     if (_scrollController.position.pixels >=
             _scrollController.position.maxScrollExtent - 800 &&
-        !_isLoading) {
-      print("xd");
+        !cargarTodas) {
       // Detecta si se está a 100 píxeles del final y si no está cargando
-      _loadMoreTasks();
+      recargarMasTareas();
     }
   }
 
-  Future<void> _loadMoreTasks() async {
+  Future<void> recargarMasTareas() async {
     setState(() {
-      _isLoading = true; // Evita cargas múltiples mientras ya está cargando
+      // Evita cargas múltiples mientras ya está cargando
+      cargarTodas = true;
     });
 
-    await Provider.of<TareasViewModel>(context, listen: false)
-        .recargarTodas(context);
+    await Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    ).recargarTodas(context);
 
     setState(() {
-      _isLoading = false;
+      cargarTodas = false;
     });
   }
 
@@ -99,7 +101,7 @@ class _CargarTareasViewState extends State<CargarTareasView> {
                       return CardTask(tarea: tarea);
                     },
                   ),
-                  if (_isLoading) // Indicador de carga al final de la lista
+                  if (cargarTodas) // Indicador de carga al final de la lista
                     const Padding(
                       padding: EdgeInsets.all(10),
                       child: CircularProgressIndicator(),
