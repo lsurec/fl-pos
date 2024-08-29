@@ -122,7 +122,7 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
               controller: vmTarea.tabController,
               children: const [
                 // Contenido de la primera pestaña
-                VerTodasView(),
+                CargarTareasView(),
                 // Contenido de la segunda pestaña
                 VerCreadasView(),
                 // Contenido de la tercera pestaña
