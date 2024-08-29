@@ -6,7 +6,6 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/card_task_widgets.dart';
-import 'package:flutter_post_printer_example/widgets/search_task_widget.dart';
 import 'package:provider/provider.dart';
 
 class VerTodasView extends StatelessWidget {
@@ -27,9 +26,6 @@ class VerTodasView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SearchTask(
-                    keyType: vmTarea.todas,
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
