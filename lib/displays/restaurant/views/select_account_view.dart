@@ -61,7 +61,7 @@ class SelectAccountView extends StatelessWidget {
                       tooltip: "Trasladar", //TODO:Translate
                     ),
                     IconButton(
-                      onPressed: () => {},
+                      onPressed: () => vm.printStatusAccount(context),
                       icon: const Icon(Icons.print_outlined),
                       tooltip: "Estado de cuenta", //TODO:Translate
                     ),

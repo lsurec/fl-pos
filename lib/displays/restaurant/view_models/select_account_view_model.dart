@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_post_printer_example/libraries/app_data.dart'
+    as AppData;
 
 class SelectAccountViewModel extends ChangeNotifier {
+  final PrinterManager instanceManager = PrinterManager.instance;
+
   bool isSelectedMode = false;
 
   setIsSelectedMode(BuildContext context, bool value) {
@@ -24,6 +31,106 @@ class SelectAccountViewModel extends ChangeNotifier {
     isSelectedMode = value;
 
     notifyListeners();
+  }
+
+  Future<void> printStatusAccount(BuildContext context) async {
+    try {
+      int paperDefault = 80; //58 //72 //80
+
+      PosStyles center = const PosStyles(
+        align: PosAlign.center,
+      );
+
+      List<int> bytes = [];
+      final generator = Generator(
+        AppData.paperSize[paperDefault],
+        await CapabilityProfile.load(),
+      );
+
+      // final ByteData data = await rootBundle.load('assets/logo_demosoft.png');
+      // final Uint8List bytesImg = data.buffer.asUint8List();
+      // final img.Image? image = decodeImage(bytesImg);
+
+      bytes += generator.setGlobalCodeTable('CP1252');
+
+      bytes += generator.text(
+        "Club campestre la montaña",
+        styles: PosStyles(
+          bold: true,
+          align: PosAlign.center,
+          height: PosTextSize.size2,
+        ),
+      );
+
+      bytes += generator.text(
+        "Barra mirablosque",
+        styles: PosStyles(
+          bold: true,
+          align: PosAlign.center,
+          height: PosTextSize.size2,
+        ),
+      );
+
+      bytes += generator.text(
+        "Mesa: Mesa 1",
+        styles: PosStyles(
+          align: PosAlign.center,
+          height: PosTextSize.size2,
+        ),
+      );
+
+      bytes += generator.text(
+        "MIRALBOLSQUE - 1",
+        styles: PosStyles(
+          bold: true,
+          align: PosAlign.center,
+          height: PosTextSize.size2,
+        ),
+      );
+
+      bytes += generator.emptyLines(2);
+
+      bytes += generator.text(
+        "----------------------------",
+        styles: center,
+      );
+
+      bytes += generator.text(
+        "Powered By:",
+        styles: center,
+      );
+
+      bytes += generator.text(
+        "Desarrollo Moderno de Software S.A.",
+        styles: center,
+      );
+      bytes += generator.text(
+        "www.demosoft.com.gt",
+        styles: center,
+      );
+
+      bytes += generator.cut();
+
+      await PrinterManager.instance.connect(
+        type: PrinterType.network,
+        model: TcpPrinterInput(
+          // ipAddress: element.ipAdress,
+          ipAddress: "192.168.0.10",
+        ),
+      );
+
+      await instanceManager.send(
+        type: PrinterType.network,
+        bytes: bytes,
+      );
+    } catch (e) {
+      // isLoading = false;
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'noImprimio',
+      ));
+      return;
+    }
   }
 
   navigatePermisionView(
