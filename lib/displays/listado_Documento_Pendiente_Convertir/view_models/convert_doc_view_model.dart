@@ -706,7 +706,7 @@ class ConvertDocViewModel extends ChangeNotifier {
       ApiResModel resProduct = await productService.getProduct(
         tra.detalle.id,
         token,
-        user,
+        originalDoc.usuario,
         originalDoc.estacionTrabajo,
         0,
         100,
