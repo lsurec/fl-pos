@@ -17,7 +17,7 @@ class VerInvitacionesView extends StatelessWidget {
     List<TareaModel> tareas = vmTarea.tareasInvitaciones;
 
     return RefreshIndicator(
-      onRefresh: () => vmTarea.loadData(context),
+      onRefresh: () => vmTarea.obtenerTareasInvitaciones(context),
       child: ListView(
         children: [
           Padding(

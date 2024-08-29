@@ -17,7 +17,7 @@ class VerCreadasView extends StatelessWidget {
     List<TareaModel> tareas = vmTarea.tareasCreadas;
 
     return RefreshIndicator(
-      onRefresh: () => vmTarea.loadData(context),
+      onRefresh: () => vmTarea.obtenerTareasCreadas(context),
       child: ListView(
         children: [
           Padding(

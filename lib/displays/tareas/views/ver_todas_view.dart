@@ -17,7 +17,7 @@ class VerTodasView extends StatelessWidget {
     List<TareaModel> tareas = vmTarea.tareasGenerales;
 
     return RefreshIndicator(
-      onRefresh: () => vmTarea.loadData(context),
+      onRefresh: () => vmTarea.obtenerTareasTodas(context),
       child: ListView(
         children: [
           Padding(

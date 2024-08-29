@@ -17,7 +17,7 @@ class VerAsignadasView extends StatelessWidget {
     List<TareaModel> tareas = vmTarea.tareasAsignadas;
 
     return RefreshIndicator(
-      onRefresh: () => vmTarea.loadData(context),
+      onRefresh: () => vmTarea.obtenerTareasAsignadas(context),
       child: ListView(
         children: [
           Padding(
