@@ -172,6 +172,7 @@ class BuscarTarea extends StatelessWidget {
     return Column(
       children: [
         Form(
+          key: vm.formKeySearch,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: TextFormField(
             onFieldSubmitted: (value) => vm.buscarRangoTareas(

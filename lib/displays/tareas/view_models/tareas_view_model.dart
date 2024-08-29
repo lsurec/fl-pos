@@ -68,18 +68,18 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   bool isValidFormCSearch() {
-    switch (tabController.index) {
-      case 0:
-        return formKeySearch.currentState?.validate() ?? false;
-      case 1:
-        return formCreadasKeySearch.currentState?.validate() ?? false;
-      case 2:
-        return formInvitacioesKeySearch.currentState?.validate() ?? false;
-      case 3:
-        return formAsignadasKeySearch.currentState?.validate() ?? false;
-      default:
-        return false;
-    }
+    return formKeySearch.currentState?.validate() ?? false;
+    // switch (tabController.index) {
+    //   case 0:
+    //   case 1:
+    //     return formCreadasKeySearch.currentState?.validate() ?? false;
+    //   case 2:
+    //     return formInvitacioesKeySearch.currentState?.validate() ?? false;
+    //   case 3:
+    //     return formAsignadasKeySearch.currentState?.validate() ?? false;
+    //   default:
+    //     return false;
+    // }
   }
 
   //Asignar el valor del filtro seleccionado.
@@ -90,6 +90,11 @@ class TareasViewModel extends ChangeNotifier {
 
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
+    await obtenerTareasTodas(context);
+    await obtenerTareasCreadas(context);
+    await obtenerTareasInvitaciones(context);
+    await obtenerTareasAsignadas(context);
+
     // limpiar(0);
     // List<TareaModel> encontradas = [];
     // encontradas.clear(); //limpiar lista
@@ -656,6 +661,10 @@ class TareasViewModel extends ChangeNotifier {
   obtenerTareasTodas(
     BuildContext context,
   ) async {
+    tareasGenerales.clear();
+    rangoTodasIni = 1;
+    rangoTodasFin = intervaloRegistros;
+
     //Obtener user y token
     final vmLogin = Provider.of<LoginViewModel>(
       context,
@@ -677,8 +686,6 @@ class TareasViewModel extends ChangeNotifier {
       rangoTodasFin,
     );
 
-    isLoading = false;
-
     //si algo salio mal
     if (!resTarea.succes) {
       isLoading = false;
@@ -694,6 +701,8 @@ class TareasViewModel extends ChangeNotifier {
     //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
     tareasGenerales.addAll(resTarea.response);
 
+    isLoading = false;
+
     rangoTodasIni = tareasGenerales[tareasGenerales.length - 1].id + 1;
     rangoTodasFin = rangoTodasIni + 10;
   }
@@ -701,6 +710,10 @@ class TareasViewModel extends ChangeNotifier {
   obtenerTareasCreadas(
     BuildContext context,
   ) async {
+    tareasCreadas.clear();
+    rangoCreadasIni = 1;
+    rangoCreadasFin = intervaloRegistros;
+
     //Obtener user y token
     final vmLogin = Provider.of<LoginViewModel>(
       context,
@@ -746,6 +759,9 @@ class TareasViewModel extends ChangeNotifier {
   obtenerTareasAsignadas(
     BuildContext context,
   ) async {
+    tareasAsignadas.clear();
+    rangoAsignadasIni = 1;
+    rangoAsignadasFin = intervaloRegistros;
     //Obtener user y token
     final vmLogin = Provider.of<LoginViewModel>(
       context,
@@ -795,6 +811,9 @@ class TareasViewModel extends ChangeNotifier {
   obtenerTareasInvitaciones(
     BuildContext context,
   ) async {
+    tareasInvitaciones.clear();
+    rangoInvitacionesIni = 1;
+    rangoInvitacionesFin = intervaloRegistros;
     //Obtener user y token
     final vmLogin = Provider.of<LoginViewModel>(
       context,

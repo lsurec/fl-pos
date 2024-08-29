@@ -34,6 +34,8 @@ class SplashViewModel extends ChangeNotifier {
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
     final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
 
+    // Preferences.urlApi = "http://192.168.0.8:3036/api/";
+
     //serviico controlar version
     VersionService versionService = VersionService();
 
@@ -276,10 +278,10 @@ class SplashViewModel extends ChangeNotifier {
 
     //si hay mas de una estacion o mas de una empresa mostar configuracion local
     Navigator.of(context).pushNamedAndRemoveUntil(
-      AppRoutes
-          .shrLocalConfig, // Ruta a la que se redirigirá después de cerrar sesión
-      (Route<dynamic> route) =>
-          false, // Condición para eliminar todas las rutas anteriores
+      // Ruta a la que se redirigirá después de cerrar sesión
+      AppRoutes.shrLocalConfig,
+      // Condición para eliminar todas las rutas anteriores
+      (Route<dynamic> route) => false,
     );
   }
 }

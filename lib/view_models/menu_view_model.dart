@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -59,6 +60,11 @@ class MenuViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmTarea = Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    );
+
     final String user = vmLogin.user;
     final String token = vmLogin.token;
 
@@ -66,12 +72,21 @@ class MenuViewModel extends ChangeNotifier {
 
     if (route.toLowerCase() == "prcdocumento_3") {
       vmHome.isLoading = true;
-      await vmFactura.loadNewData(context, 0);
+      await vmTarea.loadData(
+        context,
+      );
       vmHome.isLoading = false;
 
       return;
     }
 
+    if (route.toLowerCase() == "shrTarea_3") {
+      vmHome.isLoading = true;
+      await vmFactura.loadNewData(context, 0);
+      vmHome.isLoading = false;
+
+      return;
+    }
     //cargar dtos
     if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
       if (documento == null) {
