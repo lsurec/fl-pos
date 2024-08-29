@@ -8,8 +8,54 @@ import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
 
-class VerAsignadasView extends StatelessWidget {
+class VerAsignadasView extends StatefulWidget {
   const VerAsignadasView({super.key});
+
+  @override
+  State<VerAsignadasView> createState() => _VerAsignadasViewState();
+}
+
+class _VerAsignadasViewState extends State<VerAsignadasView> {
+  final ScrollController _scrollController = ScrollController();
+  bool cargarAsignadas = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 800 &&
+        !cargarAsignadas) {
+      // Detecta si se está a 100 píxeles del final y si no está cargando
+      recargarMasTareas();
+    }
+  }
+
+  Future<void> recargarMasTareas() async {
+    setState(() {
+      // Evita cargas múltiples mientras ya está cargando
+      cargarAsignadas = true;
+    });
+
+    await Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    ).recargarAsignadas(context);
+
+    setState(() {
+      cargarAsignadas = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +99,13 @@ class VerAsignadasView extends StatelessWidget {
                       final TareaModel tarea = tareas[index];
                       return CardTask(tarea: tarea);
                     },
-                  )
+                  ),
+                  // Indicador de carga al final de la lista
+                  if (cargarAsignadas)
+                    const Padding(
+                      padding: EdgeInsets.all(10),
+                      child: CircularProgressIndicator(),
+                    ),
                 ],
               ),
             ),
