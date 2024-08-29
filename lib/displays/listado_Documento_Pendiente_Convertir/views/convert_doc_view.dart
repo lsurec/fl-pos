@@ -43,7 +43,10 @@ class ConvertDocView extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: [
               Positioned(
-                bottom: 70, // Ajusta esta posición según lo que necesites
+                // Ajusta esta posición según lo que necesites
+                // bottom: 70,
+                // right: 10,
+                bottom: 10,
                 right: 10,
                 child: FloatingActionButton(
                   heroTag: 'button1', // Tag único para el primer botón
@@ -61,28 +64,28 @@ class ConvertDocView extends StatelessWidget {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: 10,
-                right: 10,
-                child: FloatingActionButton(
-                  heroTag: 'button2', // Tag único para el segundo botón
-                  onPressed: () {
-                    //editar
+              // Positioned(
+              //   bottom: 10,
+              //   right: 10,
+              //   child: FloatingActionButton(
+              //     heroTag: 'button2', // Tag único para el segundo botón
+              //     onPressed: () {
+              //       //editar
 
-                    vm.editarNewDocumento(
-                      context,
-                      docOrigen,
-                    );
-                  },
-                  child: Icon(
-                    Icons.edit,
-                    color: AppTheme.color(
-                      context,
-                      Styles.white,
-                    ),
-                  ),
-                ),
-              ),
+              //       vm.editarNewDocumento(
+              //         context,
+              //         docOrigen,
+              //       );
+              //     },
+              //     child: Icon(
+              //       Icons.edit,
+              //       color: AppTheme.color(
+              //         context,
+              //         Styles.white,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           body: RefreshIndicator(
