@@ -14,111 +14,98 @@ class BuscarTareasView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vmTarea = Provider.of<TareasViewModel>(context);
-    // List<TareaModel> tareas = vmTarea.tareas;
 
     return Stack(
       children: [
         Scaffold(
           appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(70.0),
+            preferredSize: const Size.fromHeight(
+              100,
+            ),
             child: AppBar(
-              // backgroundColor: Colors.blue,
               title: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 5),
                 child: BuscarTarea(),
               ),
-              // Añade un borde en la parte inferior del AppBar
               bottom: PreferredSize(
-                // Altura del borde
                 preferredSize: const Size.fromHeight(2),
-                child: Container(
-                  color: AppTheme.color(
-                    context,
-                    Styles.greyBorder,
-                  ), // Color del borde
-                  height: 2, // Grosor del borde
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.general,
-                          'registro',
-                        )} (${vmTarea.tareas.length})",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
+                child: Column(
+                  children: [
+                    Container(
+                      color: AppTheme.color(
+                        context,
+                        Styles.greyBorder,
+                      ),
+                      height: 2,
+                    ),
+                    PreferredSize(
+                      preferredSize: const Size.fromHeight(2),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          bottom: 10,
+                          left: 0,
+                          right: 20,
+                          top: 5,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'registro',
+                              )} (${vmTarea.tareas.length})",
+                              style: AppTheme.style(context, Styles.bold),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),
           ),
-          body: RefreshIndicator(
-            onRefresh: () => vmTarea.loadData(context),
-            child: ListView(
+          body: Padding(
+            padding: const EdgeInsets.only(
+              bottom: 10,
+              left: 20,
+              right: 20,
+              top: 5,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(
-                            "${AppLocalizations.of(context)!.translate(
-                              BlockTranslate.general,
-                              'registro',
-                            )} (${vmTarea.tareas.length})",
-                            style: AppTheme.style(
+                const SizedBox(height: 10),
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () => vmTarea.loadData(context),
+                    child: ListView.builder(
+                      itemCount: vmTarea.tareas.length + 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index < vmTarea.tareas.length) {
+                          final TareaModel tarea = vmTarea.tareas[index];
+                          return CardTask(tarea: tarea);
+                        } else if (vmTarea.tareas.length > 1) {
+                          // Botón "Ver más" al final de la lista
+                          return TextButton(
+                            onPressed: () => vmTarea.buscarRangoTareas(
                               context,
-                              Styles.bold,
+                              vmTarea.searchController.text,
+                              1,
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    if (vmTarea.tareas.isNotEmpty) const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: vmTarea.tareas.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final TareaModel tarea = vmTarea.tareas[index];
-                                return CardTask(tarea: tarea);
-                              },
+                            child: Text(
+                              "Ver más",
+                              style: AppTheme.style(context, Styles.normal),
                             ),
-                            if (vmTarea.tareas.isNotEmpty)
-                              TextButton(
-                                onPressed: () => vmTarea.buscarRangoTareas(
-                                  context,
-                                  vmTarea.searchController.text,
-                                  1,
-                                ),
-                                child: Text(
-                                  "Ver mas",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
+                          );
+                        }
+                        return const SizedBox(
+                          height: 10,
+                        );
+                      },
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -127,7 +114,6 @@ class BuscarTareasView extends StatelessWidget {
         if (vmTarea.isLoading)
           ModalBarrier(
             dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
             color: AppTheme.color(
               context,
               Styles.loading,
