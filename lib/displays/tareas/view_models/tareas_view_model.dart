@@ -40,6 +40,11 @@ class TareasViewModel extends ChangeNotifier {
   //Lista de tareas
   final List<TareaModel> tareas = [];
 
+  bool creadasCarga = false;
+  bool asignadasCarga = false;
+  bool invitacionesCarga = false;
+  bool todasCarga = false;
+
   final List<TareaModel> tareasGenerales = [];
   final List<TareaModel> tareasCreadas = [];
   final List<TareaModel> tareasInvitaciones = [];
@@ -63,18 +68,18 @@ class TareasViewModel extends ChangeNotifier {
   }
 
   bool isValidFormCSearch() {
-    switch (tabController.index) {
-      case 0:
-        return formKeySearch.currentState?.validate() ?? false;
-      case 1:
-        return formCreadasKeySearch.currentState?.validate() ?? false;
-      case 2:
-        return formInvitacioesKeySearch.currentState?.validate() ?? false;
-      case 3:
-        return formAsignadasKeySearch.currentState?.validate() ?? false;
-      default:
-        return false;
-    }
+    return formKeySearch.currentState?.validate() ?? false;
+    // switch (tabController.index) {
+    //   case 0:
+    //   case 1:
+    //     return formCreadasKeySearch.currentState?.validate() ?? false;
+    //   case 2:
+    //     return formInvitacioesKeySearch.currentState?.validate() ?? false;
+    //   case 3:
+    //     return formAsignadasKeySearch.currentState?.validate() ?? false;
+    //   default:
+    //     return false;
+    // }
   }
 
   //Asignar el valor del filtro seleccionado.
@@ -85,39 +90,44 @@ class TareasViewModel extends ChangeNotifier {
 
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
-    limpiar(0);
-    List<TareaModel> encontradas = [];
-    encontradas.clear(); //limpiar lista
-    searchController.clear();
+    await obtenerTareasTodas(context);
+    await obtenerTareasCreadas(context);
+    await obtenerTareasInvitaciones(context);
+    await obtenerTareasAsignadas(context);
 
-    //obtener token y usuario
-    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
-    String token = vmLogin.token;
-    String user = vmLogin.user;
+    // limpiar(0);
+    // List<TareaModel> encontradas = [];
+    // encontradas.clear(); //limpiar lista
+    // searchController.clear();
 
-    //instancia del servicio
-    final TareaService tareaService = TareaService();
+    // //obtener token y usuario
+    // final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    // String token = vmLogin.token;
+    // String user = vmLogin.user;
 
-    isLoading = true; //cargar pantalla
+    // //instancia del servicio
+    // final TareaService tareaService = TareaService();
 
-    //consumo de api
-    final ApiResModel res = await tareaService.getTopTareas(user, token);
+    // isLoading = true; //cargar pantalla
 
-    //si el consumo salió mal
-    if (!res.succes) {
-      isLoading = false;
-      NotificationService.showErrorView(context, res);
-      return;
-    }
-    //agregar tareas encontradas a la lista de tareas
-    encontradas.addAll(res.response);
-    //Registros encontrados
-    registros = encontradas.length;
+    // //consumo de api
+    // final ApiResModel res = await tareaService.getTopTareas(user, token);
 
-    //tipo 1 = ultimas tareas
-    asignarTareas(encontradas, 0);
+    // //si el consumo salió mal
+    // if (!res.succes) {
+    //   isLoading = false;
+    //   NotificationService.showErrorView(context, res);
+    //   return;
+    // }
+    // //agregar tareas encontradas a la lista de tareas
+    // encontradas.addAll(res.response);
+    // //Registros encontrados
+    // registros = encontradas.length;
 
-    isLoading = false; //detener carga
+    // //tipo 1 = ultimas tareas
+    // asignarTareas(encontradas, 0);
+
+    // isLoading = false; //detener carga
   }
 
   asignarTareas(List<TareaModel> tareasEncontradas, int tipo) {
@@ -220,7 +230,10 @@ class TareasViewModel extends ChangeNotifier {
     //si el consumo salió mal
     if (!res.succes) {
       isLoading = false;
-      NotificationService.showErrorView(context, res);
+      NotificationService.showErrorView(
+        context,
+        res,
+      );
       return;
     }
 
@@ -242,6 +255,113 @@ class TareasViewModel extends ChangeNotifier {
     }
 
     isLoading = false; //detener carga
+  }
+
+  //Rangos
+  int vermas = 0;
+  int rangoIni = 1;
+  int rangoFin = 10;
+  int rangoTodasIni = 1;
+  int rangoTodasFin = 10;
+  int rangoCreadasIni = 1;
+  int rangoCreadasFin = 10;
+  int rangoAsignadasIni = 1;
+  int rangoAsignadasFin = 10;
+  int rangoInvitacionesIni = 1;
+  int rangoInvitacionesFin = 10;
+  int intervaloRegistros = 10;
+
+  //Buscar tareas por rango
+  Future<void> buscarRangoTareas(
+    BuildContext context,
+    String search,
+    int vermas,
+  ) async {
+    //obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia del servicio
+    final TareaService tareaService = TareaService();
+
+    //Validar formulario
+    if (!isValidFormCSearch()) return;
+
+    //si tareas está vacio, reestablecer los rangos
+    if (tareas.isEmpty) {
+      rangoIni = 1;
+      rangoFin = intervaloRegistros;
+    }
+
+    // Realiza la búsqueda
+    //si ver mas es = 1 aumenta los rangos
+    if (vermas == 1) {
+      isLoading = true; //cargar pantalla
+
+      //consumo de api
+      final ApiResModel res = await tareaService.getRangoTareas(
+        user,
+        token,
+        search,
+        rangoIni,
+        rangoFin,
+      );
+
+      //si el consumo salió mal
+      if (!res.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(
+          context,
+          res,
+        );
+        return;
+      }
+
+      tareas.addAll(res.response);
+
+      isLoading = false; //detener cargar pantalla
+
+      rangoIni = tareas.length + 1;
+      rangoFin = rangoIni + intervaloRegistros;
+
+      //sino
+    } else {
+      //Limpiar lista
+      tareas.clear();
+
+      rangoIni = 1;
+      rangoFin = 10;
+
+      isLoading = true;
+
+      //consumo de api
+      final ApiResModel resTarea = await tareaService.getRangoTareas(
+        user,
+        token,
+        search,
+        rangoIni,
+        rangoFin,
+      );
+
+      //si el consumo salió mal
+      if (!resTarea.succes) {
+        isLoading = false;
+        NotificationService.showErrorView(
+          context,
+          resTarea,
+        );
+        return;
+      }
+
+      //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+      tareas.addAll(resTarea.response);
+
+      isLoading = false;
+
+      rangoIni += intervaloRegistros;
+      rangoFin += intervaloRegistros;
+    }
   }
 
   //Buscar por filtro: Id de referencia
@@ -493,5 +613,460 @@ class TareasViewModel extends ChangeNotifier {
           return false;
       }
     }
+  }
+
+  navegarBusqueda(
+    BuildContext context,
+  ) {
+    //Navegar a la vista de crear tareas
+    Navigator.pushNamed(
+      context,
+      AppRoutes.searchTask,
+    );
+  }
+
+  //Regresar a la pantalla anterior y limpiar
+  Future<bool> back() async {
+    searchController.clear();
+    rangoIni = 0;
+    rangoFin = 0;
+    tareas.clear();
+    return true;
+  }
+
+  Future<void> cargarTodas(
+    BuildContext context,
+  ) async {
+    //cargar todas
+  }
+
+  Future<void> cargarAsignadas(
+    BuildContext context,
+  ) async {
+    //cargar asignadas
+  }
+
+  Future<void> cargarInvitaciones(
+    BuildContext context,
+  ) async {
+    //cargar invitaciones
+  }
+
+  Future<void> cargarCreadas(
+    BuildContext context,
+  ) async {
+    //cargar creadas
+  }
+
+  obtenerTareasTodas(
+    BuildContext context,
+  ) async {
+    tareasGenerales.clear();
+    rangoTodasIni = 1;
+    rangoTodasFin = intervaloRegistros;
+
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+    //Consumo de api
+    ApiResModel resTarea = await tareaService.getRangoTodas(
+      user,
+      token,
+      rangoTodasIni,
+      rangoTodasFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    tareasGenerales.addAll(resTarea.response);
+
+    isLoading = false;
+
+    rangoTodasIni = tareasGenerales[tareasGenerales.length - 1].id + 1;
+    rangoTodasFin = rangoTodasIni + 10;
+  }
+
+  obtenerTareasCreadas(
+    BuildContext context,
+  ) async {
+    tareasCreadas.clear();
+    rangoCreadasIni = 1;
+    rangoCreadasFin = intervaloRegistros;
+
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+    //Consumo de api
+    ApiResModel resTarea = await tareaService.getRangoCreadas(
+      user,
+      token,
+      rangoCreadasIni,
+      rangoCreadasFin,
+    );
+
+    isLoading = false;
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    tareasCreadas.addAll(resTarea.response);
+
+    rangoCreadasIni = tareasCreadas[tareasCreadas.length - 1].id + 1;
+    rangoCreadasFin = rangoCreadasIni + 10;
+  }
+
+  obtenerTareasAsignadas(
+    BuildContext context,
+  ) async {
+    tareasAsignadas.clear();
+    rangoAsignadasIni = 1;
+    rangoAsignadasFin = intervaloRegistros;
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+    //Consumo de api
+    ApiResModel resTarea = await tareaService.getRangoAsignadas(
+      user,
+      token,
+      rangoAsignadasIni,
+      rangoAsignadasFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    tareasAsignadas.addAll(resTarea.response);
+
+    isLoading = false;
+
+    if (tareasInvitaciones.isEmpty) {
+      return;
+    }
+
+    rangoAsignadasIni = tareasAsignadas[tareasAsignadas.length - 1].id + 1;
+    rangoAsignadasFin = rangoAsignadasIni + 10;
+  }
+
+  obtenerTareasInvitaciones(
+    BuildContext context,
+  ) async {
+    tareasInvitaciones.clear();
+    rangoInvitacionesIni = 1;
+    rangoInvitacionesFin = intervaloRegistros;
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    isLoading = true;
+    //Consumo de api
+    ApiResModel resTarea = await tareaService.getRangoInvitaciones(
+      user,
+      token,
+      rangoInvitacionesIni,
+      rangoInvitacionesFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      isLoading = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    tareasInvitaciones.addAll(resTarea.response);
+
+    isLoading = false;
+
+    if (tareasInvitaciones.isEmpty) {
+      return;
+    }
+
+    rangoInvitacionesIni =
+        tareasInvitaciones[tareasInvitaciones.length - 1].id + 1;
+    rangoInvitacionesFin = rangoInvitacionesIni + 10;
+  }
+
+  recargarTodas(
+    BuildContext context,
+  ) async {
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    todasCarga = true;
+
+    //aumentar los rangos
+    ApiResModel resTarea = await tareaService.getRangoTodas(
+      user,
+      token,
+      rangoInvitacionesIni,
+      rangoInvitacionesFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      todasCarga = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    List<TareaModel> tareasMas = resTarea.response;
+
+    todasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    tareasGenerales.addAll(tareasMas);
+
+    //actualizar rangos
+    int mas10 = 10;
+
+    rangoTodasIni = tareasGenerales[tareasGenerales.length - 1].id + 1;
+    rangoTodasFin = rangoTodasIni + intervaloRegistros + mas10;
+  }
+
+  recargarCreadas(
+    BuildContext context,
+  ) async {
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    creadasCarga = true;
+
+    //aumentar los rangos
+    ApiResModel resTarea = await tareaService.getRangoCreadas(
+      user,
+      token,
+      rangoInvitacionesIni,
+      rangoInvitacionesFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      creadasCarga = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    List<TareaModel> tareasMas = resTarea.response;
+
+    creadasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    tareasCreadas.addAll(tareasMas);
+
+    //actualizar rangos
+    int mas10 = 10;
+
+    rangoCreadasIni = tareasCreadas[tareasCreadas.length - 1].id + 1;
+    rangoCreadasFin = rangoCreadasIni + intervaloRegistros + mas10;
+  }
+
+  recargarAsignadas(
+    BuildContext context,
+  ) async {
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    asignadasCarga = true;
+
+    //aumentar los rangos
+    ApiResModel resTarea = await tareaService.getRangoAsignadas(
+      user,
+      token,
+      rangoInvitacionesIni,
+      rangoInvitacionesFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      asignadasCarga = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    List<TareaModel> tareasMas = resTarea.response;
+
+    asignadasCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    tareasAsignadas.addAll(tareasMas);
+
+    //actualizar rangos
+    int mas10 = 10;
+
+    rangoAsignadasIni = tareasAsignadas[tareasAsignadas.length - 1].id + 1;
+    rangoAsignadasFin = rangoAsignadasIni + intervaloRegistros + mas10;
+  }
+
+  recargarInvitaciones(
+    BuildContext context,
+  ) async {
+    //Obtener user y token
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+
+    //instancia de servicio
+    final TareaService tareaService = TareaService();
+
+    invitacionesCarga = true;
+
+    //aumentar los rangos
+    ApiResModel resTarea = await tareaService.getRangoInvitaciones(
+      user,
+      token,
+      rangoInvitacionesIni,
+      rangoInvitacionesFin,
+    );
+
+    //si algo salio mal
+    if (!resTarea.succes) {
+      invitacionesCarga = false;
+
+      NotificationService.showErrorView(
+        context,
+        resTarea,
+      );
+
+      return;
+    }
+
+    //Si se ejecuto bien, obtener la respuesta de Api Buscar Tareas
+    List<TareaModel> tareasMas = resTarea.response;
+
+    invitacionesCarga = false;
+
+    // Insertar la lista de tareas en `tareasFiltro`
+    tareasInvitaciones.addAll(tareasMas);
+
+    //actualizar rangos
+    int mas10 = 10;
+
+    rangoAsignadasIni =
+        tareasInvitaciones[tareasInvitaciones.length - 1].id + 1;
+    rangoAsignadasFin = rangoAsignadasIni + intervaloRegistros + mas10;
   }
 }

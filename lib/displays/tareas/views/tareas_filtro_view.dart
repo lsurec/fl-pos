@@ -65,6 +65,20 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
                   Styles.title,
                 ),
               ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    vmTarea.navegarBusqueda(context);
+                  },
+                  icon: const Icon(
+                    Icons.search,
+                  ),
+                  tooltip: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'buscar',
+                  ),
+                ),
+              ],
               bottom: TabBar(
                 onTap: (index) => vmTarea.limpiarLista(context),
                 controller: vmTarea.tabController,
@@ -92,13 +106,13 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
                   Tab(
                     text: AppLocalizations.of(context)!.translate(
                       BlockTranslate.tareas,
-                      'invitaciones',
+                      'asignadas',
                     ),
                   ),
                   Tab(
                     text: AppLocalizations.of(context)!.translate(
                       BlockTranslate.tareas,
-                      'asignadas',
+                      'invitaciones',
                     ),
                   ),
                 ],
@@ -112,9 +126,9 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
                 // Contenido de la segunda pestaña
                 VerCreadasView(),
                 // Contenido de la tercera pestaña
-                VerInvitacionesView(),
-                // Contenido de la cuarta pestaña
                 VerAsignadasView(),
+                // Contenido de la cuarta pestaña
+                VerInvitacionesView(),
               ],
             ),
           ),

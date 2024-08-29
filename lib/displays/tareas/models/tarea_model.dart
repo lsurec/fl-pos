@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class TareaModel {
+  int id;
   dynamic tarea;
   int iDTarea;
   String? usuarioCreador;
@@ -26,8 +27,14 @@ class TareaModel {
   String? backColor;
   int nivelPrioridad;
   String? nomNivelPrioridad;
+  int registros;
+  bool filtroTodasTareas;
+  bool filtroMisTareas;
+  bool filtroMisResponsabilidades;
+  bool filtroMisInvitaciones;
 
   TareaModel({
+    required this.id,
     required this.tarea,
     required this.iDTarea,
     required this.usuarioCreador,
@@ -53,6 +60,11 @@ class TareaModel {
     required this.backColor,
     required this.nivelPrioridad,
     required this.nomNivelPrioridad,
+    required this.registros,
+    required this.filtroTodasTareas,
+    required this.filtroMisTareas,
+    required this.filtroMisResponsabilidades,
+    required this.filtroMisInvitaciones,
   });
 
   factory TareaModel.fromJson(String str) =>
@@ -61,6 +73,7 @@ class TareaModel {
   String toJson() => json.encode(toMap());
 
   factory TareaModel.fromMap(Map<String, dynamic> json) => TareaModel(
+        id: json["id"],
         tarea: json["tarea"],
         iDTarea: json["iD_Tarea"],
         usuarioCreador: json["usuario_Creador"],
@@ -88,9 +101,15 @@ class TareaModel {
         backColor: json["backColor"],
         nivelPrioridad: json["nivel_Prioridad"],
         nomNivelPrioridad: json["nom_Nivel_Prioridad"],
+        registros: json["registros"],
+        filtroTodasTareas: json["filtroTodasTareas"],
+        filtroMisTareas: json["filtroMisTareas"],
+        filtroMisResponsabilidades: json["filtroMisResponsabilidades"],
+        filtroMisInvitaciones: json["filtroMisInvitaciones"],
       );
 
   Map<String, dynamic> toMap() => {
+        "id": id,
         "tarea": tarea,
         "iD_Tarea": iDTarea,
         "usuario_Creador": usuarioCreador,
@@ -116,5 +135,10 @@ class TareaModel {
         "backColor": backColor,
         "nivel_Prioridad": nivelPrioridad,
         "nom_Nivel_Prioridad": nomNivelPrioridad,
+        "registros": registros,
+        "filtroTodasTareas": filtroTodasTareas,
+        "filtroMisTareas": filtroMisTareas,
+        "filtroMisResponsabilidades": filtroMisResponsabilidades,
+        "filtroMisInvitaciones": filtroMisInvitaciones,
       };
 }
