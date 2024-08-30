@@ -46,19 +46,11 @@ class HomeRestaurantView extends StatelessWidget {
                 ],
               ),
             ),
-            body: TabBarView(
+            body: const TabBarView(
               children: [
                 // Contenido de la primera pestaña
-                const _AccesTab(),
-                ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: _CardDoc(),
-                    );
-                  },
-                ),
+                _AccesTab(),
+                _TableOpen(),
                 // Contenido de la segunda pestaña
               ],
             ),
@@ -74,6 +66,43 @@ class HomeRestaurantView extends StatelessWidget {
             ),
           ),
         if (vm.isLoading) const LoadWidget(),
+      ],
+    );
+  }
+}
+
+class _TableOpen extends StatelessWidget {
+  const _TableOpen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
+
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.all(20),
+          height: 20,
+          child: RegisterCountWidget(
+            count: orderVM.orders.length,
+          ),
+        ),
+        Expanded(
+          child: ListView.separated(
+            itemCount: orderVM.orders.length,
+            separatorBuilder: (BuildContext context, int index) {
+              return Container(
+                color: const Color.fromARGB(255, 227, 226, 226),
+                height: 10,
+              );
+            },
+            itemBuilder: (BuildContext context, int index) {
+              return Container();
+            },
+          ),
+        ),
       ],
     );
   }
