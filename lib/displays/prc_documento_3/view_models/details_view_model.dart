@@ -29,6 +29,11 @@ class DetailsViewModel extends ChangeNotifier {
   double total = 0;
   double monto = 0;
 
+  //rangos
+  int rangoIni = 1;
+  int rangoFin = 20;
+  int intervaloRegistros = 20;
+
   //Transacciones del docummento
   final List<TraInternaModel> traInternas = [];
 
@@ -71,7 +76,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     vmProducto.controllerNum.text = "1";
     vmProducto.valueNum = 1;
-    searchController.text = "";
+    // searchController.text = "";
 
     traInternas.clear(); //limpuar lista
     calculateTotales(context); //actualizar totales
@@ -123,6 +128,8 @@ class DetailsViewModel extends ChangeNotifier {
 
     //Limpiar lista de productros
     products.clear();
+    rangoIni = 1;
+    rangoFin = 20;
 
     //campo de texto input
     String searchText = searchController.text;
@@ -207,8 +214,8 @@ class DetailsViewModel extends ChangeNotifier {
       token,
       user,
       station.estacionTrabajo,
-      0,
-      100,
+      rangoIni,
+      rangoFin,
     );
 
     //valid succes response
@@ -226,6 +233,15 @@ class DetailsViewModel extends ChangeNotifier {
 
     //añadir la repuesta
     products.addAll(resDesc.response);
+
+    //Modificar: se han aumentado los rangos
+    if (products.length < intervaloRegistros) {
+      rangoIni = products.length + 1;
+      rangoFin = rangoIni + intervaloRegistros;
+    } else {
+      rangoIni += intervaloRegistros;
+      rangoFin += intervaloRegistros;
+    }
 
     //si no hay coicncidencias de busqueda mostrar mensaje
     if (products.isEmpty) {
@@ -271,10 +287,10 @@ class DetailsViewModel extends ChangeNotifier {
       Navigator.pushNamed(
         context,
         AppRoutes.selectProduct,
-        arguments: products,
       );
 
       vmFactura.isLoading = false;
+
       return;
 
       //el producto que se selecciona en la pantalla de coincidecias se asigna a producto

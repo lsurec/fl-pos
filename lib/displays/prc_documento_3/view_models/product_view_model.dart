@@ -1377,4 +1377,75 @@ class ProductViewModel extends ChangeNotifier {
       // Aquí puedes agregar la lógica para el botón de regresar si es necesario
     }
   }
+
+  //Regresar a la pantalla anterior y limpiar
+  Future<bool> back() async {
+    return true;
+  }
+
+  List<ProductModel> products = [];
+
+  //filtrar tareas
+  Future<void> filtrarResultados(
+    BuildContext context,
+  ) async {
+    //
+
+    //obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    final vmDetalle = Provider.of<DetailsViewModel>(context, listen: false);
+    final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+    EstacionModel station = localVM.selectedEstacion!;
+
+    //campo de texto input
+    String searchText = vmDetalle.searchController.text;
+
+    searchText = searchText.trimRight();
+
+    //instacia del servicio
+    ProductService productService = ProductService();
+
+    //Validar formulario
+    if (vmDetalle.isValidFormCSearch() == false) return;
+
+    //si tareas está vacio, reestablecer los rangos
+    if (products.isEmpty) {
+      vmDetalle.rangoIni = 1;
+      vmDetalle.rangoFin = vmDetalle.intervaloRegistros;
+    }
+
+    // Realiza la búsqueda
+    //si ver mas es = 1 aumenta los rangos
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel resDesc = await productService.getProduct(
+      searchText,
+      token,
+      user,
+      station.estacionTrabajo,
+      vmDetalle.rangoIni,
+      vmDetalle.rangoFin,
+    );
+
+    //si el consumo salió mal
+    if (!resDesc.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(
+        context,
+        resDesc,
+      );
+      return;
+    }
+
+    products.addAll(resDesc.response);
+
+    isLoading = false; //detener cargar pantalla
+
+    vmDetalle.rangoIni = vmDetalle.products.length + 1;
+    vmDetalle.rangoFin = vmDetalle.rangoIni + vmDetalle.intervaloRegistros;
+  }
 }
