@@ -18,7 +18,9 @@ class SelectProductView extends StatelessWidget {
     final vmDetalle = Provider.of<DetailsViewModel>(context);
 
     return WillPopScope(
-      onWillPop: () => vmProducto.back(),
+      onWillPop: () => vmProducto.back(
+        context,
+      ),
       child: Stack(
         children: [
           Scaffold(
