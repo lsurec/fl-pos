@@ -1383,8 +1383,6 @@ class ProductViewModel extends ChangeNotifier {
     return true;
   }
 
-  List<ProductModel> products = [];
-
   //filtrar tareas
   Future<void> filtrarResultados(
     BuildContext context,
@@ -1412,7 +1410,7 @@ class ProductViewModel extends ChangeNotifier {
     if (vmDetalle.isValidFormCSearch() == false) return;
 
     //si tareas está vacio, reestablecer los rangos
-    if (products.isEmpty) {
+    if (vmDetalle.products.isEmpty) {
       vmDetalle.rangoIni = 1;
       vmDetalle.rangoFin = vmDetalle.intervaloRegistros;
     }
@@ -1441,7 +1439,7 @@ class ProductViewModel extends ChangeNotifier {
       return;
     }
 
-    products.addAll(resDesc.response);
+    vmDetalle.products.addAll(resDesc.response);
 
     isLoading = false; //detener cargar pantalla
 

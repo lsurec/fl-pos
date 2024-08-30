@@ -21,73 +21,83 @@ class SelectProductView extends StatelessWidget {
       child: Stack(
         children: [
           Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.general,
+                      'registro',
+                    )} (${vmDetalle.products.length})",
+                    style: AppTheme.style(
+                      context,
+                      Styles.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             body: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "${AppLocalizations.of(context)!.translate(
-                          BlockTranslate.general,
-                          'registro',
-                        )} (${vmDetalle.products.length})",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: vmDetalle.products.length,
+                    // +1 para el botón "Ver más"
+                    itemCount: vmDetalle.products.length + 1,
                     separatorBuilder: (context, index) => Divider(
                       color: AppTheme.color(
                         context,
                         Styles.border,
                       ),
-                    ), // Agregar el separador
+                    ),
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 0,
-                          horizontal: 20,
-                        ),
-                        title: Text(
-                          vmDetalle.products[index].desProducto,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
+                      if (index < vmDetalle.products.length) {
+                        return ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 20,
                           ),
-                        ),
-                        subtitle: Text(
-                          'SKU: ${vmDetalle.products[index].productoId} ',
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
+                          title: Text(
+                            vmDetalle.products[index].desProducto,
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
                           ),
-                        ),
-                        onTap: () => vmProducto.navigateProduct(
-                          context,
-                          vmDetalle.products[index],
-                        ),
-                        trailing: IconButton(
-                          onPressed: () => vmProducto.viewProductImages(
+                          subtitle: Text(
+                            'SKU: ${vmDetalle.products[index].productoId} ',
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                          onTap: () => vmProducto.navigateProduct(
                             context,
                             vmDetalle.products[index],
                           ),
-                          icon: const Icon(
-                            Icons.image,
+                          trailing: IconButton(
+                            onPressed: () => vmProducto.viewProductImages(
+                              context,
+                              vmDetalle.products[index],
+                            ),
+                            icon: const Icon(
+                              Icons.image,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        // Botón "Ver más" al final de la lista
+                        // Llama a la función que carga más productos
+                        return TextButton(
+                          onPressed: () => vmProducto.filtrarResultados(
+                            context,
+                          ),
+                          child: Text(
+                            "Ver más",
+                            style: AppTheme.style(context, Styles.normal),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -97,7 +107,6 @@ class SelectProductView extends StatelessWidget {
           if (vmProducto.isLoading)
             ModalBarrier(
               dismissible: false,
-              // color: Colors.black.withOpacity(0.3),
               color: AppTheme.color(
                 context,
                 Styles.loading,
