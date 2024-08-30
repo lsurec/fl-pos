@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
@@ -52,38 +53,9 @@ class SelectProductView extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) {
                       if (index < vmDetalle.products.length) {
-                        return ListTile(
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0,
-                            horizontal: 20,
-                          ),
-                          title: Text(
-                            vmDetalle.products[index].desProducto,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
-                          ),
-                          subtitle: Text(
-                            'SKU: ${vmDetalle.products[index].productoId} ',
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
-                          ),
-                          onTap: () => vmProducto.navigateProduct(
-                            context,
-                            vmDetalle.products[index],
-                          ),
-                          trailing: IconButton(
-                            onPressed: () => vmProducto.viewProductImages(
-                              context,
-                              vmDetalle.products[index],
-                            ),
-                            icon: const Icon(
-                              Icons.image,
-                            ),
-                          ),
+                        final ProductModel producto = vmDetalle.products[index];
+                        return ProductWidget(
+                          producto: producto,
                         );
                       } else {
                         // Botón "Ver más" al final de la lista
@@ -114,6 +86,54 @@ class SelectProductView extends StatelessWidget {
             ),
           if (vmProducto.isLoading) const LoadWidget(),
         ],
+      ),
+    );
+  }
+}
+
+class ProductWidget extends StatelessWidget {
+  const ProductWidget({
+    super.key,
+    required this.producto,
+  });
+
+  final ProductModel producto;
+
+  @override
+  Widget build(BuildContext context) {
+    final vmProducto = Provider.of<ProductViewModel>(context);
+
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 0,
+        horizontal: 20,
+      ),
+      title: Text(
+        producto.desProducto,
+        style: AppTheme.style(
+          context,
+          Styles.normal,
+        ),
+      ),
+      subtitle: Text(
+        'SKU: ${producto.productoId} ',
+        style: AppTheme.style(
+          context,
+          Styles.normal,
+        ),
+      ),
+      onTap: () => vmProducto.navigateProduct(
+        context,
+        producto,
+      ),
+      trailing: IconButton(
+        onPressed: () => vmProducto.viewProductImages(
+          context,
+          producto,
+        ),
+        icon: const Icon(
+          Icons.image,
+        ),
       ),
     );
   }
