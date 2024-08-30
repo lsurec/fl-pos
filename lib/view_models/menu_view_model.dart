@@ -70,19 +70,20 @@ class MenuViewModel extends ChangeNotifier {
 
     tipoCambio = 0;
 
+    //factura o cotizacion
     if (route.toLowerCase() == "prcdocumento_3") {
+      vmHome.isLoading = true;
+      await vmFactura.loadNewData(context, 0);
+      vmHome.isLoading = false;
+      return;
+    }
+
+    //Tareas
+    if (route.toLowerCase() == "shrTarea_3") {
       vmHome.isLoading = true;
       await vmTarea.loadData(
         context,
       );
-      vmHome.isLoading = false;
-
-      return;
-    }
-
-    if (route.toLowerCase() == "shrTarea_3") {
-      vmHome.isLoading = true;
-      await vmFactura.loadNewData(context, 0);
       vmHome.isLoading = false;
 
       return;
