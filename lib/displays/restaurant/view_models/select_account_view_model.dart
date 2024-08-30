@@ -41,6 +41,8 @@ class SelectAccountViewModel extends ChangeNotifier {
         align: PosAlign.center,
       );
 
+      String line = "________________________________________________";
+
       List<int> bytes = [];
       final generator = Generator(
         AppData.paperSize[paperDefault],
@@ -55,7 +57,7 @@ class SelectAccountViewModel extends ChangeNotifier {
 
       bytes += generator.text(
         "Club campestre la montaña",
-        styles: PosStyles(
+        styles: const PosStyles(
           bold: true,
           align: PosAlign.center,
           height: PosTextSize.size2,
@@ -64,7 +66,7 @@ class SelectAccountViewModel extends ChangeNotifier {
 
       bytes += generator.text(
         "Barra mirablosque",
-        styles: PosStyles(
+        styles: const PosStyles(
           bold: true,
           align: PosAlign.center,
           height: PosTextSize.size2,
@@ -73,7 +75,7 @@ class SelectAccountViewModel extends ChangeNotifier {
 
       bytes += generator.text(
         "Mesa: Mesa 1",
-        styles: PosStyles(
+        styles: const PosStyles(
           align: PosAlign.center,
           height: PosTextSize.size2,
         ),
@@ -81,19 +83,204 @@ class SelectAccountViewModel extends ChangeNotifier {
 
       bytes += generator.text(
         "MIRALBOLSQUE - 1",
-        styles: PosStyles(
+        styles: const PosStyles(
           bold: true,
           align: PosAlign.center,
           height: PosTextSize.size2,
         ),
       );
 
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.row([
+        PosColumn(
+          text: "Cant",
+          width: 2,
+        ),
+        PosColumn(
+          text: "Descripcion",
+          width: 7,
+        ),
+        PosColumn(
+          text: "Total",
+          width: 3,
+          styles: const PosStyles(
+            align: PosAlign.right,
+          ),
+        ),
+      ]);
+
+      bytes += generator.text(line);
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "100",
+            width: 2,
+          ),
+          PosColumn(
+            text: "Excepteur reprehenderit ut nostrud et veniam in.",
+            width: 7,
+          ),
+          PosColumn(
+            text: "100.00",
+            width: 3,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+          ),
+        ],
+      );
+      bytes += generator.text(line);
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "Sub-Total:",
+            width: 8,
+            styles: const PosStyles(
+              align: PosAlign.right,
+              bold: true,
+            ),
+          ),
+          PosColumn(
+            text: "100,000.00",
+            width: 4,
+            styles: const PosStyles(
+              align: PosAlign.right,
+              bold: true,
+            ),
+          ),
+        ],
+      );
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "Descuento:",
+            width: 8,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+          ),
+          PosColumn(
+            text: "100,000.00",
+            width: 4,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+          ),
+        ],
+      );
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "Total:",
+            width: 8,
+            styles: const PosStyles(
+              align: PosAlign.right,
+              bold: true,
+            ),
+          ),
+          PosColumn(
+            text: "100,000.00",
+            width: 4,
+            styles: const PosStyles(
+              align: PosAlign.right,
+              bold: true,
+            ),
+          ),
+        ],
+      );
+
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "",
+            width: 8,
+            styles: const PosStyles(
+              align: PosAlign.right,
+              bold: true,
+            ),
+          ),
+          PosColumn(
+            text: "_______________",
+            width: 4,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+          ),
+        ],
+      );
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: "Propina:",
+            width: 8,
+            styles: const PosStyles(
+              align: PosAlign.right,
+              bold: true,
+            ),
+          ),
+          PosColumn(
+            text: "_______________",
+            width: 4,
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+          ),
+        ],
+      );
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.text(
+        "Nombre:",
+      );
+
+      bytes += generator.text(line);
+
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.text(
+        "NIT:",
+      );
+
+      bytes += generator.text(line);
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.text(
+        "Celular:",
+      );
+
+      bytes += generator.text(line);
+
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.text(
+        "Email:",
+      );
+
+      bytes += generator.text(line);
       bytes += generator.emptyLines(2);
 
       bytes += generator.text(
-        "----------------------------",
-        styles: center,
+        "Le atendió: MESERO",
       );
+      bytes += generator.emptyLines(1);
+      bytes += generator.text(
+        "12/12/2020",
+      );
+      bytes += generator.text(
+        "12:12:00",
+      );
+
+      bytes += generator.emptyLines(2);
+
+      bytes += generator.text(line);
+      bytes += generator.emptyLines(2);
 
       bytes += generator.text(
         "Powered By:",
