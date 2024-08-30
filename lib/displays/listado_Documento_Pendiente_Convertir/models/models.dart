@@ -10,3 +10,5 @@ export 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/origin_doc_model.dart';
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/param_convert_doc_model.dart';
 export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/type_doc_model.dart';
+export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/update_doc_model.dart';
+export 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/update_ref_model.dart';

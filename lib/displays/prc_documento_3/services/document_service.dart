@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -438,6 +439,26 @@ class DocumentService {
       tipoDocumento: menuVM.documento!,
       detalles: detailsVM.traInternas,
       pagos: paymentVM.amounts,
+      tipoRef: docVM.valueParametro(58) ? docVM.referenciaSelect : null,
+      refFechaEntrega: docVM.valueParametro(381)
+          ? docVM.fechaRefIni.toIso8601String()
+          : null,
+      refFechaRecoger: docVM.valueParametro(382)
+          ? docVM.fechaRefFin.toIso8601String()
+          : null,
+      refFechaInicio: docVM.valueParametro(44)
+          ? docVM.fechaInicial.toIso8601String()
+          : null,
+      refFechaFin:
+          docVM.valueParametro(44) ? docVM.fechaFinal.toIso8601String() : null,
+      refContacto:
+          docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
+      refDescripcion:
+          docVM.valueParametro(383) ? docVM.refDescripcionParam383.text : null,
+      refDireccionEntrega:
+          docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
+      refObservacion:
+          docVM.valueParametro(384) ? docVM.refObservacionParam384.text : null,
     );
 
     //Guardar el documento en memoria del telefono
@@ -489,8 +510,8 @@ class DocumentService {
     //si no se encontró la serie del documento en las series de la sesion no hacer nada
     if (counter == -1) return;
 
-    //si no hay transacciones o pagos agregados no hacer nada
-    if (saveDocument.detalles.isEmpty && saveDocument.pagos.isEmpty) return;
+    //si no hay transacciones no hacer nada
+    // if (saveDocument.detalles.isEmpty) return;
 
     //mostrar dialogo de confirmacion
     bool result = await showDialog(
@@ -529,49 +550,347 @@ class DocumentService {
       return;
     }
 
+    //Llamar a la funcion que recupera los datos y actualiza las vistas
+
     //Cargar documento
 
-    //limpiar serie
-    docVM.serieSelect = null;
+    loadDocumentLocal(context);
 
-    //agregaar serie del documento
-    await docVM.changeSerie(docVM.series[counter], context);
+    // //limpiar serie
+    // docVM.serieSelect = null;
 
-    counter = -1;
+    // //agregaar serie del documento
+    // await docVM.changeSerie(docVM.series[counter], context);
 
-    //agregar vendedor del docuemto
-    for (var i = 0; i < docVM.cuentasCorrentistasRef.length; i++) {
-      final vendedor = docVM.cuentasCorrentistasRef[i];
-      if (vendedor.cuentaCorrentista ==
-          saveDocument.vendedor?.cuentaCorrentista) {
-        counter = i;
-        break;
+    // counter = -1;
+
+    // //agregar vendedor del docuemto
+    // for (var i = 0; i < docVM.cuentasCorrentistasRef.length; i++) {
+    //   final vendedor = docVM.cuentasCorrentistasRef[i];
+    //   if (vendedor.cuentaCorrentista ==
+    //       saveDocument.vendedor?.cuentaCorrentista) {
+    //     counter = i;
+    //     break;
+    //   }
+    // }
+
+    // docVM.vendedorSelect = null;
+
+    // //si el venodor no se encuntra no asignar niguno
+    // if (counter != -1) {
+    //   docVM.changeSeller(docVM.cuentasCorrentistasRef[counter]);
+    // }
+
+    // docVM.clienteSelect = null;
+
+    // //agregar el cliente del documento
+    // docVM.addClient(saveDocument.cliente);
+
+    // detailsVM.traInternas.clear();
+    // //agregar las transacciones del documento
+    // for (var transaction in saveDocument.detalles) {
+    //   detailsVM.addTransaction(transaction, context);
+    // }
+
+    // paymentVM.amounts.clear();
+
+    // //agregar las formas de pago del documento
+    // for (var amount in saveDocument.pagos) {
+    //   paymentVM.addAmount(amount, context);
+    // }
+  }
+
+  loadDocumentLocal(BuildContext context) async {
+    //View models a utilizar
+
+    final vmFactura = Provider.of<DocumentoViewModel>(
+      context,
+      listen: false,
+    );
+    final vmDoc = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmPayment = Provider.of<PaymentViewModel>(
+      context,
+      listen: false,
+    );
+
+    //Iniciar carga
+    vmFactura.isLoading = true;
+
+    //str to object para documento estructura
+    //Tipar documento guardado
+    final SaveDocModel saveDocument = SaveDocModel.fromMap(
+      jsonDecode(Preferences.document),
+    );
+
+    if (vmDoc.serieSelect == null) {
+      //Cargar serie del documento guardado
+      for (int i = 0; i < vmDoc.series.length; i++) {
+        SerieModel serieF = vmDoc.series[i];
+
+        if (serieF.serieDocumento == saveDocument.serie!.serieDocumento) {
+          vmDoc.serieSelect = serieF;
+        }
       }
     }
 
-    docVM.vendedorSelect = null;
+    final List<SellerModel> cuentasCorrentistasRef =
+        []; //cuenta correntisat ref
 
-    //si el venodor no se encuntra no asignar niguno
-    if (counter != -1) {
-      docVM.changeSeller(docVM.cuentasCorrentistasRef[counter]);
+    //limmpiar lista vendedor
+    cuentasCorrentistasRef.clear();
+
+    //View models externos
+    final loginVM = Provider.of<LoginViewModel>(context, listen: false);
+    final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
+
+    //Datos necesarios
+    int empresa = localVM.selectedEmpresa!.empresa;
+    int estacion = localVM.selectedEstacion!.estacionTrabajo;
+    String user = loginVM.user;
+    String token = loginVM.token;
+    int tipoDocumento = saveDocument.tipoDocumento;
+    String serie = saveDocument.serie!.serieDocumento!;
+
+    //instancia del servicio
+    CuentaService cuentaService = CuentaService();
+
+    //Consummo del api
+    ApiResModel resVendedores = await cuentaService.getCeuntaCorrentistaRef(
+      user,
+      tipoDocumento,
+      serie,
+      empresa,
+      token,
+    );
+
+    //valid succes response
+    if (!resVendedores.succes) {
+      vmFactura.isLoading = false;
+
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resVendedores,
+      );
+      return;
     }
 
-    docVM.clienteSelect = null;
+    //cuntas correntista ref disponibles - agregar vendedores
+    cuentasCorrentistasRef.addAll(resVendedores.response);
 
-    //agregar el cliente del documento
-    docVM.addClient(saveDocument.cliente);
-
-    detailsVM.traInternas.clear();
-    //agregar las transacciones del documento
-    for (var transaction in saveDocument.detalles) {
-      detailsVM.addTransaction(transaction, context);
+    //si solo hay un vendedor seleccionarlo por defecto
+    if (cuentasCorrentistasRef.length == 1) {
+      vmDoc.vendedorSelect = cuentasCorrentistasRef.first;
     }
 
-    paymentVM.amounts.clear();
+    //Buscar tipos transaccion
+    final List<TipoTransaccionModel> tiposTransaccion = [];
 
-    //agregar las formas de pago del documento
-    for (var amount in saveDocument.pagos) {
-      paymentVM.addAmount(amount, context);
+    //instancia del servicio
+    tiposTransaccion.clear();
+    TipoTransaccionService tipoTransaccionService = TipoTransaccionService();
+
+    //consumo del api
+    ApiResModel resTipoTransaccion =
+        await tipoTransaccionService.getTipoTransaccion(
+      tipoDocumento, // documento,
+      serie, // serie,
+      empresa, // empresa,
+      token, // token,
+      user, // user,
+    );
+
+    //valid succes response
+    if (!resTipoTransaccion.succes) {
+      vmFactura.isLoading = false;
+
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resTipoTransaccion,
+      );
+      return;
     }
+
+    //tioos de transaccion disponibles
+    tiposTransaccion.addAll(resTipoTransaccion.response);
+
+    //Parametros
+    //Buscar parametros del documento
+    // final List<ParametroModel> parametros = [];
+    vmDoc.parametros.clear();
+    ParametroService parametroService = ParametroService();
+
+    ApiResModel resParametros = await parametroService.getParametro(
+      user,
+      tipoDocumento,
+      serie,
+      empresa,
+      estacion,
+      token,
+    );
+
+    //valid succes response
+    if (!resParametros.succes) {
+      vmFactura.isLoading = false;
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resParametros,
+      );
+      return;
+    }
+
+    //Parammetros disponibles
+    vmDoc.parametros.addAll(resParametros.response);
+
+    //Buscar formas de pago
+    //Formas de pago disponibles
+    final List<PaymentModel> paymentList = [];
+
+    //instancia del servicio
+    PagoService pagoService = PagoService();
+
+    //load prosses
+
+    //Consumo del servicio
+    ApiResModel resPayment = await pagoService.getFormas(
+      tipoDocumento, // doc,
+      serie, // serie,
+      empresa, // empresa,
+      token, // token,
+    );
+
+    //valid succes response
+    if (!resPayment.succes) {
+      //stop process
+      vmFactura.isLoading = false;
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resPayment,
+      );
+      return;
+    }
+
+    //agregar formas de pago encontradas
+    paymentList.addAll(resPayment.response);
+
+    //si hay vendedor cargarlo
+    if (saveDocument.vendedor != null &&
+        saveDocument.vendedor!.nomCuentaCorrentista.isNotEmpty) {
+      for (int i = 0; i < cuentasCorrentistasRef.length; i++) {
+        SellerModel vendedorF = cuentasCorrentistasRef[i];
+
+        //Asignaer vendedor guardado
+        if (vendedorF.cuentaCorrentista ==
+            saveDocument.vendedor!.cuentaCorrentista) {
+          vmDoc.vendedorSelect = vendedorF;
+        }
+      }
+    }
+
+    if (vmDoc.valueParametro(58)) {
+      TipoReferenciaService referenciaService = TipoReferenciaService();
+
+      vmDoc.referenciaSelect = null;
+      vmDoc.referencias.clear();
+
+      //Consumo del servicio
+      ApiResModel resTiposRef = await referenciaService.getTiposReferencia(
+        user,
+        token,
+      );
+
+      //valid succes response
+      if (!resTiposRef.succes) {
+        vmFactura.isLoading = false;
+
+        //si algo salio mal mostrar alerta
+        await NotificationService.showErrorView(
+          context,
+          resTiposRef,
+        );
+        return;
+      }
+
+      //agregar formas de pago encontradas
+      vmDoc.referencias.addAll(resTiposRef.response);
+
+      if (saveDocument.tipoRef != null) {
+        for (int i = 0; i < vmDoc.referencias.length; i++) {
+          TipoReferenciaModel referenciaF = vmDoc.referencias[i];
+          if (referenciaF.tipoReferencia ==
+              saveDocument.tipoRef!.tipoReferencia) {
+            vmDoc.referenciaSelect = referenciaF;
+          }
+        }
+      }
+    }
+
+    //evaluar fechas y observaciones
+    if (vmDoc.valueParametro(381)) {
+      //Fecha entrega
+      vmDoc.fechaRefIni = DateTime.parse(saveDocument.refFechaEntrega!);
+    }
+
+    if (vmDoc.valueParametro(382)) {
+      //Fecha recoger
+      vmDoc.fechaRefFin = DateTime.parse(saveDocument.refFechaRecoger!);
+    }
+
+    if (vmDoc.valueParametro(44)) {
+      //Fecha inicio y fecha fin
+
+      vmDoc.fechaInicial = DateTime.parse(saveDocument.refFechaInicio!);
+      vmDoc.fechaFinal = DateTime.parse(saveDocument.refFechaFin!);
+    }
+
+    if (vmDoc.valueParametro(385)) {
+      vmDoc.refContactoParam385.text = saveDocument.refContacto ?? "";
+    }
+
+    if (vmDoc.valueParametro(383)) {
+      vmDoc.refDescripcionParam383.text = saveDocument.refDescripcion ?? "";
+    }
+
+    if (vmDoc.valueParametro(386)) {
+      vmDoc.refDirecEntregaParam386.text =
+          saveDocument.refDireccionEntrega ?? "";
+    }
+
+    if (vmDoc.valueParametro(384)) {
+      vmDoc.refObservacionParam384.text = saveDocument.refObservacion ?? "";
+    }
+
+    final detailsVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
+    vmDoc.clienteSelect = saveDocument.cliente; //asignar cliente
+
+    if (saveDocument.cliente != null &&
+        saveDocument.cliente!.facturaNit.toLowerCase() == "c/f") {
+      vmDoc.cf = true;
+    }
+
+    // print(saveDocument.cliente!.facturaNit);
+
+    detailsVM.traInternas.addAll(saveDocument.detalles); //asignar detalles
+    vmPayment.amounts.addAll(saveDocument.pagos); //asignar pagos
+
+    //calcular totales del documento y pagos
+    detailsVM.calculateTotales(context);
+
+    vmFactura.isLoading = false;
   }
 }

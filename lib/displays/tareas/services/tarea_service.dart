@@ -133,7 +133,6 @@ class TareaService {
     String filtro,
     int opcion,
   ) async {
-
     Uri url = Uri.parse("${_baseUrl}Tareas/buscar");
     try {
       //url completa
@@ -190,6 +189,324 @@ class TareaService {
     }
   }
 
+  //obtener tareas por rango y filtro de busqueda
+
+  //Consumo api para obtener tareas de la busqueda por descripción.
+  Future<ApiResModel> getRangoTareas(
+    String user,
+    String token,
+    String filtro,
+    int rangoIni,
+    int rangoFin,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Tareas/buscar");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "filtro": filtro,
+          "user": user,
+          "rangoIni": rangoIni.toString(),
+          "rangoFin": rangoFin.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TareaModel> tareas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TareaModel.fromMap(item);
+        //agregar item a la lista
+        tareas.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: tareas,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener tareas de la busqueda por descripción.
+  Future<ApiResModel> getRangoTodas(
+    String user,
+    String token,
+    int rangoIni,
+    int rangoFin,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}tareas/todas");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "rangoIni": rangoIni.toString(),
+          "rangoFin": rangoFin.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TareaModel> tareas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TareaModel.fromMap(item);
+        //agregar item a la lista
+        tareas.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: tareas,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener tareas de la busqueda por descripción.
+  Future<ApiResModel> getRangoCreadas(
+    String user,
+    String token,
+    int rangoIni,
+    int rangoFin,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}tareas/creadas");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "rangoIni": rangoIni.toString(),
+          "rangoFin": rangoFin.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TareaModel> tareas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TareaModel.fromMap(item);
+        //agregar item a la lista
+        tareas.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: tareas,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+  //Consumo api para obtener tareas de la busqueda por descripción.
+  Future<ApiResModel> getRangoAsignadas(
+    String user,
+    String token,
+    int rangoIni,
+    int rangoFin,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}tareas/asignadas");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "rangoIni": rangoIni.toString(),
+          "rangoFin": rangoFin.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TareaModel> tareas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TareaModel.fromMap(item);
+        //agregar item a la lista
+        tareas.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: tareas,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
+    //Consumo api para obtener tareas de la busqueda por descripción.
+  Future<ApiResModel> getRangoInvitaciones(
+    String user,
+    String token,
+    int rangoIni,
+    int rangoFin,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}tareas/asignadas");
+    try {
+      //url completa
+
+      //Configuraciones del api
+      final response = await http.get(
+        url,
+        headers: {
+          "Authorization": "bearer $token",
+          "user": user,
+          "rangoIni": rangoIni.toString(),
+          "rangoFin": rangoFin.toString(),
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Tareas por busqueda de descripcion retornadas por api
+      List<TareaModel> tareas = [];
+
+      //recorrer lista api Y  agregar a lista local
+      for (var item in res.data) {
+        //Tipar a map
+        final responseFinally = TareaModel.fromMap(item);
+        //agregar item a la lista
+        tareas.add(responseFinally);
+      }
+
+      //retornar respuesta correcta del api
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: tareas,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //en caso de error retornar el error
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
   //Consumo api para obtener tareas de la busqueda por id de referencia.
   Future<ApiResModel> getTareasIdReferencia(
     String user,

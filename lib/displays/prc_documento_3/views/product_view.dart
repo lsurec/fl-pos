@@ -69,14 +69,15 @@ class ProductView extends StatelessWidget {
                   const SizedBox(height: 10),
                   _NumericField(),
                   Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'descripcion',
-                      ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.blueText,
-                      )),
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.general,
+                      'descripcion',
+                    ),
+                    style: AppTheme.style(
+                      context,
+                      Styles.blueText,
+                    ),
+                  ),
                   const SizedBox(height: 5),
                   Text(
                     product.desProducto,
@@ -205,7 +206,9 @@ class ProductView extends StatelessWidget {
                       ],
                     ),
                   if (vm.prices.isNotEmpty && !docVM.editPrice())
-                    Text(currencyFormat.format(vm.price)),
+                    Text(
+                      currencyFormat.format(vm.price),
+                    ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -291,30 +294,68 @@ class _BottomBar extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => vm.addTransaction(context, product, back),
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                color: AppTheme.color(
+          //agregar transaccion
+          if (vm.accion == 0)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => vm.addTransaction(
                   context,
-                  Styles.primary,
+                  product,
+                  back,
+                  0,
                 ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'agregar',
-                    ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'agregar',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.whiteStyle,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
+          //modificar transaccion
+          if (vm.accion == 1)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => vm.addTransaction(
+                  context,
+                  product,
+                  back,
+                  1,
+                ),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  color: AppTheme.color(
+                    context,
+                    Styles.primary,
+                  ),
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'modificar',
+                      ),
+                      style: AppTheme.style(
+                        context,
+                        Styles.whiteStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -359,27 +400,28 @@ class _NumericField extends StatelessWidget {
         Expanded(
           child: TextFormField(
             decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                  ),
+              border: const OutlineInputBorder(
+                borderSide: BorderSide(
+                  width: 1,
                 ),
-                hintText: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.factura,
-                  'cantidad',
-                ),
-                hintStyle: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
-                labelText: AppLocalizations.of(context)!.translate(
-                  BlockTranslate.factura,
-                  'cantidad',
-                ),
-                labelStyle: AppTheme.style(
-                  context,
-                  Styles.normal,
-                )),
+              ),
+              hintText: AppLocalizations.of(context)!.translate(
+                BlockTranslate.factura,
+                'cantidad',
+              ),
+              hintStyle: AppTheme.style(
+                context,
+                Styles.normal,
+              ),
+              labelText: AppLocalizations.of(context)!.translate(
+                BlockTranslate.factura,
+                'cantidad',
+              ),
+              labelStyle: AppTheme.style(
+                context,
+                Styles.normal,
+              ),
+            ),
             controller: vm.controllerNum,
             inputFormatters: [
               FilteringTextInputFormatter.allow(

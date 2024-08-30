@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -13,95 +14,127 @@ class SelectProductView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<ProductModel> products =
-        ModalRoute.of(context)!.settings.arguments as List<ProductModel>;
+    final vmProducto = Provider.of<ProductViewModel>(context);
+    final vmDetalle = Provider.of<DetailsViewModel>(context);
 
-    final vm = Provider.of<ProductViewModel>(context);
-
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(),
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "${AppLocalizations.of(context)!.translate(
-                        BlockTranslate.general,
-                        'registro',
-                      )} (${products.length})",
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: products.length,
-                  separatorBuilder: (context, index) => Divider(
-                    color: AppTheme.color(
+    return WillPopScope(
+      onWillPop: () => vmProducto.back(),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.general,
+                      'registro',
+                    )} (${vmDetalle.products.length})",
+                    style: AppTheme.style(
                       context,
-                      Styles.border,
+                      Styles.bold,
                     ),
-                  ), // Agregar el separador
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 0,
-                        horizontal: 20,
-                      ),
-                      title: Text(
-                        products[index].desProducto,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
-                      ),
-                      subtitle: Text(
-                        'SKU: ${products[index].productoId} ',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
-                      ),
-                      onTap: () => vm.navigateProduct(
-                        context,
-                        products[index],
-                      ),
-                      trailing: IconButton(
-                        onPressed: () => vm.viewProductImages(
-                          context,
-                          products[index],
-                        ),
-                        icon: const Icon(
-                          Icons.image,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        if (vm.isLoading)
-          ModalBarrier(
-            dismissible: false,
-            // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
+            ),
+            body: Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    // +1 para el botón "Ver más"
+                    itemCount: vmDetalle.products.length + 1,
+                    separatorBuilder: (context, index) => Divider(
+                      color: AppTheme.color(
+                        context,
+                        Styles.border,
+                      ),
+                    ),
+                    itemBuilder: (context, index) {
+                      if (index < vmDetalle.products.length) {
+                        final ProductModel producto = vmDetalle.products[index];
+                        return ProductWidget(
+                          producto: producto,
+                        );
+                      } else {
+                        // Botón "Ver más" al final de la lista
+                        // Llama a la función que carga más productos
+                        return TextButton(
+                          onPressed: () => vmProducto.filtrarResultados(
+                            context,
+                          ),
+                          child: Text(
+                            "Ver más",
+                            style: AppTheme.style(context, Styles.normal),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
-        if (vm.isLoading) const LoadWidget(),
-      ],
+          if (vmProducto.isLoading)
+            ModalBarrier(
+              dismissible: false,
+              color: AppTheme.color(
+                context,
+                Styles.loading,
+              ),
+            ),
+          if (vmProducto.isLoading) const LoadWidget(),
+        ],
+      ),
+    );
+  }
+}
+
+class ProductWidget extends StatelessWidget {
+  const ProductWidget({
+    super.key,
+    required this.producto,
+  });
+
+  final ProductModel producto;
+
+  @override
+  Widget build(BuildContext context) {
+    final vmProducto = Provider.of<ProductViewModel>(context);
+
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 0,
+        horizontal: 20,
+      ),
+      title: Text(
+        producto.desProducto,
+        style: AppTheme.style(
+          context,
+          Styles.normal,
+        ),
+      ),
+      subtitle: Text(
+        'SKU: ${producto.productoId} ',
+        style: AppTheme.style(
+          context,
+          Styles.normal,
+        ),
+      ),
+      onTap: () => vmProducto.navigateProduct(
+        context,
+        producto,
+      ),
+      trailing: IconButton(
+        onPressed: () => vmProducto.viewProductImages(
+          context,
+          producto,
+        ),
+        icon: const Icon(
+          Icons.image,
+        ),
+      ),
     );
   }
 }

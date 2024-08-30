@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -18,9 +19,13 @@ class DocumentView extends StatelessWidget {
     final vm = Provider.of<DocumentViewModel>(context);
     final vmFactura = Provider.of<DocumentoViewModel>(context);
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context);
+    final vmConvert = Provider.of<ConvertDocViewModel>(context);
 
     return RefreshIndicator(
-      onRefresh: () => vmFactura.loadData(context),
+      onRefresh: () => vmFactura.loadNewData(
+        context,
+        1,
+      ),
       child: ListView(
         children: [
           Padding(
@@ -57,7 +62,7 @@ class DocumentView extends StatelessWidget {
                     Styles.title,
                   ),
                 ),
-                if (vm.series.isEmpty)
+                if (vm.series.isEmpty && !vmFactura.editDoc)
                   NotFoundWidget(
                     text: AppLocalizations.of(context)!.translate(
                       BlockTranslate.notificacion,
@@ -68,7 +73,15 @@ class DocumentView extends StatelessWidget {
                       size: 50,
                     ),
                   ),
-                if (vm.series.isNotEmpty)
+                if (vmFactura.editDoc)
+                  Text(
+                    "${vmConvert.docOriginSelect!.serie} (${vmConvert.docOriginSelect!.serieDocumento})",
+                    style: AppTheme.style(
+                      context,
+                      Styles.normal,
+                    ),
+                  ),
+                if (vm.series.isNotEmpty && !vmFactura.editDoc)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
                     dropdownColor: AppTheme.color(
@@ -227,22 +240,34 @@ class DocumentView extends StatelessWidget {
                           Styles.normal,
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      Text(
-                        vm.clienteSelect!.facturaDireccion,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
+                      if (vm.clienteSelect!.facturaDireccion.isNotEmpty &&
+                          vmFactura.editDoc)
+                        Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              vm.clienteSelect!.facturaDireccion,
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "(${vm.clienteSelect!.desCuentaCta})",
-                        style: AppTheme.style(
-                          context,
-                          Styles.inactive,
+                      if (vm.clienteSelect!.desCuentaCta.isNotEmpty &&
+                          vmFactura.editDoc)
+                        Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            Text(
+                              "(${vm.clienteSelect!.desCuentaCta})",
+                              style: AppTheme.style(
+                                context,
+                                Styles.inactive,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
                     ],
                   ),
                 if (vm.cuentasCorrentistasRef.isNotEmpty)
@@ -331,7 +356,10 @@ class DocumentView extends StatelessWidget {
                           ),
                         ),
                         value: vm.referenciaSelect,
-                        onChanged: (value) => vm.changeRef(value),
+                        onChanged: (value) => vm.changeRef(
+                          context,
+                          value,
+                        ),
                         items: vm.referencias.map(
                           (tipoRef) {
                             return DropdownMenuItem<TipoReferenciaModel>(

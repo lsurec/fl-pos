@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -8,7 +10,7 @@ class ProductService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-  Future<ApiResModel> getValidateProducts(
+  Future<ApiResModel> getValidaProducto(
     String user,
     String serie,
     int tipoDocumento,
@@ -19,14 +21,13 @@ class ProductService {
     int unidadMedida,
     int producto,
     int cantidad,
-    double tipoCambio,
+    int tipoCambio,
     int moneda,
     int tipoPrecio,
     String token,
   ) async {
-    //url completa
+    //URL completa
     Uri url = Uri.parse("${_baseUrl}Producto/validate");
-
     try {
       //Configuraciones del api
       final response = await http.get(
@@ -61,7 +62,7 @@ class ProductService {
         );
       }
 
-      //bodegas disponibles
+      //Lista para almacenar la respuesta del api
       List<String> mensajes = [];
 
       //recorrer lista api Y  agregar a lista local
@@ -70,8 +71,7 @@ class ProductService {
         //agregar item a la lista
         mensajes.add(item);
       }
-
-      //respuesta correcta
+      //retornar respuesta correcta del api
       return ApiResModel(
         url: url.toString(),
         succes: true,
@@ -79,7 +79,7 @@ class ProductService {
         storeProcedure: null,
       );
     } catch (e) {
-      //respuesta incorrecta
+      //en caso de error retornar el error
       return ApiResModel(
         url: url.toString(),
         succes: false,
@@ -208,8 +208,12 @@ class ProductService {
   Future<ApiResModel> getProduct(
     String search,
     String token,
+    String user,
+    int station,
+    int start,
+    int end,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Producto/buscar/$search");
+    Uri url = Uri.parse("${_baseUrl}Producto/buscar");
     try {
       //url completa
 
@@ -217,6 +221,11 @@ class ProductService {
         url,
         headers: {
           "Authorization": "bearer $token",
+          "user": user,
+          "station": "$station",
+          "search": search,
+          "start": "$start",
+          "end": "$end",
         },
       );
 

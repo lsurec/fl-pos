@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -50,7 +50,8 @@ class MenuViewModel extends ChangeNotifier {
       context,
       listen: false,
     );
-    final vmLocal = Provider.of<LocalSettingsViewModel>(
+
+    final vmFactura = Provider.of<DocumentoViewModel>(
       context,
       listen: false,
     );
@@ -60,8 +61,11 @@ class MenuViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final int empresa = vmLocal.selectedEmpresa!.empresa;
-    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+    final vmTarea = Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    );
+
     final String user = vmLogin.user;
     final String token = vmLogin.token;
 
@@ -93,281 +97,24 @@ class MenuViewModel extends ChangeNotifier {
       return;
     }
 
-    //POS
+    //factura o cotizacion
     if (route.toLowerCase() == "prcdocumento_3") {
-      if (documento == null) {
-        NotificationService.showSnackbar(
-          AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'sinDocumento',
-          ),
-        );
-        return;
-      }
-
-      final vmPayment = Provider.of<PaymentViewModel>(
-        context,
-        listen: false,
-      );
-
-      final vmDoc = Provider.of<DocumentViewModel>(
-        context,
-        listen: false,
-      );
-
       vmHome.isLoading = true;
-      //Load data
-
-      TipoCambioService tipoCambioService = TipoCambioService();
-
-      final ApiResModel resCambio = await tipoCambioService.getTipoCambio(
-        empresa,
-        user,
-        token,
-      );
-
-      if (!resCambio.succes) {
-        vmHome.isLoading = false;
-        NotificationService.showErrorView(context, resCambio);
-        return;
-      }
-
-      final List<TipoCambioModel> cambios = resCambio.response;
-
-      if (cambios.isNotEmpty) {
-        tipoCambio = cambios[0].tipoCambio;
-      } else {
-        vmHome.isLoading = false;
-
-        resCambio.response = AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'sinTipoCambio',
-        );
-        NotificationService.showErrorView(context, resCambio);
-
-        return;
-      }
-
-      //limpiar serie seleccionada
-      vmDoc.serieSelect = null;
-      //simpiar lista serie
-      vmDoc.series.clear();
-
-      //instancia del servicio
-      SerieService serieService = SerieService();
-
-      //consumo del api
-      ApiResModel resSeries = await serieService.getSerie(
-        documento!, // documento,
-        empresa, // empresa,
-        estacion, // estacion,
-        user, // user,
-        token, // token,
-      );
-
-      //valid succes response
-      if (!resSeries.succes) {
-        //si algo salio mal mostrar alerta
-        vmHome.isLoading = false;
-
-        await NotificationService.showErrorView(
-          context,
-          resSeries,
-        );
-        return;
-      }
-
-      //Agregar series encontradas
-      vmDoc.series.addAll(resSeries.response);
-
-      //Para realizar pruebas con una sola serie
-      // if (vmDoc.series.length > 1) {
-      //   if (vmDoc.series.length > 1) {
-      //     vmDoc.series.removeRange(
-      //       1,
-      //       vmDoc.series.length,
-      //     ); // Borra todos los elementos excepto el primero
-      //   }
-      //   vmDoc.serieSelect = vmDoc.series.first;
-      // }
-
-      // si sololo hay una serie seleccionarla por defecto
-      if (vmDoc.series.length == 1) {
-        vmDoc.serieSelect = vmDoc.series.first;
-      }
-
-      // si hay solo una serie buscar vendedores
-      if (vmDoc.series.length == 1) {
-        //limpiar vendedor seleccionado
-        vmDoc.vendedorSelect = null;
-
-        //limmpiar lista vendedor
-        vmDoc.cuentasCorrentistasRef.clear();
-
-        //instancia del servicio
-        CuentaService cuentaService = CuentaService();
-
-        //Consummo del api
-        ApiResModel resCuentRef = await cuentaService.getCeuntaCorrentistaRef(
-          user, // user,
-          documento!, // doc,
-          vmDoc.serieSelect!.serieDocumento!, // serie,
-          empresa, // empresa,
-          token, // token,
-        );
-
-        //valid succes response
-        if (!resCuentRef.succes) {
-          //si algo salio mal mostrar alerta
-
-          vmHome.isLoading = false;
-          await NotificationService.showErrorView(
-            context,
-            resCuentRef,
-          );
-          return;
-        }
-
-        //agregar vendedores
-        vmDoc.cuentasCorrentistasRef.addAll(resCuentRef.response);
-
-        //si solo hay un vendedor agregarlo por defecto
-        if (vmDoc.cuentasCorrentistasRef.length == 1) {
-          vmDoc.vendedorSelect = vmDoc.cuentasCorrentistasRef.first;
-        }
-
-        //instancia del servicio
-        vmDoc.tiposTransaccion.clear();
-        TipoTransaccionService tipoTransaccionService =
-            TipoTransaccionService();
-
-        //consumo del api
-        ApiResModel resTiposTra =
-            await tipoTransaccionService.getTipoTransaccion(
-          documento!, // documento,
-          vmDoc.serieSelect!.serieDocumento!, // serie,
-          empresa, // empresa,
-          token, // token,
-          user, // user,
-        );
-
-        //valid succes response
-        if (!resTiposTra.succes) {
-          //si algo salio mal mostrar alerta
-          vmHome.isLoading = false;
-
-          await NotificationService.showErrorView(
-            context,
-            resTiposTra,
-          );
-          return;
-        }
-
-        //Agregar series encontradas
-        vmDoc.tiposTransaccion.addAll(resTiposTra.response);
-
-        vmDoc.parametros.clear();
-
-        ParametroService parametroService = ParametroService();
-
-        ApiResModel resParams = await parametroService.getParametro(
-          user,
-          documento!,
-          vmDoc.serieSelect!.serieDocumento!,
-          empresa,
-          estacion,
-          token,
-        );
-
-        //valid succes response
-        if (!resParams.succes) {
-          //si algo salio mal mostrar alerta
-          vmHome.isLoading = false;
-
-          await NotificationService.showErrorView(
-            context,
-            resParams,
-          );
-          return;
-        }
-
-        //Agregar series encontradas
-        vmDoc.parametros.addAll(resParams.response);
-
-        //evaluar el parametro 58
-        TipoReferenciaService referenciaService = TipoReferenciaService();
-
-        if (vmDoc.valueParametro(58)) {
-          vmDoc.referencias.clear();
-          vmDoc.referenciaSelect = null;
-
-          //Consumo del servicio
-          ApiResModel resTiposRef = await referenciaService.getTiposReferencia(
-            user, //user
-            token, // token,
-          );
-
-          //valid succes response
-          if (!resTiposRef.succes) {
-            //si algo salio mal mostrar alerta
-            vmHome.isLoading = false;
-
-            await NotificationService.showErrorView(
-              context,
-              resTiposRef,
-            );
-            return;
-          }
-
-          //agregar formas de pago encontradas
-          vmDoc.referencias.addAll(resTiposRef.response);
-        }
-      }
-
-      //limpiar lista
-      vmPayment.paymentList.clear();
-
-      //TODO: si ahay varias series no se carga los pagos y no hay pagos
-      if (vmDoc.serieSelect != null) {
-        //instancia del servicio
-        PagoService pagoService = PagoService();
-
-        //Consumo del servicio
-        ApiResModel resPayments = await pagoService.getFormas(
-          documento!, // doc,
-          vmDoc.serieSelect!.serieDocumento!, // serie,
-          empresa, // empresa,
-          token, // token,
-        );
-
-        //valid succes response
-        if (!resPayments.succes) {
-          //si algo salio mal mostrar alerta
-          vmHome.isLoading = false;
-
-          await NotificationService.showErrorView(
-            context,
-            resPayments,
-          );
-          return;
-        }
-
-        //agregar formas de pago encontradas
-        vmPayment.paymentList.addAll(resPayments.response);
-      }
-
-      if (vmPayment.paymentList.isEmpty) {
-        Navigator.pushNamed(context, AppRoutes.withoutPayment);
-        vmHome.isLoading = false;
-
-        return;
-      }
-
-      Navigator.pushNamed(context, AppRoutes.withPayment);
+      await vmFactura.loadNewData(context, 0);
       vmHome.isLoading = false;
       return;
     }
 
+    //Tareas
+    if (route.toLowerCase() == "shrTarea_3") {
+      vmHome.isLoading = true;
+      await vmTarea.loadData(
+        context,
+      );
+      vmHome.isLoading = false;
+
+      return;
+    }
     //cargar dtos
     if (route == AppRoutes.Listado_Documento_Pendiente_Convertir) {
       if (documento == null) {

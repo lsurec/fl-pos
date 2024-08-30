@@ -83,7 +83,9 @@
         "eliminar": "Supprimer",
         "adjuntarArchivos": "Joindre des fichiers",
         "enviarComentario": "Envoyer un commentaire.",
-        "cambiarResponsable": "Mettre à jour la personne responsable"
+        "cambiarResponsable": "Mettre à jour la personne responsable",
+        "modificar": "Modifier",
+        "compartirInforme": "Partager le rapport"
     },
     "fechas": {
         "fecha": "Date:",
@@ -211,7 +213,15 @@
         "seleccioneTipoRef": "Vous devez sélectionner un type de référence.",
         "noCalculoDias": "Le prix par jour n'a pas pu être calculé.",
         "recalcularFechas": "Prix par jour recalculés en raison de la modification des dates.",
-        "sinImagenes": "Aucune image associée à ce produit."
+        "sinImagenes": "Aucune image associée à ce produit.",
+        "cantidadPositiva": "La quantité doit être numérique et positive.",
+        "cantidadNumerica": "La quantité doit être numérique.",
+        "cantidadMayor": "La quantité doit être supérieure à 0.",
+        "traModificada": "Transaction modifiée.",
+        "advertencia": "Avertissement",
+        "productosNoDisponibles": "Un ou plusieurs produits ne sont pas disponibles.",
+        "aplicaranCambios": "Les modifications seront appliquées au document.",
+        "docEditado": "Document édité avec succès."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
@@ -412,7 +422,9 @@
         "idRef": "Réf ID: ",
         "cuenta": "Compte: ",
         "direEntrega": "Adresse de Livraison",
-        "tipoRef": "Type de référence"
+        "tipoRef": "Type de référence",
+        "codigo": "Code",
+        "mensajes": "Messages: "
     },
     "tareas": {
         "numTarea": "Tâche No : ",

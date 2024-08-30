@@ -7,6 +7,8 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/views/prod
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
+// import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -18,6 +20,10 @@ class ProductViewModel extends ChangeNotifier {
   //valores globales
   double total = 0; //total transaccion
   double price = 0; //Precio unitario seleccionado
+
+  int indexEdit = -1;
+
+  int accion = 0; // Agregar = 0; Editar = 1;
 
   //controlar procesos
   bool _isLoading = false;
@@ -74,13 +80,29 @@ class ProductViewModel extends ChangeNotifier {
     BuildContext context,
     ProductModel product,
   ) async {
-    //reiniciar valores
-    total = 0;
-    selectedPrice = null;
-    controllerNum.text = "1";
-    valueNum = 1;
-    price = 0;
-    controllerPrice.text = "$price";
+    accion = 0;
+    //View models a utilizar
+
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final detailsVM = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    ); //lo
+
+    String token = loginVM.token;
+    // String user = loginVM.user;
+
+    //instacia del servicio
+    ProductService productService = ProductService();
 
     //inciiar proceso
     isLoading = true;
@@ -138,15 +160,425 @@ class ProductViewModel extends ChangeNotifier {
       }
     }
 
-    //finalizar proceso
+    //print(bodegas.length);
+    //print(prices.length);
+    //print(docVM.valueParametro(351));
+
+    //si hay mas de una bodega, mas de un precio o existe e parametro 351
+    if (bodegas.length > 1 || prices.length > 1 || docVM.valueParametro(351)) {
+      //Calcular totral de la transaccion
+      //SI no hau precio seleccionado no calcular
+      if (price == 0) {
+        total = 0;
+        return;
+      }
+
+      //convertir cantidad de texto a numerica
+      int cantidad = convertirTextNum(controllerNum.text)!;
+
+      //Calcular el total (cantidad * precio seleccionado)
+      total = cantidad * selectedPrice!.precioU;
+
+      //detener carga
+      isLoading = false;
+
+      //navegar y verificar que ocurre
+
+      Navigator.pushNamed(
+        context,
+        AppRoutes.product,
+        arguments: [
+          product,
+          2,
+        ],
+      );
+
+      return;
+
+      //si de vuelve errores de api o de las validaciones
+    }
+
+    if (!selectedBodega!.poseeComponente) {
+      //realizar las validaciones
+    }
+
+    //Calcular totral de la transaccion
+    //SI no hau precio seleccionado no calcular
+    if (price == 0) {
+      total = 0;
+      return;
+    }
+
+    //convertir cantidad de texto a numerica
+    int cantidad = convertirTextNum(controllerNum.text)!;
+
+    //Calcular el total (cantidad * precio seleccionado)
+    total = cantidad * selectedPrice!.precioU;
+
+    double precioDias = 0;
+    int cantidadDias = 0;
+
+    //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
+    if (docVM.valueParametro(44)) {
+      //vobtener fechas
+
+      if (Utilities.fechaIgualOMayorSinSegundos(
+        docVM.fechaFinal,
+        docVM.fechaInicial,
+      )) {
+        //formular precios por dias
+        ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
+          token,
+          docVM.fechaInicial,
+          docVM.fechaFinal,
+          total.toString(),
+        );
+
+        //valid succes response
+        if (!resFormPrecio.succes) {
+          isLoading = false;
+
+          //si algo salio mal mostrar alerta
+
+          await NotificationService.showErrorView(
+            context,
+            resFormPrecio,
+          );
+          return;
+        }
+
+        List<PrecioDiaModel> preciosDia = resFormPrecio.response;
+
+        if (preciosDia.isEmpty) {
+          isLoading = false;
+
+          resFormPrecio.response =
+              'No fue posible obtner los valores calculados para el precio dia';
+
+          NotificationService.showErrorView(context, resFormPrecio);
+
+          return;
+        }
+        //asignar valores
+        precioDias = preciosDia[0].montoCalculado;
+        cantidadDias = preciosDia[0].cantidadDia;
+      } else {
+        isLoading = false;
+
+        precioDias = total;
+        cantidadDias = 1;
+
+        NotificationService.showSnackbar(
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'precioDiasNoCalculado',
+          ),
+        );
+      }
+    }
+
+    //agregar transacion al documento
+    detailsVM.addTransaction(
+      TraInternaModel(
+        bodega: selectedBodega!,
+        cantidad: (int.tryParse(controllerNum.text) ?? 0),
+        cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+        cargo: 0,
+        consecutivo: 0,
+        descuento: 0,
+        estadoTra: 1,
+        isChecked: false,
+        operaciones: [],
+        precio: selectedPrice,
+        precioCantidad: docVM.valueParametro(44) ? total : null,
+        precioDia: docVM.valueParametro(44) ? precioDias : null,
+        producto: product,
+        total: docVM.valueParametro(44) ? precioDias : total,
+      ),
+      context,
+    );
+
+    //campo de cantidad = "1"
+    controllerNum.text = "1";
+    valueNum = 1;
+
+    //mensaje de confirmacion
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'transaccionAgregada',
+      ),
+    );
+
+    DocumentService.saveDocumentLocal(context);
+
+    //regresar a detalle
+    Navigator.pop(context);
+
+    //detener carga
     isLoading = false;
 
-    //navegar a pantalla pregunta
-    Navigator.pushNamed(
+    //valor para regresae
+    detailsVM.navegarProduct = 2;
+  }
+
+  //editar la transaccion
+  editarTran(BuildContext context, int indexTra) async {
+    accion = 1;
+    //View Models a utilizar
+    final detailsVM = Provider.of<DetailsViewModel>(
       context,
-      "product",
-      arguments: [product, 2],
+      listen: false,
     );
+
+    final docVM = Provider.of<DocumentViewModel>(
+      context,
+      listen: false,
+    );
+
+    final loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final localVM = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    String token = loginVM.token;
+    String user = loginVM.user;
+
+    //limpiar bodegas
+    bodegas.clear();
+    //Limpiar precios
+    prices.clear();
+
+    //Asignar cantidad de la transaccion a las variables correspondientes
+    controllerNum.text = detailsVM.traInternas[indexTra].cantidad.toString();
+    valueNum = detailsVM.traInternas[indexTra].cantidad;
+
+    //obtener el producto
+    ProductModel productoTra = detailsVM.traInternas[indexTra].producto;
+    //obtener la bodega
+    BodegaProductoModel bodegaTra = detailsVM.traInternas[indexTra].bodega!;
+    //obtener el precio
+    UnitarioModel precioTra = detailsVM.traInternas[indexTra].precio!;
+
+    //inciiar proceso
+    isLoading = true;
+
+    //cargar podegas del producto seleccionado
+    //instancia del servicio
+    ProductService productService = ProductService();
+
+    //consumo del api
+    ApiResModel resBodega = await productService.getBodegaProducto(
+      user,
+      localVM.selectedEmpresa!.empresa,
+      localVM.selectedEstacion!.estacionTrabajo,
+      productoTra.producto,
+      productoTra.unidadMedida,
+      token,
+    );
+
+    //valid succes response
+    if (!resBodega.succes) {
+      //si algo salio mal mostrar alerta
+
+      await NotificationService.showErrorView(
+        context,
+        resBodega,
+      );
+      return;
+    }
+
+    //agreagar bodegas encontradas
+    bodegas.addAll(resBodega.response);
+
+    //si solo hay una bodega seleccionarla por defecto
+    if (bodegas.length == 1) {
+      selectedBodega = bodegas.first;
+    }
+
+    // si no hay bodegas mostrar mensaje
+    if (bodegas.isEmpty) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+      return;
+    }
+
+    //si solo hay una bodega buscar precios
+    if (bodegas.length == 1) {
+      //evaluar los precios
+      selectedBodega = bodegas.first;
+
+      int bodega = bodegas.first.bodega;
+
+      ApiResModel resPrecio = await productService.getPrecios(
+        bodega,
+        productoTra.producto,
+        productoTra.unidadMedida,
+        user,
+        token,
+        docVM.clienteSelect?.cuentaCorrentista ?? 0,
+        docVM.clienteSelect?.cuentaCta ?? "0",
+      );
+
+      if (!resPrecio.succes) {
+        isLoading = false;
+
+        //si algo salio mal mostrar alerta
+        await NotificationService.showErrorView(
+          context,
+          resPrecio,
+        );
+        return;
+      }
+
+      //almacenar respuesta de precios
+
+      final List<PrecioModel> precios = resPrecio.response;
+
+      if (precios.isEmpty) {
+        //"no hay precios
+        return;
+      }
+
+      for (var precio in precios) {
+        final UnitarioModel unitario = UnitarioModel(
+          id: precio.tipoPrecio,
+          precioU: precio.precioUnidad,
+          descripcion: precio.desTipoPrecio,
+          precio: true, //true Tipo precio; false Factor conversion
+          moneda: precio.moneda,
+          orden: precio.tipoPrecioOrden,
+        );
+
+        prices.add(unitario);
+      }
+
+      //si no hay precios buscar factor conversion
+      if (prices.isEmpty) {
+        ApiResModel resFactores = await productService.getFactorConversion(
+          bodega,
+          productoTra.producto,
+          productoTra.unidadMedida,
+          user,
+          token,
+        );
+
+        if (!resFactores.succes) {
+          isLoading = false;
+
+          //si algo salio mal mostrar alerta
+          await NotificationService.showErrorView(
+            context,
+            resFactores,
+          );
+          return;
+        }
+
+        final List<FactorConversionModel> factores = resFactores.response;
+
+        for (var factor in factores) {
+          final UnitarioModel unitario = UnitarioModel(
+            id: factor.factorConversion,
+            precioU: factor.precioUnidad,
+            descripcion: factor.presentacion,
+            precio: false, //true Tipo precio; false Factor conversion
+            moneda: factor.moneda,
+            orden: factor.tipoPrecioOrden,
+          );
+
+          prices.add(unitario);
+        }
+      }
+
+      //si solo existe un precio
+
+      if (prices.length == 1) {
+        //
+        UnitarioModel precioU = prices.first;
+
+        selectedPrice = precioU;
+        total = precioU.precioU;
+        price = precioU.precioU;
+        controllerPrice.text = precioU.precioU.toString();
+      } else if (prices.length > 1) {
+        //
+        for (var i = 0; i < prices.length; i++) {
+          final UnitarioModel unit = prices[i];
+
+          if (unit.orden != null) {
+            selectedPrice = unit;
+            total = unit.precioU;
+            price = unit.precioU;
+            controllerPrice.text = unit.precioU.toString();
+            break;
+          }
+        }
+      }
+    } //fin validacion de una bodega
+
+    //detener carga
+    isLoading = false;
+
+    //buscar bodega de la transaccion
+    int existBodega = -1;
+
+    for (int i = 0; i < bodegas.length; i++) {
+      final BodegaProductoModel traBodega = bodegas[i];
+      if (traBodega.bodega == selectedBodega!.bodega) {
+        existBodega = i;
+        break;
+      }
+    }
+
+    //si no se ecnotro la bodega crearla internamente y asiganrla
+    if (existBodega == -1) {
+      bodegas.add(bodegaTra);
+      selectedBodega = bodegas[bodegas.length - 1];
+    } else {
+      //asiganar bodega de la transaccion
+      selectedBodega = bodegas[existBodega];
+    }
+
+    //buscar precio del producto de la transaccion
+    int existPrecio = -1;
+
+    //si no se encontro el procuto crearlo unetnamente
+    if (existPrecio == -1) {
+      prices.add(precioTra);
+      selectedPrice = prices[prices.length - 1];
+    } else {
+      //asignar precio del producto de la transaccion
+      selectedPrice = prices[existPrecio];
+    }
+
+    //enviar indice de la transaccion para poder editarla despues
+    indexEdit = indexTra;
+
+    //calcular el total
+    total = valueNum * selectedPrice!.precioU;
+
+    //abrir pantalla producto con lo datos cargados
+
+    Navigator.pushNamed(
+      detailsVM.scaffoldKey.currentState!.context,
+      AppRoutes.product,
+      arguments: [
+        productoTra,
+        1,
+      ],
+    );
+
+    //aun no pasa aqui
+    return;
   }
 
   Future<ApiResModel> loadPrecioUnitario(
@@ -408,6 +840,28 @@ class ProductViewModel extends ChangeNotifier {
     calculateTotal(); //calcuar total
   }
 
+  int convertirTextNum2(String value) {
+    // Convertir el texto a número
+    int parsedValue = int.tryParse(value) ?? 0;
+
+    // Retornar el valor numérico
+    return parsedValue;
+  }
+
+  // Convierte un string a número entero si es válido
+  int? convertirTextNum(String texto) {
+    // Verificar si la cadena es un número entero
+    final esNumeroEntero = RegExp(r'^\d+$').hasMatch(texto);
+
+    if (esNumeroEntero) {
+      // Realizar la conversión a número entero
+      return int.parse(texto);
+    } else {
+      // Retornar null si la cadena no es un número entero
+      return null;
+    }
+  }
+
   void chanchePrice(String value) {
     double parsedValue = double.tryParse(value) ?? 0;
 
@@ -488,6 +942,7 @@ class ProductViewModel extends ChangeNotifier {
     BuildContext context,
     ProductModel product,
     int back,
+    int opcion,
   ) async {
     //vire model externo
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
@@ -568,17 +1023,19 @@ class ProductViewModel extends ChangeNotifier {
     //   return;
     // }
 
-    //TODO:Validacion de producto
+    //Validacion de producto
 
-    TipoTransaccionModel tipoTra =
-        getTipoTransaccion(product.tipoProducto, context);
+    TipoTransaccionModel tipoTra = getTipoTransaccion(
+      product.tipoProducto,
+      context,
+    );
     ProductService productService = ProductService();
 
     if (tipoTra.altCantidad) {
       //iniciar proceso
 
       //consumo del api
-      ApiResModel res = await productService.getValidateProducts(
+      ApiResModel res = await productService.getValidaProducto(
         user,
         serieDocumento,
         tipoDocumento,
@@ -589,7 +1046,7 @@ class ProductViewModel extends ChangeNotifier {
         product.unidadMedida,
         product.producto,
         (int.tryParse(controllerNum.text) ?? 0),
-        8, //TODO:Parametrizar
+        menuVM.tipoCambio.toInt(),
         selectedPrice!.moneda,
         selectedPrice!.id,
         token,
@@ -610,8 +1067,32 @@ class ProductViewModel extends ChangeNotifier {
 
       final List<String> mensajes = res.response;
 
+      //aqui abre una norificacion
       if (mensajes.isNotEmpty) {
-        NotificationService.showSnackbar(mensajes[0]);
+        //Lista para agregar las validaciones
+        List<ValidateProductModel> validaciones = [];
+
+        //detener carga
+        isLoading = false;
+
+        ValidateProductModel validacion = ValidateProductModel(
+          sku: product.productoId,
+          productoDesc: product.desProducto,
+          bodega: "${selectedBodega!.nombre} (${selectedBodega!.bodega})",
+          tipoDoc: "${menuVM.name} (${menuVM.documento!})",
+          serie:
+              "${docVM.serieSelect!.descripcion!} (${docVM.serieSelect!.serieDocumento!})",
+          mensajes: mensajes,
+        );
+
+        validaciones.add(validacion);
+
+        //aqui abre un dialogo con notificacion
+        await NotificationService.showMessageValidations(
+          context,
+          validaciones,
+        );
+
         return;
       }
     }
@@ -694,9 +1175,46 @@ class ProductViewModel extends ChangeNotifier {
 
 //aqui termina lo que agregue..
 
-    //agregar transacion al documento
-    detailsVM.addTransaction(
-      TraInternaModel(
+//Opcion 1 = Agregar nueva transaccion
+    if (opcion == 0) {
+      //agregar transacion al documento
+      detailsVM.addTransaction(
+        TraInternaModel(
+          consecutivo: 0,
+          estadoTra: 1,
+          isChecked: false,
+          bodega: selectedBodega!,
+          producto: product,
+          precio: selectedPrice,
+          cantidad: (int.tryParse(controllerNum.text) ?? 0),
+          total: docVM.valueParametro(44) ? precioDias : total,
+          cargo: 0,
+          descuento: 0,
+          operaciones: [],
+          precioCantidad: docVM.valueParametro(44) ? total : null,
+          cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+          precioDia: docVM.valueParametro(44) ? precioDias : null,
+        ),
+        context,
+      );
+
+      //actualizar el campo cantidad
+
+      controllerNum.text = "1";
+
+      //mensaje de confirmacion
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'transaccionAgregada',
+        ),
+      );
+
+      DocumentService.saveDocumentLocal(context);
+    }
+
+    if (opcion == 1) {
+      detailsVM.traInternas[indexEdit] = TraInternaModel(
         consecutivo: 0,
         estadoTra: 1,
         isChecked: false,
@@ -711,20 +1229,62 @@ class ProductViewModel extends ChangeNotifier {
         precioCantidad: docVM.valueParametro(44) ? total : null,
         cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
         precioDia: docVM.valueParametro(44) ? precioDias : null,
-      ),
-      context,
-    );
+      );
 
-    //mensaje de confirmacion
-    NotificationService.showSnackbar(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'transaccionAgregada',
-      ),
-    );
+      detailsVM.calculateTotales(context);
+
+      //campo de cantidad = "1"
+      controllerNum.text = "1";
+      valueNum = 1;
+
+      notifyListeners();
+
+      //mensaje de confirmacion
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'traModificada',
+        ),
+      );
+    }
+
+    // //agregar transacion al documento
+    // detailsVM.addTransaction(
+    //   TraInternaModel(
+    //     consecutivo: 0,
+    //     estadoTra: 1,
+    //     isChecked: false,
+    //     bodega: selectedBodega!,
+    //     producto: product,
+    //     precio: selectedPrice,
+    //     cantidad: (int.tryParse(controllerNum.text) ?? 0),
+    //     total: docVM.valueParametro(44) ? precioDias : total,
+    //     cargo: 0,
+    //     descuento: 0,
+    //     operaciones: [],
+    //     precioCantidad: docVM.valueParametro(44) ? total : null,
+    //     cantidadDias: docVM.valueParametro(44) ? cantidadDias : 0,
+    //     precioDia: docVM.valueParametro(44) ? precioDias : null,
+    //   ),
+    //   context,
+    // );
+
+    // //actualizar el campo cantidad
+
+    // controllerNum.text = "1";
+
+    // //mensaje de confirmacion
+    // NotificationService.showSnackbar(
+    //   AppLocalizations.of(context)!.translate(
+    //     BlockTranslate.notificacion,
+    //     'transaccionAgregada',
+    //   ),
+    // );
 
     //regresar a pantallas anteriroeres
     if (back == 2) {
+      // Navigator.popUntil(context, ModalRoute.withName(AppRoutes.detailsDoc));
+
       Navigator.pop(context);
       Navigator.pop(context);
     } else {
@@ -816,5 +1376,74 @@ class ProductViewModel extends ChangeNotifier {
       //boton para regresar
       // Aquí puedes agregar la lógica para el botón de regresar si es necesario
     }
+  }
+
+  //Regresar a la pantalla anterior y limpiar
+  Future<bool> back() async {
+    return true;
+  }
+
+  //filtrar tareas
+  Future<void> filtrarResultados(
+    BuildContext context,
+  ) async {
+    //
+
+    //obtener usuario y token
+    final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
+    final vmDetalle = Provider.of<DetailsViewModel>(context, listen: false);
+    final localVM = Provider.of<LocalSettingsViewModel>(context, listen: false);
+
+    String token = vmLogin.token;
+    String user = vmLogin.user;
+    EstacionModel station = localVM.selectedEstacion!;
+
+    //campo de texto input
+    String searchText = vmDetalle.searchController.text;
+
+    searchText = searchText.trimRight();
+
+    //instacia del servicio
+    ProductService productService = ProductService();
+
+    //Validar formulario
+    if (vmDetalle.isValidFormCSearch() == false) return;
+
+    //si tareas está vacio, reestablecer los rangos
+    if (vmDetalle.products.isEmpty) {
+      vmDetalle.rangoIni = 1;
+      vmDetalle.rangoFin = vmDetalle.intervaloRegistros;
+    }
+
+    // Realiza la búsqueda
+    //si ver mas es = 1 aumenta los rangos
+    isLoading = true; //cargar pantalla
+
+    //consumo de api
+    final ApiResModel resDesc = await productService.getProduct(
+      searchText,
+      token,
+      user,
+      station.estacionTrabajo,
+      vmDetalle.rangoIni,
+      vmDetalle.rangoFin,
+    );
+
+    //si el consumo salió mal
+    if (!resDesc.succes) {
+      isLoading = false;
+      NotificationService.showErrorView(
+        context,
+        resDesc,
+      );
+      return;
+    }
+
+    vmDetalle.products.addAll(resDesc.response);
+
+    isLoading = false; //detener cargar pantalla
+
+    vmDetalle.rangoIni = vmDetalle.products.length + 1;
+    vmDetalle.rangoFin = vmDetalle.rangoIni + vmDetalle.intervaloRegistros;
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/views/products_
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
+import 'package:flutter_post_printer_example/displays/tareas/views/buscar_tareas_view.dart';
 import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,7 @@ class AppRoutes {
   static const selectLocation = 'selectLocation';
   static const selectAccount = 'selectAccount';
   static const transferSummary = 'transferSummary';
+  static const searchTask = 'searchTask';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -121,6 +123,7 @@ class AppRoutes {
     selectLocation: (BuildContext context) => const SelectLocationView(),
     selectAccount: (BuildContext context) => const SelectAccountView(),
     transferSummary: (BuildContext context) => const TransferSummaryView(),
+    searchTask: (BuildContext context) => const BuscarTareasView(),
   };
 
   //en caso de ruta incorrecta

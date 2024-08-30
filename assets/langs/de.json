@@ -83,7 +83,9 @@
         "eliminar": "Löschen",
         "adjuntarArchivos": "Dateien anhängen",
         "enviarComentario": "Kommentar senden.",
-        "cambiarResponsable": "Verantwortliche Person aktualisieren"
+        "cambiarResponsable": "Verantwortliche Person aktualisieren",
+        "modificar": "Ändern",
+        "compartirInforme": "Bericht teilen"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -211,7 +213,15 @@
         "seleccioneTipoRef": "Sie müssen einen Referenztyp auswählen.",
         "noCalculoDias": "Der Preis pro Tag konnte nicht berechnet werden.",
         "recalcularFechas": "Preise pro Tag aufgrund der Datumsänderung neu berechnet.",
-        "sinImagenes": "Keine Bilder mit diesem Produkt verbunden."
+        "sinImagenes": "Keine Bilder mit diesem Produkt verbunden.",
+        "cantidadPositiva": "Die Menge muss numerisch und positiv sein.",
+        "cantidadNumerica": "Die Menge muss numerisch sein.",
+        "cantidadMayor": "Die Menge muss größer als 0 sein.",
+        "traModificada": "Transaktion geändert.",
+        "advertencia": "Warnung",
+        "productosNoDisponibles": "Ein oder mehrere Produkte sind nicht verfügbar.",
+        "aplicaranCambios": "Die Änderungen werden am Dokument vorgenommen.",
+        "docEditado": "Dokument erfolgreich bearbeitet."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -412,7 +422,9 @@
         "idRef": "ID-Ref: ",
         "cuenta": "Konto: ",
         "direEntrega": "Lieferadresse",
-        "tipoRef": "Referenztyp"
+        "tipoRef": "Referenztyp",
+        "codigo": "Code",
+        "mensajes": "Nachrichten: "
     },
     "tareas": {
         "numTarea": "Aufgabe Nr: ",
