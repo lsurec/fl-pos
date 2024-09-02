@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeRestaurantView extends StatelessWidget {
@@ -80,6 +82,15 @@ class _TableOpen extends StatelessWidget {
   Widget build(BuildContext context) {
     final OrderViewModel orderVM = Provider.of<OrderViewModel>(context);
 
+    final HomeViewModel homeVM = Provider.of<HomeViewModel>(context);
+
+    // Crear una instancia de NumberFormat para el formato de moneda
+    final currencyFormat = NumberFormat.currency(
+      symbol: homeVM
+          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      decimalDigits: 2, // Número de decimales a mostrar
+    );
+
     return Column(
       children: [
         Container(
@@ -89,6 +100,11 @@ class _TableOpen extends StatelessWidget {
             count: orderVM.orders.length,
           ),
         ),
+        if (orderVM.orders.isNotEmpty)
+          Container(
+            color: const Color.fromARGB(255, 227, 226, 226),
+            height: 10,
+          ),
         Expanded(
           child: ListView.separated(
             itemCount: orderVM.orders.length,
@@ -99,7 +115,74 @@ class _TableOpen extends StatelessWidget {
               );
             },
             itemBuilder: (BuildContext context, int index) {
-              return Container();
+              OrderModel order = orderVM.orders[index];
+
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              order.nombre,
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                            Text(
+                              "Consecutivo: ${order.consecutivo}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextsWidget(
+                          title: "Mesa: ",
+                          text: order.mesa.descripcion,
+                        ),
+                        const SizedBox(height: 5),
+                        TextsWidget(
+                          title: "Ubicacion: ",
+                          text: order.ubicacion.descripcion,
+                        ),
+                        //  const SizedBox(height: 5),
+                        // TextsWidget(
+                        //   title: "Serie: ${order.}",
+                        //   text: order.ubicacion.descripcion,
+                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Total: ${currencyFormat.format(orderVM.getTotal(index))}",
+                              style: AppTheme.style(
+                                context,
+                                Styles.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (orderVM.orders.isNotEmpty &&
+                      index == orderVM.orders.length - 1)
+                    Container(
+                      color: const Color.fromARGB(255, 227, 226, 226),
+                      height: 10,
+                    ),
+                ],
+              );
             },
           ),
         ),
