@@ -17,6 +17,9 @@ class Preferences {
   static const String _themeKey = "theme";
   static const String _themeNameKey = "nameTheme";
   static const String _systemThemeKey = "_systemTheme";
+  static const String _themeAppKey = "theme";
+  static const String _colorKey = "color";
+  static const String _valueColorKey = "valueColor";
 
   //iniciar shared preferences
   static Future init() async {
@@ -138,5 +141,29 @@ class Preferences {
 
   static set systemTheme(String value) {
     _prefs.setString(_systemThemeKey, value);
+  }
+
+  static String get idThemeApp {
+    return _prefs.getString(_themeAppKey) ?? "";
+  }
+
+  static set idThemeApp(String value) {
+    _prefs.setString(_themeAppKey, value);
+  }
+
+  static String get idColor {
+    return _prefs.getString(_colorKey) ?? "";
+  }
+
+  static set idColor(String value) {
+    _prefs.setString(_colorKey, value);
+  }
+
+  static String get valueColor {
+    return _prefs.getString(_valueColorKey) ?? "";
+  }
+
+  static set valueColor(String value) {
+    _prefs.setString(_valueColorKey, value);
   }
 }
