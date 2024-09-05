@@ -424,7 +424,8 @@
         "direEntrega": "Adresse de Livraison",
         "tipoRef": "Type de référence",
         "codigo": "Code",
-        "mensajes": "Messages: "
+        "mensajes": "Messages: ",
+        "confirmar": "Confirmer la commande"
     },
     "tareas": {
         "numTarea": "Tâche No : ",

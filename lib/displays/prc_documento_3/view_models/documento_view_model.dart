@@ -31,6 +31,24 @@ class DocumentoViewModel extends ChangeNotifier {
 
   late TabController tabController;
 
+  List<String> terminosyCondiciones = [
+    "Esta Cotización no es reservación.",
+    "Al confirmar su cotización se requiere de contrato firmado.",
+    "Los precios cotizados están sujetos a cambios.",
+    "Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+    "Se solicitara cheque de garantía.",
+    "Se cobrará por daños al mobiliario y equipo según contrato.",
+  ];
+
+  List<String> copiaTerminosyCondiciones = [
+    "Esta Cotización no es reservación.",
+    "Al confirmar su cotización se requiere de contrato firmado.",
+    "Los precios cotizados están sujetos a cambios.",
+    "Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
+    "Se solicitara cheque de garantía.",
+    "Se cobrará por daños al mobiliario y equipo según contrato.",
+  ];
+
   //Regresar a la pantalla anterior y limpiar
   Future<bool> back(BuildContext context) async {
     setValuesNewDoc(context);
@@ -129,6 +147,7 @@ class DocumentoViewModel extends ChangeNotifier {
     final documentVM = Provider.of<DocumentViewModel>(context, listen: false);
     final detailsVM = Provider.of<DetailsViewModel>(context, listen: false);
     final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
+    final menuVM = Provider.of<MenuViewModel>(context, listen: false);
 
     //Si no hay serie seleccionado mostrar mensaje
     if (documentVM.serieSelect == null) {
@@ -225,6 +244,16 @@ class DocumentoViewModel extends ChangeNotifier {
       }
     }
 
+    //si el documento es cotizacion, consultar
+    if (menuVM.documento == 20) {
+      //Mostrar dialogo
+      editTerms(
+        context,
+        screen,
+      );
+      return;
+    }
+
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
     //Obtener latitude y longitud Si es necesario
@@ -309,10 +338,10 @@ class DocumentoViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final vmFactura = Provider.of<DocumentoViewModel>(
-      context,
-      listen: false,
-    );
+    // final vmFactura = Provider.of<DocumentoViewModel>(
+    //   context,
+    //   listen: false,
+    // );
 
     final vmConvert = Provider.of<ConvertDocViewModel>(
       context,
@@ -374,6 +403,9 @@ class DocumentoViewModel extends ChangeNotifier {
     //simpiar lista serie
     vmDoc.series.clear();
 
+    terminosyCondiciones.clear();
+    terminosyCondiciones.addAll(copiaTerminosyCondiciones);
+
     //instancia del servicio
     SerieService serieService = SerieService();
 
@@ -407,7 +439,7 @@ class DocumentoViewModel extends ChangeNotifier {
     }
 
     //verificar que exista una serie
-    if (vmFactura.editDoc) {
+    if (editDoc) {
       OriginDocModel docOriginSlect = vmConvert.docOriginSelect!;
 
       for (int i = 0; i < vmDoc.series.length; i++) {
@@ -543,7 +575,7 @@ class DocumentoViewModel extends ChangeNotifier {
         //agregar formas de pago encontradas
         vmDoc.referencias.addAll(resTiposRef.response);
 
-        if (vmFactura.editDoc) {
+        if (editDoc) {
           OriginDocModel docOriginSlect = vmConvert.docOriginSelect!;
 
           for (int i = 0; i < vmDoc.referencias.length; i++) {
@@ -964,5 +996,93 @@ class DocumentoViewModel extends ChangeNotifier {
         'docEditado',
       ),
     );
+  }
+
+  //Cerrar sesion
+  Future<void> editTerms(
+    BuildContext context,
+    int screen,
+  ) async {
+    //mostrar dialogo de confirmacion
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "imprimir",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "modificar",
+            ),
+            title: "Modificar terminos y condiciones",
+            description:
+                "¿Desea modificar terminos y condiciones para este documento?. Podrá editar, eliminar y/o agregar terminos y condiciones.",
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    if (result) {
+      //si todas las validaciones son correctas navegar a resumen del documento
+      Navigator.pushNamed(
+        context,
+        AppRoutes.confirm,
+        arguments: screen, //1 documento; 2 comanda
+      );
+
+      return;
+    }
+
+    Navigator.pushNamed(
+      context,
+      AppRoutes.terms,
+      arguments: screen, //1 documento; 2 comanda
+    );
+  }
+
+  void editar(BuildContext context, int index) async {
+    // Aquí asumimos que hay un método similar a _notificationsService.editTerm en Dart.
+    // _notificationsService.editTerm(index);
+
+    bool accion = await NotificationService.editTerm(
+      context,
+      index,
+    );
+
+    if (accion) {}
+  }
+
+  void eliminar(int index) {
+    print(index);
+
+    terminosyCondiciones.removeAt(index);
+    notifyListeners();
+  }
+
+  modificar(
+    BuildContext context,
+    int index,
+    String textModify,
+  ) {
+    if (index == -1) {
+      terminosyCondiciones.add(textModify);
+      notifyListeners();
+    } else {
+      // Guardar el nuevo valor y cerrar el diálogo
+      terminosyCondiciones[index] = textModify;
+
+      notifyListeners();
+    }
+
+    Navigator.of(context).pop(true);
+  }
+
+  Future<bool> backModify() async {
+    terminosyCondiciones.clear();
+
+    terminosyCondiciones.addAll(copiaTerminosyCondiciones);
+    return true;
   }
 }

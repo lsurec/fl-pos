@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -431,5 +432,104 @@ class NotificationService {
         arguments: error,
       );
     }
+  }
+
+  static Future<bool> editTerm(
+    BuildContext context,
+    int index,
+  ) async {
+    final facturaVM = Provider.of<DocumentoViewModel>(context, listen: false);
+
+    // Controlador de texto para el TextField
+    TextEditingController controller = TextEditingController();
+
+    if (index == -1) {
+      //iniciaulzar el controlador vacio
+      controller.text = "";
+    } else {
+      // Inicializar el controlador con el valor existente en la lista
+      controller.text = facturaVM.terminosyCondiciones[index];
+    }
+
+    bool result = await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: index != -1
+                      ? Text(
+                          "Modificar termino",
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        )
+                      : Text(
+                          "Agregar Término",
+                          style: AppTheme.style(
+                            context,
+                            Styles.normal,
+                          ),
+                        ),
+                  content: TextField(
+                    maxLines: null,
+                    controller: controller,
+                    decoration: InputDecoration(
+                      labelText:
+                          index != -1 ? "Editar Término." : "Escribir Término.",
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.botones,
+                          "cancelar",
+                        ),
+                      ),
+                    ),
+                    if (index != -1)
+                      ElevatedButton(
+                        onPressed: () {
+                          // Guardar el nuevo valor y cerrar el diálogo
+                          facturaVM.modificar(
+                            context,
+                            index,
+                            controller.text,
+                          );
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.botones,
+                            "guardar",
+                          ),
+                        ),
+                      ),
+                    if (index == -1)
+                      ElevatedButton(
+                        onPressed: () {
+                          // Guardar el nuevo valor y cerrar el diálogo
+                          facturaVM.modificar(
+                            context,
+                            -1,
+                            controller.text,
+                          );
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.botones,
+                            "agregar",
+                          ),
+                        ),
+                      ),
+                  ],
+                )) ??
+        false;
+
+    // Verificar el resultado del diálogo y actualizar el estado si es necesario
+    if (result) return true;
+
+    return false;
   }
 }

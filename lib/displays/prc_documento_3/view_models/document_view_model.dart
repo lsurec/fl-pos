@@ -46,6 +46,8 @@ class DocumentViewModel extends ChangeNotifier {
   //serie seleccionada
   SerieModel? serieSelect;
 
+  bool confirmarCotizacion = false;
+
   //listas globales
   final List<ClientModel> cuentasCorrentistas = []; //cunetas correntisat
   final List<SellerModel> cuentasCorrentistasRef = []; //cuenta correntisat ref

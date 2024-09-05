@@ -423,7 +423,8 @@
         "direEntrega": "Delivery Address",
         "tipoRef": "Reference Type",
         "codigo": "Code",
-        "mensajes": "Messages: "
+        "mensajes": "Messages: ",
+        "confirmar": "Confirm Order"
     },
     "tareas": {
         "numTarea": "Task No: ",
