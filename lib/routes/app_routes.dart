@@ -96,7 +96,7 @@ class AppRoutes {
     detailsTaskCalendar: (BuildContext context) =>
         const DetalleTareaCalendariaView(),
     lang: (BuildContext context) => const LangView(),
-    theme: (BuildContext context) => const ThemeView(),
+    theme: (BuildContext context) => const TemasColoresView(),
     classification: (BuildContext context) => const ClassificationView(),
     searchTask: (BuildContext context) => const BuscarTareasView(),
     terms: (BuildContext context) => const TermsConditionsView(),

@@ -4,7 +4,7 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 class AppNewTheme {
   static int idTema = int.tryParse(Preferences.idThemeApp) ?? 0;
   static int idColorTema = int.tryParse(Preferences.idColor) ?? 0;
-
+  static bool oscuro = false; 
   static Color backroundColor = Colors.orange.shade50;
 
   // Función para convertir un color hexadecimal en formato RGB

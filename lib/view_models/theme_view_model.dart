@@ -311,6 +311,8 @@ class ThemeViewModel extends ChangeNotifier {
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
+    AppNewTheme.oscuro = isDarkMode;
+
     return [
       TemaModel(
         id: 0,

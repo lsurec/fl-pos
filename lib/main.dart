@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -83,6 +84,8 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final vmTema = Provider.of<ThemeViewModel>(context);
+
     // limpiar preferencias
     // Preferences.clearLang();
     // Preferences.clearTheme();
@@ -98,8 +101,21 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: NotificationService.messengerKey,
       title: "Business",
       debugShowCheckedModeBanner: false,
-      //Tema de la aplicacion
-      theme: aplicarTemaApp(context),
+      // //Tema de la aplicacion
+      // theme: aplicarTemaApp(context),
+      // Verifica si el tema es determinado por el sistema
+      //SI IDTEMA = O EL TEMA SELECCIONADO ES DEL SISTEMA
+      theme: AppNewTheme.idTema == 0
+          ? aplicarTema(
+              context,
+              AppNewTheme.idColorTema,
+            )
+          : vmTema.getThemeByColor(
+              AppNewTheme.idColorTema,
+              //SI IDTEMA = 1 EL TEMA SELECCIONADO ES CLARO
+              //SI IDTEMA = 2 EL TEMA SELECCIONADO ES OSCURO
+              isDarkMode: AppNewTheme.idTema == 1 ? false : true,
+            ), // Usa el tema seleccionado
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       // home: const Tabs4View(), // Muestra el SplashScreen durante el inicio
