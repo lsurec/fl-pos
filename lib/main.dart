@@ -174,3 +174,24 @@ ThemeData aplicarTemaApp(BuildContext context) {
   // Retornar un tema por defecto en caso de que no se cumplan las condiciones
   return AppTheme.lightTheme;
 }
+
+//Tema de la aplicación: manejar el tema del sistema
+ThemeData aplicarTema(
+  BuildContext context,
+  // ThemeData tema,
+  int idColor,
+) {
+  final Brightness brightness = MediaQuery.of(context).platformBrightness;
+  final bool isDarkMode = brightness == Brightness.dark;
+
+  final vmTema = Provider.of<ThemeViewModel>(
+    context,
+    listen: false,
+  );
+
+  // Utilizamos la función auxiliar getThemeByColor para obtener el tema basado en idColorTema
+  return vmTema.getThemeByColor(
+    idColor,
+    isDarkMode: isDarkMode,
+  );
+}

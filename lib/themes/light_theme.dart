@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class LightTheme {
   //COLORES
@@ -195,5 +198,30 @@ class LightTheme {
     fontSize: 14,
     color: Colors.white,
     fontWeight: FontWeight.bold,
+  );
+
+  // Colores del tema claro
+  static const Color lightPrimaryColor = Color(0xff134895);
+
+  static final ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: AppNewTheme.backroundColor,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: lightPrimaryColor,
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+      ),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: lightPrimaryColor,
+    ),
+    textTheme: const TextTheme(
+      bodyText1: TextStyle(
+        color: Colors.black,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.black,
+      ),
+    ),
   );
 }

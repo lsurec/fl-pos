@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:restart_app/restart_app.dart';
@@ -194,4 +195,232 @@ class ThemeViewModel extends ChangeNotifier {
       Icons.light_mode_outlined,
     );
   }
+
+  ThemeData selectedPreferencesTheme = LightTheme.lightTheme;
+
+  ThemeData get selectedTheme => selectedPreferencesTheme;
+
+  void validarColorTema(BuildContext context, int idTema) {
+    AppNewTheme.idTema = idTema;
+    Preferences.idThemeApp = AppNewTheme.idTema.toString();
+    Preferences.idColor = AppNewTheme.idColorTema.toString();
+    Preferences.valueColor = obtenerColor(context, Preferences.idColor);
+    notifyListeners();
+
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+
+    // Selección de tema y color
+    switch (AppNewTheme.idTema) {
+      case 1: // Tema Claro
+        selectedPreferencesTheme = getThemeByColor(
+          AppNewTheme.idColorTema,
+          isDarkMode: false,
+        );
+        break;
+      case 2: // Tema Oscuro
+        selectedPreferencesTheme = getThemeByColor(
+          AppNewTheme.idColorTema,
+          isDarkMode: true,
+        );
+        break;
+      default: // Sistema (idTema == 0)
+        selectedPreferencesTheme = getThemeByColor(
+          AppNewTheme.idColorTema,
+          isDarkMode: isDarkMode,
+        );
+    }
+  }
+
+  // String obtenerColor(BuildContext context, String idcolor) {
+  //   for (var i = 0; i < coloresApp(context).length; i++) {
+  //     ColorModel color = coloresApp(context)[i];
+  //     if (idcolor == color.id) {
+  //       return color.valor;
+  //     }
+  //   }
+  //   return "#134895";
+  // }
+
+  String obtenerColor(BuildContext context, String idcolor) {
+    // Convertir idcolor a int
+    int? idColorInt = int.tryParse(idcolor);
+
+    // Si la conversión falla, retornar el color predeterminado
+    if (idColorInt == null) {
+      return "#134895";
+    }
+
+    for (var i = 0; i < coloresApp(context).length; i++) {
+      ColorModel color = coloresApp(context)[i];
+      // Comparar idColorInt (int) con color.id (int)
+      if (idColorInt == color.id) {
+        return color.valor;
+      }
+    }
+
+    // Retornar el color predeterminado si no se encuentra
+    return "#134895";
+  }
+
+  ColorModel obtenerColorModel(
+    BuildContext context,
+    int idcolor,
+  ) {
+    // Convertir idcolor a int
+
+    for (var i = 0; i < coloresApp(context).length; i++) {
+      ColorModel color = coloresApp(context)[i];
+      if (idcolor == color.id) {
+        return color;
+      }
+    }
+
+    // Retornar el color predeterminado si no se encuentra
+    return defaultColor;
+  }
+
+// Función auxiliar para obtener el tema por color y modo
+  ThemeData getThemeByColor(
+    int idColorTema, {
+    required bool isDarkMode,
+  }) {
+    switch (idColorTema) {
+      case 1: // Rojo
+        return isDarkMode ? RedTheme.darkRed : RedTheme.lightRed;
+      case 2: // Naranja
+        return isDarkMode ? OrangeTheme.darkOrange : OrangeTheme.lightOrange;
+      case 3: // Verde
+        return isDarkMode ? GreenTheme.darkGreen : GreenTheme.lightGreen;
+      case 4: // Azul
+        return isDarkMode ? BlueTheme.darkGreen : BlueTheme.lightGreen;
+      case 5: // Azul
+        return isDarkMode ? PurpleTheme.darkPurple : PurpleTheme.lightPurple;
+      default: // Morado
+        return isDarkMode ? DarkTheme.darkTheme : LightTheme.lightTheme;
+    }
+  }
+
+  void selectedColor(int idColor) {
+    AppNewTheme.idColorTema = idColor;
+    Preferences.idColor = AppNewTheme.idColorTema.toString();
+    notifyListeners();
+  }
+
+  List<TemaModel> temasAppM(BuildContext context) {
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+    final bool isLightMode = brightness == Brightness.light;
+    return [
+      TemaModel(
+        id: 0,
+        descripcion: "Sistema",
+        tema: isLightMode
+            ? LightTheme.lightTheme
+            : isDarkMode
+                ? DarkTheme.darkTheme
+                : LightTheme.lightTheme,
+      ),
+      TemaModel(
+        id: 1,
+        descripcion: "Claro",
+        tema: LightTheme.lightTheme,
+      ),
+      TemaModel(
+        id: 2,
+        descripcion: "Oscuro",
+        tema: DarkTheme.darkTheme,
+      ),
+    ];
+  }
+
+  List<ColorModel> coloresApp(BuildContext context) {
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
+    final bool isDarkMode = brightness == Brightness.dark;
+    final bool isLightMode = brightness == Brightness.light;
+
+    return [
+      ColorModel(
+        id: 1,
+        valor: "#FF0000",
+        nombre: "Rojo",
+        tema: TemaModel(
+          id: 0,
+          descripcion: "Sistema",
+          tema: isLightMode
+              ? LightTheme.lightTheme
+              : isDarkMode
+                  ? DarkTheme.darkTheme
+                  : LightTheme.lightTheme,
+        ),
+      ),
+      ColorModel(
+        id: 2,
+        valor: "#FFA500",
+        nombre: "Naranja",
+        tema: TemaModel(
+          id: 2,
+          descripcion: "Naranja",
+          tema: isLightMode
+              ? OrangeTheme.lightOrange
+              : isDarkMode
+                  ? OrangeTheme.darkOrange
+                  : OrangeTheme.lightOrange,
+        ),
+      ),
+      ColorModel(
+        id: 3,
+        valor: "#008000",
+        nombre: "Verde",
+        tema: TemaModel(
+          id: 3,
+          descripcion: "Verde",
+          tema: isLightMode
+              ? GreenTheme.lightGreen
+              : isDarkMode
+                  ? GreenTheme.darkGreen
+                  : GreenTheme.lightGreen,
+        ),
+      ),
+      ColorModel(
+        id: 4,
+        valor: "#134895",
+        nombre: "Azul",
+        tema: TemaModel(
+          id: 4,
+          descripcion: "Azul",
+          tema: isLightMode
+              ? BlueTheme.lightGreen
+              : isDarkMode
+                  ? BlueTheme.darkGreen
+                  : BlueTheme.lightGreen,
+        ),
+      ),
+      ColorModel(
+        id: 5,
+        valor: "#800080",
+        nombre: "Morado",
+        tema: TemaModel(
+          id: 5,
+          descripcion: "Morado",
+          tema: isLightMode
+              ? PurpleTheme.lightPurple
+              : isDarkMode
+                  ? PurpleTheme.darkPurple
+                  : PurpleTheme.lightPurple,
+        ),
+      ),
+    ];
+  }
+
+  ColorModel defaultColor = ColorModel(
+    id: 1,
+    valor: "#FF0000",
+    nombre: "Azul",
+    tema: TemaModel(
+      id: 0,
+      descripcion: "Claro",
+      tema: LightTheme.lightTheme,
+    ),
+  );
 }

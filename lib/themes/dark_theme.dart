@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class DarkTheme {
@@ -194,5 +196,29 @@ class DarkTheme {
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: darkPrimary,
+  );
+
+  // Colores del tema claro
+  static const Color darkPrimaryColor = Color(0xff134895);
+
+  static final ThemeData darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: darkPrimaryColor,
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+      ),
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: darkPrimaryColor,
+    ),
+    textTheme: const TextTheme(
+      bodyText1: TextStyle(
+        color: Colors.white,
+      ),
+      bodyText2: TextStyle(
+        color: Colors.white,
+      ),
+    ),
   );
 }

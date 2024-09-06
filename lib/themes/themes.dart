@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/themes/dark_theme.dart';
+export 'package:flutter_post_printer_example/themes/light_theme.dart';
 export 'package:flutter_post_printer_example/themes/blue_theme.dart';
 export 'package:flutter_post_printer_example/themes/green_theme.dart';
 export 'package:flutter_post_printer_example/themes/orange_theme.dart';
