@@ -1,5 +1,8 @@
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,8 @@ class HomeView extends StatelessWidget {
     final vm = Provider.of<HomeViewModel>(context);
     final menuVM = Provider.of<MenuViewModel>(context);
 
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(context);
+
     return Stack(
       children: [
         DefaultTabController(
@@ -20,8 +25,31 @@ class HomeView extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               actions: [
-                UserWidget(
-                  child: Container(),
+                IconButton(
+                  iconSize: 50,
+                  onPressed: () =>
+                      Navigator.pushNamed(context, AppRoutes.settings),
+                  icon: ClipOval(
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      color: AppTheme.color(
+                        context,
+                        Styles.primary,
+                      ),
+                      child: Center(
+                        child: Text(
+                          loginVM.user.isNotEmpty
+                              ? loginVM.user[0].toUpperCase()
+                              : "",
+                          style: AppTheme.style(
+                            context,
+                            Styles.user,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -143,41 +171,7 @@ class _MyDrawer extends StatelessWidget {
               },
             ),
           ),
-          const _FooterDrawer(),
         ],
-      ),
-    );
-  }
-}
-
-class _FooterDrawer extends StatelessWidget {
-  const _FooterDrawer();
-
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<HomeViewModel>(context);
-
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        height: 56,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => vm.navigateSettings(context),
-              icon: const Icon(
-                Icons.settings,
-              ),
-            ),
-            IconButton(
-              onPressed: () => vm.logout(context),
-              icon: const Icon(
-                Icons.logout,
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

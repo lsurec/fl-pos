@@ -12,3 +12,4 @@ export 'package:flutter_post_printer_example/views/login_view.dart';
 export 'package:flutter_post_printer_example/views/not_found_view.dart';
 export 'package:flutter_post_printer_example/views/splash_view.dart';
 export 'package:flutter_post_printer_example/views/settings_view.dart';
+export 'package:flutter_post_printer_example/views/appearance_view.dart';

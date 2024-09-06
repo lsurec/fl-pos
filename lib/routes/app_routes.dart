@@ -53,6 +53,7 @@ class AppRoutes {
   static const classification = 'classification';
   static const searchTask = 'searchTask';
   static const terms = 'terms';
+  static const appearance = 'appearance';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -100,6 +101,7 @@ class AppRoutes {
     classification: (BuildContext context) => const ClassificationView(),
     searchTask: (BuildContext context) => const BuscarTareasView(),
     terms: (BuildContext context) => const TermsConditionsView(),
+    appearance: (BuildContext context) => const AppearenceView(),
   };
 
   //en caso de ruta incorrecta

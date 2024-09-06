@@ -18,6 +18,7 @@ class GreenTheme {
       backgroundColor: lightPrimaryColor,
       titleTextStyle: TextStyle(
         color: Colors.white,
+        fontSize: 20,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
