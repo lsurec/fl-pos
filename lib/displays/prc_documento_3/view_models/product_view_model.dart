@@ -1379,7 +1379,11 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   //Regresar a la pantalla anterior y limpiar
-  Future<bool> back() async {
+  Future<bool> back(
+    BuildContext context,
+  ) async {
+    final vmDetalle = Provider.of<DetailsViewModel>(context, listen: false);
+    vmDetalle.searchController.clear();
     return true;
   }
 
