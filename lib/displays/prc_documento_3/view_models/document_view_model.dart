@@ -68,6 +68,7 @@ class DocumentViewModel extends ChangeNotifier {
     refDescripcionParam383.text = "";
     refContactoParam385.text = "";
     refDirecEntregaParam386.text = "";
+    cuentasCorrentistasRef.clear();
 
     notifyListeners();
   }

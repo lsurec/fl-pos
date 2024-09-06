@@ -133,6 +133,8 @@ class DocumentoViewModel extends ChangeNotifier {
     confirmVM.newDoc();
 
     vmConfirm.setIdDocumentoRef();
+    terminosyCondiciones.clear();
+    terminosyCondiciones.addAll(copiaTerminosyCondiciones);
 
     // Cambiar al primer tab al presionar el botón
     tabController.animateTo(0); // Cambiar al primer tab (índice 0)
