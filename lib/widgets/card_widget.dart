@@ -30,9 +30,9 @@ class CardWidget extends StatelessWidget {
       width: width,
       child: Card(
         color: color ??
-            (AppNewTheme.lightOrDark()
+            (AppNewTheme.isDark()
                 ? AppNewTheme.backroundDarkSecondary
-                : AppNewTheme.backroundLigthSecondary),
+                : AppNewTheme.backroundSecondary),
         shape: borderColor == null
             ? RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(raidus!),

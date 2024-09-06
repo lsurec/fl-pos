@@ -10,8 +10,8 @@ class GreenTheme {
   // Colores del tema oscuro
   static final Color darkPrimaryColor = Colors.green.shade800;
 
-  static final ThemeData lightGreen = ThemeData(
-    brightness: Brightness.light,
+  static final ThemeData lightGreen = ThemeData.light().copyWith(
+    // brightness: Brightness.light,
     primaryColor: lightPrimaryColor,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
     appBarTheme: const AppBarTheme(
@@ -23,17 +23,17 @@ class GreenTheme {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: lightPrimaryColor,
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.black,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.black,
-      ),
-    ),
+    // textTheme: const TextTheme(
+    //   bodyText1: TextStyle(
+    //     color: Colors.black,
+    //   ),
+    //   bodyText2: TextStyle(
+    //     color: Colors.black,
+    //   ),
+    // ),
   );
 
-  static final ThemeData darkGreen = ThemeData(
+  static final ThemeData darkGreen = ThemeData.dark().copyWith(
     brightness: Brightness.dark,
     primaryColor: darkPrimaryColor,
     appBarTheme: AppBarTheme(

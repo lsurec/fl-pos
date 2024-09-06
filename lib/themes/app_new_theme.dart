@@ -6,8 +6,15 @@ class AppNewTheme {
   static int idColorTema = int.tryParse(Preferences.idColor) ?? 0;
   static bool oscuro = false;
   static Color backroundColor = Colors.orange.shade50;
-  static const Color backroundLigthSecondary = Color(0xffFEF5E7);
+  static const Color darkBackroundColor = Color(0xFF121212);
+  static const Color backroundSecondary = Color(0xffFEF5E7);
   static const Color backroundDarkSecondary = Color.fromARGB(255, 40, 40, 40);
+
+  static Color divider = Colors.grey[400]!;
+  static const Color dividerDark = Colors.white60;
+
+  static const Color primary = Color(0xff134895);
+  static const Color primaryDark = Color.fromARGB(255, 159, 197, 255);
 
   // Función para convertir un color hexadecimal en formato RGB
   static List<int> hexToRgb(String hexColor) {
@@ -32,7 +39,7 @@ class AppNewTheme {
     return Color(int.parse("0xFF$hexColor"));
   }
 
-  static bool lightOrDark() {
+  static bool isDark() {
     if (oscuro && idTema == 0) {
       return true;
     }

@@ -1,6 +1,5 @@
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +41,9 @@ class HomeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.darkBackroundColor
+                : AppNewTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -64,10 +62,9 @@ class _MyDrawer extends StatelessWidget {
 
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.black,
-      ),
+      backgroundColor: AppNewTheme.isDark()
+          ? AppNewTheme.darkBackroundColor
+          : AppNewTheme.backroundColor,
       child: Column(
         children: [
           const SizedBox(height: kToolbarHeight),
@@ -89,14 +86,12 @@ class _MyDrawer extends StatelessWidget {
                       Text(
                         route.name,
                         style: index == routeMenu.length - 1
-                            ? AppTheme.style(
-                                context,
-                                Styles.menuActive,
-                              )
-                            : AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                            ? (AppNewTheme.isDark()
+                                ? StyleApp.menuActiveDark
+                                : StyleApp.menuActive)
+                            : (AppNewTheme.isDark()
+                                ? StyleApp.whiteNormal
+                                : StyleApp.normal),
                       ),
                       const Icon(
                         Icons.arrow_right,
@@ -108,10 +103,9 @@ class _MyDrawer extends StatelessWidget {
             ),
           ),
           Divider(
-            color: AppTheme.color(
-              context,
-              Styles.divider,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.dividerDark
+                : AppNewTheme.divider,
           ),
           Expanded(
             child: ListView.separated(
@@ -119,25 +113,16 @@ class _MyDrawer extends StatelessWidget {
               itemCount: menu.length,
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(
-                  color: AppTheme.color(
-                    context,
-                    Styles.divider,
-                  ),
+                  color: AppNewTheme.isDark()
+                      ? AppNewTheme.dividerDark
+                      : AppNewTheme.divider,
                 );
               },
               itemBuilder: (BuildContext context, int index) {
                 MenuModel itemMenu = menu[index];
                 return ListTile(
-                  titleTextStyle: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
                   title: Text(
                     itemMenu.name,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
                   ),
                   trailing: itemMenu.children.isNotEmpty
                       ? const Icon(Icons.chevron_right)
@@ -174,12 +159,8 @@ class _FooterDrawer extends StatelessWidget {
 
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Container(
+      child: SizedBox(
         height: 56,
-        color: AppTheme.color(
-          context,
-          Styles.secondBackground,
-        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
