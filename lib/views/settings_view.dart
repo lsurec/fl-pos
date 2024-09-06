@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -96,7 +97,7 @@ class SettingsView extends StatelessWidget {
                 ),
                 //Nombre del idioma seleccionado en el idioma seleccionado
                 subtitle: Text(
-                  vmTheme.temasApp(context)[Preferences.theme].descripcion,
+                  vmTheme.temasApp(context)[AppNewTheme.idTema].descripcion,
                 ),
                 trailing: const Icon(Icons.arrow_right),
                 onTap: () => vm.navigateTheme(context),

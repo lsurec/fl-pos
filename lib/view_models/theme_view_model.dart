@@ -57,7 +57,7 @@ class ThemeViewModel extends ChangeNotifier {
 
       if (!result) return;
 
-      Preferences.theme = tema.id;
+      AppNewTheme.idTema = tema.id;
       Preferences.idTheme = tema.id.toString();
 
       notifyListeners();
@@ -76,7 +76,7 @@ class ThemeViewModel extends ChangeNotifier {
       Preferences.systemTheme = "2";
     }
 
-    Preferences.theme = tema.id;
+    AppNewTheme.idTema = tema.id;
     Preferences.idTheme = tema.id.toString();
 
     notifyListeners();
@@ -166,7 +166,7 @@ class ThemeViewModel extends ChangeNotifier {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":

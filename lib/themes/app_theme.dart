@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/dark_theme.dart';
 import 'package:flutter_post_printer_example/themes/light_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class AppTheme {
@@ -89,7 +90,7 @@ class AppTheme {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -198,7 +199,7 @@ class AppTheme {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -290,7 +291,7 @@ class AppTheme {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -345,7 +346,7 @@ class AppTheme {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -400,7 +401,7 @@ class AppTheme {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -495,7 +496,7 @@ class AppTheme {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && Preferences.theme == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":

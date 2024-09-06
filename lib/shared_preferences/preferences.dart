@@ -14,7 +14,6 @@ class Preferences {
   static const String _docKey = "docKey";
   static const String _langKey = "langKey";
   static const String _idLangKey = "idLangKey";
-  static const String _themeKey = "theme";
   static const String _themeNameKey = "nameTheme";
   static const String _systemThemeKey = "_systemTheme";
   static const String _themeAppKey = "theme";
@@ -90,7 +89,6 @@ class Preferences {
   }
 
   static void clearTheme() {
-    _prefs.remove(_themeKey);
     _prefs.remove(_themeNameKey);
     _prefs.remove(_systemThemeKey);
   }
@@ -116,15 +114,6 @@ class Preferences {
 
   static set idLanguage(int value) {
     _prefs.setInt(_idLangKey, value);
-  }
-
-  //ID del tema de la aplicacion
-  static int get theme {
-    return _prefs.getInt(_themeKey) ?? 0;
-  }
-
-  static set theme(int value) {
-    _prefs.setInt(_themeKey, value);
   }
 
   static String get idTheme {
