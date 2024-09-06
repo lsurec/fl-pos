@@ -1,6 +1,7 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/styles.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -55,18 +56,12 @@ class DetailsView extends StatelessWidget {
                               BlockTranslate.factura,
                               'cantidad',
                             ),
-                            hintStyle: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            hintStyle: StyleApp.normal,
                             labelText: AppLocalizations.of(context)!.translate(
                               BlockTranslate.factura,
                               'cantidad',
                             ),
-                            labelStyle: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            labelStyle: StyleApp.normal,
                           ),
                           controller: vmProducto.controllerNum,
                           inputFormatters: [
@@ -251,10 +246,7 @@ class DetailsView extends StatelessWidget {
                           BlockTranslate.general,
                           'numTransacciones',
                         )}: ${vm.traInternas.length}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       const Spacer(),
                       if (vm.traInternas.isNotEmpty)
@@ -372,8 +364,8 @@ class _TransactionCard extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
       decimalDigits: 2, // Número de decimales a mostrar
     );
 
@@ -398,17 +390,11 @@ class _TransactionCard extends StatelessWidget {
             children: [
               Text(
                 '${transaction.cantidad} x ${transaction.producto.desProducto}',
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
               Text(
                 'SKU: ${transaction.producto.productoId}',
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               )
             ],
           ),
@@ -422,22 +408,15 @@ class _TransactionCard extends StatelessWidget {
                     BlockTranslate.calcular,
                     'cantDias',
                   )}: ${transaction.cantidadDias}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
-
               if (transaction.precio != null)
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'precioU',
                   )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
               //Total por cantidad
               if (docVM.valueParametro(44))
@@ -446,20 +425,14 @@ class _TransactionCard extends StatelessWidget {
                     BlockTranslate.calcular,
                     'precioTotalCant',
                   )}: ${currencyFormat.format(transaction.precioCantidad)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
               Text(
                 '${AppLocalizations.of(context)!.translate(
                   BlockTranslate.calcular,
                   'precioT',
                 )}: ${currencyFormat.format(transaction.total)}',
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
+                style: StyleApp.normal,
               ),
               if (transaction.cargo != 0)
                 Text(
@@ -467,10 +440,7 @@ class _TransactionCard extends StatelessWidget {
                     BlockTranslate.calcular,
                     'cargo',
                   )}: ${currencyFormat.format(transaction.cargo)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
 
               if (transaction.descuento != 0)
@@ -479,12 +449,8 @@ class _TransactionCard extends StatelessWidget {
                     BlockTranslate.calcular,
                     'descuento',
                   )}: ${currencyFormat.format(transaction.descuento)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
-              // Text('Detalles: ${transaction.detalles}'),
             ],
           ),
           leading: Checkbox(
@@ -536,10 +502,7 @@ class _RadioCargo extends StatelessWidget {
                   BlockTranslate.calcular,
                   'porcentaje',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
+                style: StyleApp.normal,
               ),
             ],
           ),
@@ -562,10 +525,7 @@ class _RadioCargo extends StatelessWidget {
                   BlockTranslate.calcular,
                   'monto',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
+                style: StyleApp.normal,
               ),
             ],
           ),
@@ -600,10 +560,7 @@ class MyExpansionTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: AppTheme.style(
-          context,
-          Styles.title,
-        ),
+        style: StyleApp.title,
       ),
       children: <Widget>[
         Padding(

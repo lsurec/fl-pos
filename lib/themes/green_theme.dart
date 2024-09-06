@@ -11,48 +11,30 @@ class GreenTheme {
   static final Color darkPrimaryColor = Colors.green.shade800;
 
   static final ThemeData lightGreen = ThemeData.light().copyWith(
-    // brightness: Brightness.light,
     primaryColor: lightPrimaryColor,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: lightPrimaryColor,
-      titleTextStyle: TextStyle(
-        color: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppNewTheme.backroundColor,
+      titleTextStyle: const TextStyle(
         fontSize: 20,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: lightPrimaryColor,
     ),
-    // textTheme: const TextTheme(
-    //   bodyText1: TextStyle(
-    //     color: Colors.black,
-    //   ),
-    //   bodyText2: TextStyle(
-    //     color: Colors.black,
-    //   ),
-    // ),
   );
 
   static final ThemeData darkGreen = ThemeData.dark().copyWith(
-    brightness: Brightness.dark,
     primaryColor: darkPrimaryColor,
-    appBarTheme: AppBarTheme(
-      backgroundColor: darkPrimaryColor,
-      titleTextStyle: const TextStyle(
-        color: Colors.white,
+    scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppNewTheme.darkBackroundColor,
+      titleTextStyle: TextStyle(
+        fontSize: 20,
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: darkPrimaryColor,
-    ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.white,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.white,
-      ),
     ),
   );
 }

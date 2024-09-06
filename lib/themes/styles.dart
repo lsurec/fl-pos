@@ -33,4 +33,9 @@ class StyleApp {
     color: Colors.white,
     // color: Colors.white60,
   );
+
+  static const title = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
 }
