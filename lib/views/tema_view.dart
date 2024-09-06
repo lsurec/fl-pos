@@ -3,7 +3,6 @@ import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class TemasColoresView extends StatelessWidget {
@@ -74,39 +73,30 @@ class TemasColoresView extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       final TemaModel tema = temas[index];
                       // Cada item de la lista
-                      return Column(
-                        children: [
-                          CardWidget(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 5,
-                            ),
-                            child: ListTile(
-                              contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5,
-                                horizontal: 15,
-                              ),
-                              title: Text(
-                                tema.descripcion,
-                                style: StyleApp.normal,
-                              ),
-                              leading: Radio<int>(
-                                value: index,
-                                groupValue: selectedIndex,
-                                onChanged: (int? value) {
-                                  selectedIndex = value!;
-                                  // Tu función personalizada
-                                  vmTema.validarColorTema(
-                                    context,
-                                    tema.id,
-                                  );
-                                },
-                              ),
-                              onTap: () {
-                                vmTema.validarColorTema(context, tema.id);
-                              },
-                            ),
-                          ),
-                        ],
+                      return ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5,
+                          horizontal: 15,
+                        ),
+                        title: Text(
+                          tema.descripcion,
+                          style: StyleApp.normal,
+                        ),
+                        leading: Radio<int>(
+                          value: index,
+                          groupValue: selectedIndex,
+                          onChanged: (int? value) {
+                            selectedIndex = value!;
+                            // Tu función personalizada
+                            vmTema.validarColorTema(
+                              context,
+                              tema.id,
+                            );
+                          },
+                        ),
+                        onTap: () {
+                          vmTema.validarColorTema(context, tema.id);
+                        },
                       );
                     },
                   ),

@@ -205,11 +205,11 @@ class ThemeViewModel extends ChangeNotifier {
     Preferences.idThemeApp = AppNewTheme.idTema.toString();
     Preferences.idColor = AppNewTheme.idColorTema.toString();
     Preferences.valueColor = obtenerColor(context, Preferences.idColor);
-    notifyListeners();
 
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
-
+    AppNewTheme.oscuro = isDarkMode;
+    notifyListeners();
     // Selección de tema y color
     switch (AppNewTheme.idTema) {
       case 1: // Tema Claro
@@ -425,4 +425,5 @@ class ThemeViewModel extends ChangeNotifier {
       tema: LightTheme.lightTheme,
     ),
   );
+
 }

@@ -199,6 +199,7 @@ ThemeData aplicarTema(
 ) {
   final Brightness brightness = MediaQuery.of(context).platformBrightness;
   final bool isDarkMode = brightness == Brightness.dark;
+  AppNewTheme.oscuro = isDarkMode;
 
   final vmTema = Provider.of<ThemeViewModel>(
     context,

@@ -4,8 +4,10 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 class AppNewTheme {
   static int idTema = int.tryParse(Preferences.idThemeApp) ?? 0;
   static int idColorTema = int.tryParse(Preferences.idColor) ?? 0;
-  static bool oscuro = false; 
+  static bool oscuro = false;
   static Color backroundColor = Colors.orange.shade50;
+  static const Color backroundLigthSecondary = Color(0xffFEF5E7);
+  static const Color backroundDarkSecondary = Color.fromARGB(255, 40, 40, 40);
 
   // Función para convertir un color hexadecimal en formato RGB
   static List<int> hexToRgb(String hexColor) {
@@ -28,5 +30,17 @@ class AppNewTheme {
 
     // Convertir el string hexadecimal a entero y agregar el prefijo 0xFF para la opacidad
     return Color(int.parse("0xFF$hexColor"));
+  }
+
+  static bool lightOrDark() {
+    if (oscuro && idTema == 0) {
+      return true;
+    }
+
+    if (idTema == 2) {
+      return true;
+    }
+
+    return false;
   }
 }
