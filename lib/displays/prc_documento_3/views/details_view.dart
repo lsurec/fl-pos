@@ -33,10 +33,22 @@ class DetailsView extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.20,
                         child: TextFormField(
+                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                            border: const OutlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                width: 1,
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.greyBorder,
+                                ),
+                              ),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: AppTheme.color(
+                                  context,
+                                  Styles.grey,
+                                ),
                               ),
                             ),
                             hintText: AppLocalizations.of(context)!.translate(
@@ -87,6 +99,22 @@ class DetailsView extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.greyBorder,
+                                  ),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: AppTheme.color(
+                                    context,
+                                    Styles.grey,
+                                  ),
+                                ),
+                              ),
                               hintText: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.factura,
                                 'skuDesc',
