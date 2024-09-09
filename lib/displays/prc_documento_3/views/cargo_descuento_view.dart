@@ -192,10 +192,7 @@ class CargoDescuentoView extends StatelessWidget {
                                 : currencyFormat.format(operacion.cargo),
                             style: operacion.cargo == 0
                                 ? StyleApp.descuento
-                                : AppNewTheme.style(
-                                    StyleApp.cargo,
-                                    StyleApp.cargoDark,
-                                  ),
+                                : StyleApp.cargo,
                           )
                         ],
                       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +33,7 @@ class DetailsDestinationDocView extends StatelessWidget {
                   BlockTranslate.cotizacion,
                   'procesadoDoc',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: [
                 IconButton(
@@ -89,10 +87,7 @@ class DetailsDestinationDocView extends StatelessWidget {
                                 BlockTranslate.cotizacion,
                                 'transacciones',
                               )} (${vm.detalles.length})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                           ],
                         ),
@@ -205,14 +200,12 @@ class _PrintActions extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'listo',
-                      ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteStyle,
-                      )),
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'listo',
+                    ),
+                    style: StyleApp.whiteNormal,
+                  ),
                 ),
               ),
             ),
@@ -232,14 +225,12 @@ class _PrintActions extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'imprimir',
-                      ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteStyle,
-                      )),
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'imprimir',
+                    ),
+                   style: StyleApp.whiteNormal,
+                  ),
                 ),
               ),
             ),

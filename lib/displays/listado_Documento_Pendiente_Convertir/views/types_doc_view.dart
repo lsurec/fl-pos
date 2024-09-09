@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -23,10 +24,7 @@ class TypesDocView extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               vmMenu.name,
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: RefreshIndicator(
@@ -45,10 +43,7 @@ class TypesDocView extends StatelessWidget {
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.documents.length})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                         ],
                       ),
@@ -70,10 +65,7 @@ class TypesDocView extends StatelessWidget {
                               trailing: const Icon(Icons.arrow_right),
                               title: Text(
                                 "${doc.fDesTipoDocumento} (${doc.tipoDocumento})",
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ),
                           );

@@ -72,10 +72,6 @@ class ProductView extends StatelessWidget {
                       'descripcion',
                     ),
                     style: StyleApp.blueText,
-                    // style: AppNewTheme.style(
-                    //   StyleApp.blueText,
-                    //   StyleApp.blueDarkText,
-                    // ),
                   ),
                   const SizedBox(height: 5),
                   Text(

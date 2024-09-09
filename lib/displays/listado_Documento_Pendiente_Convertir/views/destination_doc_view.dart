@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -27,10 +28,7 @@ class DestinationDocView extends StatelessWidget {
                 BlockTranslate.cotizacion,
                 'destinoDoc',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: Padding(
@@ -49,10 +47,7 @@ class DestinationDocView extends StatelessWidget {
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.documents.length})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                         ],
                       ),
@@ -82,17 +77,11 @@ class DestinationDocView extends StatelessWidget {
                                         BlockTranslate.general,
                                         'documento',
                                       )}:",
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.bold,
-                                      ),
+                                      style: StyleApp.normalBold,
                                     ),
                                     Text(
                                       doc.documento,
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.normal,
-                                      ),
+                                      style: StyleApp.normal,
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
@@ -100,17 +89,11 @@ class DestinationDocView extends StatelessWidget {
                                         BlockTranslate.general,
                                         'serie',
                                       ),
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.bold,
-                                      ),
+                                      style: StyleApp.normalBold,
                                     ),
                                     Text(
                                       doc.serie,
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.normal,
-                                      ),
+                                      style: StyleApp.normal,
                                     ),
                                   ],
                                 ),

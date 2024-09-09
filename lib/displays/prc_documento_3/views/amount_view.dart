@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -71,10 +72,7 @@ class _Body extends StatelessWidget {
                   children: [
                     Text(
                       payment.descripcion,
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
+                      style: StyleApp.title,
                     ),
                     const SizedBox(height: 20),
                     //monto
@@ -160,10 +158,7 @@ class _Body extends StatelessWidget {
                           BlockTranslate.factura,
                           'banco',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold ,
                       ),
                     if (payment.banco) const SizedBox(height: 10),
                     if (payment.banco)

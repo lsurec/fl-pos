@@ -546,10 +546,7 @@ class ConfirmDocView extends StatelessWidget {
                       if (vm.viewMessage)
                         Text(
                           vm.error,
-                          style: AppNewTheme.style(
-                            StyleApp.red,
-                            StyleApp.redDark,
-                          ),
+                          style: StyleApp.red,
                         ),
                       if (vm.viewSucces)
                         Text(
@@ -557,10 +554,7 @@ class ConfirmDocView extends StatelessWidget {
                             BlockTranslate.notificacion,
                             'docProcesado',
                           ),
-                          style: AppNewTheme.style(
-                            StyleApp.green,
-                            StyleApp.greenDark,
-                          ),
+                          style: StyleApp.green,
                         ),
                       if (vm.viewError)
                         SizedBox(
@@ -572,10 +566,7 @@ class ConfirmDocView extends StatelessWidget {
                                 BlockTranslate.botones,
                                 'verError',
                               ),
-                              style: AppNewTheme.style(
-                                StyleApp.blueText,
-                                StyleApp.blueDarkText,
-                              ),
+                              style: StyleApp.blueText,
                             ),
                           ),
                         ),
