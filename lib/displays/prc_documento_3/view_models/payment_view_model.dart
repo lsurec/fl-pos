@@ -46,6 +46,7 @@ class PaymentViewModel extends ChangeNotifier {
   Future<void> loadPayments(BuildContext context) async {
     //limpiar lista
     paymentList.clear();
+    amounts.clear();
 
     //view models exxternos
     final loginVM = Provider.of<LoginViewModel>(context, listen: false);
@@ -98,6 +99,7 @@ class PaymentViewModel extends ChangeNotifier {
 
     //agregar formas de pago encontradas
     paymentList.addAll(res.response);
+    calculateTotales(context);
 
     notifyListeners();
   }

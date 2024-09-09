@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/themes/app_new_theme.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/styles.dart';
@@ -37,51 +38,38 @@ class DocumentView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (vm.valueParametro(58))
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.cotizacion,
-                              'docIdRef',
-                            ),
-                            style: StyleApp.title,
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            vmConfirm.idDocumentoRef.toString(),
-                            style: StyleApp.normal,
-                          ),
-                        ],
+                  CheckboxListTile(
+                    checkColor: Colors.white,
+                    activeColor: AppNewTheme.primary,
+                    value: vm.confirmarCotizacion,
+                    onChanged: (value) => vm.confirmarOrden(value!),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cotizacion,
+                        'confirmar',
                       ),
-                      SizedBox(
-                        width: 250,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Checkbox(
-                              activeColor: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                              value: vm.confirmarCotizacion,
-                              onChanged: (value) {},
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.cotizacion,
-                                'confirmar',
-                              ),
-                              style: StyleApp.normalBold,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                      style: StyleApp.title,
+                    ),
+                    contentPadding: EdgeInsets.zero,
                   ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cotizacion,
+                        'docIdRef',
+                      ),
+                      style: StyleApp.title,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      vmConfirm.idDocumentoRef.toString(),
+                      style: StyleApp.normal,
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 10),
                 Text(
                   AppLocalizations.of(context)!.translate(
@@ -268,7 +256,7 @@ class DocumentView extends StatelessWidget {
                             const SizedBox(height: 10),
                             Text(
                               "(${vm.clienteSelect!.desCuentaCta})",
-                              style: StyleApp.inactive,
+                              style: StyleApp.greyText,
                             ),
                           ],
                         ),

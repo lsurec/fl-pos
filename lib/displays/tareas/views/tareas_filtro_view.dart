@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/tareas/view_models/tareas_
 import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -60,10 +61,7 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
             appBar: AppBar(
               title: Text(
                 vmMenu.name,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: [
                 IconButton(

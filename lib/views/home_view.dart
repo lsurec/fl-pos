@@ -42,10 +42,7 @@ class HomeView extends StatelessWidget {
                           loginVM.user.isNotEmpty
                               ? loginVM.user[0].toUpperCase()
                               : "",
-                          style: AppTheme.style(
-                            context,
-                            Styles.user,
-                          ),
+                          style: StyleApp.user,
                         ),
                       ),
                     ),

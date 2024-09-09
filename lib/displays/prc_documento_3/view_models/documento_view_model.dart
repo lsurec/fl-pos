@@ -350,6 +350,11 @@ class DocumentoViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmDetalle = Provider.of<DetailsViewModel>(
+      context,
+      listen: false,
+    );
+
     final int empresa = vmLocal.selectedEmpresa!.empresa;
     final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
     final String user = vmLogin.user;
@@ -407,6 +412,13 @@ class DocumentoViewModel extends ChangeNotifier {
 
     terminosyCondiciones.clear();
     terminosyCondiciones.addAll(copiaTerminosyCondiciones);
+    vmDetalle.traInternas.clear();
+    vmDoc.confirmarCotizacion = false;
+    vmPayment.amounts.clear();
+    vmDoc.clienteSelect = null;
+    vmDoc.cf = false;
+    vmPayment.calculateTotales(context);
+    vmDetalle.calculateTotales(context);
 
     //instancia del servicio
     SerieService serieService = SerieService();

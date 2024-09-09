@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -59,10 +60,7 @@ class ProductView extends StatelessWidget {
                       ),
                       Text(
                         "SKU: ${product.productoId}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                     ],
                   ),
@@ -73,10 +71,11 @@ class ProductView extends StatelessWidget {
                       BlockTranslate.general,
                       'descripcion',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.blueText,
-                    ),
+                    style: StyleApp.blueText,
+                    // style: AppNewTheme.style(
+                    //   StyleApp.blueText,
+                    //   StyleApp.blueDarkText,
+                    // ),
                   ),
                   const SizedBox(height: 5),
                   Text(
@@ -148,10 +147,7 @@ class ProductView extends StatelessWidget {
                         BlockTranslate.notificacion,
                         'preciosNoEncontrados',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                   const SizedBox(height: 5),
                   if (vm.prices.isNotEmpty && docVM.editPrice())
@@ -166,18 +162,12 @@ class ProductView extends StatelessWidget {
                           BlockTranslate.calcular,
                           'precioU',
                         ),
-                        hintStyle: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        hintStyle: StyleApp.normal,
                         labelText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioU',
                         ),
-                        labelStyle: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        labelStyle: StyleApp.normal,
                       ),
                       controller: vm.controllerPrice,
                       inputFormatters: [
@@ -218,10 +208,7 @@ class ProductView extends StatelessWidget {
                           BlockTranslate.calcular,
                           'total',
                         )}: ${currencyFormat.format(vm.total)}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                     ],
                   ),
@@ -285,10 +272,7 @@ class _BottomBar extends StatelessWidget {
                       BlockTranslate.botones,
                       'cancelar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -316,10 +300,7 @@ class _BottomBar extends StatelessWidget {
                         BlockTranslate.botones,
                         'agregar',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteStyle,
-                      ),
+                      style: StyleApp.whiteNormal,
                     ),
                   ),
                 ),
@@ -347,10 +328,7 @@ class _BottomBar extends StatelessWidget {
                         BlockTranslate.botones,
                         'modificar',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteStyle,
-                      ),
+                      style: StyleApp.whiteNormal,
                     ),
                   ),
                 ),
@@ -409,18 +387,12 @@ class _NumericField extends StatelessWidget {
                 BlockTranslate.factura,
                 'cantidad',
               ),
-              hintStyle: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
+              hintStyle: StyleApp.normal,
               labelText: AppLocalizations.of(context)!.translate(
                 BlockTranslate.factura,
                 'cantidad',
               ),
-              labelStyle: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
+              labelStyle: StyleApp.normal,
             ),
             controller: vm.controllerNum,
             inputFormatters: [
@@ -495,10 +467,7 @@ class ImageCarouselDialog extends StatelessWidget {
                           ),
                           child: Text(
                             "${index + 1}/${imageUrls.length}",
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ),
                       ),

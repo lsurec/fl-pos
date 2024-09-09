@@ -6,7 +6,7 @@ class AppNewTheme {
   static int idColorTema = int.tryParse(Preferences.idColor) ?? 0;
   static bool oscuro = false;
   static Color backroundColor = Colors.orange.shade50;
-  static const Color darkBackroundColor = Color(0xFF121212);
+  static const Color darkBackroundColor = Color(0xFF242323);
   static const Color backroundSecondary = Color(0xffFEF5E7);
   static const Color backroundDarkSecondary = Color.fromARGB(255, 40, 40, 40);
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/card_task_widgets.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
 
@@ -80,10 +79,7 @@ class _VerAsignadasViewState extends State<VerAsignadasView> {
                           BlockTranslate.general,
                           'registro',
                         )} (${tareas.length})",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.title,
                       ),
                     ],
                   ),

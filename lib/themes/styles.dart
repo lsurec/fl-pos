@@ -45,9 +45,15 @@ class StyleApp {
     color: Colors.grey[400]!,
   );
 
-  static const inactive = TextStyle(
+  static const greyText = TextStyle(
     fontSize: 17,
     color: Colors.grey,
+  );
+
+  static const greyBold = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+    fontWeight: FontWeight.bold,
   );
 
   static const blueText = TextStyle(
@@ -78,5 +84,31 @@ class StyleApp {
   static const descuentoDark = TextStyle(
     fontSize: 17,
     color: Color.fromARGB(255, 248, 119, 109),
+  );
+
+  static const green = TextStyle(
+    fontSize: 17,
+    color: Colors.green,
+  );
+
+  static const red = TextStyle(
+    fontSize: 17,
+    color: Colors.red,
+  );
+
+  static const greenDark = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 96, 217, 100),
+  );
+
+  static const redDark = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 248, 119, 109),
+  );
+
+  static const user = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
   );
 }
