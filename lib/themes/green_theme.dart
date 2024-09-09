@@ -17,6 +17,7 @@ class GreenTheme {
       backgroundColor: AppNewTheme.backroundColor,
       titleTextStyle: const TextStyle(
         fontSize: 20,
+        color: Colors.black,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(

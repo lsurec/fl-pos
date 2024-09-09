@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -51,10 +53,7 @@ class DocumentView extends StatelessWidget {
                           const SizedBox(height: 3),
                           Text(
                             vmConfirm.idDocumentoRef.toString(),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -76,10 +75,7 @@ class DocumentView extends StatelessWidget {
                                 BlockTranslate.cotizacion,
                                 'confirmar',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                           ],
                         ),
@@ -92,10 +88,7 @@ class DocumentView extends StatelessWidget {
                     BlockTranslate.general,
                     'serie',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 if (vm.series.isEmpty && !vmFactura.editDoc)
                   NotFoundWidget(
@@ -111,10 +104,7 @@ class DocumentView extends StatelessWidget {
                 if (vmFactura.editDoc)
                   Text(
                     "${vmConvert.docOriginSelect!.serie} (${vmConvert.docOriginSelect!.serieDocumento})",
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (vm.series.isNotEmpty && !vmFactura.editDoc)
                   DropdownButton<SerieModel>(
@@ -146,10 +136,7 @@ class DocumentView extends StatelessWidget {
                   children: [
                     Text(
                       vm.getTextCuenta(context),
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
+                      style: StyleApp.title,
                     ),
                     IconButton(
                       onPressed: () => Navigator.pushNamed(
@@ -216,12 +203,9 @@ class DocumentView extends StatelessWidget {
                     context,
                     value,
                   ),
-                  title: Text(
+                  title: const Text(
                     "C/F",
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                    style: StyleApp.title,
                   ),
                 ),
                 if (vm.clienteSelect != null)
@@ -233,10 +217,7 @@ class DocumentView extends StatelessWidget {
                         children: [
                           Text(
                             vm.getTextCuenta(context),
-                            style: AppTheme.style(
-                              context,
-                              Styles.titlegrey,
-                            ),
+                            style: StyleApp.titlegrey,
                           ),
                           if (!vm.cf)
                             IconButton(
@@ -262,18 +243,12 @@ class DocumentView extends StatelessWidget {
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNit,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNombre,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       if (vm.clienteSelect!.facturaDireccion.isNotEmpty &&
                           vmFactura.editDoc)
@@ -282,10 +257,7 @@ class DocumentView extends StatelessWidget {
                             const SizedBox(height: 10),
                             Text(
                               vm.clienteSelect!.facturaDireccion,
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ],
                         ),
@@ -296,10 +268,7 @@ class DocumentView extends StatelessWidget {
                             const SizedBox(height: 10),
                             Text(
                               "(${vm.clienteSelect!.desCuentaCta})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.inactive,
-                              ),
+                              style: StyleApp.inactive,
                             ),
                           ],
                         ),
@@ -317,10 +286,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.factura,
                           'vendedor',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       DropdownButton<SellerModel>(
                         isExpanded: true,
@@ -362,10 +328,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.factura,
                           'evento',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const SizedBox(height: 10),
                       Text(
@@ -373,10 +336,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.cotizacion,
                           'tipoRef',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       DropdownButton<TipoReferenciaModel>(
                         isExpanded: true,
@@ -420,10 +380,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'entrega',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -451,10 +408,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'recoger',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -482,10 +436,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'inicio',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -513,10 +464,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'fin',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -676,9 +624,8 @@ class FechaButton extends StatelessWidget {
               BlockTranslate.fecha,
               'fecha',
             )} ${Utilities.formatearFecha(fecha)}",
-            style: AppTheme.style(
-              context,
-              Styles.normal,
+            style: StyleApp.normal.copyWith(
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           const SizedBox(width: 15),
@@ -717,9 +664,8 @@ class HoraButton extends StatelessWidget {
               BlockTranslate.fecha,
               'hora',
             )} ${Utilities.formatearHora(fecha)}",
-            style: AppTheme.style(
-              context,
-              Styles.normal,
+            style: StyleApp.normal.copyWith(
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           const SizedBox(width: 15),

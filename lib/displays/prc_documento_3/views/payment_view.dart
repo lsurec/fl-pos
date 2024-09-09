@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -53,10 +54,7 @@ class PaymentView extends StatelessWidget {
                         BlockTranslate.factura,
                         'agregarPago',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
+                      style: StyleApp.title,
                     ),
                   const SizedBox(height: 10),
                   ListView.builder(
@@ -95,10 +93,7 @@ class PaymentView extends StatelessWidget {
                             BlockTranslate.factura,
                             'pagosAgregados',
                           )} (${vm.amounts.length})",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         const Spacer(),
                         IconButton(
@@ -133,10 +128,7 @@ class PaymentView extends StatelessWidget {
                           ),
                           title: Text(
                             amount.payment.descripcion,
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,10 +139,7 @@ class PaymentView extends StatelessWidget {
                                     BlockTranslate.factura,
                                     'autorizar',
                                   )}: ${amount.authorization}',
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               if (amount.payment.referencia)
                                 Text(
@@ -158,10 +147,7 @@ class PaymentView extends StatelessWidget {
                                     BlockTranslate.factura,
                                     'referencia',
                                   )}: ${amount.reference}',
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               if (amount.payment.banco)
                                 Text(
@@ -169,10 +155,7 @@ class PaymentView extends StatelessWidget {
                                     BlockTranslate.factura,
                                     'banco',
                                   )}: ${amount.bank?.nombre}',
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               if (amount.account != null)
                                 Text(
@@ -180,20 +163,14 @@ class PaymentView extends StatelessWidget {
                                     BlockTranslate.factura,
                                     'cuenta',
                                   )}: ${amount.account!.descripcion}',
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               Text(
                                 '${AppLocalizations.of(context)!.translate(
                                   BlockTranslate.calcular,
                                   'monto',
                                 )}: ${currencyFormat.format(amount.amount)}',
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               if (amount.diference > 0)
                                 Text(
@@ -201,10 +178,7 @@ class PaymentView extends StatelessWidget {
                                     BlockTranslate.calcular,
                                     'diferencia',
                                   )}: ${currencyFormat.format(amount.diference)}',
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               if (amount.diference > 0)
                                 Text(
@@ -212,10 +186,7 @@ class PaymentView extends StatelessWidget {
                                     BlockTranslate.calcular,
                                     'precioT',
                                   )}: ${currencyFormat.format(amount.diference + amount.amount)}',
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                             ],
                           ),
@@ -283,10 +254,7 @@ class PaymentCard extends StatelessWidget {
         trailing: const Icon(Icons.arrow_right),
         title: Text(
           payment.descripcion,
-          style: AppTheme.style(
-            context,
-            Styles.normal,
-          ),
+          style: StyleApp.normal,
         ),
       ),
     );

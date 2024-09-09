@@ -50,4 +50,14 @@ class AppNewTheme {
 
     return false;
   }
+
+  static TextStyle style(
+    TextStyle claro,
+    TextStyle oscuro,
+  ) {
+    if (isDark()) {
+      return oscuro;
+    }
+    return claro;
+  }
 }

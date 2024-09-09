@@ -38,4 +38,45 @@ class StyleApp {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
+
+  static TextStyle titlegrey = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey[400]!,
+  );
+
+  static const inactive = TextStyle(
+    fontSize: 17,
+    color: Colors.grey,
+  );
+
+  static const blueText = TextStyle(
+    fontSize: 15,
+    color: AppNewTheme.primary,
+  );
+
+  static const blueDarkText = TextStyle(
+    fontSize: 15,
+    color: AppNewTheme.primaryDark,
+  );
+
+  static const cargo = TextStyle(
+    fontSize: 17,
+    color: Colors.green,
+  );
+
+  static const descuento = TextStyle(
+    fontSize: 17,
+    color: Colors.red,
+  );
+
+  static const cargoDark = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 96, 217, 100),
+  );
+
+  static const descuentoDark = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 248, 119, 109),
+  );
 }

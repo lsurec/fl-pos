@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -51,10 +52,7 @@ class _RecentViewState extends State<RecentView> {
                 BlockTranslate.factura,
                 'docRecientes',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: Padding(
@@ -69,10 +67,7 @@ class _RecentViewState extends State<RecentView> {
                         BlockTranslate.general,
                         'registro',
                       )} (${vm.documents.length})",
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                     ),
                   ],
                 ),
@@ -101,47 +96,40 @@ class _RecentViewState extends State<RecentView> {
                                 children: [
                                   Text(
                                     "Id. Ref: ${doc.estructura.docIdDocumentoRef}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   Text(
                                     "Cons. Interno: ${doc.item.consecutivoInterno}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   Text(
                                     vm.strDate(doc.item.fechaHora),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.normal,
-                                    ),
+                                    style: StyleApp.normal,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(currencyFormat.format(doc.subtotal),
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.blueText,
-                                      )),
+                                  Text(
+                                    currencyFormat.format(doc.subtotal),
+                                    style: AppNewTheme.style(
+                                      StyleApp.blueText,
+                                      StyleApp.blueDarkText,
+                                    ),
+                                  ),
                                   Text(
                                     "(+) ${currencyFormat.format(doc.cargo)}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.cargo,
+                                    style: AppNewTheme.style(
+                                      StyleApp.cargo,
+                                      StyleApp.cargoDark,
                                     ),
                                   ),
                                   Text(
                                     "(-) ${currencyFormat.format(doc.descuento)}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.descuento,
+                                    style: AppNewTheme.style(
+                                      StyleApp.descuento,
+                                      StyleApp.descuentoDark,
                                     ),
                                   ),
                                   Container(
@@ -154,10 +142,7 @@ class _RecentViewState extends State<RecentView> {
                                   ),
                                   Text(
                                     currencyFormat.format(doc.total),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                 ],
                               ),
