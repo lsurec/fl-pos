@@ -6,10 +6,43 @@ import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
-class TablesView extends StatelessWidget {
+class TablesView extends StatefulWidget {
   const TablesView({Key? key}) : super(key: key);
 
+  @override
+  State<TablesView> createState() => _TablesViewState();
+}
+
+
+class _TablesViewState extends State<TablesView> {
+
+
+  late WebSocketChannel _channel;
+
+  @override
+  void initState() {
+    super.initState();
+    // Conexión al WebSocket cuando se entra a la pantalla
+    _channel = WebSocketChannel.connect(
+      Uri.parse('ws://192.168.0.7:9192/ws'),
+    );
+
+    // Escucha los mensajes sin redibujar el widget
+    _channel.stream.listen((message) {
+      _handleMessage(message);
+    });
+  }
+
+  // Función para manejar los mensajes recibidos
+  void _handleMessage(String message) {
+    // Ejecuta la función que necesites
+    print('Mensaje recibido: $message');
+    // Aquí puedes realizar cualquier operación, por ejemplo:
+    // Llamar a otra función, actualizar una variable, etc.
+  }
+  
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TablesViewModel>(context);
