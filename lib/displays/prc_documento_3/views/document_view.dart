@@ -33,24 +33,61 @@ class DocumentView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  AppLocalizations.of(context)!.translate(
-                    BlockTranslate.cotizacion,
-                    'docIdRef',
+                if (vm.valueParametro(58))
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.cotizacion,
+                              'docIdRef',
+                            ),
+                            style: AppTheme.style(
+                              context,
+                              Styles.title,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          Text(
+                            vmConfirm.idDocumentoRef.toString(),
+                            style: AppTheme.style(
+                              context,
+                              Styles.normal,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 250,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Checkbox(
+                              activeColor: AppTheme.color(
+                                context,
+                                Styles.darkPrimary,
+                              ),
+                              value: vm.confirmarCotizacion,
+                              onChanged: (value) {},
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.cotizacion,
+                                'confirmar',
+                              ),
+                              style: AppTheme.style(
+                                context,
+                                Styles.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  vmConfirm.idDocumentoRef.toString(),
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
-                ),
                 const SizedBox(height: 10),
                 Text(
                   AppLocalizations.of(context)!.translate(

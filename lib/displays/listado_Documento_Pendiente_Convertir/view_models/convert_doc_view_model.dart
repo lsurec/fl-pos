@@ -795,6 +795,7 @@ class ConvertDocViewModel extends ChangeNotifier {
           existencia: 0,
           nombre: tra.detalle.bodegaDescripcion,
           poseeComponente: false,
+          orden: 0,
         );
       } else {
         //Asignar la bodega

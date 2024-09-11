@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/prc_documento_3/views/terms_conditions.dart';
+
 export 'package:flutter_post_printer_example/displays/prc_documento_3/views/fechas_view.dart';
 
 export 'package:flutter_post_printer_example/displays/prc_documento_3/views/update_client_view.dart';

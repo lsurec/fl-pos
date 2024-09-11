@@ -46,6 +46,8 @@ class DocumentViewModel extends ChangeNotifier {
   //serie seleccionada
   SerieModel? serieSelect;
 
+  bool confirmarCotizacion = false;
+
   //listas globales
   final List<ClientModel> cuentasCorrentistas = []; //cunetas correntisat
   final List<SellerModel> cuentasCorrentistasRef = []; //cuenta correntisat ref
@@ -66,6 +68,7 @@ class DocumentViewModel extends ChangeNotifier {
     refDescripcionParam383.text = "";
     refContactoParam385.text = "";
     refDirecEntregaParam386.text = "";
+    cuentasCorrentistasRef.clear();
 
     notifyListeners();
   }
@@ -512,6 +515,17 @@ class DocumentViewModel extends ChangeNotifier {
     //si solo hay un vendedor agregarlo por defecto
     if (cuentasCorrentistasRef.length == 1) {
       vendedorSelect = cuentasCorrentistasRef.first;
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
+    }
+
+    if (cuentasCorrentistasRef.isNotEmpty) {
+      //Buscar y seleccionar el item con el numero menor en el campo orden
+      vendedorSelect = cuentasCorrentistasRef.reduce((prev, curr) {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
+
       if (!vmFactura.editDoc) {
         DocumentService.saveDocumentLocal(context);
       }
