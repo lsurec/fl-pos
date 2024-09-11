@@ -130,16 +130,47 @@ class StyleApp {
     color: AppNewTheme.primary,
   );
 
-    static const titleWhite = TextStyle(
+  static const titleWhite = TextStyle(
     color: Colors.white,
     fontSize: 20,
   );
 
-    static const titleBlue = TextStyle(
+  static const titleBlue = TextStyle(
     fontSize: 20,
-        color: AppNewTheme.primary,
+    color: AppNewTheme.primary,
     fontWeight: FontWeight.bold,
   );
 
+  static const obligatory = TextStyle(
+    fontSize: 20,
+    color: Colors.red,
+    fontWeight: FontWeight.bold,
+  );
 
+  static const task = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
+
+  static const verMas = TextStyle(
+    fontSize: 12,
+    color: Color.fromARGB(255, 111, 111, 111),
+    fontWeight: FontWeight.w500,
+  );
+
+  static const horaBold = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const diasFueraMes = TextStyle(
+    fontSize: 14,
+    color: Color.fromARGB(255, 111, 111, 111),
+  );
+
+  static const diaHoy = TextStyle(
+    fontSize: 14,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+  );
 }

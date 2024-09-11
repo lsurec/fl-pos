@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/models/models.d
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -45,10 +46,7 @@ class _CalendarioViewState extends State<CalendarioView> {
             appBar: AppBar(
               title: Text(
                 vmMenu.name,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: <Widget>[
                 Text(
@@ -56,10 +54,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                     BlockTranslate.calendario,
                     'hoy',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 IconButton(
                   onPressed: () => vm.loadData(context),
@@ -107,10 +102,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                       context,
                                       vm.monthSelectView,
                                     )} ${vm.yearSelect}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   const SizedBox(width: 5),
                                   const Icon(
@@ -154,10 +146,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                       context,
                                       vm.monthSelectView,
                                     )} ${vm.yearSelect}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   const SizedBox(width: 5),
                                   const Icon(
@@ -198,10 +187,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                 children: [
                                   Text(
                                     vm.generateNameWeeck(context),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   const SizedBox(width: 5),
                                   const Icon(
@@ -314,10 +300,7 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'vistas',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 trailing: IconButton(
                   onPressed: () => vm.abrirPickerCalendario(context),
@@ -336,10 +319,7 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'mes',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 leading: const Icon(Icons.calendar_month),
                 onTap: () => vm.mostrarVistaMes(context),
@@ -356,10 +336,7 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'semana',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 leading: const Icon(Icons.date_range),
                 onTap: () => vm.mostrarVistaSemana(context),
@@ -376,10 +353,7 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'dia',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 leading: const Icon(Icons.today),
                 onTap: () => vm.mostrarVistaDia(context, 0),
@@ -458,10 +432,7 @@ class _NombreDias extends StatelessWidget {
                 child: Text(
                   // Para obtener solo las tres primeras letras del día
                   dia.substring(0, 3),
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
               ),
             );
@@ -530,14 +501,8 @@ class _VistaSemana extends StatelessWidget {
             final style = dia.value == vm.today &&
                     vm.resolveMonth(dia.indexWeek) == vm.month &&
                     vm.resolveYear(dia.indexWeek) == vm.year
-                ? AppTheme.style(
-                    context,
-                    Styles.diaHoy,
-                  )
-                : AppTheme.style(
-                    context,
-                    Styles.diasOtroMes,
-                  );
+                ? StyleApp.diaHoy
+                : StyleApp.diasFueraMes;
             return TableCell(
               child: GestureDetector(
                 onTap: () => vm.diaCorrectoSemana(
@@ -576,10 +541,7 @@ class _VistaSemana extends StatelessWidget {
                             if (tareasDia.isNotEmpty)
                               Text(
                                 tareasDia[indexTarea].tarea.toString(),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.taskStyle,
-                                ),
+                                style: StyleApp.task,
                               ),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 5),
@@ -651,19 +613,10 @@ class _VistaMes extends StatelessWidget {
                     )
                   : null;
               final hoyColor = vm.nuevaIsToday(dia.value, index)
-                  ? AppTheme.style(
-                      context,
-                      Styles.diaHoy,
-                    )
+                  ? StyleApp.diaHoy
                   : vm.diasOtroMes(dia, index, diasMesSeleccionado)
-                      ? AppTheme.style(
-                          context,
-                          Styles.diasOtroMes,
-                        )
-                      : AppTheme.style(
-                          context,
-                          Styles.subTitle,
-                        );
+                      ? StyleApp.diasFueraMes
+                      : StyleApp.subTitle;
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
                   context,
@@ -737,10 +690,7 @@ class _VistaMes extends StatelessWidget {
                                           tareasDia[indexTarea]
                                               .tarea
                                               .toString(),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.taskStyle,
-                                          ),
+                                          style: StyleApp.task,
                                         ),
                                       ],
                                     ),
@@ -773,10 +723,7 @@ class _VistaMes extends StatelessWidget {
                                               : vm.yearSelect,
                                         ).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.verMas,
-                                    ),
+                                    style: StyleApp.verMas,
                                   ),
                                 )
                             ],
@@ -822,10 +769,7 @@ class _VistaMes extends StatelessWidget {
                                           tareasDia[indexTarea]
                                               .tarea
                                               .toString(),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.taskStyle,
-                                          ),
+                                          style: StyleApp.task,
                                         ),
                                       ],
                                     ),
@@ -846,10 +790,7 @@ class _VistaMes extends StatelessWidget {
                                   child: Text(
                                     "(+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.verMas,
-                                    ),
+                                    style: StyleApp.verMas,
                                   ),
                                 ),
                             ],
@@ -909,10 +850,7 @@ class _VistaMes extends StatelessWidget {
                                           tareasDia[indexTarea]
                                               .tarea
                                               .toString(),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.taskStyle,
-                                          ),
+                                          style: StyleApp.task,
                                         ),
                                       ],
                                     ),
@@ -945,10 +883,7 @@ class _VistaMes extends StatelessWidget {
                                               : vm.yearSelect,
                                         ).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.verMas,
-                                    ),
+                                    style: StyleApp.verMas,
                                   ),
                                 ),
                             ],
@@ -992,10 +927,7 @@ class _VistaDiaState extends State<_VistaDia> {
                 BlockTranslate.calendario,
                 'horario',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
+              style: StyleApp.normalBold,
             ),
           ),
           TableCell(
@@ -1009,10 +941,7 @@ class _VistaDiaState extends State<_VistaDia> {
                   BlockTranslate.calendario,
                   'tareas',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
             ),
           ),
@@ -1029,10 +958,7 @@ class _VistaDiaState extends State<_VistaDia> {
                   BlockTranslate.calendario,
                   'nueva',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.taskStyle,
-                ),
+                style: StyleApp.task,
               ),
             ),
         ],
@@ -1049,10 +975,7 @@ class _VistaDiaState extends State<_VistaDia> {
               child: Center(
                 child: Text(
                   horasDia[indexHora].hora12,
-                  style: AppTheme.style(
-                    context,
-                    Styles.hora,
-                  ),
+                  style: StyleApp.horaBold,
                 ),
               ),
             ),
@@ -1109,10 +1032,7 @@ class _VistaDiaState extends State<_VistaDia> {
                           child: ListTile(
                             title: Text(
                               tarea.texto.substring(7),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
