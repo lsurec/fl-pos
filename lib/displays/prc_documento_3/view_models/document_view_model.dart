@@ -520,6 +520,17 @@ class DocumentViewModel extends ChangeNotifier {
       }
     }
 
+    if (cuentasCorrentistasRef.isNotEmpty) {
+      //Buscar y seleccionar el item con el numero menor en el campo orden
+      vendedorSelect = cuentasCorrentistasRef.reduce((prev, curr) {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
+
+      if (!vmFactura.editDoc) {
+        DocumentService.saveDocumentLocal(context);
+      }
+    }
+
     notifyListeners();
   }
 
