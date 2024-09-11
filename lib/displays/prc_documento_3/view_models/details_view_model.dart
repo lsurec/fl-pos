@@ -341,10 +341,13 @@ class DetailsViewModel extends ChangeNotifier {
     }
 
     //si solo hay una bodega seleccionarla por defecto
-    if (productVM.bodegas.length == 1) {
-      //evaluar los precios
-      productVM.selectedBodega = productVM.bodegas.first;
+    if (productVM.bodegas.isNotEmpty) {
+      //Buscar y seleccionar el item con el numero menor en el campo orden
+      productVM.selectedBodega = productVM.bodegas.reduce((prev, curr) {
+        return (curr.orden < prev.orden) ? curr : prev;
+      });
 
+      //evaluar los precios
       int bodega = productVM.bodegas.first.bodega;
 
       ApiResModel resPrecio = await productService.getPrecios(
