@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
@@ -23,12 +24,10 @@ class TermsConditionsView extends StatelessWidget {
         children: [
           Scaffold(
             appBar: AppBar(
-              title: Text(
+              //Traducir
+              title: const Text(
                 "TERMINOS Y CONDICIONES",
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
             ),
             body: Padding(
@@ -49,10 +48,7 @@ class TermsConditionsView extends StatelessWidget {
                           BlockTranslate.general,
                           'registro',
                         )} (${facturaVM.terminosyCondiciones.length})",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                     ],
                   ),
@@ -92,10 +88,7 @@ class TermsConditionsView extends StatelessWidget {
                                 // Para asegurar que el texto ocupe el espacio disponible
                                 child: Text(
                                   "${index + 1}.  $mensaje",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               ),
                               Row(

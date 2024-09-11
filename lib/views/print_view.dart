@@ -14,6 +14,7 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/print_view_model.dart';
@@ -287,10 +288,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                   BlockTranslate.impresora,
                                   "documento",
                                 ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.disabledStyle,
-                          ),
+                          style: StyleApp.whiteBold,
                         ),
                       ),
                     ),
@@ -302,10 +300,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                       BlockTranslate.impresora,
                       "impresion",
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                    style: StyleApp.title,
                   ),
                   actions: [
                     IconButton(
@@ -335,29 +330,20 @@ class _SettingsFromState extends State<SettingsFrom> {
                           BlockTranslate.impresora,
                           "conectado",
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const SizedBox(height: 10),
                       ListTile(
                         title: Text(
                           printerDefault.name,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                         subtitle: Text(
                           "${printerDefault.address!} | ${AppLocalizations.of(context)!.translate(
                             BlockTranslate.impresora,
                             "papelT",
                           )} $paperDefault",
-                          style: AppTheme.style(
-                            context,
-                            Styles.subTitle,
-                          ),
+                          style: StyleApp.subTitle,
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -401,10 +387,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                           BlockTranslate.impresora,
                           "disponibles",
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const SizedBox(height: 10),
                       Expanded(
@@ -415,17 +398,11 @@ class _SettingsFromState extends State<SettingsFrom> {
                             return ListTile(
                               title: Text(
                                 devices[index].name,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               subtitle: Text(
                                 devices[index].address!,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.subTitle,
-                                ),
+                                style: StyleApp.subTitle,
                               ),
                               onTap: () {
                                 setState(() {
@@ -454,10 +431,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           BlockTranslate.botones,
                                           "agregar",
                                         ),
-                                        style: AppTheme.style(
-                                          context,
-                                          Styles.whiteBoldStyle,
-                                        ),
+                                        style: StyleApp.whiteBold,
                                       ),
                                     )
                                   : null,
@@ -520,10 +494,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           BlockTranslate.impresora,
           "selecPapel",
         ),
-        style: AppTheme.style(
-          context,
-          Styles.subTitle,
-        ),
+        style: StyleApp.subTitle,
       ),
       content: DropdownButtonFormField<int>(
         decoration: InputDecoration(
@@ -557,10 +528,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               BlockTranslate.botones,
               "cancelar",
             ),
-            style: AppTheme.style(
-              context,
-              Styles.whiteBoldStyle,
-            ),
+            style: StyleApp.whiteNormal,
           ),
         ),
         ElevatedButton(
@@ -581,10 +549,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
               BlockTranslate.botones,
               "conectar",
             ),
-            style: AppTheme.style(
-              context,
-              Styles.whiteBoldStyle,
-            ),
+            style: StyleApp.whiteBold,
           ),
         ),
       ],

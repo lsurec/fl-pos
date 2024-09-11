@@ -1,6 +1,7 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -31,10 +32,7 @@ class UserWidget extends StatelessWidget {
           child: Center(
             child: Text(
               vmLogin.user.isNotEmpty ? vmLogin.user[0].toUpperCase() : "",
-              style: AppTheme.style(
-                context,
-                Styles.user,
-              ),
+              style: StyleApp.user,
             ),
           ),
         ),
@@ -70,12 +68,9 @@ void _showUserInfoModal(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text(
+              const Text(
                 "DMOSOFT S.A",
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               const SizedBox(height: 10),
               Card(
@@ -94,10 +89,7 @@ void _showUserInfoModal(
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           vmLogin.user.toUpperCase(),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                         leading: IconButton(
                           onPressed: () {},
@@ -112,10 +104,7 @@ void _showUserInfoModal(
                               child: Center(
                                 child: Text(
                                   vmLogin.user[0].toUpperCase(),
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.user,
-                                  ),
+                                  style: StyleApp.user,
                                 ),
                               ),
                             ),
@@ -129,17 +118,11 @@ void _showUserInfoModal(
                             BlockTranslate.localConfig,
                             'empresa',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         subtitle: Text(
                           vmLocal.selectedEmpresa!.empresaNombre,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ),
                       ListTile(
@@ -148,17 +131,11 @@ void _showUserInfoModal(
                             BlockTranslate.localConfig,
                             'estaciones',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         subtitle: Text(
                           vmLocal.selectedEstacion!.nombre,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ),
                       if (vmMenu.tipoCambio != 0)
@@ -168,17 +145,11 @@ void _showUserInfoModal(
                               BlockTranslate.localConfig,
                               'cambioTipo',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           subtitle: Text(
                             currencyFormat.format(vmMenu.tipoCambio),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ),
                     ],

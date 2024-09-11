@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -33,10 +34,7 @@ class SelectProductView extends StatelessWidget {
                       BlockTranslate.general,
                       'registro',
                     )} (${vmDetalle.products.length})",
-                    style: AppTheme.style(
-                      context,
-                      Styles.bold,
-                    ),
+                    style: StyleApp.blueText,
                   ),
                 ],
               ),
@@ -66,9 +64,9 @@ class SelectProductView extends StatelessWidget {
                           onPressed: () => vmProducto.filtrarResultados(
                             context,
                           ),
-                          child: Text(
+                          child: const Text(
                             "Ver más",
-                            style: AppTheme.style(context, Styles.normal),
+                            style: StyleApp.normal,
                           ),
                         );
                       }
@@ -112,17 +110,11 @@ class ProductWidget extends StatelessWidget {
       ),
       title: Text(
         producto.desProducto,
-        style: AppTheme.style(
-          context,
-          Styles.normal,
-        ),
+        style: StyleApp.normal,
       ),
       subtitle: Text(
         'SKU: ${producto.productoId} ',
-        style: AppTheme.style(
-          context,
-          Styles.normal,
-        ),
+        style: StyleApp.normal,
       ),
       onTap: () => vmProducto.navigateProduct(
         context,

@@ -39,6 +39,10 @@ class StyleApp {
     fontWeight: FontWeight.bold,
   );
 
+  static const subTitle = TextStyle(
+    fontSize: 14,
+  );
+
   static TextStyle titlegrey = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -111,4 +115,31 @@ class StyleApp {
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
+
+  static const normal20Style = TextStyle(
+    fontSize: 20,
+  );
+
+  static const bold30Style = TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const action = TextStyle(
+    fontSize: 15,
+    color: AppNewTheme.primary,
+  );
+
+    static const titleWhite = TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+  );
+
+    static const titleBlue = TextStyle(
+    fontSize: 20,
+        color: AppNewTheme.primary,
+    fontWeight: FontWeight.bold,
+  );
+
+
 }

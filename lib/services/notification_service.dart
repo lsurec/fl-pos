@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -23,10 +24,7 @@ class NotificationService {
     final snackBar = SnackBar(
       content: Text(
         message,
-        style: AppTheme.style(
-          messengerKey.currentContext!,
-          Styles.whiteStyle,
-        ),
+        style: StyleApp.whiteNormal,
       ),
       backgroundColor: AppTheme.color(
         messengerKey.currentContext!,
@@ -245,10 +243,7 @@ class NotificationService {
                   BlockTranslate.notificacion,
                   "productosNoDisponibles",
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
+                style: StyleApp.normal,
               ),
               const Divider(),
             ],
@@ -269,10 +264,7 @@ class NotificationService {
             children: [
               Text(
                 "(${validacion.sku}) ${validacion.productoDesc}",
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
               const Divider(),
               const SizedBox(
@@ -289,17 +281,11 @@ class NotificationService {
                           BlockTranslate.general,
                           'serie',
                         )}:",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         validacion.serie,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       )
                     ],
                   ),
@@ -311,17 +297,11 @@ class NotificationService {
                           BlockTranslate.factura,
                           'tipoDoc',
                         )}:",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         validacion.tipoDoc,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       )
                     ],
                   )
@@ -342,10 +322,7 @@ class NotificationService {
                               const SizedBox(height: 5),
                               Text(
                                 mensaje,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               const SizedBox(height: 5),
                             ],
@@ -455,19 +432,13 @@ class NotificationService {
             context: context,
             builder: (context) => AlertDialog(
                   title: index != -1
-                      ? Text(
+                      ? const Text(
                           "Modificar termino",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         )
-                      : Text(
+                      : const Text(
                           "Agregar Término",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                   content: TextField(
                     maxLines: null,

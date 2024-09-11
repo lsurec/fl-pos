@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -59,7 +60,7 @@ class BuscarTareasView extends StatelessWidget {
                                   BlockTranslate.general,
                                   'registro',
                                 )} (${vmTarea.tareas.length})",
-                                style: AppTheme.style(context, Styles.bold),
+                                style: StyleApp.normalBold,
                               ),
                             ],
                           ),
@@ -98,9 +99,9 @@ class BuscarTareasView extends StatelessWidget {
                                 vmTarea.searchController.text,
                                 1,
                               ),
-                              child: Text(
+                              child: const Text(
                                 "Ver más",
-                                style: AppTheme.style(context, Styles.normal),
+                                style: StyleApp.normal,
                               ),
                             );
                           }

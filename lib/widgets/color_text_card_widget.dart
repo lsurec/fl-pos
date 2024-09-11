@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class ColorTextCardWidget extends StatelessWidget {
   const ColorTextCardWidget({
@@ -20,11 +19,7 @@ class ColorTextCardWidget extends StatelessWidget {
       color: color,
       child: Text(
         text,
-        style: AppTheme.style(
-          context,
-          Styles.titleWhite,
-          
-        ),
+        style: StyleApp.titleWhite,
       ),
     );
   }

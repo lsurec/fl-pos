@@ -2,6 +2,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/models/mo
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -63,10 +64,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             BlockTranslate.localConfig,
                             'configuracion',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -78,20 +76,14 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               BlockTranslate.localConfig,
                               'empresa',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           Text(
                             '${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.empresas.length})',
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -131,20 +123,14 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                               BlockTranslate.localConfig,
                               'estaciones',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           Text(
                             '${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.estaciones.length})',
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -195,10 +181,7 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                                   BlockTranslate.botones,
                                   'continuar',
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.whiteBoldStyle,
-                                ),
+                                style: StyleApp.whiteBold,
                               ),
                             ),
                           ),

@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -41,10 +42,7 @@ class UsuariosView extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 titulo,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
             ),
             body: ListView(
@@ -93,10 +91,7 @@ class UsuariosView extends StatelessWidget {
                               BlockTranslate.general,
                               'registro',
                             )} (${vm.usuarios.length})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                         ],
                       ),
@@ -163,17 +158,11 @@ class _UsuariosEncontados extends StatelessWidget {
                     const SizedBox(height: 5),
                     Text(
                       usuario.name,
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                     RichText(
                       text: TextSpan(
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                         children: [
                           TextSpan(
                             text: AppLocalizations.of(context)!.translate(
@@ -184,10 +173,7 @@ class _UsuariosEncontados extends StatelessWidget {
                           const TextSpan(text: " "),
                           TextSpan(
                             text: usuario.email,
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                         ],
                       ),

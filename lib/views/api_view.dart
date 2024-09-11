@@ -1,5 +1,6 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -40,10 +41,7 @@ class ApiView extends StatelessWidget {
                               BlockTranslate.url,
                               "url",
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold30Style,
-                            ),
+                            style: StyleApp.bold30Style,
                           ),
                         if (Preferences.urlApi.isEmpty)
                           const SizedBox(height: 10),
@@ -53,10 +51,7 @@ class ApiView extends StatelessWidget {
                               BlockTranslate.url,
                               "ingresar",
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal20Style,
-                            ),
+                            style: StyleApp.normal20Style,
                           ),
                         if (Preferences.urlApi.isNotEmpty)
                           const SizedBox(height: 20),
@@ -69,10 +64,7 @@ class ApiView extends StatelessWidget {
                                   BlockTranslate.url,
                                   "actual",
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold30Style,
-                                ),
+                                style: StyleApp.bold30Style,
                               ),
                               IconButton(
                                 tooltip:
@@ -92,10 +84,7 @@ class ApiView extends StatelessWidget {
                         if (Preferences.urlApi.isNotEmpty)
                           Text(
                             Preferences.urlApi,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal20Style,
-                            ),
+                            style: StyleApp.normal20Style,
                           ),
                       ],
                     ),
@@ -160,10 +149,7 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cancelar",
                                           ),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.whiteBoldStyle,
-                                          ),
+                                          style: StyleApp.whiteBold,
                                         ),
                                       ),
                                     ),
@@ -186,10 +172,7 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cambiar",
                                           ),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.whiteBoldStyle,
-                                          ),
+                                          style: StyleApp.whiteNormal,
                                         ),
                                       ),
                                     ),
@@ -212,10 +195,7 @@ class ApiView extends StatelessWidget {
                                       BlockTranslate.botones,
                                       "aceptar",
                                     ),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.whiteBoldStyle,
-                                    ),
+                                    style: StyleApp.whiteBold,
                                   ),
                                 ),
                               ),
@@ -233,10 +213,7 @@ class ApiView extends StatelessWidget {
                           BlockTranslate.url,
                           "version",
                         )}: ${vmSplash.versionLocal}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.versionStyle,
-                        ),
+                        style: StyleApp.greyText,
                       ),
                       const SizedBox(width: 10)
                     ],

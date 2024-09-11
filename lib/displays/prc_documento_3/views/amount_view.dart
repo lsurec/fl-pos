@@ -158,7 +158,7 @@ class _Body extends StatelessWidget {
                           BlockTranslate.factura,
                           'banco',
                         ),
-                        style: StyleApp.normalBold ,
+                        style: StyleApp.normalBold,
                       ),
                     if (payment.banco) const SizedBox(height: 10),
                     if (payment.banco)
@@ -182,10 +182,7 @@ class _Body extends StatelessWidget {
                               ),
                               title: Text(
                                 bank.bank.nombre,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               value: index,
                               groupValue: vmPayment.banks
@@ -208,10 +205,7 @@ class _Body extends StatelessWidget {
                           BlockTranslate.factura,
                           'cuentas',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                     if (vmPayment.accounts.isNotEmpty)
                       const SizedBox(height: 10),
@@ -237,10 +231,7 @@ class _Body extends StatelessWidget {
                               ),
                               title: Text(
                                 account.account.descripcion,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               value: index,
                               groupValue: vmPayment.accounts
@@ -294,10 +285,7 @@ class _ButtonConfirm extends StatelessWidget {
                 BlockTranslate.factura,
                 'agregarPago',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.whiteStyle,
-              ),
+              style: StyleApp.whiteNormal,
             ),
           ),
         ),

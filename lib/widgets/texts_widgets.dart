@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class TextsWidget extends StatelessWidget {
   const TextsWidget({
@@ -16,27 +15,15 @@ class TextsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: AppTheme.style(
-          context,
-          Styles.normal,
-          
-        ),
+        style: StyleApp.normal,
         children: [
           TextSpan(
             text: title,
-            style: AppTheme.style(
-              context,
-              Styles.bold,
-              
-            ),
+            style: StyleApp.normalBold,
           ),
           TextSpan(
             text: text,
-            style: AppTheme.style(
-              context,
-              Styles.normal,
-              
-            ),
+            style: StyleApp.normal,
           )
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -35,10 +36,7 @@ class LangView extends StatelessWidget {
                           BlockTranslate.preferencias,
                           "idioma",
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                     ),
                     ListView.builder(
@@ -66,14 +64,8 @@ class LangView extends StatelessWidget {
                                 title: Text(
                                   vm.getNameLang(lang)!,
                                   style: index == Preferences.idLanguage
-                                      ? AppTheme.style(
-                                          context,
-                                          Styles.whiteBoldStyle,
-                                        )
-                                      : AppTheme.style(
-                                          context,
-                                          Styles.bold,
-                                        ),
+                                      ? StyleApp.whiteBold
+                                      : StyleApp.normalBold,
                                   textAlign: TextAlign.center,
                                 ),
                                 onTap: () => vm.cambiarIdioma(
@@ -100,10 +92,7 @@ class LangView extends StatelessWidget {
                             BlockTranslate.botones,
                             "continuar",
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.whiteBoldStyle,
-                          ),
+                          style: StyleApp.whiteBold,
                         ),
                       ),
                   ],

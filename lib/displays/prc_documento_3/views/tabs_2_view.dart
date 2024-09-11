@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -71,10 +72,7 @@ class _Tabs2ViewState extends State<Tabs2View>
               appBar: AppBar(
                 title: Text(
                   vmMenu.name,
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 actions: [
                   if (!vm.editDoc)
@@ -141,17 +139,11 @@ class _Tabs2ViewState extends State<Tabs2View>
                                 BlockTranslate.factura,
                                 'tipoDoc',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             subtitle: Text(
                               "${vmMenu.documentoName} (${vmMenu.documento})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ),
                         if (vmDoc.serieSelect != null)
@@ -161,17 +153,11 @@ class _Tabs2ViewState extends State<Tabs2View>
                                 BlockTranslate.general,
                                 'serie',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             subtitle: Text(
                               "${vmDoc.serieSelect!.descripcion} (${vmDoc.serieSelect!.serieDocumento})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ),
                       ],

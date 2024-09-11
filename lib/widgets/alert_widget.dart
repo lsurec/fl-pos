@@ -1,6 +1,7 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
@@ -39,10 +40,7 @@ class AlertWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'cancelar',
                 ),
-            style: AppTheme.style(
-              context,
-              Styles.action,
-            ),
+            style: StyleApp.action,
           ),
           onPressed: () => onCancel(),
         ),
@@ -53,10 +51,7 @@ class AlertWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'aceptar',
                 ),
-            style: AppTheme.style(
-              context,
-              Styles.action,
-            ),
+            style: StyleApp.action,
           ),
           onPressed: () => onOk(),
         ),

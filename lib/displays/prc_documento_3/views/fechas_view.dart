@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
@@ -38,10 +39,7 @@ class FechasView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'entrega',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,10 +58,7 @@ class FechasView extends StatelessWidget {
                                 BlockTranslate.fecha,
                                 'fecha',
                               )} ${Utilities.formatearFecha(vm.fechaEntrega)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ),
                           TextButton.icon(
@@ -80,10 +75,7 @@ class FechasView extends StatelessWidget {
                                 BlockTranslate.fecha,
                                 'hora',
                               )} ${Utilities.formatearHora(vm.fechaEntrega)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           )
                         ],
@@ -99,10 +91,7 @@ class FechasView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'recoger',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,10 +110,7 @@ class FechasView extends StatelessWidget {
                                 BlockTranslate.fecha,
                                 'fecha',
                               )} ${Utilities.formatearFecha(vm.fechaRecoger)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ),
                           TextButton.icon(
@@ -141,10 +127,7 @@ class FechasView extends StatelessWidget {
                                 BlockTranslate.fecha,
                                 'hora',
                               )} ${Utilities.formatearHora(vm.fechaRecoger)}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           )
                         ],

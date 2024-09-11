@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
@@ -36,10 +37,7 @@ class AlertInfoWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'aceptar',
                 ),
-            style: AppTheme.style(
-              context,
-              Styles.action,
-            ),
+            style: StyleApp.action,
           ),
           onPressed: () => onOk(),
         ),

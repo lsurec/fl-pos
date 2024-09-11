@@ -41,10 +41,7 @@ class ThemeView extends StatelessWidget {
                             BlockTranslate.home,
                             "tema",
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.blueTitle,
-                          ),
+                          style: StyleApp.titleBlue,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -74,14 +71,8 @@ class ThemeView extends StatelessWidget {
                                 title: Text(
                                   theme.descripcion,
                                   style: index == AppNewTheme.idTema
-                                      ? AppTheme.style(
-                                          context,
-                                          Styles.whiteBoldStyle,
-                                        )
-                                      : AppTheme.style(
-                                          context,
-                                          Styles.bold,
-                                        ),
+                                      ? StyleApp.whiteBold
+                                      : StyleApp.normalBold,
                                   textAlign: TextAlign.center,
                                 ),
                                 onTap: () => vm.nuevoTema(context, theme),
@@ -103,10 +94,7 @@ class ThemeView extends StatelessWidget {
                             BlockTranslate.botones,
                             "continuar",
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.whiteBoldStyle,
-                          ),
+                          style: StyleApp.whiteBold,
                         ),
                       ),
                   ],

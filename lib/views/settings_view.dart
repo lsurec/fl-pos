@@ -40,10 +40,7 @@ class SettingsView extends StatelessWidget {
             BlockTranslate.home,
             'configuracion',
           ),
-          style: AppTheme.style(
-            context,
-            Styles.title,
-          ),
+          style: StyleApp.title,
         ),
       ),
       body: SingleChildScrollView(
@@ -57,10 +54,7 @@ class SettingsView extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     title: Text(
                       vmLogin.user.toUpperCase(),
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                     leading: IconButton(
                       onPressed: () {},
@@ -75,10 +69,7 @@ class SettingsView extends StatelessWidget {
                           child: Center(
                             child: Text(
                               vmLogin.user[0].toUpperCase(),
-                              style: AppTheme.style(
-                                context,
-                                Styles.user,
-                              ),
+                              style: StyleApp.user,
                             ),
                           ),
                         ),
@@ -91,17 +82,11 @@ class SettingsView extends StatelessWidget {
                         BlockTranslate.localConfig,
                         'empresa',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                     ),
                     subtitle: Text(
                       vmLocal.selectedEmpresa!.empresaNombre,
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                   ),
                   ListTile(
@@ -110,17 +95,11 @@ class SettingsView extends StatelessWidget {
                         BlockTranslate.localConfig,
                         'estaciones',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                     ),
                     subtitle: Text(
                       vmLocal.selectedEstacion!.nombre,
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                   ),
                   if (vmMenu.tipoCambio != 0)
@@ -130,17 +109,11 @@ class SettingsView extends StatelessWidget {
                           BlockTranslate.localConfig,
                           'cambioTipo',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       subtitle: Text(
                         currencyFormat.format(vmMenu.tipoCambio),
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ),
                 ],
@@ -174,10 +147,7 @@ class SettingsView extends StatelessWidget {
                     BlockTranslate.home,
                     'idioma',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 //Nombre del idioma seleccionado en el idioma seleccionado
                 subtitle: Text(

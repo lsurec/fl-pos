@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -26,10 +27,7 @@ class IdReferenciaView extends StatelessWidget {
                 BlockTranslate.tareas,
                 'buscarIdRef',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: ListView(
@@ -77,10 +75,7 @@ class IdReferenciaView extends StatelessWidget {
                             BlockTranslate.general,
                             'registro',
                           )} (${vm.idReferencias.length})",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                       ],
                     ),
@@ -149,10 +144,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     referencia.descripcion,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                   Row(
                     children: [
@@ -161,17 +153,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRef',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         referencia.referenciaId,
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
@@ -183,17 +169,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.factura,
                           'referencia',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         "${referencia.referencia}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
@@ -205,17 +185,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.tareas,
                           'estadoTarea',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       Text(
                         referencia.fDesEstadoObjeto,
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                     ],
                   ),

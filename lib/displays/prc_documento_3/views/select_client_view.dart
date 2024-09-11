@@ -3,6 +3,7 @@ import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/document_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
@@ -31,10 +32,7 @@ class SelectClientView extends StatelessWidget {
                     BlockTranslate.general,
                     'registro',
                   )} (${clients.length})",
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
               ],
             ),
@@ -57,10 +55,7 @@ class SelectClientView extends StatelessWidget {
                     ),
                     title: Text(
                       client.facturaNit,
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,10 +63,7 @@ class SelectClientView extends StatelessWidget {
                         const SizedBox(height: 3),
                         Text(
                           client.facturaNombre,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                         const SizedBox(height: 3),
                         Text("(${client.desCuentaCta})")

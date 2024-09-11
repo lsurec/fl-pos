@@ -1,4 +1,5 @@
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -149,10 +150,7 @@ class LoginView extends StatelessWidget {
                                 BlockTranslate.login,
                                 "recordar",
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.menuActive,
-                              ),
+                              style: StyleApp.greyText,
                               textAlign: TextAlign.right,
                             ),
                             value: vm.isSliderDisabledSession,
@@ -173,10 +171,7 @@ class LoginView extends StatelessWidget {
                                     BlockTranslate.login,
                                     "iniciar",
                                   ),
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.whiteBoldStyle,
-                                  ),
+                                  style: StyleApp.whiteBold,
                                 ),
                               ),
                             ),
@@ -193,10 +188,7 @@ class LoginView extends StatelessWidget {
                           BlockTranslate.url,
                           "version",
                         )}: ${vmSplash.versionLocal}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.versionStyle,
-                        ),
+                        style: StyleApp.greyText,
                       ),
                       const SizedBox(width: 10)
                     ],
