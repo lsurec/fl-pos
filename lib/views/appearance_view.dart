@@ -7,11 +7,11 @@ class AppearenceView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Apariencia",
           ),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
           child: Column(
             children: [
               SizedBox(height: 50),
@@ -26,7 +26,6 @@ class AppearenceView extends StatelessWidget {
               ListTile(
                 title: Text("Color"),
                 subtitle: Text("Definido por el sistema."),
-
               ),
               ListTile(
                 title: Text("Tamaño de fuente"),
