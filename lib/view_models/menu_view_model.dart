@@ -73,7 +73,8 @@ class MenuViewModel extends ChangeNotifier {
 
     //Restaurante
     //TODO:Parametrizar nombre del diplay
-    if (nameDisplay.toLowerCase() == "restaurante") {
+    print(route);
+    if (route.toLowerCase() == "prcrestaurante") {
       vmHome.isLoading = true;
 
       //cargar series
