@@ -16,6 +16,11 @@ class AppNewTheme {
   static const Color primary = Color(0xff134895);
   static const Color primaryDark = Color.fromARGB(255, 159, 197, 255);
 
+  static const Color greyBorder = Color.fromRGBO(0, 0, 0, 0.12);
+  static const Color greyBorderDark = Color.fromARGB(255, 112, 111, 111);
+
+  static const Color grey = Colors.grey;
+
   // Función para convertir un color hexadecimal en formato RGB
   static List<int> hexToRgb(String hexColor) {
     // Elimina el carácter '#'
@@ -50,5 +55,4 @@ class AppNewTheme {
 
     return false;
   }
-
 }

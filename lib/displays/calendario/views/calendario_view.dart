@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -279,10 +277,9 @@ class _DrawerCalendar extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.black,
-      ),
+      backgroundColor: AppNewTheme.isDark()
+          ? AppNewTheme.darkBackroundColor
+          : AppNewTheme.backroundColor,
       child: Column(
         children: [
           const SizedBox(height: 30.0),
@@ -307,10 +304,9 @@ class _DrawerCalendar extends StatelessWidget {
                 ),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color: AppNewTheme.isDark()
+                    ? AppNewTheme.dividerDark
+                    : AppNewTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -324,10 +320,9 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaMes(context),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color: AppNewTheme.isDark()
+                    ? AppNewTheme.dividerDark
+                    : AppNewTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -341,10 +336,9 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaSemana(context),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color: AppNewTheme.isDark()
+                    ? AppNewTheme.dividerDark
+                    : AppNewTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -358,10 +352,9 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaDia(context, 0),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color: AppNewTheme.isDark()
+                    ? AppNewTheme.dividerDark
+                    : AppNewTheme.divider,
               ),
             ],
           ),
@@ -384,40 +377,34 @@ class _NombreDias extends StatelessWidget {
     return Table(
       border: TableBorder(
         top: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde arriba
         left: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -454,34 +441,29 @@ class _VistaSemana extends StatelessWidget {
       border: TableBorder(
         top: BorderSide.none, // Borde arriba
         left: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -491,10 +473,7 @@ class _VistaSemana extends StatelessWidget {
             final color = dia.value == vm.today &&
                     vm.resolveMonth(dia.indexWeek) == vm.month &&
                     vm.resolveYear(dia.indexWeek) == vm.year
-                ? AppTheme.color(
-                    context,
-                    Styles.primary,
-                  )
+                ? AppNewTheme.primary
                 : null;
 
             final style = dia.value == vm.today &&
@@ -577,23 +556,20 @@ class _VistaMes extends StatelessWidget {
     return Table(
       border: TableBorder(
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ),
         // Mantenemos los bordes interiores y eliminamos el superior
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ),
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ),
         top: BorderSide.none, // Eliminamos el borde superior
       ),
@@ -606,10 +582,7 @@ class _VistaMes extends StatelessWidget {
               final index = rowIndex * 7 + columnIndex;
               DiaModel dia = diasMesSeleccionado[index];
               final backgroundColor = vm.nuevaIsToday(dia.value, index)
-                  ? AppTheme.color(
-                      context,
-                      Styles.primary,
-                    )
+                  ? AppNewTheme.primary
                   : null;
               final hoyColor = vm.nuevaIsToday(dia.value, index)
                   ? StyleApp.diaHoy
@@ -1018,10 +991,9 @@ class _VistaDiaState extends State<_VistaDia> {
                         margin: const EdgeInsets.only(bottom: 5),
                         elevation: 0.3,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.greyBorderDark
+                            : AppNewTheme.greyBorder,
                         raidus: 10,
                         child: GestureDetector(
                           onTap: () => vm.navegarDetalleTarea(
@@ -1083,40 +1055,34 @@ class _VistaDiaState extends State<_VistaDia> {
     return Table(
       border: TableBorder(
         top: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde arriba
         left: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Bo, // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.greyBorderDark
+              : AppNewTheme.greyBorder,
         ), // Borde vertical dentro de la tabla
       ),
       columnWidths: const <int, TableColumnWidth>{
@@ -1149,10 +1115,7 @@ class _CirculoDia extends StatelessWidget {
       height: 25.0, // Altura del círculo
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.grey,
-          ),
+          color: AppNewTheme.grey,
           width: 0.5,
         ),
         shape: BoxShape.circle, // Forma del contenedor
@@ -1190,10 +1153,7 @@ class EstadoColor extends StatelessWidget {
           1,
         ),
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.grey,
-          ),
+          color: AppNewTheme.grey,
           width: 1.0,
         ),
       ),
