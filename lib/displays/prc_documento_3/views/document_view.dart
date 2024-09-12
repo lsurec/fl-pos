@@ -4,11 +4,10 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/app_new_theme.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/styles.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -97,10 +96,9 @@ class DocumentView extends StatelessWidget {
                 if (vm.series.isNotEmpty && !vmFactura.editDoc)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
-                    dropdownColor: AppTheme.color(
-                      context,
-                      Styles.background,
-                    ),
+                    dropdownColor: AppNewTheme.isDark()
+                        ? AppNewTheme.darkBackroundColor
+                        : AppNewTheme.backroundColor,
                     hint: Text(
                       AppLocalizations.of(context)!.translate(
                         BlockTranslate.factura,
@@ -160,10 +158,7 @@ class DocumentView extends StatelessWidget {
                       decoration: InputDecoration(
                         hintText: vm.getTextCuenta(context),
                         suffixIcon: IconButton(
-                          color: AppTheme.color(
-                            context,
-                            Styles.darkPrimary,
-                          ),
+                          color: AppNewTheme.primary,
                           icon: const Icon(Icons.search),
                           onPressed: () => vm.performSearchClient(context),
                         ),
@@ -181,9 +176,8 @@ class DocumentView extends StatelessWidget {
                   ),
                 const SizedBox(height: 10),
                 SwitchListTile(
-                  activeColor: AppTheme.color(
-                    context,
-                    Styles.darkPrimary,
+                  activeColor: AppNewTheme.hexToColor(
+                    Preferences.valueColor,
                   ),
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
@@ -214,12 +208,9 @@ class DocumentView extends StatelessWidget {
                                 AppRoutes.updateClient,
                                 arguments: vm.clienteSelect,
                               ),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.edit_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.grey,
-                                ),
+                                color: AppNewTheme.grey,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.cuenta,
@@ -278,10 +269,9 @@ class DocumentView extends StatelessWidget {
                       ),
                       DropdownButton<SellerModel>(
                         isExpanded: true,
-                        dropdownColor: AppTheme.color(
-                          context,
-                          Styles.background,
-                        ),
+                        dropdownColor: AppNewTheme.isDark()
+                            ? AppNewTheme.darkBackroundColor
+                            : AppNewTheme.backroundColor,
                         hint: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
@@ -328,10 +318,9 @@ class DocumentView extends StatelessWidget {
                       ),
                       DropdownButton<TipoReferenciaModel>(
                         isExpanded: true,
-                        dropdownColor: AppTheme.color(
-                          context,
-                          Styles.background,
-                        ),
+                        dropdownColor: AppNewTheme.isDark()
+                            ? AppNewTheme.darkBackroundColor
+                            : AppNewTheme.backroundColor,
                         hint: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
@@ -562,20 +551,14 @@ class _Observacion extends StatelessWidget {
           labelText: labelText,
           hintText: labelText,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            borderSide: const BorderSide(
+              color: AppNewTheme.grey,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            borderSide: const BorderSide(
+              color: AppNewTheme.grey,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -617,12 +600,9 @@ class FechaButton extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          Icon(
+          const Icon(
             Icons.calendar_today_outlined,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
-            ),
+            color: AppNewTheme.primary,
           ),
         ],
       ),
@@ -657,12 +637,9 @@ class HoraButton extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          Icon(
+          const Icon(
             Icons.schedule_outlined,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
-            ),
+            color: AppNewTheme.primary,
           ),
         ],
       ),

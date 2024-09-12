@@ -4,9 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -117,16 +115,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -161,16 +155,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -205,16 +195,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -234,16 +220,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -286,16 +268,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -340,16 +318,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 style: StyleApp.normalBold,
                               ),
                             CardWidget(
-                              color: AppTheme.color(
-                                context,
-                                Styles.secondBackground,
-                              ),
+                              color: AppNewTheme.isDark()
+                                  ? AppNewTheme.backroundDarkSecondary
+                                  : AppNewTheme.backroundSecondary,
                               elevation: 0,
                               borderWidth: 1.5,
-                              borderColor: AppTheme.color(
-                                context,
-                                Styles.greyBorder,
-                              ),
+                              borderColor: AppNewTheme.grey,
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -399,16 +373,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -448,16 +418,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderColor: AppNewTheme.grey,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -503,10 +469,9 @@ class _ActualizarEstado extends StatelessWidget {
     final List<EstadoModel> estados = vmCrear.estados;
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
+      color: AppNewTheme.isDark()
+          ? AppNewTheme.backroundDarkSecondary
+          : AppNewTheme.backroundSecondary,
       elevation: 0,
       borderWidth: 0,
       raidus: 10,
@@ -517,11 +482,8 @@ class _ActualizarEstado extends StatelessWidget {
           isExpanded: true,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.color(
-                  context,
-                  Styles.border,
-                ),
+              borderSide: const BorderSide(
+                color: AppNewTheme.greyBorder,
               ),
               borderRadius: BorderRadius.circular(10),
             ),
@@ -584,10 +546,9 @@ class _ActualizarPrioridad extends StatelessWidget {
     final List<PrioridadModel> prioridades = vmCrear.prioridades;
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
+      color: AppNewTheme.isDark()
+          ? AppNewTheme.backroundDarkSecondary
+          : AppNewTheme.backroundSecondary,
       elevation: 0,
       borderWidth: 0,
       raidus: 10,
@@ -598,11 +559,8 @@ class _ActualizarPrioridad extends StatelessWidget {
           isExpanded: true,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.color(
-                  context,
-                  Styles.border,
-                ),
+              borderSide: const BorderSide(
+                color: AppNewTheme.greyBorder,
               ),
               borderRadius: BorderRadius.circular(10),
             ),

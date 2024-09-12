@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -544,18 +542,14 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(
-                        color: AppTheme.color(
-                          context,
-                          Styles.border,
-                        ),
+                      side: const BorderSide(
+                        color: AppNewTheme.grey,
                         width: 1.0,
                       ), // Define el color y grosor del borde
                     ),
-                    color: AppTheme.color(
-                      context,
-                      Styles.background,
-                    ),
+                    color: AppNewTheme.isDark()
+                        ? AppNewTheme.darkBackroundColor
+                        : AppNewTheme.backroundColor,
                     child: Padding(
                       padding: const EdgeInsets.all(
                         10,
@@ -696,18 +690,14 @@ class _Pyments extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppNewTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.darkBackroundColor
+              : AppNewTheme.backroundColor,
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
@@ -811,18 +801,14 @@ class _Transaction extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppNewTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.darkBackroundColor
+              : AppNewTheme.backroundColor,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -66,10 +64,9 @@ class DestinationDocView extends StatelessWidget {
                               doc,
                             ),
                             child: CardWidget(
-                              color: AppTheme.color(
-                                context,
-                                Styles.secondBackground,
-                              ),
+                              color: AppNewTheme.isDark()
+                                  ? AppNewTheme.backroundDarkSecondary
+                                  : AppNewTheme.backroundSecondary,
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
