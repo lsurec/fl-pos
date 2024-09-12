@@ -51,8 +51,8 @@ class ErrorViewModel extends ChangeNotifier {
                     pw.SizedBox(height: 5),
                     pw.Text(
                       "${AppLocalizations.of(contextP)!.translate(
-                        BlockTranslate.general,
-                        "descripcion",
+                        BlockTranslate.fecha,
+                        "fecha",
                       )} - ${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}",
                       style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold,
@@ -72,7 +72,7 @@ class ErrorViewModel extends ChangeNotifier {
                     pw.SizedBox(height: 5),
                     pw.Text(
                       "${AppLocalizations.of(contextP)!.translate(
-                        BlockTranslate.login,
+                        BlockTranslate.general,
                         "usuario",
                       )}: ${vmLogin.user}",
                       style: pw.TextStyle(
