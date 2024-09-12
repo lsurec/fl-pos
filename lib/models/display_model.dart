@@ -7,17 +7,17 @@ class DisplayModel {
   String name;
   bool active;
   bool visible;
-  int rol;
+  dynamic rol;
   String? display;
-  int application;
-  int? param;
+  dynamic application;
+  String? param;
   int orden;
   int consecutivoInterno;
   String? displayUrl;
   String? displayMenu;
   String? displayUrlAlter;
   int languageId;
-  int? tipoDocumento;
+  dynamic tipoDocumento;
   String? desTipoDocumento;
 
   DisplayModel({
