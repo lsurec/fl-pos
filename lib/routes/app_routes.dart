@@ -66,6 +66,7 @@ class AppRoutes {
   static const selectAccount = 'selectAccount';
   static const transferSummary = 'transferSummary';
   static const searchTask = 'searchTask';
+  static const terms = 'terms';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -124,6 +125,7 @@ class AppRoutes {
     selectAccount: (BuildContext context) => const SelectAccountView(),
     transferSummary: (BuildContext context) => const TransferSummaryView(),
     searchTask: (BuildContext context) => const BuscarTareasView(),
+    terms: (BuildContext context) => const TermsConditionsView(),
   };
 
   //en caso de ruta incorrecta

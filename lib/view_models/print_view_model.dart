@@ -1627,6 +1627,7 @@ class PrintViewModel extends ChangeNotifier {
     );
 
     final docVM = Provider.of<DocumentViewModel>(context, listen: false);
+    final facturaVM = Provider.of<DocumentoViewModel>(context, listen: false);
 
     final bool isFel = docVM.printFel(); //TODO:Parametrizar
 
@@ -2170,36 +2171,14 @@ class PrintViewModel extends ChangeNotifier {
     );
 
     bytes += generator.emptyLines(1);
-    //1:
-    bytes += generator.text(
-      "1. Esta Cotización no es reservación.",
-      styles: center,
-    );
-    //2:
-    bytes += generator.text(
-      "2. Al confrmar su cotizacion se requiere de contrato firmado.",
-      styles: center,
-    );
-    //3:
-    bytes += generator.text(
-      "3. Los precios cotizados estan sujetos a cambios.",
-      styles: center,
-    );
-    //4:
-    bytes += generator.text(
-      "4. Se cobrara Q 125.00 por cheque rechazado por cargos administrativos.",
-      styles: center,
-    );
-    //5:
-    bytes += generator.text(
-      "5. Se solicitara cheque de garantía.",
-      styles: center,
-    );
-    //6:
-    bytes += generator.text(
-      "6. Se cobrará por daños al mobiliario y equipo según contrato.",
-      styles: center,
-    );
+
+    for (var i = 0; i < facturaVM.terminosyCondiciones.length; i++) {
+      String termino = facturaVM.terminosyCondiciones[i];
+      bytes += generator.text(
+        "$i. $termino",
+        styles: center,
+      );
+    }
 
     bytes += generator.text(
       "--------------------",

@@ -5,12 +5,14 @@ class BodegaProductoModel {
   String nombre;
   double existencia;
   bool poseeComponente;
+  int orden;
 
   BodegaProductoModel({
     required this.bodega,
     required this.nombre,
     required this.existencia,
     required this.poseeComponente,
+    required this.orden,
   });
 
   factory BodegaProductoModel.fromJson(String str) =>
@@ -24,6 +26,7 @@ class BodegaProductoModel {
         nombre: json["nombre"],
         existencia: json["existencia"],
         poseeComponente: json["posee_Componente"],
+        orden: json["orden"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -31,5 +34,6 @@ class BodegaProductoModel {
         "nombre": nombre,
         "existencia": existencia,
         "posee_Componente": poseeComponente,
+        "orden": orden,
       };
 }

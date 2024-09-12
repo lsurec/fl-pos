@@ -424,7 +424,8 @@
         "direEntrega": "Dirección Entrega",
         "tipoRef": "Tipo de referencia",
         "codigo": "Código",
-        "mensajes": "Mensajes: "
+        "mensajes": "Mensajes: ",
+        "confirmar": "Confirmar Orden"
     },
     "tareas": {
         "numTarea": "Tarea No: ",
