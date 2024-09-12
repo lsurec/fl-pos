@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -53,12 +52,8 @@ class ConvertDocView extends StatelessWidget {
                     docOrigen,
                     docDestino,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.check,
-                    color: AppTheme.color(
-                      context,
-                      Styles.white,
-                    ),
                   ),
                 ),
               ),
@@ -77,10 +72,6 @@ class ConvertDocView extends StatelessWidget {
               //     },
               //     child: Icon(
               //       Icons.edit,
-              //       color: AppTheme.color(
-              //         context,
-              //         Styles.white,
-              //       ),
               //     ),
               //   ),
               // ),
@@ -106,20 +97,14 @@ class ConvertDocView extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       ColorTextCardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.green,
-                        ),
+                        color: AppNewTheme.verde,
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'origenT',
                         )} - (${docOrigen.documento}) ${docOrigen.documentoDescripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
                       ColorTextCardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.red,
-                        ),
+                        color: AppNewTheme.rojo,
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'destinoT',
@@ -134,9 +119,8 @@ class ConvertDocView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 13),
                             child: Checkbox(
-                              activeColor: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
+                              activeColor: AppNewTheme.hexToColor(
+                                Preferences.valueColor,
                               ),
                               value: vm.selectAllTra,
                               onChanged: (value) => vm.selectAllTra = value!,
@@ -199,10 +183,9 @@ class _Actions extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              color: AppTheme.color(
-                context,
-                Styles.background,
-              ),
+              color: AppNewTheme.isDark()
+                  ? AppNewTheme.darkBackroundColor
+                  : AppNewTheme.backroundColor,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: SingleChildScrollView(
                 child: Column(
@@ -274,10 +257,9 @@ class _CardDetalle extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              backgroundColor: AppTheme.color(
-                context,
-                Styles.background,
-              ),
+              backgroundColor: AppNewTheme.isDark()
+                  ? AppNewTheme.darkBackroundColor
+                  : AppNewTheme.backroundColor,
               title: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.cotizacion,
@@ -345,10 +327,9 @@ class _CardDetalle extends StatelessWidget {
         );
       },
       child: CardWidget(
-        color: AppTheme.color(
-          context,
-          Styles.secondBackground,
-        ),
+        color: AppNewTheme.isDark()
+            ? AppNewTheme.backroundDarkSecondary
+            : AppNewTheme.backroundSecondary,
         child: ListTile(
           leading: Checkbox(
             value: documento.checked,
@@ -357,9 +338,8 @@ class _CardDetalle extends StatelessWidget {
               index,
               value!,
             ),
-            activeColor: AppTheme.color(
-              context,
-              Styles.darkPrimary,
+            activeColor: AppNewTheme.hexToColor(
+              Preferences.valueColor,
             ),
           ),
           contentPadding: const EdgeInsets.all(10),

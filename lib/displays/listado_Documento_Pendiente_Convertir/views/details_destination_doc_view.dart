@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -100,10 +98,9 @@ class DetailsDestinationDocView extends StatelessWidget {
                             DestinationDetailModel detalle = vm.detalles[index];
 
                             return CardWidget(
-                              color: AppTheme.color(
-                                context,
-                                Styles.secondBackground,
-                              ),
+                              color: AppNewTheme.isDark()
+                                  ? AppNewTheme.backroundDarkSecondary
+                                  : AppNewTheme.backroundSecondary,
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
@@ -193,10 +190,7 @@ class _PrintActions extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -218,10 +212,7 @@ class _PrintActions extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(

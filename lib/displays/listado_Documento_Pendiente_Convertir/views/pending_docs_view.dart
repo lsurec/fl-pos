@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:provider/provider.dart';
 
 class PendingDocsView extends StatelessWidget {
@@ -56,12 +54,9 @@ class PendingDocsView extends StatelessWidget {
                               ),
                               TextButton.icon(
                                 onPressed: () => vm.showPickerIni(context),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.calendar_today_outlined,
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.darkPrimary,
-                                  ),
+                                  color: AppNewTheme.primary,
                                 ),
                                 label: Text(
                                   vm.formatView(vm.fechaIni!),
@@ -85,12 +80,9 @@ class PendingDocsView extends StatelessWidget {
                               ),
                               TextButton.icon(
                                 onPressed: () => vm.showPickerFin(context),
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.calendar_today_outlined,
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.darkPrimary,
-                                  ),
+                                  color: AppNewTheme.primary,
                                 ),
                                 label: Text(
                                   vm.formatView(vm.fechaFin!),
@@ -108,10 +100,9 @@ class PendingDocsView extends StatelessWidget {
                             width: 175,
                             child: DropdownButton<int>(
                               isExpanded: true,
-                              dropdownColor: AppTheme.color(
-                                context,
-                                Styles.background,
-                              ),
+                              dropdownColor: AppNewTheme.isDark()
+                                  ? AppNewTheme.darkBackroundColor
+                                  : AppNewTheme.backroundColor,
                               value: vm.idSelectFilter,
                               onChanged: (value) => vm.changeFilter(value!),
                               items: [
@@ -184,12 +175,9 @@ class PendingDocsView extends StatelessWidget {
                               'buscar',
                             ),
                             suffixIcon: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.search,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
-                                ),
+                                color: AppNewTheme.primary,
                               ),
                               onPressed: () => vm.filtrar(context),
                             ),
@@ -271,10 +259,9 @@ class _CardDoc extends StatelessWidget {
         GestureDetector(
           onTap: () => vm.navigateDestination(context, document),
           child: CardWidget(
-            color: AppTheme.color(
-              context,
-              Styles.secondBackground,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.backroundDarkSecondary
+                : AppNewTheme.backroundSecondary,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(

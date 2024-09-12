@@ -1,9 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +38,9 @@ class CargoDescuentoView extends StatelessWidget {
           child: Column(
             children: [
               Card(
-                color: AppTheme.color(
-                  context,
-                  Styles.transaction,
-                ),
+                color: AppNewTheme.isDark()
+                    ? AppNewTheme.backroundDarkSecondary
+                    : AppNewTheme.backroundSecondary,
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Text(
@@ -117,13 +115,14 @@ class CargoDescuentoView extends StatelessWidget {
                       children: [
                         const SizedBox(width: 12),
                         Checkbox(
-                          activeColor: AppTheme.color(
-                            context,
-                            Styles.darkPrimary,
+                          activeColor: AppNewTheme.hexToColor(
+                            Preferences.valueColor,
                           ),
                           value: vm.selectAllMontos,
-                          onChanged: (value) =>
-                              vm.selectAllMonto(value, indexDocument),
+                          onChanged: (value) => vm.selectAllMonto(
+                            value,
+                            indexDocument,
+                          ),
                         ),
                         Text(
                           AppLocalizations.of(context)!.translate(
@@ -153,18 +152,16 @@ class CargoDescuentoView extends StatelessWidget {
                   final TraInternaModel operacion =
                       transaction.operaciones[index];
                   return Card(
-                    color: AppTheme.color(
-                      context,
-                      Styles.transaction,
-                    ),
+                    color: AppNewTheme.isDark()
+                        ? AppNewTheme.backroundDarkSecondary
+                        : AppNewTheme.backroundSecondary,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Checkbox(
-                            activeColor: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
+                            activeColor: AppNewTheme.hexToColor(
+                              Preferences.valueColor,
                             ),
                             value: operacion.isChecked,
                             onChanged: (value) => vm.changeCheckedMonto(

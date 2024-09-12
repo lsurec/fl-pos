@@ -2,10 +2,9 @@
 
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -414,9 +413,8 @@ class ConfirmDocView extends StatelessWidget {
                     if (!vm.showPrint) _Observacion(),
                     const SizedBox(height: 10),
                     SwitchListTile(
-                      activeColor: AppTheme.color(
-                        context,
-                        Styles.darkPrimary,
+                      activeColor: AppNewTheme.hexToColor(
+                        Preferences.valueColor,
                       ),
                       value: vm.directPrint,
                       onChanged: (value) => vm.directPrint = value,
@@ -504,38 +502,26 @@ class ConfirmDocView extends StatelessWidget {
                                     style: StyleApp.normal,
                                   ),
                                   if (step.status == 1) //Cargando
-                                    Icon(
+                                    const Icon(
                                       Icons.pending_outlined,
-                                      color: AppTheme.color(
-                                        context,
-                                        Styles.grey,
-                                      ),
+                                      color: AppNewTheme.grey,
                                     ),
                                   if (step.status == 2) //exitoso
-                                    Icon(
+                                    const Icon(
                                       Icons.check_circle_outline,
-                                      color: AppTheme.color(
-                                        context,
-                                        Styles.green,
-                                      ),
+                                      color: AppNewTheme.verde,
                                     ),
                                   if (step.status == 3) //error
-                                    Icon(
+                                    const Icon(
                                       Icons.cancel_outlined,
-                                      color: AppTheme.color(
-                                        context,
-                                        Styles.red,
-                                      ),
+                                      color: AppNewTheme.rojo,
                                     ),
                                 ],
                               ),
                               const SizedBox(height: 10),
                               if (step.isLoading)
-                                LinearProgressIndicator(
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.darkPrimary,
-                                  ),
+                                const LinearProgressIndicator(
+                                  color: AppNewTheme.primary,
                                 ),
                             ],
                           );
@@ -589,10 +575,7 @@ class ConfirmDocView extends StatelessWidget {
                                       bottom: 10,
                                       right: 10,
                                     ),
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.primary,
-                                    ),
+                                    color: AppNewTheme.primary,
                                     child: Center(
                                       child: Text(
                                         AppLocalizations.of(context)!.translate(
@@ -637,11 +620,8 @@ class _Observacion extends StatelessWidget {
           'observacion',
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppNewTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -672,10 +652,7 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -699,10 +676,7 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -739,10 +713,7 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -764,10 +735,7 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -804,10 +772,7 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -829,10 +794,7 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -872,10 +834,7 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -901,10 +860,7 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -940,18 +896,14 @@ class _Pyments extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppNewTheme.grey,
               width: 1.0,
             ),
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.darkBackroundColor
+              : AppNewTheme.backroundColor,
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
@@ -1019,18 +971,14 @@ class _TotalsPayment extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
-        side: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+        side: const BorderSide(
+          color: AppNewTheme.grey,
           width: 1.0,
         ), // Define el color y grosor del borde
       ),
-      color: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      color: AppNewTheme.isDark()
+          ? AppNewTheme.darkBackroundColor
+          : AppNewTheme.backroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -1066,18 +1014,14 @@ class _Totals extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
-        side: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+        side: const BorderSide(
+          color: AppNewTheme.grey,
           width: 1.0,
         ), // Define el color y grosor del borde
       ),
-      color: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      color: AppNewTheme.isDark()
+          ? AppNewTheme.darkBackroundColor
+          : AppNewTheme.backroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -1146,18 +1090,14 @@ class _Transaction extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppNewTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppNewTheme.isDark()
+              ? AppNewTheme.darkBackroundColor
+              : AppNewTheme.backroundColor,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
