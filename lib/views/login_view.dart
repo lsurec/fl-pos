@@ -44,10 +44,9 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CardWidget(
-                    color: AppTheme.color(
-                      context,
-                      Styles.secondBackground,
-                    ),
+                    color: AppNewTheme.isDark()
+                        ? AppNewTheme.backroundDarkSecondary
+                        : AppNewTheme.backroundSecondary,
                     width: double.infinity,
                     raidus: 18,
                     child: Padding(
@@ -99,21 +98,14 @@ class LoginView extends StatelessWidget {
                                           suffixIcon: const Icon(
                                             Icons.lock_outlined,
                                           ),
-                                          suffixIconColor: AppTheme.color(
-                                            context,
-                                            Styles.iconActive,
-                                          ),
+                                          suffixIconColor: AppNewTheme.grey,
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
                                           //   icon: Icon(
                                           //     vm.obscureText
                                           //         ? Icons.visibility
                                           //         : Icons.visibility_off,
-                                          //     color: AppTheme.color(
-                                          //       context,
-                                          //       Styles.iconActive,
-                                          //
-                                          //     ),
+                                          //     color: AppNewTheme.grey,
                                           //   ),
                                           // ),
                                         ),
