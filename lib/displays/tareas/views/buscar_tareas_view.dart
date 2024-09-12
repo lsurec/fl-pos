@@ -119,10 +119,9 @@ class BuscarTareasView extends StatelessWidget {
           if (vmTarea.isLoading)
             ModalBarrier(
               dismissible: false,
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppNewTheme.isDark()
+                  ? AppNewTheme.darkBackroundColor
+                  : AppNewTheme.backroundColor,
             ),
           if (vmTarea.isLoading) const LoadWidget(),
         ],

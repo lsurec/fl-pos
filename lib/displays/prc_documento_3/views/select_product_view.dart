@@ -79,10 +79,9 @@ class SelectProductView extends StatelessWidget {
           if (vmProducto.isLoading)
             ModalBarrier(
               dismissible: false,
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppNewTheme.isDark()
+                  ? AppNewTheme.darkBackroundColor
+                  : AppNewTheme.backroundColor,
             ),
           if (vmProducto.isLoading) const LoadWidget(),
         ],

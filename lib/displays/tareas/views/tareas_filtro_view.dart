@@ -135,10 +135,9 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.darkBackroundColor
+                : AppNewTheme.backroundColor,
           ),
         if (vmTarea.isLoading) const LoadWidget(),
       ],

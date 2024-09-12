@@ -205,10 +205,9 @@ class _Tabs2ViewState extends State<Tabs2View>
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppNewTheme.isDark()
+                  ? AppNewTheme.darkBackroundColor
+                  : AppNewTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],

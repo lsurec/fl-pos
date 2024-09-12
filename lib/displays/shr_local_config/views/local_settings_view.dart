@@ -197,10 +197,9 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
         if (vm.isLoading)
           ModalBarrier(
             dismissible: false,
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.darkBackroundColor
+                : AppNewTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

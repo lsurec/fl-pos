@@ -105,10 +105,9 @@ class LangView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.darkBackroundColor
+                : AppNewTheme.backroundColor,
           ),
         if (vm.isLoading)
           Center(
