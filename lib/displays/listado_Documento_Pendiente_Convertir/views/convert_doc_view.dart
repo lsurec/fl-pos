@@ -130,7 +130,7 @@ class ConvertDocView extends StatelessWidget {
                             "${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
                               'registro',
-                            )} (${vm.detalles.length})",
+                            )} (${vm.detailsOrigin.length})",
                             style: StyleApp.normalBold,
                           ),
                         ],

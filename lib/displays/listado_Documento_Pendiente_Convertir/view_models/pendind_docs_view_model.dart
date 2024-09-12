@@ -180,9 +180,6 @@ class PendingDocsViewModel extends ChangeNotifier {
     //servicio que se va a utilizar
     final ReceptionService receptionService = ReceptionService();
 
-    //Limpiar detalles del documento que haya previamente
-    convertOriginVM.detalles.clear();
-
     //si estan seleccioandos todos
     convertOriginVM.selectAllTra = false;
 
