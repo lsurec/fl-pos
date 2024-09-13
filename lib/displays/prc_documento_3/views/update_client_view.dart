@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/client_model.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +24,8 @@ class UpdateClientView extends StatelessWidget {
               context,
               cuenta.cuentaCorrentista,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.save_outlined,
-              color: AppTheme.color(
-                context,
-                Styles.white,
-              ),
             ),
           ),
           appBar: AppBar(

@@ -1,10 +1,8 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -45,11 +43,12 @@ class SelectProductView extends StatelessWidget {
                   child: ListView.separated(
                     // +1 para el botón "Ver más"
                     itemCount: vmDetalle.products.length + 1,
-                    separatorBuilder: (context, index) => Divider(
-                      color: AppTheme.color(
-                        context,
-                        Styles.border,
-                      ),
+                    separatorBuilder: (
+                      context,
+                      index,
+                    ) =>
+                        const Divider(
+                      color: AppNewTheme.grey,
                     ),
                     itemBuilder: (context, index) {
                       if (index < vmDetalle.products.length) {

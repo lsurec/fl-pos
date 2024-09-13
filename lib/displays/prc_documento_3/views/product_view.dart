@@ -1,9 +1,7 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -89,10 +87,9 @@ class ProductView extends StatelessWidget {
                   DropdownButton<BodegaProductoModel>(
                     isExpanded: true,
                     isDense: true,
-                    dropdownColor: AppTheme.color(
-                      context,
-                      Styles.background,
-                    ),
+                    dropdownColor: AppNewTheme.isDark()
+                        ? AppNewTheme.darkBackroundColor
+                        : AppNewTheme.backroundColor,
                     value: vm.selectedBodega,
                     onChanged: (value) =>
                         vm.changeBodega(value, context, product),
@@ -248,10 +245,7 @@ class _BottomBar extends StatelessWidget {
               onDoubleTap: () => vm.cancelButton(back, context),
               child: Container(
                 margin: const EdgeInsets.all(10),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                color: AppNewTheme.primary,
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -276,10 +270,7 @@ class _BottomBar extends StatelessWidget {
                 ),
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  color: AppTheme.color(
-                    context,
-                    Styles.primary,
-                  ),
+                  color: AppNewTheme.primary,
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.translate(
@@ -304,10 +295,7 @@ class _BottomBar extends StatelessWidget {
                 ),
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  color: AppTheme.color(
-                    context,
-                    Styles.primary,
-                  ),
+                  color: AppNewTheme.primary,
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.translate(
@@ -335,10 +323,9 @@ class TipoPrecioSelect extends StatelessWidget {
 
     return DropdownButton<UnitarioModel>(
       isExpanded: true,
-      dropdownColor: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      dropdownColor: AppNewTheme.isDark()
+          ? AppNewTheme.darkBackroundColor
+          : AppNewTheme.backroundColor,
       value: vm.selectedPrice,
       onChanged: (value) => vm.changePrice(value),
       items: vm.prices.map(
@@ -443,10 +430,7 @@ class ImageCarouselDialog extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: Container(
-                          color: AppTheme.color(
-                            context,
-                            Styles.grey,
-                          ),
+                          color: AppNewTheme.grey,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 5,

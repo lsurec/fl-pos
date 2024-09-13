@@ -1,9 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -22,9 +21,10 @@ class PaymentView extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
     //tra
 
@@ -81,9 +81,8 @@ class PaymentView extends StatelessWidget {
                       children: [
                         const SizedBox(width: 20),
                         Checkbox(
-                          activeColor: AppTheme.color(
-                            context,
-                            Styles.darkPrimary,
+                          activeColor: AppNewTheme.hexToColor(
+                            Preferences.valueColor,
                           ),
                           value: vm.selectAllAmounts,
                           onChanged: (value) => vm.selectAllMounts(value),
@@ -111,20 +110,20 @@ class PaymentView extends StatelessWidget {
                       final AmountModel amount = vm.amounts[index];
 
                       return Card(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 2.0,
                         child: ListTile(
                           leading: Checkbox(
-                            activeColor: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
+                            activeColor: AppNewTheme.hexToColor(
+                              Preferences.valueColor,
                             ),
                             value: amount.checked,
-                            onChanged: (value) =>
-                                vm.changeCheckedamount(value, index),
+                            onChanged: (value) => vm.changeCheckedamount(
+                              value,
+                              index,
+                            ),
                           ),
                           title: Text(
                             amount.payment.descripcion,
@@ -205,10 +204,7 @@ class PaymentView extends StatelessWidget {
               'total',
             ),
             value: vmDetails.total,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
-            ),
+            color: AppNewTheme.primary,
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -216,10 +212,7 @@ class PaymentView extends StatelessWidget {
               'saldo',
             ),
             value: vm.saldo,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
-            ),
+            color: AppNewTheme.primary,
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -227,10 +220,7 @@ class PaymentView extends StatelessWidget {
               'cambio',
             ),
             value: vm.cambio,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
-            ),
+            color: AppNewTheme.primary,
           ),
         ],
       ),
@@ -245,10 +235,9 @@ class PaymentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
+      color: AppNewTheme.isDark()
+          ? AppNewTheme.backroundDarkSecondary
+          : AppNewTheme.backroundSecondary,
       elevation: 2.0,
       child: ListTile(
         trailing: const Icon(Icons.arrow_right),

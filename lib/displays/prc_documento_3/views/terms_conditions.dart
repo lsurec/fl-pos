@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
 
@@ -52,12 +50,7 @@ class TermsConditionsView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Divider(
-                    color: AppTheme.color(
-                      context,
-                      Styles.border,
-                    ),
-                  ),
+                  const Divider(color: AppNewTheme.greyBorder),
                   Expanded(
                     child: ListView.builder(
                       itemCount: facturaVM.terminosyCondiciones.length,
@@ -69,13 +62,10 @@ class TermsConditionsView extends StatelessWidget {
                             vertical: 15,
                             horizontal: 10,
                           ),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.greyBorder,
-                                ),
+                                color: AppNewTheme.greyBorder,
                                 width: 1, // Ancho del borde
                               ),
                             ),
@@ -138,12 +128,8 @@ class TermsConditionsView extends StatelessWidget {
                         -1,
                       );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
-                      color: AppTheme.color(
-                        context,
-                        Styles.white,
-                      ),
                     ),
                   ),
                 ),
@@ -159,12 +145,8 @@ class TermsConditionsView extends StatelessWidget {
                         arguments: screen,
                       );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.check,
-                      color: AppTheme.color(
-                        context,
-                        Styles.white,
-                      ),
                     ),
                   ),
                 ),

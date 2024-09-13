@@ -89,20 +89,18 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       ),
                       if (vm.empresas.isNotEmpty)
                         CardWidget(
-                          color: AppTheme.color(
-                            context,
-                            Styles.background,
-                          ),
+                          color: AppNewTheme.isDark()
+                              ? AppNewTheme.darkBackroundColor
+                              : AppNewTheme.backroundColor,
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownButton<EmpresaModel>(
                               isExpanded: true,
-                              dropdownColor: AppTheme.color(
-                                context,
-                                Styles.background,
-                              ),
+                              dropdownColor: AppNewTheme.isDark()
+                                  ? AppNewTheme.darkBackroundColor
+                                  : AppNewTheme.backroundColor,
                               value: vm.selectedEmpresa,
                               onChanged: (value) => vm.changeEmpresa(value),
                               items: vm.empresas.map((empresa) {
@@ -136,20 +134,18 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       ),
                       if (vm.estaciones.isNotEmpty)
                         CardWidget(
-                          color: AppTheme.color(
-                            context,
-                            Styles.background,
-                          ),
+                          color: AppNewTheme.isDark()
+                              ? AppNewTheme.darkBackroundColor
+                              : AppNewTheme.backroundColor,
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownButton<EstacionModel>(
                               isExpanded: true,
-                              dropdownColor: AppTheme.color(
-                                context,
-                                Styles.background,
-                              ),
+                              dropdownColor: AppNewTheme.isDark()
+                                  ? AppNewTheme.darkBackroundColor
+                                  : AppNewTheme.backroundColor,
                               value: vm.selectedEstacion,
                               onChanged: (value) => vm.changeEstacion(value),
                               items: vm.estaciones.map((estacion) {
