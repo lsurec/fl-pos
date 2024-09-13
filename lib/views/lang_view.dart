@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/card_widget.dart';
@@ -79,10 +77,7 @@ class LangView extends StatelessWidget {
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
-                        style: AppTheme.button(
-                          context,
-                          Styles.buttonStyle,
-                        ),
+                        style: StyleApp.button,
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,

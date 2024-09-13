@@ -13,9 +13,7 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/print_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -231,8 +229,8 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 PrintModel print = await printVM.printDocument(
                                   context, // context,
                                   paperDefault, // paperDefault,
-                                  settings
-                                      .consecutivoDoc!, // consecutivoDoc, //TODO: verificar eror
+                                  // consecutivoDoc, //TODO: verificar eror
+                                  settings.consecutivoDoc!,
                                   settings.cuentaCorrentistaRef ?? "",
                                   settings.client!, // cuentaCorrentistaRef,
                                 );
@@ -412,10 +410,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           ),
                                         );
                                       },
-                                      style: AppTheme.button(
-                                        context,
-                                        Styles.buttonStyle,
-                                      ),
+                                      style: StyleApp.button,
                                       child: Text(
                                         AppLocalizations.of(context)!.translate(
                                           BlockTranslate.botones,
@@ -508,10 +503,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           onPressed: () {
             Navigator.pop(context);
           },
-          style: AppTheme.button(
-            context,
-            Styles.buttonStyle,
-          ),
+          style: StyleApp.button,
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
@@ -528,11 +520,8 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
                 }
               : null,
           style: (paper != null)
-              ? AppTheme.button(
-                  context,
-                  Styles.buttonStyle,
-                ) //si esta desactivado
-              : AppTheme.disabledButtonsStyle,
+              ? StyleApp.button //si esta desactivado
+              : StyleApp.disabledButton,
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,

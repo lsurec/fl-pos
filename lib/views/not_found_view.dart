@@ -1,7 +1,5 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +36,7 @@ class NotFoundView extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              style: AppTheme.button(
-                context,
-                Styles.buttonStyle,
-              ),
+              style: StyleApp.button,
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.botones,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class StyleApp {
@@ -172,5 +173,19 @@ class StyleApp {
     fontSize: 14,
     color: Colors.white,
     fontWeight: FontWeight.bold,
+  );
+
+  static final ButtonStyle button = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+      AppNewTheme.hexToColor(
+        Preferences.valueColor,
+      ),
+    ),
+  );
+
+  static final ButtonStyle disabledButton = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+      Colors.grey,
+    ),
   );
 }

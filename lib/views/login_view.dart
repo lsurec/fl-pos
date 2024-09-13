@@ -1,14 +1,11 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../themes/app_theme.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -153,10 +150,7 @@ class LoginView extends StatelessWidget {
                           const SizedBox(height: 5),
                           ElevatedButton(
                             onPressed: () => vm.login(context),
-                            style: AppTheme.button(
-                              context,
-                              Styles.buttonStyle,
-                            ),
+                            style: StyleApp.button,
                             child: SizedBox(
                               width: double.infinity,
                               child: Center(

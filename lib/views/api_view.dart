@@ -1,14 +1,11 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../themes/app_theme.dart';
 
 //Vista configurar api
 class ApiView extends StatelessWidget {
@@ -134,10 +131,7 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => Navigator.pop(context),
-                                    style: AppTheme.button(
-                                      context,
-                                      Styles.buttonStyle,
-                                    ),
+                                    style: StyleApp.button,
                                     // onPressed: () => Preferences.clearUrl(),
                                     child: SizedBox(
                                       width: double.infinity,
@@ -158,10 +152,7 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => vm.connectService(context),
-                                    style: AppTheme.button(
-                                      context,
-                                      Styles.buttonStyle,
-                                    ),
+                                    style: StyleApp.button,
                                     child: SizedBox(
                                       width: double.infinity,
                                       child: Center(
@@ -182,10 +173,7 @@ class ApiView extends StatelessWidget {
                           if (Preferences.urlApi.isEmpty)
                             ElevatedButton(
                               onPressed: () => vm.connectService(context),
-                              style: AppTheme.button(
-                                context,
-                                Styles.primary,
-                              ),
+                              style: StyleApp.button,
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Center(
