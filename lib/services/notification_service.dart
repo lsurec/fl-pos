@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
@@ -500,5 +501,135 @@ class NotificationService {
     if (result) return true;
 
     return false;
+  }
+
+  static Future<void> changeLang(
+    BuildContext context,
+  ) async {
+    final vmLang = Provider.of<LangViewModel>(
+      context,
+      listen: false,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(
+            left: 0,
+            bottom: 20,
+            right: 20,
+            top: 20,
+          ),
+          backgroundColor: AppNewTheme.isDark()
+              ? AppNewTheme.backroundDarkSecondary
+              : AppNewTheme.backroundSecondary,
+          content: SizedBox(
+            height: 220, // Limitar la altura del diálogo
+            width: double.maxFinite,
+            child: ListView.builder(
+              itemCount: vmLang.languages.length,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                final LanguageModel lang = vmLang.languages[index];
+
+                return RadioListTile<int>(
+                  title: Text(
+                    vmLang.getNameLang(
+                      lang,
+                    )!,
+                  ),
+                  // Puedes ajustar cómo mostrar el nombre
+                  value: index,
+                  groupValue: vmLang.selectedIndexLang,
+                  // Asegúrate de manejar el valor seleccionado
+                  onChanged: (int? value) {
+                    if (value != null) {
+                      vmLang.cambiarLenguaje(
+                        context,
+                        Locale(lang.lang),
+                        index,
+                      );
+                    }
+                  },
+                  activeColor: AppNewTheme.hexToColor(
+                    Preferences.valueColor,
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<void> changeTheme(
+    BuildContext context,
+  ) async {
+    final vmTheme = Provider.of<ThemeViewModel>(
+      context,
+      listen: false,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(
+            left: 0,
+            bottom: 20,
+            right: 20,
+            top: 20,
+          ),
+          backgroundColor: AppNewTheme.isDark()
+              ? AppNewTheme.backroundDarkSecondary
+              : AppNewTheme.backroundSecondary,
+          content: SizedBox(
+            height: 160, // Limitar la altura del diálogo
+            width: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: vmTheme.temasApp(context).length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      final ThemeModel tema = vmTheme.temasApp(context)[index];
+
+                      return RadioListTile<int>(
+                        title: Text(
+                          tema.descripcion,
+                        ),
+                        // Puedes ajustar cómo mostrar el nombre
+                        value: index,
+                        groupValue: AppNewTheme.idTema,
+                        activeColor: AppNewTheme.hexToColor(
+                          Preferences.valueColor,
+                        ),
+                        // Asegúrate de manejar el valor seleccionado
+                        onChanged: (int? value) {
+                          if (value != null) {
+                            vmTheme.validarColorTema(
+                              context,
+                              tema.id,
+                            );
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

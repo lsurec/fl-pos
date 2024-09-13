@@ -3,7 +3,11 @@ class LanguageModel {
   String lang;
   String reg;
 
-  LanguageModel({required this.names, required this.lang, required this.reg});
+  LanguageModel({
+    required this.names,
+    required this.lang,
+    required this.reg,
+  });
 
   factory LanguageModel.fromJson(Map<String, dynamic> json) {
     return LanguageModel(

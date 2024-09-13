@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +10,8 @@ class TemasColoresView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vmTema = Provider.of<ThemeViewModel>(context);
-    final List<TemaModel> temas = vmTema.temasAppM(context);
     final List<ColorModel> colores = vmTema.coloresApp(context);
     // Índice del tema seleccionado
-    int selectedIndex = AppNewTheme.idTema;
     // ID del color seleccionado
     int selectedColorId = AppNewTheme.idColorTema;
 
@@ -28,81 +25,6 @@ class TemasColoresView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 350,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Column(
-                        children: [
-                          const Text(
-                            "Elegir tema de preferencia.",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "ID DEL TEMA: ${AppNewTheme.idTema}.",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "NOMBRE TEMA: ${vmTema.temasApp(context)[AppNewTheme.idTema].descripcion}.",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "ID DEL COLOR: ${AppNewTheme.idColorTema}.",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "NOMBRE TEMA: ${vmTema.obtenerColorModel(
-                                  context,
-                                  AppNewTheme.idColorTema,
-                                ).nombre}.",
-                            textAlign: TextAlign.center,
-                          ),
-                          Text(
-                            "VALOR COLOR: ${Preferences.valueColor}.",
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: temas.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final TemaModel tema = temas[index];
-                      // Cada item de la lista
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 15,
-                        ),
-                        title: Text(
-                          tema.descripcion,
-                          style: StyleApp.normal,
-                        ),
-                        leading: Radio<int>(
-                          value: index,
-                          groupValue: selectedIndex,
-                          onChanged: (int? value) {
-                            selectedIndex = value!;
-                            // Tu función personalizada
-                            vmTema.validarColorTema(
-                              context,
-                              tema.id,
-                            );
-                          },
-                        ),
-                        onTap: () {
-                          vmTema.validarColorTema(context, tema.id);
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: GridView.builder(
@@ -182,17 +104,6 @@ class TemasColoresView extends StatelessWidget {
                           ),
                         );
                       },
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // Navigator.pushNamed(
-                      //   context,
-                      //   AppRoutes.tema,
-                      // );
-                    },
-                    icon: const Icon(
-                      Icons.arrow_forward_ios,
                     ),
                   ),
                 ],
