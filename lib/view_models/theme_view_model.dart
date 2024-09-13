@@ -293,7 +293,7 @@ class ThemeViewModel extends ChangeNotifier {
       case 3: // Verde
         return isDarkMode ? GreenTheme.darkGreen : GreenTheme.lightGreen;
       case 4: // Azul
-        return isDarkMode ? BlueTheme.darkGreen : BlueTheme.lightGreen;
+        return isDarkMode ? BlueTheme.darkBlue : BlueTheme.lightBlue;
       case 5: // Azul
         return isDarkMode ? PurpleTheme.darkPurple : PurpleTheme.lightPurple;
       default: // Morado
@@ -392,10 +392,10 @@ class ThemeViewModel extends ChangeNotifier {
           id: 4,
           descripcion: "Azul",
           tema: isLightMode
-              ? BlueTheme.lightGreen
+              ? BlueTheme.lightBlue
               : isDarkMode
-                  ? BlueTheme.darkGreen
-                  : BlueTheme.lightGreen,
+                  ? BlueTheme.darkBlue
+                  : BlueTheme.lightBlue,
         ),
       ),
       ColorModel(

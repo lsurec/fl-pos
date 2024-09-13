@@ -10,48 +10,32 @@ class PurpleTheme {
   // Colores del tema oscuro
   static final Color darkPrimaryColor = Colors.purple.shade800;
 
-  static final ThemeData lightPurple = ThemeData(
-    brightness: Brightness.light,
+  static final ThemeData lightPurple = ThemeData.light().copyWith(
     primaryColor: lightPrimaryColor,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: lightPrimaryColor,
-      titleTextStyle: TextStyle(
-        color: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppNewTheme.backroundColor,
+      titleTextStyle: const TextStyle(
+        fontSize: 20,
+        color: Colors.black,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: lightPrimaryColor,
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.black,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.black,
-      ),
-    ),
   );
 
-  static final ThemeData darkPurple = ThemeData(
-    brightness: Brightness.dark,
+  static final ThemeData darkPurple = ThemeData.dark().copyWith(
     primaryColor: darkPrimaryColor,
-    appBarTheme: AppBarTheme(
-      backgroundColor: darkPrimaryColor,
-      titleTextStyle: const TextStyle(
-        color: Colors.white,
+    scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppNewTheme.darkBackroundColor,
+      titleTextStyle: TextStyle(
+        fontSize: 20,
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: darkPrimaryColor,
-    ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.white,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.white,
-      ),
     ),
   );
 }

@@ -10,48 +10,32 @@ class BlueTheme {
   // Colores del tema oscuro
   static const Color darkPrimaryColor = Color(0xff134895);
 
-  static final ThemeData lightGreen = ThemeData(
-    brightness: Brightness.light,
+  static final ThemeData lightBlue = ThemeData.light().copyWith(
     primaryColor: lightPrimaryColor,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: lightPrimaryColor,
-      titleTextStyle: TextStyle(
-        color: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppNewTheme.backroundColor,
+      titleTextStyle: const TextStyle(
+        fontSize: 20,
+        color: Colors.black,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: lightPrimaryColor,
-    ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.black,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.black,
-      ),
     ),
   );
 
-  static final ThemeData darkGreen = ThemeData(
-    brightness: Brightness.dark,
+  static final ThemeData darkBlue = ThemeData.dark().copyWith(
     primaryColor: darkPrimaryColor,
+    scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
-      backgroundColor: darkPrimaryColor,
+      backgroundColor: AppNewTheme.darkBackroundColor,
       titleTextStyle: TextStyle(
-        color: Colors.white,
+        fontSize: 20,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: darkPrimaryColor,
-    ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.white,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.white,
-      ),
     ),
   );
 }
