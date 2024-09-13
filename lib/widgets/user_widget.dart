@@ -1,8 +1,7 @@
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +24,8 @@ class UserWidget extends StatelessWidget {
         child: Container(
           width: 35,
           height: 35,
-          color: AppTheme.color(
-            context,
-            Styles.primary,
+          color: AppNewTheme.hexToColor(
+            Preferences.valueColor,
           ),
           child: Center(
             child: Text(
@@ -60,10 +58,9 @@ void _showUserInfoModal(
     context: context,
     builder: (BuildContext context) {
       return Container(
-        color: AppTheme.color(
-          context,
-          Styles.background,
-        ),
+        color: AppNewTheme.isDark()
+            ? AppNewTheme.darkBackroundColor
+            : AppNewTheme.backroundSecondary,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
@@ -74,10 +71,9 @@ void _showUserInfoModal(
               ),
               const SizedBox(height: 10),
               Card(
-                color: AppTheme.color(
-                  context,
-                  Styles.background,
-                ),
+                color: AppNewTheme.isDark()
+                    ? AppNewTheme.darkBackroundColor
+                    : AppNewTheme.backroundSecondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22),
                 ),
@@ -97,9 +93,8 @@ void _showUserInfoModal(
                             child: Container(
                               width: 45,
                               height: 50,
-                              color: AppTheme.color(
-                                context,
-                                Styles.primary,
+                              color: AppNewTheme.hexToColor(
+                                Preferences.valueColor,
                               ),
                               child: Center(
                                 child: Text(

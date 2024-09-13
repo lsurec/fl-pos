@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -27,12 +25,8 @@ class ErrorView extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => vm.shareDoc(error, context),
-        child: Icon(
+        child: const Icon(
           Icons.share,
-          color: AppTheme.color(
-            context,
-            Styles.white,
-          ),
         ),
       ),
       appBar: AppBar(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class HelpView extends StatelessWidget {
@@ -40,10 +38,9 @@ class HelpSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
-        color: AppTheme.color(
-          context,
-          Styles.background,
-        ),
+        color: AppNewTheme.isDark()
+            ? AppNewTheme.darkBackroundColor
+            : AppNewTheme.backroundColor,
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(
@@ -79,10 +76,9 @@ class ClientSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
-        color: AppTheme.color(
-          context,
-          Styles.background,
-        ),
+        color: AppNewTheme.isDark()
+            ? AppNewTheme.darkBackroundColor
+            : AppNewTheme.backroundColor,
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(

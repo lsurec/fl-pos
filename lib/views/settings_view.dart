@@ -3,9 +3,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:intl/intl.dart';
@@ -62,10 +60,7 @@ class SettingsView extends StatelessWidget {
                         child: Container(
                           width: 45,
                           height: 50,
-                          color: AppTheme.color(
-                            context,
-                            Styles.primary,
-                          ),
+                          color: AppNewTheme.primary,
                           child: Center(
                             child: Text(
                               vmLogin.user[0].toUpperCase(),

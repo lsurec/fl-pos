@@ -3,13 +3,10 @@ import 'dart:io';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
-
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -198,11 +195,8 @@ class _NuevoComentario extends StatelessWidget {
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            borderSide: const BorderSide(
+              color: AppNewTheme.greyBorder,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -261,31 +255,22 @@ class _Comentario extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(
                 width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                color: AppNewTheme.greyBorder,
               ),
               left: BorderSide(
                 width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                color: AppNewTheme.greyBorder,
               ),
               right: BorderSide(
                 width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                color: AppNewTheme.greyBorder,
               ),
             ),
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
@@ -305,10 +290,7 @@ class _Comentario extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1.5,
-              color: AppTheme.color(
-                context,
-                Styles.greyBorder,
-              ),
+              color: AppNewTheme.greyBorder,
             ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
@@ -373,10 +355,7 @@ class _Comentario extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
-              color: AppTheme.color(
-                context,
-                Styles.greyBorder,
-              ),
+              color: AppNewTheme.greyBorder,
               height: 20,
               width: 3,
             ),

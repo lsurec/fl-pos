@@ -91,10 +91,9 @@ class ApiView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CardWidget(
-                    color: AppTheme.color(
-                      context,
-                      Styles.secondBackground,
-                    ),
+                    color: AppNewTheme.isDark()
+                        ? AppNewTheme.backroundDarkSecondary
+                        : AppNewTheme.backroundSecondary,
                     width: double.infinity,
                     raidus: 18,
                     child: Padding(

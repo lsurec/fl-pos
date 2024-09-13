@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -30,12 +29,8 @@ class UsuariosView extends StatelessWidget {
             floatingActionButton: vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
                 ? FloatingActionButton(
                     onPressed: () => vmDetalle.invitadosButton(context),
-                    child: Icon(
+                    child: const Icon(
                       Icons.group_add_rounded,
-                      color: AppTheme.color(
-                        context,
-                        Styles.white,
-                      ),
                     ),
                   )
                 : null,
@@ -62,21 +57,14 @@ class UsuariosView extends StatelessWidget {
                             'buscar',
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: AppTheme.color(
-                                context,
-                                Styles.border,
-                              ),
+                            borderSide: const BorderSide(
+                              color: AppNewTheme.greyBorder,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           suffixIcon: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.search,
-                              color: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
                             ),
                             onPressed: () => vm.buscarUsuario(context),
                           ),
@@ -135,14 +123,11 @@ class _UsuariosEncontados extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final UsuarioModel usuario = vm.usuarios[index];
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               bottom: BorderSide(
                 width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                color: AppNewTheme.greyBorder,
               ),
             ),
           ),
@@ -184,9 +169,8 @@ class _UsuariosEncontados extends StatelessWidget {
                   children: [
                     if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
                       Checkbox(
-                        activeColor: AppTheme.color(
-                          context,
-                          Styles.darkPrimary,
+                        activeColor: AppNewTheme.hexToColor(
+                          Preferences.valueColor,
                         ),
                         value: usuario.select,
                         onChanged: (value) => vm.changeChecked(

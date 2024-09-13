@@ -1,8 +1,6 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class AlertWidget extends StatelessWidget {
@@ -26,10 +24,9 @@ class AlertWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.black,
-      ),
+      backgroundColor: AppNewTheme.isDark()
+          ? AppNewTheme.darkBackroundColor
+          : AppNewTheme.backroundColor,
       title: Text(title),
       content: Text(description),
       actions: [

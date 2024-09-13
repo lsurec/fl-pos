@@ -1,4 +1,5 @@
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -132,10 +133,11 @@ class LoginView extends StatelessWidget {
                           ),
                           SwitchListTile(
                             contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 0),
-                            activeColor: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
+                              vertical: 0,
+                              horizontal: 0,
+                            ),
+                            activeColor: AppNewTheme.hexToColor(
+                              Preferences.valueColor,
                             ),
                             title: Text(
                               AppLocalizations.of(context)!.translate(

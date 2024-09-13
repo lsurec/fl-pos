@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -46,21 +44,15 @@ class IdReferenciaView extends StatelessWidget {
                           'buscar',
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppTheme.color(
-                              context,
-                              Styles.border,
-                            ),
+                          borderSide: const BorderSide(
+                            color: AppNewTheme.greyBorder,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         suffixIcon: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.search,
-                            color: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
-                            ),
+                            color: AppNewTheme.grey,
                           ),
                           onPressed: () => vm.buscarIdRefencia(context),
                         ),
@@ -121,14 +113,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
             referencia,
           ),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   width: 1.5,
-                  color: AppTheme.color(
-                    context,
-                    Styles.greyBorder,
-                  ),
+                  color: AppNewTheme.greyBorder,
                 ),
               ),
             ),

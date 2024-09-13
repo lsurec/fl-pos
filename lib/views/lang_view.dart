@@ -50,14 +50,10 @@ class LangView extends StatelessWidget {
                           children: [
                             CardWidget(
                               color: index == Preferences.idLanguage
-                                  ? AppTheme.color(
-                                      context,
-                                      Styles.primary,
-                                    )
-                                  : AppTheme.color(
-                                      context,
-                                      Styles.secondBackground,
-                                    ),
+                                  ? AppNewTheme.primary
+                                  : AppNewTheme.isDark()
+                                      ? AppNewTheme.backroundDarkSecondary
+                                      : AppNewTheme.backroundSecondary,
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(

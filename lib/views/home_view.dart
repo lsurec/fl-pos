@@ -1,8 +1,6 @@
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +31,7 @@ class HomeView extends StatelessWidget {
                     child: Container(
                       width: 35,
                       height: 35,
-                      color: AppTheme.color(
-                        context,
-                        Styles.primary,
-                      ),
+                      color: AppNewTheme.primary,
                       child: Center(
                         child: Text(
                           loginVM.user.isNotEmpty

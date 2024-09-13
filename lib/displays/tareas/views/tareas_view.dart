@@ -1,9 +1,7 @@
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -152,46 +150,33 @@ class _CardTask extends StatelessWidget {
                     children: [
                       CardWidget(
                         margin: const EdgeInsets.only(bottom: 10),
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
+                        color: AppNewTheme.isDark()
+                            ? AppNewTheme.backroundDarkSecondary
+                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.border,
-                        ),
+                        borderColor: AppNewTheme.greyBorder,
                         raidus: 15,
                         child: Column(
                           children: [
                             Container(
                               padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 border: Border(
                                   top: BorderSide(
                                     width: 1.5,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.greyBorder,
-                                    ),
+                                    color: AppNewTheme.greyBorder,
                                   ),
                                   left: BorderSide(
                                     width: 1.5,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.greyBorder,
-                                    ),
+                                    color: AppNewTheme.greyBorder,
                                   ),
                                   right: BorderSide(
                                     width: 1.5,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.greyBorder,
-                                    ),
+                                    color: AppNewTheme.greyBorder,
                                   ),
                                 ),
-                                borderRadius: const BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10),
                                 ),
@@ -212,10 +197,7 @@ class _CardTask extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 1.5,
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.greyBorder,
-                                  ),
+                                  color: AppNewTheme.greyBorder,
                                 ),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
@@ -274,16 +256,12 @@ class _CardTask extends StatelessWidget {
                 : const EdgeInsets.only(
                     top: 5,
                   ),
-            color: AppTheme.color(
-              context,
-              Styles.secondBackground,
-            ),
+            color: AppNewTheme.isDark()
+                ? AppNewTheme.backroundDarkSecondary
+                : AppNewTheme.backroundSecondary,
             elevation: 0,
             borderWidth: 1.5,
-            borderColor: AppTheme.color(
-              context,
-              Styles.tareaBorder,
-            ),
+            borderColor: AppNewTheme.greyBorder,
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -406,12 +384,8 @@ class _InputSerach extends StatelessWidget {
               BlockTranslate.tareas,
               'buscar',
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
-              color: AppTheme.color(
-                context,
-                Styles.darkPrimary,
-              ),
             ),
             onPressed: () => vm.searchText(context),
           ),

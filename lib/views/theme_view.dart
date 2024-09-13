@@ -57,14 +57,10 @@ class ThemeView extends StatelessWidget {
                           children: [
                             CardWidget(
                               color: theme.id == AppNewTheme.idTema
-                                  ? AppTheme.color(
-                                      context,
-                                      Styles.primary,
-                                    )
-                                  : AppTheme.color(
-                                      context,
-                                      Styles.secondBackground,
-                                    ),
+                                  ? AppNewTheme.primary
+                                  : AppNewTheme.isDark()
+                                      ? AppNewTheme.darkBackroundColor
+                                      : AppNewTheme.backroundColor,
                               width: 400,
                               margin: const EdgeInsets.only(bottom: 25),
                               child: ListTile(

@@ -1,15 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
-
-import '../view_models/view_models.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -111,11 +108,8 @@ class CrearTareaView extends StatelessWidget {
                               'agregaTitulo',
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.border,
-                                ),
+                              borderSide: const BorderSide(
+                                color: AppNewTheme.greyBorder,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -134,12 +128,9 @@ class CrearTareaView extends StatelessWidget {
                           children: [
                             TextButton.icon(
                               onPressed: () => vm.abrirFechaInicial(context),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.calendar_today_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
-                                ),
+                                color: AppNewTheme.primary,
                               ),
                               label: Text(
                                 "${AppLocalizations.of(context)!.translate(
@@ -151,12 +142,9 @@ class CrearTareaView extends StatelessWidget {
                             ),
                             TextButton.icon(
                               onPressed: () => vm.abrirHoraInicial(context),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.schedule_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
-                                ),
+                                color: AppNewTheme.primary,
                               ),
                               label: Text(
                                 "${AppLocalizations.of(context)!.translate(
@@ -183,12 +171,9 @@ class CrearTareaView extends StatelessWidget {
                           children: [
                             TextButton.icon(
                               onPressed: () => vm.abrirFechaFinal(context),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.calendar_today_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
-                                ),
+                                color: AppNewTheme.primary,
                               ),
                               label: Text(
                                 "${AppLocalizations.of(context)!.translate(
@@ -200,12 +185,9 @@ class CrearTareaView extends StatelessWidget {
                             ),
                             TextButton.icon(
                               onPressed: () => vm.abrirHoraFinal(context),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.schedule_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
-                                ),
+                                color: AppNewTheme.primary,
                               ),
                               label: Text(
                                 "${AppLocalizations.of(context)!.translate(
@@ -234,10 +216,7 @@ class CrearTareaView extends StatelessWidget {
                               padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.border,
-                                  ),
+                                  color: AppNewTheme.greyBorder,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -604,10 +583,7 @@ class _TiempoEstimado extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+          color: AppNewTheme.greyBorder,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -643,11 +619,8 @@ class _ObservacionTarea extends StatelessWidget {
           'notaObservacion',
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppNewTheme.greyBorder,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -679,11 +652,8 @@ class _PrioridadTarea extends StatelessWidget {
           borderSide: const BorderSide(),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppNewTheme.greyBorder,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -759,10 +729,7 @@ class _EstadoTarea extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+          color: AppNewTheme.greyBorder,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -796,11 +763,8 @@ class _TipoTarea extends StatelessWidget {
               const BorderSide(), // Cambia el color del borde inferior aquí
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppNewTheme.greyBorder,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

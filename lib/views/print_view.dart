@@ -269,14 +269,8 @@ class _SettingsFromState extends State<SettingsFrom> {
                         : null,
                     child: Container(
                       color: (_currentStatus == BTStatus.connected)
-                          ? AppTheme.color(
-                              context,
-                              Styles.primary,
-                            )
-                          : AppTheme.color(
-                              context,
-                              Styles.grey,
-                            ),
+                          ? AppNewTheme.primary
+                          : AppNewTheme.grey,
                       child: Center(
                         child: Text(
                           widget.settings.opcion == 1
@@ -307,12 +301,8 @@ class _SettingsFromState extends State<SettingsFrom> {
                       onPressed: () {
                         NotificationService.showInfoPrint(context);
                       },
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.help_outline,
-                        color: AppTheme.color(
-                          context,
-                          Styles.icons,
-                        ),
                         size: 20,
                       ),
                       tooltip: "Ayuda",

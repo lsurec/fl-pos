@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/app_new_theme.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:provider/provider.dart';
 
@@ -42,11 +41,8 @@ class SearchTask extends StatelessWidget {
             },
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppTheme.color(
-                    context,
-                    Styles.border,
-                  ),
+                borderSide: const BorderSide(
+                  color: AppNewTheme.greyBorder,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -63,12 +59,9 @@ class SearchTask extends StatelessWidget {
                   BlockTranslate.tareas,
                   'buscar',
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
-                  color: AppTheme.color(
-                    context,
-                    Styles.darkPrimary,
-                  ),
+                  color: AppNewTheme.grey,
                 ),
                 onPressed: () => vm.buscarTareas(
                   context,
@@ -117,11 +110,8 @@ class SearchTasks extends StatelessWidget {
             },
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppTheme.color(
-                    context,
-                    Styles.border,
-                  ),
+                borderSide: const BorderSide(
+                  color: AppNewTheme.greyBorder,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -138,12 +128,9 @@ class SearchTasks extends StatelessWidget {
                   BlockTranslate.tareas,
                   'buscar',
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
-                  color: AppTheme.color(
-                    context,
-                    Styles.darkPrimary,
-                  ),
+                  color: AppNewTheme.primary,
                 ),
                 onPressed: () => vm.buscarRangoTareas(
                   context,
@@ -207,12 +194,9 @@ class BuscarTarea extends StatelessWidget {
                   BlockTranslate.tareas,
                   'buscar',
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
-                  color: AppTheme.color(
-                    context,
-                    Styles.darkPrimary,
-                  ),
+                  color: AppNewTheme.primary,
                 ),
                 onPressed: () => vm.buscarRangoTareas(
                   context,
