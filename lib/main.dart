@@ -117,7 +117,7 @@ class MyApp extends StatelessWidget {
               isDarkMode: AppNewTheme.idTema == 1 ? false : true,
             ), // Usa el tema seleccionado
       //configurar ruta inicial
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: const TemasColoresView(), // Muestra el SplashScreen durante el inicio
       // home: const Tabs4View(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta

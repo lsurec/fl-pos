@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class AppNewTheme {
   static int idTema = int.tryParse(Preferences.idThemeApp) ?? 0;
@@ -46,5 +47,41 @@ class AppNewTheme {
     }
 
     return false;
+  }
+
+  static Color colorPref(int idColor) {
+
+    switch (idColorTema) {
+      case 0: // Sistema
+        return primary;
+      case 1: // Azul
+        return BlueTheme.primary;
+      case 2: // Rojo
+        return RedTheme.primary;
+      case 3: // Naranja
+        return OrangeTheme.primary;
+      case 4: // Verde Musgo
+        return OliveTheme.primary;
+      case 5: // Verde
+        return GreenTheme.primary;
+      case 6: // Verde 2
+        return GreenAccentTheme.primary;
+      case 7: // Cyan
+        return CyanTheme.primary;
+      case 8: // Aqua
+        return SteelBlueTheme.primary;
+      case 9: // Lila
+        return MediumPurpleTheme.primary;
+      case 10: // Morado
+        return PurpleTheme.primary;
+      case 11: // Fucsia
+        return FuchsiaTheme.primary;
+      case 12: // Rosadito
+        return RosyBrownTheme.primary;
+      case 13: // Gris
+        return GreyTheme.primary;
+      default: // Default
+        return LightTheme.primary;
+    }
   }
 }

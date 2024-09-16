@@ -5,14 +5,11 @@ import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class RedTheme {
   // Colores del tema claro
-  static const Color lightPrimaryColor = Colors.red;
-
-  // Colores del tema oscuro
-  static final Color darkPrimaryColor = Colors.red.shade800;
+  static const Color primary = Color(0xFFFF0000);
 
   static final ThemeData light = ThemeData.light().copyWith(
     brightness: Brightness.light,
-    primaryColor: lightPrimaryColor,
+    primaryColor: primary,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
     appBarTheme: AppBarTheme(
       backgroundColor: AppNewTheme.backroundColor,
@@ -22,11 +19,11 @@ class RedTheme {
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: lightPrimaryColor,
+      backgroundColor: primary,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: lightPrimaryColor,
+        backgroundColor: primary,
         elevation: 0,
         shape: const StadiumBorder(),
       ),
@@ -34,7 +31,7 @@ class RedTheme {
   );
 
   static final ThemeData dark = ThemeData.dark().copyWith(
-    primaryColor: darkPrimaryColor,
+    primaryColor: primary,
     scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppNewTheme.darkBackroundColor,
@@ -43,11 +40,11 @@ class RedTheme {
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: darkPrimaryColor,
+      backgroundColor: primary,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: darkPrimaryColor,
+        backgroundColor: primary,
         elevation: 0,
         shape: const StadiumBorder(),
       ),

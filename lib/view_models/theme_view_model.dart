@@ -204,7 +204,7 @@ class ThemeViewModel extends ChangeNotifier {
     AppNewTheme.idTema = idTema;
     Preferences.idThemeApp = AppNewTheme.idTema.toString();
     Preferences.idColor = AppNewTheme.idColorTema.toString();
-    Preferences.valueColor = obtenerColor(context, Preferences.idColor);
+    Preferences.valueColor = obtenerColor(Preferences.idColor);
 
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
@@ -232,7 +232,9 @@ class ThemeViewModel extends ChangeNotifier {
     }
   }
 
-  String obtenerColor(BuildContext context, String idcolor) {
+  static Color? preferencia;
+
+  String obtenerColor(String idcolor) {
     // Convertir idcolor a int
     int? idColorInt = int.tryParse(idcolor);
 
@@ -251,23 +253,6 @@ class ThemeViewModel extends ChangeNotifier {
 
     // Retornar el color predeterminado si no se encuentra
     return "#134895";
-  }
-
-  ColorModel obtenerColorModel(
-    BuildContext context,
-    int idcolor,
-  ) {
-    // Convertir idcolor a int
-
-    for (var i = 0; i < coloresTemaApp.length; i++) {
-      ColorModel color = coloresTemaApp[i];
-      if (idcolor == color.id) {
-        return color;
-      }
-    }
-
-    // Retornar el color predeterminado si no se encuentra
-    return defaultColor;
   }
 
 // Función auxiliar para obtener el tema por color y modo

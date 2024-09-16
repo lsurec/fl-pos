@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -26,6 +25,18 @@ class TemasColoresView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      "aceptar",
+                    ),
+                    style: StyleApp.normal.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   ElevatedButton(
                     onPressed: () {},
                     child: SizedBox(
@@ -41,18 +52,8 @@ class TemasColoresView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 20,
-                    ),
-                    padding: const EdgeInsets.all(20),
-                    color: AppNewTheme.hexToColor(
-                      Preferences.valueColor,
-                    ),
-                    child: const Text(
-                      "Cambio de color",
-                      style: StyleApp.whiteNormal,
-                    ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
