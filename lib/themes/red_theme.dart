@@ -10,7 +10,7 @@ class RedTheme {
   // Colores del tema oscuro
   static final Color darkPrimaryColor = Colors.red.shade800;
 
-  static final ThemeData lightRed = ThemeData.light().copyWith(
+  static final ThemeData light = ThemeData.light().copyWith(
     brightness: Brightness.light,
     primaryColor: lightPrimaryColor,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
@@ -24,9 +24,16 @@ class RedTheme {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: lightPrimaryColor,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: lightPrimaryColor,
+        elevation: 0,
+        shape: const StadiumBorder(),
+      ),
+    ),
   );
 
-  static final ThemeData darkRed = ThemeData.dark().copyWith(
+  static final ThemeData dark = ThemeData.dark().copyWith(
     primaryColor: darkPrimaryColor,
     scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
@@ -37,6 +44,13 @@ class RedTheme {
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: darkPrimaryColor,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: darkPrimaryColor,
+        elevation: 0,
+        shape: const StadiumBorder(),
+      ),
     ),
   );
 }

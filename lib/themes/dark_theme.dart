@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class DarkTheme {
   //COLORES
@@ -201,23 +202,22 @@ class DarkTheme {
   // Colores del tema claro
   static const Color darkPrimaryColor = Color(0xff134895);
 
-  static final ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
+  static final ThemeData darkTheme = ThemeData.dark().copyWith(
+    scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
-      backgroundColor: darkPrimaryColor,
+      backgroundColor: AppNewTheme.darkBackroundColor,
       titleTextStyle: TextStyle(
-        color: Colors.white,
+        fontSize: 20,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: darkPrimaryColor,
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.white,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.white,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: darkPrimaryColor,
+        elevation: 0,
+        shape: const StadiumBorder(),
       ),
     ),
   );

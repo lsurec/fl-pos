@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 
-class OrangeTheme {
+class MediumPurpleTheme {
   // Color primario de este tema
-  static const Color primary = Color(0xffFFA500);
+  static const Color primary = Color(0xff6156ca);
 
   static final ThemeData light = ThemeData.light().copyWith(
     primaryColor: primary,

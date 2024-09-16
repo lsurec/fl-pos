@@ -206,21 +206,21 @@ class LightTheme {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
-    appBarTheme: const AppBarTheme(
-      backgroundColor: lightPrimaryColor,
-      titleTextStyle: TextStyle(
-        color: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: AppNewTheme.backroundColor,
+      titleTextStyle: const TextStyle(
+        fontSize: 20,
+        color: Colors.black,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: lightPrimaryColor,
     ),
-    textTheme: const TextTheme(
-      bodyText1: TextStyle(
-        color: Colors.black,
-      ),
-      bodyText2: TextStyle(
-        color: Colors.black,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: lightPrimaryColor,
+        elevation: 0,
+        shape: const StadiumBorder(),
       ),
     ),
   );

@@ -1,11 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 
-class OrangeTheme {
+class FuchsiaTheme {
   // Color primario de este tema
-  static const Color primary = Color(0xffFFA500);
+  static const Color primary = Color(0xffab367a);
 
   static final ThemeData light = ThemeData.light().copyWith(
     primaryColor: primary,

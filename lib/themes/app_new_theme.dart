@@ -28,21 +28,6 @@ class AppNewTheme {
 
   static const Color grayAppBar = Color(0xfff5f5f5);
 
-  // Función para convertir un color hexadecimal en formato RGB
-  static List<int> hexToRgb(String hexColor) {
-    // Elimina el carácter '#'
-    if (hexColor[0] == '#') {
-      hexColor = hexColor.substring(1);
-    }
-
-    // Divide el color en componentes r, g y b
-    int r = int.parse(hexColor.substring(0, 2), radix: 16);
-    int g = int.parse(hexColor.substring(2, 4), radix: 16);
-    int b = int.parse(hexColor.substring(4, 6), radix: 16);
-
-    return [r, g, b];
-  }
-
   static Color hexToColor(String hexColor) {
     // Asegurarse de que el string no tenga el carácter '#'
     hexColor = hexColor.replaceAll("#", "");

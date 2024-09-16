@@ -4,14 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class GreenTheme {
-  // Colores del tema claro
-  static const Color lightPrimaryColor = Colors.green;
+  // Color primario de este tema
+  static const Color primary = Color(0xff3c7944);
 
-  // Colores del tema oscuro
-  static final Color darkPrimaryColor = Colors.green.shade800;
-
-  static final ThemeData lightGreen = ThemeData.light().copyWith(
-    primaryColor: lightPrimaryColor,
+  static final ThemeData light = ThemeData.light().copyWith(
+    primaryColor: primary,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
     appBarTheme: AppBarTheme(
       backgroundColor: AppNewTheme.backroundColor,
@@ -21,12 +18,19 @@ class GreenTheme {
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-      backgroundColor: lightPrimaryColor,
+      backgroundColor: primary,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+        elevation: 0,
+        shape: const StadiumBorder(),
+      ),
     ),
   );
 
-  static final ThemeData darkGreen = ThemeData.dark().copyWith(
-    primaryColor: darkPrimaryColor,
+  static final ThemeData dark = ThemeData.dark().copyWith(
+    primaryColor: primary,
     scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppNewTheme.darkBackroundColor,
@@ -34,8 +38,15 @@ class GreenTheme {
         fontSize: 20,
       ),
     ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: darkPrimaryColor,
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: primary,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: primary,
+        elevation: 0,
+        shape: const StadiumBorder(),
+      ),
     ),
   );
 }
