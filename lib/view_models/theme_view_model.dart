@@ -241,8 +241,8 @@ class ThemeViewModel extends ChangeNotifier {
       return "#134895";
     }
 
-    for (var i = 0; i < coloresTemaApp(context).length; i++) {
-      ColorModel color = coloresTemaApp(context)[i];
+    for (var i = 0; i < coloresTemaApp.length; i++) {
+      ColorModel color = coloresTemaApp[i];
       // Comparar idColorInt (int) con color.id (int)
       if (idColorInt == color.id) {
         return color.valor;
@@ -259,8 +259,8 @@ class ThemeViewModel extends ChangeNotifier {
   ) {
     // Convertir idcolor a int
 
-    for (var i = 0; i < coloresTemaApp(context).length; i++) {
-      ColorModel color = coloresTemaApp(context)[i];
+    for (var i = 0; i < coloresTemaApp.length; i++) {
+      ColorModel color = coloresTemaApp[i];
       if (idcolor == color.id) {
         return color;
       }
@@ -344,85 +344,6 @@ class ThemeViewModel extends ChangeNotifier {
     ];
   }
 
-  List<ColorModel> coloresAnteriores(BuildContext context) {
-    final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final bool isDarkMode = brightness == Brightness.dark;
-    final bool isLightMode = brightness == Brightness.light;
-
-    return [
-      ColorModel(
-        id: 1,
-        valor: "#FF0000",
-        nombre: "Rojo",
-        tema: TemaModel(
-          id: 0,
-          descripcion: "Sistema",
-          tema: isLightMode
-              ? LightTheme.lightTheme
-              : isDarkMode
-                  ? DarkTheme.darkTheme
-                  : LightTheme.lightTheme,
-        ),
-      ),
-      ColorModel(
-        id: 2,
-        valor: "#FFA500",
-        nombre: "Naranja",
-        tema: TemaModel(
-          id: 2,
-          descripcion: "Naranja",
-          tema: isLightMode
-              ? OrangeTheme.light
-              : isDarkMode
-                  ? OrangeTheme.dark
-                  : OrangeTheme.light,
-        ),
-      ),
-      ColorModel(
-        id: 3,
-        valor: "#008000",
-        nombre: "Verde",
-        tema: TemaModel(
-          id: 3,
-          descripcion: "Verde",
-          tema: isLightMode
-              ? GreenTheme.light
-              : isDarkMode
-                  ? GreenTheme.dark
-                  : GreenTheme.light,
-        ),
-      ),
-      ColorModel(
-        id: 4,
-        valor: "#134895",
-        nombre: "Azul",
-        tema: TemaModel(
-          id: 4,
-          descripcion: "Azul",
-          tema: isLightMode
-              ? BlueTheme.light
-              : isDarkMode
-                  ? BlueTheme.dark
-                  : BlueTheme.light,
-        ),
-      ),
-      ColorModel(
-        id: 5,
-        valor: "#800080",
-        nombre: "Morado",
-        tema: TemaModel(
-          id: 5,
-          descripcion: "Morado",
-          tema: isLightMode
-              ? PurpleTheme.light
-              : isDarkMode
-                  ? PurpleTheme.dark
-                  : PurpleTheme.light,
-        ),
-      ),
-    ];
-  }
-
   ColorModel defaultColor = ColorModel(
     id: 1,
     valor: "#FF0000",
@@ -434,208 +355,146 @@ class ThemeViewModel extends ChangeNotifier {
     ),
   );
 
-  List<ColorModel> coloresTemaApp(BuildContext context) {
-    final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final bool isDarkMode = brightness == Brightness.dark;
-    final bool isLightMode = brightness == Brightness.light;
-
-    return [
-      ColorModel(
+  List<ColorModel> coloresTemaApp = [
+    ColorModel(
+      id: 0,
+      valor: "#134895",
+      nombre: "Azul",
+      tema: TemaModel(
         id: 0,
-        valor: "#134895",
-        nombre: "Azul",
-        tema: TemaModel(
-          id: 0,
-          descripcion: "Auto",
-          tema: isLightMode
-              ? LightTheme.lightTheme
-              : isDarkMode
-                  ? DarkTheme.darkTheme
-                  : LightTheme.lightTheme,
-        ),
+        descripcion: "Auto",
+        tema: LightTheme.lightTheme,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 1,
+      valor: "#134895",
+      nombre: "Azul",
+      tema: TemaModel(
         id: 1,
-        valor: "#134895",
-        nombre: "Azul",
-        tema: TemaModel(
-          id: 1,
-          descripcion: "Azul",
-          tema: isLightMode
-              ? BlueTheme.light
-              : isDarkMode
-                  ? BlueTheme.dark
-                  : BlueTheme.light,
-        ),
+        descripcion: "Azul",
+        tema: BlueTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 2,
+      valor: "#FF0000",
+      nombre: "Rojo",
+      tema: TemaModel(
         id: 2,
-        valor: "#FF0000",
-        nombre: "Rojo",
-        tema: TemaModel(
-          id: 2,
-          descripcion: "Rojo",
-          tema: isLightMode
-              ? RedTheme.light
-              : isDarkMode
-                  ? RedTheme.dark
-                  : RedTheme.light,
-        ),
+        descripcion: "Rojo",
+        tema: RedTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 3,
+      valor: "#FFA500",
+      nombre: "Naranja",
+      tema: TemaModel(
         id: 3,
-        valor: "#FFA500",
-        nombre: "Naranja",
-        tema: TemaModel(
-          id: 3,
-          descripcion: "Naranja",
-          tema: isLightMode
-              ? OrangeTheme.light
-              : isDarkMode
-                  ? OrangeTheme.light
-                  : OrangeTheme.dark,
-        ),
+        descripcion: "Naranja",
+        tema: OrangeTheme.dark,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 4,
+      valor: "#6e6b57",
+      nombre: "Verde Musgo",
+      tema: TemaModel(
         id: 4,
-        valor: "#6e6b57",
-        nombre: "Verde Musgo",
-        tema: TemaModel(
-          id: 4,
-          descripcion: "Verde Musgo",
-          tema: isLightMode
-              ? OliveTheme.light
-              : isDarkMode
-                  ? OliveTheme.dark
-                  : OliveTheme.light,
-        ),
+        descripcion: "Verde Musgo",
+        tema: OliveTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 5,
+      valor: "#3c7944",
+      nombre: "Verde",
+      tema: TemaModel(
         id: 5,
-        valor: "#3c7944",
-        nombre: "Verde",
-        tema: TemaModel(
-          id: 5,
-          descripcion: "Verde",
-          tema: isLightMode
-              ? GreenTheme.light
-              : isDarkMode
-                  ? GreenTheme.dark
-                  : GreenTheme.light,
-        ),
+        descripcion: "Verde",
+        tema: GreenTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 6,
+      valor: "#1d8763",
+      nombre: "Verde 2",
+      tema: TemaModel(
         id: 6,
-        valor: "#1d8763",
-        nombre: "Verde 2",
-        tema: TemaModel(
-          id: 6,
-          descripcion: "Verde 2",
-          tema: isLightMode
-              ? GreenAccentTheme.light
-              : isDarkMode
-                  ? GreenAccentTheme.dark
-                  : GreenAccentTheme.light,
-        ),
+        descripcion: "Verde 2",
+        tema: GreenAccentTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 7,
+      valor: "#067d91",
+      nombre: "Cyan",
+      tema: TemaModel(
         id: 7,
-        valor: "#067d91",
-        nombre: "Cyan",
-        tema: TemaModel(
-          id: 7,
-          descripcion: "Cyan",
-          tema: isLightMode
-              ? CyanTheme.light
-              : isDarkMode
-                  ? CyanTheme.dark
-                  : CyanTheme.light,
-        ),
+        descripcion: "Cyan",
+        tema: CyanTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 8,
+      valor: "#336ca3",
+      nombre: "Azul Acerado",
+      tema: TemaModel(
         id: 8,
-        valor: "#336ca3",
-        nombre: "Azul Acerado",
-        tema: TemaModel(
-          id: 8,
-          descripcion: "Azul Acerado",
-          tema: isLightMode
-              ? SteelBlueTheme.light
-              : isDarkMode
-                  ? SteelBlueTheme.dark
-                  : SteelBlueTheme.light,
-        ),
+        descripcion: "Azul Acerado",
+        tema: SteelBlueTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 9,
+      valor: "#6156ca",
+      nombre: "Lila",
+      tema: TemaModel(
         id: 9,
-        valor: "#6156ca",
-        nombre: "Lila",
-        tema: TemaModel(
-          id: 9,
-          descripcion: "Lila",
-          tema: isLightMode
-              ? OliveTheme.light
-              : isDarkMode
-                  ? OliveTheme.dark
-                  : OliveTheme.light,
-        ),
+        descripcion: "Lila",
+        tema: MediumPurpleTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 10,
+      valor: "#9832ca",
+      nombre: "Morado",
+      tema: TemaModel(
         id: 10,
-        valor: "#9832ca",
-        nombre: "Morado",
-        tema: TemaModel(
-          id: 10,
-          descripcion: "Morado",
-          tema: isLightMode
-              ? OliveTheme.light
-              : isDarkMode
-                  ? OliveTheme.dark
-                  : OliveTheme.light,
-        ),
+        descripcion: "Morado",
+        tema: PurpleTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 11,
+      valor: "#ab367a",
+      nombre: "Fucsia",
+      tema: TemaModel(
         id: 11,
-        valor: "#ab367a",
-        nombre: "Fucsia",
-        tema: TemaModel(
-          id: 11,
-          descripcion: "Fucsia",
-          tema: isLightMode
-              ? FuchsiaTheme.light
-              : isDarkMode
-                  ? FuchsiaTheme.dark
-                  : FuchsiaTheme.light,
-        ),
+        descripcion: "Fucsia",
+        tema: FuchsiaTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 12,
+      valor: "#8e606b",
+      nombre: "Rosita",
+      tema: TemaModel(
         id: 12,
-        valor: "#8e606b",
-        nombre: "Rosita",
-        tema: TemaModel(
-          id: 12,
-          descripcion: "Rosita",
-          tema: isLightMode
-              ? RosyBrownTheme.light
-              : isDarkMode
-                  ? RosyBrownTheme.dark
-                  : RosyBrownTheme.light,
-        ),
+        descripcion: "Rosita",
+        tema: RosyBrownTheme.light,
       ),
-      ColorModel(
+    ),
+    ColorModel(
+      id: 13,
+      valor: "#72717f",
+      nombre: "Gris",
+      tema: TemaModel(
         id: 13,
-        valor: "#72717f",
-        nombre: "Gris",
-        tema: TemaModel(
-          id: 13,
-          descripcion: "Gris",
-          tema: isLightMode
-              ? GreyTheme.light
-              : isDarkMode
-                  ? GreyTheme.dark
-                  : GreyTheme.light,
-        ),
+        descripcion: "Gris",
+        tema: GreyTheme.light,
       ),
-    ];
-  }
+    ),
+  ];
 }

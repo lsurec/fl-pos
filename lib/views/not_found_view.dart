@@ -36,7 +36,6 @@ class NotFoundView extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              style: StyleApp.button,
               child: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.botones,

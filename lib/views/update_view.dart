@@ -63,7 +63,6 @@ class UpdateView extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                style: StyleApp.button,
                 // onPressed: () => vm.openLink(),
                 onPressed: () {},
                 child: Row(

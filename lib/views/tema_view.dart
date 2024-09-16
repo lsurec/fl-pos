@@ -13,8 +13,6 @@ class TemasColoresView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vmTema = Provider.of<ThemeViewModel>(context);
-    final List<ColorModel> colores = vmTema.coloresTemaApp(context);
-    // Índice del tema seleccionado
     // ID del color seleccionado
     int selectedColorId = AppNewTheme.idColorTema;
 
@@ -30,7 +28,6 @@ class TemasColoresView extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    // style: StyleApp.button,
                     child: SizedBox(
                       width: double.infinity,
                       child: Center(
@@ -73,9 +70,9 @@ class TemasColoresView extends StatelessWidget {
                         // Relación de aspecto de cada elemento
                         childAspectRatio: 1,
                       ),
-                      itemCount: colores.length,
+                      itemCount: vmTema.coloresTemaApp.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final ColorModel color = colores[index];
+                        final ColorModel color = vmTema.coloresTemaApp[index];
 
                         // Verificar si este es el color seleccionado
                         bool isSelected = color.id == selectedColorId;

@@ -410,7 +410,6 @@ class _SettingsFromState extends State<SettingsFrom> {
                                           ),
                                         );
                                       },
-                                      style: StyleApp.button,
                                       child: Text(
                                         AppLocalizations.of(context)!.translate(
                                           BlockTranslate.botones,
@@ -503,7 +502,6 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
           onPressed: () {
             Navigator.pop(context);
           },
-          style: StyleApp.button,
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,
@@ -519,9 +517,7 @@ class _SelectSizePaperFromState extends State<SelectSizePaperFrom> {
                   Navigator.pop(context);
                 }
               : null,
-          style: (paper != null)
-              ? StyleApp.button //si esta desactivado
-              : StyleApp.disabledButton,
+          style: (paper == null) ? StyleApp.disabledButton : null,
           child: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.botones,

@@ -131,7 +131,6 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => Navigator.pop(context),
-                                    style: StyleApp.button,
                                     // onPressed: () => Preferences.clearUrl(),
                                     child: SizedBox(
                                       width: double.infinity,
@@ -152,7 +151,6 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => vm.connectService(context),
-                                    style: StyleApp.button,
                                     child: SizedBox(
                                       width: double.infinity,
                                       child: Center(
@@ -173,7 +171,6 @@ class ApiView extends StatelessWidget {
                           if (Preferences.urlApi.isEmpty)
                             ElevatedButton(
                               onPressed: () => vm.connectService(context),
-                              style: StyleApp.button,
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Center(

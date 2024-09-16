@@ -175,14 +175,6 @@ class StyleApp {
     fontWeight: FontWeight.bold,
   );
 
-  static final ButtonStyle button = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(
-      AppNewTheme.hexToColor(
-        Preferences.valueColor,
-      ),
-    ),
-  );
-
   static final ButtonStyle disabledButton = ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(
       Colors.grey,

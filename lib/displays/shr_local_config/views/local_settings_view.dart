@@ -159,7 +159,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       SizedBox(
                         height: 50,
                         child: ElevatedButton(
-                          style: StyleApp.button,
                           onPressed:
                               vm.estaciones.isEmpty || vm.empresas.isEmpty
                                   ? null

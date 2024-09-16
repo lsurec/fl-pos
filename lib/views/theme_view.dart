@@ -80,7 +80,6 @@ class ThemeView extends StatelessWidget {
                     if (AppTheme.cambiarTema == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
-                        style: StyleApp.button,
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,

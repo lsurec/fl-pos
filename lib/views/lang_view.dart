@@ -77,7 +77,6 @@ class LangView extends StatelessWidget {
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
-                        style: StyleApp.button,
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,

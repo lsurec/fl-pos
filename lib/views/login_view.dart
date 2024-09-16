@@ -150,7 +150,6 @@ class LoginView extends StatelessWidget {
                           const SizedBox(height: 5),
                           ElevatedButton(
                             onPressed: () => vm.login(context),
-                            style: StyleApp.button,
                             child: SizedBox(
                               width: double.infinity,
                               child: Center(
