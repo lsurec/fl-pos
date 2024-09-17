@@ -77,7 +77,9 @@ class TemasColoresView extends StatelessWidget {
                               Text(
                                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto porro dolor est alias excepturi quis, molestias expedita repellat eos inventore a eligendi.",
                                 style: StyleApp.normal.copyWith(
-                                  color: Theme.of(context).primaryColor,
+                                  color: AppNewTheme.idColorTema != 0
+                                      ? Theme.of(context).primaryColor
+                                      : null,
                                 ),
                                 textAlign: TextAlign.justify,
                               ),

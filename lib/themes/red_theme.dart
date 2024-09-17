@@ -28,6 +28,9 @@ class RedTheme {
         shape: const StadiumBorder(),
       ),
     ),
+    cardTheme: const CardTheme(
+      color: AppNewTheme.backroundSecondary,
+    ),
   );
 
   static final ThemeData dark = ThemeData.dark().copyWith(
@@ -39,7 +42,7 @@ class RedTheme {
         fontSize: 20,
       ),
     ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: primary,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -48,6 +51,9 @@ class RedTheme {
         elevation: 0,
         shape: const StadiumBorder(),
       ),
+    ),
+    cardTheme: const CardTheme(
+      color: AppNewTheme.backroundDarkSecondary,
     ),
   );
 }

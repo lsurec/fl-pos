@@ -220,5 +220,8 @@ class DarkTheme {
         shape: const StadiumBorder(),
       ),
     ),
+    cardTheme: const CardTheme(
+      color: AppNewTheme.backroundDarkSecondary,
+    ),
   );
 }

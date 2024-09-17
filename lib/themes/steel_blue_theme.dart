@@ -25,6 +25,9 @@ class SteelBlueTheme {
         shape: const StadiumBorder(),
       ),
     ),
+    cardTheme: const CardTheme(
+      color: AppNewTheme.backroundSecondary,
+    ),
   );
 
   static final ThemeData dark = ThemeData.dark().copyWith(
@@ -45,6 +48,9 @@ class SteelBlueTheme {
         elevation: 0,
         shape: const StadiumBorder(),
       ),
+    ),
+    cardTheme: const CardTheme(
+      color: AppNewTheme.backroundDarkSecondary,
     ),
   );
 }
