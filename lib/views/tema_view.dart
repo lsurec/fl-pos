@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
 
 class TemasColoresView extends StatelessWidget {
@@ -25,35 +27,127 @@ class TemasColoresView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      "aceptar",
-                    ),
-                    style: StyleApp.normal.copyWith(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.translate(
-                            BlockTranslate.botones,
-                            "aceptar",
+                  CardWidget(
+                    color: AppNewTheme.isDark()
+                        ? AppNewTheme.backroundDarkSecondary
+                        : AppNewTheme.backroundSecondary,
+                    raidus: 20,
+                    elevation: 2,
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          height: 60,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: AppNewTheme.isDark()
+                                    ? AppNewTheme.greyBorderDark
+                                    : AppNewTheme.greyBorder,
+                              ),
+                            ),
                           ),
-                          style: StyleApp.whiteBold,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              IconButton(
+                                onPressed: () => vmTema.back(context),
+                                icon: const Icon(Icons.arrow_back),
+                              ),
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Icon(Icons.print_outlined),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(Icons.note_add_outlined),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto porro dolor est alias excepturi quis, molestias expedita repellat eos inventore a eligendi.",
+                                style: StyleApp.normal.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      color: AppNewTheme.hexToColor(
+                                        Preferences.valueColor,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(
+                                          20,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    height: 50,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      color: AppNewTheme.hexToColor(
+                                        Preferences.valueColor,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(
+                                          20,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {},
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.botones,
+                                        "aceptar",
+                                      ),
+                                      style: StyleApp.whiteBold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),

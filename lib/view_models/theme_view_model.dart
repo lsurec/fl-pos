@@ -23,6 +23,10 @@ class ThemeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  back(BuildContext context) {
+    Navigator.pop(context);
+  }
+
   nuevoTema(BuildContext context, ThemeModel tema) async {
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
