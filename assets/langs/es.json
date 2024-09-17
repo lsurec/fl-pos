@@ -226,7 +226,7 @@
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
         "idioma": "Selecciona el idioma de tu preferencia.",
-        "tema2": "Selecciona el tema de tu preferencia. O continua con el tema de tu dispositivo.",
+        "tema2": "Selecciona el tema de tu preferencia. O continúa con el tema de tu dispositivo.",
         "seleccionado": "Idioma seleccionado.",
         "nuevoTema": "Tema seleccionado.",
         "reiniciarTema": "La aplicación se reiniciará una vez que hayas seleccionado el tema de tu preferencia.",
@@ -235,7 +235,9 @@
         "tema": "Tema",
         "color": "Color",
         "fuente": "Tamaño de fuente",
-        "sistema": "Definido por el sistema."
+        "sistema": "Definido por el sistema.",
+        "apariencia": "Apariencia",
+        "cambios": "Lenguaje, Tema, Colores..."
     },
     "error": {
         "informeT": "INFORME DE ERRORES",

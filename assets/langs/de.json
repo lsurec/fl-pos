@@ -223,14 +223,21 @@
         "aplicaranCambios": "Die Änderungen werden am Dokument vorgenommen.",
         "docEditado": "Dokument erfolgreich bearbeitet."
     },
-    "preferencias": {
+    "einstellungen": {
         "idiomaT": "ANWENDUNGSSPRACHE",
         "idioma": "Wählen Sie Ihre bevorzugte Sprache aus.",
-        "tema": "Wähle dein bevorzugtes Thema oder fahre mit dem Thema deines Geräts fort.",
-        "seleccionado": "Sprache ausgewählt.",
-        "nuevoTema": "Thema ausgewählt.",
-        "reiniciarTema": "Die Anwendung wird neu gestartet, sobald Sie Ihr bevorzugtes Thema ausgewählt haben.",
-        "nota": "Hinweis:"
+        "tema2": "Wählen Sie Ihr bevorzugtes Thema oder verwenden Sie das Thema Ihres Geräts.",
+        "seleccionado": "Ausgewählte Sprache.",
+        "nuevoTema": "Ausgewähltes Thema.",
+        "reiniciarTema": "Die App wird neu gestartet, sobald Sie Ihr bevorzugtes Thema ausgewählt haben.",
+        "nota": "Hinweis:",
+        "lenguaje": "Sprache",
+        "tema": "Thema",
+        "color": "Farbe",
+        "fuente": "Schriftgröße",
+        "sistema": "Vom System festgelegt.",
+        "apariencia": "Aussehen",
+        "cambios": "Sprache, Thema, Farben..."
     },
     "error": {
         "informeT": "FEHLERBERICHT",

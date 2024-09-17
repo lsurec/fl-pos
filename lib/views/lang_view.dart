@@ -5,7 +5,6 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
 
 class LangView extends StatelessWidget {
@@ -44,27 +43,21 @@ class LangView extends StatelessWidget {
                       itemCount: vm.languages.length,
                       itemBuilder: (BuildContext context, int index) {
                         final LanguageModel lang = vm.languages[index];
-                        return Column(
-                          children: [
-                            CardWidget(
-                              width: 400,
-                              margin: const EdgeInsets.only(bottom: 25),
-                              child: ListTile(
-                                title: Text(
-                                  vm.getNameLang(lang)!,
-                                  style: index == Preferences.idLanguage
-                                      ? StyleApp.whiteBold
-                                      : StyleApp.normalBold,
-                                  textAlign: TextAlign.center,
-                                ),
-                                onTap: () => vm.cambiarIdioma(
-                                  context,
-                                  Locale(lang.lang),
-                                  index,
-                                ),
-                              ),
-                            ),
-                          ],
+                        return RadioListTile(
+                          activeColor: AppNewTheme.hexToColor(
+                            Preferences.valueColor,
+                          ),
+                          title: Text(
+                            vm.getNameLang(lang)!,
+                            style: StyleApp.normal,
+                          ),
+                          value: index,
+                          groupValue: Preferences.idLanguage,
+                          onChanged: (int? value) => vm.cambiarIdioma(
+                            context,
+                            Locale(lang.lang),
+                            index,
+                          ),
                         );
                       },
                     ),

@@ -16,9 +16,6 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<SettingsViewModel>(context);
     final vmSplash = Provider.of<SplashViewModel>(context);
-    final vmLang = Provider.of<LangViewModel>(context);
-    final vmTheme = Provider.of<ThemeViewModel>(context);
-
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
     final vmHome = Provider.of<HomeViewModel>(context, listen: false);
@@ -136,40 +133,19 @@ class SettingsView extends StatelessWidget {
                 subtitle: Text(Preferences.urlApi),
               ),
               ListTile(
-                leading: const Icon(Icons.language),
-                title: Text(
-                  AppLocalizations.of(context)!.translate(
-                    BlockTranslate.home,
-                    'idioma',
-                  ),
-                  style: StyleApp.normal,
-                ),
-                //Nombre del idioma seleccionado en el idioma seleccionado
-                subtitle: Text(
-                  vmLang.getNameLang(vmLang.languages[Preferences.idLanguage])!,
-                ),
-                trailing: const Icon(Icons.arrow_right),
-                onTap: () => vm.navigateLang(context),
-              ),
-              ListTile(
-                leading: vmTheme.getThemeIcon(context, Preferences.idTheme),
-                title: Text(
-                  AppLocalizations.of(context)!.translate(
-                    BlockTranslate.home,
-                    'tema',
-                  ),
-                ),
-                //Nombre del idioma seleccionado en el idioma seleccionado
-                subtitle: Text(
-                  vmTheme.temasApp(context)[AppNewTheme.idTema].descripcion,
-                ),
-                trailing: const Icon(Icons.arrow_right),
-                onTap: () => vm.navigateTheme(context),
-              ),
-              ListTile(
                 leading: const Icon(Icons.palette_outlined),
-                title: const Text("Apariencia" //TODO:Translate
-                    ),
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.preferencias,
+                    'apariencia',
+                  ),
+                ),
+                subtitle: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.preferencias,
+                    'cambios',
+                  ),
+                ),
                 onTap: () => Navigator.pushNamed(
                   context,
                   AppRoutes.appearance,
@@ -186,7 +162,10 @@ class SettingsView extends StatelessWidget {
                   ),
                 ),
                 trailing: const Icon(Icons.arrow_right),
-                onTap: () => Navigator.pushNamed(context, "help"),
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  AppRoutes.help,
+                ),
               ),
               ListTile(
                 leading: const Icon(Icons.cloud_outlined),
@@ -201,7 +180,12 @@ class SettingsView extends StatelessWidget {
               ListTile(
                 onTap: () => vmHome.logout(context),
                 leading: const Icon(Icons.logout_outlined),
-                title: Text("Cerrar sesión"),
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.botones,
+                    'salir',
+                  ),
+                ),
               ),
             ],
           ),

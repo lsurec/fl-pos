@@ -259,6 +259,24 @@ class ThemeViewModel extends ChangeNotifier {
     return "#134895";
   }
 
+  ColorModel temaColor(String idcolor) {
+    // Convertir idcolor a int
+    int? idColorInt = int.tryParse(idcolor);
+
+    // Si la conversión falla, retornar el color predeterminado
+    if (idColorInt != null) {
+      for (var i = 0; i < coloresTemaApp.length; i++) {
+        ColorModel color = coloresTemaApp[i];
+        // Comparar idColorInt (int) con color.id (int)
+        if (idColorInt == color.id) {
+          return color;
+        }
+      }
+    }
+    // Retornar el color predeterminado si no se encuentra
+    return defaultColor;
+  }
+
 // Función auxiliar para obtener el tema por color y modo
   ThemeData getThemeByColor(
     int idColorTema, {
@@ -348,7 +366,7 @@ class ThemeViewModel extends ChangeNotifier {
     ColorModel(
       id: 0,
       valor: "#134895",
-      nombre: "Azul",
+      nombre: "Auto (Azul)",
       tema: TemaModel(
         id: 0,
         descripcion: "Auto",
