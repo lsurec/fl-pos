@@ -8,8 +8,10 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class TablesViewModel extends ChangeNotifier {
   //manejar flujo del procesp
@@ -24,6 +26,55 @@ class TablesViewModel extends ChangeNotifier {
   final List<TableModel> tables = [];
   TableModel? table;
   TableModel? tableCopy;
+
+  late WebSocketChannel _channel;
+
+  String buildWebSocketUrl(String apiUrl) {
+    Uri apiUri = Uri.parse(apiUrl);
+
+    // Extraer el esquema (http/https)
+    String scheme = apiUri.scheme == 'https' ? 'wss' : 'ws';
+
+    // Extraer el host
+    String host = apiUri.host;
+
+    // Verificar que la URL termine con "/api" y reemplazarla con "/ws"
+    String path = apiUri.path;
+    if (path.endsWith('/api/')) {
+      path = path.replaceFirst('/api/', '/ws', path.length - '/api/'.length);
+    }
+
+    // Construir la nueva URL del WebSocket
+    Uri webSocketUri = Uri(
+      scheme: scheme,
+      host: host,
+      port: apiUri.port, // Mantiene el puerto original
+      path: path,
+    );
+
+    return webSocketUri.toString();
+  }
+
+  connectWebSocket() {
+    final String baseUrl = Preferences.urlApi;
+
+    String urlWebSocket = buildWebSocketUrl(baseUrl);
+
+    //TODO:Armar id en base a emoresa raiz+empresa+estacion
+    int id = 111;
+
+    //agregar id usuario
+    urlWebSocket = "$urlWebSocket?userId=$id";
+
+    _channel = WebSocketChannel.connect(
+      Uri.parse(urlWebSocket),
+    );
+
+    // Escucha los mensajes sin redibujar el widget
+    _channel.stream.listen((message) {
+      print(message);
+    });
+  }
 
   selectNewtable(TableModel tableParam) {
     tableCopy = table;

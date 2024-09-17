@@ -72,8 +72,6 @@ class MenuViewModel extends ChangeNotifier {
     tipoCambio = 0;
 
     //Restaurante
-    //TODO:Parametrizar nombre del diplay
-    print(route);
     if (route.toLowerCase() == "prcrestaurante") {
       vmHome.isLoading = true;
 

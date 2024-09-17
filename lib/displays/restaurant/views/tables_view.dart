@@ -15,34 +15,18 @@ class TablesView extends StatefulWidget {
   State<TablesView> createState() => _TablesViewState();
 }
 
-
 class _TablesViewState extends State<TablesView> {
-
-
-  late WebSocketChannel _channel;
-
   @override
   void initState() {
     super.initState();
     // Conexión al WebSocket cuando se entra a la pantalla
-    _channel = WebSocketChannel.connect(
-      Uri.parse('ws://192.168.0.7:9192/ws'),
+    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+      context,
+      listen: false,
     );
-
-    // Escucha los mensajes sin redibujar el widget
-    _channel.stream.listen((message) {
-      _handleMessage(message);
-    });
+    tablesVM.connectWebSocket();
   }
 
-  // Función para manejar los mensajes recibidos
-  void _handleMessage(String message) {
-    // Ejecuta la función que necesites
-    print('Mensaje recibido: $message');
-    // Aquí puedes realizar cualquier operación, por ejemplo:
-    // Llamar a otra función, actualizar una variable, etc.
-  }
-  
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TablesViewModel>(context);
