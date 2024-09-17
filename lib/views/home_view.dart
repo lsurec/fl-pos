@@ -151,7 +151,7 @@ class _MyDrawer extends StatelessWidget {
                       ? menuVM.navigateDisplay(
                           context,
                           itemMenu.route,
-                          int.parse(itemMenu.display?.tipoDocumento ?? 0),
+                          int.parse(itemMenu.display?.tipoDocumento ?? "0"),
                           itemMenu.display!.name,
                           itemMenu.display!.desTipoDocumento,
                         ) //Mostar contenido
