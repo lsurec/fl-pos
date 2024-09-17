@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -325,6 +326,8 @@ class OrderViewModel extends ChangeNotifier {
     }
 
     isLoading = false;
+
+    //TODO:notificar cambios a clientes escuchamado
 
     await printNetwork(context, indexOrder);
 
