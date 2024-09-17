@@ -223,5 +223,9 @@ class DarkTheme {
     cardTheme: const CardTheme(
       color: AppNewTheme.backroundDarkSecondary,
     ),
+    dividerColor: AppNewTheme.dividerDark,
+    dividerTheme: const DividerThemeData(
+      color: AppNewTheme.dividerDark,
+    ),
   );
 }

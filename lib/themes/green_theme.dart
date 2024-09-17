@@ -30,6 +30,10 @@ class GreenTheme {
     cardTheme: const CardTheme(
       color: AppNewTheme.backroundSecondary,
     ),
+    dividerColor: AppNewTheme.divider,
+    dividerTheme: DividerThemeData(
+      color: AppNewTheme.divider,
+    ),
   );
 
   static final ThemeData dark = ThemeData.dark().copyWith(
@@ -53,6 +57,10 @@ class GreenTheme {
     ),
     cardTheme: const CardTheme(
       color: AppNewTheme.darkBackroundColor,
+    ),
+    dividerColor: AppNewTheme.dividerDark,
+    dividerTheme: const DividerThemeData(
+      color: AppNewTheme.dividerDark,
     ),
   );
 }

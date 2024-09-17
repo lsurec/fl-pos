@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -164,8 +165,9 @@ class _Tabs2ViewState extends State<Tabs2View>
                 ],
                 bottom: TabBar(
                   controller: vm.tabController,
-                  labelColor: Colors.black,
-                  indicatorColor: AppNewTheme.primary,
+                  indicatorColor: AppNewTheme.hexToColor(
+                    Preferences.valueColor,
+                  ),
                   tabs: [
                     Tab(
                       text: AppLocalizations.of(context)!.translate(

@@ -36,16 +36,23 @@ class IdReferenciaView extends StatelessWidget {
                   children: [
                     TextFormField(
                       controller: vm.buscarIdReferencia,
-                      onFieldSubmitted: (criterio) =>
-                          vm.buscarIdRefencia(context),
+                      onFieldSubmitted: (criterio) => vm.buscarIdRefencia(
+                        context,
+                      ),
                       decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: AppNewTheme.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         labelText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.tareas,
                           'buscar',
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                            color: AppNewTheme.greyBorder,
+                            color: AppNewTheme.grey,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -117,7 +124,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
               border: Border(
                 bottom: BorderSide(
                   width: 1.5,
-                  color: AppNewTheme.greyBorder,
+                  color: AppNewTheme.grey,
                 ),
               ),
             ),

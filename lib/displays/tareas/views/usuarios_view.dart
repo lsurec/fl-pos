@@ -56,9 +56,15 @@ class UsuariosView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'buscar',
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: AppNewTheme.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: AppNewTheme.greyBorder,
+                              color: AppNewTheme.grey,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -122,67 +128,62 @@ class _UsuariosEncontados extends StatelessWidget {
       itemCount: vm.usuarios.length,
       itemBuilder: (BuildContext context, int index) {
         final UsuarioModel usuario = vm.usuarios[index];
-        return Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 1.5,
-                color: AppNewTheme.greyBorder,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: GestureDetector(
-              onTap: () => vmCrear.seleccionarResponsable(context, usuario),
-              child: ListTile(
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 5),
-                    Text(
-                      usuario.name,
-                      style: StyleApp.normal,
-                    ),
-                    RichText(
-                      text: TextSpan(
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: GestureDetector(
+                onTap: () => vmCrear.seleccionarResponsable(context, usuario),
+                child: ListTile(
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 5),
+                      Text(
+                        usuario.name,
                         style: StyleApp.normal,
-                        children: [
-                          TextSpan(
-                            text: AppLocalizations.of(context)!.translate(
-                              BlockTranslate.cuenta,
-                              'correo',
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          style: StyleApp.normal,
+                          children: [
+                            TextSpan(
+                              text: AppLocalizations.of(context)!.translate(
+                                BlockTranslate.cuenta,
+                                'correo',
+                              ),
                             ),
-                          ),
-                          const TextSpan(text: " "),
-                          TextSpan(
-                            text: usuario.email,
-                            style: StyleApp.normalBold,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                  ],
-                ),
-                leading: Column(
-                  children: [
-                    if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
-                      Checkbox(
-                        activeColor: AppNewTheme.hexToColor(
-                          Preferences.valueColor,
-                        ),
-                        value: usuario.select,
-                        onChanged: (value) => vm.changeChecked(
-                          value,
-                          index,
+                            const TextSpan(text: ": "),
+                            TextSpan(
+                              text: usuario.email,
+                              style: StyleApp.normalBold,
+                            ),
+                          ],
                         ),
                       ),
-                  ],
+                      const SizedBox(height: 5),
+                    ],
+                  ),
+                  leading: Column(
+                    children: [
+                      if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
+                        Checkbox(
+                          activeColor: AppNewTheme.hexToColor(
+                            Preferences.valueColor,
+                          ),
+                          value: usuario.select,
+                          onChanged: (value) => vm.changeChecked(
+                            value,
+                            index,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+            const Divider(),
+          ],
         );
       },
     );

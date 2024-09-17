@@ -51,18 +51,20 @@ class SettingsView extends StatelessWidget {
                       vmLogin.user.toUpperCase(),
                       style: StyleApp.normal,
                     ),
-                    leading: IconButton(
-                      onPressed: () {},
-                      icon: ClipOval(
-                        child: Container(
-                          width: 45,
-                          height: 50,
-                          color: AppNewTheme.primary,
-                          child: Center(
-                            child: Text(
-                              vmLogin.user[0].toUpperCase(),
-                              style: StyleApp.user,
-                            ),
+                    leading: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppNewTheme.hexToColor(
+                          Preferences.valueColor,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          vmLogin.user[0].toUpperCase(),
+                          style: StyleApp.user.copyWith(
+                            fontSize: 30,
                           ),
                         ),
                       ),

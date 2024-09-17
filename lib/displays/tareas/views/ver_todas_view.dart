@@ -81,7 +81,7 @@ class _VerTodasViewState extends State<VerTodasView> {
                           BlockTranslate.general,
                           'registro',
                         )} (${tareas.length})",
-                        style: StyleApp.title,
+                        style: StyleApp.normalBold,
                       ),
                     ],
                   ),

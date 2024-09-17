@@ -8,7 +8,6 @@ class RedTheme {
   static const Color primary = Color(0xFFFF0000);
 
   static final ThemeData light = ThemeData.light().copyWith(
-    brightness: Brightness.light,
     primaryColor: primary,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
     appBarTheme: AppBarTheme(
@@ -30,6 +29,13 @@ class RedTheme {
     ),
     cardTheme: const CardTheme(
       color: AppNewTheme.backroundSecondary,
+    ),
+    dividerColor: AppNewTheme.divider,
+    dividerTheme: DividerThemeData(
+      color: AppNewTheme.divider,
+    ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.black,
     ),
   );
 
@@ -54,6 +60,13 @@ class RedTheme {
     ),
     cardTheme: const CardTheme(
       color: AppNewTheme.backroundDarkSecondary,
+    ),
+    dividerColor: AppNewTheme.dividerDark,
+    dividerTheme: const DividerThemeData(
+      color: AppNewTheme.dividerDark,
+    ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.white,
     ),
   );
 }

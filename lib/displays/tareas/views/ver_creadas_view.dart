@@ -80,7 +80,7 @@ class _VerCreadasViewState extends State<VerCreadasView> {
                           BlockTranslate.general,
                           'registro',
                         )} (${tareas.length})",
-                        style: StyleApp.title,
+                        style: StyleApp.normalBold,
                       ),
                     ],
                   ),

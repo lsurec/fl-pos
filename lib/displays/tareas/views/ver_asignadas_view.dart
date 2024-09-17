@@ -79,7 +79,7 @@ class _VerAsignadasViewState extends State<VerAsignadasView> {
                           BlockTranslate.general,
                           'registro',
                         )} (${tareas.length})",
-                        style: StyleApp.title,
+                        style: StyleApp.normalBold,
                       ),
                     ],
                   ),

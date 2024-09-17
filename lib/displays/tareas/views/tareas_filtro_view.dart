@@ -1,6 +1,7 @@
 import 'package:flutter_post_printer_example/displays/tareas/view_models/tareas_view_model.dart';
 import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -74,8 +75,9 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
               bottom: TabBar(
                 onTap: (index) => vmTarea.limpiarLista(context),
                 controller: vmTarea.tabController,
-                labelColor: Colors.black,
-                indicatorColor: AppNewTheme.primary,
+                indicatorColor: AppNewTheme.hexToColor(
+                  Preferences.valueColor,
+                ),
                 tabs: [
                   Tab(
                     text: AppLocalizations.of(context)!.translate(

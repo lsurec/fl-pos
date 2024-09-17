@@ -226,5 +226,9 @@ class LightTheme {
     cardTheme: const CardTheme(
       color: AppNewTheme.backroundSecondary,
     ),
+    dividerColor: AppNewTheme.divider,
+    dividerTheme: DividerThemeData(
+      color: AppNewTheme.divider,
+    ),
   );
 }

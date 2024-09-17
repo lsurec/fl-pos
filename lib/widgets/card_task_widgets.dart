@@ -78,8 +78,8 @@ class CardTask extends StatelessWidget {
                       CardWidget(
                         margin: const EdgeInsets.only(bottom: 10),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1.0,
+                        borderColor: AppNewTheme.grey,
                         raidus: 15,
                         child: Column(
                           children: [
@@ -88,16 +88,16 @@ class CardTask extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   top: BorderSide(
-                                    width: 1.5,
-                                    color: AppNewTheme.greyBorder,
+                                    width: 1,
+                                    color: AppNewTheme.grey,
                                   ),
                                   left: BorderSide(
-                                    width: 1.5,
-                                    color: AppNewTheme.greyBorder,
+                                    width: 1,
+                                    color: AppNewTheme.grey,
                                   ),
                                   right: BorderSide(
-                                    width: 1.5,
-                                    color: AppNewTheme.greyBorder,
+                                    width: 1,
+                                    color: AppNewTheme.grey,
                                   ),
                                 ),
                                 borderRadius: BorderRadius.only(
@@ -120,8 +120,8 @@ class CardTask extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  width: 1.5,
-                                  color: AppNewTheme.greyBorder,
+                                  width: 1,
+                                  color: AppNewTheme.grey,
                                 ),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
@@ -181,8 +181,8 @@ class CardTask extends StatelessWidget {
                     top: 5,
                   ),
             elevation: 0,
-            borderWidth: 1.5,
-            borderColor: AppNewTheme.greyBorder,
+            borderWidth: 1,
+            borderColor: AppNewTheme.grey,
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),

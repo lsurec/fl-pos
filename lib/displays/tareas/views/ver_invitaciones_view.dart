@@ -79,7 +79,7 @@ class _VerInvitacionesViewState extends State<VerInvitacionesView> {
                           BlockTranslate.general,
                           'registro',
                         )} (${tareas.length})",
-                        style: StyleApp.title,
+                         style: StyleApp.normalBold,
                       ),
                     ],
                   ),

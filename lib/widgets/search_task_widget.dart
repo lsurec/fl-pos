@@ -130,7 +130,6 @@ class SearchTasks extends StatelessWidget {
                 ),
                 icon: const Icon(
                   Icons.search,
-                  color: AppNewTheme.primary,
                 ),
                 onPressed: () => vm.buscarRangoTareas(
                   context,
@@ -196,7 +195,6 @@ class BuscarTarea extends StatelessWidget {
                 ),
                 icon: const Icon(
                   Icons.search,
-                  color: AppNewTheme.primary,
                 ),
                 onPressed: () => vm.buscarRangoTareas(
                   context,
