@@ -9,6 +9,7 @@ import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/services/restaurant_service.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -327,7 +328,14 @@ class OrderViewModel extends ChangeNotifier {
 
     isLoading = false;
 
+    final RestaurantService restaurantService = RestaurantService();
+
     //TODO:notificar cambios a clientes escuchamado
+    await restaurantService.notifyComanda(
+      orders[indexOrder],
+      0001,
+      tokenUser,
+    );
 
     await printNetwork(context, indexOrder);
 

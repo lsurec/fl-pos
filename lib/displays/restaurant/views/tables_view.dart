@@ -24,7 +24,7 @@ class _TablesViewState extends State<TablesView> {
       context,
       listen: false,
     );
-    tablesVM.connectWebSocket();
+    tablesVM.connectWebSocket(context);
   }
 
   @override

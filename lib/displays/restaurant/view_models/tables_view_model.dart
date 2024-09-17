@@ -55,7 +55,7 @@ class TablesViewModel extends ChangeNotifier {
     return webSocketUri.toString();
   }
 
-  connectWebSocket() {
+  connectWebSocket(BuildContext context) {
     final String baseUrl = Preferences.urlApi;
 
     String urlWebSocket = buildWebSocketUrl(baseUrl);
@@ -72,7 +72,16 @@ class TablesViewModel extends ChangeNotifier {
 
     // Escucha los mensajes sin redibujar el widget
     _channel.stream.listen((message) {
-      print(message);
+      OrderModel orderWeb = OrderModel.fromMap(message);
+
+      final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+        context,
+        listen: false,
+      );
+
+      orderVM.orders.add(orderWeb);
+
+      updateOrdersTable(context);
     });
   }
 

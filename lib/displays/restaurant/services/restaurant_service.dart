@@ -9,6 +9,55 @@ import 'package:http/http.dart' as http;
 class RestaurantService {
   final String _baseUrl = Preferences.urlApi;
 
+  Future<ApiResModel> notifyComanda(
+    OrderModel order,
+    int userId,
+    String token,
+  ) async {
+    Uri url = Uri.parse("${_baseUrl}Restaurant/send/comanda/$userId");
+    try {
+      //url completa
+
+      // Configurar Api y consumirla
+      final response = await http.post(
+        url,
+        body: order.toJson(),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "bearer $token",
+        },
+      );
+
+      ResponseModel res = ResponseModel.fromMap(jsonDecode(response.body));
+
+      //si el api no responde
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        return ApiResModel(
+          url: url.toString(),
+          succes: false,
+          response: res.data,
+          storeProcedure: res.storeProcedure,
+        );
+      }
+
+      //Retornar respuesta correcta
+      return ApiResModel(
+        url: url.toString(),
+        succes: true,
+        response: res,
+        storeProcedure: null,
+      );
+    } catch (e) {
+      //retornar respuesta incorrecta
+      return ApiResModel(
+        url: url.toString(),
+        succes: false,
+        response: e.toString(),
+        storeProcedure: null,
+      );
+    }
+  }
+
   //Obtner empresas
   Future<ApiResModel> getGarnish(
     int product,
