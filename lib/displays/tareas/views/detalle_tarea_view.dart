@@ -129,9 +129,6 @@ class DetalleTareaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -173,9 +170,6 @@ class DetalleTareaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -217,9 +211,6 @@ class DetalleTareaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -247,9 +238,6 @@ class DetalleTareaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -296,9 +284,6 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -347,9 +332,6 @@ class DetalleTareaView extends StatelessWidget {
                                 style: StyleApp.normalBold,
                               ),
                             CardWidget(
-                              color: AppNewTheme.isDark()
-                                  ? AppNewTheme.backroundDarkSecondary
-                                  : AppNewTheme.backroundSecondary,
                               elevation: 0,
                               borderWidth: 1.5,
                               borderColor: AppNewTheme.greyBorder,
@@ -402,9 +384,6 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -447,9 +426,6 @@ class DetalleTareaView extends StatelessWidget {
                         style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -502,9 +478,6 @@ class _ActualizarEstado extends StatelessWidget {
     final List<EstadoModel> estados = vmCrear.estados;
 
     return CardWidget(
-      color: AppNewTheme.isDark()
-          ? AppNewTheme.backroundDarkSecondary
-          : AppNewTheme.backroundSecondary,
       elevation: 0,
       borderWidth: 0,
       raidus: 10,
@@ -579,9 +552,6 @@ class _ActualizarPrioridad extends StatelessWidget {
     final List<PrioridadModel> prioridades = vmCrear.prioridades;
 
     return CardWidget(
-      color: AppNewTheme.isDark()
-          ? AppNewTheme.backroundDarkSecondary
-          : AppNewTheme.backroundSecondary,
       elevation: 0,
       borderWidth: 0,
       raidus: 10,

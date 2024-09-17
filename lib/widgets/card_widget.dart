@@ -28,6 +28,7 @@ class CardWidget extends StatelessWidget {
       margin: margin,
       width: width,
       child: Card(
+        color: color,
         shape: borderColor == null
             ? RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(raidus!),

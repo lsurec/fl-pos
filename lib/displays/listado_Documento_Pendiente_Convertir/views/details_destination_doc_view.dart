@@ -98,9 +98,6 @@ class DetailsDestinationDocView extends StatelessWidget {
                             DestinationDetailModel detalle = vm.detalles[index];
 
                             return CardWidget(
-                              color: AppNewTheme.isDark()
-                                  ? AppNewTheme.backroundDarkSecondary
-                                  : AppNewTheme.backroundSecondary,
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Column(

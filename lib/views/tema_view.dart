@@ -28,9 +28,6 @@ class TemasColoresView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CardWidget(
-                    color: AppNewTheme.isDark()
-                        ? AppNewTheme.backroundDarkSecondary
-                        : AppNewTheme.backroundSecondary,
                     raidus: 20,
                     elevation: 2,
                     child: Column(

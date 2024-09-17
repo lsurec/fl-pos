@@ -64,9 +64,6 @@ class DestinationDocView extends StatelessWidget {
                               doc,
                             ),
                             child: CardWidget(
-                              color: AppNewTheme.isDark()
-                                  ? AppNewTheme.backroundDarkSecondary
-                                  : AppNewTheme.backroundSecondary,
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Column(

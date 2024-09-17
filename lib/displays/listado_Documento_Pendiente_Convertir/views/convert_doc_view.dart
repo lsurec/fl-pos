@@ -327,9 +327,6 @@ class _CardDetalle extends StatelessWidget {
         );
       },
       child: CardWidget(
-        color: AppNewTheme.isDark()
-            ? AppNewTheme.backroundDarkSecondary
-            : AppNewTheme.backroundSecondary,
         child: ListTile(
           leading: Checkbox(
             value: documento.checked,

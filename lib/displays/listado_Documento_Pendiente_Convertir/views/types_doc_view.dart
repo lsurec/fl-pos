@@ -54,9 +54,6 @@ class TypesDocView extends StatelessWidget {
                         itemBuilder: (BuildContext context, int index) {
                           final TypeDocModel doc = vm.documents[index];
                           return CardWidget(
-                            color: AppNewTheme.isDark()
-                                ? AppNewTheme.backroundDarkSecondary
-                                : AppNewTheme.backroundSecondary,
                             child: ListTile(
                               onTap: () => vm.navigatePendDocs(context, doc),
                               trailing: const Icon(Icons.arrow_right),

@@ -87,9 +87,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       ),
                       if (vm.empresas.isNotEmpty)
                         CardWidget(
-                          color: AppNewTheme.isDark()
-                              ? AppNewTheme.darkBackroundColor
-                              : AppNewTheme.backroundColor,
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(
@@ -132,9 +129,6 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                       ),
                       if (vm.estaciones.isNotEmpty)
                         CardWidget(
-                          color: AppNewTheme.isDark()
-                              ? AppNewTheme.darkBackroundColor
-                              : AppNewTheme.backroundColor,
                           raidus: 10,
                           width: double.infinity,
                           child: Padding(

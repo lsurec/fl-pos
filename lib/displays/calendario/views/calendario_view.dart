@@ -991,9 +991,6 @@ class _VistaDiaState extends State<_VistaDia> {
                         margin: const EdgeInsets.only(bottom: 5),
                         elevation: 0.3,
                         borderWidth: 1.5,
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.greyBorderDark
-                            : AppNewTheme.greyBorder,
                         raidus: 10,
                         child: GestureDetector(
                           onTap: () => vm.navegarDetalleTarea(

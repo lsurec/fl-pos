@@ -259,9 +259,6 @@ class _CardDoc extends StatelessWidget {
         GestureDetector(
           onTap: () => vm.navigateDestination(context, document),
           child: CardWidget(
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.backroundDarkSecondary
-                : AppNewTheme.backroundSecondary,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(

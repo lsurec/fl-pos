@@ -150,9 +150,6 @@ class _CardTask extends StatelessWidget {
                     children: [
                       CardWidget(
                         margin: const EdgeInsets.only(bottom: 10),
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
                         elevation: 0,
                         borderWidth: 1.5,
                         borderColor: AppNewTheme.greyBorder,
@@ -256,9 +253,6 @@ class _CardTask extends StatelessWidget {
                 : const EdgeInsets.only(
                     top: 5,
                   ),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.backroundDarkSecondary
-                : AppNewTheme.backroundSecondary,
             elevation: 0,
             borderWidth: 1.5,
             borderColor: AppNewTheme.greyBorder,
