@@ -113,7 +113,7 @@ class _MyDrawer extends StatelessWidget {
                                 ? StyleApp.menuActiveDark
                                 : StyleApp.menuActive)
                             : (AppTheme.isDark()
-                                ? StyleApp.whiteNormal
+                                ? StyleApp.whiteMenuNormal
                                 : StyleApp.normal),
                       ),
                       const Icon(

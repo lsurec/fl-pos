@@ -15,6 +15,11 @@ class StyleApp {
 
   static const whiteNormal = TextStyle(
     fontSize: 17,
+    color: Colors.white,
+  );
+
+  static const whiteMenuNormal = TextStyle(
+    fontSize: 17,
     color: Colors.white60,
   );
 
@@ -31,7 +36,6 @@ class StyleApp {
   static TextStyle menuActiveDark = const TextStyle(
     fontSize: 17,
     color: Colors.white,
-    // color: Colors.white60,
   );
 
   static const title = TextStyle(
