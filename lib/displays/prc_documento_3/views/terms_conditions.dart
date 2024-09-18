@@ -50,7 +50,9 @@ class TermsConditionsView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Divider(color: AppNewTheme.greyBorder),
+                  const Divider(
+                    color: AppNewTheme.border,
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: facturaVM.terminosyCondiciones.length,
@@ -65,7 +67,7 @@ class TermsConditionsView extends StatelessWidget {
                           decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: AppNewTheme.greyBorder,
+                                color: AppNewTheme.border,
                                 width: 1, // Ancho del borde
                               ),
                             ),

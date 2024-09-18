@@ -35,7 +35,7 @@ class BuscarTareasView extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        color: AppNewTheme.greyBorder,
+                        color: AppNewTheme.border,
                         height: 2,
                       ),
                       PreferredSize(

@@ -375,36 +375,24 @@ class _NombreDias extends StatelessWidget {
     );
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         top: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde arriba
         left: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -438,32 +426,22 @@ class _VistaSemana extends StatelessWidget {
     List<List<DiaModel>> semanas = vm.semanasDelMes;
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         top: BorderSide.none, // Borde arriba
         left: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -554,22 +532,16 @@ class _VistaMes extends StatelessWidget {
     List<List<DiaModel>> semanas = vm.semanasDelMes;
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         bottom: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ),
         // Mantenemos los bordes interiores y eliminamos el superior
         horizontalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ),
         verticalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ),
         top: BorderSide.none, // Eliminamos el borde superior
       ),
@@ -1050,36 +1022,24 @@ class _VistaDiaState extends State<_VistaDia> {
     }
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         top: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde arriba
         left: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Bo, // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.greyBorderDark
-              : AppNewTheme.greyBorder,
+          color: AppNewTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       columnWidths: const <int, TableColumnWidth>{

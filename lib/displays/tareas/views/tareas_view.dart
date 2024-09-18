@@ -152,7 +152,7 @@ class _CardTask extends StatelessWidget {
                         margin: const EdgeInsets.only(bottom: 10),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderColor: AppNewTheme.border,
                         raidus: 15,
                         child: Column(
                           children: [
@@ -162,15 +162,15 @@ class _CardTask extends StatelessWidget {
                                 border: Border(
                                   top: BorderSide(
                                     width: 1.5,
-                                    color: AppNewTheme.greyBorder,
+                                    color: AppNewTheme.border,
                                   ),
                                   left: BorderSide(
                                     width: 1.5,
-                                    color: AppNewTheme.greyBorder,
+                                    color: AppNewTheme.border,
                                   ),
                                   right: BorderSide(
                                     width: 1.5,
-                                    color: AppNewTheme.greyBorder,
+                                    color: AppNewTheme.border,
                                   ),
                                 ),
                                 borderRadius: BorderRadius.only(
@@ -194,7 +194,7 @@ class _CardTask extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 1.5,
-                                  color: AppNewTheme.greyBorder,
+                                  color: AppNewTheme.border,
                                 ),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
@@ -255,7 +255,7 @@ class _CardTask extends StatelessWidget {
                   ),
             elevation: 0,
             borderWidth: 1.5,
-            borderColor: AppNewTheme.greyBorder,
+            borderColor: AppNewTheme.border,
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),

@@ -116,8 +116,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -153,8 +153,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                         borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -190,8 +190,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                         borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -212,8 +212,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                         borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -257,8 +257,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                         borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -304,8 +304,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                               ),
                             CardWidget(
                               elevation: 0,
-                              borderWidth: 1.5,
-                              borderColor: AppNewTheme.grey,
+                               borderWidth: 1,
+                              borderColor: AppNewTheme.border,
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -356,8 +356,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                         borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -398,8 +398,8 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.grey,
+                         borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -446,21 +446,16 @@ class _ActualizarEstado extends StatelessWidget {
 
     return CardWidget(
       elevation: 0,
-      borderWidth: 0,
+      borderColor: AppNewTheme.border,
+      borderWidth: 1,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<EstadoModel>(
           value: vm.estadoAtual,
           isExpanded: true,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppNewTheme.greyBorder,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
@@ -520,21 +515,16 @@ class _ActualizarPrioridad extends StatelessWidget {
 
     return CardWidget(
       elevation: 0,
-      borderWidth: 0,
+      borderWidth: 1,
+      borderColor: AppNewTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<PrioridadModel>(
           value: vm.prioridadActual,
           isExpanded: true,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppNewTheme.greyBorder,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(

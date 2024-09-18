@@ -42,7 +42,7 @@ class SearchTask extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: AppNewTheme.greyBorder,
+                  color: AppNewTheme.border,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -111,7 +111,7 @@ class SearchTasks extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: AppNewTheme.greyBorder,
+                  color: AppNewTheme.border,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),

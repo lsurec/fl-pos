@@ -196,7 +196,7 @@ class _NuevoComentario extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppNewTheme.greyBorder,
+              color: AppNewTheme.border,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -258,16 +258,16 @@ class _Comentario extends StatelessWidget {
           decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(
-                width: 1.5,
-                color: AppNewTheme.greyBorder,
+                width: 1,
+                color: AppNewTheme.border,
               ),
               left: BorderSide(
-                width: 1.5,
-                color: AppNewTheme.greyBorder,
+                width: 1,
+                color: AppNewTheme.border,
               ),
               right: BorderSide(
-                width: 1.5,
-                color: AppNewTheme.greyBorder,
+                width: 1,
+                color: AppNewTheme.border,
               ),
             ),
             borderRadius: BorderRadius.only(
@@ -289,8 +289,8 @@ class _Comentario extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border.all(
-              width: 1.5,
-              color: AppNewTheme.greyBorder,
+              width: 1,
+              color: AppNewTheme.border,
             ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
@@ -355,7 +355,7 @@ class _Comentario extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
-              color: AppNewTheme.greyBorder,
+              color: AppNewTheme.border,
               height: 20,
               width: 3,
             ),

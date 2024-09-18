@@ -35,12 +35,10 @@ class TemasColoresView extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           height: 60,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: AppNewTheme.isDark()
-                                    ? AppNewTheme.greyBorderDark
-                                    : AppNewTheme.greyBorder,
+                                color:  AppNewTheme.border,
                               ),
                             ),
                           ),

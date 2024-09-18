@@ -130,8 +130,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -171,8 +171,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -212,8 +212,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -239,8 +239,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -285,8 +285,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -333,8 +333,8 @@ class DetalleTareaView extends StatelessWidget {
                               ),
                             CardWidget(
                               elevation: 0,
-                              borderWidth: 1.5,
-                              borderColor: AppNewTheme.greyBorder,
+                              borderWidth: 1,
+                              borderColor: AppNewTheme.border,
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -385,8 +385,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -427,8 +427,8 @@ class DetalleTareaView extends StatelessWidget {
                       ),
                       CardWidget(
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppNewTheme.greyBorder,
+                        borderWidth: 1,
+                        borderColor: AppNewTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -479,21 +479,19 @@ class _ActualizarEstado extends StatelessWidget {
 
     return CardWidget(
       elevation: 0,
-      borderWidth: 0,
+      borderWidth: 1,
+      borderColor: AppNewTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<EstadoModel>(
           value: vm.estadoAtual,
           isExpanded: true,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppNewTheme.greyBorder,
-              ),
-              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+            contentPadding: EdgeInsets.symmetric(vertical: 5),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
@@ -553,21 +551,19 @@ class _ActualizarPrioridad extends StatelessWidget {
 
     return CardWidget(
       elevation: 0,
-      borderWidth: 0,
+      borderWidth: 1,
+      borderColor: AppNewTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<PrioridadModel>(
           value: vm.prioridadActual,
           isExpanded: true,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppNewTheme.greyBorder,
-              ),
-              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+            contentPadding: EdgeInsets.symmetric(vertical: 5),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
