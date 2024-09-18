@@ -182,11 +182,6 @@ class LightTheme {
     decoration: TextDecoration.underline,
   );
 
-  static const blueText = TextStyle(
-    fontSize: 15,
-    color: primary,
-  );
-
   static const blueTitle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
@@ -232,6 +227,19 @@ class LightTheme {
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.black,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          const TextStyle(
+            color: primary,
+            fontSize: 17,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(
+          primary,
+        ),
+      ),
     ),
   );
 }

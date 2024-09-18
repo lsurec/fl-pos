@@ -84,7 +84,7 @@ class DarkTheme {
     //   Colors.white,
     // ),
     textStyle: MaterialStateProperty.all<TextStyle>(
-    normalStyle,
+      normalStyle,
     ),
   );
 
@@ -173,11 +173,6 @@ class DarkTheme {
     decoration: TextDecoration.underline,
   );
 
-  static const blueText = TextStyle(
-    fontSize: 15,
-    color: darkPrimary,
-  );
-
   static const diasFueraMes = TextStyle(
     fontSize: 14,
     color: Color.fromARGB(255, 159, 150, 150),
@@ -229,6 +224,19 @@ class DarkTheme {
     dividerColor: AppNewTheme.dividerDark,
     dividerTheme: const DividerThemeData(
       color: AppNewTheme.dividerDark,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          const TextStyle(
+            color: primary,
+            fontSize: 17,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(
+          primary,
+        ),
+      ),
     ),
   );
 }

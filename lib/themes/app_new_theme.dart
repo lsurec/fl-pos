@@ -3,6 +3,9 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class AppNewTheme {
+  //CAMBIAR TEMA CAMBIA A 1 DESDE LOS AJUSTES
+  static int cambiarTema = 0;
+
   static int idTema = int.tryParse(Preferences.idThemeApp) ?? 0;
   static int idColorTema = int.tryParse(Preferences.idColor) ?? 0;
   static bool oscuro = false;
@@ -50,7 +53,6 @@ class AppNewTheme {
   }
 
   static Color colorPref(int idColor) {
-
     switch (idColorTema) {
       case 0: // Sistema
         return primary;

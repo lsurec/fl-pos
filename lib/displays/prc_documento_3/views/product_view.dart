@@ -69,7 +69,9 @@ class ProductView extends StatelessWidget {
                       BlockTranslate.general,
                       'descripcion',
                     ),
-                    style: StyleApp.blueText,
+                    style: StyleApp.normalColor15.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   Text(
@@ -81,7 +83,9 @@ class ProductView extends StatelessWidget {
                       BlockTranslate.factura,
                       'bodega',
                     ),
-                    style: StyleApp.blueText,
+                    style: StyleApp.normalColor15.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   const SizedBox(height: 5),
                   DropdownButton<BodegaProductoModel>(
@@ -122,7 +126,9 @@ class ProductView extends StatelessWidget {
                                   BlockTranslate.factura,
                                   'presentaciones',
                                 ),
-                          style: StyleApp.blueText,
+                          style: StyleApp.normalColor15.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         const TipoPrecioSelect(),
@@ -174,7 +180,9 @@ class ProductView extends StatelessWidget {
                             BlockTranslate.calcular,
                             'precioU',
                           ),
-                          style: StyleApp.blueText,
+                          style: StyleApp.normalColor15.copyWith(
+                            color: Theme.of(context).primaryColor,
+                          ),
                         ),
                         const SizedBox(height: 5),
                       ],

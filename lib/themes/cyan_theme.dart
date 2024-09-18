@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/themes/themes.dart';
 class CyanTheme {
   // Color primario de este tema
   static const Color primary = Color(0xff067d91);
+
   static final ThemeData light = ThemeData.light().copyWith(
     primaryColor: primary,
     scaffoldBackgroundColor: AppNewTheme.backroundColor,
@@ -33,6 +34,19 @@ class CyanTheme {
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.black,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          const TextStyle(
+            color: primary,
+            fontSize: 17,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(
+          primary,
+        ),
+      ),
     ),
   );
 
@@ -64,6 +78,19 @@ class CyanTheme {
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.white,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          const TextStyle(
+            color: primary,
+            fontSize: 17,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(
+          primary,
+        ),
+      ),
     ),
   );
 }

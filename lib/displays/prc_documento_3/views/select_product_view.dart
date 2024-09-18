@@ -32,7 +32,9 @@ class SelectProductView extends StatelessWidget {
                       BlockTranslate.general,
                       'registro',
                     )} (${vmDetalle.products.length})",
-                    style: StyleApp.blueText,
+                    style: StyleApp.normalColor15.copyWith(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                 ],
               ),

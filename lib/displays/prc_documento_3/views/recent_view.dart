@@ -112,7 +112,9 @@ class _RecentViewState extends State<RecentView> {
                                 children: [
                                   Text(
                                     currencyFormat.format(doc.subtotal),
-                                    style: StyleApp.blueText,
+                                    style: StyleApp.normalColor15.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                   Text(
                                     "(+) ${currencyFormat.format(doc.cargo)}",

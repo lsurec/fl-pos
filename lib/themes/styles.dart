@@ -60,9 +60,8 @@ class StyleApp {
     fontWeight: FontWeight.bold,
   );
 
-  static const blueText = TextStyle(
+  static const normalColor15 = TextStyle(
     fontSize: 15,
-    color: AppNewTheme.primary,
   );
 
   static const cargo = TextStyle(

@@ -554,7 +554,9 @@ class ConfirmDocView extends StatelessWidget {
                                 BlockTranslate.botones,
                                 'verError',
                               ),
-                              style: StyleApp.blueText,
+                              style: StyleApp.normalColor15.copyWith(
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
                         ),

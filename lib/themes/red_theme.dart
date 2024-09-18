@@ -37,6 +37,19 @@ class RedTheme {
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.black,
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          const TextStyle(
+            color: primary,
+            fontSize: 17,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(
+          primary,
+        ),
+      ),
+    ),
   );
 
   static final ThemeData dark = ThemeData.dark().copyWith(
@@ -67,6 +80,19 @@ class RedTheme {
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.white,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all<TextStyle>(
+          const TextStyle(
+            color: primary,
+            fontSize: 17,
+          ),
+        ),
+        foregroundColor: MaterialStateProperty.all<Color>(
+          primary,
+        ),
+      ),
     ),
   );
 }

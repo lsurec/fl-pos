@@ -7,7 +7,6 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -32,7 +31,7 @@ class ThemeViewModel extends ChangeNotifier {
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
 
-    if (AppTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
+    if (AppNewTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
       //mostrar dialogo de confirmacion
       bool result = await showDialog(
             context: context,
@@ -98,10 +97,10 @@ class ThemeViewModel extends ChangeNotifier {
           'temaDispositivo',
         ),
         theme: isLightMode
-            ? AppTheme.lightTheme
+            ? LightTheme.lightTheme
             : isDarkMode
-                ? AppTheme.darkTheme
-                : AppTheme.lightTheme,
+                ? DarkTheme.darkTheme
+                : LightTheme.lightTheme,
       ),
       ThemeModel(
         id: 1,
@@ -109,7 +108,7 @@ class ThemeViewModel extends ChangeNotifier {
           BlockTranslate.home,
           'claro',
         ),
-        theme: AppTheme.lightTheme,
+        theme: LightTheme.lightTheme,
       ),
       ThemeModel(
         id: 2,
@@ -117,7 +116,7 @@ class ThemeViewModel extends ChangeNotifier {
           BlockTranslate.home,
           'oscuro',
         ),
-        theme: AppTheme.darkTheme,
+        theme: DarkTheme.darkTheme,
       )
     ];
   }

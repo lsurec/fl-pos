@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -72,7 +71,7 @@ class ThemeView extends StatelessWidget {
                         );
                       },
                     ),
-                    if (AppTheme.cambiarTema == 0)
+                    if (AppNewTheme.cambiarTema == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
                         child: Text(

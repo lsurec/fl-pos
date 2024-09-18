@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class SettingsViewModel extends ChangeNotifier {
   navigatePrint(BuildContext context) {
@@ -24,7 +24,7 @@ class SettingsViewModel extends ChangeNotifier {
   }
 
   navigateTheme(BuildContext context) {
-    AppTheme.cambiarTema = 1;
+    AppNewTheme.cambiarTema = 1;
     notifyListeners();
     Navigator.pushNamed(
       context,
