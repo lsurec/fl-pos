@@ -304,9 +304,8 @@ class _DrawerCalendar extends StatelessWidget {
                 ),
               ),
               Divider(
-                color: AppTheme.isDark()
-                    ? AppTheme.dividerDark
-                    : AppTheme.divider,
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -320,9 +319,8 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaMes(context),
               ),
               Divider(
-                color: AppTheme.isDark()
-                    ? AppTheme.dividerDark
-                    : AppTheme.divider,
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -336,9 +334,8 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaSemana(context),
               ),
               Divider(
-                color: AppTheme.isDark()
-                    ? AppTheme.dividerDark
-                    : AppTheme.divider,
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -352,9 +349,8 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaDia(context, 0),
               ),
               Divider(
-                color: AppTheme.isDark()
-                    ? AppTheme.dividerDark
-                    : AppTheme.divider,
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
             ],
           ),
@@ -421,6 +417,7 @@ class _VistaSemana extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     vm.semanasDelMes = vm.agregarSemanas(vm.monthSelectView, vm.yearSelect);
     List<List<DiaModel>> semanas = vm.semanasDelMes;
@@ -451,7 +448,9 @@ class _VistaSemana extends StatelessWidget {
             final color = dia.value == vm.today &&
                     vm.resolveMonth(dia.indexWeek) == vm.month &&
                     vm.resolveYear(dia.indexWeek) == vm.year
-                ? AppTheme.primary
+                ? vmTheme.colorPref(
+                    AppTheme.idColorTema,
+                  )
                 : null;
 
             final style = dia.value == vm.today &&
@@ -522,9 +521,12 @@ class _VistaMes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
-    List<DiaModel> diasMesSeleccionado =
-        vm.armarMes(vm.monthSelectView, vm.yearSelect);
+    List<DiaModel> diasMesSeleccionado = vm.armarMes(
+      vm.monthSelectView,
+      vm.yearSelect,
+    );
     //Calcular numero de semanas correctamente
     int semanasNum = (diasMesSeleccionado.length / 7).ceil();
 
@@ -553,8 +555,13 @@ class _VistaMes extends StatelessWidget {
             (columnIndex) {
               final index = rowIndex * 7 + columnIndex;
               DiaModel dia = diasMesSeleccionado[index];
-              final backgroundColor = vm.nuevaIsToday(dia.value, index)
-                  ? AppTheme.primary
+              final backgroundColor = vm.nuevaIsToday(
+                dia.value,
+                index,
+              )
+                  ? vmTheme.colorPref(
+                      AppTheme.idColorTema,
+                    )
                   : null;
               final hoyColor = vm.nuevaIsToday(dia.value, index)
                   ? StyleApp.diaHoy
