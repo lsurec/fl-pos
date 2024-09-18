@@ -330,12 +330,18 @@ class OrderViewModel extends ChangeNotifier {
 
     final RestaurantService restaurantService = RestaurantService();
 
+    SenOrderModel order = SenOrderModel(
+      userId: "111", //TODO:Armar user id empresa raiz, empresa, estacion
+      order: orders[indexOrder].toJson(),
+    );
+
     //TODO:notificar cambios a clientes escuchamado
-    await restaurantService.notifyComanda(
-      orders[indexOrder],
-      0001,
+    final ApiResModel resPostComanda = await restaurantService.notifyComanda(
+      order,
       tokenUser,
     );
+
+    NotificationService.showSnackbar(resPostComanda.response);
 
     await printNetwork(context, indexOrder);
 

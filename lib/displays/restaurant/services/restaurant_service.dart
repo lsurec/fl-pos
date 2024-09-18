@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/models/send_order_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -10,11 +11,10 @@ class RestaurantService {
   final String _baseUrl = Preferences.urlApi;
 
   Future<ApiResModel> notifyComanda(
-    OrderModel order,
-    int userId,
+    SenOrderModel order,
     String token,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Restaurant/send/comanda/$userId");
+    Uri url = Uri.parse("${_baseUrl}Restaurant/send/order");
     try {
       //url completa
 

@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/services/services.dart';
@@ -72,17 +74,19 @@ class TablesViewModel extends ChangeNotifier {
 
     // Escucha los mensajes sin redibujar el widget
     _channel.stream.listen((message) {
-      OrderModel orderWeb = OrderModel.fromMap(message);
-
-      final OrderViewModel orderVM = Provider.of<OrderViewModel>(
-        context,
-        listen: false,
-      );
-
-      orderVM.orders.add(orderWeb);
-
-      updateOrdersTable(context);
+      listenChangesWebSpcket(context, message);
     });
+  }
+
+  listenChangesWebSpcket(BuildContext context, dynamic data) {
+    try {
+      OrderModel order = OrderModel.fromMap(json.decode(data));
+
+      print("bien");
+    } catch (e) {
+      print(e.toString());
+      print("salomall");
+    }
   }
 
   selectNewtable(TableModel tableParam) {
