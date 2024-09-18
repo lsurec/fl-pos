@@ -43,7 +43,7 @@ class InputWidget extends StatelessWidget {
               ? null
               : Icon(
                   suffixIcon,
-                  color: AppNewTheme.grey,
+                  color: AppTheme.grey,
                 ),
         ),
         validator: (value) {

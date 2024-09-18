@@ -165,7 +165,7 @@ class _Tabs2ViewState extends State<Tabs2View>
                 ],
                 bottom: TabBar(
                   controller: vm.tabController,
-                  indicatorColor: AppNewTheme.hexToColor(
+                  indicatorColor: AppTheme.hexToColor(
                     Preferences.valueColor,
                   ),
                   tabs: [
@@ -199,9 +199,9 @@ class _Tabs2ViewState extends State<Tabs2View>
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],

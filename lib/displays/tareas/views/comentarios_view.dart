@@ -154,9 +154,9 @@ class ComentariosView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -196,7 +196,7 @@ class _NuevoComentario extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppNewTheme.border,
+              color: AppTheme.border,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -259,15 +259,15 @@ class _Comentario extends StatelessWidget {
             border: Border(
               top: BorderSide(
                 width: 1,
-                color: AppNewTheme.border,
+                color: AppTheme.border,
               ),
               left: BorderSide(
                 width: 1,
-                color: AppNewTheme.border,
+                color: AppTheme.border,
               ),
               right: BorderSide(
                 width: 1,
-                color: AppNewTheme.border,
+                color: AppTheme.border,
               ),
             ),
             borderRadius: BorderRadius.only(
@@ -290,7 +290,7 @@ class _Comentario extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: AppNewTheme.border,
+              color: AppTheme.border,
             ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
@@ -355,7 +355,7 @@ class _Comentario extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
-              color: AppNewTheme.border,
+              color: AppTheme.border,
               height: 20,
               width: 3,
             ),

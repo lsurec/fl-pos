@@ -78,13 +78,13 @@ class HomeViewModel extends ChangeNotifier {
     tema = value;
 
     if (!tema) {
-      AppNewTheme.idTema = 1;
+      AppTheme.idTema = 1;
       notifyListeners();
     } else if (tema) {
-      AppNewTheme.idTema = 2;
+      AppTheme.idTema = 2;
       notifyListeners();
     }
     notifyListeners();
-    print(AppNewTheme.idTema);
+    print(AppTheme.idTema);
   }
 }

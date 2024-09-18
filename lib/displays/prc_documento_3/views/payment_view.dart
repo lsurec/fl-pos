@@ -81,7 +81,7 @@ class PaymentView extends StatelessWidget {
                       children: [
                         const SizedBox(width: 20),
                         Checkbox(
-                          activeColor: AppNewTheme.hexToColor(
+                          activeColor: AppTheme.hexToColor(
                             Preferences.valueColor,
                           ),
                           value: vm.selectAllAmounts,
@@ -110,13 +110,13 @@ class PaymentView extends StatelessWidget {
                       final AmountModel amount = vm.amounts[index];
 
                       return Card(
-                        color: AppNewTheme.isDark()
-                            ? AppNewTheme.backroundDarkSecondary
-                            : AppNewTheme.backroundSecondary,
+                        color: AppTheme.isDark()
+                            ? AppTheme.backroundDarkSecondary
+                            : AppTheme.backroundSecondary,
                         elevation: 2.0,
                         child: ListTile(
                           leading: Checkbox(
-                            activeColor: AppNewTheme.hexToColor(
+                            activeColor: AppTheme.hexToColor(
                               Preferences.valueColor,
                             ),
                             value: amount.checked,
@@ -204,7 +204,7 @@ class PaymentView extends StatelessWidget {
               'total',
             ),
             value: vmDetails.total,
-            color: AppNewTheme.hexToColor(
+            color: AppTheme.hexToColor(
               Preferences.valueColor,
             ),
           ),
@@ -214,7 +214,7 @@ class PaymentView extends StatelessWidget {
               'saldo',
             ),
             value: vm.saldo,
-            color: AppNewTheme.hexToColor(
+            color: AppTheme.hexToColor(
               Preferences.valueColor,
             ),
           ),
@@ -224,7 +224,7 @@ class PaymentView extends StatelessWidget {
               'cambio',
             ),
             value: vm.cambio,
-            color: AppNewTheme.hexToColor(
+            color: AppTheme.hexToColor(
               Preferences.valueColor,
             ),
           ),
@@ -241,9 +241,9 @@ class PaymentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: AppNewTheme.isDark()
-          ? AppNewTheme.backroundDarkSecondary
-          : AppNewTheme.backroundSecondary,
+      color: AppTheme.isDark()
+          ? AppTheme.backroundDarkSecondary
+          : AppTheme.backroundSecondary,
       elevation: 2.0,
       child: ListTile(
         trailing: const Icon(Icons.arrow_right),

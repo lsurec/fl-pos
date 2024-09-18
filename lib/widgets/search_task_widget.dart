@@ -42,7 +42,7 @@ class SearchTask extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: AppNewTheme.border,
+                  color: AppTheme.border,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -61,7 +61,7 @@ class SearchTask extends StatelessWidget {
                 ),
                 icon: const Icon(
                   Icons.search,
-                  color: AppNewTheme.grey,
+                  color: AppTheme.grey,
                 ),
                 onPressed: () => vm.buscarTareas(
                   context,
@@ -111,7 +111,7 @@ class SearchTasks extends StatelessWidget {
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: AppNewTheme.border,
+                  color: AppTheme.border,
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),

@@ -58,13 +58,13 @@ class UsuariosView extends StatelessWidget {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: AppNewTheme.grey,
+                              color: AppTheme.grey,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                              color: AppNewTheme.grey,
+                              color: AppTheme.grey,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -102,9 +102,9 @@ class UsuariosView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],
@@ -168,7 +168,7 @@ class _UsuariosEncontados extends StatelessWidget {
                     children: [
                       if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
                         Checkbox(
-                          activeColor: AppNewTheme.hexToColor(
+                          activeColor: AppTheme.hexToColor(
                             Preferences.valueColor,
                           ),
                           value: usuario.select,

@@ -75,7 +75,7 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
               bottom: TabBar(
                 onTap: (index) => vmTarea.limpiarLista(context),
                 controller: vmTarea.tabController,
-                indicatorColor: AppNewTheme.hexToColor(
+                indicatorColor: AppTheme.hexToColor(
                   Preferences.valueColor,
                 ),
                 tabs: [
@@ -125,9 +125,9 @@ class _TareasFiltroViewState extends State<TareasFiltroView>
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vmTarea.isLoading) const LoadWidget(),
       ],

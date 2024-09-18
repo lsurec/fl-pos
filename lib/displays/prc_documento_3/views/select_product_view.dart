@@ -50,7 +50,7 @@ class SelectProductView extends StatelessWidget {
                       index,
                     ) =>
                         const Divider(
-                      color: AppNewTheme.grey,
+                      color: AppTheme.grey,
                     ),
                     itemBuilder: (context, index) {
                       if (index < vmDetalle.products.length) {
@@ -80,9 +80,9 @@ class SelectProductView extends StatelessWidget {
           if (vmProducto.isLoading)
             ModalBarrier(
               dismissible: false,
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vmProducto.isLoading) const LoadWidget(),
         ],

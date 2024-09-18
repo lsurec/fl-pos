@@ -104,16 +104,16 @@ class MyApp extends StatelessWidget {
       // theme: aplicarTemaApp(context),
       // Verifica si el tema es determinado por el sistema
       //SI IDTEMA = O EL TEMA SELECCIONADO ES DEL SISTEMA
-      theme: AppNewTheme.idTema == 0
+      theme: AppTheme.idTema == 0
           ? aplicarTema(
               context,
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             )
           : vmTema.getThemeByColor(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
               //SI IDTEMA = 1 EL TEMA SELECCIONADO ES CLARO
               //SI IDTEMA = 2 EL TEMA SELECCIONADO ES OSCURO
-              isDarkMode: AppNewTheme.idTema == 1 ? false : true,
+              isDarkMode: AppTheme.idTema == 1 ? false : true,
             ), // Usa el tema seleccionado
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
@@ -149,7 +149,7 @@ ThemeData aplicarTema(
 ) {
   final Brightness brightness = MediaQuery.of(context).platformBrightness;
   final bool isDarkMode = brightness == Brightness.dark;
-  AppNewTheme.oscuro = isDarkMode;
+  AppTheme.oscuro = isDarkMode;
 
   final vmTema = Provider.of<ThemeViewModel>(
     context,

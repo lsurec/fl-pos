@@ -152,9 +152,9 @@ class DetailsDestinationDocView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],
@@ -190,7 +190,7 @@ class _PrintActions extends StatelessWidget {
                   right: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -214,7 +214,7 @@ class _PrintActions extends StatelessWidget {
                   left: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(

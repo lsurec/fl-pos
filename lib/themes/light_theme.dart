@@ -9,9 +9,9 @@ class LightTheme {
 
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
-    scaffoldBackgroundColor: AppNewTheme.backroundColor,
+    scaffoldBackgroundColor: AppTheme.backroundColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppNewTheme.backroundColor,
+      backgroundColor: AppTheme.backroundColor,
       titleTextStyle: const TextStyle(
         fontSize: 20,
         color: Colors.black,
@@ -28,11 +28,11 @@ class LightTheme {
       ),
     ),
     cardTheme: const CardTheme(
-      color: AppNewTheme.backroundSecondary,
+      color: AppTheme.backroundSecondary,
     ),
-    dividerColor: AppNewTheme.divider,
+    dividerColor: AppTheme.divider,
     dividerTheme: DividerThemeData(
-      color: AppNewTheme.divider,
+      color: AppTheme.divider,
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.black,

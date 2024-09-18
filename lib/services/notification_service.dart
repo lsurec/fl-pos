@@ -26,7 +26,7 @@ class NotificationService {
         message,
         style: StyleApp.whiteNormal,
       ),
-      backgroundColor: AppNewTheme.hexToColor(
+      backgroundColor: AppTheme.hexToColor(
         Preferences.valueColor,
       ),
       // action: SnackBarAction(
@@ -521,9 +521,9 @@ class NotificationService {
             right: 20,
             top: 20,
           ),
-          backgroundColor: AppNewTheme.isDark()
-              ? AppNewTheme.backroundDarkSecondary
-              : AppNewTheme.backroundSecondary,
+          backgroundColor: AppTheme.isDark()
+              ? AppTheme.backroundDarkSecondary
+              : AppTheme.backroundSecondary,
           content: SizedBox(
             height: 220, // Limitar la altura del diálogo
             width: double.maxFinite,
@@ -554,7 +554,7 @@ class NotificationService {
                       );
                     }
                   },
-                  activeColor: AppNewTheme.hexToColor(
+                  activeColor: AppTheme.hexToColor(
                     Preferences.valueColor,
                   ),
                 );
@@ -584,9 +584,9 @@ class NotificationService {
             right: 20,
             top: 20,
           ),
-          backgroundColor: AppNewTheme.isDark()
-              ? AppNewTheme.backroundDarkSecondary
-              : AppNewTheme.backroundSecondary,
+          backgroundColor: AppTheme.isDark()
+              ? AppTheme.backroundDarkSecondary
+              : AppTheme.backroundSecondary,
           content: SizedBox(
             height: 160, // Limitar la altura del diálogo
             width: double.maxFinite,
@@ -608,8 +608,8 @@ class NotificationService {
                         ),
                         // Puedes ajustar cómo mostrar el nombre
                         value: index,
-                        groupValue: AppNewTheme.idTema,
-                        activeColor: AppNewTheme.hexToColor(
+                        groupValue: AppTheme.idTema,
+                        activeColor: AppTheme.hexToColor(
                           Preferences.valueColor,
                         ),
                         // Asegúrate de manejar el valor seleccionado

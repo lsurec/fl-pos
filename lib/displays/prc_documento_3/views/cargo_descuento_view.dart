@@ -38,9 +38,9 @@ class CargoDescuentoView extends StatelessWidget {
           child: Column(
             children: [
               Card(
-                color: AppNewTheme.isDark()
-                    ? AppNewTheme.backroundDarkSecondary
-                    : AppNewTheme.backroundSecondary,
+                color: AppTheme.isDark()
+                    ? AppTheme.backroundDarkSecondary
+                    : AppTheme.backroundSecondary,
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Text(
@@ -115,7 +115,7 @@ class CargoDescuentoView extends StatelessWidget {
                       children: [
                         const SizedBox(width: 12),
                         Checkbox(
-                          activeColor: AppNewTheme.hexToColor(
+                          activeColor: AppTheme.hexToColor(
                             Preferences.valueColor,
                           ),
                           value: vm.selectAllMontos,
@@ -152,15 +152,15 @@ class CargoDescuentoView extends StatelessWidget {
                   final TraInternaModel operacion =
                       transaction.operaciones[index];
                   return Card(
-                    color: AppNewTheme.isDark()
-                        ? AppNewTheme.backroundDarkSecondary
-                        : AppNewTheme.backroundSecondary,
+                    color: AppTheme.isDark()
+                        ? AppTheme.backroundDarkSecondary
+                        : AppTheme.backroundSecondary,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Checkbox(
-                            activeColor: AppNewTheme.hexToColor(
+                            activeColor: AppTheme.hexToColor(
                               Preferences.valueColor,
                             ),
                             value: operacion.isChecked,

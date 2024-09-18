@@ -58,7 +58,7 @@ class SettingsView extends StatelessWidget {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: vmTheme.colorPref(
-                          AppNewTheme.idColorTema,
+                          AppTheme.idColorTema,
                         ),
                       ),
                       child: Center(

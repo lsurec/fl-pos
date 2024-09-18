@@ -61,7 +61,7 @@ class PendingDocsView extends StatelessWidget {
                                 icon: Icon(
                                   Icons.calendar_today_outlined,
                                   color: vmTheme.colorPref(
-                                    AppNewTheme.idColorTema,
+                                    AppTheme.idColorTema,
                                   ),
                                 ),
                                 label: Text(
@@ -94,7 +94,7 @@ class PendingDocsView extends StatelessWidget {
                                 icon: Icon(
                                   Icons.calendar_today_outlined,
                                   color: vmTheme.colorPref(
-                                    AppNewTheme.idColorTema,
+                                    AppTheme.idColorTema,
                                   ),
                                 ),
                                 label: Text(
@@ -118,9 +118,9 @@ class PendingDocsView extends StatelessWidget {
                             width: 175,
                             child: DropdownButton<int>(
                               isExpanded: true,
-                              dropdownColor: AppNewTheme.isDark()
-                                  ? AppNewTheme.darkBackroundColor
-                                  : AppNewTheme.backroundColor,
+                              dropdownColor: AppTheme.isDark()
+                                  ? AppTheme.darkBackroundColor
+                                  : AppTheme.backroundColor,
                               value: vm.idSelectFilter,
                               onChanged: (value) => vm.changeFilter(value!),
                               items: [
@@ -224,9 +224,9 @@ class PendingDocsView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

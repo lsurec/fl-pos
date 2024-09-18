@@ -24,7 +24,7 @@ class SettingsViewModel extends ChangeNotifier {
   }
 
   navigateTheme(BuildContext context) {
-    AppNewTheme.cambiarTema = 1;
+    AppTheme.cambiarTema = 1;
     notifyListeners();
     Navigator.pushNamed(
       context,

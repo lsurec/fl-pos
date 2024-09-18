@@ -414,7 +414,7 @@ class ConfirmDocView extends StatelessWidget {
                     if (!vm.showPrint) _Observacion(),
                     const SizedBox(height: 10),
                     SwitchListTile(
-                      activeColor: AppNewTheme.hexToColor(
+                      activeColor: AppTheme.hexToColor(
                         Preferences.valueColor,
                       ),
                       value: vm.directPrint,
@@ -441,9 +441,9 @@ class ConfirmDocView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
           if (vm.isLoadingDTE)
@@ -505,17 +505,17 @@ class ConfirmDocView extends StatelessWidget {
                                   if (step.status == 1) //Cargando
                                     const Icon(
                                       Icons.pending_outlined,
-                                      color: AppNewTheme.grey,
+                                      color: AppTheme.grey,
                                     ),
                                   if (step.status == 2) //exitoso
                                     const Icon(
                                       Icons.check_circle_outline,
-                                      color: AppNewTheme.verde,
+                                      color: AppTheme.verde,
                                     ),
                                   if (step.status == 3) //error
                                     const Icon(
                                       Icons.cancel_outlined,
-                                      color: AppNewTheme.rojo,
+                                      color: AppTheme.rojo,
                                     ),
                                 ],
                               ),
@@ -523,7 +523,7 @@ class ConfirmDocView extends StatelessWidget {
                               if (step.isLoading)
                                 LinearProgressIndicator(
                                   color: vmTheme.colorPref(
-                                    AppNewTheme.idColorTema,
+                                    AppTheme.idColorTema,
                                   ),
                                 ),
                             ],
@@ -581,7 +581,7 @@ class ConfirmDocView extends StatelessWidget {
                                       right: 10,
                                     ),
                                     color: vmTheme.colorPref(
-                                      AppNewTheme.idColorTema,
+                                      AppTheme.idColorTema,
                                     ),
                                     child: Center(
                                       child: Text(
@@ -628,7 +628,7 @@ class _Observacion extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: AppNewTheme.grey,
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -661,7 +661,7 @@ class _Print extends StatelessWidget {
                   right: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -687,7 +687,7 @@ class _Print extends StatelessWidget {
                   left: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -727,7 +727,7 @@ class _OptionsError extends StatelessWidget {
                   right: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -751,7 +751,7 @@ class _OptionsError extends StatelessWidget {
                   left: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -791,7 +791,7 @@ class _OptionsErrorAll extends StatelessWidget {
                   right: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -815,7 +815,7 @@ class _OptionsErrorAll extends StatelessWidget {
                   left: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -858,7 +858,7 @@ class _Options extends StatelessWidget {
                   right: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -886,7 +886,7 @@ class _Options extends StatelessWidget {
                   left: 10,
                 ),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -924,13 +924,13 @@ class _Pyments extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: const BorderSide(
-              color: AppNewTheme.grey,
+              color: AppTheme.grey,
               width: 1.0,
             ),
           ),
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.darkBackroundColor
-              : AppNewTheme.backroundColor,
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
@@ -999,13 +999,13 @@ class _TotalsPayment extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: const BorderSide(
-          color: AppNewTheme.grey,
+          color: AppTheme.grey,
           width: 1.0,
         ), // Define el color y grosor del borde
       ),
-      color: AppNewTheme.isDark()
-          ? AppNewTheme.darkBackroundColor
-          : AppNewTheme.backroundColor,
+      color: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -1042,13 +1042,13 @@ class _Totals extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
         side: const BorderSide(
-          color: AppNewTheme.grey,
+          color: AppTheme.grey,
           width: 1.0,
         ), // Define el color y grosor del borde
       ),
-      color: AppNewTheme.isDark()
-          ? AppNewTheme.darkBackroundColor
-          : AppNewTheme.backroundColor,
+      color: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -1118,13 +1118,13 @@ class _Transaction extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: const BorderSide(
-              color: AppNewTheme.grey,
+              color: AppTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.darkBackroundColor
-              : AppNewTheme.backroundColor,
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -24,9 +24,9 @@ class AlertWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppNewTheme.isDark()
-          ? AppNewTheme.darkBackroundColor
-          : AppNewTheme.backroundColor,
+      backgroundColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       title: Text(title),
       content: Text(description),
       actions: [

@@ -93,9 +93,9 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownButton<EmpresaModel>(
                               isExpanded: true,
-                              dropdownColor: AppNewTheme.isDark()
-                                  ? AppNewTheme.darkBackroundColor
-                                  : AppNewTheme.backroundColor,
+                              dropdownColor: AppTheme.isDark()
+                                  ? AppTheme.darkBackroundColor
+                                  : AppTheme.backroundColor,
                               value: vm.selectedEmpresa,
                               onChanged: (value) => vm.changeEmpresa(value),
                               items: vm.empresas.map((empresa) {
@@ -135,9 +135,9 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
                             padding: const EdgeInsets.all(8.0),
                             child: DropdownButton<EstacionModel>(
                               isExpanded: true,
-                              dropdownColor: AppNewTheme.isDark()
-                                  ? AppNewTheme.darkBackroundColor
-                                  : AppNewTheme.backroundColor,
+                              dropdownColor: AppTheme.isDark()
+                                  ? AppTheme.darkBackroundColor
+                                  : AppTheme.backroundColor,
                               value: vm.selectedEstacion,
                               onChanged: (value) => vm.changeEstacion(value),
                               items: vm.estaciones.map((estacion) {
@@ -181,9 +181,9 @@ class _LocalSettingsViewState extends State<LocalSettingsView> {
         if (vm.isLoading)
           ModalBarrier(
             dismissible: false,
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

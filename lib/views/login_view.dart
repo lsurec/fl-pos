@@ -93,14 +93,14 @@ class LoginView extends StatelessWidget {
                                           suffixIcon: const Icon(
                                             Icons.lock_outlined,
                                           ),
-                                          suffixIconColor: AppNewTheme.grey,
+                                          suffixIconColor: AppTheme.grey,
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
                                           //   icon: Icon(
                                           //     vm.obscureText
                                           //         ? Icons.visibility
                                           //         : Icons.visibility_off,
-                                          //     color: AppNewTheme.grey,
+                                          //     color: AppTheme.grey,
                                           //   ),
                                           // ),
                                         ),
@@ -130,7 +130,7 @@ class LoginView extends StatelessWidget {
                               vertical: 0,
                               horizontal: 0,
                             ),
-                            activeColor: AppNewTheme.hexToColor(
+                            activeColor: AppTheme.hexToColor(
                               Preferences.valueColor,
                             ),
                             title: Text(
@@ -193,9 +193,9 @@ class LoginView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

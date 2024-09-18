@@ -42,7 +42,7 @@ class IdReferenciaView extends StatelessWidget {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                            color: AppNewTheme.grey,
+                            color: AppTheme.grey,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
@@ -52,14 +52,14 @@ class IdReferenciaView extends StatelessWidget {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                            color: AppNewTheme.grey,
+                            color: AppTheme.grey,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         suffixIcon: IconButton(
                           icon: const Icon(
                             Icons.search,
-                            color: AppNewTheme.grey,
+                            color: AppTheme.grey,
                           ),
                           onPressed: () => vm.buscarIdRefencia(context),
                         ),
@@ -91,9 +91,9 @@ class IdReferenciaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -124,7 +124,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
               border: Border(
                 bottom: BorderSide(
                   width: 1.5,
-                  color: AppNewTheme.grey,
+                  color: AppTheme.grey,
                 ),
               ),
             ),

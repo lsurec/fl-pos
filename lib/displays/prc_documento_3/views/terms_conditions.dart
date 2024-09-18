@@ -51,7 +51,7 @@ class TermsConditionsView extends StatelessWidget {
                     ],
                   ),
                   const Divider(
-                    color: AppNewTheme.border,
+                    color: AppTheme.border,
                   ),
                   Expanded(
                     child: ListView.builder(
@@ -67,7 +67,7 @@ class TermsConditionsView extends StatelessWidget {
                           decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color: AppNewTheme.border,
+                                color: AppTheme.border,
                                 width: 1, // Ancho del borde
                               ),
                             ),

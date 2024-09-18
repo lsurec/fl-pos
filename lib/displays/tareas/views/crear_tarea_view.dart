@@ -112,7 +112,7 @@ class CrearTareaView extends StatelessWidget {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(
-                                color: AppNewTheme.grey,
+                                color: AppTheme.grey,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -133,7 +133,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaInicial(context),
                               icon: Icon(
                                 Icons.calendar_today_outlined,
-                                color: AppNewTheme.hexToColor(
+                                color: AppTheme.hexToColor(
                                   Preferences.valueColor,
                                 ),
                               ),
@@ -154,7 +154,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraInicial(context),
                               icon: Icon(
                                 Icons.schedule_outlined,
-                                color: AppNewTheme.hexToColor(
+                                color: AppTheme.hexToColor(
                                   Preferences.valueColor,
                                 ),
                               ),
@@ -190,7 +190,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaFinal(context),
                               icon: Icon(
                                 Icons.calendar_today_outlined,
-                                color: AppNewTheme.hexToColor(
+                                color: AppTheme.hexToColor(
                                   Preferences.valueColor,
                                 ),
                               ),
@@ -211,7 +211,7 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraFinal(context),
                               icon: Icon(
                                 Icons.schedule_outlined,
-                                color: AppNewTheme.hexToColor(
+                                color: AppTheme.hexToColor(
                                   Preferences.valueColor,
                                 ),
                               ),
@@ -247,7 +247,7 @@ class CrearTareaView extends StatelessWidget {
                               padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: AppNewTheme.grey,
+                                  color: AppTheme.grey,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -579,9 +579,9 @@ class CrearTareaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -614,7 +614,7 @@ class _TiempoEstimado extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppNewTheme.grey,
+          color: AppTheme.grey,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -651,7 +651,7 @@ class _ObservacionTarea extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: AppNewTheme.grey,
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -684,7 +684,7 @@ class _PrioridadTarea extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: AppNewTheme.grey,
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -760,7 +760,7 @@ class _EstadoTarea extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppNewTheme.grey,
+          color: AppTheme.grey,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -795,7 +795,7 @@ class _TipoTarea extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: AppNewTheme.grey,
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

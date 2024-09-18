@@ -43,7 +43,7 @@ class SelectClientView extends StatelessWidget {
                   index,
                 ) =>
                     const Divider(
-                  color: AppNewTheme.grey,
+                  color: AppTheme.grey,
                 ),
                 itemBuilder: (context, index) {
                   final ClientModel client = clients[index];

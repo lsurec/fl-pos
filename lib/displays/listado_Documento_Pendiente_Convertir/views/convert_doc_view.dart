@@ -97,14 +97,14 @@ class ConvertDocView extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       ColorTextCardWidget(
-                        color: AppNewTheme.verde,
+                        color: AppTheme.verde,
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'origenT',
                         )} - (${docOrigen.documento}) ${docOrigen.documentoDescripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
                       ColorTextCardWidget(
-                        color: AppNewTheme.rojo,
+                        color: AppTheme.rojo,
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'destinoT',
@@ -119,7 +119,7 @@ class ConvertDocView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 13),
                             child: Checkbox(
-                              activeColor: AppNewTheme.hexToColor(
+                              activeColor: AppTheme.hexToColor(
                                 Preferences.valueColor,
                               ),
                               value: vm.selectAllTra,
@@ -161,9 +161,9 @@ class ConvertDocView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -183,9 +183,9 @@ class _Actions extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: SingleChildScrollView(
                 child: Column(
@@ -257,9 +257,9 @@ class _CardDetalle extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              backgroundColor: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              backgroundColor: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
               title: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.cotizacion,
@@ -335,7 +335,7 @@ class _CardDetalle extends StatelessWidget {
               index,
               value!,
             ),
-            activeColor: AppNewTheme.hexToColor(
+            activeColor: AppTheme.hexToColor(
               Preferences.valueColor,
             ),
           ),

@@ -31,7 +31,7 @@ class ThemeViewModel extends ChangeNotifier {
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
 
-    if (AppNewTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
+    if (AppTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
       //mostrar dialogo de confirmacion
       bool result = await showDialog(
             context: context,
@@ -60,7 +60,7 @@ class ThemeViewModel extends ChangeNotifier {
 
       if (!result) return;
 
-      AppNewTheme.idTema = tema.id;
+      AppTheme.idTema = tema.id;
       Preferences.idTheme = tema.id.toString();
 
       notifyListeners();
@@ -79,7 +79,7 @@ class ThemeViewModel extends ChangeNotifier {
       Preferences.systemTheme = "2";
     }
 
-    AppNewTheme.idTema = tema.id;
+    AppTheme.idTema = tema.id;
     Preferences.idTheme = tema.id.toString();
 
     notifyListeners();
@@ -169,7 +169,7 @@ class ThemeViewModel extends ChangeNotifier {
       tema = isDarkMode ? "2" : "1";
     }
     // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && AppNewTheme.idTema == 0) {
+    else if (Preferences.systemTheme.isNotEmpty && AppTheme.idTema == 0) {
       // Determinar el tema a utilizar basado en Preferences.systemTheme
       switch (Preferences.systemTheme) {
         case "1":
@@ -204,32 +204,32 @@ class ThemeViewModel extends ChangeNotifier {
   ThemeData get selectedTheme => selectedPreferencesTheme;
 
   void validarColorTema(BuildContext context, int idTema) {
-    AppNewTheme.idTema = idTema;
-    Preferences.idThemeApp = AppNewTheme.idTema.toString();
-    Preferences.idColor = AppNewTheme.idColorTema.toString();
+    AppTheme.idTema = idTema;
+    Preferences.idThemeApp = AppTheme.idTema.toString();
+    Preferences.idColor = AppTheme.idColorTema.toString();
     Preferences.valueColor = obtenerColor(Preferences.idColor);
 
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
-    AppNewTheme.oscuro = isDarkMode;
+    AppTheme.oscuro = isDarkMode;
     notifyListeners();
     // Selección de tema y color
-    switch (AppNewTheme.idTema) {
+    switch (AppTheme.idTema) {
       case 1: // Tema Claro
         selectedPreferencesTheme = getThemeByColor(
-          AppNewTheme.idColorTema,
+          AppTheme.idColorTema,
           isDarkMode: false,
         );
         break;
       case 2: // Tema Oscuro
         selectedPreferencesTheme = getThemeByColor(
-          AppNewTheme.idColorTema,
+          AppTheme.idColorTema,
           isDarkMode: true,
         );
         break;
       default: // Sistema (idTema == 0)
         selectedPreferencesTheme = getThemeByColor(
-          AppNewTheme.idColorTema,
+          AppTheme.idColorTema,
           isDarkMode: isDarkMode,
         );
     }
@@ -318,7 +318,7 @@ class ThemeViewModel extends ChangeNotifier {
   Color colorPref(int idColor) {
     switch (idColor) {
       case 0: // Sistema
-        return AppNewTheme.primary;
+        return AppTheme.primary;
       case 1: // Azul
         return BlueTheme.primary;
       case 2: // Rojo
@@ -351,8 +351,8 @@ class ThemeViewModel extends ChangeNotifier {
   }
 
   void selectedColor(int idColor) {
-    AppNewTheme.idColorTema = idColor;
-    Preferences.idColor = AppNewTheme.idColorTema.toString();
+    AppTheme.idColorTema = idColor;
+    Preferences.idColor = AppTheme.idColorTema.toString();
     Preferences.valueColor = obtenerColor(Preferences.idColor);
     notifyListeners();
   }
@@ -361,7 +361,7 @@ class ThemeViewModel extends ChangeNotifier {
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
     final bool isDarkMode = brightness == Brightness.dark;
     final bool isLightMode = brightness == Brightness.light;
-    AppNewTheme.oscuro = isDarkMode;
+    AppTheme.oscuro = isDarkMode;
 
     return [
       TemaModel(

@@ -131,7 +131,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -172,7 +172,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -213,7 +213,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -240,7 +240,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -286,7 +286,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -334,7 +334,7 @@ class DetalleTareaView extends StatelessWidget {
                             CardWidget(
                               elevation: 0,
                               borderWidth: 1,
-                              borderColor: AppNewTheme.border,
+                              borderColor: AppTheme.border,
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -386,7 +386,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -428,7 +428,7 @@ class DetalleTareaView extends StatelessWidget {
                       CardWidget(
                         elevation: 0,
                         borderWidth: 1,
-                        borderColor: AppNewTheme.border,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -456,9 +456,9 @@ class DetalleTareaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -480,7 +480,7 @@ class _ActualizarEstado extends StatelessWidget {
     return CardWidget(
       elevation: 0,
       borderWidth: 1,
-      borderColor: AppNewTheme.border,
+      borderColor: AppTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -552,7 +552,7 @@ class _ActualizarPrioridad extends StatelessWidget {
     return CardWidget(
       elevation: 0,
       borderWidth: 1,
-      borderColor: AppNewTheme.border,
+      borderColor: AppTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),

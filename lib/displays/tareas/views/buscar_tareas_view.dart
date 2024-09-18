@@ -35,7 +35,7 @@ class BuscarTareasView extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        color: AppNewTheme.border,
+                        color: AppTheme.border,
                         height: 2,
                       ),
                       PreferredSize(
@@ -114,9 +114,9 @@ class BuscarTareasView extends StatelessWidget {
           if (vmTarea.isLoading)
             ModalBarrier(
               dismissible: false,
-              color: AppNewTheme.isDark()
-                  ? AppNewTheme.darkBackroundColor
-                  : AppNewTheme.backroundColor,
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vmTarea.isLoading) const LoadWidget(),
         ],

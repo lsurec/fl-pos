@@ -15,7 +15,7 @@ class TemasColoresView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vmTema = Provider.of<ThemeViewModel>(context);
     // ID del color seleccionado
-    int selectedColorId = AppNewTheme.idColorTema;
+    int selectedColorId = AppTheme.idColorTema;
 
     return Stack(
       children: [
@@ -38,7 +38,7 @@ class TemasColoresView extends StatelessWidget {
                           decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
-                                color:  AppNewTheme.border,
+                                color:  AppTheme.border,
                               ),
                             ),
                           ),
@@ -72,7 +72,7 @@ class TemasColoresView extends StatelessWidget {
                               Text(
                                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto porro dolor est alias excepturi quis, molestias expedita repellat eos inventore a eligendi.",
                                 style: StyleApp.normal.copyWith(
-                                  color: AppNewTheme.idColorTema != 0
+                                  color: AppTheme.idColorTema != 0
                                       ? Theme.of(context).primaryColor
                                       : null,
                                 ),
@@ -88,7 +88,7 @@ class TemasColoresView extends StatelessWidget {
                                     height: 50,
                                     width: 150,
                                     decoration: BoxDecoration(
-                                      color: AppNewTheme.hexToColor(
+                                      color: AppTheme.hexToColor(
                                         Preferences.valueColor,
                                       ),
                                       borderRadius: const BorderRadius.all(
@@ -107,7 +107,7 @@ class TemasColoresView extends StatelessWidget {
                                     height: 50,
                                     width: 150,
                                     decoration: BoxDecoration(
-                                      color: AppNewTheme.hexToColor(
+                                      color: AppTheme.hexToColor(
                                         Preferences.valueColor,
                                       ),
                                       borderRadius: const BorderRadius.all(
@@ -176,7 +176,7 @@ class TemasColoresView extends StatelessWidget {
 
                             vmTema.validarColorTema(
                               context,
-                              AppNewTheme.idTema,
+                              AppTheme.idTema,
                             );
                           },
                           child: Container(
@@ -187,8 +187,8 @@ class TemasColoresView extends StatelessWidget {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: isSelected
-                                  ? (!AppNewTheme.oscuro ||
-                                          AppNewTheme.idTema != 2
+                                  ? (!AppTheme.oscuro ||
+                                          AppTheme.idTema != 2
                                       ? Colors.black
                                       : Colors.white)
                                   // Fondo blanco solo si está seleccionado
@@ -199,14 +199,14 @@ class TemasColoresView extends StatelessWidget {
                               height: 24.0,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: AppNewTheme.hexToColor(
+                                color: AppTheme.hexToColor(
                                   color.valor,
                                 ),
                                 border: Border.all(
                                   // Borde más grueso o de otro color si está seleccionado
                                   color: isSelected
-                                      ? (!AppNewTheme.oscuro ||
-                                              AppNewTheme.idTema != 2
+                                      ? (!AppTheme.oscuro ||
+                                              AppTheme.idTema != 2
                                           ? Colors.white
                                           : Colors.black)
                                       : Colors.grey,

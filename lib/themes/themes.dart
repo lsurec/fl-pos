@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/themes/app_theme.dart';
 export 'package:flutter_post_printer_example/themes/grey_theme.dart';
 export 'package:flutter_post_printer_example/themes/fuchsia_theme.dart';
 export 'package:flutter_post_printer_example/themes/olive_theme.dart';
@@ -9,7 +10,6 @@ export 'package:flutter_post_printer_example/themes/orange_theme.dart';
 export 'package:flutter_post_printer_example/themes/purple_theme.dart';
 export 'package:flutter_post_printer_example/themes/red_theme.dart';
 export 'package:flutter_post_printer_example/themes/styles.dart';
-export 'package:flutter_post_printer_example/themes/app_theme.dart';
 export 'package:flutter_post_printer_example/themes/green_accent_theme.dart';
 export 'package:flutter_post_printer_example/themes/cyan_theme.dart';
 export 'package:flutter_post_printer_example/themes/medium_purple_theme.dart';

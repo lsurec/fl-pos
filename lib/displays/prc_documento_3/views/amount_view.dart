@@ -31,9 +31,9 @@ class AmountView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vmPayment.isLoading) const LoadWidget(),
       ],
@@ -166,7 +166,7 @@ class _Body extends StatelessWidget {
                           return Card(
                             elevation: 2.0,
                             child: RadioListTile(
-                              activeColor: AppNewTheme.hexToColor(
+                              activeColor: AppTheme.hexToColor(
                                 Preferences.valueColor,
                               ),
                               title: Text(
@@ -211,7 +211,7 @@ class _Body extends StatelessWidget {
                           return Card(
                             elevation: 2.0,
                             child: RadioListTile(
-                              activeColor: AppNewTheme.hexToColor(
+                              activeColor: AppTheme.hexToColor(
                                 Preferences.valueColor,
                               ),
                               title: Text(
@@ -264,7 +264,7 @@ class _ButtonConfirm extends StatelessWidget {
       child: GestureDetector(
         onTap: () => vm.addAmount(payment, context),
         child: Container(
-          color: AppNewTheme.hexToColor(
+          color: AppTheme.hexToColor(
             Preferences.valueColor,
           ),
           child: Center(
@@ -298,7 +298,7 @@ class _Footer extends StatelessWidget {
             'total',
           ),
           value: vmDetails.total,
-          color: AppNewTheme.hexToColor(
+          color: AppTheme.hexToColor(
             Preferences.valueColor,
           ),
         ),
@@ -308,7 +308,7 @@ class _Footer extends StatelessWidget {
             'saldo',
           ),
           value: vmPayment.saldo,
-          color: AppNewTheme.hexToColor(
+          color: AppTheme.hexToColor(
             Preferences.valueColor,
           ),
         ),
@@ -318,7 +318,7 @@ class _Footer extends StatelessWidget {
             'cambio',
           ),
           value: vmPayment.cambio,
-          color: AppNewTheme.hexToColor(
+          color: AppTheme.hexToColor(
             Preferences.valueColor,
           ),
         ),

@@ -59,7 +59,7 @@ class ThemeView extends StatelessWidget {
                               child: ListTile(
                                 title: Text(
                                   theme.descripcion,
-                                  style: index == AppNewTheme.idTema
+                                  style: index == AppTheme.idTema
                                       ? StyleApp.whiteBold
                                       : StyleApp.normalBold,
                                   textAlign: TextAlign.center,
@@ -71,7 +71,7 @@ class ThemeView extends StatelessWidget {
                         );
                       },
                     ),
-                    if (AppNewTheme.cambiarTema == 0)
+                    if (AppTheme.cambiarTema == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
                         child: Text(
@@ -92,9 +92,9 @@ class ThemeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading)
           Center(

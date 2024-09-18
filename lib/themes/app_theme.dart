@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 
-class AppNewTheme {
+class AppTheme {
   //CAMBIAR TEMA CAMBIA A 1 DESDE LOS AJUSTES
   static int cambiarTema = 0;
 

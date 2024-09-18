@@ -91,9 +91,9 @@ class ProductView extends StatelessWidget {
                   DropdownButton<BodegaProductoModel>(
                     isExpanded: true,
                     isDense: true,
-                    dropdownColor: AppNewTheme.isDark()
-                        ? AppNewTheme.darkBackroundColor
-                        : AppNewTheme.backroundColor,
+                    dropdownColor: AppTheme.isDark()
+                        ? AppTheme.darkBackroundColor
+                        : AppTheme.backroundColor,
                     value: vm.selectedBodega,
                     onChanged: (value) =>
                         vm.changeBodega(value, context, product),
@@ -213,9 +213,9 @@ class ProductView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -255,7 +255,7 @@ class _BottomBar extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.all(10),
                 color: vmTheme.colorPref(
-                  AppNewTheme.idColorTema,
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -282,7 +282,7 @@ class _BottomBar extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   color: vmTheme.colorPref(
-                    AppNewTheme.idColorTema,
+                    AppTheme.idColorTema,
                   ),
                   child: Center(
                     child: Text(
@@ -309,7 +309,7 @@ class _BottomBar extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.all(10),
                   color: vmTheme.colorPref(
-                    AppNewTheme.idColorTema,
+                    AppTheme.idColorTema,
                   ),
                   child: Center(
                     child: Text(
@@ -338,9 +338,9 @@ class TipoPrecioSelect extends StatelessWidget {
 
     return DropdownButton<UnitarioModel>(
       isExpanded: true,
-      dropdownColor: AppNewTheme.isDark()
-          ? AppNewTheme.darkBackroundColor
-          : AppNewTheme.backroundColor,
+      dropdownColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       value: vm.selectedPrice,
       onChanged: (value) => vm.changePrice(value),
       items: vm.prices.map(
@@ -445,7 +445,7 @@ class ImageCarouselDialog extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: Container(
-                          color: AppNewTheme.grey,
+                          color: AppTheme.grey,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
                             vertical: 5,

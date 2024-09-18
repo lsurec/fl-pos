@@ -38,9 +38,9 @@ class HelpSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
-        color: AppNewTheme.isDark()
-            ? AppNewTheme.darkBackroundColor
-            : AppNewTheme.backroundColor,
+        color: AppTheme.isDark()
+            ? AppTheme.darkBackroundColor
+            : AppTheme.backroundColor,
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(
@@ -76,9 +76,9 @@ class ClientSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Card(
-        color: AppNewTheme.isDark()
-            ? AppNewTheme.darkBackroundColor
-            : AppNewTheme.backroundColor,
+        color: AppTheme.isDark()
+            ? AppTheme.darkBackroundColor
+            : AppTheme.backroundColor,
         child: ListTile(
           title: Text(
             AppLocalizations.of(context)!.translate(

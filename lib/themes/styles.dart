@@ -25,7 +25,7 @@ class StyleApp {
 
   static TextStyle menuActive = const TextStyle(
     fontSize: 17,
-    color: AppNewTheme.primary,
+    color: AppTheme.primary,
   );
 
   static TextStyle menuActiveDark = const TextStyle(
@@ -126,7 +126,7 @@ class StyleApp {
 
   static const titleBlue = TextStyle(
     fontSize: 20,
-    color: AppNewTheme.primary,
+    color: AppTheme.primary,
     fontWeight: FontWeight.bold,
   );
 

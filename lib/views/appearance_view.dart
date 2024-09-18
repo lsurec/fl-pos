@@ -45,7 +45,7 @@ class AppearenceView extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: AppNewTheme.isDark()
+                leading: AppTheme.isDark()
                     ? const Icon(
                         Icons.dark_mode_outlined,
                       )
@@ -60,7 +60,7 @@ class AppearenceView extends StatelessWidget {
                   style: StyleApp.normal,
                 ),
                 subtitle: Text(
-                  vmTheme.temasApp(context)[AppNewTheme.idTema].descripcion,
+                  vmTheme.temasApp(context)[AppTheme.idTema].descripcion,
                 ),
                 onTap: () {
                   NotificationService.changeTheme(context);

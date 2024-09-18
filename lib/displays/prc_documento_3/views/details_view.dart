@@ -38,12 +38,12 @@ class DetailsView extends StatelessWidget {
                           decoration: InputDecoration(
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: AppNewTheme.grey,
+                                color: AppTheme.grey,
                               ),
                             ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: AppNewTheme.grey,
+                                color: AppTheme.grey,
                               ),
                             ),
                             hintText: AppLocalizations.of(context)!.translate(
@@ -90,12 +90,12 @@ class DetailsView extends StatelessWidget {
                             decoration: InputDecoration(
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: AppNewTheme.grey,
+                                  color: AppTheme.grey,
                                 ),
                               ),
                               focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: AppNewTheme.grey,
+                                  color: AppTheme.grey,
                                 ),
                               ),
                               hintText: AppLocalizations.of(context)!.translate(
@@ -190,14 +190,14 @@ class DetailsView extends StatelessWidget {
                               onPressed: () => vm.cargoDescuento(1, context),
                               icon: const Icon(
                                 Icons.add_circle,
-                                color: AppNewTheme.verde,
+                                color: AppTheme.verde,
                               ),
                             ),
                             IconButton(
                               onPressed: () => vm.cargoDescuento(2, context),
                               icon: const Icon(
                                 Icons.remove_circle,
-                                color: AppNewTheme.rojo,
+                                color: AppTheme.rojo,
                               ),
                             ),
                           ],
@@ -211,7 +211,7 @@ class DetailsView extends StatelessWidget {
                       if (vm.traInternas.isNotEmpty) const SizedBox(width: 14),
                       if (vm.traInternas.isNotEmpty)
                         Checkbox(
-                          activeColor: AppNewTheme.hexToColor(
+                          activeColor: AppTheme.hexToColor(
                             Preferences.valueColor,
                           ),
                           value: vm.selectAll,
@@ -248,7 +248,7 @@ class DetailsView extends StatelessWidget {
                         onDismissed: (direction) =>
                             vm.dismissItem(context, index),
                         background: Container(
-                          color: AppNewTheme.rojo,
+                          color: AppTheme.rojo,
                           alignment:
                               Alignment.centerLeft, // Alineado a la izquierda
                           padding: const EdgeInsets.only(left: 16.0),
@@ -275,7 +275,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.subtotal,
             color: vmTheme.colorPref(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             ),
           ),
           RowTotalWidget(
@@ -285,7 +285,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.cargo,
             color: vmTheme.colorPref(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             ),
           ),
           RowTotalWidget(
@@ -295,7 +295,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.descuento,
             color: vmTheme.colorPref(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             ),
           ),
           const Divider(),
@@ -306,7 +306,7 @@ class DetailsView extends StatelessWidget {
             ),
             value: vm.total,
             color: vmTheme.colorPref(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             ),
           ),
         ],
@@ -340,9 +340,9 @@ class _TransactionCard extends StatelessWidget {
     );
 
     return Card(
-      color: AppNewTheme.isDark()
-          ? AppNewTheme.backroundDarkSecondary
-          : AppNewTheme.backroundSecondary,
+      color: AppTheme.isDark()
+          ? AppTheme.backroundDarkSecondary
+          : AppTheme.backroundSecondary,
       child: InkWell(
         onDoubleTap: () => vm.navigatorDetails(
           context,
@@ -423,7 +423,7 @@ class _TransactionCard extends StatelessWidget {
             ],
           ),
           leading: Checkbox(
-            activeColor: AppNewTheme.hexToColor(
+            activeColor: AppTheme.hexToColor(
               Preferences.valueColor,
             ),
             value: transaction.isChecked,
@@ -457,7 +457,7 @@ class _RadioCargo extends StatelessWidget {
           child: Row(
             children: [
               Radio<String>(
-                activeColor: AppNewTheme.hexToColor(
+                activeColor: AppTheme.hexToColor(
                   Preferences.valueColor,
                 ),
                 value: 'Porcentaje',
@@ -479,7 +479,7 @@ class _RadioCargo extends StatelessWidget {
           child: Row(
             children: [
               Radio<String>(
-                activeColor: AppNewTheme.hexToColor(
+                activeColor: AppTheme.hexToColor(
                   Preferences.valueColor,
                 ),
                 value: 'Monto',
@@ -516,7 +516,7 @@ class MyExpansionTile extends StatelessWidget {
     return ExpansionTile(
       tilePadding: EdgeInsets.zero,
       childrenPadding: const EdgeInsets.symmetric(vertical: 10),
-      iconColor: AppNewTheme.grey,
+      iconColor: AppTheme.grey,
       title: Text(
         title,
         style: StyleApp.title,

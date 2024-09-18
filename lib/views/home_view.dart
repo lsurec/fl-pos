@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
                       width: 35,
                       height: 35,
                       color: vmTheme.colorPref(
-                        AppNewTheme.idColorTema,
+                        AppTheme.idColorTema,
                       ),
                       child: Center(
                         child: Text(
@@ -64,9 +64,9 @@ class HomeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -85,9 +85,9 @@ class _MyDrawer extends StatelessWidget {
 
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppNewTheme.isDark()
-          ? AppNewTheme.darkBackroundColor
-          : AppNewTheme.backroundColor,
+      backgroundColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Column(
         children: [
           const SizedBox(height: kToolbarHeight),
@@ -109,10 +109,10 @@ class _MyDrawer extends StatelessWidget {
                       Text(
                         route.name,
                         style: index == routeMenu.length - 1
-                            ? (AppNewTheme.isDark()
+                            ? (AppTheme.isDark()
                                 ? StyleApp.menuActiveDark
                                 : StyleApp.menuActive)
-                            : (AppNewTheme.isDark()
+                            : (AppTheme.isDark()
                                 ? StyleApp.whiteNormal
                                 : StyleApp.normal),
                       ),
@@ -126,9 +126,9 @@ class _MyDrawer extends StatelessWidget {
             ),
           ),
           Divider(
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.dividerDark
-                : AppNewTheme.divider,
+            color: AppTheme.isDark()
+                ? AppTheme.dividerDark
+                : AppTheme.divider,
           ),
           Expanded(
             child: ListView.separated(
@@ -136,9 +136,9 @@ class _MyDrawer extends StatelessWidget {
               itemCount: menu.length,
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(
-                  color: AppNewTheme.isDark()
-                      ? AppNewTheme.dividerDark
-                      : AppNewTheme.divider,
+                  color: AppTheme.isDark()
+                      ? AppTheme.dividerDark
+                      : AppTheme.divider,
                 );
               },
               itemBuilder: (BuildContext context, int index) {

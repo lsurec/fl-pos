@@ -1128,7 +1128,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Mostrar el SnackBar con la opción de deshacer
     final snackBar = SnackBar(
-      backgroundColor: vmTheme.colorPref(AppNewTheme.idColorTema,),
+      backgroundColor: vmTheme.colorPref(AppTheme.idColorTema,),
       duration: const Duration(seconds: 5),
       content: Row(
         children: [
@@ -1149,7 +1149,7 @@ class DetailsViewModel extends ChangeNotifier {
           BlockTranslate.botones,
           'deshacer',
         ),
-        textColor: AppNewTheme.white,
+        textColor: AppTheme.white,
         onPressed: () {
           // Acción de deshacer: Restaurar el elemento eliminado
           traInternas.insert(index, deletedItem);

@@ -41,7 +41,7 @@ class DocumentView extends StatelessWidget {
                   CheckboxListTile(
                     checkColor: Colors.white,
                     activeColor: vmTheme.colorPref(
-                      AppNewTheme.idColorTema,
+                      AppTheme.idColorTema,
                     ),
                     value: vm.confirmarCotizacion,
                     onChanged: (value) => vm.confirmarOrden(value!),
@@ -99,9 +99,9 @@ class DocumentView extends StatelessWidget {
                 if (vm.series.isNotEmpty && !vmFactura.editDoc)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
-                    dropdownColor: AppNewTheme.isDark()
-                        ? AppNewTheme.darkBackroundColor
-                        : AppNewTheme.backroundColor,
+                    dropdownColor: AppTheme.isDark()
+                        ? AppTheme.darkBackroundColor
+                        : AppTheme.backroundColor,
                     hint: Text(
                       AppLocalizations.of(context)!.translate(
                         BlockTranslate.factura,
@@ -180,7 +180,7 @@ class DocumentView extends StatelessWidget {
                   ),
                 const SizedBox(height: 10),
                 SwitchListTile(
-                  activeColor: AppNewTheme.hexToColor(
+                  activeColor: AppTheme.hexToColor(
                     Preferences.valueColor,
                   ),
                   contentPadding: EdgeInsets.zero,
@@ -214,7 +214,7 @@ class DocumentView extends StatelessWidget {
                               ),
                               icon: const Icon(
                                 Icons.edit_outlined,
-                                color: AppNewTheme.grey,
+                                color: AppTheme.grey,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.cuenta,
@@ -273,9 +273,9 @@ class DocumentView extends StatelessWidget {
                       ),
                       DropdownButton<SellerModel>(
                         isExpanded: true,
-                        dropdownColor: AppNewTheme.isDark()
-                            ? AppNewTheme.darkBackroundColor
-                            : AppNewTheme.backroundColor,
+                        dropdownColor: AppTheme.isDark()
+                            ? AppTheme.darkBackroundColor
+                            : AppTheme.backroundColor,
                         hint: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
@@ -322,9 +322,9 @@ class DocumentView extends StatelessWidget {
                       ),
                       DropdownButton<TipoReferenciaModel>(
                         isExpanded: true,
-                        dropdownColor: AppNewTheme.isDark()
-                            ? AppNewTheme.darkBackroundColor
-                            : AppNewTheme.backroundColor,
+                        dropdownColor: AppTheme.isDark()
+                            ? AppTheme.darkBackroundColor
+                            : AppTheme.backroundColor,
                         hint: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
@@ -556,13 +556,13 @@ class _Observacion extends StatelessWidget {
           hintText: labelText,
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppNewTheme.grey,
+              color: AppTheme.grey,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppNewTheme.grey,
+              color: AppTheme.grey,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -609,7 +609,7 @@ class FechaButton extends StatelessWidget {
           Icon(
             Icons.calendar_today_outlined,
             color: vmTheme.colorPref(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             ),
           ),
         ],
@@ -650,7 +650,7 @@ class HoraButton extends StatelessWidget {
           Icon(
             Icons.schedule_outlined,
             color: vmTheme.colorPref(
-              AppNewTheme.idColorTema,
+              AppTheme.idColorTema,
             ),
           ),
         ],

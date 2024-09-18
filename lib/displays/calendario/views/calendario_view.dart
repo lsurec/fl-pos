@@ -257,9 +257,9 @@ class _CalendarioViewState extends State<CalendarioView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -277,9 +277,9 @@ class _DrawerCalendar extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppNewTheme.isDark()
-          ? AppNewTheme.darkBackroundColor
-          : AppNewTheme.backroundColor,
+      backgroundColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Column(
         children: [
           const SizedBox(height: 30.0),
@@ -304,9 +304,9 @@ class _DrawerCalendar extends StatelessWidget {
                 ),
               ),
               Divider(
-                color: AppNewTheme.isDark()
-                    ? AppNewTheme.dividerDark
-                    : AppNewTheme.divider,
+                color: AppTheme.isDark()
+                    ? AppTheme.dividerDark
+                    : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -320,9 +320,9 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaMes(context),
               ),
               Divider(
-                color: AppNewTheme.isDark()
-                    ? AppNewTheme.dividerDark
-                    : AppNewTheme.divider,
+                color: AppTheme.isDark()
+                    ? AppTheme.dividerDark
+                    : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -336,9 +336,9 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaSemana(context),
               ),
               Divider(
-                color: AppNewTheme.isDark()
-                    ? AppNewTheme.dividerDark
-                    : AppNewTheme.divider,
+                color: AppTheme.isDark()
+                    ? AppTheme.dividerDark
+                    : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -352,9 +352,9 @@ class _DrawerCalendar extends StatelessWidget {
                 onTap: () => vm.mostrarVistaDia(context, 0),
               ),
               Divider(
-                color: AppNewTheme.isDark()
-                    ? AppNewTheme.dividerDark
-                    : AppNewTheme.divider,
+                color: AppTheme.isDark()
+                    ? AppTheme.dividerDark
+                    : AppTheme.divider,
               ),
             ],
           ),
@@ -377,22 +377,22 @@ class _NombreDias extends StatelessWidget {
     return Table(
       border: const TableBorder(
         top: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde arriba
         left: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -429,19 +429,19 @@ class _VistaSemana extends StatelessWidget {
       border: const TableBorder(
         top: BorderSide.none, // Borde arriba
         left: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -451,7 +451,7 @@ class _VistaSemana extends StatelessWidget {
             final color = dia.value == vm.today &&
                     vm.resolveMonth(dia.indexWeek) == vm.month &&
                     vm.resolveYear(dia.indexWeek) == vm.year
-                ? AppNewTheme.primary
+                ? AppTheme.primary
                 : null;
 
             final style = dia.value == vm.today &&
@@ -534,14 +534,14 @@ class _VistaMes extends StatelessWidget {
     return Table(
       border: const TableBorder(
         bottom: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ),
         // Mantenemos los bordes interiores y eliminamos el superior
         horizontalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ),
         verticalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ),
         top: BorderSide.none, // Eliminamos el borde superior
       ),
@@ -554,7 +554,7 @@ class _VistaMes extends StatelessWidget {
               final index = rowIndex * 7 + columnIndex;
               DiaModel dia = diasMesSeleccionado[index];
               final backgroundColor = vm.nuevaIsToday(dia.value, index)
-                  ? AppNewTheme.primary
+                  ? AppTheme.primary
                   : null;
               final hoyColor = vm.nuevaIsToday(dia.value, index)
                   ? StyleApp.diaHoy
@@ -1024,22 +1024,22 @@ class _VistaDiaState extends State<_VistaDia> {
     return Table(
       border: const TableBorder(
         top: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde arriba
         left: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Bo, // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppNewTheme.border,
+          color: AppTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       columnWidths: const <int, TableColumnWidth>{
@@ -1072,7 +1072,7 @@ class _CirculoDia extends StatelessWidget {
       height: 25.0, // Altura del círculo
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppNewTheme.grey,
+          color: AppTheme.grey,
           width: 0.5,
         ),
         shape: BoxShape.circle, // Forma del contenedor
@@ -1110,7 +1110,7 @@ class EstadoColor extends StatelessWidget {
           1,
         ),
         border: Border.all(
-          color: AppNewTheme.grey,
+          color: AppTheme.grey,
           width: 1.0,
         ),
       ),

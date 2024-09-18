@@ -7,9 +7,9 @@ class GreenAccentTheme {
 
   static final ThemeData light = ThemeData.light().copyWith(
     primaryColor: primary,
-    scaffoldBackgroundColor: AppNewTheme.backroundColor,
+    scaffoldBackgroundColor: AppTheme.backroundColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppNewTheme.backroundColor,
+      backgroundColor: AppTheme.backroundColor,
       titleTextStyle: const TextStyle(
         fontSize: 20,
         color: Colors.black,
@@ -26,11 +26,11 @@ class GreenAccentTheme {
       ),
     ),
     cardTheme: const CardTheme(
-      color: AppNewTheme.backroundSecondary,
+      color: AppTheme.backroundSecondary,
     ),
-    dividerColor: AppNewTheme.divider,
+    dividerColor: AppTheme.divider,
     dividerTheme: DividerThemeData(
-      color: AppNewTheme.divider,
+      color: AppTheme.divider,
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.black,
@@ -52,9 +52,9 @@ class GreenAccentTheme {
 
   static final ThemeData dark = ThemeData.dark().copyWith(
     primaryColor: primary,
-    scaffoldBackgroundColor: AppNewTheme.darkBackroundColor,
+    scaffoldBackgroundColor: AppTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppNewTheme.darkBackroundColor,
+      backgroundColor: AppTheme.darkBackroundColor,
       titleTextStyle: TextStyle(
         fontSize: 20,
       ),
@@ -70,11 +70,11 @@ class GreenAccentTheme {
       ),
     ),
     cardTheme: const CardTheme(
-      color: AppNewTheme.backroundDarkSecondary,
+      color: AppTheme.backroundDarkSecondary,
     ),
-    dividerColor: AppNewTheme.dividerDark,
+    dividerColor: AppTheme.dividerDark,
     dividerTheme: const DividerThemeData(
-      color: AppNewTheme.dividerDark,
+      color: AppTheme.dividerDark,
     ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.white,

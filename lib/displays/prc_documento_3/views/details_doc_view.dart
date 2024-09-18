@@ -543,13 +543,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: const BorderSide(
-                        color: AppNewTheme.grey,
+                        color: AppTheme.grey,
                         width: 1.0,
                       ), // Define el color y grosor del borde
                     ),
-                    color: AppNewTheme.isDark()
-                        ? AppNewTheme.darkBackroundColor
-                        : AppNewTheme.backroundColor,
+                    color: AppTheme.isDark()
+                        ? AppTheme.darkBackroundColor
+                        : AppTheme.backroundColor,
                     child: Padding(
                       padding: const EdgeInsets.all(
                         10,
@@ -652,9 +652,9 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppNewTheme.isDark()
-                ? AppNewTheme.darkBackroundColor
-                : AppNewTheme.backroundColor,
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -691,13 +691,13 @@ class _Pyments extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: const BorderSide(
-              color: AppNewTheme.grey,
+              color: AppTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.darkBackroundColor
-              : AppNewTheme.backroundColor,
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
@@ -802,13 +802,13 @@ class _Transaction extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
             side: const BorderSide(
-              color: AppNewTheme.grey,
+              color: AppTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppNewTheme.isDark()
-              ? AppNewTheme.darkBackroundColor
-              : AppNewTheme.backroundColor,
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -24,7 +24,7 @@ class UserWidget extends StatelessWidget {
         child: Container(
           width: 35,
           height: 35,
-          color: AppNewTheme.hexToColor(
+          color: AppTheme.hexToColor(
             Preferences.valueColor,
           ),
           child: Center(
@@ -58,9 +58,9 @@ void _showUserInfoModal(
     context: context,
     builder: (BuildContext context) {
       return Container(
-        color: AppNewTheme.isDark()
-            ? AppNewTheme.darkBackroundColor
-            : AppNewTheme.backroundSecondary,
+        color: AppTheme.isDark()
+            ? AppTheme.darkBackroundColor
+            : AppTheme.backroundSecondary,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: SingleChildScrollView(
           child: Column(
@@ -71,9 +71,9 @@ void _showUserInfoModal(
               ),
               const SizedBox(height: 10),
               Card(
-                color: AppNewTheme.isDark()
-                    ? AppNewTheme.darkBackroundColor
-                    : AppNewTheme.backroundSecondary,
+                color: AppTheme.isDark()
+                    ? AppTheme.darkBackroundColor
+                    : AppTheme.backroundSecondary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(22),
                 ),
@@ -93,7 +93,7 @@ void _showUserInfoModal(
                             child: Container(
                               width: 45,
                               height: 50,
-                              color: AppNewTheme.hexToColor(
+                              color: AppTheme.hexToColor(
                                 Preferences.valueColor,
                               ),
                               child: Center(
