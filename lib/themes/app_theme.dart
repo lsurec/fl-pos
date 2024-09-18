@@ -32,6 +32,9 @@ class AppTheme {
   static const Color grayAppBar = Color(0xfff5f5f5);
 
   static Color hexToColor(String hexColor) {
+    if (hexColor.isEmpty) {
+      return primary;
+    }
     // Asegurarse de que el string no tenga el carácter '#'
     hexColor = hexColor.replaceAll("#", "");
 

@@ -222,7 +222,7 @@
         "productosNoDisponibles": "One or more products are unavailable.",
         "aplicaranCambios": "Se aplicaran los cambios al documento."
     },
-    "preferences": {
+    "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
         "idioma": "Select your preferred language.",
         "tema2": "Select your preferred theme, or continue with your device theme.",

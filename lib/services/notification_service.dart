@@ -21,13 +21,18 @@ class NotificationService {
 
   //Mostrar snack bar
   static showSnackbar(String message) {
+    final vmTheme = Provider.of<ThemeViewModel>(
+      messengerKey.currentContext!,
+      listen: false,
+    );
+
     final snackBar = SnackBar(
       content: Text(
         message,
         style: StyleApp.whiteNormal,
       ),
-      backgroundColor: AppTheme.hexToColor(
-        Preferences.valueColor,
+      backgroundColor: vmTheme.colorPref(
+        AppTheme.idColorTema,
       ),
       // action: SnackBarAction(
       //   label: 'Aceptar',
@@ -543,7 +548,7 @@ class NotificationService {
                   ),
                   // Puedes ajustar cómo mostrar el nombre
                   value: index,
-                  groupValue: vmLang.selectedIndexLang,
+                  groupValue: Preferences.idLanguage,
                   // Asegúrate de manejar el valor seleccionado
                   onChanged: (int? value) {
                     if (value != null) {

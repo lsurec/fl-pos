@@ -91,6 +91,7 @@ class Preferences {
   static void clearTheme() {
     _prefs.remove(_themeNameKey);
     _prefs.remove(_systemThemeKey);
+    _prefs.remove(_colorKey);
   }
 
   //limpiar pedido

@@ -44,9 +44,11 @@ class LangView extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         final LanguageModel lang = vm.languages[index];
                         return RadioListTile(
-                          activeColor: AppTheme.hexToColor(
-                            Preferences.valueColor,
-                          ),
+                          activeColor: Preferences.valueColor.isNotEmpty
+                              ? AppTheme.hexToColor(
+                                  Preferences.valueColor,
+                                )
+                              : AppTheme.primary,
                           title: Text(
                             vm.getNameLang(lang)!,
                             style: StyleApp.normal,

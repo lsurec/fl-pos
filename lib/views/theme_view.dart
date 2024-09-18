@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ThemeView extends StatelessWidget {
@@ -51,23 +51,21 @@ class ThemeView extends StatelessWidget {
                       itemCount: themes.length,
                       itemBuilder: (BuildContext context, int index) {
                         final ThemeModel theme = themes[index];
-                        return Column(
-                          children: [
-                            CardWidget(
-                              width: 400,
-                              margin: const EdgeInsets.only(bottom: 25),
-                              child: ListTile(
-                                title: Text(
-                                  theme.descripcion,
-                                  style: index == AppTheme.idTema
-                                      ? StyleApp.whiteBold
-                                      : StyleApp.normalBold,
-                                  textAlign: TextAlign.center,
+                        return RadioListTile(
+                          activeColor: AppTheme.idTema == 0
+                              ? AppTheme.primary
+                              : AppTheme.hexToColor(
+                                  Preferences.valueColor,
                                 ),
-                                onTap: () => vm.nuevoTema(context, theme),
-                              ),
-                            ),
-                          ],
+                          title: Text(
+                            theme.descripcion,
+                            style: StyleApp.normal,
+                          ),
+                          value: index,
+                          groupValue: AppTheme.idTema,
+                          onChanged: (int? value) => vm.reiniciarTemp(
+                            context,
+                          ),
                         );
                       },
                     ),
