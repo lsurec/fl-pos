@@ -79,9 +79,12 @@ class DarkTheme {
     fontWeight: FontWeight.bold,
   );
 
-  static final ButtonStyle buttonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(
-      primary,
+  static final ButtonStyle button = ButtonStyle(
+    // backgroundColor: MaterialStateProperty.all<Color>(
+    //   Colors.white,
+    // ),
+    textStyle: MaterialStateProperty.all<TextStyle>(
+    normalStyle,
     ),
   );
 

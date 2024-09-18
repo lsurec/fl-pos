@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -172,6 +173,7 @@ class _PrintActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetailsDestinationDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -187,7 +189,9 @@ class _PrintActions extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -209,7 +213,9 @@ class _PrintActions extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(

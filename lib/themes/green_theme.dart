@@ -59,7 +59,7 @@ class GreenTheme {
       ),
     ),
     cardTheme: const CardTheme(
-      color: AppNewTheme.darkBackroundColor,
+      color: AppNewTheme.backroundDarkSecondary,
     ),
     dividerColor: AppNewTheme.dividerDark,
     dividerTheme: const DividerThemeData(

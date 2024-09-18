@@ -19,6 +19,7 @@ class DetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<DetailsViewModel>(context);
     final vmProducto = Provider.of<ProductViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -109,7 +110,6 @@ class DetailsView extends StatelessWidget {
                               suffixIcon: IconButton(
                                 icon: const Icon(
                                   Icons.search,
-                                  color: AppNewTheme.primary,
                                 ),
                                 onPressed: () => vm.performSearch(context),
                               ),
@@ -274,7 +274,9 @@ class DetailsView extends StatelessWidget {
               'subTotal',
             ),
             value: vm.subtotal,
-            color: AppNewTheme.primary,
+            color: vmTheme.colorPref(
+              AppNewTheme.idColorTema,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -282,7 +284,9 @@ class DetailsView extends StatelessWidget {
               'cargo',
             ),
             value: vm.cargo,
-            color: AppNewTheme.primary,
+            color: vmTheme.colorPref(
+              AppNewTheme.idColorTema,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -290,7 +294,9 @@ class DetailsView extends StatelessWidget {
               'descuento',
             ),
             value: vm.descuento,
-            color: AppNewTheme.primary,
+            color: vmTheme.colorPref(
+              AppNewTheme.idColorTema,
+            ),
           ),
           const Divider(),
           RowTotalWidget(
@@ -299,7 +305,9 @@ class DetailsView extends StatelessWidget {
               'total',
             ),
             value: vm.total,
-            color: AppNewTheme.primary,
+            color: vmTheme.colorPref(
+              AppNewTheme.idColorTema,
+            ),
           ),
         ],
       ),

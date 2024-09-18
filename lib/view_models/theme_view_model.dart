@@ -316,9 +316,45 @@ class ThemeViewModel extends ChangeNotifier {
     }
   }
 
+  Color colorPref(int idColor) {
+    switch (idColor) {
+      case 0: // Sistema
+        return AppNewTheme.primary;
+      case 1: // Azul
+        return BlueTheme.primary;
+      case 2: // Rojo
+        return RedTheme.primary;
+      case 3: // Naranja
+        return OrangeTheme.primary;
+      case 4: // Verde Musgo
+        return OliveTheme.primary;
+      case 5: // Verde
+        return GreenTheme.primary;
+      case 6: // Verde 2
+        return GreenAccentTheme.primary;
+      case 7: // Cyan
+        return CyanTheme.primary;
+      case 8: // Aqua
+        return SteelBlueTheme.primary;
+      case 9: // Lila
+        return MediumPurpleTheme.primary;
+      case 10: // Morado
+        return PurpleTheme.primary;
+      case 11: // Fucsia
+        return FuchsiaTheme.primary;
+      case 12: // Rosadito
+        return RosyBrownTheme.primary;
+      case 13: // Gris
+        return GreyTheme.primary;
+      default: // Default
+        return LightTheme.primary;
+    }
+  }
+
   void selectedColor(int idColor) {
     AppNewTheme.idColorTema = idColor;
     Preferences.idColor = AppNewTheme.idColorTema.toString();
+    Preferences.valueColor = obtenerColor(Preferences.idColor);
     notifyListeners();
   }
 

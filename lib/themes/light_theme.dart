@@ -230,5 +230,8 @@ class LightTheme {
     dividerTheme: DividerThemeData(
       color: AppNewTheme.divider,
     ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.black,
+    ),
   );
 }

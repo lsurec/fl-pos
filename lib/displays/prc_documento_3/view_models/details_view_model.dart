@@ -1108,6 +1108,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     //view model externo
     final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
+    final vmTheme = Provider.of<ThemeViewModel>(context, listen: false);
 
     //si hay formas de pago agregadas mostrar mensaje
     if (vmPayment.amounts.isNotEmpty) {
@@ -1127,7 +1128,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Mostrar el SnackBar con la opción de deshacer
     final snackBar = SnackBar(
-      backgroundColor: AppNewTheme.primary,
+      backgroundColor: vmTheme.colorPref(AppNewTheme.idColorTema,),
       duration: const Duration(seconds: 5),
       content: Row(
         children: [

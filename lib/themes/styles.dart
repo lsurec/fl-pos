@@ -65,11 +65,6 @@ class StyleApp {
     color: AppNewTheme.primary,
   );
 
-  static const blueDarkText = TextStyle(
-    fontSize: 15,
-    color: AppNewTheme.primaryDark,
-  );
-
   static const cargo = TextStyle(
     fontSize: 17,
     color: Colors.green,
@@ -123,11 +118,6 @@ class StyleApp {
   static const bold30Style = TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
-  );
-
-  static const action = TextStyle(
-    fontSize: 15,
-    color: AppNewTheme.primary,
   );
 
   static const titleWhite = TextStyle(

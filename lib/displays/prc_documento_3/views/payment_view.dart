@@ -204,7 +204,9 @@ class PaymentView extends StatelessWidget {
               'total',
             ),
             value: vmDetails.total,
-            color: AppNewTheme.primary,
+            color: AppNewTheme.hexToColor(
+              Preferences.valueColor,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -212,7 +214,9 @@ class PaymentView extends StatelessWidget {
               'saldo',
             ),
             value: vm.saldo,
-            color: AppNewTheme.primary,
+            color: AppNewTheme.hexToColor(
+              Preferences.valueColor,
+            ),
           ),
           RowTotalWidget(
             title: AppLocalizations.of(context)!.translate(
@@ -220,7 +224,9 @@ class PaymentView extends StatelessWidget {
               'cambio',
             ),
             value: vm.cambio,
-            color: AppNewTheme.primary,
+            color: AppNewTheme.hexToColor(
+              Preferences.valueColor,
+            ),
           ),
         ],
       ),

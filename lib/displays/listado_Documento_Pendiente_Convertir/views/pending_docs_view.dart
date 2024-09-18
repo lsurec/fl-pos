@@ -1,9 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +18,7 @@ class PendingDocsView extends StatelessWidget {
     final vm = Provider.of<PendingDocsViewModel>(context);
     final TypeDocModel tipoDoc =
         ModalRoute.of(context)!.settings.arguments as TypeDocModel;
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return Stack(
       children: [
@@ -54,13 +58,20 @@ class PendingDocsView extends StatelessWidget {
                               ),
                               TextButton.icon(
                                 onPressed: () => vm.showPickerIni(context),
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.calendar_today_outlined,
-                                  color: AppNewTheme.primary,
+                                  color: vmTheme.colorPref(
+                                    AppNewTheme.idColorTema,
+                                  ),
                                 ),
                                 label: Text(
                                   vm.formatView(vm.fechaIni!),
-                                  style: StyleApp.normal,
+                                  style: StyleApp.normal.copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
                                 ),
                               ),
                             ],
@@ -80,13 +91,20 @@ class PendingDocsView extends StatelessWidget {
                               ),
                               TextButton.icon(
                                 onPressed: () => vm.showPickerFin(context),
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.calendar_today_outlined,
-                                  color: AppNewTheme.primary,
+                                  color: vmTheme.colorPref(
+                                    AppNewTheme.idColorTema,
+                                  ),
                                 ),
                                 label: Text(
                                   vm.formatView(vm.fechaFin!),
-                                  style: StyleApp.normal,
+                                  style: StyleApp.normal.copyWith(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
                                 ),
                               ),
                             ],
@@ -177,14 +195,12 @@ class PendingDocsView extends StatelessWidget {
                             suffixIcon: IconButton(
                               icon: const Icon(
                                 Icons.search,
-                                color: AppNewTheme.primary,
                               ),
                               onPressed: () => vm.filtrar(context),
                             ),
                           ),
                         ),
                       ),
-                      const Divider(),
                       const SizedBox(height: 10),
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),

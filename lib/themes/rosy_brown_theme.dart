@@ -32,6 +32,9 @@ class RosyBrownTheme {
     dividerTheme: DividerThemeData(
       color: AppNewTheme.divider,
     ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.black,
+    ),
   );
 
   static final ThemeData dark = ThemeData.dark().copyWith(
@@ -59,6 +62,9 @@ class RosyBrownTheme {
     dividerColor: AppNewTheme.dividerDark,
     dividerTheme: const DividerThemeData(
       color: AppNewTheme.dividerDark,
+    ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.white,
     ),
   );
 }

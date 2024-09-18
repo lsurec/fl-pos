@@ -23,6 +23,7 @@ class ConfirmDocView extends StatelessWidget {
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
     final vmDoc = Provider.of<DocumentoViewModel>(context);
     final paymentsVM = Provider.of<PaymentViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vmDoc.backTabs(context),
@@ -520,8 +521,10 @@ class ConfirmDocView extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               if (step.isLoading)
-                                const LinearProgressIndicator(
-                                  color: AppNewTheme.primary,
+                                LinearProgressIndicator(
+                                  color: vmTheme.colorPref(
+                                    AppNewTheme.idColorTema,
+                                  ),
                                 ),
                             ],
                           );
@@ -575,7 +578,9 @@ class ConfirmDocView extends StatelessWidget {
                                       bottom: 10,
                                       right: 10,
                                     ),
-                                    color: AppNewTheme.primary,
+                                    color: vmTheme.colorPref(
+                                      AppNewTheme.idColorTema,
+                                    ),
                                     child: Center(
                                       child: Text(
                                         AppLocalizations.of(context)!.translate(
@@ -638,6 +643,7 @@ class _Print extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
     final vmDoc = Provider.of<DocumentoViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -652,7 +658,9 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -676,7 +684,9 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -699,6 +709,7 @@ class _OptionsError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -713,7 +724,9 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -735,7 +748,9 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -758,6 +773,7 @@ class _OptionsErrorAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -772,7 +788,9 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -794,7 +812,9 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -820,6 +840,7 @@ class _Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -834,7 +855,9 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -860,7 +883,9 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(

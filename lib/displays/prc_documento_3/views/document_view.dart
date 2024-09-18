@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/themes/styles.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter_post_printer_example/view_models/theme_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class DocumentView extends StatelessWidget {
     final vmFactura = Provider.of<DocumentoViewModel>(context);
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context);
     final vmConvert = Provider.of<ConvertDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return RefreshIndicator(
       onRefresh: () => vmFactura.loadNewData(
@@ -39,7 +41,9 @@ class DocumentView extends StatelessWidget {
                 if (vm.valueParametro(58))
                   CheckboxListTile(
                     checkColor: Colors.white,
-                    activeColor: AppNewTheme.primary,
+                    activeColor: vmTheme.colorPref(
+                      AppNewTheme.idColorTema,
+                    ),
                     value: vm.confirmarCotizacion,
                     onChanged: (value) => vm.confirmarOrden(value!),
                     title: Text(
@@ -152,13 +156,14 @@ class DocumentView extends StatelessWidget {
                     key: vm.formKeyClient,
                     child: TextFormField(
                       controller: vm.client,
-                      onFieldSubmitted: (value) =>
-                          vm.performSearchClient(context),
+                      onFieldSubmitted: (value) => vm.performSearchClient(
+                        context,
+                      ),
                       textInputAction: TextInputAction.search,
                       decoration: InputDecoration(
                         hintText: vm.getTextCuenta(context),
                         suffixIcon: IconButton(
-                          color: AppNewTheme.primary,
+                  
                           icon: const Icon(Icons.search),
                           onPressed: () => vm.performSearchClient(context),
                         ),
@@ -580,6 +585,8 @@ class FechaButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
     return TextButton(
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -600,9 +607,11 @@ class FechaButton extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          const Icon(
+          Icon(
             Icons.calendar_today_outlined,
-            color: AppNewTheme.primary,
+            color: vmTheme.colorPref(
+              AppNewTheme.idColorTema,
+            ),
           ),
         ],
       ),
@@ -622,6 +631,8 @@ class HoraButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
     return TextButton(
       onPressed: onPressed,
       child: Row(
@@ -637,9 +648,11 @@ class HoraButton extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          const Icon(
+          Icon(
             Icons.schedule_outlined,
-            color: AppNewTheme.primary,
+            color: vmTheme.colorPref(
+              AppNewTheme.idColorTema,
+            ),
           ),
         ],
       ),

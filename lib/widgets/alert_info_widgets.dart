@@ -33,7 +33,6 @@ class AlertInfoWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'aceptar',
                 ),
-            style: StyleApp.action,
           ),
           onPressed: () => onOk(),
         ),

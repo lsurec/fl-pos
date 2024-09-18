@@ -227,6 +227,7 @@ class _BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ProductViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -245,7 +246,9 @@ class _BottomBar extends StatelessWidget {
               onDoubleTap: () => vm.cancelButton(back, context),
               child: Container(
                 margin: const EdgeInsets.all(10),
-                color: AppNewTheme.primary,
+                color: vmTheme.colorPref(
+                  AppNewTheme.idColorTema,
+                ),
                 child: Center(
                   child: Text(
                     AppLocalizations.of(context)!.translate(
@@ -270,7 +273,9 @@ class _BottomBar extends StatelessWidget {
                 ),
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  color: AppNewTheme.primary,
+                  color: vmTheme.colorPref(
+                    AppNewTheme.idColorTema,
+                  ),
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.translate(
@@ -295,7 +300,9 @@ class _BottomBar extends StatelessWidget {
                 ),
                 child: Container(
                   margin: const EdgeInsets.all(10),
-                  color: AppNewTheme.primary,
+                  color: vmTheme.colorPref(
+                    AppNewTheme.idColorTema,
+                  ),
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context)!.translate(
