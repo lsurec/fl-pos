@@ -82,7 +82,22 @@ class TablesViewModel extends ChangeNotifier {
     try {
       OrderModel order = OrderModel.fromMap(json.decode(data));
 
-      print("bien");
+      final OrderViewModel orderVM = Provider.of<OrderViewModel>(
+        context,
+        listen: false,
+      );
+
+      int index = orderVM.orders
+          .indexWhere((objeto) => objeto.consecutivo == order.consecutivo);
+
+      if (index != -1) {
+        //agregar transacciones
+        orderVM.orders[index] = order;
+      } else {
+        orderVM.orders.add(order);
+      }
+
+      updateOrdersTable(context);
     } catch (e) {
       print(e.toString());
       print("salomall");

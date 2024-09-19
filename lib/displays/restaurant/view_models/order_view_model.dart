@@ -341,7 +341,7 @@ class OrderViewModel extends ChangeNotifier {
       tokenUser,
     );
 
-    NotificationService.showSnackbar(resPostComanda.response);
+    // NotificationService.showSnackbar(resPostComanda.response);
 
     await printNetwork(context, indexOrder);
 
