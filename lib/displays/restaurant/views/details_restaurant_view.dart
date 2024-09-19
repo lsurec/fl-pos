@@ -195,7 +195,7 @@ class DetailsRestaurantView extends StatelessWidget {
                                 context: context,
                                 builder: (BuildContext context) {
                                   return AlertDialog(
-                                    backgroundColor: AppTheme.backroundColor,
+                                    // backgroundColor: AppTheme.backroundColor,
                                     title: Text(
                                       AppLocalizations.of(context)!.translate(
                                         BlockTranslate.cuenta,

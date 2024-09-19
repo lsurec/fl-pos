@@ -230,7 +230,6 @@ class _AccountCard extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        backgroundColor: AppTheme.backroundColor,
                         title: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.restaurante,
@@ -319,7 +318,6 @@ class _NewAccountCard extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                backgroundColor: AppTheme.backroundColor,
                 title: Text(
                   AppLocalizations.of(context)!.translate(
                     BlockTranslate.cuenta,

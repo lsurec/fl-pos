@@ -68,6 +68,8 @@ class PinViewModel extends ChangeNotifier {
     final List<AccountPinModel> waiters = resPin.response;
 
     if (waiters.isEmpty) {
+      isLoading = false;
+
       NotificationService.showSnackbar(
         AppLocalizations.of(context)!.translate(
           BlockTranslate.notificacion,
@@ -80,8 +82,10 @@ class PinViewModel extends ChangeNotifier {
     waitress = waiters.first;
 
     //Cargar
-    final vmClass =
-        Provider.of<ClassificationViewModel>(context, listen: false);
+    final vmClass = Provider.of<ClassificationViewModel>(
+      context,
+      listen: false,
+    );
 
     final ApiResModel resClassification =
         await vmClass.loadClassification(context);
