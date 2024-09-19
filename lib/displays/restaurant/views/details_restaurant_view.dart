@@ -28,9 +28,10 @@ class DetailsRestaurantView extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     final vmProduct = Provider.of<ProductsClassViewModel>(
@@ -41,6 +42,7 @@ class DetailsRestaurantView extends StatelessWidget {
     final vm = Provider.of<DetailsRestaurantViewModel>(context);
     final vmAddPerson = Provider.of<AddPersonViewModel>(context);
     final ProductRestaurantModel product = vmProduct.product!;
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -58,7 +60,7 @@ class DetailsRestaurantView extends StatelessWidget {
               decoration: const BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: Color.fromARGB(255, 228, 225, 225),
+                    color: AppTheme.grey,
                   ),
                 ),
               ),
@@ -92,7 +94,9 @@ class DetailsRestaurantView extends StatelessWidget {
                         child: Container(
                           height: 50,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
+                            border: Border.all(
+                              color: AppTheme.border,
+                            ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -120,15 +124,23 @@ class DetailsRestaurantView extends StatelessWidget {
                           height: 50,
                           child: ElevatedButton(
                             //TODO:Modificar ytransaccion
-                            onPressed: () => vm.addProduct(context, options),
-
+                            onPressed: () => vm.addProduct(
+                              context,
+                              options,
+                            ),
                             child: SizedBox(
                               width: double.infinity,
                               child: Center(
                                 child: Text(
                                   !options["modify"]
-                                      ? "Agregar"
-                                      : "Modificar", //TODO:Translate
+                                      ? AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'agregar',
+                                        )
+                                      : AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'modificar',
+                                        ),
                                   style: StyleApp.whiteBold,
                                 ),
                               ),
@@ -157,8 +169,9 @@ class DetailsRestaurantView extends StatelessWidget {
                         left: 20,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                           child: IconButton(
                             onPressed: () => Navigator.of(context).pop(),
                             icon: const Icon(
@@ -173,8 +186,9 @@ class DetailsRestaurantView extends StatelessWidget {
                         right: 20,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                           child: IconButton(
                             onPressed: () {
                               showDialog(
@@ -182,28 +196,52 @@ class DetailsRestaurantView extends StatelessWidget {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     backgroundColor: AppTheme.backroundColor,
-                                    title: const Text('Nueva cuenta'),
+                                    title: Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.cuenta,
+                                        'nueva',
+                                      ),
+                                    ),
                                     content: InputWidget(
                                       maxLines: 1,
                                       formProperty: "name",
                                       formValues: vmAddPerson.formValues,
-                                      hintText: "Nombre",
-                                      labelText: "Nombre",
+                                      hintText: AppLocalizations.of(context)!
+                                          .translate(
+                                        BlockTranslate.cuenta,
+                                        'nombre',
+                                      ),
+                                      labelText: AppLocalizations.of(context)!
+                                          .translate(
+                                        BlockTranslate.cuenta,
+                                        'nombre',
+                                      ),
                                     ),
                                     actions: <Widget>[
                                       TextButton(
-                                        child: const Text('Cancelar'),
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            BlockTranslate.botones,
+                                            'cancelar',
+                                          ),
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
                                       ),
                                       ElevatedButton(
-                                        child: const Text('Agregar'),
-                                        onPressed: () {
-                                          // Aquí puedes manejar el valor ingresado
-
-                                          vmAddPerson.addPerson(context);
-                                        },
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .translate(
+                                            BlockTranslate.botones,
+                                            'agregar',
+                                          ),
+                                          style: StyleApp.whiteBold,
+                                        ),
+                                        onPressed: () => vmAddPerson.addPerson(
+                                          context,
+                                        ),
                                       ),
                                     ],
                                   );
@@ -344,7 +382,9 @@ class DetailsRestaurantView extends StatelessWidget {
                   ),
                   if (vm.treeGarnish.isNotEmpty)
                     Container(
-                      color: const Color.fromARGB(255, 227, 226, 226),
+                      color: AppTheme.isDark()
+                          ? AppTheme.darkSeparador
+                          : AppTheme.separador,
                       height: 10,
                     ),
                   ListView.separated(
@@ -354,7 +394,9 @@ class DetailsRestaurantView extends StatelessWidget {
                     itemCount: vm.treeGarnish.length,
                     separatorBuilder: (BuildContext context, _) {
                       return Container(
-                        color: const Color.fromARGB(255, 227, 226, 226),
+                        color: AppTheme.isDark()
+                            ? AppTheme.darkSeparador
+                            : AppTheme.separador,
                         height: 10,
                       );
                     },
@@ -392,16 +434,8 @@ class DetailsRestaurantView extends StatelessWidget {
                                                   vm.treeGarnish[indexFather]
                                                           .route.length -
                                                       1
-                                              ? const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                )
-                                              : const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.grey,
-                                                  fontSize: 17,
-                                                ),
+                                              ? StyleApp.normal
+                                              : StyleApp.greyBold,
                                         ),
                                         if (indexRoute !=
                                             vm.treeGarnish[indexFather].route
@@ -417,9 +451,11 @@ class DetailsRestaurantView extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            const Text(
-                              //TODO: Traducir
-                              "Elige una opcion",
+                            Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.restaurante,
+                                'elegirOpcion',
+                              ),
                               style: StyleApp.normal,
                             ),
                             const SizedBox(height: 5),
@@ -429,8 +465,10 @@ class DetailsRestaurantView extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: vm.treeGarnish[indexFather].route.last
                                   .children.length,
-                              itemBuilder:
-                                  (BuildContext context, int indexChild) {
+                              itemBuilder: (
+                                BuildContext context,
+                                int indexChild,
+                              ) {
                                 return RadioListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
@@ -446,7 +484,9 @@ class DetailsRestaurantView extends StatelessWidget {
                                     vm.treeGarnish[indexFather].route.last
                                         .children[indexChild],
                                   ),
-                                  activeColor: AppTheme.primary,
+                                  activeColor: vmTheme.colorPref(
+                                    AppTheme.idColorTema,
+                                  ),
                                 );
                               },
                             ),
@@ -456,7 +496,9 @@ class DetailsRestaurantView extends StatelessWidget {
                     },
                   ),
                   Container(
-                    color: const Color.fromARGB(255, 227, 226, 226),
+                    color: AppTheme.isDark()
+                        ? AppTheme.darkSeparador
+                        : AppTheme.separador,
                     height: 10,
                   ),
                   Padding(
@@ -467,8 +509,11 @@ class DetailsRestaurantView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Notas para este producto", //TODO:Translate
+                        Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.restaurante,
+                            'notasProducto',
+                          ),
                           style: StyleApp.normalBold,
                         ),
                         const SizedBox(height: 10),
@@ -477,8 +522,10 @@ class DetailsRestaurantView extends StatelessWidget {
                           maxLines: 2,
                           formProperty: "observacion",
                           formValues: vm.formValues,
-                          hintText:
-                              "Escriba las instrucciones necesarias.", //TODO:Translate
+                          hintText: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.restaurante,
+                            'instrucciones',
+                          ),
                         ),
                       ],
                     ),

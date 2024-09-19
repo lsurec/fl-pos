@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/permisions_view_model.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -26,8 +28,14 @@ class PermisionsView extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
                       tipoAccion == 32
-                          ? "Trasladar Mesa (Cuenta)"
-                          : "Trasladar Transaccion",
+                          ? AppLocalizations.of(context)!.translate(
+                              BlockTranslate.restaurante,
+                              'trasladoMesa',
+                            )
+                          : AppLocalizations.of(context)!.translate(
+                              BlockTranslate.restaurante,
+                              'trasladoTrans',
+                            ),
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -54,24 +62,43 @@ class PermisionsView extends StatelessWidget {
                                   formValues: vm.formValues,
                                   maxLines: 1,
                                   initialValue: '',
-                                  hintText: 'Usuario',
-                                  labelText: 'Usuario',
+                                  hintText:
+                                      AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.general,
+                                    'usuario',
+                                  ),
+                                  labelText:
+                                      AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.general,
+                                    'usuario',
+                                  ),
                                   suffixIcon: Icons.person,
                                 ),
                                 TextFormField(
-                                  decoration: const InputDecoration(
-                                    hintText: 'Contraseña',
-                                    labelText: 'Contraseña',
-                                    suffixIcon: Icon(
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.login,
+                                      'contrasena',
+                                    ),
+                                    labelText:
+                                        AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.login,
+                                      'contrasena',
+                                    ),
+                                    suffixIcon: const Icon(
                                       Icons.lock,
-                                      color: AppTheme.primary,
                                     ),
                                   ),
                                   onChanged: (value) =>
                                       vm.formValues['pass'] = value,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Campo requerido.';
+                                      return AppLocalizations.of(context)!
+                                          .translate(
+                                        BlockTranslate.notificacion,
+                                        'requerido',
+                                      );
                                     }
                                     return null;
                                   },
@@ -86,10 +113,15 @@ class PermisionsView extends StatelessWidget {
                               Expanded(
                                 child: TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: const SizedBox(
+                                  child: SizedBox(
                                     width: double.infinity,
                                     child: Center(
-                                      child: Text("Cancelar"),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'cancelar',
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -97,12 +129,22 @@ class PermisionsView extends StatelessWidget {
                               const SizedBox(width: 20),
                               Expanded(
                                 child: ElevatedButton(
-                                  onPressed: () => vm.login(context,
-                                      tipoAccion), //32 trasladar mesa; 45 trasladar transaccion
-                                  child: const SizedBox(
+                                  //32 trasladar mesa;
+                                  //45 trasladar transaccion;
+                                  onPressed: () => vm.login(
+                                    context,
+                                    tipoAccion,
+                                  ),
+                                  child: SizedBox(
                                     width: double.infinity,
                                     child: Center(
-                                      child: Text("Aceptar"),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'aceptar',
+                                        ),
+                                        style: StyleApp.whiteBold,
+                                      ),
                                     ),
                                   ),
                                 ),

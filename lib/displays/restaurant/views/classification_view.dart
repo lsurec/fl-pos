@@ -7,7 +7,9 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/classifi
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/locations_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -38,16 +40,22 @@ class ClassificationView extends StatelessWidget {
               actions: [
                 PopupMenuButton<int>(
                   itemBuilder: (context) => [
-                    const PopupMenuItem(
+                    PopupMenuItem(
                       value: 1,
-                      child: Text("Trasladar Mesa"),
+                      child: Text(
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.restaurante,
+                          'trasladarMesa',
+                        ),
+                      ),
                     ),
                   ],
                   // color: AppTheme.backroundColor,
                   elevation: 2,
                   // on selected we show the dialog box
-                  onSelected: (value) =>
-                      selectAccountVM.navigatePermisionView(context),
+                  onSelected: (value) => selectAccountVM.navigatePermisionView(
+                    context,
+                  ),
                 )
               ],
             ),
@@ -67,36 +75,28 @@ class ClassificationView extends StatelessWidget {
                             children: [
                               GestureDetector(
                                 onTap: () => vmLoc.backLocationsView(context),
-                                child: const Text(
-                                  "Ubicaciones/", //TODO:Translate
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black38,
+                                child: Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.restaurante,
+                                    'ubicaciones',
                                   ),
+                                  style: StyleApp.normal,
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () => vmTables.backTablesView(context),
                                 child: Text(
                                   "${vmLoc.location!.descripcion}/",
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black38,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                               ),
                               Text(
                                 vmTables.table!.descripcion,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black54,
-                                ),
+                                style: StyleApp.normalBold,
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10),
                         RegisterCountWidget(count: vm.totalLength),
                       ],
                     ),
@@ -149,7 +149,10 @@ class _RowMenu extends StatelessWidget {
     return Row(
       children: [
         CardImageWidget(
-          onTap: () => vmClass.navigateProduct(context, classification[0]),
+          onTap: () => vmClass.navigateProduct(
+            context,
+            classification[0],
+          ),
           description: classification[0].desClasificacion,
           // srcImage: options[0].image,
           srcImage:
@@ -187,7 +190,7 @@ class CardImageWidget extends StatelessWidget {
       child: InkWell(
         onTap: () => onTap(),
         child: Container(
-          height: 250,
+          height: 260,
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [

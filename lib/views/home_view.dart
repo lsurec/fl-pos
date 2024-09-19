@@ -114,9 +114,7 @@ class _MyDrawer extends StatelessWidget {
                                 : StyleApp.normal.copyWith(
                                     color: Theme.of(context).primaryColor,
                                   ))
-                            : (AppTheme.isDark()
-                                ? StyleApp.whiteMenuNormal
-                                : StyleApp.normal),
+                            : StyleApp.normal,
                       ),
                       const Icon(
                         Icons.arrow_right,

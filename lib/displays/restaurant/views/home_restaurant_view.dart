@@ -33,10 +33,19 @@ class HomeRestaurantView extends StatelessWidget {
                 indicatorColor: AppTheme.hexToColor(
                   Preferences.valueColor,
                 ),
-                //TODO:Translate
-                tabs: const [
-                  Tab(text: "Accesos"),
-                  Tab(text: "Mesas abiertas"),
+                tabs: [
+                  Tab(
+                    text: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.restaurante,
+                      'accesos',
+                    ),
+                  ),
+                  Tab(
+                    text: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.restaurante,
+                      'mesasA',
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -65,9 +74,7 @@ class HomeRestaurantView extends StatelessWidget {
 }
 
 class _TableOpen extends StatelessWidget {
-  const _TableOpen({
-    super.key,
-  });
+  const _TableOpen();
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +84,10 @@ class _TableOpen extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     return Column(
@@ -93,7 +101,8 @@ class _TableOpen extends StatelessWidget {
         ),
         if (orderVM.orders.isNotEmpty)
           Container(
-            color: const Color.fromARGB(255, 227, 226, 226),
+            color:
+                AppTheme.isDark() ? AppTheme.darkSeparador : AppTheme.separador,
             height: 10,
           ),
         Expanded(
@@ -101,7 +110,9 @@ class _TableOpen extends StatelessWidget {
             itemCount: orderVM.orders.length,
             separatorBuilder: (BuildContext context, int index) {
               return Container(
-                color: const Color.fromARGB(255, 227, 226, 226),
+                color: AppTheme.isDark()
+                    ? AppTheme.darkSeparador
+                    : AppTheme.separador,
                 height: 10,
               );
             },
@@ -126,18 +137,27 @@ class _TableOpen extends StatelessWidget {
                               style: StyleApp.normal,
                             ),
                             Text(
-                              "Consecutivo: ${order.consecutivo}",
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.restaurante,
+                                'consecutivo',
+                              )} ${order.consecutivo}",
                               style: StyleApp.normal,
                             ),
                           ],
                         ),
                         TextsWidget(
-                          title: "Mesa: ",
+                          title: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.restaurante,
+                            'mesa',
+                          ),
                           text: order.mesa.descripcion,
                         ),
                         const SizedBox(height: 5),
                         TextsWidget(
-                          title: "Ubicacion: ",
+                          title: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.restaurante,
+                            'ubicacion',
+                          ),
                           text: order.ubicacion.descripcion,
                         ),
                         //  const SizedBox(height: 5),
@@ -149,7 +169,10 @@ class _TableOpen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              "Total: ${currencyFormat.format(orderVM.getTotal(index))}",
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.calcular,
+                                'total',
+                              )}: ${currencyFormat.format(orderVM.getTotal(index))}",
                               style: StyleApp.normalBold,
                             ),
                           ],
@@ -160,7 +183,9 @@ class _TableOpen extends StatelessWidget {
                   if (orderVM.orders.isNotEmpty &&
                       index == orderVM.orders.length - 1)
                     Container(
-                      color: const Color.fromARGB(255, 227, 226, 226),
+                      color: AppTheme.isDark()
+                          ? AppTheme.darkSeparador
+                          : AppTheme.separador,
                       height: 10,
                     ),
                 ],
@@ -174,9 +199,7 @@ class _TableOpen extends StatelessWidget {
 }
 
 class _AccesTab extends StatelessWidget {
-  const _AccesTab({
-    super.key,
-  });
+  const _AccesTab();
 
   @override
   Widget build(BuildContext context) {
@@ -235,11 +258,14 @@ class _AccesTab extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => vm.navigateLoc(context),
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: double.infinity,
                     child: Center(
                       child: Text(
-                        "Empezar", //TODO:Translate
+                        AppLocalizations.of(context)!.translate(
+                          BlockTranslate.botones,
+                          'empezar',
+                        ),
                         style: StyleApp.whiteBold,
                       ),
                     ),
@@ -250,124 +276,6 @@ class _AccesTab extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _CardDoc extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.home,
-                  'idDoc',
-                )} 45",
-                style: StyleApp.normalBold,
-              ),
-              Text(
-                "${AppLocalizations.of(context)!.translate(
-                  BlockTranslate.general,
-                  'usuario',
-                )}: sa",
-                style: StyleApp.normalBold,
-              ),
-            ],
-          ),
-        ),
-        GestureDetector(
-          onTap: () => {},
-          child: CardWidget(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextsWidget(
-                    title: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.cotizacion,
-                      'idRef',
-                    ),
-                    text: '5451515',
-                  ),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                    title: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.cotizacion,
-                      'cuenta',
-                    ),
-                    text: 'Juan Hernandez',
-                  ),
-                  const SizedBox(height: 5),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.fecha,
-                          'fechaHora',
-                        ),
-                        style: StyleApp.normalBold,
-                      ),
-                      const Text(
-                        '12/12/2012 12:12:12',
-                        style: StyleApp.normal,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.fecha,
-                          'fechaDoc',
-                        ),
-                        style: StyleApp.normalBold,
-                      ),
-                      const Text(
-                        '12/12/2012 12:12:12',
-                        style: StyleApp.normal,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  TextsWidget(
-                      title: "${AppLocalizations.of(context)!.translate(
-                        BlockTranslate.factura,
-                        'serieDoc',
-                      )}: ",
-                      text: "COT (1)"),
-                  const SizedBox(height: 5),
-
-                  // if (document.observacion1 != null ||
-                  //     document.observacion1 != "")
-                  //   TextsWidget(
-                  //     title: "${AppLocalizations.of(context)!.translate(
-                  //       BlockTranslate.general,
-                  //       'observacion',
-                  //     )}: ",
-                  //     text: document.observacion1 ?? "",
-                  //   ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        const Divider(),
-      ],
     );
   }
 }

@@ -20,9 +20,10 @@ class OrderView extends StatelessWidget {
     final homeVM = Provider.of<HomeViewModel>(context);
 
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     final indexOrder = ModalRoute.of(context)!.settings.arguments as int;

@@ -85,7 +85,10 @@
         "enviarComentario": "Send comment",
         "cambiarResponsable": "Update Responsible Person",
         "modificar": "Modify",
-        "compartirInforme": "Share report"
+        "compartirInforme": "Share report",
+        "empezar": "Start",
+        "trasladar": "Transfer",
+        "renombrar": "Rename"
     },
     "fechas": {
         "fecha": "Date: ",
@@ -488,5 +491,28 @@
         "horario": "Schedule",
         "tareas": "Tasks",
         "nueva": "New"
+    },
+    "restaurante": {
+        "accesos": "Accesses",
+        "mesasA": "Open tables",
+        "ubicacion": "Location: ",
+        "consecutivo": "Consecutive: ",
+        "mesa": "Table: ",
+        "trasladarMesa": "Transfer Table",
+        "ubicaciones": "Locations/",
+        "mesero": "Waiter",
+        "pin": "Pin",
+        "elegirOpcion": "Choose an option",
+        "notasProducto": "Notes for this product",
+        "instrucciones": "Write the necessary instructions.",
+        "trasladoMesa": "Transfer Table (Bill)",
+        "trasladoTrans": "Transfer Transaction",
+        "seleccionarT": "Select all",
+        "estadoCuenta": "Account status",
+        "seleccionarCuenta": "Select account.",
+        "renombrarCuenta": "Rename account.",
+        "nuevaUbicacion": "New Location",
+        "nuevaMesa": "New Table",
+        "cuentaExisteMesa": "The account already exists at this table."
     }
 }

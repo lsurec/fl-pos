@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -21,10 +23,15 @@ class PinView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 150),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text("Mesero", //TODO:Translate
-                        style: StyleApp.title),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.restaurante,
+                        'mesero',
+                      ),
+                      style: StyleApp.title,
+                    ),
                   ),
                   CardWidget(
                     width: double.infinity,
@@ -38,22 +45,34 @@ class PinView extends StatelessWidget {
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             key: vm.formKey,
-                            //TODO: Translate elemnts
                             child: TextFormField(
-                                decoration: const InputDecoration(
-                                  hintText: 'Pin',
-                                  labelText: 'Pin',
+                              decoration: InputDecoration(
+                                hintText:
+                                    AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.restaurante,
+                                  'pin',
                                 ),
-                                onChanged: (value) => {
-                                      vm.pinMesero = value,
-                                    },
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Campo requerido.';
-                                  }
-                                  return null;
-                                },
-                                obscureText: true),
+                                labelText:
+                                    AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.restaurante,
+                                  'pin',
+                                ),
+                              ),
+                              onChanged: (value) => {
+                                vm.pinMesero = value,
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return AppLocalizations.of(context)!
+                                      .translate(
+                                    BlockTranslate.notificacion,
+                                    'requerido',
+                                  );
+                                }
+                                return null;
+                              },
+                              obscureText: true,
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Row(
@@ -61,10 +80,15 @@ class PinView extends StatelessWidget {
                               Expanded(
                                 child: TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: const SizedBox(
+                                  child: SizedBox(
                                     width: double.infinity,
                                     child: Center(
-                                      child: Text("Cancelar"), //TODO:Translate
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'cancelar',
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -73,10 +97,16 @@ class PinView extends StatelessWidget {
                               Expanded(
                                 child: ElevatedButton(
                                   onPressed: () => vm.validatePin(context),
-                                  child: const SizedBox(
+                                  child: SizedBox(
                                     width: double.infinity,
                                     child: Center(
-                                      child: Text("Aceptar"), //TODO:Translate
+                                      child: Text(
+                                        AppLocalizations.of(context)!.translate(
+                                          BlockTranslate.botones,
+                                          'aceptar',
+                                        ),
+                                        style: StyleApp.whiteBold,
+                                      ),
                                     ),
                                   ),
                                 ),

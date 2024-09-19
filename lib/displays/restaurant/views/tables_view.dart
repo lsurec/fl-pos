@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -55,28 +57,21 @@ class _TablesViewState extends State<TablesView> {
                           children: [
                             GestureDetector(
                               onTap: () => Navigator.pop(context),
-                              //TODO:Verificar estilos
-                              child: const Text(
-                                "Ubicaciones/", //TODO:Translate
-                                //TODO;Styles
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
+                              child: Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.restaurante,
+                                  'ubicaciones',
                                 ),
+                                style: StyleApp.normal,
                               ),
                             ),
                             Text(
                               vmLoc.location!.descripcion,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black54,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
                       RegisterCountWidget(count: vm.tables.length),
                     ],
                   ),

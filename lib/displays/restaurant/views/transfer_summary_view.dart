@@ -67,7 +67,9 @@ class TransferSummaryView extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  color: const Color.fromARGB(255, 227, 226, 226),
+                  color: AppTheme.isDark()
+                      ? AppTheme.darkSeparador
+                      : AppTheme.separador,
                   height: 10,
                 ),
                 Padding(

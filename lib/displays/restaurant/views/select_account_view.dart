@@ -1,8 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:intl/intl.dart';
@@ -47,22 +51,34 @@ class SelectAccountView extends StatelessWidget {
                     IconButton(
                       onPressed: () => vm.selectedAll(context),
                       icon: const Icon(Icons.select_all),
-                      tooltip: "Seleccionar todo", //TODO:Translate
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.restaurante,
+                        'seleccionarT',
+                      ),
                     ),
                     IconButton(
                       onPressed: () => vm.deleteItems(context),
                       icon: const Icon(Icons.delete_outline),
-                      tooltip: "Eliminar", //TODO:Translate
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'eliminar',
+                      ),
                     ),
                     IconButton(
                       onPressed: () => vm.navigatePermisionView(context),
                       icon: const Icon(Icons.drive_file_move_outline),
-                      tooltip: "Trasladar", //TODO:Translate
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'trasladar',
+                      ),
                     ),
                     IconButton(
                       onPressed: () => vm.printStatusAccount(context),
                       icon: const Icon(Icons.print_outlined),
-                      tooltip: "Estado de cuenta", //TODO:Translate
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.restaurante,
+                        'estadoCuenta',
+                      ),
                     ),
                   ]
                 : null,
@@ -73,9 +89,11 @@ class SelectAccountView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    //TODO: traducir
-                    "Seleccionar cuenta",
+                  Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.restaurante,
+                      'seleccionarCuenta',
+                    ),
                     style: StyleApp.title,
                   ),
                   const SizedBox(height: 20),
@@ -134,19 +152,26 @@ class _AccountCard extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     final SelectAccountViewModel vm =
         Provider.of<SelectAccountViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return CardWidget(
       elevation: 2,
       raidus: 10,
       child: InkWell(
-        onLongPress: screen == 3 ? null : () => vm.onLongPress(context, index),
+        onLongPress: screen == 3
+            ? null
+            : () => vm.onLongPress(
+                  context,
+                  index,
+                ),
         onTap: vm.isSelectedMode
             ? () => vm.selectedItem(context, index)
             : () => vm.tapCard(
@@ -163,12 +188,13 @@ class _AccountCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Center(
+                  Center(
                     child: CircleAvatar(
-                      //TODO: cambiar al color de preferencia
-                      backgroundColor: AppTheme.primary,
+                      backgroundColor: vmTheme.colorPref(
+                        AppTheme.idColorTema,
+                      ),
                       radius: 30.0,
-                      child: Icon(
+                      child: const Icon(
                         Icons.person,
                         size: 30.0,
                         color: Colors.white,
@@ -178,12 +204,14 @@ class _AccountCard extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   Text(
                     orderVM.orders[index].nombre,
-                    style: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.bold),
+                    style: StyleApp.normalBold,
                   ),
                   const SizedBox(height: 10.0),
                   Text(
-                    "Total: ${currencyFormat.format(orderVM.getTotal(index))}",
+                    "${AppLocalizations.of(context)!.translate(
+                      BlockTranslate.calcular,
+                      'total',
+                    )}: ${currencyFormat.format(orderVM.getTotal(index))}",
                     style: StyleApp.greyText,
                   ),
                 ],
@@ -203,29 +231,50 @@ class _AccountCard extends StatelessWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         backgroundColor: AppTheme.backroundColor,
-                        title: const Text('Renombrar cuenta'), //TODO:Translate
+                        title: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.restaurante,
+                            'renombrarCuenta',
+                          ),
+                        ),
                         content: InputWidget(
                           maxLines: 1,
                           formProperty: "name",
                           formValues: vmAddPerson.formValues,
-                          hintText: "Nombre", //TODO:Translate
-                          labelText: "Nombre", //TODO:Translate
+                          hintText: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cuenta,
+                            'nombre',
+                          ),
+                          labelText: AppLocalizations.of(context)!.translate(
+                            BlockTranslate.cuenta,
+                            'nombre',
+                          ),
                           initialValue: orderVM.orders[index].nombre,
                         ),
                         actions: <Widget>[
                           TextButton(
-                            child: const Text('Cancelar'),
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.botones,
+                                'cancelar',
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
                           ),
                           ElevatedButton(
-                            child: const Text('Renombrar'),
-                            onPressed: () {
-                              // Aquí puedes manejar el valor ingresado
-
-                              vmAddPerson.renamePerson(context, index);
-                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.botones,
+                                'renombrar',
+                              ),
+                              style: StyleApp.whiteBold,
+                            ),
+                            onPressed: () => vmAddPerson.renamePerson(
+                              context,
+                              index,
+                            ),
                           ),
                         ],
                       );
@@ -240,7 +289,7 @@ class _AccountCard extends StatelessWidget {
                 bottom: 10,
                 child: Icon(
                   Icons.check_circle,
-                  color: Colors.green,
+                  color: AppTheme.verde,
                 ),
               ),
           ],
@@ -255,8 +304,12 @@ class _NewAccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AddPersonViewModel vmAddPerson =
-        Provider.of<AddPersonViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
+    final AddPersonViewModel vmAddPerson = Provider.of<AddPersonViewModel>(
+      context,
+    );
+
     return CardWidget(
       elevation: 2,
       raidus: 10,
@@ -267,48 +320,72 @@ class _NewAccountCard extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 backgroundColor: AppTheme.backroundColor,
-                title: const Text('Nueva cuenta'),
+                title: Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.cuenta,
+                    'nueva',
+                  ),
+                ),
                 content: InputWidget(
                   maxLines: 1,
                   formProperty: "name",
                   formValues: vmAddPerson.formValues,
-                  hintText: "Nombre",
-                  labelText: "Nombre",
+                  hintText: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.cuenta,
+                    'nombre',
+                  ),
+                  labelText: AppLocalizations.of(context)!.translate(
+                    BlockTranslate.cuenta,
+                    'nombre',
+                  ),
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: const Text('Cancelar'),
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'cancelar',
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
                   ),
                   ElevatedButton(
-                    child: const Text('Agregar'),
-                    onPressed: () {
-                      vmAddPerson.addPerson(context);
-                    },
+                    child: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'agregar',
+                      ),
+                      style: StyleApp.whiteBold,
+                    ),
+                    onPressed: () => vmAddPerson.addPerson(
+                      context,
+                    ),
                   ),
                 ],
               );
             },
           );
         },
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.add,
                 size: 40.0,
-                color: AppTheme.primary,
-              ),
-              SizedBox(height: 16.0),
-              Text(
-                "Nueva cuenta",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
+              ),
+              const SizedBox(height: 16.0),
+              Text(
+                AppLocalizations.of(context)!.translate(
+                  BlockTranslate.cuenta,
+                  'nueva',
+                ),
+                style: StyleApp.normalBold,
               ),
             ],
           ),

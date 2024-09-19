@@ -85,7 +85,10 @@
         "enviarComentario": "Kommentar senden.",
         "cambiarResponsable": "Verantwortliche Person aktualisieren",
         "modificar": "Ändern",
-        "compartirInforme": "Bericht teilen"
+        "compartirInforme": "Bericht teilen",
+        "empezar": "Starten",
+        "trasladar": "Übertragen",
+        "renombrar": "Umbenennen"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -489,5 +492,28 @@
         "horario": "Zeitplan",
         "tareas": "Aufgaben",
         "nueva": "Neu"
+    },
+    "restaurante": {
+        "accesos": "Zugänge",
+        "mesasA": "Offene Tische",
+        "ubicacion": "Standort: ",
+        "consecutivo": "Fortlaufende Nummer: ",
+        "mesa": "Tisch: ",
+        "trasladarMesa": "Tisch übertragen",
+        "ubicaciones": "Standorte/",
+        "mesero": "Kellner",
+        "pin": "Pin",
+        "elegirOpcion": "Wählen Sie eine Option",
+        "notasProducto": "Anmerkungen zu diesem Produkt",
+        "instrucciones": "Geben Sie die notwendigen Anweisungen ein.",
+        "trasladoMesa": "Tisch übertragen (Rechnung)",
+        "trasladoTrans": "Transaktion übertragen",
+        "seleccionarT": "Alles auswählen",
+        "estadoCuenta": "Kontostand",
+        "seleccionarCuenta": "Konto auswählen.",
+        "renombrarCuenta": "Konto umbenennen.",
+        "nuevaUbicacion": "Neuer Standort",
+        "nuevaMesa": "Neuer Tisch",
+        "cuentaExisteMesa": "Das Konto existiert bereits an diesem Tisch."
     }
 }

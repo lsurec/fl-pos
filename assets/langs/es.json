@@ -85,7 +85,10 @@
         "enviarComentario": "Enviar comentario.",
         "cambiarResponsable": "Actualizar Responsable",
         "modificar": "Modificar",
-        "compartirInforme": "Compartir informe"
+        "compartirInforme": "Compartir informe",
+        "empezar": "Empezar",
+        "trasladar": "Trasladar",
+        "renombrar": "Renombrar"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -114,7 +117,7 @@
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
-        "requerido": "Campo requedido.",
+        "requerido": "Campo requerido.",
         "tituloCerrar": "Cerrar sesión",
         "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
         "salioMal": "Algo salió mal.",
@@ -344,7 +347,8 @@
         "detalle": "Detalle",
         "pago": "Pago",
         "observaciones": "Observaciones",
-        "noRegistrado": "No Registrado."
+        "noRegistrado": "No Registrado.",
+        "requerido": "Campo requerido."
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -489,5 +493,28 @@
         "horario": "Horario",
         "tareas": "Tareas",
         "nueva": "Nueva"
+    },
+    "restaurante": {
+        "accesos": "Accesos",
+        "mesasA": "Mesas abiertas",
+        "ubicacion": "Ubicación: ",
+        "consecutivo": "Consecutivo: ",
+        "mesa": "Mesa: ",
+        "trasladarMesa": "Trasladar Mesa",
+        "ubicaciones": "Ubicaciones/",
+        "mesero": "Mesero",
+        "pin": "Pin",
+        "elegirOpcion": "Elige una opción",
+        "notasProducto": "Notas para este producto",
+        "instrucciones": "Escriba las instrucciones necesarias.",
+        "trasladoMesa": "Trasladar Mesa (Cuenta)",
+        "trasladoTrans": "Trasladar Transacción",
+        "seleccionarT": "Seleccionar todo",
+        "estadoCuenta": "Estado de cuenta",
+        "seleccionarCuenta": "Seleccionar cuenta.",
+        "renombrarCuenta": "Renombrar cuenta.",
+        "nuevaUbicacion": "Nueva Ubicación",
+        "nuevaMesa": "Nueva Mesa",
+        "cuentaExisteMesa": "La cuenta ya existe en esta mesa."
     }
 }

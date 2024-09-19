@@ -8,6 +8,7 @@ class DarkTheme {
   static const Color primary = Color(0xff134895);
 
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
+    primaryColor: primary,
     scaffoldBackgroundColor: AppTheme.darkBackroundColor,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppTheme.darkBackroundColor,
@@ -31,6 +32,9 @@ class DarkTheme {
     dividerColor: AppTheme.dividerDark,
     dividerTheme: const DividerThemeData(
       color: AppTheme.dividerDark,
+    ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.white,
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(

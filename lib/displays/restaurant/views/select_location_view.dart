@@ -3,7 +3,9 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/models.d
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +29,11 @@ class SelectLocationView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  //TODO: translate
-                  "Nueva Ubicacion",
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.restaurante,
+                    'nuevaUbicacion',
+                  ),
                   style: StyleApp.title,
                 ),
                 RegisterCountWidget(count: vm.locations.length),

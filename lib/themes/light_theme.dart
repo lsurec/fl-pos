@@ -8,6 +8,7 @@ class LightTheme {
   static const Color primary = Color(0xff134895);
 
   static final ThemeData lightTheme = ThemeData(
+    primaryColor: primary,
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppTheme.backroundColor,
     appBarTheme: AppBarTheme(

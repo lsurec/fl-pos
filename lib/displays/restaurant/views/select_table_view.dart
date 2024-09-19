@@ -3,8 +3,9 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/models.d
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +32,11 @@ class SelectTableView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  //TODO: traslate
-                  "Nueva Mesa",
+                Text(
+                  AppLocalizations.of(context)!.translate(
+                    BlockTranslate.restaurante,
+                    'nuevaMesa',
+                  ),
                   style: StyleApp.title,
                 ),
                 RegisterCountWidget(count: vm.tables.length),
@@ -84,14 +87,20 @@ class SelectTableView extends StatelessWidget {
                                       transferVM
                                           .tableOrigin!.elementoAsignado) {
                                 NotificationService.showSnackbar(
-                                    "La cuenta ya existe en esta mesa");
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.restaurante,
+                                    'cuentaExisteMesa',
+                                  ),
+                                );
                                 return;
                               }
 
                               if (tipoAccion == 32) {
                                 Navigator.pushNamed(
-                                    context, AppRoutes.transferSummary,
-                                    arguments: tipoAccion);
+                                  context,
+                                  AppRoutes.transferSummary,
+                                  arguments: tipoAccion,
+                                );
                               }
                             });
                       },

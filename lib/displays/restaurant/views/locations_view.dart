@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -17,8 +19,11 @@ class LocationsView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text(
-              "Ubicaciones", //TODO:Translate
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.restaurante,
+                'ubicaciones',
+              ),
               style: StyleApp.title,
             ),
           ),

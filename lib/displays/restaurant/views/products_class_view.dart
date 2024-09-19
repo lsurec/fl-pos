@@ -3,7 +3,9 @@ import 'package:flutter_post_printer_example/displays/restaurant/views/views.dar
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -47,46 +49,35 @@ class ProductClassView extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () => vmLoc.backLocationsView(context),
-                              child: const Text(
-                                "Ubicaciones/",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
+                              child: Text(
+                                AppLocalizations.of(context)!.translate(
+                                  BlockTranslate.restaurante,
+                                  'ubicaciones',
                                 ),
+                                style: StyleApp.normal,
                               ),
                             ),
                             GestureDetector(
                               onTap: () => vmTables.backTablesView(context),
                               child: Text(
                                 "${vmLoc.location!.descripcion}/",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ),
                             GestureDetector(
                               onTap: () => Navigator.pop(context),
                               child: Text(
                                 "${vmTables.table!.descripcion}/",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black38,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ),
                             Text(
                               vmClass.classification!.desClasificacion,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black54,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 10),
                       RegisterCountWidget(count: vm.totalLength),
                     ],
                   ),
