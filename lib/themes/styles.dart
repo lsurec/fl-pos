@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/themes/themes.dart';
 
 class StyleApp {
   //Estilos para textos
@@ -26,16 +25,6 @@ class StyleApp {
   static const normalBold = TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.bold,
-  );
-
-  static TextStyle menuActive = const TextStyle(
-    fontSize: 17,
-    color: AppTheme.primary,
-  );
-
-  static TextStyle menuActiveDark = const TextStyle(
-    fontSize: 17,
-    color: Colors.white,
   );
 
   static const title = TextStyle(
@@ -126,12 +115,6 @@ class StyleApp {
   static const titleWhite = TextStyle(
     color: Colors.white,
     fontSize: 20,
-  );
-
-  static const titleBlue = TextStyle(
-    fontSize: 20,
-    color: AppTheme.primary,
-    fontWeight: FontWeight.bold,
   );
 
   static const obligatory = TextStyle(

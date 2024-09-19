@@ -110,8 +110,10 @@ class _MyDrawer extends StatelessWidget {
                         route.name,
                         style: index == routeMenu.length - 1
                             ? (AppTheme.isDark()
-                                ? StyleApp.menuActiveDark
-                                : StyleApp.menuActive)
+                                ? StyleApp.whiteMenuNormal
+                                : StyleApp.normal.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ))
                             : (AppTheme.isDark()
                                 ? StyleApp.whiteMenuNormal
                                 : StyleApp.normal),
@@ -126,9 +128,7 @@ class _MyDrawer extends StatelessWidget {
             ),
           ),
           Divider(
-            color: AppTheme.isDark()
-                ? AppTheme.dividerDark
-                : AppTheme.divider,
+            color: AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
           ),
           Expanded(
             child: ListView.separated(

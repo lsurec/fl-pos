@@ -39,7 +39,7 @@ class ThemeView extends StatelessWidget {
                             BlockTranslate.home,
                             "tema",
                           ),
-                          style: StyleApp.titleBlue,
+                          style: StyleApp.normalBold,
                           textAlign: TextAlign.center,
                         ),
                       ),
