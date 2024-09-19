@@ -88,7 +88,9 @@
         "compartirInforme": "Bericht teilen",
         "empezar": "Starten",
         "trasladar": "Übertragen",
-        "renombrar": "Umbenennen"
+        "renombrar": "Umbenennen",
+        "comandar": "Befehlen",
+        "comandada": "Befehl erteilt"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -514,6 +516,7 @@
         "renombrarCuenta": "Konto umbenennen.",
         "nuevaUbicacion": "Neuer Standort",
         "nuevaMesa": "Neuer Tisch",
-        "cuentaExisteMesa": "Das Konto existiert bereits an diesem Tisch."
+        "cuentaExisteMesa": "Das Konto existiert bereits an diesem Tisch.",
+        "notas": "Notizen: "
     }
 }

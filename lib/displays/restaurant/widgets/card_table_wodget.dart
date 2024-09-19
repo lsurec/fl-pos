@@ -16,11 +16,10 @@ class CardTableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardWidget(
-      borderColor: const Color(0xffc2cfd9),
+      borderColor: AppTheme.cardBorder,
       elevation: 0,
       width: double.infinity,
       raidus: 10,
-      color: AppTheme.backroundColor,
       borderWidth: 2,
       child: InkWell(
         onTap: () => onTap(),

@@ -39,7 +39,7 @@ class OrderView extends StatelessWidget {
                     decoration: const BoxDecoration(
                       border: Border(
                         top: BorderSide(
-                          color: Color.fromARGB(255, 228, 225, 225),
+                          color: AppTheme.border,
                         ),
                       ),
                     ),
@@ -73,11 +73,14 @@ class OrderView extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () =>
                                   vm.monitorPrint(context, indexOrder),
-                              child: const SizedBox(
+                              child: SizedBox(
                                 width: double.infinity,
                                 child: Center(
                                   child: Text(
-                                    "Comandar", //TODO:Translate
+                                    AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.botones,
+                                      'comandar',
+                                    ),
                                     style: StyleApp.whiteBold,
                                   ),
                                 ),
@@ -100,18 +103,29 @@ class OrderView extends StatelessWidget {
                       IconButton(
                         onPressed: () => vm.selectedAll(indexOrder),
                         icon: const Icon(Icons.select_all),
-                        tooltip: "Seleccionar todo", //TODO:Translate
+                        tooltip: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.restaurante,
+                          'seleccionarT',
+                        ),
                       ),
                       IconButton(
                         onPressed: () => vm.deleteSelected(indexOrder, context),
                         icon: const Icon(Icons.delete_outline),
-                        tooltip: "Eliminar", //TODO:Translate
+                        tooltip: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.botones,
+                          'eliminar',
+                        ),
                       ),
                       IconButton(
-                        onPressed: () =>
-                            vm.navigatePermisionView(context, indexOrder),
+                        onPressed: () => vm.navigatePermisionView(
+                          context,
+                          indexOrder,
+                        ),
                         icon: const Icon(Icons.drive_file_move_outline),
-                        tooltip: "Trasladar", //TODO:Translate
+                        tooltip: AppLocalizations.of(context)!.translate(
+                          BlockTranslate.botones,
+                          'trasladar',
+                        ),
                       ),
                     ]
                   : null,
@@ -173,8 +187,14 @@ class OrderView extends StatelessWidget {
                                           children: [
                                             const SizedBox(height: 5),
                                             TextsWidget(
-                                                title: "Notas: ",
-                                                text: transaction.observacion),
+                                              title:
+                                                  AppLocalizations.of(context)!
+                                                      .translate(
+                                                BlockTranslate.restaurante,
+                                                'notas',
+                                              ),
+                                              text: transaction.observacion,
+                                            ),
                                           ],
                                         ),
                                     ],
@@ -197,8 +217,9 @@ class OrderView extends StatelessWidget {
                                       height: 45,
                                       width: 150,
                                       decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: AppTheme.primary),
+                                        border: Border.all(
+                                          color: AppTheme.border,
+                                        ),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Row(
@@ -227,9 +248,7 @@ class OrderView extends StatelessWidget {
                                                     .orders[indexOrder]
                                                     .transacciones[index]
                                                     .processed
-                                                ? const TextStyle(
-                                                    fontSize: 17,
-                                                    color: Colors.grey)
+                                                ? StyleApp.greyText
                                                 : StyleApp.normalBold,
                                           ),
                                           IconButton(
@@ -249,11 +268,15 @@ class OrderView extends StatelessWidget {
                                     ),
                                     if (vm.orders[indexOrder]
                                         .transacciones[index].processed)
-                                      const Column(
+                                      Column(
                                         children: [
-                                          SizedBox(height: 5),
+                                          const SizedBox(height: 5),
                                           Text(
-                                            "Comandada",
+                                            AppLocalizations.of(context)!
+                                                .translate(
+                                              BlockTranslate.botones,
+                                              'comandada',
+                                            ),
                                             style: StyleApp.red,
                                           ),
                                         ],
@@ -270,7 +293,7 @@ class OrderView extends StatelessWidget {
                                 bottom: 0,
                                 child: Icon(
                                   Icons.check_circle,
-                                  color: Colors.green,
+                                  color: AppTheme.verde,
                                 ),
                               ),
                             // if (vm.orders[indexOrder].transacciones[index]

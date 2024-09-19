@@ -88,7 +88,9 @@
         "compartirInforme": "Share report",
         "empezar": "Start",
         "trasladar": "Transfer",
-        "renombrar": "Rename"
+        "renombrar": "Rename",
+        "comandar": "Command",
+        "comandada": "Commanded"
     },
     "fechas": {
         "fecha": "Date: ",
@@ -223,7 +225,8 @@
         "traModificada": "Transaction modified.",
         "advertencia": "Warning",
         "productosNoDisponibles": "One or more products are unavailable.",
-        "aplicaranCambios": "Se aplicaran los cambios al documento."
+        "aplicaranCambios": "Se aplicaran los cambios al documento.",
+        "docEditado": "Document edited successfully."
     },
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
@@ -513,6 +516,7 @@
         "renombrarCuenta": "Rename account.",
         "nuevaUbicacion": "New Location",
         "nuevaMesa": "New Table",
-        "cuentaExisteMesa": "The account already exists at this table."
+        "cuentaExisteMesa": "The account already exists at this table.",
+        "notas": "Notes: "
     }
 }

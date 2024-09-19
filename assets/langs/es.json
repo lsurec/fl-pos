@@ -88,7 +88,9 @@
         "compartirInforme": "Compartir informe",
         "empezar": "Empezar",
         "trasladar": "Trasladar",
-        "renombrar": "Renombrar"
+        "renombrar": "Renombrar",
+        "comandar": "Comandar",
+        "comandada": "Comandada"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -347,8 +349,7 @@
         "detalle": "Detalle",
         "pago": "Pago",
         "observaciones": "Observaciones",
-        "noRegistrado": "No Registrado.",
-        "requerido": "Campo requerido."
+        "noRegistrado": "No Registrado."
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",
@@ -515,6 +516,7 @@
         "renombrarCuenta": "Renombrar cuenta.",
         "nuevaUbicacion": "Nueva Ubicación",
         "nuevaMesa": "Nueva Mesa",
-        "cuentaExisteMesa": "La cuenta ya existe en esta mesa."
+        "cuentaExisteMesa": "La cuenta ya existe en esta mesa.",
+        "notas": "Notas: "
     }
 }

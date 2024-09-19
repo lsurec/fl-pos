@@ -34,6 +34,9 @@ class AppTheme {
 
   static const Color grayAppBar = Color(0xfff5f5f5);
 
+  static const Color cardBorder = Color(0xffc2cfd9);
+  
+
   static Color hexToColor(String hexColor) {
     if (hexColor.isEmpty) {
       return primary;

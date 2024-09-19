@@ -88,7 +88,9 @@
         "compartirInforme": "Partager le rapport",
         "empezar": "Commencer",
         "trasladar": "Transférer",
-        "renombrar": "Renommer"
+        "renombrar": "Renommer",
+        "comandar": "Commander",
+        "comandada": "Commandée"
     },
     "fechas": {
         "fecha": "Date:",
@@ -514,6 +516,7 @@
         "renombrarCuenta": "Renommer le compte.",
         "nuevaUbicacion": "Nouvel emplacement",
         "nuevaMesa": "Nouvelle table",
-        "cuentaExisteMesa": "Le compte existe déjà à cette table."
+        "cuentaExisteMesa": "Le compte existe déjà à cette table.",
+        "notas": "Notes: "
     }
 }
