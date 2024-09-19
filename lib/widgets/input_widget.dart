@@ -1,7 +1,5 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class InputWidget extends StatelessWidget {
@@ -45,10 +43,7 @@ class InputWidget extends StatelessWidget {
               ? null
               : Icon(
                   suffixIcon,
-                  color: AppTheme.color(
-                    context,
-                    Styles.iconActive,
-                  ),
+                  color: AppTheme.grey,
                 ),
         ),
         validator: (value) {

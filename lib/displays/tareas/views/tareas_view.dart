@@ -1,8 +1,7 @@
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -54,10 +53,7 @@ class _TareasViewState extends State<TareasView> {
                         BlockTranslate.general,
                         'registro',
                       )} (${tareas.length})",
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                     ),
                   ],
                 ),
@@ -119,10 +115,7 @@ class _CardTask extends StatelessWidget {
                             BlockTranslate.general,
                             'noDisponible',
                           ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                     const SizedBox(width: 20),
                     Icon(
@@ -148,57 +141,39 @@ class _CardTask extends StatelessWidget {
                 if (tarea.ultimoComentario != null) const SizedBox(height: 10),
                 if (tarea.ultimoComentario != null)
                   ExpansionTile(
-                    title: Text(
+                    //Traducir
+                    title: const Text(
                       'Ver último comentario',
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                       textAlign: TextAlign.end,
                     ),
                     children: [
                       CardWidget(
                         margin: const EdgeInsets.only(bottom: 10),
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.border,
-                        ),
+                        borderColor: AppTheme.border,
                         raidus: 15,
                         child: Column(
                           children: [
                             Container(
                               padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 border: Border(
                                   top: BorderSide(
                                     width: 1.5,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.greyBorder,
-                                    ),
+                                    color: AppTheme.border,
                                   ),
                                   left: BorderSide(
                                     width: 1.5,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.greyBorder,
-                                    ),
+                                    color: AppTheme.border,
                                   ),
                                   right: BorderSide(
                                     width: 1.5,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.greyBorder,
-                                    ),
+                                    color: AppTheme.border,
                                   ),
                                 ),
-                                borderRadius: const BorderRadius.only(
+                                borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10),
                                 ),
@@ -209,10 +184,7 @@ class _CardTask extends StatelessWidget {
                                 children: [
                                   Text(
                                     tarea.usuarioUltimoComentario!,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                 ],
                               ),
@@ -222,10 +194,7 @@ class _CardTask extends StatelessWidget {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 1.5,
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.greyBorder,
-                                  ),
+                                  color: AppTheme.border,
                                 ),
                                 borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
@@ -242,10 +211,7 @@ class _CardTask extends StatelessWidget {
                                         Utilities.formatearFechaHora(
                                           tarea.fechaUltimoComentario!,
                                         ),
-                                        style: AppTheme.style(
-                                          context,
-                                          Styles.normal,
-                                        ),
+                                        style: StyleApp.normal,
                                       ),
                                     ],
                                   ),
@@ -263,10 +229,7 @@ class _CardTask extends StatelessWidget {
                                             BlockTranslate.general,
                                             'noDisponible',
                                           ),
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.normal,
-                                      ),
+                                      style: StyleApp.normal,
                                       textAlign: TextAlign.justify,
                                     ),
                                   ),
@@ -290,16 +253,9 @@ class _CardTask extends StatelessWidget {
                 : const EdgeInsets.only(
                     top: 5,
                   ),
-            color: AppTheme.color(
-              context,
-              Styles.secondBackground,
-            ),
             elevation: 0,
             borderWidth: 1.5,
-            borderColor: AppTheme.color(
-              context,
-              Styles.tareaBorder,
-            ),
+            borderColor: AppTheme.border,
             raidus: 15,
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -313,10 +269,7 @@ class _CardTask extends StatelessWidget {
                             BlockTranslate.general,
                             'noDisponible',
                           ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -328,17 +281,11 @@ class _CardTask extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRef',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         '${tarea.iDReferencia}',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
@@ -347,10 +294,7 @@ class _CardTask extends StatelessWidget {
                       BlockTranslate.tareas,
                       'creador',
                     )} ${tarea.usuarioCreador}",
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                   Text(
                     "${AppLocalizations.of(context)!.translate(
@@ -360,10 +304,7 @@ class _CardTask extends StatelessWidget {
                           BlockTranslate.tareas,
                           'noAsignado',
                         )}",
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 5),
@@ -373,10 +314,7 @@ class _CardTask extends StatelessWidget {
                         BlockTranslate.general,
                         'observacion',
                       )}:",
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                   ),
                   Text(
@@ -385,10 +323,7 @@ class _CardTask extends StatelessWidget {
                           BlockTranslate.general,
                           'noDisponible',
                         ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                     textAlign: TextAlign.justify,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -443,12 +378,8 @@ class _InputSerach extends StatelessWidget {
               BlockTranslate.tareas,
               'buscar',
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
-              color: AppTheme.color(
-                context,
-                Styles.darkPrimary,
-              ),
             ),
             onPressed: () => vm.searchText(context),
           ),

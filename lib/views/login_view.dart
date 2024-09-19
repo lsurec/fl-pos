@@ -1,12 +1,11 @@
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../themes/app_theme.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -43,10 +42,6 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CardWidget(
-                    color: AppTheme.color(
-                      context,
-                      Styles.secondBackground,
-                    ),
                     width: double.infinity,
                     raidus: 18,
                     child: Padding(
@@ -98,21 +93,14 @@ class LoginView extends StatelessWidget {
                                           suffixIcon: const Icon(
                                             Icons.lock_outlined,
                                           ),
-                                          suffixIconColor: AppTheme.color(
-                                            context,
-                                            Styles.iconActive,
-                                          ),
+                                          suffixIconColor: AppTheme.grey,
                                           // suffixIcon: IconButton(
                                           //   onPressed: vm.toggle,
                                           //   icon: Icon(
                                           //     vm.obscureText
                                           //         ? Icons.visibility
                                           //         : Icons.visibility_off,
-                                          //     color: AppTheme.color(
-                                          //       context,
-                                          //       Styles.iconActive,
-                                          //
-                                          //     ),
+                                          //     color: AppTheme.grey,
                                           //   ),
                                           // ),
                                         ),
@@ -139,20 +127,18 @@ class LoginView extends StatelessWidget {
                           ),
                           SwitchListTile(
                             contentPadding: const EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 0),
-                            activeColor: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
+                              vertical: 0,
+                              horizontal: 0,
+                            ),
+                            activeColor: AppTheme.hexToColor(
+                              Preferences.valueColor,
                             ),
                             title: Text(
                               AppLocalizations.of(context)!.translate(
                                 BlockTranslate.login,
                                 "recordar",
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.menuActive,
-                              ),
+                              style: StyleApp.greyText,
                               textAlign: TextAlign.right,
                             ),
                             value: vm.isSliderDisabledSession,
@@ -161,10 +147,6 @@ class LoginView extends StatelessWidget {
                           const SizedBox(height: 5),
                           ElevatedButton(
                             onPressed: () => vm.login(context),
-                            style: AppTheme.button(
-                              context,
-                              Styles.buttonStyle,
-                            ),
                             child: SizedBox(
                               width: double.infinity,
                               child: Center(
@@ -173,10 +155,7 @@ class LoginView extends StatelessWidget {
                                     BlockTranslate.login,
                                     "iniciar",
                                   ),
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.whiteBoldStyle,
-                                  ),
+                                  style: StyleApp.whiteBold,
                                 ),
                               ),
                             ),
@@ -193,10 +172,7 @@ class LoginView extends StatelessWidget {
                           BlockTranslate.url,
                           "version",
                         )}: ${vmSplash.versionLocal}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.versionStyle,
-                        ),
+                        style: StyleApp.greyText,
                       ),
                       const SizedBox(width: 10)
                     ],
@@ -217,10 +193,9 @@ class LoginView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

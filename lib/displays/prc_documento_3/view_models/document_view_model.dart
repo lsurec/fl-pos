@@ -534,6 +534,13 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  confirmarOrden(
+    bool value,
+  ) {
+    confirmarCotizacion = value;
+    notifyListeners();
+  }
+
   //agregar consumidor final
   changeCF(
     BuildContext context,

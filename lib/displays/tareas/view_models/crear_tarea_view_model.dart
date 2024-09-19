@@ -120,12 +120,16 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   //Navegar a view para buscar usuarios
-  irUsuarios(BuildContext context, int tipo, String titulo) {
+  irUsuarios(
+    BuildContext context,
+    int tipo,
+    String titulo,
+  ) {
     final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
-    invitados = [];
     vmUsuario.tipoBusqueda = tipo;
     vmUsuario.usuarios = [];
     vmUsuario.buscar.text = '';
+    notifyListeners();
 
     Navigator.pushNamed(
       context,

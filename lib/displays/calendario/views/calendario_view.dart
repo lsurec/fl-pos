@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -45,10 +44,7 @@ class _CalendarioViewState extends State<CalendarioView> {
             appBar: AppBar(
               title: Text(
                 vmMenu.name,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: <Widget>[
                 Text(
@@ -56,10 +52,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                     BlockTranslate.calendario,
                     'hoy',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 IconButton(
                   onPressed: () => vm.loadData(context),
@@ -107,10 +100,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                       context,
                                       vm.monthSelectView,
                                     )} ${vm.yearSelect}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   const SizedBox(width: 5),
                                   const Icon(
@@ -154,10 +144,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                       context,
                                       vm.monthSelectView,
                                     )} ${vm.yearSelect}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   const SizedBox(width: 5),
                                   const Icon(
@@ -198,10 +185,7 @@ class _CalendarioViewState extends State<CalendarioView> {
                                 children: [
                                   Text(
                                     vm.generateNameWeeck(context),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   const SizedBox(width: 5),
                                   const Icon(
@@ -273,10 +257,9 @@ class _CalendarioViewState extends State<CalendarioView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -294,10 +277,9 @@ class _DrawerCalendar extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.black,
-      ),
+      backgroundColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Column(
         children: [
           const SizedBox(height: 30.0),
@@ -314,10 +296,7 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'vistas',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 trailing: IconButton(
                   onPressed: () => vm.abrirPickerCalendario(context),
@@ -325,10 +304,8 @@ class _DrawerCalendar extends StatelessWidget {
                 ),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -336,19 +313,14 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'mes',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 leading: const Icon(Icons.calendar_month),
                 onTap: () => vm.mostrarVistaMes(context),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -356,19 +328,14 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'semana',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 leading: const Icon(Icons.date_range),
                 onTap: () => vm.mostrarVistaSemana(context),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
               ListTile(
                 title: Text(
@@ -376,19 +343,14 @@ class _DrawerCalendar extends StatelessWidget {
                     BlockTranslate.calendario,
                     'dia',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.bold,
-                  ),
+                  style: StyleApp.normalBold,
                 ),
                 leading: const Icon(Icons.today),
                 onTap: () => vm.mostrarVistaDia(context, 0),
               ),
               Divider(
-                color: AppTheme.color(
-                  context,
-                  Styles.divider,
-                ),
+                color:
+                    AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
               ),
             ],
           ),
@@ -409,42 +371,24 @@ class _NombreDias extends StatelessWidget {
     );
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         top: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde arriba
         left: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -458,10 +402,7 @@ class _NombreDias extends StatelessWidget {
                 child: Text(
                   // Para obtener solo las tres primeras letras del día
                   dia.substring(0, 3),
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
               ),
             );
@@ -476,42 +417,28 @@ class _VistaSemana extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     vm.semanasDelMes = vm.agregarSemanas(vm.monthSelectView, vm.yearSelect);
     List<List<DiaModel>> semanas = vm.semanasDelMes;
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         top: BorderSide.none, // Borde arriba
         left: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -521,23 +448,16 @@ class _VistaSemana extends StatelessWidget {
             final color = dia.value == vm.today &&
                     vm.resolveMonth(dia.indexWeek) == vm.month &&
                     vm.resolveYear(dia.indexWeek) == vm.year
-                ? AppTheme.color(
-                    context,
-                    Styles.primary,
+                ? vmTheme.colorPref(
+                    AppTheme.idColorTema,
                   )
                 : null;
 
             final style = dia.value == vm.today &&
                     vm.resolveMonth(dia.indexWeek) == vm.month &&
                     vm.resolveYear(dia.indexWeek) == vm.year
-                ? AppTheme.style(
-                    context,
-                    Styles.diaHoy,
-                  )
-                : AppTheme.style(
-                    context,
-                    Styles.diasOtroMes,
-                  );
+                ? StyleApp.diaHoy
+                : StyleApp.diasFueraMes;
             return TableCell(
               child: GestureDetector(
                 onTap: () => vm.diaCorrectoSemana(
@@ -576,10 +496,7 @@ class _VistaSemana extends StatelessWidget {
                             if (tareasDia.isNotEmpty)
                               Text(
                                 tareasDia[indexTarea].tarea.toString(),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.taskStyle,
-                                ),
+                                style: StyleApp.task,
                               ),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 5),
@@ -604,9 +521,12 @@ class _VistaMes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CalendarioViewModel>(context, listen: false);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
-    List<DiaModel> diasMesSeleccionado =
-        vm.armarMes(vm.monthSelectView, vm.yearSelect);
+    List<DiaModel> diasMesSeleccionado = vm.armarMes(
+      vm.monthSelectView,
+      vm.yearSelect,
+    );
     //Calcular numero de semanas correctamente
     int semanasNum = (diasMesSeleccionado.length / 7).ceil();
 
@@ -614,25 +534,16 @@ class _VistaMes extends StatelessWidget {
     List<List<DiaModel>> semanas = vm.semanasDelMes;
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ),
         // Mantenemos los bordes interiores y eliminamos el superior
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ),
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ),
         top: BorderSide.none, // Eliminamos el borde superior
       ),
@@ -644,26 +555,19 @@ class _VistaMes extends StatelessWidget {
             (columnIndex) {
               final index = rowIndex * 7 + columnIndex;
               DiaModel dia = diasMesSeleccionado[index];
-              final backgroundColor = vm.nuevaIsToday(dia.value, index)
-                  ? AppTheme.color(
-                      context,
-                      Styles.primary,
+              final backgroundColor = vm.nuevaIsToday(
+                dia.value,
+                index,
+              )
+                  ? vmTheme.colorPref(
+                      AppTheme.idColorTema,
                     )
                   : null;
               final hoyColor = vm.nuevaIsToday(dia.value, index)
-                  ? AppTheme.style(
-                      context,
-                      Styles.diaHoy,
-                    )
+                  ? StyleApp.diaHoy
                   : vm.diasOtroMes(dia, index, diasMesSeleccionado)
-                      ? AppTheme.style(
-                          context,
-                          Styles.diasOtroMes,
-                        )
-                      : AppTheme.style(
-                          context,
-                          Styles.subTitle,
-                        );
+                      ? StyleApp.diasFueraMes
+                      : StyleApp.subTitle;
               return GestureDetector(
                 onTap: () => vm.diaCorrectoMes(
                   context,
@@ -737,10 +641,7 @@ class _VistaMes extends StatelessWidget {
                                           tareasDia[indexTarea]
                                               .tarea
                                               .toString(),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.taskStyle,
-                                          ),
+                                          style: StyleApp.task,
                                         ),
                                       ],
                                     ),
@@ -773,10 +674,7 @@ class _VistaMes extends StatelessWidget {
                                               : vm.yearSelect,
                                         ).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.verMas,
-                                    ),
+                                    style: StyleApp.verMas,
                                   ),
                                 )
                             ],
@@ -822,10 +720,7 @@ class _VistaMes extends StatelessWidget {
                                           tareasDia[indexTarea]
                                               .tarea
                                               .toString(),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.taskStyle,
-                                          ),
+                                          style: StyleApp.task,
                                         ),
                                       ],
                                     ),
@@ -846,10 +741,7 @@ class _VistaMes extends StatelessWidget {
                                   child: Text(
                                     "(+ ${vm.tareaDia(dia.value, vm.monthSelectView, vm.yearSelect).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.verMas,
-                                    ),
+                                    style: StyleApp.verMas,
                                   ),
                                 ),
                             ],
@@ -909,10 +801,7 @@ class _VistaMes extends StatelessWidget {
                                           tareasDia[indexTarea]
                                               .tarea
                                               .toString(),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.taskStyle,
-                                          ),
+                                          style: StyleApp.task,
                                         ),
                                       ],
                                     ),
@@ -945,10 +834,7 @@ class _VistaMes extends StatelessWidget {
                                               : vm.yearSelect,
                                         ).length - 4})",
                                     textAlign: TextAlign.end,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.verMas,
-                                    ),
+                                    style: StyleApp.verMas,
                                   ),
                                 ),
                             ],
@@ -992,10 +878,7 @@ class _VistaDiaState extends State<_VistaDia> {
                 BlockTranslate.calendario,
                 'horario',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.bold,
-              ),
+              style: StyleApp.normalBold,
             ),
           ),
           TableCell(
@@ -1009,10 +892,7 @@ class _VistaDiaState extends State<_VistaDia> {
                   BlockTranslate.calendario,
                   'tareas',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
             ),
           ),
@@ -1029,10 +909,7 @@ class _VistaDiaState extends State<_VistaDia> {
                   BlockTranslate.calendario,
                   'nueva',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.taskStyle,
-                ),
+                style: StyleApp.task,
               ),
             ),
         ],
@@ -1049,10 +926,7 @@ class _VistaDiaState extends State<_VistaDia> {
               child: Center(
                 child: Text(
                   horasDia[indexHora].hora12,
-                  style: AppTheme.style(
-                    context,
-                    Styles.hora,
-                  ),
+                  style: StyleApp.horaBold,
                 ),
               ),
             ),
@@ -1096,10 +970,6 @@ class _VistaDiaState extends State<_VistaDia> {
                         margin: const EdgeInsets.only(bottom: 5),
                         elevation: 0.3,
                         borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
                         raidus: 10,
                         child: GestureDetector(
                           onTap: () => vm.navegarDetalleTarea(
@@ -1109,10 +979,7 @@ class _VistaDiaState extends State<_VistaDia> {
                           child: ListTile(
                             title: Text(
                               tarea.texto.substring(7),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -1162,42 +1029,24 @@ class _VistaDiaState extends State<_VistaDia> {
     }
 
     return Table(
-      border: TableBorder(
+      border: const TableBorder(
         top: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde arriba
         left: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde izquierdo
         right: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde derecho
         bottom: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Bo, // Sin borde abajo
         horizontalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.greyBorder,
-          ),
+          color: AppTheme.border,
         ), // Borde vertical dentro de la tabla
       ),
       columnWidths: const <int, TableColumnWidth>{
@@ -1230,10 +1079,7 @@ class _CirculoDia extends StatelessWidget {
       height: 25.0, // Altura del círculo
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.grey,
-          ),
+          color: AppTheme.grey,
           width: 0.5,
         ),
         shape: BoxShape.circle, // Forma del contenedor
@@ -1271,10 +1117,7 @@ class EstadoColor extends StatelessWidget {
           1,
         ),
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.grey,
-          ),
+          color: AppTheme.grey,
           width: 1.0,
         ),
       ),

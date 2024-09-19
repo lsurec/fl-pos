@@ -4,8 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -30,10 +29,7 @@ class DetalleTareaView extends StatelessWidget {
                 BlockTranslate.tareas,
                 'detalleTarea',
               )}: ${vm.tarea!.iDTarea}',
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: RefreshIndicator(
@@ -51,10 +47,7 @@ class DetalleTareaView extends StatelessWidget {
                               BlockTranslate.general,
                               'noDisponible',
                             ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const Divider(),
                       Text(
@@ -62,10 +55,7 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.general,
                           'observacion',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       GestureDetector(
                         onLongPress: () => Utilities.copyToClipboard(
@@ -78,10 +68,7 @@ class DetalleTareaView extends StatelessWidget {
                                 BlockTranslate.general,
                                 'noDisponible',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                           textAlign: TextAlign.justify,
                         ),
                       ),
@@ -103,10 +90,7 @@ class DetalleTareaView extends StatelessWidget {
                                     BlockTranslate.tareas,
                                     'comentarios',
                                   )} (${vmComentarios.comentarioDetalle.length})",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.title,
-                                  ),
+                                  style: StyleApp.title,
                                 ),
                               ],
                             ),
@@ -123,10 +107,7 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'estadoT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       const _ActualizarEstado(),
 
@@ -136,10 +117,7 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'prioridadT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       const _ActualizarPrioridad(),
 
@@ -148,22 +126,12 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'feHoInicio',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -177,10 +145,7 @@ class DetalleTareaView extends StatelessWidget {
                                 Utilities.formatearFecha(
                                   vm.tarea!.tareaFechaIni,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
@@ -191,10 +156,7 @@ class DetalleTareaView extends StatelessWidget {
                                 Utilities.formatearHora(
                                   vm.tarea!.tareaFechaIni,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ],
                           ),
@@ -205,22 +167,12 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'feHoFin',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -234,10 +186,7 @@ class DetalleTareaView extends StatelessWidget {
                                 Utilities.formatearFecha(
                                   vm.tarea!.tareaFechaFin,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
@@ -248,10 +197,7 @@ class DetalleTareaView extends StatelessWidget {
                                 Utilities.formatearHora(
                                   vm.tarea!.tareaFechaFin,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ],
                           ),
@@ -262,22 +208,12 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'tipo',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -286,10 +222,7 @@ class DetalleTareaView extends StatelessWidget {
                                   BlockTranslate.general,
                                   'noDisponible',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -302,22 +235,12 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRefT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -326,10 +249,7 @@ class DetalleTareaView extends StatelessWidget {
                                   BlockTranslate.general,
                                   'noDisponible',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -342,10 +262,7 @@ class DetalleTareaView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'responsableT',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         trailing: IconButton(
                           //tipoBusqueda = 3 para actualizar responsable
@@ -367,16 +284,9 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -385,10 +295,7 @@ class DetalleTareaView extends StatelessWidget {
                                   BlockTranslate.tareas,
                                   'noAsignado',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -414,10 +321,7 @@ class DetalleTareaView extends StatelessWidget {
                                   BlockTranslate.tareas,
                                   'sinHistorialResp',
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold,
-                                ),
+                                style: StyleApp.normalBold,
                               ),
                             if (vm.responsablesHistorial.isNotEmpty)
                               Text(
@@ -425,22 +329,12 @@ class DetalleTareaView extends StatelessWidget {
                                   BlockTranslate.tareas,
                                   'historialResp',
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold,
-                                ),
+                                style: StyleApp.normalBold,
                               ),
                             CardWidget(
-                              color: AppTheme.color(
-                                context,
-                                Styles.secondBackground,
-                              ),
                               elevation: 0,
-                              borderWidth: 1.5,
-                              borderColor: AppTheme.color(
-                                context,
-                                Styles.greyBorder,
-                              ),
+                              borderWidth: 1,
+                              borderColor: AppTheme.border,
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -453,10 +347,7 @@ class DetalleTareaView extends StatelessWidget {
                                   return ListTile(
                                     title: Text(
                                       responsable.tUserName,
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.inactive,
-                                      ),
+                                      style: StyleApp.greyText,
                                     ),
                                     leading: const Icon(Icons.person_4),
                                   );
@@ -471,10 +362,7 @@ class DetalleTareaView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'invitados',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         trailing: IconButton(
                           //tipoBusqueda = 4 para actualizar invitados
@@ -496,16 +384,9 @@ class DetalleTareaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -517,10 +398,7 @@ class DetalleTareaView extends StatelessWidget {
                             return ListTile(
                               title: Text(
                                 invitado.userName,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               leading: const Icon(Icons.person_4),
                               trailing: IconButton(
@@ -545,22 +423,12 @@ class DetalleTareaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'creadorT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -569,10 +437,7 @@ class DetalleTareaView extends StatelessWidget {
                                   BlockTranslate.general,
                                   'noDisponible',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -591,10 +456,9 @@ class DetalleTareaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -614,39 +478,27 @@ class _ActualizarEstado extends StatelessWidget {
     final List<EstadoModel> estados = vmCrear.estados;
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
       elevation: 0,
-      borderWidth: 0,
+      borderWidth: 1,
+      borderColor: AppTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<EstadoModel>(
           value: vm.estadoAtual,
           isExpanded: true,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.color(
-                  context,
-                  Styles.border,
-                ),
-              ),
-              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+            contentPadding: EdgeInsets.symmetric(vertical: 5),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.tareas,
               'nuevoEstado',
             ),
-            style: AppTheme.style(
-              context,
-              Styles.normal,
-            ),
+            style: StyleApp.normal,
           ),
           items: estados
               .map(
@@ -654,10 +506,7 @@ class _ActualizarEstado extends StatelessWidget {
                   value: item,
                   child: Text(
                     item.descripcion,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 ),
               )
@@ -701,39 +550,27 @@ class _ActualizarPrioridad extends StatelessWidget {
     final List<PrioridadModel> prioridades = vmCrear.prioridades;
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
       elevation: 0,
-      borderWidth: 0,
+      borderWidth: 1,
+      borderColor: AppTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<PrioridadModel>(
           value: vm.prioridadActual,
           isExpanded: true,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.color(
-                  context,
-                  Styles.border,
-                ),
-              ),
-              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+            contentPadding: EdgeInsets.symmetric(vertical: 5),
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.tareas,
               'nuevaPrioridad',
             ),
-            style: AppTheme.style(
-              context,
-              Styles.normal,
-            ),
+            style: StyleApp.normal,
           ),
           items: prioridades
               .map(
@@ -741,10 +578,7 @@ class _ActualizarPrioridad extends StatelessWidget {
                   value: item,
                   child: Text(
                     item.nombre,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 ),
               )

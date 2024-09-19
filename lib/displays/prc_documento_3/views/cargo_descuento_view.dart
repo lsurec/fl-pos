@@ -1,8 +1,8 @@
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
@@ -38,18 +38,14 @@ class CargoDescuentoView extends StatelessWidget {
           child: Column(
             children: [
               Card(
-                color: AppTheme.color(
-                  context,
-                  Styles.transaction,
-                ),
+                color: AppTheme.isDark()
+                    ? AppTheme.backroundDarkSecondary
+                    : AppTheme.backroundSecondary,
                 child: ListTile(
                   contentPadding: const EdgeInsets.all(10),
                   title: Text(
                     '${transaction.cantidad} x ${transaction.producto.desProducto} (SKU: ${transaction.producto.productoId})',
-                    style: AppTheme.style(
-                      context,
-                      Styles.bold,
-                    ),
+                    style: StyleApp.normalBold,
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,20 +55,14 @@ class CargoDescuentoView extends StatelessWidget {
                           BlockTranslate.calcular,
                           'precioU',
                         )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         '${AppLocalizations.of(context)!.translate(
                           BlockTranslate.calcular,
                           'precioT',
                         )}: ${currencyFormat.format(transaction.total)}',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       if (transaction.cargo != 0)
                         Text(
@@ -80,10 +70,7 @@ class CargoDescuentoView extends StatelessWidget {
                             BlockTranslate.calcular,
                             'cargo',
                           )}: ${currencyFormat.format(transaction.cargo)}',
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
 
                       if (transaction.descuento != 0)
@@ -92,10 +79,7 @@ class CargoDescuentoView extends StatelessWidget {
                             BlockTranslate.calcular,
                             'descuento',
                           )}: ${currencyFormat.format(transaction.descuento)}',
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       // Text('Detalles: ${transaction.detalles}'),
                     ],
@@ -115,10 +99,7 @@ class CargoDescuentoView extends StatelessWidget {
                             BlockTranslate.calcular,
                             'cargoDecuento',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         IconButton(
                           onPressed: () =>
@@ -134,23 +115,21 @@ class CargoDescuentoView extends StatelessWidget {
                       children: [
                         const SizedBox(width: 12),
                         Checkbox(
-                          activeColor: AppTheme.color(
-                            context,
-                            Styles.darkPrimary,
+                          activeColor: AppTheme.hexToColor(
+                            Preferences.valueColor,
                           ),
                           value: vm.selectAllMontos,
-                          onChanged: (value) =>
-                              vm.selectAllMonto(value, indexDocument),
+                          onChanged: (value) => vm.selectAllMonto(
+                            value,
+                            indexDocument,
+                          ),
                         ),
                         Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.general,
                             'descripcion',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         const Spacer(),
                         Text(
@@ -158,10 +137,7 @@ class CargoDescuentoView extends StatelessWidget {
                             BlockTranslate.calcular,
                             'monto',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                       ],
                     ),
@@ -176,18 +152,16 @@ class CargoDescuentoView extends StatelessWidget {
                   final TraInternaModel operacion =
                       transaction.operaciones[index];
                   return Card(
-                    color: AppTheme.color(
-                      context,
-                      Styles.transaction,
-                    ),
+                    color: AppTheme.isDark()
+                        ? AppTheme.backroundDarkSecondary
+                        : AppTheme.backroundSecondary,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
                           Checkbox(
-                            activeColor: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
+                            activeColor: AppTheme.hexToColor(
+                              Preferences.valueColor,
                             ),
                             value: operacion.isChecked,
                             onChanged: (value) => vm.changeCheckedMonto(
@@ -206,10 +180,7 @@ class CargoDescuentoView extends StatelessWidget {
                                     BlockTranslate.calcular,
                                     'cargo',
                                   ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.cargDesc,
-                            ),
+                            style: StyleApp.greyBold,
                           ),
                           const Spacer(),
                           Text(
@@ -217,14 +188,8 @@ class CargoDescuentoView extends StatelessWidget {
                                 ? currencyFormat.format(operacion.descuento)
                                 : currencyFormat.format(operacion.cargo),
                             style: operacion.cargo == 0
-                                ? AppTheme.style(
-                                    context,
-                                    Styles.descuento,
-                                  )
-                                : AppTheme.style(
-                                    context,
-                                    Styles.cargo,
-                                  ),
+                                ? StyleApp.descuento
+                                : StyleApp.cargo,
                           )
                         ],
                       ),

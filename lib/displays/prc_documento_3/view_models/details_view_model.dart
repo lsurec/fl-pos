@@ -9,8 +9,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -1109,6 +1108,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     //view model externo
     final vmPayment = Provider.of<PaymentViewModel>(context, listen: false);
+    final vmTheme = Provider.of<ThemeViewModel>(context, listen: false);
 
     //si hay formas de pago agregadas mostrar mensaje
     if (vmPayment.amounts.isNotEmpty) {
@@ -1128,10 +1128,7 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Mostrar el SnackBar con la opción de deshacer
     final snackBar = SnackBar(
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.primary,
-      ),
+      backgroundColor: vmTheme.colorPref(AppTheme.idColorTema,),
       duration: const Duration(seconds: 5),
       content: Row(
         children: [
@@ -1152,10 +1149,7 @@ class DetailsViewModel extends ChangeNotifier {
           BlockTranslate.botones,
           'deshacer',
         ),
-        textColor: AppTheme.color(
-          context,
-          Styles.white,
-        ),
+        textColor: AppTheme.white,
         onPressed: () {
           // Acción de deshacer: Restaurar el elemento eliminado
           traInternas.insert(index, deletedItem);

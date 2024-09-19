@@ -1,9 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -36,10 +37,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           appBar: AppBar(
             title: Text(
               "${document.consecutivo}",
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
             actions: [
               IconButton(
@@ -92,9 +90,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                 children: [
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
+                      style: StyleApp.normal.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                       children: [
                         TextSpan(
@@ -102,17 +99,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.cotizacion,
                             'docIdRef',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         TextSpan(
                           text: document.idRef.toString(),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         )
                       ],
                     ),
@@ -122,9 +113,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const SizedBox(height: 5),
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
+                      style: StyleApp.normal.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                       children: [
                         TextSpan(
@@ -132,17 +122,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.fecha,
                             'fecha',
                           )} ",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         TextSpan(
                           text: document.fecha,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         )
                       ],
                     ),
@@ -152,9 +136,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const SizedBox(height: 5),
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
+                      style: StyleApp.normal.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                       children: [
                         TextSpan(
@@ -162,18 +145,12 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.localConfig,
                             'empresa',
                           )}: ",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         TextSpan(
                           text:
                               "${document.empresa.empresaNombre} (${document.empresa.empresa})",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         )
                       ],
                     ),
@@ -183,9 +160,8 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                   const SizedBox(height: 5),
                   RichText(
                     text: TextSpan(
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
+                      style: StyleApp.normal.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
                       ),
                       children: [
                         TextSpan(
@@ -193,18 +169,12 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.localConfig,
                             'estacion',
                           )}: ",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         TextSpan(
                           text:
                               "${document.estacion.descripcion} (${document.estacion.estacionTrabajo})",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         )
                       ],
                     ),
@@ -223,17 +193,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                               BlockTranslate.factura,
                               'tipoDoc',
                             )}:",
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           Text(
                             document.documentoDesc,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -245,17 +209,11 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                               BlockTranslate.factura,
                               'serieDoc',
                             )}:",
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           Text(
                             document.serieDesc,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -269,10 +227,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       BlockTranslate.factura,
                       'cuenta',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                    style: StyleApp.title,
                   ),
                   const SizedBox(height: 5),
                   if (document.client == null)
@@ -281,10 +236,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                         BlockTranslate.general,
                         'noDisponible',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.normal,
-                      ),
+                      style: StyleApp.normal,
                     ),
                   if (document.client != null)
                     Column(
@@ -292,30 +244,21 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       children: [
                         Text(
                           "Nit: ${document.client!.facturaNit}",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                         Text(
                           "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.general,
                             'nombre',
                           )}: ${document.client!.facturaNombre}",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                         Text(
                           "${AppLocalizations.of(context)!.translate(
                             BlockTranslate.general,
                             'direccion',
                           )}: ${document.client!.facturaDireccion}",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -331,10 +274,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.factura,
                             'vendedor',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -343,10 +283,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'noDisponible',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -363,18 +300,12 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.tiket,
                             'tipoRef',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
                           "${document.docRefTipoReferencia}",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -392,10 +323,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.factura,
                                 'contacto',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -404,10 +332,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'noDisponible',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -425,10 +350,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'descripcion',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -437,10 +359,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'noDisponible',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -458,10 +377,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.cotizacion,
                                 'direEntrega',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -470,10 +386,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'noDisponible',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -491,10 +404,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'observacion',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
@@ -503,10 +413,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.general,
                                 'noDisponible',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -525,19 +432,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.fecha,
                                 'entrega',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         Text(
                           Utilities.formatearFechaHora(
                             docVM.fechaRefIni,
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
 //Fecha Ref Fin
                         const SizedBox(height: 5),
@@ -549,19 +450,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                                 BlockTranslate.fecha,
                                 'recoger',
                               ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         Text(
                           Utilities.formatearFechaHora(
                             docVM.fechaRefFin,
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -579,19 +474,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.fecha,
                             'inicio',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         Text(
                           Utilities.formatearFechaHora(
                             docVM.fechaInicial,
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
 //Fecha Fin
                         const SizedBox(height: 5),
@@ -602,19 +491,13 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.fecha,
                             'fin',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         Text(
                           Utilities.formatearFechaHora(
                             docVM.fechaFinal,
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -626,10 +509,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       BlockTranslate.factura,
                       'productos',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                    style: StyleApp.title,
                   ),
                   const SizedBox(height: 5),
                   _Transaction(
@@ -647,10 +527,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.factura,
                             'formasPago',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         _Pyments(amounts: document.payments),
@@ -665,18 +542,14 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(
-                        color: AppTheme.color(
-                          context,
-                          Styles.border,
-                        ),
+                      side: const BorderSide(
+                        color: AppTheme.grey,
                         width: 1.0,
                       ), // Define el color y grosor del borde
                     ),
-                    color: AppTheme.color(
-                      context,
-                      Styles.background,
-                    ),
+                    color: AppTheme.isDark()
+                        ? AppTheme.darkBackroundColor
+                        : AppTheme.backroundColor,
                     child: Padding(
                       padding: const EdgeInsets.all(
                         10,
@@ -730,18 +603,12 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                             BlockTranslate.general,
                             'observacion',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
                           document.observacion,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                       ],
                     ),
@@ -785,10 +652,9 @@ class _DetailsDocViewState extends State<DetailsDocView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -824,25 +690,18 @@ class _Pyments extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
-              style: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
+              style: StyleApp.normal,
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -853,10 +712,7 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'autorizar',
                     )}: ${amount.authorization}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (amount.reference != "")
                   Text(
@@ -864,10 +720,7 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'referencia',
                     )}: ${amount.reference}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (amount.payment.banco)
                   Text(
@@ -875,10 +728,7 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'banco',
                     )}: ${amount.bank?.nombre}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (amount.account != null)
                   Text(
@@ -886,40 +736,28 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'cuenta',
                     )}: ${amount.account!.descripcion}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'monto',
                   )}: ${currencyFormat.format(amount.amount)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'diferencia',
                   )}: ${currencyFormat.format(amount.diference)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'pagoTotal',
                   )}: ${currencyFormat.format(amount.amount + amount.diference)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 // Text('${AppLocalizations.of(context)!.translate(
                 //   BlockTranslate.general,
@@ -963,35 +801,25 @@ class _Transaction extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${transaction.cantidad} x ${transaction.product.desProducto}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 Text(
                   'SKU: ${transaction.product.productoId}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
               ],
             ),
@@ -1003,20 +831,14 @@ class _Transaction extends StatelessWidget {
                     BlockTranslate.calcular,
                     'precioU',
                   )}: ${currencyFormat.format(transaction.cantidad > 0 ? transaction.total / transaction.cantidad : transaction.total)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'total',
                   )}: ${currencyFormat.format(transaction.total)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 // Text(
                 //   '${AppLocalizations.of(context)!.translate(

@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -26,10 +25,7 @@ class IdReferenciaView extends StatelessWidget {
                 BlockTranslate.tareas,
                 'buscarIdRef',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: ListView(
@@ -40,29 +36,30 @@ class IdReferenciaView extends StatelessWidget {
                   children: [
                     TextFormField(
                       controller: vm.buscarIdReferencia,
-                      onFieldSubmitted: (criterio) =>
-                          vm.buscarIdRefencia(context),
+                      onFieldSubmitted: (criterio) => vm.buscarIdRefencia(
+                        context,
+                      ),
                       decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: AppTheme.grey,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         labelText: AppLocalizations.of(context)!.translate(
                           BlockTranslate.tareas,
                           'buscar',
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: AppTheme.color(
-                              context,
-                              Styles.border,
-                            ),
+                          borderSide: const BorderSide(
+                            color: AppTheme.grey,
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         suffixIcon: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.search,
-                            color: AppTheme.color(
-                              context,
-                              Styles.darkPrimary,
-                            ),
+                            color: AppTheme.grey,
                           ),
                           onPressed: () => vm.buscarIdRefencia(context),
                         ),
@@ -77,10 +74,7 @@ class IdReferenciaView extends StatelessWidget {
                             BlockTranslate.general,
                             'registro',
                           )} (${vm.idReferencias.length})",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                       ],
                     ),
@@ -97,10 +91,9 @@ class IdReferenciaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -127,14 +120,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
             referencia,
           ),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   width: 1.5,
-                  color: AppTheme.color(
-                    context,
-                    Styles.greyBorder,
-                  ),
+                  color: AppTheme.grey,
                 ),
               ),
             ),
@@ -149,10 +139,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
                   const SizedBox(height: 5),
                   Text(
                     referencia.descripcion,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                   Row(
                     children: [
@@ -161,17 +148,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRef',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         referencia.referenciaId,
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
@@ -183,17 +164,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.factura,
                           'referencia',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         "${referencia.referencia}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
@@ -205,17 +180,11 @@ class _ReferenciasEncontradas extends StatelessWidget {
                           BlockTranslate.tareas,
                           'estadoTarea',
                         )}: ",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       Text(
                         referencia.fDesEstadoObjeto,
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                     ],
                   ),

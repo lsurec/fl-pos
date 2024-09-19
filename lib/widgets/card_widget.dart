@@ -1,6 +1,4 @@
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({
@@ -30,12 +28,7 @@ class CardWidget extends StatelessWidget {
       margin: margin,
       width: width,
       child: Card(
-        color: color ??
-            AppTheme.color(
-              context,
-              Styles.secondBackground,
-              
-            ),
+        color: color,
         shape: borderColor == null
             ? RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(raidus!),

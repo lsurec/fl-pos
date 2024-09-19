@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ThemeView extends StatelessWidget {
@@ -41,10 +39,7 @@ class ThemeView extends StatelessWidget {
                             BlockTranslate.home,
                             "tema",
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.blueTitle,
-                          ),
+                          style: StyleApp.normalBold,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -56,57 +51,33 @@ class ThemeView extends StatelessWidget {
                       itemCount: themes.length,
                       itemBuilder: (BuildContext context, int index) {
                         final ThemeModel theme = themes[index];
-                        return Column(
-                          children: [
-                            CardWidget(
-                              color: theme.id == Preferences.theme
-                                  ? AppTheme.color(
-                                      context,
-                                      Styles.primary,
-                                    )
-                                  : AppTheme.color(
-                                      context,
-                                      Styles.secondBackground,
-                                    ),
-                              width: 400,
-                              margin: const EdgeInsets.only(bottom: 25),
-                              child: ListTile(
-                                title: Text(
-                                  theme.descripcion,
-                                  style: index == Preferences.theme
-                                      ? AppTheme.style(
-                                          context,
-                                          Styles.whiteBoldStyle,
-                                        )
-                                      : AppTheme.style(
-                                          context,
-                                          Styles.bold,
-                                        ),
-                                  textAlign: TextAlign.center,
+                        return RadioListTile(
+                          activeColor: AppTheme.idTema == 0
+                              ? AppTheme.primary
+                              : AppTheme.hexToColor(
+                                  Preferences.valueColor,
                                 ),
-                                onTap: () => vm.nuevoTema(context, theme),
-                              ),
-                            ),
-                          ],
+                          title: Text(
+                            theme.descripcion,
+                            style: StyleApp.normal,
+                          ),
+                          value: index,
+                          groupValue: AppTheme.idTema,
+                          onChanged: (int? value) => vm.reiniciarTemp(
+                            context,
+                          ),
                         );
                       },
                     ),
                     if (AppTheme.cambiarTema == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
-                        style: AppTheme.button(
-                          context,
-                          Styles.buttonStyle,
-                        ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,
                             "continuar",
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.whiteBoldStyle,
-                          ),
+                          style: StyleApp.whiteBold,
                         ),
                       ),
                   ],
@@ -119,10 +90,9 @@ class ThemeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading)
           Center(

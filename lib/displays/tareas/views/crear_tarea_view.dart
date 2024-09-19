@@ -1,14 +1,15 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
+import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
-
-import '../view_models/view_models.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +33,7 @@ class CrearTareaView extends StatelessWidget {
                 BlockTranslate.botones,
                 'nueva',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
             actions: <Widget>[
               Row(
@@ -87,17 +85,11 @@ class CrearTareaView extends StatelessWidget {
                                 BlockTranslate.tareas,
                                 'titulo',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
-                            Text(
+                            const Text(
                               "*",
-                              style: AppTheme.style(
-                                context,
-                                Styles.obligatory,
-                              ),
+                              style: StyleApp.obligatory,
                             ),
                           ],
                         ),
@@ -119,11 +111,8 @@ class CrearTareaView extends StatelessWidget {
                               'agregaTitulo',
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.border,
-                                ),
+                              borderSide: const BorderSide(
+                                color: AppTheme.grey,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -135,10 +124,7 @@ class CrearTareaView extends StatelessWidget {
                             BlockTranslate.fecha,
                             'fechaHoraInicio',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -147,9 +133,8 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaInicial(context),
                               icon: Icon(
                                 Icons.calendar_today_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
+                                color: AppTheme.hexToColor(
+                                  Preferences.valueColor,
                                 ),
                               ),
                               label: Text(
@@ -157,9 +142,11 @@ class CrearTareaView extends StatelessWidget {
                                   BlockTranslate.fecha,
                                   'fecha',
                                 )} ${Utilities.formatearFecha(vm.fechaInicial)}",
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
+                                style: StyleApp.normal.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color,
                                 ),
                               ),
                             ),
@@ -167,9 +154,8 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraInicial(context),
                               icon: Icon(
                                 Icons.schedule_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
+                                color: AppTheme.hexToColor(
+                                  Preferences.valueColor,
                                 ),
                               ),
                               label: Text(
@@ -177,9 +163,11 @@ class CrearTareaView extends StatelessWidget {
                                   BlockTranslate.fecha,
                                   'hora',
                                 )} ${Utilities.formatearHora(vm.fechaInicial)}",
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
+                                style: StyleApp.normal.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color,
                                 ),
                               ),
                             )
@@ -193,10 +181,7 @@ class CrearTareaView extends StatelessWidget {
                             BlockTranslate.fecha,
                             'fechaHoraFin',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,9 +190,8 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirFechaFinal(context),
                               icon: Icon(
                                 Icons.calendar_today_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
+                                color: AppTheme.hexToColor(
+                                  Preferences.valueColor,
                                 ),
                               ),
                               label: Text(
@@ -215,9 +199,11 @@ class CrearTareaView extends StatelessWidget {
                                   BlockTranslate.fecha,
                                   'fecha',
                                 )} ${Utilities.formatearFecha(vm.fechaFinal)}",
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
+                                style: StyleApp.normal.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color,
                                 ),
                               ),
                             ),
@@ -225,9 +211,8 @@ class CrearTareaView extends StatelessWidget {
                               onPressed: () => vm.abrirHoraFinal(context),
                               icon: Icon(
                                 Icons.schedule_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.darkPrimary,
+                                color: AppTheme.hexToColor(
+                                  Preferences.valueColor,
                                 ),
                               ),
                               label: Text(
@@ -235,9 +220,11 @@ class CrearTareaView extends StatelessWidget {
                                   BlockTranslate.fecha,
                                   'hora',
                                 )} ${Utilities.formatearHora(vm.fechaFinal)}",
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
+                                style: StyleApp.normal.copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .color,
                                 ),
                               ),
                             )
@@ -251,10 +238,7 @@ class CrearTareaView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'tiempoEstimado',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         const SizedBox(height: 10),
                         Row(
@@ -263,20 +247,14 @@ class CrearTareaView extends StatelessWidget {
                               padding: const EdgeInsets.all(14),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.border,
-                                  ),
+                                  color: AppTheme.grey,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Text(
                                 vm.tiempoController.text,
                                 textAlign: TextAlign.center,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -296,18 +274,12 @@ class CrearTareaView extends StatelessWidget {
                                 BlockTranslate.tareas,
                                 'tipoTarea',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
-                            Text(
+                            const Text(
                               "*",
-                              style: AppTheme.style(
-                                context,
-                                Styles.obligatory,
-                              ),
+                              style: StyleApp.obligatory,
                             ),
                           ],
                         ),
@@ -323,20 +295,14 @@ class CrearTareaView extends StatelessWidget {
                                     BlockTranslate.tareas,
                                     'estadoTarea',
                                   ),
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.bold,
-                                  ),
+                                  style: StyleApp.normalBold,
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.only(left: 5),
                                 ),
-                                Text(
+                                const Text(
                                   "*",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.obligatory,
-                                  ),
+                                  style: StyleApp.obligatory,
                                 ),
                               ],
                             ),
@@ -354,18 +320,12 @@ class CrearTareaView extends StatelessWidget {
                                 BlockTranslate.tareas,
                                 'prioridadTarea',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
-                            Text(
+                            const Text(
                               "*",
-                              style: AppTheme.style(
-                                context,
-                                Styles.obligatory,
-                              ),
+                              style: StyleApp.obligatory,
                             ),
                           ],
                         ),
@@ -381,18 +341,12 @@ class CrearTareaView extends StatelessWidget {
                                 BlockTranslate.general,
                                 'observacion',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             const Padding(padding: EdgeInsets.only(left: 5)),
-                            Text(
+                            const Text(
                               "*",
-                              style: AppTheme.style(
-                                context,
-                                Styles.obligatory,
-                              ),
+                              style: StyleApp.obligatory,
                             ),
                           ],
                         ),
@@ -405,10 +359,7 @@ class CrearTareaView extends StatelessWidget {
                               BlockTranslate.tareas,
                               'archivosSelec',
                             )} (${vm.files.length})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                         const SizedBox(height: 5),
                         const Divider(),
@@ -424,10 +375,7 @@ class CrearTareaView extends StatelessWidget {
                                 ListTile(
                                   title: Text(
                                     Utilities.nombreArchivo(archivo),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.normal,
-                                    ),
+                                    style: StyleApp.normal,
                                   ),
                                   leading: const Icon(Icons.attachment),
                                   trailing: GestureDetector(
@@ -454,17 +402,11 @@ class CrearTareaView extends StatelessWidget {
                                     BlockTranslate.tareas,
                                     'idRef',
                                   )}: ",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
-                                Text(
+                                const Text(
                                   " * ",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.obligatory,
-                                  ),
+                                  style: StyleApp.obligatory,
                                 ),
                                 const SizedBox(width: 30),
                               ],
@@ -482,10 +424,7 @@ class CrearTareaView extends StatelessWidget {
                                   BlockTranslate.tareas,
                                   'refSelec',
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               ListTile(
                                 contentPadding: const EdgeInsets.all(5),
@@ -494,10 +433,7 @@ class CrearTareaView extends StatelessWidget {
                                       ? "${vm.idReferencia?.referenciaId ?? vm.idReferencia?.referencia}"
                                       : vm.idReferencia?.referenciaId ??
                                           "${vm.idReferencia?.referencia ?? vm.idReferencia}",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.bold,
-                                  ),
+                                  style: StyleApp.normalBold,
                                 ),
                                 subtitle: Row(
                                   children: [
@@ -506,19 +442,13 @@ class CrearTareaView extends StatelessWidget {
                                         BlockTranslate.tareas,
                                         'idRef',
                                       )}: ",
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.normal,
-                                      ),
+                                      style: StyleApp.normal,
                                     ),
                                     Text(
                                       vm.idReferencia?.referenciaId ??
                                           vm.idReferencia?.referenciaId ??
                                           "",
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.bold,
-                                      ),
+                                      style: StyleApp.normalBold,
                                     ),
                                   ],
                                 ),
@@ -547,17 +477,11 @@ class CrearTareaView extends StatelessWidget {
                                     BlockTranslate.tareas,
                                     'agregarResponsable',
                                   ),
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
-                                Text(
+                                const Text(
                                   " * ",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.obligatory,
-                                  ),
+                                  style: StyleApp.obligatory,
                                 ),
                               ],
                             ),
@@ -571,17 +495,11 @@ class CrearTareaView extends StatelessWidget {
                           ListTile(
                             title: Text(
                               vm.responsable!.name,
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             subtitle: Text(
                               vm.responsable!.email,
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                             leading: const Icon(Icons.person),
                             trailing: GestureDetector(
@@ -607,10 +525,7 @@ class CrearTareaView extends StatelessWidget {
                                 BlockTranslate.tareas,
                                 'agregarInvitados',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                             leading: const Icon(
                               Icons.person_add_alt_1_outlined,
@@ -631,17 +546,11 @@ class CrearTareaView extends StatelessWidget {
                                 ListTile(
                                   title: Text(
                                     usuario.name,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   subtitle: Text(
                                     usuario.email,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.normal,
-                                    ),
+                                    style: StyleApp.normal,
                                   ),
                                   leading: const Icon(Icons.person),
                                   trailing: GestureDetector(
@@ -670,10 +579,9 @@ class CrearTareaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -706,19 +614,13 @@ class _TiempoEstimado extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+          color: AppTheme.grey,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         vm.periodicidad!.descripcion,
-        style: AppTheme.style(
-          context,
-          Styles.normal,
-        ),
+        style: StyleApp.normal,
       ),
     );
   }
@@ -748,11 +650,8 @@ class _ObservacionTarea extends StatelessWidget {
           'notaObservacion',
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -784,11 +683,8 @@ class _PrioridadTarea extends StatelessWidget {
           borderSide: const BorderSide(),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -864,19 +760,13 @@ class _EstadoTarea extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+          color: AppTheme.grey,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         primerEstado.descripcion,
-        style: AppTheme.style(
-          context,
-          Styles.subTitle,
-        ),
+        style: StyleApp.subTitle,
       ),
     );
   }
@@ -904,11 +794,8 @@ class _TipoTarea extends StatelessWidget {
               const BorderSide(), // Cambia el color del borde inferior aquí
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),

@@ -5,8 +5,8 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -71,10 +71,7 @@ class _Tabs2ViewState extends State<Tabs2View>
               appBar: AppBar(
                 title: Text(
                   vmMenu.name,
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 actions: [
                   if (!vm.editDoc)
@@ -141,17 +138,11 @@ class _Tabs2ViewState extends State<Tabs2View>
                                 BlockTranslate.factura,
                                 'tipoDoc',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             subtitle: Text(
                               "${vmMenu.documentoName} (${vmMenu.documento})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ),
                         if (vmDoc.serieSelect != null)
@@ -161,17 +152,11 @@ class _Tabs2ViewState extends State<Tabs2View>
                                 BlockTranslate.general,
                                 'serie',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             subtitle: Text(
                               "${vmDoc.serieSelect!.descripcion} (${vmDoc.serieSelect!.serieDocumento})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ),
                       ],
@@ -180,13 +165,8 @@ class _Tabs2ViewState extends State<Tabs2View>
                 ],
                 bottom: TabBar(
                   controller: vm.tabController,
-                  labelColor: AppTheme.color(
-                    context,
-                    Styles.normal,
-                  ),
-                  indicatorColor: AppTheme.color(
-                    context,
-                    Styles.darkPrimary,
+                  indicatorColor: AppTheme.hexToColor(
+                    Preferences.valueColor,
                   ),
                   tabs: [
                     Tab(
@@ -219,10 +199,9 @@ class _Tabs2ViewState extends State<Tabs2View>
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],

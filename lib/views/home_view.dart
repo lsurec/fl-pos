@@ -1,6 +1,6 @@
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,9 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<HomeViewModel>(context);
     final menuVM = Provider.of<MenuViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(context);
 
     return Stack(
       children: [
@@ -21,8 +24,27 @@ class HomeView extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               actions: [
-                UserWidget(
-                  child: Container(),
+                IconButton(
+                  iconSize: 50,
+                  onPressed: () =>
+                      Navigator.pushNamed(context, AppRoutes.settings),
+                  icon: ClipOval(
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      color: vmTheme.colorPref(
+                        AppTheme.idColorTema,
+                      ),
+                      child: Center(
+                        child: Text(
+                          loginVM.user.isNotEmpty
+                              ? loginVM.user[0].toUpperCase()
+                              : "",
+                          style: StyleApp.user,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -42,10 +64,9 @@ class HomeView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -64,10 +85,9 @@ class _MyDrawer extends StatelessWidget {
 
     return Drawer(
       width: screenSize.width * 0.8,
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.black,
-      ),
+      backgroundColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Column(
         children: [
           const SizedBox(height: kToolbarHeight),
@@ -89,14 +109,14 @@ class _MyDrawer extends StatelessWidget {
                       Text(
                         route.name,
                         style: index == routeMenu.length - 1
-                            ? AppTheme.style(
-                                context,
-                                Styles.menuActive,
-                              )
-                            : AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                            ? (AppTheme.isDark()
+                                ? StyleApp.whiteMenuNormal
+                                : StyleApp.normal.copyWith(
+                                    color: Theme.of(context).primaryColor,
+                                  ))
+                            : (AppTheme.isDark()
+                                ? StyleApp.whiteMenuNormal
+                                : StyleApp.normal),
                       ),
                       const Icon(
                         Icons.arrow_right,
@@ -108,10 +128,7 @@ class _MyDrawer extends StatelessWidget {
             ),
           ),
           Divider(
-            color: AppTheme.color(
-              context,
-              Styles.divider,
-            ),
+            color: AppTheme.isDark() ? AppTheme.dividerDark : AppTheme.divider,
           ),
           Expanded(
             child: ListView.separated(
@@ -119,25 +136,16 @@ class _MyDrawer extends StatelessWidget {
               itemCount: menu.length,
               separatorBuilder: (BuildContext context, int index) {
                 return Divider(
-                  color: AppTheme.color(
-                    context,
-                    Styles.divider,
-                  ),
+                  color: AppTheme.isDark()
+                      ? AppTheme.dividerDark
+                      : AppTheme.divider,
                 );
               },
               itemBuilder: (BuildContext context, int index) {
                 MenuModel itemMenu = menu[index];
                 return ListTile(
-                  titleTextStyle: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
                   title: Text(
                     itemMenu.name,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
                   ),
                   trailing: itemMenu.children.isNotEmpty
                       ? const Icon(Icons.chevron_right)
@@ -146,7 +154,7 @@ class _MyDrawer extends StatelessWidget {
                       ? menuVM.navigateDisplay(
                           context,
                           itemMenu.route,
-                          int.parse(itemMenu.display?.tipoDocumento ?? 0),
+                          int.parse(itemMenu.display?.tipoDocumento ?? "0"),
                           itemMenu.display!.name,
                           itemMenu.display!.desTipoDocumento,
                         ) //Mostar contenido
@@ -158,45 +166,7 @@ class _MyDrawer extends StatelessWidget {
               },
             ),
           ),
-          const _FooterDrawer(),
         ],
-      ),
-    );
-  }
-}
-
-class _FooterDrawer extends StatelessWidget {
-  const _FooterDrawer();
-
-  @override
-  Widget build(BuildContext context) {
-    final vm = Provider.of<HomeViewModel>(context);
-
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 56,
-        color: AppTheme.color(
-          context,
-          Styles.secondBackground,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => vm.navigateSettings(context),
-              icon: const Icon(
-                Icons.settings,
-              ),
-            ),
-            IconButton(
-              onPressed: () => vm.logout(context),
-              icon: const Icon(
-                Icons.logout,
-              ),
-            )
-          ],
-        ),
       ),
     );
   }

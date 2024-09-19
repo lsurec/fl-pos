@@ -1,9 +1,8 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -33,9 +32,8 @@ class SelectProductView extends StatelessWidget {
                       BlockTranslate.general,
                       'registro',
                     )} (${vmDetalle.products.length})",
-                    style: AppTheme.style(
-                      context,
-                      Styles.bold,
+                    style: StyleApp.normalColor15.copyWith(
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ],
@@ -47,11 +45,12 @@ class SelectProductView extends StatelessWidget {
                   child: ListView.separated(
                     // +1 para el botón "Ver más"
                     itemCount: vmDetalle.products.length + 1,
-                    separatorBuilder: (context, index) => Divider(
-                      color: AppTheme.color(
-                        context,
-                        Styles.border,
-                      ),
+                    separatorBuilder: (
+                      context,
+                      index,
+                    ) =>
+                        const Divider(
+                      color: AppTheme.grey,
                     ),
                     itemBuilder: (context, index) {
                       if (index < vmDetalle.products.length) {
@@ -66,9 +65,9 @@ class SelectProductView extends StatelessWidget {
                           onPressed: () => vmProducto.filtrarResultados(
                             context,
                           ),
-                          child: Text(
+                          child: const Text(
                             "Ver más",
-                            style: AppTheme.style(context, Styles.normal),
+                            style: StyleApp.normal,
                           ),
                         );
                       }
@@ -81,10 +80,9 @@ class SelectProductView extends StatelessWidget {
           if (vmProducto.isLoading)
             ModalBarrier(
               dismissible: false,
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vmProducto.isLoading) const LoadWidget(),
         ],
@@ -112,17 +110,11 @@ class ProductWidget extends StatelessWidget {
       ),
       title: Text(
         producto.desProducto,
-        style: AppTheme.style(
-          context,
-          Styles.normal,
-        ),
+        style: StyleApp.normal,
       ),
       subtitle: Text(
         'SKU: ${producto.productoId} ',
-        style: AppTheme.style(
-          context,
-          Styles.normal,
-        ),
+        style: StyleApp.normal,
       ),
       onTap: () => vmProducto.navigateProduct(
         context,

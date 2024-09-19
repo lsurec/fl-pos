@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
-
-import '../themes/app_theme.dart';
 
 class AlertInfoWidget extends StatelessWidget {
   const AlertInfoWidget({
@@ -22,10 +20,9 @@ class AlertInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      backgroundColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       title: Text(title),
       content: Text(description),
       actions: [
@@ -36,10 +33,6 @@ class AlertInfoWidget extends StatelessWidget {
                   BlockTranslate.botones,
                   'aceptar',
                 ),
-            style: AppTheme.style(
-              context,
-              Styles.action,
-            ),
           ),
           onPressed: () => onOk(),
         ),

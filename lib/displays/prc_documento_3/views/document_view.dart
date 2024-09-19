@@ -1,12 +1,15 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter_post_printer_example/view_models/theme_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +23,7 @@ class DocumentView extends StatelessWidget {
     final vmFactura = Provider.of<DocumentoViewModel>(context);
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context);
     final vmConvert = Provider.of<ConvertDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return RefreshIndicator(
       onRefresh: () => vmFactura.loadNewData(
@@ -34,70 +38,47 @@ class DocumentView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (vm.valueParametro(58))
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.cotizacion,
-                              'docIdRef',
-                            ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            vmConfirm.idDocumentoRef.toString(),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
-                          ),
-                        ],
+                  CheckboxListTile(
+                    checkColor: Colors.white,
+                    activeColor: vmTheme.colorPref(
+                      AppTheme.idColorTema,
+                    ),
+                    value: vm.confirmarCotizacion,
+                    onChanged: (value) => vm.confirmarOrden(value!),
+                    title: Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cotizacion,
+                        'confirmar',
                       ),
-                      SizedBox(
-                        width: 250,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Checkbox(
-                              activeColor: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
-                              ),
-                              value: vm.confirmarCotizacion,
-                              onChanged: (value) {},
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.cotizacion,
-                                'confirmar',
-                              ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                      style: StyleApp.title,
+                    ),
+                    contentPadding: EdgeInsets.zero,
                   ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cotizacion,
+                        'docIdRef',
+                      ),
+                      style: StyleApp.title,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      vmConfirm.idDocumentoRef.toString(),
+                      style: StyleApp.normal,
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 10),
                 Text(
                   AppLocalizations.of(context)!.translate(
                     BlockTranslate.general,
                     'serie',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 if (vm.series.isEmpty && !vmFactura.editDoc)
                   NotFoundWidget(
@@ -113,18 +94,14 @@ class DocumentView extends StatelessWidget {
                 if (vmFactura.editDoc)
                   Text(
                     "${vmConvert.docOriginSelect!.serie} (${vmConvert.docOriginSelect!.serieDocumento})",
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (vm.series.isNotEmpty && !vmFactura.editDoc)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
-                    dropdownColor: AppTheme.color(
-                      context,
-                      Styles.background,
-                    ),
+                    dropdownColor: AppTheme.isDark()
+                        ? AppTheme.darkBackroundColor
+                        : AppTheme.backroundColor,
                     hint: Text(
                       AppLocalizations.of(context)!.translate(
                         BlockTranslate.factura,
@@ -148,10 +125,7 @@ class DocumentView extends StatelessWidget {
                   children: [
                     Text(
                       vm.getTextCuenta(context),
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
+                      style: StyleApp.title,
                     ),
                     IconButton(
                       onPressed: () => Navigator.pushNamed(
@@ -181,16 +155,14 @@ class DocumentView extends StatelessWidget {
                     key: vm.formKeyClient,
                     child: TextFormField(
                       controller: vm.client,
-                      onFieldSubmitted: (value) =>
-                          vm.performSearchClient(context),
+                      onFieldSubmitted: (value) => vm.performSearchClient(
+                        context,
+                      ),
                       textInputAction: TextInputAction.search,
                       decoration: InputDecoration(
                         hintText: vm.getTextCuenta(context),
                         suffixIcon: IconButton(
-                          color: AppTheme.color(
-                            context,
-                            Styles.darkPrimary,
-                          ),
+                  
                           icon: const Icon(Icons.search),
                           onPressed: () => vm.performSearchClient(context),
                         ),
@@ -208,9 +180,8 @@ class DocumentView extends StatelessWidget {
                   ),
                 const SizedBox(height: 10),
                 SwitchListTile(
-                  activeColor: AppTheme.color(
-                    context,
-                    Styles.darkPrimary,
+                  activeColor: AppTheme.hexToColor(
+                    Preferences.valueColor,
                   ),
                   contentPadding: EdgeInsets.zero,
                   value: vm.cf,
@@ -218,12 +189,9 @@ class DocumentView extends StatelessWidget {
                     context,
                     value,
                   ),
-                  title: Text(
+                  title: const Text(
                     "C/F",
-                    style: AppTheme.style(
-                      context,
-                      Styles.title,
-                    ),
+                    style: StyleApp.title,
                   ),
                 ),
                 if (vm.clienteSelect != null)
@@ -235,10 +203,7 @@ class DocumentView extends StatelessWidget {
                         children: [
                           Text(
                             vm.getTextCuenta(context),
-                            style: AppTheme.style(
-                              context,
-                              Styles.titlegrey,
-                            ),
+                            style: StyleApp.titlegrey,
                           ),
                           if (!vm.cf)
                             IconButton(
@@ -247,12 +212,9 @@ class DocumentView extends StatelessWidget {
                                 AppRoutes.updateClient,
                                 arguments: vm.clienteSelect,
                               ),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.edit_outlined,
-                                color: AppTheme.color(
-                                  context,
-                                  Styles.grey,
-                                ),
+                                color: AppTheme.grey,
                               ),
                               tooltip: AppLocalizations.of(context)!.translate(
                                 BlockTranslate.cuenta,
@@ -264,18 +226,12 @@ class DocumentView extends StatelessWidget {
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNit,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       const SizedBox(height: 10),
                       Text(
                         vm.clienteSelect!.facturaNombre,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       if (vm.clienteSelect!.facturaDireccion.isNotEmpty &&
                           vmFactura.editDoc)
@@ -284,10 +240,7 @@ class DocumentView extends StatelessWidget {
                             const SizedBox(height: 10),
                             Text(
                               vm.clienteSelect!.facturaDireccion,
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ],
                         ),
@@ -298,10 +251,7 @@ class DocumentView extends StatelessWidget {
                             const SizedBox(height: 10),
                             Text(
                               "(${vm.clienteSelect!.desCuentaCta})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.inactive,
-                              ),
+                              style: StyleApp.greyText,
                             ),
                           ],
                         ),
@@ -319,17 +269,13 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.factura,
                           'vendedor',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       DropdownButton<SellerModel>(
                         isExpanded: true,
-                        dropdownColor: AppTheme.color(
-                          context,
-                          Styles.background,
-                        ),
+                        dropdownColor: AppTheme.isDark()
+                            ? AppTheme.darkBackroundColor
+                            : AppTheme.backroundColor,
                         hint: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
@@ -364,10 +310,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.factura,
                           'evento',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const SizedBox(height: 10),
                       Text(
@@ -375,17 +318,13 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.cotizacion,
                           'tipoRef',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       DropdownButton<TipoReferenciaModel>(
                         isExpanded: true,
-                        dropdownColor: AppTheme.color(
-                          context,
-                          Styles.background,
-                        ),
+                        dropdownColor: AppTheme.isDark()
+                            ? AppTheme.darkBackroundColor
+                            : AppTheme.backroundColor,
                         hint: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.factura,
@@ -422,10 +361,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'entrega',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -453,10 +389,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'recoger',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -484,10 +417,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'inicio',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -515,10 +445,7 @@ class DocumentView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'fin',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -628,20 +555,14 @@ class _Observacion extends StatelessWidget {
           labelText: labelText,
           hintText: labelText,
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            borderSide: const BorderSide(
+              color: AppTheme.grey,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            borderSide: const BorderSide(
+              color: AppTheme.grey,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -663,6 +584,8 @@ class FechaButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
     return TextButton(
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -678,17 +601,15 @@ class FechaButton extends StatelessWidget {
               BlockTranslate.fecha,
               'fecha',
             )} ${Utilities.formatearFecha(fecha)}",
-            style: AppTheme.style(
-              context,
-              Styles.normal,
+            style: StyleApp.normal.copyWith(
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           const SizedBox(width: 15),
           Icon(
             Icons.calendar_today_outlined,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
+            color: vmTheme.colorPref(
+              AppTheme.idColorTema,
             ),
           ),
         ],
@@ -709,6 +630,8 @@ class HoraButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
     return TextButton(
       onPressed: onPressed,
       child: Row(
@@ -719,17 +642,15 @@ class HoraButton extends StatelessWidget {
               BlockTranslate.fecha,
               'hora',
             )} ${Utilities.formatearHora(fecha)}",
-            style: AppTheme.style(
-              context,
-              Styles.normal,
+            style: StyleApp.normal.copyWith(
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           const SizedBox(width: 15),
           Icon(
             Icons.schedule_outlined,
-            color: AppTheme.color(
-              context,
-              Styles.darkPrimary,
+            color: vmTheme.colorPref(
+              AppTheme.idColorTema,
             ),
           ),
         ],

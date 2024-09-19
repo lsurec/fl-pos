@@ -1,5 +1,3 @@
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,9 +21,10 @@ class RowTotalWidget extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     return Row(
@@ -34,11 +33,7 @@ class RowTotalWidget extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-            color: color ??
-                AppTheme.color(
-                  context,
-                  Styles.total,
-                ),
+            color: color,
             fontSize: 17,
             fontWeight: FontWeight.bold,
           ),
@@ -46,11 +41,7 @@ class RowTotalWidget extends StatelessWidget {
         Text(
           currencyFormat.format(value),
           style: TextStyle(
-            color: color ??
-                AppTheme.color(
-                  context,
-                  Styles.total,
-                ),
+            color: color,
             fontSize: 17,
           ),
         ),

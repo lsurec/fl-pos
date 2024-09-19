@@ -66,7 +66,6 @@ class ConvertDocViewModel extends ChangeNotifier {
   }
 
   //Detalles del documeto origen
-  final List<OriginDetailInterModel> detalles = [];
   //Detalles dle docuemtno origen
   List<DetailOriginDocInterModel> detailsOrigin = [];
 
@@ -85,7 +84,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     final ReceptionService receptionService = ReceptionService();
 
     //Limpiar detalles del documento que haya previamente
-    detalles.clear();
+    detailsOrigin.clear();
 
     //si estan seleccioandos todos
     selectAllTra = false;
@@ -208,7 +207,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     //si el mmonto es mayor a la cantidad disponible
-    if (monto > detalles[index].disponible) {
+    if (monto > detailsOrigin[index].detalle.disponible) {
       Navigator.of(context).pop(); // Cierra el diálogo
 
       NotificationService.showSnackbar(
@@ -221,7 +220,7 @@ class ConvertDocViewModel extends ChangeNotifier {
     }
 
     //Asiganr nuevo monto modificado
-    detalles[index].disponibleMod = monto;
+    detailsOrigin[index].disponibleMod = monto;
     //seleciconar transaccion
     selectTra(context, index, true);
 
@@ -237,8 +236,8 @@ class ConvertDocViewModel extends ChangeNotifier {
     DestinationDocModel destino, //documento destino
   ) async {
     //Buscar transacciones seleccioandas
-    List<OriginDetailInterModel> elementosCheckTrue =
-        detalles.where((elemento) => elemento.checked).toList();
+    List<DetailOriginDocInterModel> elementosCheckTrue =
+        detailsOrigin.where((elemento) => elemento.checked).toList();
 
     //si no hay transacciones seleccionadas
     if (elementosCheckTrue.isEmpty) {
@@ -296,7 +295,8 @@ class ConvertDocViewModel extends ChangeNotifier {
       final ApiResModel resUpdate = await receptionService.postActualizar(
         user,
         token,
-        element.consecutivoInterno, // consecutivo,
+        element.detalle
+            .transaccionConsecutivoInterno, //TODO:Preguntar // consecutivo, // .consecutivoInterno
         element.disponibleMod, // cantidad,
       );
 

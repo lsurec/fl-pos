@@ -5,9 +5,10 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/api_res_model.dart';
 import 'package:flutter_post_printer_example/models/error_model.dart';
+import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -20,17 +21,18 @@ class NotificationService {
 
   //Mostrar snack bar
   static showSnackbar(String message) {
+    final vmTheme = Provider.of<ThemeViewModel>(
+      messengerKey.currentContext!,
+      listen: false,
+    );
+
     final snackBar = SnackBar(
       content: Text(
         message,
-        style: AppTheme.style(
-          messengerKey.currentContext!,
-          Styles.whiteStyle,
-        ),
+        style: StyleApp.whiteNormal,
       ),
-      backgroundColor: AppTheme.color(
-        messengerKey.currentContext!,
-        Styles.primary,
+      backgroundColor: vmTheme.colorPref(
+        AppTheme.idColorTema,
       ),
       // action: SnackBarAction(
       //   label: 'Aceptar',
@@ -245,10 +247,7 @@ class NotificationService {
                   BlockTranslate.notificacion,
                   "productosNoDisponibles",
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                ),
+                style: StyleApp.normal,
               ),
               const Divider(),
             ],
@@ -269,10 +268,7 @@ class NotificationService {
             children: [
               Text(
                 "(${validacion.sku}) ${validacion.productoDesc}",
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
               const Divider(),
               const SizedBox(
@@ -289,17 +285,11 @@ class NotificationService {
                           BlockTranslate.general,
                           'serie',
                         )}:",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         validacion.serie,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       )
                     ],
                   ),
@@ -311,17 +301,11 @@ class NotificationService {
                           BlockTranslate.factura,
                           'tipoDoc',
                         )}:",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                       Text(
                         validacion.tipoDoc,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       )
                     ],
                   )
@@ -342,10 +326,7 @@ class NotificationService {
                               const SizedBox(height: 5),
                               Text(
                                 mensaje,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               const SizedBox(height: 5),
                             ],
@@ -455,19 +436,13 @@ class NotificationService {
             context: context,
             builder: (context) => AlertDialog(
                   title: index != -1
-                      ? Text(
+                      ? const Text(
                           "Modificar termino",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         )
-                      : Text(
+                      : const Text(
                           "Agregar Término",
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                   content: TextField(
                     maxLines: null,
@@ -531,5 +506,135 @@ class NotificationService {
     if (result) return true;
 
     return false;
+  }
+
+  static Future<void> changeLang(
+    BuildContext context,
+  ) async {
+    final vmLang = Provider.of<LangViewModel>(
+      context,
+      listen: false,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(
+            left: 0,
+            bottom: 20,
+            right: 20,
+            top: 20,
+          ),
+          backgroundColor: AppTheme.isDark()
+              ? AppTheme.backroundDarkSecondary
+              : AppTheme.backroundSecondary,
+          content: SizedBox(
+            height: 220, // Limitar la altura del diálogo
+            width: double.maxFinite,
+            child: ListView.builder(
+              itemCount: vmLang.languages.length,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                final LanguageModel lang = vmLang.languages[index];
+
+                return RadioListTile<int>(
+                  title: Text(
+                    vmLang.getNameLang(
+                      lang,
+                    )!,
+                  ),
+                  // Puedes ajustar cómo mostrar el nombre
+                  value: index,
+                  groupValue: Preferences.idLanguage,
+                  // Asegúrate de manejar el valor seleccionado
+                  onChanged: (int? value) {
+                    if (value != null) {
+                      vmLang.cambiarLenguaje(
+                        context,
+                        Locale(lang.lang),
+                        index,
+                      );
+                    }
+                  },
+                  activeColor: AppTheme.hexToColor(
+                    Preferences.valueColor,
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<void> changeTheme(
+    BuildContext context,
+  ) async {
+    final vmTheme = Provider.of<ThemeViewModel>(
+      context,
+      listen: false,
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: const EdgeInsets.only(
+            left: 0,
+            bottom: 20,
+            right: 20,
+            top: 20,
+          ),
+          backgroundColor: AppTheme.isDark()
+              ? AppTheme.backroundDarkSecondary
+              : AppTheme.backroundSecondary,
+          content: SizedBox(
+            height: 160, // Limitar la altura del diálogo
+            width: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: vmTheme.temasApp(context).length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      final ThemeModel tema = vmTheme.temasApp(context)[index];
+
+                      return RadioListTile<int>(
+                        title: Text(
+                          tema.descripcion,
+                        ),
+                        // Puedes ajustar cómo mostrar el nombre
+                        value: index,
+                        groupValue: AppTheme.idTema,
+                        activeColor: AppTheme.hexToColor(
+                          Preferences.valueColor,
+                        ),
+                        // Asegúrate de manejar el valor seleccionado
+                        onChanged: (int? value) {
+                          if (value != null) {
+                            vmTheme.validarColorTema(
+                              context,
+                              tema.id,
+                            );
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

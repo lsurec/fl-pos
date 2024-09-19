@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -32,10 +32,7 @@ class ConvertDocView extends StatelessWidget {
                 BlockTranslate.cotizacion,
                 'convertirDoc',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
             // actions: const [_Actions()],
           ),
@@ -55,12 +52,8 @@ class ConvertDocView extends StatelessWidget {
                     docOrigen,
                     docDestino,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.check,
-                    color: AppTheme.color(
-                      context,
-                      Styles.white,
-                    ),
                   ),
                 ),
               ),
@@ -79,10 +72,6 @@ class ConvertDocView extends StatelessWidget {
               //     },
               //     child: Icon(
               //       Icons.edit,
-              //       color: AppTheme.color(
-              //         context,
-              //         Styles.white,
-              //       ),
               //     ),
               //   ),
               // ),
@@ -108,20 +97,14 @@ class ConvertDocView extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       ColorTextCardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.green,
-                        ),
+                        color: AppTheme.verde,
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'origenT',
                         )} - (${docOrigen.documento}) ${docOrigen.documentoDescripcion} - (${docOrigen.serieDocumento}) ${docOrigen.serie}.",
                       ),
                       ColorTextCardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.red,
-                        ),
+                        color: AppTheme.rojo,
                         text: "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.cotizacion,
                           'destinoT',
@@ -136,9 +119,8 @@ class ConvertDocView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 13),
                             child: Checkbox(
-                              activeColor: AppTheme.color(
-                                context,
-                                Styles.darkPrimary,
+                              activeColor: AppTheme.hexToColor(
+                                Preferences.valueColor,
                               ),
                               value: vm.selectAllTra,
                               onChanged: (value) => vm.selectAllTra = value!,
@@ -148,11 +130,8 @@ class ConvertDocView extends StatelessWidget {
                             "${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
                               'registro',
-                            )} (${vm.detalles.length})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            )} (${vm.detailsOrigin.length})",
+                            style: StyleApp.normalBold,
                           ),
                         ],
                       ),
@@ -182,10 +161,9 @@ class ConvertDocView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -205,10 +183,9 @@ class _Actions extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return Container(
-              color: AppTheme.color(
-                context,
-                Styles.background,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: SingleChildScrollView(
                 child: Column(
@@ -280,10 +257,9 @@ class _CardDetalle extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              backgroundColor: AppTheme.color(
-                context,
-                Styles.background,
-              ),
+              backgroundColor: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
               title: Text(
                 AppLocalizations.of(context)!.translate(
                   BlockTranslate.cotizacion,
@@ -351,10 +327,6 @@ class _CardDetalle extends StatelessWidget {
         );
       },
       child: CardWidget(
-        color: AppTheme.color(
-          context,
-          Styles.secondBackground,
-        ),
         child: ListTile(
           leading: Checkbox(
             value: documento.checked,
@@ -363,9 +335,8 @@ class _CardDetalle extends StatelessWidget {
               index,
               value!,
             ),
-            activeColor: AppTheme.color(
-              context,
-              Styles.darkPrimary,
+            activeColor: AppTheme.hexToColor(
+              Preferences.valueColor,
             ),
           ),
           contentPadding: const EdgeInsets.all(10),

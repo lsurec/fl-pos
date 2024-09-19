@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -37,9 +36,10 @@ class _RecentViewState extends State<RecentView> {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: homeVM
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: homeVM.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     return Stack(
@@ -51,10 +51,7 @@ class _RecentViewState extends State<RecentView> {
                 BlockTranslate.factura,
                 'docRecientes',
               ),
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: Padding(
@@ -69,10 +66,7 @@ class _RecentViewState extends State<RecentView> {
                         BlockTranslate.general,
                         'registro',
                       )} (${vm.documents.length})",
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                     ),
                   ],
                 ),
@@ -101,63 +95,43 @@ class _RecentViewState extends State<RecentView> {
                                 children: [
                                   Text(
                                     "Id. Ref: ${doc.estructura.docIdDocumentoRef}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   Text(
                                     "Cons. Interno: ${doc.item.consecutivoInterno}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                   Text(
                                     vm.strDate(doc.item.fechaHora),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.normal,
-                                    ),
+                                    style: StyleApp.normal,
                                   ),
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(currencyFormat.format(doc.subtotal),
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.blueText,
-                                      )),
                                   Text(
-                                    "(+) ${currencyFormat.format(doc.cargo)}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.cargo,
+                                    currencyFormat.format(doc.subtotal),
+                                    style: StyleApp.normalColor15.copyWith(
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                   Text(
+                                    "(+) ${currencyFormat.format(doc.cargo)}",
+                                    style: StyleApp.cargo,
+                                  ),
+                                  Text(
                                     "(-) ${currencyFormat.format(doc.descuento)}",
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.descuento,
-                                    ),
+                                    style: StyleApp.descuento,
                                   ),
                                   Container(
                                     width: 50,
                                     height: 1,
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.normal,
-                                    ),
+                                    color: Colors.transparent,
                                   ),
                                   Text(
                                     currencyFormat.format(doc.total),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.bold,
-                                    ),
+                                    style: StyleApp.normalBold,
                                   ),
                                 ],
                               ),
@@ -178,10 +152,9 @@ class _RecentViewState extends State<RecentView> {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

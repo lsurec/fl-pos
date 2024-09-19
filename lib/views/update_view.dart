@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/version_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -35,11 +34,7 @@ class UpdateView extends StatelessWidget {
                   BlockTranslate.home,
                   'nuevaVersion',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                  
-                ),
+                style: StyleApp.title,
               ),
               const SizedBox(height: 10),
               Text(
@@ -47,11 +42,7 @@ class UpdateView extends StatelessWidget {
                   BlockTranslate.home,
                   'continuar',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.normal,
-                  
-                ),
+                style: StyleApp.normal,
               ),
               const SizedBox(height: 20),
               Row(
@@ -59,32 +50,19 @@ class UpdateView extends StatelessWidget {
                 children: [
                   Text(
                     vmSplash.versionLocal,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                      
-                    ),
+                    style: StyleApp.normal,
                   ),
                   const SizedBox(width: 10),
                   const Icon(Icons.arrow_forward),
                   const SizedBox(width: 10),
                   Text(
                     vmSplash.versionRemota,
-                    style: AppTheme.style(
-                      context,
-                      Styles.bold,
-                      
-                    ),
+                    style: StyleApp.normalBold,
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                style: AppTheme.button(
-                  context,
-                  Styles.buttonStyle,
-                  
-                ),
                 // onPressed: () => vm.openLink(),
                 onPressed: () {},
                 child: Row(
@@ -95,11 +73,7 @@ class UpdateView extends StatelessWidget {
                         BlockTranslate.botones,
                         'actualizar',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteBoldStyle,
-                        
-                      ),
+                      style: StyleApp.whiteNormal,
                     ),
                     const Icon(
                       Icons.upgrade,

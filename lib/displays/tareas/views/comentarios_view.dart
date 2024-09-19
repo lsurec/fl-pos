@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
-
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -37,10 +35,7 @@ class ComentariosView extends StatelessWidget {
                       BlockTranslate.tareas,
                       'comentariosTarea',
                     )}: ${vmTareaCalendario.tarea!.tarea}',
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: RefreshIndicator(
@@ -57,10 +52,7 @@ class ComentariosView extends StatelessWidget {
                           BlockTranslate.general,
                           'observacion',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       GestureDetector(
                         onLongPress: () => Utilities.copyToClipboard(
@@ -77,10 +69,7 @@ class ComentariosView extends StatelessWidget {
                                     'noDisponible',
                                   )
                               : vmTareaCalendario.tarea!.observacion1,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                           textAlign: TextAlign.justify,
                         ),
                       ),
@@ -92,10 +81,7 @@ class ComentariosView extends StatelessWidget {
                               BlockTranslate.tareas,
                               'comentarios',
                             )} (${vm.comentarioDetalle.length})",
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                         ],
                       ),
@@ -124,10 +110,7 @@ class ComentariosView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'archivosSelec',
                           )} (${vm.files.length})",
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                       const SizedBox(height: 5),
                       if (vm.files.isNotEmpty) const Divider(),
@@ -143,10 +126,7 @@ class ComentariosView extends StatelessWidget {
                               ListTile(
                                 title: Text(
                                   Utilities.nombreArchivo(archivo),
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.normal,
-                                  ),
+                                  style: StyleApp.normal,
                                 ),
                                 leading: const Icon(Icons.attachment),
                                 trailing: GestureDetector(
@@ -174,10 +154,9 @@ class ComentariosView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -216,11 +195,8 @@ class _NuevoComentario extends StatelessWidget {
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            borderSide: const BorderSide(
+              color: AppTheme.border,
             ),
             borderRadius: BorderRadius.circular(10),
           ),
@@ -279,31 +255,22 @@ class _Comentario extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(
-                width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                width: 1,
+                color: AppTheme.border,
               ),
               left: BorderSide(
-                width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                width: 1,
+                color: AppTheme.border,
               ),
               right: BorderSide(
-                width: 1.5,
-                color: AppTheme.color(
-                  context,
-                  Styles.greyBorder,
-                ),
+                width: 1,
+                color: AppTheme.border,
               ),
             ),
-            borderRadius: const BorderRadius.only(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
@@ -313,10 +280,7 @@ class _Comentario extends StatelessWidget {
             children: [
               Text(
                 comentario.comentario.nameUser,
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
             ],
           ),
@@ -325,11 +289,8 @@ class _Comentario extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border.all(
-              width: 1.5,
-              color: AppTheme.color(
-                context,
-                Styles.greyBorder,
-              ),
+              width: 1,
+              color: AppTheme.border,
             ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(10),
@@ -346,10 +307,7 @@ class _Comentario extends StatelessWidget {
                     Utilities.formatearFechaHora(
                       comentario.comentario.fechaHora,
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 ],
               ),
@@ -361,10 +319,7 @@ class _Comentario extends StatelessWidget {
                 ),
                 child: Text(
                   comentario.comentario.comentario,
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -383,10 +338,7 @@ class _Comentario extends StatelessWidget {
                       ),
                       child: Text(
                         objeto.objetoNombre,
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ),
                     leading: const Icon(Icons.insert_photo_outlined),
@@ -403,10 +355,7 @@ class _Comentario extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: Container(
-              color: AppTheme.color(
-                context,
-                Styles.greyBorder,
-              ),
+              color: AppTheme.border,
               height: 20,
               width: 3,
             ),

@@ -10,7 +10,7 @@ import 'package:flutter_post_printer_example/displays/tareas/view_models/view_mo
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +94,8 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final vmTema = Provider.of<ThemeViewModel>(context);
+
     // limpiar preferencias
     // Preferences.clearLang();
     // Preferences.clearTheme();
@@ -109,8 +111,21 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: NotificationService.messengerKey,
       title: "Business",
       debugShowCheckedModeBanner: false,
-      //Tema de la aplicacion
-      theme: aplicarTemaApp(context),
+      // //Tema de la aplicacion
+      // theme: aplicarTemaApp(context),
+      // Verifica si el tema es determinado por el sistema
+      //SI IDTEMA = O EL TEMA SELECCIONADO ES DEL SISTEMA
+      theme: AppTheme.idTema == 0
+          ? aplicarTema(
+              context,
+              AppTheme.idColorTema,
+            )
+          : vmTema.getThemeByColor(
+              AppTheme.idColorTema,
+              //SI IDTEMA = 1 EL TEMA SELECCIONADO ES CLARO
+              //SI IDTEMA = 2 EL TEMA SELECCIONADO ES OSCURO
+              isDarkMode: AppTheme.idTema == 1 ? false : true,
+            ), // Usa el tema seleccionado
       //configurar ruta inicial
       home: const SplashView(), // Muestra el SplashScreen durante el inicio
       // home: const Tabs4View(), // Muestra el SplashScreen durante el inicio
@@ -137,51 +152,24 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//Tema de la aplicación
-ThemeData aplicarTemaApp(BuildContext context) {
-  // Encontrar el tema del dispositivo
+//Tema de la aplicación: manejar el tema del sistema
+ThemeData aplicarTema(
+  BuildContext context,
+  // ThemeData tema,
+  int idColor,
+) {
   final Brightness brightness = MediaQuery.of(context).platformBrightness;
   final bool isDarkMode = brightness == Brightness.dark;
-  final bool isLightMode = brightness == Brightness.light;
+  AppTheme.oscuro = isDarkMode;
 
-  //1- Evaluar que la preferencia idTheme no esté vacía.
-  if (Preferences.idTheme.isNotEmpty) {
-    //2- Verificar si la preferencia es 1: Tema Claro
-    if (Preferences.idTheme == "1") {
-      return AppTheme.lightTheme;
-      //3- Verificar si la preferencia es 2: Tema Oscuro
-    } else if (Preferences.idTheme == "2") {
-      return AppTheme.darkTheme;
-    }
+  final vmTema = Provider.of<ThemeViewModel>(
+    context,
+    listen: false,
+  );
 
-    //4- Verificar si la preferencia es 0:Determinado por el sistema
-    if (Preferences.idTheme == "0") {
-      //5- Verifiar el tema del dispositivo es: Oscuro
-      if (isDarkMode) {
-        Preferences.systemTheme = "2";
-        return AppTheme.darkTheme;
-        //6- Verificar el tema del dispositivo es: Claro
-      } else if (isLightMode) {
-        Preferences.systemTheme = "1";
-        return AppTheme.lightTheme;
-      }
-    }
-    //7- Si la preferencia está vacía. Verificar el tema del dispositivo
-  } else {
-    //8- Si es tema Claro
-    if (isDarkMode) {
-      Preferences.systemTheme = "2";
-      return AppTheme.darkTheme;
-    }
-
-    //9- Si es tema Oscuro
-    if (isLightMode) {
-      Preferences.systemTheme = "1";
-      return AppTheme.lightTheme;
-    }
-  }
-
-  //10- Sino encuentra nada
-  // Retornar un tema por defecto en caso de que no se cumplan las condiciones
-  return AppTheme.lightTheme;
+  // Utilizamos la función auxiliar getThemeByColor para obtener el tema basado en idColorTema
+  return vmTema.getThemeByColor(
+    idColor,
+    isDarkMode: isDarkMode,
+  );
 }

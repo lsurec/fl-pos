@@ -225,11 +225,18 @@
     "preferencias": {
         "idiomaT": "APPLICATION LANGUAGE",
         "idioma": "Select your preferred language.",
-        "tema": "Select the theme of your preference. Or continue with the topic of your device.",
+        "tema2": "Select your preferred theme, or continue with your device theme.",
         "seleccionado": "Selected language.",
         "nuevoTema": "Selected theme.",
-        "reiniciarTema": "The application will restart once you have selected your preferred theme.",
-        "nota": "Note:"
+        "reiniciarTema": "The app will restart once you have selected your preferred theme.",
+        "nota": "Note:",
+        "lenguaje": "Language",
+        "tema": "Theme",
+        "color": "Color",
+        "fuente": "Font size",
+        "sistema": "Defined by the system.",
+        "apariencia": "Appearance",
+        "cambios": "Language, Theme, Colors..."
     },
     "error": {
         "informeT": "ERROR REPORT",

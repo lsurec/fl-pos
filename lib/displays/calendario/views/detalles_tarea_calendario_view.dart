@@ -4,8 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -29,10 +28,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                 BlockTranslate.tareas,
                 'detalleTarea',
               )}: ${vm.tarea!.tarea}',
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: RefreshIndicator(
@@ -49,10 +45,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.general,
                           'observacion',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       GestureDetector(
                         onLongPress: () => Utilities.copyToClipboard(
@@ -61,10 +54,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         ),
                         child: Text(
                           vm.tarea!.observacion1,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                           textAlign: TextAlign.justify,
                         ),
                       ),
@@ -86,10 +76,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                     BlockTranslate.tareas,
                                     'comentarios',
                                   )} (${vmComentarios.comentarioDetalle.length})",
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.title,
-                                  ),
+                                  style: StyleApp.title,
                                 ),
                               ],
                             ),
@@ -106,10 +93,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'estadoT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       const _ActualizarEstado(),
 
@@ -119,10 +103,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'prioridadT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       const _ActualizarPrioridad(),
 
@@ -131,22 +112,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'feHoInicio',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                        borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -158,10 +129,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 Utilities.formatearFechaString(
                                   vm.tarea!.fechaIni,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
@@ -170,10 +138,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 Utilities.formatearHoraString(
                                   vm.tarea!.fechaIni,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ],
                           ),
@@ -184,22 +149,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.fecha,
                           'feHoFin',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                         borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -211,10 +166,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 Utilities.formatearFechaString(
                                   vm.tarea!.fechaFin,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               const Spacer(),
                               const Icon(Icons.schedule_outlined),
@@ -223,10 +175,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 Utilities.formatearHoraString(
                                   vm.tarea!.fechaFin,
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                             ],
                           ),
@@ -237,30 +186,17 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'tipo',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                         borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
                             vm.tarea!.desTipoTarea,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading:
                               const Icon(Icons.arrow_circle_right_outlined),
@@ -272,22 +208,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'idRefT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                         borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -295,10 +221,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                               BlockTranslate.general,
                               'noDisponible',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -311,10 +234,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'responsableT',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         trailing: IconButton(
                           //tipoBusqueda = 3 para actualizar responsable
@@ -336,16 +256,9 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                         borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
@@ -354,10 +267,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                   BlockTranslate.tareas,
                                   'noAsignado',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -382,10 +292,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                 BlockTranslate.tareas,
                                 'sinHistorialResp',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                             if (vm.responsablesHistorial.isNotEmpty)
                               Text(
@@ -393,22 +300,12 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                   BlockTranslate.tareas,
                                   'historialResp',
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold,
-                                ),
+                                style: StyleApp.normalBold,
                               ),
                             CardWidget(
-                              color: AppTheme.color(
-                                context,
-                                Styles.secondBackground,
-                              ),
                               elevation: 0,
-                              borderWidth: 1.5,
-                              borderColor: AppTheme.color(
-                                context,
-                                Styles.greyBorder,
-                              ),
+                               borderWidth: 1,
+                              borderColor: AppTheme.border,
                               raidus: 10,
                               child: ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
@@ -421,10 +318,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                                   return ListTile(
                                     title: Text(
                                       responsable.tUserName,
-                                      style: AppTheme.style(
-                                        context,
-                                        Styles.inactive,
-                                      ),
+                                      style: StyleApp.greyText,
                                     ),
                                     leading: const Icon(Icons.person_4),
                                   );
@@ -439,10 +333,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             BlockTranslate.tareas,
                             'invitados',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         trailing: IconButton(
                           //tipoBusqueda = 4 para actualizar invitados
@@ -464,16 +355,9 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                         ),
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                         borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
@@ -485,10 +369,7 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                             return ListTile(
                               title: Text(
                                 invitado.userName,
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.normal,
-                                ),
+                                style: StyleApp.normal,
                               ),
                               leading: const Icon(Icons.person_4),
                               trailing: IconButton(
@@ -513,30 +394,17 @@ class DetalleTareaCalendariaView extends StatelessWidget {
                           BlockTranslate.tareas,
                           'creadorT',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                       CardWidget(
-                        color: AppTheme.color(
-                          context,
-                          Styles.secondBackground,
-                        ),
                         elevation: 0,
-                        borderWidth: 1.5,
-                        borderColor: AppTheme.color(
-                          context,
-                          Styles.greyBorder,
-                        ),
+                         borderWidth: 1,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: ListTile(
                           title: Text(
                             vm.tarea!.nomUser,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                           leading: const Icon(
                             Icons.arrow_circle_right_outlined,
@@ -555,10 +423,9 @@ class DetalleTareaCalendariaView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -578,39 +445,24 @@ class _ActualizarEstado extends StatelessWidget {
     final List<EstadoModel> estados = vmCrear.estados;
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
       elevation: 0,
-      borderWidth: 0,
+      borderColor: AppTheme.border,
+      borderWidth: 1,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<EstadoModel>(
           value: vm.estadoAtual,
           isExpanded: true,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.color(
-                  context,
-                  Styles.border,
-                ),
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.tareas,
               'nuevoEstado',
             ),
-            style: AppTheme.style(
-              context,
-              Styles.normal,
-            ),
+            style: StyleApp.normal,
           ),
           items: estados
               .map(
@@ -618,10 +470,7 @@ class _ActualizarEstado extends StatelessWidget {
                   value: item,
                   child: Text(
                     item.descripcion,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 ),
               )
@@ -665,39 +514,24 @@ class _ActualizarPrioridad extends StatelessWidget {
     final List<PrioridadModel> prioridades = vmCrear.prioridades;
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
       elevation: 0,
-      borderWidth: 0,
+      borderWidth: 1,
+      borderColor: AppTheme.border,
       raidus: 10,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DropdownButtonFormField2<PrioridadModel>(
           value: vm.prioridadActual,
           isExpanded: true,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppTheme.color(
-                  context,
-                  Styles.border,
-                ),
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          decoration: const InputDecoration(
+            border: InputBorder.none,
           ),
           hint: Text(
             AppLocalizations.of(context)!.translate(
               BlockTranslate.tareas,
               'nuevaPrioridad',
             ),
-            style: AppTheme.style(
-              context,
-              Styles.normal,
-            ),
+            style: StyleApp.normal,
           ),
           items: prioridades
               .map(
@@ -705,10 +539,7 @@ class _ActualizarPrioridad extends StatelessWidget {
                   value: item,
                   child: Text(
                     item.nombre,
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 ),
               )

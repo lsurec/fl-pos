@@ -1,8 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -21,6 +23,7 @@ class ConfirmDocView extends StatelessWidget {
     final int screen = ModalRoute.of(context)!.settings.arguments as int;
     final vmDoc = Provider.of<DocumentoViewModel>(context);
     final paymentsVM = Provider.of<PaymentViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return WillPopScope(
       onWillPop: () => vmDoc.backTabs(context),
@@ -34,10 +37,7 @@ class ConfirmDocView extends StatelessWidget {
                   BlockTranslate.factura,
                   'resumenDoc',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: [
                 if (vm.showPrint)
@@ -63,25 +63,18 @@ class ConfirmDocView extends StatelessWidget {
                           BlockTranslate.cotizacion,
                           'consecutivoInter',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                     if (vm.showPrint)
                       Text(
                         "${vm.consecutivoDoc}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     if (vm.showPrint) const SizedBox(height: 5),
                     RichText(
                       text: TextSpan(
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
+                        style: StyleApp.normal.copyWith(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                         children: [
                           TextSpan(
@@ -89,17 +82,11 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.cotizacion,
                               'docIdRef',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           TextSpan(
                             text: vm.idDocumentoRef.toString(),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           )
                         ],
                       ),
@@ -109,9 +96,8 @@ class ConfirmDocView extends StatelessWidget {
                     const SizedBox(height: 5),
                     RichText(
                       text: TextSpan(
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
+                        style: StyleApp.normal.copyWith(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                         children: [
                           TextSpan(
@@ -119,10 +105,7 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.tiket,
                               'latitud',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           TextSpan(
                             text: vm.currentPosition?.latitude.toString() ??
@@ -130,10 +113,7 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.tiket,
                                   'sinObtener',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           )
                         ],
                       ),
@@ -141,9 +121,8 @@ class ConfirmDocView extends StatelessWidget {
                     const SizedBox(height: 5),
                     RichText(
                       text: TextSpan(
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
+                        style: StyleApp.normal.copyWith(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
                         ),
                         children: [
                           TextSpan(
@@ -151,10 +130,7 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.tiket,
                               'longitud',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold,
-                            ),
+                            style: StyleApp.normalBold,
                           ),
                           TextSpan(
                             text: vm.currentPosition?.longitude.toString() ??
@@ -162,10 +138,7 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.tiket,
                                   'sinObtener',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           )
                         ],
                       ),
@@ -197,18 +170,12 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.factura,
                               'vendedor',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             docVM.vendedorSelect?.nomCuentaCorrentista ?? "",
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -224,18 +191,12 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.tiket,
                               'tipoRef',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             docVM.referenciaSelect?.descripcion ?? "",
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -253,18 +214,12 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.factura,
                                   'contacto',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             docVM.refContactoParam385.text,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -282,18 +237,12 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.general,
                                   'descripcion',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             docVM.refDescripcionParam383.text,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -311,18 +260,12 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.cotizacion,
                                   'direEntrega',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             docVM.refDirecEntregaParam386.text,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -340,18 +283,12 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.general,
                                   'observacion',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           Text(
                             docVM.refObservacionParam384.text,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -369,19 +306,13 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.fecha,
                                   'entrega',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           Text(
                             Utilities.formatearFechaHora(
                               docVM.fechaRefIni,
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
 //Fecha Ref Fin
                           const SizedBox(height: 5),
@@ -393,19 +324,13 @@ class ConfirmDocView extends StatelessWidget {
                                   BlockTranslate.fecha,
                                   'entrega',
                                 ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           Text(
                             Utilities.formatearFechaHora(
                               docVM.fechaRefFin,
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -422,19 +347,13 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.fecha,
                               'inicio',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           Text(
                             Utilities.formatearFechaHora(
                               docVM.fechaInicial,
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
 //Fecha Fin
                           const SizedBox(height: 5),
@@ -445,19 +364,13 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.fecha,
                               'fin',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           Text(
                             Utilities.formatearFechaHora(
                               docVM.fechaFinal,
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         ],
                       ),
@@ -469,10 +382,7 @@ class ConfirmDocView extends StatelessWidget {
                         BlockTranslate.factura,
                         'productos',
                       ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
+                      style: StyleApp.title,
                     ),
                     const SizedBox(height: 5),
                     _Transaction(),
@@ -488,10 +398,7 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.factura,
                               'formasPago',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.title,
-                            ),
+                            style: StyleApp.title,
                           ),
                           const SizedBox(height: 5),
                           _Pyments(),
@@ -507,9 +414,8 @@ class ConfirmDocView extends StatelessWidget {
                     if (!vm.showPrint) _Observacion(),
                     const SizedBox(height: 10),
                     SwitchListTile(
-                      activeColor: AppTheme.color(
-                        context,
-                        Styles.darkPrimary,
+                      activeColor: AppTheme.hexToColor(
+                        Preferences.valueColor,
                       ),
                       value: vm.directPrint,
                       onChanged: (value) => vm.directPrint = value,
@@ -518,10 +424,7 @@ class ConfirmDocView extends StatelessWidget {
                           BlockTranslate.tiket,
                           'imprimir',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ),
                     if (!vm.showPrint)
@@ -538,10 +441,9 @@ class ConfirmDocView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
           if (vm.isLoadingDTE)
@@ -568,10 +470,7 @@ class ConfirmDocView extends StatelessWidget {
                               BlockTranslate.general,
                               'tareasCompletas',
                             )} ${vm.stepsSucces}/${vm.steps.length}",
-                            style: AppTheme.style(
-                              context,
-                              Styles.versionStyle,
-                            ),
+                            style: StyleApp.greyText,
                           ),
                         ],
                       ),
@@ -601,43 +500,30 @@ class ConfirmDocView extends StatelessWidget {
                                 children: [
                                   Text(
                                     step.text,
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.normal,
-                                    ),
+                                    style: StyleApp.normal,
                                   ),
                                   if (step.status == 1) //Cargando
-                                    Icon(
+                                    const Icon(
                                       Icons.pending_outlined,
-                                      color: AppTheme.color(
-                                        context,
-                                        Styles.grey,
-                                      ),
+                                      color: AppTheme.grey,
                                     ),
                                   if (step.status == 2) //exitoso
-                                    Icon(
+                                    const Icon(
                                       Icons.check_circle_outline,
-                                      color: AppTheme.color(
-                                        context,
-                                        Styles.green,
-                                      ),
+                                      color: AppTheme.verde,
                                     ),
                                   if (step.status == 3) //error
-                                    Icon(
+                                    const Icon(
                                       Icons.cancel_outlined,
-                                      color: AppTheme.color(
-                                        context,
-                                        Styles.red,
-                                      ),
+                                      color: AppTheme.rojo,
                                     ),
                                 ],
                               ),
                               const SizedBox(height: 10),
                               if (step.isLoading)
                                 LinearProgressIndicator(
-                                  color: AppTheme.color(
-                                    context,
-                                    Styles.darkPrimary,
+                                  color: vmTheme.colorPref(
+                                    AppTheme.idColorTema,
                                   ),
                                 ),
                             ],
@@ -648,10 +534,7 @@ class ConfirmDocView extends StatelessWidget {
                       if (vm.viewMessage)
                         Text(
                           vm.error,
-                          style: AppTheme.style(
-                            context,
-                            Styles.red,
-                          ),
+                          style: StyleApp.red,
                         ),
                       if (vm.viewSucces)
                         Text(
@@ -659,10 +542,7 @@ class ConfirmDocView extends StatelessWidget {
                             BlockTranslate.notificacion,
                             'docProcesado',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.green,
-                          ),
+                          style: StyleApp.green,
                         ),
                       if (vm.viewError)
                         SizedBox(
@@ -674,9 +554,8 @@ class ConfirmDocView extends StatelessWidget {
                                 BlockTranslate.botones,
                                 'verError',
                               ),
-                              style: AppTheme.style(
-                                context,
-                                Styles.blue,
+                              style: StyleApp.normalColor15.copyWith(
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
@@ -701,9 +580,8 @@ class ConfirmDocView extends StatelessWidget {
                                       bottom: 10,
                                       right: 10,
                                     ),
-                                    color: AppTheme.color(
-                                      context,
-                                      Styles.primary,
+                                    color: vmTheme.colorPref(
+                                      AppTheme.idColorTema,
                                     ),
                                     child: Center(
                                       child: Text(
@@ -711,10 +589,7 @@ class ConfirmDocView extends StatelessWidget {
                                           BlockTranslate.botones,
                                           'aceptar',
                                         ),
-                                        style: AppTheme.style(
-                                          context,
-                                          Styles.whiteStyle,
-                                        ),
+                                        style: StyleApp.whiteNormal,
                                       ),
                                     ),
                                   ),
@@ -752,11 +627,8 @@ class _Observacion extends StatelessWidget {
           'observacion',
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: AppTheme.color(
-              context,
-              Styles.border,
-            ),
+          borderSide: const BorderSide(
+            color: AppTheme.grey,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -773,6 +645,7 @@ class _Print extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
     final vmDoc = Provider.of<DocumentoViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -787,9 +660,8 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -797,10 +669,7 @@ class _Print extends StatelessWidget {
                       BlockTranslate.botones,
                       'listo',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -817,9 +686,8 @@ class _Print extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -827,10 +695,7 @@ class _Print extends StatelessWidget {
                       BlockTranslate.botones,
                       'imprimir',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -846,6 +711,7 @@ class _OptionsError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -860,9 +726,8 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -870,10 +735,7 @@ class _OptionsError extends StatelessWidget {
                       BlockTranslate.botones,
                       'sinFirma',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -888,9 +750,8 @@ class _OptionsError extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -898,10 +759,7 @@ class _OptionsError extends StatelessWidget {
                       BlockTranslate.botones,
                       'reintentar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -917,6 +775,7 @@ class _OptionsErrorAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -931,9 +790,8 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -941,10 +799,7 @@ class _OptionsErrorAll extends StatelessWidget {
                       BlockTranslate.botones,
                       'aceptar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -959,9 +814,8 @@ class _OptionsErrorAll extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -969,10 +823,7 @@ class _OptionsErrorAll extends StatelessWidget {
                       BlockTranslate.botones,
                       'reintentar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -991,6 +842,7 @@ class _Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<ConfirmDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return SizedBox(
       height: 75,
@@ -1005,9 +857,8 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -1015,10 +866,7 @@ class _Options extends StatelessWidget {
                       BlockTranslate.botones,
                       'cancelar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -1037,9 +885,8 @@ class _Options extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
@@ -1047,10 +894,7 @@ class _Options extends StatelessWidget {
                       BlockTranslate.botones,
                       'confirmar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteNormal,
                   ),
                 ),
               ),
@@ -1079,25 +923,18 @@ class _Pyments extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppTheme.grey,
               width: 1.0,
             ),
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Text(
               amount.payment.descripcion,
-              style: AppTheme.style(
-                context,
-                Styles.normal,
-              ),
+              style: StyleApp.normal,
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1108,10 +945,7 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'autorizar',
                     )}: ${amount.authorization}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (amount.reference != "")
                   Text(
@@ -1119,10 +953,7 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'referencia',
                     )}: ${amount.reference}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (amount.payment.banco)
                   Text(
@@ -1130,10 +961,7 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'banco',
                     )}: ${amount.bank?.nombre}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 if (amount.account != null)
                   Text(
@@ -1141,20 +969,14 @@ class _Pyments extends StatelessWidget {
                       BlockTranslate.factura,
                       'cuenta',
                     )}: ${amount.account!.descripcion}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'monto',
                   )}: ${amount.amount.toStringAsFixed(2)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
@@ -1176,18 +998,14 @@ class _TotalsPayment extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
-        side: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+        side: const BorderSide(
+          color: AppTheme.grey,
           width: 1.0,
         ), // Define el color y grosor del borde
       ),
-      color: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      color: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -1223,18 +1041,14 @@ class _Totals extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5),
-        side: BorderSide(
-          color: AppTheme.color(
-            context,
-            Styles.border,
-          ),
+        side: const BorderSide(
+          color: AppTheme.grey,
           width: 1.0,
         ), // Define el color y grosor del borde
       ),
-      color: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      color: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -1303,35 +1117,25 @@ class _Transaction extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
-            side: BorderSide(
-              color: AppTheme.color(
-                context,
-                Styles.border,
-              ),
+            side: const BorderSide(
+              color: AppTheme.grey,
               width: 1.0,
             ), // Define el color y grosor del borde
           ),
-          color: AppTheme.color(
-            context,
-            Styles.background,
-          ),
+          color: AppTheme.isDark()
+              ? AppTheme.darkBackroundColor
+              : AppTheme.backroundColor,
           child: ListTile(
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   '${transaction.cantidad} x ${transaction.producto.desProducto}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 Text(
                   'SKU: ${transaction.producto.productoId}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
               ],
             ),
@@ -1344,10 +1148,7 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'precioU',
                     )}: ${currencyFormat.format(transaction.precio!.precioU)}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
 
 //Cantidad dias
@@ -1357,10 +1158,7 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'cantDias',
                     )}: ${transaction.cantidadDias}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
 
                 if (transaction.cargo != 0)
@@ -1369,10 +1167,7 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'cargo',
                     )}: ${transaction.cargo.toStringAsFixed(2)}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
 
                 if (transaction.descuento != 0)
@@ -1381,10 +1176,7 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'descuento',
                     )}: ${transaction.descuento.toStringAsFixed(2)}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
 //Total por cantidad
                 if (docVM.valueParametro(44))
@@ -1393,20 +1185,14 @@ class _Transaction extends StatelessWidget {
                       BlockTranslate.calcular,
                       'precioTotalCant',
                     )}: ${currencyFormat.format(transaction.precioCantidad)}',
-                    style: AppTheme.style(
-                      context,
-                      Styles.normal,
-                    ),
+                    style: StyleApp.normal,
                   ),
                 Text(
                   '${AppLocalizations.of(context)!.translate(
                     BlockTranslate.calcular,
                     'total',
                   )}: ${transaction.total.toStringAsFixed(2)}',
-                  style: AppTheme.style(
-                    context,
-                    Styles.normal,
-                  ),
+                  style: StyleApp.normal,
                 ),
                 // Text('Detalles: ${transaction.detalles}'),
               ],
@@ -1434,48 +1220,33 @@ class _DataUser extends StatelessWidget {
       children: [
         Text(
           title,
-          style: AppTheme.style(
-            context,
-            Styles.title,
-          ),
+          style: StyleApp.title,
         ),
         const SizedBox(height: 5),
         Text(
           "Nit: ${user.nit}",
-          style: AppTheme.style(
-            context,
-            Styles.normal,
-          ),
+          style: StyleApp.normal,
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.general,
             'nombre',
           )}: ${user.name}",
-          style: AppTheme.style(
-            context,
-            Styles.normal,
-          ),
+          style: StyleApp.normal,
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.general,
             'direccion',
           )}: ${user.adress}",
-          style: AppTheme.style(
-            context,
-            Styles.normal,
-          ),
+          style: StyleApp.normal,
         ),
         Text(
           "${AppLocalizations.of(context)!.translate(
             BlockTranslate.cuenta,
             'cuentaCta',
           )} ${user.desCtaCta}",
-          style: AppTheme.style(
-            context,
-            Styles.normal,
-          ),
+          style: StyleApp.normal,
         )
       ],
     );

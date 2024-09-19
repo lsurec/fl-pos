@@ -225,12 +225,19 @@
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",
-        "idioma": "Sélectionnez la langue de votre préférence.",
-        "tema": "Sélectionnez votre thème préféré ou continuez avec le thème de votre appareil.",
+        "idioma": "Sélectionnez la langue de votre choix.",
+        "tema2": "Sélectionnez le thème de votre choix. Ou continuez avec le thème de votre appareil.",
         "seleccionado": "Langue sélectionnée.",
         "nuevoTema": "Thème sélectionné.",
-        "reiniciarTema": "L'application redémarrera une fois que vous aurez sélectionné votre thème préféré.",
-        "nota": "Remarque :"
+        "reiniciarTema": "L'application redémarrera une fois que vous aurez sélectionné le thème de votre choix.",
+        "nota": "Remarque:",
+        "lenguaje": "Langue",
+        "tema": "Thème",
+        "color": "Couleur",
+        "fuente": "Taille de police",
+        "sistema": "Défini par le système.",
+        "apariencia": "Apparence",
+        "cambios": "Langue, Thème, Couleurs..."
     },
     "error": {
         "informeT": "RAPPORT D'ERREURS",

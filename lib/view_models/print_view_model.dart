@@ -1511,8 +1511,6 @@ class PrintViewModel extends ChangeNotifier {
       totalLetras: encabezado.montoLetras!.toUpperCase(),
     );
 
-    print("aqui ya paso");
-
     List<Pago> pagos = [];
 
     for (var pago in pagosTemplate) {
@@ -1539,8 +1537,6 @@ class PrintViewModel extends ChangeNotifier {
     EmpresaModel empresaImg = vmLocal.selectedEmpresa!;
 
     List<String> mensajes = [
-      //TODO: Mostrar frase
-      // "**Sujeto a pagos trimestrales**",
       AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
         'sinCambios',

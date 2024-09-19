@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/services/language_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/widgets/card_widget.dart';
 import 'package:provider/provider.dart';
 
 class LangView extends StatelessWidget {
@@ -35,10 +33,7 @@ class LangView extends StatelessWidget {
                           BlockTranslate.preferencias,
                           "idioma",
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
                     ),
                     ListView.builder(
@@ -48,42 +43,23 @@ class LangView extends StatelessWidget {
                       itemCount: vm.languages.length,
                       itemBuilder: (BuildContext context, int index) {
                         final LanguageModel lang = vm.languages[index];
-                        return Column(
-                          children: [
-                            CardWidget(
-                              color: index == Preferences.idLanguage
-                                  ? AppTheme.color(
-                                      context,
-                                      Styles.primary,
-                                    )
-                                  : AppTheme.color(
-                                      context,
-                                      Styles.secondBackground,
-                                    ),
-                              width: 400,
-                              margin: const EdgeInsets.only(bottom: 25),
-                              child: ListTile(
-                                title: Text(
-                                  vm.getNameLang(lang)!,
-                                  style: index == Preferences.idLanguage
-                                      ? AppTheme.style(
-                                          context,
-                                          Styles.whiteBoldStyle,
-                                        )
-                                      : AppTheme.style(
-                                          context,
-                                          Styles.bold,
-                                        ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                onTap: () => vm.cambiarIdioma(
-                                  context,
-                                  Locale(lang.lang),
-                                  index,
-                                ),
-                              ),
-                            ),
-                          ],
+                        return RadioListTile(
+                          activeColor: Preferences.valueColor.isNotEmpty
+                              ? AppTheme.hexToColor(
+                                  Preferences.valueColor,
+                                )
+                              : AppTheme.primary,
+                          title: Text(
+                            vm.getNameLang(lang)!,
+                            style: StyleApp.normal,
+                          ),
+                          value: index,
+                          groupValue: Preferences.idLanguage,
+                          onChanged: (int? value) => vm.cambiarIdioma(
+                            context,
+                            Locale(lang.lang),
+                            index,
+                          ),
                         );
                       },
                     ),
@@ -91,19 +67,12 @@ class LangView extends StatelessWidget {
                     if (AppLocalizations.cambiarIdioma == 0)
                       ElevatedButton(
                         onPressed: () => vm.reiniciarTemp(context),
-                        style: AppTheme.button(
-                          context,
-                          Styles.buttonStyle,
-                        ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
                             BlockTranslate.botones,
                             "continuar",
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.whiteBoldStyle,
-                          ),
+                          style: StyleApp.whiteBold,
                         ),
                       ),
                   ],
@@ -116,10 +85,9 @@ class LangView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading)
           Center(

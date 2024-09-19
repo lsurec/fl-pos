@@ -16,6 +16,7 @@ class LangViewModel extends ChangeNotifier {
   LanguageModel activeLang =
       LanguagesProvider.languagesProvider[LanguagesProvider.indexDefaultLang];
 
+  int selectedIndexLang = 0;
   // cambiar el valor del idioma
   void cambiarIdioma(
     BuildContext context,
@@ -163,5 +164,60 @@ class LangViewModel extends ChangeNotifier {
       }
     }
     return null;
+  }
+
+  // cambiar el valor del idioma
+  void cambiarLenguaje(
+    BuildContext context,
+    Locale nuevoIdioma,
+    int indexLang,
+  ) async {
+    //Si es desde ajustes
+    Navigator.pop(context);
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "reiniciar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.preferencias,
+              "seleccionado",
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              "reiniciar",
+            ),
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    if (!result) return;
+
+    //Si reinicia, guardar el nuevo tema
+
+    Preferences.language = nuevoIdioma.languageCode;
+
+    AppLocalizations.idioma = Locale(Preferences.language);
+
+    Preferences.idLanguage = indexLang;
+
+    activeLang = languages[indexLang];
+
+    notifyListeners();
+
+    isLoading = true;
+    // timer?.cancel(); // Cancelar el temporizador existente si existe
+    timer = Timer(const Duration(milliseconds: 2000), () {
+      // Función de filtrado que consume el servicio
+      reiniciarApp();
+    });
   }
 }

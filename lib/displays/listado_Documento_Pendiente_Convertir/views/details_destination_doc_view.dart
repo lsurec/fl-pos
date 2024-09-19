@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
@@ -32,10 +32,7 @@ class DetailsDestinationDocView extends StatelessWidget {
                   BlockTranslate.cotizacion,
                   'procesadoDoc',
                 ),
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: [
                 IconButton(
@@ -89,10 +86,7 @@ class DetailsDestinationDocView extends StatelessWidget {
                                 BlockTranslate.cotizacion,
                                 'transacciones',
                               )} (${vm.detalles.length})",
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                           ],
                         ),
@@ -105,10 +99,6 @@ class DetailsDestinationDocView extends StatelessWidget {
                             DestinationDetailModel detalle = vm.detalles[index];
 
                             return CardWidget(
-                              color: AppTheme.color(
-                                context,
-                                Styles.secondBackground,
-                              ),
                               child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Column(
@@ -162,10 +152,9 @@ class DetailsDestinationDocView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],
@@ -184,6 +173,7 @@ class _PrintActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<DetailsDestinationDocViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -199,20 +189,17 @@ class _PrintActions extends StatelessWidget {
                   bottom: 10,
                   right: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'listo',
-                      ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteStyle,
-                      )),
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'listo',
+                    ),
+                    style: StyleApp.whiteNormal,
+                  ),
                 ),
               ),
             ),
@@ -226,20 +213,17 @@ class _PrintActions extends StatelessWidget {
                   bottom: 10,
                   left: 10,
                 ),
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
+                color: vmTheme.colorPref(
+                  AppTheme.idColorTema,
                 ),
                 child: Center(
                   child: Text(
-                      AppLocalizations.of(context)!.translate(
-                        BlockTranslate.botones,
-                        'imprimir',
-                      ),
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteStyle,
-                      )),
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'imprimir',
+                    ),
+                    style: StyleApp.whiteNormal,
+                  ),
                 ),
               ),
             ),

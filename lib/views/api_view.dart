@@ -1,13 +1,11 @@
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../themes/app_theme.dart';
 
 //Vista configurar api
 class ApiView extends StatelessWidget {
@@ -40,10 +38,7 @@ class ApiView extends StatelessWidget {
                               BlockTranslate.url,
                               "url",
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.bold30Style,
-                            ),
+                            style: StyleApp.bold30Style,
                           ),
                         if (Preferences.urlApi.isEmpty)
                           const SizedBox(height: 10),
@@ -53,10 +48,7 @@ class ApiView extends StatelessWidget {
                               BlockTranslate.url,
                               "ingresar",
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal20Style,
-                            ),
+                            style: StyleApp.normal20Style,
                           ),
                         if (Preferences.urlApi.isNotEmpty)
                           const SizedBox(height: 20),
@@ -69,10 +61,7 @@ class ApiView extends StatelessWidget {
                                   BlockTranslate.url,
                                   "actual",
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold30Style,
-                                ),
+                                style: StyleApp.bold30Style,
                               ),
                               IconButton(
                                 tooltip:
@@ -92,20 +81,13 @@ class ApiView extends StatelessWidget {
                         if (Preferences.urlApi.isNotEmpty)
                           Text(
                             Preferences.urlApi,
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal20Style,
-                            ),
+                            style: StyleApp.normal20Style,
                           ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 20),
                   CardWidget(
-                    color: AppTheme.color(
-                      context,
-                      Styles.secondBackground,
-                    ),
                     width: double.infinity,
                     raidus: 18,
                     child: Padding(
@@ -146,10 +128,6 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => Navigator.pop(context),
-                                    style: AppTheme.button(
-                                      context,
-                                      Styles.buttonStyle,
-                                    ),
                                     // onPressed: () => Preferences.clearUrl(),
                                     child: SizedBox(
                                       width: double.infinity,
@@ -160,10 +138,7 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cancelar",
                                           ),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.whiteBoldStyle,
-                                          ),
+                                          style: StyleApp.whiteBold,
                                         ),
                                       ),
                                     ),
@@ -173,10 +148,6 @@ class ApiView extends StatelessWidget {
                                 Expanded(
                                   child: ElevatedButton(
                                     onPressed: () => vm.connectService(context),
-                                    style: AppTheme.button(
-                                      context,
-                                      Styles.buttonStyle,
-                                    ),
                                     child: SizedBox(
                                       width: double.infinity,
                                       child: Center(
@@ -186,10 +157,7 @@ class ApiView extends StatelessWidget {
                                             BlockTranslate.botones,
                                             "cambiar",
                                           ),
-                                          style: AppTheme.style(
-                                            context,
-                                            Styles.whiteBoldStyle,
-                                          ),
+                                          style: StyleApp.whiteNormal,
                                         ),
                                       ),
                                     ),
@@ -200,10 +168,6 @@ class ApiView extends StatelessWidget {
                           if (Preferences.urlApi.isEmpty)
                             ElevatedButton(
                               onPressed: () => vm.connectService(context),
-                              style: AppTheme.button(
-                                context,
-                                Styles.primary,
-                              ),
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Center(
@@ -212,10 +176,7 @@ class ApiView extends StatelessWidget {
                                       BlockTranslate.botones,
                                       "aceptar",
                                     ),
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.whiteBoldStyle,
-                                    ),
+                                    style: StyleApp.whiteBold,
                                   ),
                                 ),
                               ),
@@ -233,10 +194,7 @@ class ApiView extends StatelessWidget {
                           BlockTranslate.url,
                           "version",
                         )}: ${vmSplash.versionLocal}",
-                        style: AppTheme.style(
-                          context,
-                          Styles.versionStyle,
-                        ),
+                        style: StyleApp.greyText,
                       ),
                       const SizedBox(width: 10)
                     ],
@@ -250,10 +208,9 @@ class ApiView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
