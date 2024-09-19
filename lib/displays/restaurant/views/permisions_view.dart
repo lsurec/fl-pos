@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/permisions_view_model.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -61,12 +60,13 @@ class PermisionsView extends StatelessWidget {
                                 ),
                                 TextFormField(
                                   decoration: const InputDecoration(
-                                      hintText: 'Contraseña',
-                                      labelText: 'Contraseña',
-                                      suffixIcon: Icon(
-                                        Icons.lock,
-                                        color: AppTheme.primary,
-                                      )),
+                                    hintText: 'Contraseña',
+                                    labelText: 'Contraseña',
+                                    suffixIcon: Icon(
+                                      Icons.lock,
+                                      color: AppTheme.primary,
+                                    ),
+                                  ),
                                   onChanged: (value) =>
                                       vm.formValues['pass'] = value,
                                   validator: (value) {
@@ -122,10 +122,9 @@ class PermisionsView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

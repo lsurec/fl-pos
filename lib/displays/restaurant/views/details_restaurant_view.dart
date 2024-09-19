@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
@@ -5,8 +7,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -76,17 +77,11 @@ class DetailsRestaurantView extends StatelessWidget {
                           BlockTranslate.calcular,
                           'total',
                         )}:",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       Text(
                         currencyFormat.format(vm.total),
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       )
                     ],
                   ),
@@ -109,7 +104,7 @@ class DetailsRestaurantView extends StatelessWidget {
                               ),
                               Text(
                                 vm.controllerNum.text,
-                                style: AppTheme.style(context, Styles.bold),
+                                style: StyleApp.normalBold,
                               ),
                               IconButton(
                                 onPressed: () => vm.incrementNum(),
@@ -126,10 +121,7 @@ class DetailsRestaurantView extends StatelessWidget {
                           child: ElevatedButton(
                             //TODO:Modificar ytransaccion
                             onPressed: () => vm.addProduct(context, options),
-                            style: AppTheme.button(
-                              context,
-                              Styles.buttonStyle,
-                            ),
+
                             child: SizedBox(
                               width: double.infinity,
                               child: Center(
@@ -137,10 +129,7 @@ class DetailsRestaurantView extends StatelessWidget {
                                   !options["modify"]
                                       ? "Agregar"
                                       : "Modificar", //TODO:Translate
-                                  style: AppTheme.style(
-                                    context,
-                                    Styles.whiteBoldStyle,
-                                  ),
+                                  style: StyleApp.whiteBold,
                                 ),
                               ),
                             ),
@@ -237,18 +226,12 @@ class DetailsRestaurantView extends StatelessWidget {
                       children: [
                         Text(
                           product.desProducto,
-                          style: AppTheme.style(
-                            context,
-                            Styles.title,
-                          ),
+                          style: StyleApp.title,
                         ),
                         const SizedBox(height: 5),
                         Text(
                           product.productoId,
-                          style: AppTheme.style(
-                            context,
-                            Styles.normal,
-                          ),
+                          style: StyleApp.normal,
                         ),
                         const SizedBox(height: 20),
                         Text(
@@ -256,19 +239,15 @@ class DetailsRestaurantView extends StatelessWidget {
                             BlockTranslate.factura,
                             'bodega',
                           ),
-                          style: AppTheme.style(
-                            context,
-                            Styles.bold,
-                          ),
+                          style: StyleApp.normalBold,
                         ),
                         const SizedBox(height: 5),
                         DropdownButton<BodegaProductoModel>(
                           isExpanded: true,
                           isDense: true,
-                          dropdownColor: AppTheme.color(
-                            context,
-                            Styles.background,
-                          ),
+                          dropdownColor: AppTheme.isDark()
+                              ? AppTheme.darkBackroundColor
+                              : AppTheme.backroundColor,
                           value: vm.bodega,
                           onChanged: (value) => vm.changeBodega(value, context),
                           items: vm.bodegas.map(
@@ -300,10 +279,7 @@ class DetailsRestaurantView extends StatelessWidget {
                                         BlockTranslate.factura,
                                         'presentaciones',
                                       ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold,
-                                ),
+                                style: StyleApp.normalBold,
                               ),
                               const SizedBox(height: 5),
                               const TipoPrecioSelect(),
@@ -315,10 +291,7 @@ class DetailsRestaurantView extends StatelessWidget {
                               BlockTranslate.notificacion,
                               'preciosNoEncontrados',
                             ),
-                            style: AppTheme.style(
-                              context,
-                              Styles.normal,
-                            ),
+                            style: StyleApp.normal,
                           ),
                         const SizedBox(height: 5),
                         if (vm.unitarios.isNotEmpty && docVM.editPrice())
@@ -333,19 +306,13 @@ class DetailsRestaurantView extends StatelessWidget {
                                 BlockTranslate.calcular,
                                 'precioU',
                               ),
-                              hintStyle: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              hintStyle: StyleApp.normal,
                               labelText:
                                   AppLocalizations.of(context)!.translate(
                                 BlockTranslate.calcular,
                                 'precioU',
                               ),
-                              labelStyle: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              labelStyle: StyleApp.normal,
                             ),
                             controller: vm.controllerPrice,
                             inputFormatters: [
@@ -365,10 +332,7 @@ class DetailsRestaurantView extends StatelessWidget {
                                   BlockTranslate.calcular,
                                   'precioU',
                                 ),
-                                style: AppTheme.style(
-                                  context,
-                                  Styles.bold,
-                                ),
+                                style: StyleApp.normalBold,
                               ),
                               const SizedBox(height: 5),
                             ],
@@ -453,9 +417,10 @@ class DetailsRestaurantView extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Text(
+                            const Text(
+                              //TODO: Traducir
                               "Elige una opcion",
-                              style: AppTheme.style(context, Styles.normal),
+                              style: StyleApp.normal,
                             ),
                             const SizedBox(height: 5),
                             ListView.builder(
@@ -502,9 +467,9 @@ class DetailsRestaurantView extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Notas para este producto", //TODO:Translate
-                          style: AppTheme.style(context, Styles.bold),
+                          style: StyleApp.normalBold,
                         ),
                         const SizedBox(height: 10),
                         InputWidget(
@@ -526,10 +491,9 @@ class DetailsRestaurantView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],
@@ -575,10 +539,9 @@ class TipoPrecioSelect extends StatelessWidget {
 
     return DropdownButton<UnitarioModel>(
       isExpanded: true,
-      dropdownColor: AppTheme.color(
-        context,
-        Styles.background,
-      ),
+      dropdownColor: AppTheme.isDark()
+          ? AppTheme.darkBackroundColor
+          : AppTheme.backroundColor,
       value: vm.selectedPrice,
       onChanged: (value) => vm.changePrice(value),
       items: vm.unitarios.map(

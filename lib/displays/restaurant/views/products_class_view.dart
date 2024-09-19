@@ -3,8 +3,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/views/views.dar
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/product_restaurant_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -27,10 +26,7 @@ class ProductClassView extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               vmClass.classification!.desClasificacion,
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -116,10 +112,9 @@ class ProductClassView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

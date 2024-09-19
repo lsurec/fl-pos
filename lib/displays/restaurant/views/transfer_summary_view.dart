@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -23,12 +22,10 @@ class TransferSummaryView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
+              //TODO: translate
               'Resumen de Traslado',
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: SingleChildScrollView(
@@ -43,12 +40,10 @@ class TransferSummaryView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
+                        //TODO: traducir
                         "Origen",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const SizedBox(height: 5),
                       const Divider(),
@@ -83,12 +78,10 @@ class TransferSummaryView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
+                        //TODO: traducir
                         "Destino",
-                        style: AppTheme.style(
-                          context,
-                          Styles.title,
-                        ),
+                        style: StyleApp.title,
                       ),
                       const SizedBox(height: 5),
                       const Divider(),
@@ -126,10 +119,9 @@ class TransferSummaryView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -178,10 +170,8 @@ class _Options extends StatelessWidget {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: AppTheme.color(
-                  context,
-                  Styles.primary,
-                ),
+                //TODO: cambiar al color de preferencia
+                color: AppTheme.primary,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: InkWell(
@@ -194,10 +184,7 @@ class _Options extends StatelessWidget {
                       BlockTranslate.botones,
                       'confirmar',
                     ),
-                    style: AppTheme.style(
-                      context,
-                      Styles.whiteStyle,
-                    ),
+                    style: StyleApp.whiteBold,
                   ),
                 ),
               ),

@@ -3,8 +3,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/view_models/ord
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:provider/provider.dart';
 
 class ButtonDetailsWidget extends StatelessWidget {
@@ -63,20 +62,11 @@ class ButtonDetailsWidget extends StatelessWidget {
                     );
                   }
                 },
-                style: AppTheme.button(
-                  context,
-                  Styles.buttonStyle,
-                ),
-                child: SizedBox(
+                child: const SizedBox(
                   width: double.infinity,
                   child: Center(
-                    child: Text(
-                      "Detalles", //TODO:Translate
-                      style: AppTheme.style(
-                        context,
-                        Styles.whiteBoldStyle,
-                      ),
-                    ),
+                    child: Text("Detalles", //TODO:Translate
+                        style: StyleApp.whiteBold),
                   ),
                 ),
               ),

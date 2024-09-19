@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/button_details_widget.dart';
@@ -5,8 +7,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/classifi
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/classification_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/locations_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/tables_view_model.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -32,10 +33,7 @@ class ClassificationView extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 vmTables.table!.descripcion,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               actions: [
                 PopupMenuButton<int>(
@@ -124,10 +122,9 @@ class ClassificationView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],
@@ -207,7 +204,7 @@ class CardImageWidget extends StatelessWidget {
                 description,
                 maxLines: 2,
                 textAlign: TextAlign.center,
-                style: AppTheme.style(context, Styles.title),
+                style: StyleApp.title,
                 overflow: TextOverflow.ellipsis,
               ),
             ],

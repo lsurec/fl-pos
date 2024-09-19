@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +39,7 @@ class SelectAccountView extends StatelessWidget {
             title: vm.isSelectedMode
                 ? Text(
                     vm.getSelectedItems(context).toString(),
-                    style: AppTheme.style(context, Styles.normal),
+                    style: StyleApp.normal,
                   )
                 : null,
             actions: vm.isSelectedMode
@@ -74,9 +73,10 @@ class SelectAccountView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
+                    //TODO: traducir
                     "Seleccionar cuenta",
-                    style: AppTheme.style(context, Styles.title),
+                    style: StyleApp.title,
                   ),
                   const SizedBox(height: 20),
                   GridView.builder(
@@ -143,10 +143,6 @@ class _AccountCard extends StatelessWidget {
         Provider.of<SelectAccountViewModel>(context);
 
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
       elevation: 2,
       raidus: 10,
       child: InkWell(
@@ -169,6 +165,7 @@ class _AccountCard extends StatelessWidget {
                 children: [
                   const Center(
                     child: CircleAvatar(
+                      //TODO: cambiar al color de preferencia
                       backgroundColor: AppTheme.primary,
                       radius: 30.0,
                       child: Icon(
@@ -187,10 +184,7 @@ class _AccountCard extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   Text(
                     "Total: ${currencyFormat.format(orderVM.getTotal(index))}",
-                    style: AppTheme.style(
-                      context,
-                      Styles.versionStyle,
-                    ),
+                    style: StyleApp.greyText,
                   ),
                 ],
               ),
@@ -264,10 +258,6 @@ class _NewAccountCard extends StatelessWidget {
     final AddPersonViewModel vmAddPerson =
         Provider.of<AddPersonViewModel>(context);
     return CardWidget(
-      color: AppTheme.color(
-        context,
-        Styles.secondBackground,
-      ),
       elevation: 2,
       raidus: 10,
       child: InkWell(

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -18,12 +17,9 @@ class LocationsView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               "Ubicaciones", //TODO:Translate
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: Padding(
@@ -57,10 +53,9 @@ class LocationsView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

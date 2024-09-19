@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class RegisterCountWidget extends StatelessWidget {
@@ -22,10 +21,7 @@ class RegisterCountWidget extends StatelessWidget {
             BlockTranslate.general,
             'registro',
           )} ($count)",
-          style: AppTheme.style(
-            context,
-            Styles.bold,
-          ),
+          style: StyleApp.normalBold,
         ),
       ],
     );

@@ -4,8 +4,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/view_models/vie
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/notification_service.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -24,10 +23,7 @@ class SelectTableView extends StatelessWidget {
           appBar: AppBar(
             title: Text(
               vmLoc.location!.descripcion,
-              style: AppTheme.style(
-                context,
-                Styles.title,
-              ),
+              style: StyleApp.title,
             ),
           ),
           body: Padding(
@@ -35,12 +31,10 @@ class SelectTableView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
+                  //TODO: traslate
                   "Nueva Mesa",
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 RegisterCountWidget(count: vm.tables.length),
                 Expanded(
@@ -112,10 +106,9 @@ class SelectTableView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

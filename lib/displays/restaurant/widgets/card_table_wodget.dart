@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 
 class CardTableWidget extends StatelessWidget {
@@ -47,10 +46,7 @@ class CardTableWidget extends StatelessWidget {
                   children: [
                     Text(
                       mesa.descripcion,
-                      style: AppTheme.style(
-                        context,
-                        Styles.title,
-                      ),
+                      style: StyleApp.normalBold,
                       textAlign: TextAlign.justify,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -59,10 +55,7 @@ class CardTableWidget extends StatelessWidget {
                     Text(
                       //TODO:Translate
                       "Cuentas: ${mesa.orders!.length}",
-                      style: AppTheme.style(
-                        context,
-                        Styles.bold,
-                      ),
+                      style: StyleApp.normalBold,
                       textAlign: TextAlign.justify,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

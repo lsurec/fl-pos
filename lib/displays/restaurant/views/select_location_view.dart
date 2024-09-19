@@ -3,8 +3,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/models/models.d
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -28,12 +27,10 @@ class SelectLocationView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
+                  //TODO: translate
                   "Nueva Ubicacion",
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 RegisterCountWidget(count: vm.locations.length),
                 Expanded(
@@ -66,10 +63,9 @@ class SelectLocationView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],

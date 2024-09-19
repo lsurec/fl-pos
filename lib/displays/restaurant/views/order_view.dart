@@ -1,9 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/order_view_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -56,17 +57,11 @@ class OrderView extends StatelessWidget {
                                 BlockTranslate.calcular,
                                 'total',
                               )}:",
-                              style: AppTheme.style(
-                                context,
-                                Styles.title,
-                              ),
+                              style: StyleApp.title,
                             ),
                             Text(
                               currencyFormat.format(vm.getTotal(indexOrder)),
-                              style: AppTheme.style(
-                                context,
-                                Styles.title,
-                              ),
+                              style: StyleApp.title,
                             )
                           ],
                         ),
@@ -77,19 +72,12 @@ class OrderView extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () =>
                                   vm.monitorPrint(context, indexOrder),
-                              style: AppTheme.button(
-                                context,
-                                Styles.buttonStyle,
-                              ),
-                              child: SizedBox(
+                              child: const SizedBox(
                                 width: double.infinity,
                                 child: Center(
                                   child: Text(
                                     "Comandar", //TODO:Translate
-                                    style: AppTheme.style(
-                                      context,
-                                      Styles.whiteBoldStyle,
-                                    ),
+                                    style: StyleApp.whiteBold,
                                   ),
                                 ),
                               ),
@@ -104,7 +92,7 @@ class OrderView extends StatelessWidget {
                 vm.isSelectedMode
                     ? vm.getSelectedItems(indexOrder).toString()
                     : vm.orders[indexOrder].nombre,
-                style: AppTheme.style(context, Styles.normal),
+                style: StyleApp.normal,
               ),
               actions: vm.isSelectedMode
                   ? [
@@ -166,20 +154,18 @@ class OrderView extends StatelessWidget {
                                     children: [
                                       Text(
                                         transaction.producto.desProducto,
-                                        style: AppTheme.style(
-                                            context, Styles.normal),
+                                        style: StyleApp.normal,
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
                                         "${currencyFormat.format(transaction.precio.precioU)} C/U",
-                                        style: AppTheme.style(
-                                            context, Styles.normal),
+                                        style: StyleApp.normal,
                                       ),
                                       const SizedBox(height: 5),
                                       Text(
                                         vm.getGuarniciones(indexOrder, index),
-                                        style: AppTheme.style(
-                                            context, Styles.versionStyle),
+                                        //tenia estil de la version
+                                        style: StyleApp.verMas,
                                       ),
                                       if (transaction.observacion.isNotEmpty)
                                         Column(
@@ -203,8 +189,7 @@ class OrderView extends StatelessWidget {
                                         transaction.cantidad *
                                             transaction.precio.precioU,
                                       ),
-                                      style:
-                                          AppTheme.style(context, Styles.bold),
+                                      style: StyleApp.normalBold,
                                     ),
                                     const SizedBox(height: 5),
                                     Container(
@@ -244,8 +229,7 @@ class OrderView extends StatelessWidget {
                                                 ? const TextStyle(
                                                     fontSize: 17,
                                                     color: Colors.grey)
-                                                : AppTheme.style(
-                                                    context, Styles.bold),
+                                                : StyleApp.normalBold,
                                           ),
                                           IconButton(
                                             onPressed: vm
@@ -264,15 +248,12 @@ class OrderView extends StatelessWidget {
                                     ),
                                     if (vm.orders[indexOrder]
                                         .transacciones[index].processed)
-                                      Column(
+                                      const Column(
                                         children: [
-                                          const SizedBox(height: 5),
+                                          SizedBox(height: 5),
                                           Text(
                                             "Comandada",
-                                            style: AppTheme.style(
-                                              context,
-                                              Styles.red,
-                                            ),
+                                            style: StyleApp.red,
                                           ),
                                         ],
                                       ),
@@ -316,10 +297,9 @@ class OrderView extends StatelessWidget {
             ModalBarrier(
               dismissible: false,
               // color: Colors.black.withOpacity(0.3),
-              color: AppTheme.color(
-                context,
-                Styles.loading,
-              ),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
             ),
           if (vm.isLoading) const LoadWidget(),
         ],

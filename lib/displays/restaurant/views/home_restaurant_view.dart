@@ -3,8 +3,8 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
-import 'package:flutter_post_printer_example/themes/app_theme.dart';
-import 'package:flutter_post_printer_example/utilities/styles_utilities.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
@@ -27,19 +27,11 @@ class HomeRestaurantView extends StatelessWidget {
             appBar: AppBar(
               title: Text(
                 vmMenu.name,
-                style: AppTheme.style(
-                  context,
-                  Styles.title,
-                ),
+                style: StyleApp.title,
               ),
               bottom: TabBar(
-                labelColor: AppTheme.color(
-                  context,
-                  Styles.normal,
-                ),
-                indicatorColor: AppTheme.color(
-                  context,
-                  Styles.darkPrimary,
+                indicatorColor: AppTheme.hexToColor(
+                  Preferences.valueColor,
                 ),
                 //TODO:Translate
                 tabs: const [
@@ -62,10 +54,9 @@ class HomeRestaurantView extends StatelessWidget {
           ModalBarrier(
             dismissible: false,
             // color: Colors.black.withOpacity(0.3),
-            color: AppTheme.color(
-              context,
-              Styles.loading,
-            ),
+            color: AppTheme.isDark()
+                ? AppTheme.darkBackroundColor
+                : AppTheme.backroundColor,
           ),
         if (vm.isLoading) const LoadWidget(),
       ],
@@ -132,17 +123,11 @@ class _TableOpen extends StatelessWidget {
                           children: [
                             Text(
                               order.nombre,
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                             Text(
                               "Consecutivo: ${order.consecutivo}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.normal,
-                              ),
+                              style: StyleApp.normal,
                             ),
                           ],
                         ),
@@ -165,10 +150,7 @@ class _TableOpen extends StatelessWidget {
                           children: [
                             Text(
                               "Total: ${currencyFormat.format(orderVM.getTotal(index))}",
-                              style: AppTheme.style(
-                                context,
-                                Styles.bold,
-                              ),
+                              style: StyleApp.normalBold,
                             ),
                           ],
                         ),
@@ -214,10 +196,7 @@ class _AccesTab extends StatelessWidget {
                     BlockTranslate.general,
                     'serie',
                   ),
-                  style: AppTheme.style(
-                    context,
-                    Styles.title,
-                  ),
+                  style: StyleApp.title,
                 ),
                 if (vm.series.isEmpty)
                   NotFoundWidget(
@@ -233,10 +212,9 @@ class _AccesTab extends StatelessWidget {
                 if (vm.series.isNotEmpty)
                   DropdownButton<SerieModel>(
                     isExpanded: true,
-                    dropdownColor: AppTheme.color(
-                      context,
-                      Styles.background,
-                    ),
+                    dropdownColor: AppTheme.isDark()
+                        ? AppTheme.darkBackroundColor
+                        : AppTheme.backroundColor,
                     hint: Text(
                       AppLocalizations.of(context)!.translate(
                         BlockTranslate.factura,
@@ -257,19 +235,12 @@ class _AccesTab extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => vm.navigateLoc(context),
-                  style: AppTheme.button(
-                    context,
-                    Styles.buttonStyle,
-                  ),
-                  child: SizedBox(
+                  child: const SizedBox(
                     width: double.infinity,
                     child: Center(
                       child: Text(
                         "Empezar", //TODO:Translate
-                        style: AppTheme.style(
-                          context,
-                          Styles.whiteBoldStyle,
-                        ),
+                        style: StyleApp.whiteBold,
                       ),
                     ),
                   ),
@@ -301,20 +272,14 @@ class _CardDoc extends StatelessWidget {
                   BlockTranslate.home,
                   'idDoc',
                 )} 45",
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
               Text(
                 "${AppLocalizations.of(context)!.translate(
                   BlockTranslate.general,
                   'usuario',
                 )}: sa",
-                style: AppTheme.style(
-                  context,
-                  Styles.bold,
-                ),
+                style: StyleApp.normalBold,
               ),
             ],
           ),
@@ -322,10 +287,6 @@ class _CardDoc extends StatelessWidget {
         GestureDetector(
           onTap: () => {},
           child: CardWidget(
-            color: AppTheme.color(
-              context,
-              Styles.secondBackground,
-            ),
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -356,17 +317,11 @@ class _CardDoc extends StatelessWidget {
                           BlockTranslate.fecha,
                           'fechaHora',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
-                      Text(
+                      const Text(
                         '12/12/2012 12:12:12',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
@@ -379,17 +334,11 @@ class _CardDoc extends StatelessWidget {
                           BlockTranslate.fecha,
                           'fechaDoc',
                         ),
-                        style: AppTheme.style(
-                          context,
-                          Styles.bold,
-                        ),
+                        style: StyleApp.normalBold,
                       ),
-                      Text(
+                      const Text(
                         '12/12/2012 12:12:12',
-                        style: AppTheme.style(
-                          context,
-                          Styles.normal,
-                        ),
+                        style: StyleApp.normal,
                       ),
                     ],
                   ),
