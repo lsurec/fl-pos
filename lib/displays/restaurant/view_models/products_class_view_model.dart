@@ -70,10 +70,13 @@ class ProductsClassViewModel extends ChangeNotifier {
     //si no se encontrarin bodegas mostrar mensaje
     if (vmDetails.bodegas.isEmpty) {
       isLoading = false;
-      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'sinBodegaP',
-      ));
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+
       return;
     }
 

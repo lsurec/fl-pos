@@ -5,6 +5,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 
 class PermisionsViewModel extends ChangeNotifier {
   //manejar flujo del procesp
@@ -101,15 +102,22 @@ class PermisionsViewModel extends ChangeNotifier {
       RespLogin accionValida = resTipoAccion.response;
       if (!accionValida.data) {
         NotificationService.showSnackbar(
-            "El usuario ${respLogin.user} no posee permisos para esta acción.");
+          "${AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'sinPermisos',
+          )} ${respLogin.user}.",
+        );
 
         isLoading = false;
         return;
       }
 
       //Navegar a select ubicacion
-      Navigator.pushNamed(context, AppRoutes.selectLocation,
-          arguments: tipoAccion);
+      Navigator.pushNamed(
+        context,
+        AppRoutes.selectLocation,
+        arguments: tipoAccion,
+      );
 
       isLoading = false;
     } else {

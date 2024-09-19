@@ -11,7 +11,8 @@ import 'package:flutter_post_printer_example/displays/restaurant/view_models/vie
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
-import 'package:flutter_post_printer_example/services/notification_service.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
+import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -115,7 +116,11 @@ class TransferSummaryViewModel extends ChangeNotifier {
     tablesVM.restartTable();
 
     NotificationService.showSnackbar(
-        "Trnsacciones trsaladadas correctamente."); //TODO:Translate
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'traTrasladadas',
+      ),
+    );
 
     //si en dcouemnto rorigen hay transacciones regresar,
     if (orderVM.orders[indexOrderOrigin].transacciones.isNotEmpty) {
@@ -199,9 +204,18 @@ class TransferSummaryViewModel extends ChangeNotifier {
 
     if (error > 0) {
       NotificationService.showSnackbar(
-          "Algunas cuentas no se pudieron tranferir en el servidor.");
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cuentasNoTransferidasServidor',
+        ),
+      );
     } else {
-      NotificationService.showSnackbar("Cuentas tranferidas con éxito");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'cuentasTransferidas',
+        ),
+      );
     }
 
     Navigator.popUntil(context, ModalRoute.withName(AppRoutes.tables));
@@ -268,17 +282,32 @@ class TransferSummaryViewModel extends ChangeNotifier {
     if (!resDest.succes || !resOrigen.succes) {
       if (!resDest.succes && !resOrigen.succes) {
         NotificationService.showSnackbar(
-            "El documento origen y destino no se actualizó.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'documentosSinActualizar',
+          ),
+        );
+
         return;
       }
 
       if (!resDest.succes) {
         NotificationService.showSnackbar(
-            "El documento  destino no se actualizó.");
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'docDestinoNoActualizado',
+          ),
+        );
         return;
       }
 
-      NotificationService.showSnackbar("El documento origen no se actualizó.");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'docOrigenNoActualizado',
+        ),
+      );
+
       return;
     }
 

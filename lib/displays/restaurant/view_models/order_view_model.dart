@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -315,7 +314,10 @@ class OrderViewModel extends ChangeNotifier {
         isLoading = false;
 
         NotificationService.showSnackbar(
-          "No se pudo actalizar documento estructura",
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'docEstrucNoActualizado',
+          ),
         );
 
         return;
@@ -345,7 +347,12 @@ class OrderViewModel extends ChangeNotifier {
 
     await printNetwork(context, indexOrder);
 
-    NotificationService.showSnackbar("Comanda enviada");
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'comandaEnviada',
+      ),
+    );
   }
 
   printNetwork(
@@ -587,10 +594,12 @@ class OrderViewModel extends ChangeNotifier {
       } catch (e) {
         isLoading = false;
         NotificationService.showSnackbar(
-            AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'noImprimio',
-        ));
+          AppLocalizations.of(context)!.translate(
+            BlockTranslate.notificacion,
+            'noImprimio',
+          ),
+        );
+
         return;
       }
     }
@@ -664,10 +673,13 @@ class OrderViewModel extends ChangeNotifier {
     //si no se encontrarin bodegas mostrar mensaje
     if (vmDetails.bodegas.isEmpty) {
       isLoading = false;
-      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'sinBodegaP',
-      ));
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+
       return;
     }
 
@@ -858,11 +870,20 @@ class OrderViewModel extends ChangeNotifier {
           notifyListeners();
           if (comandadas != 0) {
             NotificationService.showSnackbar(
-                "Las transaciones comandadas no se pueden modificar.");
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'comandadasNoModificar',
+              ),
+            );
             return;
           }
 
-          NotificationService.showSnackbar("Transacciones eliminadas");
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'traEliminadas',
+            ),
+          );
         },
         onCancel: () => Navigator.pop(context),
       ),
@@ -889,7 +910,13 @@ class OrderViewModel extends ChangeNotifier {
             isSelectedMode = false;
           }
 
-          NotificationService.showSnackbar("Transaccion eliminada");
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'traEliminada',
+            ),
+          );
+
           notifyListeners();
         },
         onCancel: () => Navigator.pop(context),
@@ -931,7 +958,12 @@ class OrderViewModel extends ChangeNotifier {
   ) {
     orders[idexOrder].transacciones.add(transaction);
     Navigator.popUntil(context, ModalRoute.withName(AppRoutes.productsClass));
-    NotificationService.showSnackbar("Producto agregado");
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'productoAgregado',
+      ),
+    );
 
     notifyListeners();
   }

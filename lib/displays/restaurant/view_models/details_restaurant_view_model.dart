@@ -182,7 +182,11 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       if (node.children.isNotEmpty) {
         if (node.selected == null) {
           NotificationService.showSnackbar(
-              "Selecciona una opcion (${node.item?.descripcion})");
+            "${AppLocalizations.of(context)!.translate(
+              BlockTranslate.factura,
+              'opcion',
+            )} (${node.item?.descripcion})",
+          );
           return;
         }
       }
@@ -228,7 +232,13 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       formValues["observacion"] = "";
 
       Navigator.pop(context);
-      NotificationService.showSnackbar("Producto modificado");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'productoModificado',
+        ),
+      );
+
       return;
     }
 
@@ -250,7 +260,12 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       formValues["observacion"] = "";
 
       Navigator.pop(context);
-      NotificationService.showSnackbar("Producto agregado");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'productoAgregado',
+        ),
+      );
 
       return;
     }
@@ -261,7 +276,12 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
       formValues["observacion"] = "";
 
       Navigator.pop(context);
-      NotificationService.showSnackbar("Producto agregado");
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'productoAgregado',
+        ),
+      );
 
       return;
     }
@@ -343,10 +363,13 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     //si no se encontrarin bodegas mostrar mensaje
     if (vmDetails.bodegas.isEmpty) {
       isLoading = false;
-      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'sinBodegaP',
-      ));
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinBodegaP',
+        ),
+      );
+
       return;
     }
 

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
 import 'package:flutter_pos_printer_platform/flutter_pos_printer_platform.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_post_printer_example/utilities/translate_block_utilities
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
+    // ignore: library_prefixes
     as AppData;
 
 class SelectAccountViewModel extends ChangeNotifier {
@@ -312,10 +315,13 @@ class SelectAccountViewModel extends ChangeNotifier {
       );
     } catch (e) {
       // isLoading = false;
-      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'noImprimio',
-      ));
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'noImprimio',
+        ),
+      );
+
       return;
     }
   }
@@ -357,7 +363,12 @@ class SelectAccountViewModel extends ChangeNotifier {
 
     if (orderVM.orders[index].transacciones.isEmpty) {
       NotificationService.showSnackbar(
-          "No hay transacciones para mostrar"); //TODO:Translate
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'sinTransaccionesMostrar',
+        ),
+      );
+
       return;
     }
 
@@ -400,9 +411,12 @@ class SelectAccountViewModel extends ChangeNotifier {
             transferVM.locationOrigin!.elementoAsignado ==
                 transferVM.locationDest!.elementoAsignado &&
             transferVM.indexOrderOrigin == index) {
-          //TODO: Translate
           NotificationService.showSnackbar(
-              "La transaccion ya existe en esta cuenta");
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'traExisteCuenta',
+            ),
+          );
           return;
         }
 
@@ -521,11 +535,20 @@ class SelectAccountViewModel extends ChangeNotifier {
 
           if (comandada != 0) {
             NotificationService.showSnackbar(
-                "Cuentas comandadas no se pueden modificar.");
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.notificacion,
+                'comandadasNoModificar',
+              ),
+            );
             return;
           }
 
-          NotificationService.showSnackbar("Cuentas eliminadas");
+          NotificationService.showSnackbar(
+            AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'cuentasEliminadas',
+            ),
+          );
         },
         onCancel: () => Navigator.pop(context),
       ),
