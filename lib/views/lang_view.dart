@@ -65,14 +65,17 @@ class LangView extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     if (AppLocalizations.cambiarIdioma == 0)
-                      ElevatedButton(
-                        onPressed: () => vm.reiniciarTemp(context),
-                        child: Text(
-                          AppLocalizations.of(context)!.translate(
-                            BlockTranslate.botones,
-                            "continuar",
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () => vm.reiniciarTemp(context),
+                          child: Text(
+                            AppLocalizations.of(context)!.translate(
+                              BlockTranslate.calendario,
+                              "siguiente",
+                            ),
+                            style: StyleApp.whiteBold,
                           ),
-                          style: StyleApp.whiteBold,
                         ),
                       ),
                   ],

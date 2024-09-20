@@ -75,17 +75,20 @@ class ThemeView extends StatelessWidget {
                       height: 15,
                     ),
                     //Navegar a API
-                    ElevatedButton(
-                      onPressed: () => Navigator.pushNamed(
-                        context,
-                        AppRoutes.api,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)!.translate(
-                          BlockTranslate.botones,
-                          "continuar",
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.api,
                         ),
-                        style: StyleApp.whiteBold,
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(
+                            BlockTranslate.calendario,
+                            "siguiente",
+                          ),
+                          style: StyleApp.whiteBold,
+                        ),
                       ),
                     ),
                   ],
