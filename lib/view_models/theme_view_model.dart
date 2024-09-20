@@ -4,12 +4,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
-import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:restart_app/restart_app.dart';
 
 class ThemeViewModel extends ChangeNotifier {
@@ -24,65 +22,6 @@ class ThemeViewModel extends ChangeNotifier {
 
   back(BuildContext context) {
     Navigator.pop(context);
-  }
-
-  nuevoTema(BuildContext context, ThemeModel tema) async {
-    final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final bool isDarkMode = brightness == Brightness.dark;
-    final bool isLightMode = brightness == Brightness.light;
-
-    if (AppTheme.cambiarTema == 1 && tema.id != Preferences.idLanguage) {
-      //mostrar dialogo de confirmacion
-      bool result = await showDialog(
-            context: context,
-            builder: (context) => AlertWidget(
-              textOk: AppLocalizations.of(context)!.translate(
-                BlockTranslate.botones,
-                "reiniciar",
-              ),
-              textCancel: AppLocalizations.of(context)!.translate(
-                BlockTranslate.botones,
-                "cancelar",
-              ),
-              title: AppLocalizations.of(context)!.translate(
-                BlockTranslate.home,
-                "tema",
-              ),
-              description: AppLocalizations.of(context)!.translate(
-                BlockTranslate.notificacion,
-                "reiniciar",
-              ),
-              onOk: () => Navigator.of(context).pop(true),
-              onCancel: () => Navigator.of(context).pop(false),
-            ),
-          ) ??
-          false;
-
-      if (!result) return;
-
-      AppTheme.idTema = tema.id;
-      Preferences.idTheme = tema.id.toString();
-
-      notifyListeners();
-
-      isLoading = true;
-      timer = Timer(const Duration(milliseconds: 1500), () {
-        // Ocultar teclado y reiniciar App
-        FocusScope.of(context).unfocus(); //ocultar teclado
-        reiniciarApp();
-      });
-    }
-
-    if (tema.id == 0 && isLightMode) {
-      Preferences.systemTheme = "1";
-    } else if (tema.id == 0 && isDarkMode) {
-      Preferences.systemTheme = "2";
-    }
-
-    AppTheme.idTema = tema.id;
-    Preferences.idTheme = tema.id.toString();
-
-    notifyListeners();
   }
 
   List<ThemeModel> temasApp(BuildContext context) {
@@ -123,80 +62,9 @@ class ThemeViewModel extends ChangeNotifier {
 
   Timer? timer; // Temporizador
 
-  void reiniciarTemp(BuildContext context) {
-    final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    final bool isDarkMode = brightness == Brightness.dark;
-    final bool isLightMode = brightness == Brightness.light;
-
-    if (Preferences.idTheme.isEmpty && isLightMode) {
-      Preferences.idTheme = "0";
-      Preferences.systemTheme = "1";
-      notifyListeners();
-
-      Navigator.pushNamed(context, AppRoutes.api);
-      return;
-    }
-
-    if (Preferences.idTheme.isEmpty && isDarkMode) {
-      Preferences.idTheme = "0";
-      Preferences.systemTheme = "2";
-      notifyListeners();
-      Navigator.pushNamed(context, AppRoutes.api);
-      return;
-    }
-
-    isLoading = true;
-    timer = Timer(const Duration(milliseconds: 1500), () {
-      // Ocultar teclado y reiniciar App
-      FocusScope.of(context).unfocus(); //ocultar teclado
-      reiniciarApp();
-    });
-  }
-
   reiniciarApp() {
     /// Fill webOrigin only when your new origin is different than the app's origin
     Restart.restartApp();
-  }
-
-  Icon getThemeIcon(BuildContext context, String tema) {
-    // Encontrar el tema del dispositivo
-    final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    // si es oscuro
-    final bool isDarkMode = brightness == Brightness.dark;
-
-    if (Preferences.idTheme == "0") {
-      // Si no coincide con "1" o "2", usar la lógica original
-      tema = isDarkMode ? "2" : "1";
-    }
-    // Verificar si Preferences.systemTheme tiene longitud mayor que 0
-    else if (Preferences.systemTheme.isNotEmpty && AppTheme.idTema == 0) {
-      // Determinar el tema a utilizar basado en Preferences.systemTheme
-      switch (Preferences.systemTheme) {
-        case "1":
-          tema = "1"; // Tema claro
-          break;
-        case "2":
-          tema = "2"; // Tema oscuro
-          break;
-        default:
-          // Si no coincide con "1" o "2", usar la lógica original
-          tema = isDarkMode ? "2" : "1";
-          break;
-      }
-    }
-
-    if (tema == "1") {
-      return const Icon(
-        Icons.light_mode_outlined,
-      );
-    } else if (tema == "2") {
-      return const Icon(
-        Icons.dark_mode_outlined,
-      );
-    }
-    return const Icon(
-      Icons.light_mode_outlined,
-    );
   }
 
   ThemeData selectedPreferencesTheme = LightTheme.lightTheme;
