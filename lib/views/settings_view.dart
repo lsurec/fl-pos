@@ -47,7 +47,6 @@ class SettingsView extends StatelessWidget {
               Column(
                 children: [
                   ListTile(
-                    contentPadding: EdgeInsets.zero,
                     title: Text(
                       vmLogin.user.toUpperCase(),
                       style: StyleApp.normal,

@@ -19,8 +19,11 @@ class AppearenceView extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            title: const Text(
-              "Apariencia",
+            title: Text(
+              AppLocalizations.of(context)!.translate(
+                BlockTranslate.preferencias,
+                'apariencia',
+              ),
             ),
           ),
           body: SingleChildScrollView(
