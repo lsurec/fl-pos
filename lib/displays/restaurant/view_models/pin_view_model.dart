@@ -67,6 +67,7 @@ class PinViewModel extends ChangeNotifier {
     final List<AccountPinModel> waiters = resPin.response;
 
     if (waiters.isEmpty) {
+      isLoading = false;
       //TODO:Transalte
       NotificationService.showSnackbar("Pin invalido.");
       return;
