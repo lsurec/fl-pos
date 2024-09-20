@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
@@ -22,6 +23,17 @@ class ThemeViewModel extends ChangeNotifier {
 
   back(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  navegarApi(BuildContext context) {
+    Preferences.idThemeApp = AppTheme.idTema.toString();
+
+    print(Preferences.idThemeApp);
+
+    Navigator.pushNamed(
+      context,
+      AppRoutes.api,
+    );
   }
 
   List<ThemeModel> temasApp(BuildContext context) {
