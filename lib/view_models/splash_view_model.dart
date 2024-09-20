@@ -100,7 +100,7 @@ class SplashViewModel extends ChangeNotifier {
     }
 
     //sino hay tema seleccionado, mostrar pantalla de temas
-    if (Preferences.idTheme.isEmpty) {
+    if (Preferences.idThemeApp.isEmpty) {
       print("2 Thema");
 
       await Future.delayed(const Duration(seconds: 1));

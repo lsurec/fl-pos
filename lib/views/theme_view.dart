@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
@@ -63,23 +64,33 @@ class ThemeView extends StatelessWidget {
                           ),
                           value: index,
                           groupValue: AppTheme.idTema,
-                          onChanged: (int? value) => vm.reiniciarTemp(
+                          onChanged: (int? value) => vm.validarColorTema(
                             context,
+                            theme.id,
                           ),
                         );
                       },
                     ),
-                    if (AppTheme.cambiarTema == 0)
-                      ElevatedButton(
-                        onPressed: () => vm.reiniciarTemp(context),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    //Navegar a API
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.api,
+                        ),
                         child: Text(
                           AppLocalizations.of(context)!.translate(
-                            BlockTranslate.botones,
-                            "continuar",
+                            BlockTranslate.calendario,
+                            "siguiente",
                           ),
                           style: StyleApp.whiteBold,
                         ),
                       ),
+                    ),
                   ],
                 ),
               ),
