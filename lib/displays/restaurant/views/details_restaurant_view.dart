@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/models/models.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/widgets/widgets.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
@@ -380,25 +381,14 @@ class DetailsRestaurantView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (vm.treeGarnish.isNotEmpty)
-                    Container(
-                      color: AppTheme.isDark()
-                          ? AppTheme.darkSeparador
-                          : AppTheme.separador,
-                      height: 10,
-                    ),
+                  if (vm.treeGarnish.isNotEmpty) const Separator10Widget(),
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: vm.treeGarnish.length,
                     separatorBuilder: (BuildContext context, _) {
-                      return Container(
-                        color: AppTheme.isDark()
-                            ? AppTheme.darkSeparador
-                            : AppTheme.separador,
-                        height: 10,
-                      );
+                      return const Separator10Widget();
                     },
                     itemBuilder: (BuildContext context, int indexFather) {
                       return Padding(
@@ -495,12 +485,7 @@ class DetailsRestaurantView extends StatelessWidget {
                       );
                     },
                   ),
-                  Container(
-                    color: AppTheme.isDark()
-                        ? AppTheme.darkSeparador
-                        : AppTheme.separador,
-                    height: 10,
-                  ),
+                  const Separator10Widget(),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10,
