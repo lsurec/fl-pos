@@ -22,7 +22,7 @@ class LocationsView extends StatelessWidget {
             title: Text(
               AppLocalizations.of(context)!.translate(
                 BlockTranslate.restaurante,
-                'ubicaciones',
+                'ubicacionesT',
               ),
               style: StyleApp.title,
             ),

@@ -78,6 +78,7 @@ class ProductClassView extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
                       RegisterCountWidget(count: vm.totalLength),
                     ],
                   ),

@@ -72,6 +72,7 @@ class _TablesViewState extends State<TablesView> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 10),
                       RegisterCountWidget(count: vm.tables.length),
                     ],
                   ),
