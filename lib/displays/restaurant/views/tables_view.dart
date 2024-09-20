@@ -19,12 +19,12 @@ class _TablesViewState extends State<TablesView> {
   @override
   void initState() {
     super.initState();
-    // Conexión al WebSocket cuando se entra a la pantalla
-    final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
-      context,
-      listen: false,
-    );
-    tablesVM.connectWebSocket(context);
+    // // Conexión al WebSocket cuando se entra a la pantalla
+    // final TablesViewModel tablesVM = Provider.of<TablesViewModel>(
+    //   context,
+    //   listen: false,
+    // );
+    // tablesVM.connectWebSocket(context);
   }
 
   @override
