@@ -75,6 +75,10 @@ class ProductViewModel extends ChangeNotifier {
     Navigator.pop(context);
   }
 
+  String addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
   //navegar a pantalla producto
   void navigateProduct(
     BuildContext context,
@@ -219,18 +223,32 @@ class ProductViewModel extends ChangeNotifier {
     int cantidadDias = 0;
 
     //Si el docuemnto tiene fecha inicio y fecha fin, parametro 44, calcular el precio por dias
-    if (docVM.valueParametro(44)) {
+    if (docVM.valueParametro(44) && product.tipoProducto != 2) {
       //vobtener fechas
 
       if (Utilities.fechaIgualOMayorSinSegundos(
         docVM.fechaFinal,
         docVM.fechaInicial,
       )) {
+        DateTime fechaIni = docVM.fechaInicial;
+        DateTime fechaFin = docVM.fechaFinal;
+
+        String startDate = addLeadingZero(fechaIni.day);
+        String startMonth = addLeadingZero(fechaIni.month);
+        String endDate = addLeadingZero(fechaFin.day);
+        String endMonth = addLeadingZero(fechaFin.month);
+
+        String dateStart = "${fechaIni.year}$startMonth$startDate "
+            "${addLeadingZero(fechaIni.hour)}:${addLeadingZero(fechaIni.minute)}:${addLeadingZero(fechaIni.second)}";
+
+        String dateEnd = "${fechaFin.year}$endMonth$endDate "
+            "${addLeadingZero(fechaFin.hour)}:${addLeadingZero(fechaFin.minute)}:${addLeadingZero(fechaFin.second)}";
+
         //formular precios por dias
         ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
           token,
-          docVM.fechaInicial,
-          docVM.fechaFinal,
+          dateStart,
+          dateEnd,
           total.toString(),
         );
 
@@ -1123,14 +1141,28 @@ class ProductViewModel extends ChangeNotifier {
     double precioDias = 0;
     int cantidadDias = 0;
 
-    if (docVM.valueParametro(44)) {
+    if (docVM.valueParametro(44) && product.tipoProducto != 2) {
       if (Utilities.fechaIgualOMayorSinSegundos(
           docVM.fechaFinal, docVM.fechaInicial)) {
+        DateTime fechaIni = docVM.fechaInicial;
+        DateTime fechaFin = docVM.fechaFinal;
+
+        String startDate = addLeadingZero(fechaIni.day);
+        String startMonth = addLeadingZero(fechaIni.month);
+        String endDate = addLeadingZero(fechaFin.day);
+        String endMonth = addLeadingZero(fechaFin.month);
+
+        String dateStart = "${fechaIni.year}$startMonth$startDate "
+            "${addLeadingZero(fechaIni.hour)}:${addLeadingZero(fechaIni.minute)}:${addLeadingZero(fechaIni.second)}";
+
+        String dateEnd = "${fechaFin.year}$endMonth$endDate "
+            "${addLeadingZero(fechaFin.hour)}:${addLeadingZero(fechaFin.minute)}:${addLeadingZero(fechaFin.second)}";
+
         //formular precios por dias
         ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
           token,
-          docVM.fechaInicial,
-          docVM.fechaFinal,
+          dateStart,
+          dateEnd,
           total.toString(),
         );
 

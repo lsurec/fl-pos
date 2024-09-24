@@ -501,6 +501,10 @@ class ConvertDocViewModel extends ChangeNotifier {
     return;
   }
 
+  String addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
   editarNewDocumento(
     BuildContext context,
     OriginDocModel originalDoc,
@@ -865,11 +869,25 @@ class ConvertDocViewModel extends ChangeNotifier {
       double precioDias = 0;
       int cantidadDias = 0;
 
-      if (vmDocumento.valueParametro(351)) {
+      if (vmDocumento.valueParametro(44) && prod.tipoProducto != 2) {
+        DateTime fechaIni = vmDocumento.fechaInicial;
+        DateTime fechaFin = vmDocumento.fechaFinal;
+
+        String startDate = addLeadingZero(fechaIni.day);
+        String startMonth = addLeadingZero(fechaIni.month);
+        String endDate = addLeadingZero(fechaFin.day);
+        String endMonth = addLeadingZero(fechaFin.month);
+
+        String dateStart = "${fechaIni.year}$startMonth$startDate "
+            "${addLeadingZero(fechaIni.hour)}:${addLeadingZero(fechaIni.minute)}:${addLeadingZero(fechaIni.second)}";
+
+        String dateEnd = "${fechaFin.year}$endMonth$endDate "
+            "${addLeadingZero(fechaFin.hour)}:${addLeadingZero(fechaFin.minute)}:${addLeadingZero(fechaFin.second)}";
+
         ApiResModel resFormulaPrecio = await productService.getFormulaPrecioU(
           token,
-          vmDocumento.fechaInicial,
-          vmDocumento.fechaFinal,
+          dateStart,
+          dateEnd,
           precioSelect.precioU.toString(),
         );
 
