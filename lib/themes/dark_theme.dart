@@ -32,6 +32,9 @@ class DarkTheme {
     dividerTheme: const DividerThemeData(
       color: AppTheme.dividerDark,
     ),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.white,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
         textStyle: MaterialStateProperty.all<TextStyle>(
