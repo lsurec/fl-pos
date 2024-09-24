@@ -145,7 +145,9 @@ class _UsuariosEncontados extends StatelessWidget {
                       ),
                       RichText(
                         text: TextSpan(
-                          style: StyleApp.normal,
+                          style: StyleApp.normal.copyWith(
+                            color: Theme.of(context).textTheme.bodyText1!.color,
+                          ),
                           children: [
                             TextSpan(
                               text: AppLocalizations.of(context)!.translate(
@@ -156,7 +158,12 @@ class _UsuariosEncontados extends StatelessWidget {
                             const TextSpan(text: ": "),
                             TextSpan(
                               text: usuario.email,
-                              style: StyleApp.normalBold,
+                              style: StyleApp.normalBold.copyWith(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1!
+                                    .color,
+                              ),
                             ),
                           ],
                         ),

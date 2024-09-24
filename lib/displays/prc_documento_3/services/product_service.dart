@@ -334,8 +334,8 @@ class ProductService {
   //calcular precio por dias
   Future<ApiResModel> getFormulaPrecioU(
     String token,
-    DateTime fechaIni,
-    DateTime fechaFin,
+    String fechaIni,
+    String fechaFin,
     String precioU,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Producto/formula/precio/unitario");
@@ -346,8 +346,8 @@ class ProductService {
         url,
         headers: {
           "Authorization": "bearer $token",
-          "fechaIni": fechaIni.toIso8601String(),
-          "fechaFin": fechaFin.toIso8601String(),
+          "fechaIni": fechaIni,
+          "fechaFin": fechaFin,
           "precioU": precioU
         },
       );

@@ -109,12 +109,12 @@ class _MyDrawer extends StatelessWidget {
                       Text(
                         route.name,
                         style: index == routeMenu.length - 1
-                            ? (AppTheme.isDark()
+                            ? StyleApp.normal.copyWith(
+                                color: Theme.of(context).primaryColor,
+                              )
+                            : (AppTheme.isDark()
                                 ? StyleApp.whiteMenuNormal
-                                : StyleApp.normal.copyWith(
-                                    color: Theme.of(context).primaryColor,
-                                  ))
-                            : StyleApp.normal,
+                                : StyleApp.normal),
                       ),
                       const Icon(
                         Icons.arrow_right,
