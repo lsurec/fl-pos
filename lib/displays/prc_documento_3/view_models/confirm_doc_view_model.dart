@@ -951,10 +951,14 @@ class ConfirmDocViewModel extends ChangeNotifier {
     if (dataFel.isNotEmpty) {
       final DataFelModel fel = dataFel.first;
 
+      DateTime fechaAnt = fel.fechaHoraCertificacion;
+
+      String strDate = "${fechaAnt.day}/${fechaAnt.month}/${fechaAnt.year} "
+          "${fechaAnt.hour}:${fechaAnt.minute}:${fechaAnt.second}";
+
       docGlobal!.docFelSerie = fel.serieDocumento;
       docGlobal!.docFelUUID = fel.numeroAutorizacion;
-      docGlobal!.docFelFechaCertificacion =
-          fel.fechaHoraCertificacion.toIso8601String();
+      docGlobal!.docFelFechaCertificacion = strDate;
       docGlobal!.docFelNumeroDocumento = fel.numeroDocumento;
 
       final PostDocumentModel estructuraupdate = PostDocumentModel(

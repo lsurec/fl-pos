@@ -942,6 +942,10 @@ class DocumentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  String addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
   validarFecha(BuildContext context) async {
     final vmDetails = Provider.of<DetailsViewModel>(context, listen: false);
 
@@ -962,11 +966,25 @@ class DocumentViewModel extends ChangeNotifier {
 
             ProductService productService = ProductService();
 
+            DateTime fechaIni = fechaInicial;
+            DateTime fechaFin = fechaFinal;
+
+            String startDate = addLeadingZero(fechaIni.day);
+            String startMonth = addLeadingZero(fechaIni.month);
+            String endDate = addLeadingZero(fechaFin.day);
+            String endMonth = addLeadingZero(fechaFin.month);
+
+            String dateStart = "${fechaIni.year}$startMonth$startDate "
+                "${addLeadingZero(fechaIni.hour)}:${addLeadingZero(fechaIni.minute)}:${addLeadingZero(fechaIni.second)}";
+
+            String dateEnd = "${fechaFin.year}$endMonth$endDate "
+                "${addLeadingZero(fechaFin.hour)}:${addLeadingZero(fechaFin.minute)}:${addLeadingZero(fechaFin.second)}";
+
             // Suponiendo que getFormulaPrecioU es una función asíncrona que devuelve un Future<ResApiInterface>
             ApiResModel res = await productService.getFormulaPrecioU(
               token,
-              fechaInicial,
-              fechaFinal,
+              dateStart,
+              dateEnd,
               tra.precioCantidad!.toString(),
             );
 
