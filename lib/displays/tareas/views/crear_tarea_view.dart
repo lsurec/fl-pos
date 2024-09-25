@@ -22,8 +22,6 @@ class CrearTareaView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
 
-    final List<UsuarioModel> usuariosEncontrados = vm.invitados;
-
     return Stack(
       children: [
         Scaffold(
@@ -539,8 +537,7 @@ class CrearTareaView extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: vm.invitados.length,
                           itemBuilder: (BuildContext context, int index) {
-                            final UsuarioModel usuario =
-                                usuariosEncontrados[index];
+                            final UsuarioModel usuario = vm.invitados[index];
                             return Column(
                               children: [
                                 ListTile(

@@ -1004,40 +1004,47 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
-  //Guardar usuario
-  guardarUsuarios(
-    BuildContext context,
-  ) {
-    //View model de usuarios
-    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+  guardarInvitados(
+  BuildContext context,
+) {
+  final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
 
-    //Limpiar lista de usuarios seleccionados
-    vmUsuarios.usuariosSeleccionados.clear();
+  // Limpiar lista de usuarios seleccionados
+  vmUsuarios.usuariosSeleccionados.clear();
+  // invitados.clear();
 
-    //Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
-    for (var usuario in vmUsuarios.usuarios) {
-      if (usuario.select) {
-        vmUsuarios.usuariosSeleccionados.add(usuario);
-      }
+  // Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
+  for (var usuario in vmUsuarios.usuarios) {
+    if (usuario.select) {
+      vmUsuarios.usuariosSeleccionados.add(usuario);
     }
-
-    //Si hay usuarios seleccionados agrefarlos a la lista de invitados
-    if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
-      invitados.addAll(vmUsuarios.usuariosSeleccionados);
-      Navigator.pop(context);
-    }
-
-    notifyListeners();
   }
 
-  guardarInvitados(
+  if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
+    // Evitar agregar duplicados a la lista de invitados
+    for (var usuario in vmUsuarios.usuariosSeleccionados) {
+      if (!invitados.contains(usuario)) {
+        invitados.add(usuario);
+      }
+    }
+  }
+
+  // Notificar a los listeners de los cambios
+  notifyListeners();
+
+  // Regresar al formulario para crear
+  Navigator.pop(context);
+}
+
+
+  guardarInvitadoss(
     BuildContext context,
   ) {
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
 
     //Limpiar lista de usuarios seleccionados
     vmUsuarios.usuariosSeleccionados.clear();
-    invitados.clear();
+    // invitados.clear();
 
     //Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
     for (var usuario in vmUsuarios.usuarios) {

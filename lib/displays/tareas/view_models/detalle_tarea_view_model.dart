@@ -432,24 +432,6 @@ class DetalleTareaViewModel extends ChangeNotifier {
     return res;
   }
 
-  //Invitados button
-  invitadosButton(
-    BuildContext context,
-    int tipoBusqueda,
-  ) {
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
-
-    if (tipoBusqueda == 4) {
-      //Agregar invitados a la tarea desde detalles
-      guardarInvitados(context);
-    }
-
-    if (tipoBusqueda == 2) {
-      //Guardar invitados de la tarea desde detalle
-      vmCrear.guardarInvitados(context);
-    }
-  }
-
   //Guardar nuevos invitados
   Future<ApiResModel> guardarInvitados(
     BuildContext context,

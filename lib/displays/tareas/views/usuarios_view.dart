@@ -17,21 +17,21 @@ class UsuariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
 
     final String titulo = ModalRoute.of(context)!.settings.arguments as String;
 
     return WillPopScope(
-      onWillPop: () => vm.back(context),
+      onWillPop: () => vm.back(),
       child: Stack(
         children: [
           Scaffold(
             //Mostrar boton solo cuando se buscan invitados
             floatingActionButton: vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
                 ? FloatingActionButton(
-                    onPressed: () => vmDetalle.invitadosButton(
-                      context,
-                      vm.tipoBusqueda,
-                    ),
+                    onPressed: () => vm.tipoBusqueda == 2
+                        ? vmCrear.guardarInvitados(context)
+                        : vmDetalle.guardarInvitados(context),
                     child: const Icon(
                       Icons.group_add_rounded,
                     ),
@@ -81,8 +81,15 @@ class UsuariosView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          Text(
+                            "${AppLocalizations.of(context)!.translate(
+                              BlockTranslate.general,
+                              'seleccionados',
+                            )} (${vmCrear.invitados.length})",
+                            style: StyleApp.normalBold,
+                          ),
                           Text(
                             "${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
@@ -189,6 +196,7 @@ class _InvitadosEncontrados extends StatelessWidget {
                         ),
                         value: usuario.select,
                         onChanged: (value) => vm.changeChecked(
+                          context,
                           value,
                           index,
                         ),

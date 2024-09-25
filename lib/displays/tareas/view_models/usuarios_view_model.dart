@@ -33,17 +33,9 @@ class UsuariosViewModel extends ChangeNotifier {
   final List<UsuarioModel> usuariosSeleccionados = [];
 
   //Regresar a la pantalla anterior y limpiar
-  Future<bool> back(BuildContext context) async {
-    final vmCrear = Provider.of<CrearTareaViewModel>(
-      context,
-      listen: false,
-    );
-
-    vmCrear.invitados.clear();
-
+  Future<bool> back() async {
     buscar.clear();
     usuarios.clear();
-    usuariosSeleccionados.clear();
     buscar.clear();
     return true;
   }
@@ -117,7 +109,7 @@ class UsuariosViewModel extends ChangeNotifier {
       buscar.text = '';
     }
     //Marcar a los invitados en la tarea desde detalle tarea
-    if (vmCrear.invitados.length > 1) {
+    if (vmCrear.invitados.isNotEmpty) {
       // Recorrer la lista de usuarios y marcar los seleccionados
       for (var usuario in usuarios) {
         for (var invitado in vmCrear.invitados) {
@@ -131,7 +123,7 @@ class UsuariosViewModel extends ChangeNotifier {
     }
 
     //Marcar a los invitados en la tarea desde detalle tarea calendario
-    if (vmDetalleCalendario.invitados.length > 1) {
+    if (vmDetalleCalendario.invitados.isNotEmpty) {
       // Recorrer la lista de usuarios y marcar los seleccionados
       for (var usuario in usuarios) {
         for (var invitado in vmDetalleCalendario.invitados) {
@@ -161,9 +153,20 @@ class UsuariosViewModel extends ChangeNotifier {
   }
 
   //Marcar o desmarcar check de los usuarios
-  void changeChecked(bool? value, int index) {
+  void changeChecked(BuildContext context, bool? value, int index) {
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
     // Invertir el valor actual
     usuarios[index].select = !usuarios[index].select;
+
+    if (usuarios.isNotEmpty) {
+      // Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
+      for (var usuario in usuarios) {
+        if (usuario.select) {
+          vmCrear.invitados.add(usuario);
+        }
+      }
+    }
     notifyListeners();
   }
 }
