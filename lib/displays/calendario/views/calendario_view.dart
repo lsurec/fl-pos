@@ -54,14 +54,6 @@ class _CalendarioViewState extends State<CalendarioView> {
                   ),
                   style: StyleApp.normalBold,
                 ),
-                IconButton(
-                  onPressed: () => vm.loadData(context),
-                  icon: const Icon(Icons.today),
-                  tooltip: AppLocalizations.of(context)!.translate(
-                    BlockTranslate.botones,
-                    'nueva',
-                  ),
-                ),
                 const SizedBox(
                   width: 15,
                 )
@@ -374,21 +366,27 @@ class _NombreDias extends StatelessWidget {
       border: const TableBorder(
         top: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde arriba
         left: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde izquierdo
         right: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde derecho
         bottom: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -427,18 +425,23 @@ class _VistaSemana extends StatelessWidget {
         top: BorderSide.none, // Borde arriba
         left: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde izquierdo
         right: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde derecho
         bottom: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Sin borde abajo
         horizontalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde vertical dentro de la tabla
       ),
       children: List.generate(
@@ -537,13 +540,16 @@ class _VistaMes extends StatelessWidget {
       border: const TableBorder(
         bottom: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ),
         // Mantenemos los bordes interiores y eliminamos el superior
         horizontalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ),
         verticalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ),
         top: BorderSide.none, // Eliminamos el borde superior
       ),
@@ -969,7 +975,8 @@ class _VistaDiaState extends State<_VistaDia> {
                       return CardWidget(
                         margin: const EdgeInsets.only(bottom: 5),
                         elevation: 0.3,
-                        borderWidth: 1.5,
+                        borderWidth: 0.5,
+                        borderColor: AppTheme.border,
                         raidus: 10,
                         child: GestureDetector(
                           onTap: () => vm.navegarDetalleTarea(
@@ -1032,21 +1039,27 @@ class _VistaDiaState extends State<_VistaDia> {
       border: const TableBorder(
         top: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde arriba
         left: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde izquierdo
         right: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde derecho
         bottom: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Bo, // Sin borde abajo
         horizontalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde horizontal dentro de la tabla
         verticalInside: BorderSide(
           color: AppTheme.border,
+          width: 0.5,
         ), // Borde vertical dentro de la tabla
       ),
       columnWidths: const <int, TableColumnWidth>{

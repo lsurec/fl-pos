@@ -940,7 +940,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
 
     //2: para marcar al inivtado
-    if (vmUsuarios.tipoBusqueda == 2) {
+    if (vmUsuarios.tipoBusqueda == 2 || vmUsuarios.tipoBusqueda == 4) {
       usuarioSeleccionado.select = true;
       notifyListeners();
     }

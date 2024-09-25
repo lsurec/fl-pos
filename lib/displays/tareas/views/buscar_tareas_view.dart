@@ -34,10 +34,7 @@ class BuscarTareasView extends StatelessWidget {
                   preferredSize: const Size.fromHeight(2),
                   child: Column(
                     children: [
-                      Container(
-                        color: AppTheme.border,
-                        height: 2,
-                      ),
+                      const Divider(),
                       PreferredSize(
                         preferredSize: const Size.fromHeight(2),
                         child: Padding(

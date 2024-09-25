@@ -18,6 +18,8 @@ class UsuariosView extends StatelessWidget {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
 
+    print(vm.tipoBusqueda);
+
     final String titulo = ModalRoute.of(context)!.settings.arguments as String;
 
     return WillPopScope(
