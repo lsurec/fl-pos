@@ -916,7 +916,7 @@ class CrearTareaViewModel extends ChangeNotifier {
   //Seleccionar responsable
   seleccionarResponsable(
     BuildContext context,
-    UsuarioModel respon,
+    UsuarioModel usuarioSeleccionado,
   ) {
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(
@@ -929,21 +929,30 @@ class CrearTareaViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    //1: si es para seleccionar responsable
+    if (vmUsuarios.tipoBusqueda == 1) {
+      responsable = usuarioSeleccionado;
+      notifyListeners();
+
+      if (responsable != null) {
+        Navigator.pop(context);
+      }
+    }
+
+    //2: para marcar al inivtado
+    if (vmUsuarios.tipoBusqueda == 2) {
+      usuarioSeleccionado.select = true;
+      notifyListeners();
+    }
+
     //Para actualizar usuarios
     if (vmUsuarios.tipoBusqueda == 3) {
-      vmDetalle.cambiarResponsable(context, respon);
+      vmDetalle.cambiarResponsable(context, usuarioSeleccionado);
     }
 
     //5= detalles de la tarea del calendario
     if (vmUsuarios.tipoBusqueda == 5) {
-      vmDetalleCalendario.cambiarResponsable(context, respon);
-    }
-
-    responsable = respon;
-    notifyListeners();
-
-    if (responsable != null) {
-      Navigator.pop(context);
+      vmDetalleCalendario.cambiarResponsable(context, usuarioSeleccionado);
     }
   }
 
