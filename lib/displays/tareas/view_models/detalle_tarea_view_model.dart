@@ -433,18 +433,20 @@ class DetalleTareaViewModel extends ChangeNotifier {
   }
 
   //Invitados button
-  invitadosButton(BuildContext context) {
-    //View model usuarios
-    final vmUsuario = Provider.of<UsuariosViewModel>(context, listen: false);
+  invitadosButton(
+    BuildContext context,
+    int tipoBusqueda,
+  ) {
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
-    if (vmUsuario.tipoBusqueda == 4) {
+    if (tipoBusqueda == 4) {
       //Agregar invitados a la tarea desde detalles
       guardarInvitados(context);
     }
-    if (vmUsuario.tipoBusqueda == 2) {
+
+    if (tipoBusqueda == 2) {
       //Guardar invitados de la tarea desde detalle
-      vmCrear.guardarUsuarios(context);
+      vmCrear.guardarInvitados(context);
     }
   }
 
@@ -837,11 +839,14 @@ class DetalleTareaViewModel extends ChangeNotifier {
 
     isLoading = false;
 
-    // NotificationService.showSnackbar(
-    //   AppLocalizations.of(context)!.translate(
-    //     BlockTranslate.notificacion,
-    //     'responsableActualizado',
-    //   ),
-    // );
+    //Regresar al formulario para crear
+    Navigator.pop(context);
+
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'responsableActualizado',
+      ),
+    );
   }
 }

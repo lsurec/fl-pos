@@ -602,11 +602,14 @@ class DetalleTareaCalendarioViewModel extends ChangeNotifier {
 
     isLoading = false;
 
-    // NotificationService.showSnackbar(
-    //   AppLocalizations.of(context)!.translate(
-    //     BlockTranslate.notificacion,
-    //     'responsableActualizado',
-    //   ),
-    // );
+    //Regresar al formulario para crear
+    Navigator.pop(context);
+
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'responsableActualizado',
+      ),
+    );
   }
 }

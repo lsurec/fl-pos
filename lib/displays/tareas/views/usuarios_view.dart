@@ -18,19 +18,20 @@ class UsuariosView extends StatelessWidget {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
 
-    print(vm.tipoBusqueda);
-
     final String titulo = ModalRoute.of(context)!.settings.arguments as String;
 
     return WillPopScope(
-      onWillPop: () => vm.back(),
+      onWillPop: () => vm.back(context),
       child: Stack(
         children: [
           Scaffold(
             //Mostrar boton solo cuando se buscan invitados
             floatingActionButton: vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
                 ? FloatingActionButton(
-                    onPressed: () => vmDetalle.invitadosButton(context),
+                    onPressed: () => vmDetalle.invitadosButton(
+                      context,
+                      vm.tipoBusqueda,
+                    ),
                     child: const Icon(
                       Icons.group_add_rounded,
                     ),
@@ -92,7 +93,10 @@ class UsuariosView extends StatelessWidget {
                         ],
                       ),
                       const Divider(),
-                      const _UsuariosEncontados()
+                      if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
+                        const _InvitadosEncontrados(),
+                      if (vm.tipoBusqueda == 1 || vm.tipoBusqueda == 3)
+                        const _ResponsablesEncontrados()
                     ],
                   ),
                 ),
@@ -115,8 +119,8 @@ class UsuariosView extends StatelessWidget {
   }
 }
 
-class _UsuariosEncontados extends StatelessWidget {
-  const _UsuariosEncontados();
+class _InvitadosEncontrados extends StatelessWidget {
+  const _InvitadosEncontrados();
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +139,11 @@ class _UsuariosEncontados extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: GestureDetector(
-                onTap: () => vmCrear.seleccionarResponsable(context, usuario),
+                onTap: () => vmCrear.seleccionarUsuario(
+                  context,
+                  usuario,
+                  vm.tipoBusqueda,
+                ),
                 child: ListTile(
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,19 +183,87 @@ class _UsuariosEncontados extends StatelessWidget {
                   ),
                   leading: Column(
                     children: [
-                      if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
-                        Checkbox(
-                          activeColor: AppTheme.hexToColor(
-                            Preferences.valueColor,
-                          ),
-                          value: usuario.select,
-                          onChanged: (value) => vm.changeChecked(
-                            value,
-                            index,
-                          ),
+                      Checkbox(
+                        activeColor: AppTheme.hexToColor(
+                          Preferences.valueColor,
                         ),
+                        value: usuario.select,
+                        onChanged: (value) => vm.changeChecked(
+                          value,
+                          index,
+                        ),
+                      ),
                     ],
                   ),
+                ),
+              ),
+            ),
+            const Divider(),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _ResponsablesEncontrados extends StatelessWidget {
+  const _ResponsablesEncontrados();
+
+  @override
+  Widget build(BuildContext context) {
+    final vmCrear = Provider.of<CrearTareaViewModel>(context);
+    final vm = Provider.of<UsuariosViewModel>(context);
+
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: vm.usuarios.length,
+      itemBuilder: (BuildContext context, int index) {
+        final UsuarioModel usuario = vm.usuarios[index];
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: ListTile(
+                onTap: () => vmCrear.seleccionarUsuario(
+                  context,
+                  usuario,
+                  vm.tipoBusqueda,
+                ),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 5),
+                    Text(
+                      usuario.name,
+                      style: StyleApp.normal,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        style: StyleApp.normal.copyWith(
+                          color: Theme.of(context).textTheme.bodyText1!.color,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: AppLocalizations.of(context)!.translate(
+                              BlockTranslate.cuenta,
+                              'correo',
+                            ),
+                          ),
+                          const TextSpan(text: ": "),
+                          TextSpan(
+                            text: usuario.email,
+                            style: StyleApp.normalBold.copyWith(
+                              color:
+                                  Theme.of(context).textTheme.bodyText1!.color,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                  ],
                 ),
               ),
             ),

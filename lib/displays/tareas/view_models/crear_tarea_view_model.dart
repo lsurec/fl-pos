@@ -956,15 +956,60 @@ class CrearTareaViewModel extends ChangeNotifier {
     }
   }
 
+  seleccionarUsuario(
+    BuildContext context,
+    UsuarioModel usuarioSeleccionado,
+    int tipoBusqueda,
+  ) {
+    final vmDetalle = Provider.of<DetalleTareaViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmDetalleCalendario = Provider.of<DetalleTareaCalendarioViewModel>(
+      context,
+      listen: false,
+    );
+
+    //1: si es para seleccionar responsable
+    if (tipoBusqueda == 1) {
+      responsable = usuarioSeleccionado;
+      notifyListeners();
+
+      if (responsable != null) {
+        Navigator.pop(context);
+      }
+    }
+
+    //2: para marcar al inivtado
+    if (tipoBusqueda == 2 || tipoBusqueda == 4) {
+      usuarioSeleccionado.select = true;
+      notifyListeners();
+    }
+
+    //Para actualizar usuarios
+    if (tipoBusqueda == 3) {
+      vmDetalle.cambiarResponsable(
+        context,
+        usuarioSeleccionado,
+      );
+    }
+
+    //5= detalles de la tarea del calendario
+    if (tipoBusqueda == 5) {
+      vmDetalleCalendario.cambiarResponsable(
+        context,
+        usuarioSeleccionado,
+      );
+    }
+  }
+
   //Guardar usuario
   guardarUsuarios(
     BuildContext context,
   ) {
     //View model de usuarios
     final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
-    //View model de detalle tarea
-    final vmDetalle =
-        Provider.of<DetalleTareaViewModel>(context, listen: false);
 
     //Limpiar lista de usuarios seleccionados
     vmUsuarios.usuariosSeleccionados.clear();
@@ -976,16 +1021,40 @@ class CrearTareaViewModel extends ChangeNotifier {
       }
     }
 
-    notifyListeners();
-
     //Si hay usuarios seleccionados agrefarlos a la lista de invitados
     if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
       invitados.addAll(vmUsuarios.usuariosSeleccionados);
       Navigator.pop(context);
     }
 
-    //si es tipo de busqueda es = 4 fuardar invitados desde detalle de tarea
-    if (vmUsuarios.tipoBusqueda == 4) vmDetalle.guardarInvitados(context);
+    notifyListeners();
+  }
+
+  guardarInvitados(
+    BuildContext context,
+  ) {
+    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+
+    //Limpiar lista de usuarios seleccionados
+    vmUsuarios.usuariosSeleccionados.clear();
+    invitados.clear();
+
+    //Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
+    for (var usuario in vmUsuarios.usuarios) {
+      if (usuario.select) {
+        vmUsuarios.usuariosSeleccionados.add(usuario);
+      }
+    }
+
+    if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
+      //no volver a agregar a los que ya están
+      invitados.addAll(vmUsuarios.usuariosSeleccionados);
+    }
+
+    notifyListeners();
+
+    //Regresar al formulario para crear
+    Navigator.pop(context);
   }
 
   //Eliminar invitado de la lista de usuarios seleccionados para invitados
