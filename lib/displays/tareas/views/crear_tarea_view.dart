@@ -10,6 +10,7 @@ import 'package:flutter_post_printer_example/utilities/translate_block_utilities
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,37 +22,53 @@ class CrearTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
+    final vmTarea = Provider.of<TareasViewModel>(context);
+    final vmTheme = Provider.of<ThemeViewModel>(context);
+
+    print(vmTarea.vistaDetalle);
 
     return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
-            title: Text(
-              AppLocalizations.of(context)!.translate(
-                BlockTranslate.botones,
-                'nueva',
-              ),
-              style: StyleApp.title,
-            ),
+            title: vm.idTarea == -1
+                ? Text(
+                    AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'nueva',
+                    ),
+                    style: StyleApp.title,
+                  )
+                : Text(
+                    AppLocalizations.of(context)!.translate(
+                          BlockTranslate.tareas,
+                          'numTarea',
+                        ) +
+                        //Numero de tarea
+                        vm.idTarea.toString(),
+                    style: StyleApp.title,
+                  ),
             actions: <Widget>[
               Row(
                 children: [
+                  // if (vm.idTarea == -1)
                   IconButton(
-                    onPressed: () => vm.crearTarea(context),
+                    onPressed: () => vm.guardar(context),
                     icon: const Icon(Icons.save_outlined),
                     tooltip: AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'guardar',
                     ),
                   ),
-                  IconButton(
-                    onPressed: () => vm.selectFiles(),
-                    icon: const Icon(Icons.attach_file_outlined),
-                    tooltip: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'adjuntarArchivos',
+                  if (vm.idTarea == -1)
+                    IconButton(
+                      onPressed: () => vm.selectFiles(),
+                      icon: const Icon(Icons.attach_file_outlined),
+                      tooltip: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.botones,
+                        'adjuntarArchivos',
+                      ),
                     ),
-                  ),
                   IconButton(
                     onPressed: () => vm.limpiar(),
                     icon: const Icon(Icons.note_add_outlined),
@@ -65,7 +82,9 @@ class CrearTareaView extends StatelessWidget {
             ],
           ),
           body: RefreshIndicator(
-            onRefresh: () => vm.loadData(context),
+            onRefresh: () => vm.idTarea == -1
+                ? vm.loadData(context)
+                : vm.loadComent(context),
             child: ListView(
               children: [
                 Padding(
@@ -103,6 +122,7 @@ class CrearTareaView extends StatelessWidget {
                             return null;
                           },
                           controller: vm.tituloController,
+                          enabled: vm.idTarea == -1,
                           decoration: InputDecoration(
                             labelText: AppLocalizations.of(context)!.translate(
                               BlockTranslate.tareas,
@@ -128,7 +148,11 @@ class CrearTareaView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton.icon(
-                              onPressed: () => vm.abrirFechaInicial(context),
+                              onPressed: vm.idTarea == -1
+                                  // Habilitado solo si idTarea es -1
+                                  ? () => vm.abrirFechaInicial(context)
+                                  // Deshabilitar el botón cuando idTarea sea diferente de -1
+                                  : null,
                               icon: Icon(
                                 Icons.calendar_today_outlined,
                                 color: AppTheme.hexToColor(
@@ -149,7 +173,9 @@ class CrearTareaView extends StatelessWidget {
                               ),
                             ),
                             TextButton.icon(
-                              onPressed: () => vm.abrirHoraInicial(context),
+                              onPressed: vm.idTarea == -1
+                                  ? () => vm.abrirHoraInicial(context)
+                                  : null,
                               icon: Icon(
                                 Icons.schedule_outlined,
                                 color: AppTheme.hexToColor(
@@ -185,7 +211,9 @@ class CrearTareaView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton.icon(
-                              onPressed: () => vm.abrirFechaFinal(context),
+                              onPressed: vm.idTarea == -1
+                                  ? () => vm.abrirFechaFinal(context)
+                                  : null,
                               icon: Icon(
                                 Icons.calendar_today_outlined,
                                 color: AppTheme.hexToColor(
@@ -206,7 +234,9 @@ class CrearTareaView extends StatelessWidget {
                               ),
                             ),
                             TextButton.icon(
-                              onPressed: () => vm.abrirHoraFinal(context),
+                              onPressed: vm.idTarea == -1
+                                  ? () => vm.abrirHoraFinal(context)
+                                  : null,
                               icon: Icon(
                                 Icons.schedule_outlined,
                                 color: AppTheme.hexToColor(
@@ -286,23 +316,19 @@ class CrearTareaView extends StatelessWidget {
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.translate(
-                                    BlockTranslate.tareas,
-                                    'estadoTarea',
-                                  ),
-                                  style: StyleApp.normalBold,
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.only(left: 5),
-                                ),
-                                const Text(
-                                  "*",
-                                  style: StyleApp.obligatory,
-                                ),
-                              ],
+                            Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.tareas,
+                                'estadoTarea',
+                              ),
+                              style: StyleApp.normalBold,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 5),
+                            ),
+                            const Text(
+                              "*",
+                              style: StyleApp.obligatory,
                             ),
                           ],
                         ),
@@ -390,40 +416,67 @@ class CrearTareaView extends StatelessWidget {
                           },
                         ),
                         // const Divider(),
-                        TextButton(
-                          onPressed: () => vm.irIdReferencia(context),
-                          child: ListTile(
-                            title: Row(
-                              children: [
-                                Text(
-                                  "${AppLocalizations.of(context)!.translate(
-                                    BlockTranslate.tareas,
-                                    'idRef',
-                                  )}: ",
-                                  style: StyleApp.normal,
+                        if (vm.idTarea == -1)
+                          TextButton(
+                            onPressed: () => vm.irIdReferencia(context),
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    "${AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.tareas,
+                                      'idRef',
+                                    )}: ",
+                                    style: StyleApp.normal.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  const Text(
+                                    " * ",
+                                    style: StyleApp.obligatory,
+                                  ),
+                                  const SizedBox(width: 30),
+                                ],
+                              ),
+                              leading: Icon(
+                                Icons.search,
+                                color: vmTheme.colorPref(
+                                  AppTheme.idColorTema,
                                 ),
-                                const Text(
-                                  " * ",
-                                  style: StyleApp.obligatory,
-                                ),
-                                const SizedBox(width: 30),
-                              ],
+                              ),
+                              contentPadding: const EdgeInsets.all(0),
                             ),
-                            leading: const Icon(Icons.search),
-                            contentPadding: const EdgeInsets.all(0),
                           ),
-                        ),
                         if (vm.idReferencia != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                AppLocalizations.of(context)!.translate(
-                                  BlockTranslate.tareas,
-                                  'refSelec',
+                              if (vm.idTarea == -1)
+                                Text(
+                                  AppLocalizations.of(context)!.translate(
+                                    BlockTranslate.tareas,
+                                    'refSelec',
+                                  ),
+                                  style: StyleApp.normal,
                                 ),
-                                style: StyleApp.normal,
-                              ),
+                              if (vm.idTarea != -1)
+                                Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.tareas,
+                                        'idRefT',
+                                      ),
+                                      style: StyleApp.normalBold.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    const Text(
+                                      " * ",
+                                      style: StyleApp.obligatory,
+                                    ),
+                                  ],
+                                ),
                               ListTile(
                                 contentPadding: const EdgeInsets.all(5),
                                 title: Text(
@@ -450,62 +503,95 @@ class CrearTareaView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                trailing: GestureDetector(
-                                  child: const Icon(Icons.close),
-                                  onTap: () => vm.eliminarRef(),
-                                ),
+                                trailing: vm.idTarea == -1
+                                    ? GestureDetector(
+                                        child: const Icon(Icons.close),
+                                        onTap: () => vm.eliminarRef(),
+                                      )
+                                    : null,
                               ),
                             ],
                           ),
                         const Divider(),
-                        TextButton(
-                          onPressed: () => vm.irUsuarios(
-                            context,
-                            1,
-                            AppLocalizations.of(context)!.translate(
-                              BlockTranslate.botones,
-                              'agregarResponsable',
+                        if (vm.idTarea == -1)
+                          TextButton(
+                            onPressed: () => vm.irUsuarios(
+                              context,
+                              1,
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.botones,
+                                'agregarResponsable',
+                              ),
+                            ),
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!.translate(
+                                      BlockTranslate.tareas,
+                                      'agregarResponsable',
+                                    ),
+                                    style: StyleApp.normal.copyWith(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  const Text(
+                                    " * ",
+                                    style: StyleApp.obligatory,
+                                  ),
+                                ],
+                              ),
+                              leading: Icon(
+                                Icons.person_add_alt_1_outlined,
+                                color: vmTheme.colorPref(
+                                  AppTheme.idColorTema,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.all(0),
                             ),
                           ),
-                          child: ListTile(
-                            title: Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.translate(
-                                    BlockTranslate.tareas,
-                                    'agregarResponsable',
-                                  ),
+                        if (vm.responsable != null)
+                          Column(
+                            children: [
+                              if (vm.idTarea != -1)
+                                Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.translate(
+                                        BlockTranslate.tareas,
+                                        'responsableT',
+                                      ),
+                                      style: StyleApp.normalBold.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                                    const Text(
+                                      " * ",
+                                      style: StyleApp.obligatory,
+                                    ),
+                                  ],
+                                ),
+                              ListTile(
+                                title: Text(
+                                  vm.responsable!.name,
+                                  style: StyleApp.normalBold,
+                                ),
+                                subtitle: Text(
+                                  vm.responsable!.email,
                                   style: StyleApp.normal,
                                 ),
-                                const Text(
-                                  " * ",
-                                  style: StyleApp.obligatory,
+                                leading: const Icon(Icons.person),
+                                trailing: vm.idTarea == -1
+                                    ? GestureDetector(
+                                        child: const Icon(Icons.close),
+                                        onTap: () => vm.eliminarResponsable(),
+                                      )
+                                    : null,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
                                 ),
-                              ],
-                            ),
-                            leading: const Icon(
-                              Icons.person_add_alt_1_outlined,
-                            ),
-                            contentPadding: const EdgeInsets.all(0),
-                          ),
-                        ),
-                        if (vm.responsable != null)
-                          ListTile(
-                            title: Text(
-                              vm.responsable!.name,
-                              style: StyleApp.normalBold,
-                            ),
-                            subtitle: Text(
-                              vm.responsable!.email,
-                              style: StyleApp.normal,
-                            ),
-                            leading: const Icon(Icons.person),
-                            trailing: GestureDetector(
-                              child: const Icon(Icons.close),
-                              onTap: () => vm.eliminarResponsable(),
-                            ),
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 10),
+                              ),
+                            ],
                           ),
                         const Divider(),
                         TextButton(
@@ -523,10 +609,15 @@ class CrearTareaView extends StatelessWidget {
                                 BlockTranslate.tareas,
                                 'agregarInvitados',
                               ),
-                              style: StyleApp.normal,
+                              style: StyleApp.normal.copyWith(
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
-                            leading: const Icon(
+                            leading: Icon(
                               Icons.person_add_alt_1_outlined,
+                              color: vmTheme.colorPref(
+                                AppTheme.idColorTema,
+                              ),
                             ),
                             contentPadding: const EdgeInsets.all(0),
                           ),
@@ -632,6 +723,7 @@ class _ObservacionTarea extends StatelessWidget {
 
     return TextFormField(
       controller: vm.observacionController,
+      enabled: vm.idTarea == -1,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return AppLocalizations.of(context)!.translate(
@@ -708,7 +800,7 @@ class _PrioridadTarea extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) => vm.prioridad = value,
+      onChanged: vm.idTarea == -1 ? (value) => vm.prioridad = value : null,
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
@@ -787,8 +879,7 @@ class _TipoTarea extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(vertical: 16),
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide:
-              const BorderSide(), // Cambia el color del borde inferior aquí
+          borderSide: const BorderSide(),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
@@ -796,7 +887,6 @@ class _TipoTarea extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(10),
         ),
-        // Add more decoration..
       ),
       items: tipos
           .map(
@@ -820,7 +910,9 @@ class _TipoTarea extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) => vm.tipoTarea = value,
+      onChanged: vm.idTarea == -1
+          ? (value) => vm.tipoTarea = value
+          : null, // Deshabilitar cuando idTarea es distinto de -1
       buttonStyleData: const ButtonStyleData(
         padding: EdgeInsets.only(right: 8),
       ),
@@ -841,3 +933,77 @@ class _TipoTarea extends StatelessWidget {
     );
   }
 }
+
+
+// class _TipoTarea extends StatelessWidget {
+//   const _TipoTarea({
+//     required this.tipos,
+//   });
+
+//   final List<TipoTareaModel> tipos;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final vm = Provider.of<CrearTareaViewModel>(context);
+
+//     return DropdownButtonFormField2<TipoTareaModel>(
+//       value: vm.tipoTarea,
+//       isExpanded: true,
+//       decoration: InputDecoration(
+//         contentPadding: const EdgeInsets.symmetric(vertical: 16),
+//         border: UnderlineInputBorder(
+//           borderRadius: BorderRadius.circular(15),
+//           borderSide:
+//               const BorderSide(), // Cambia el color del borde inferior aquí
+//         ),
+//         enabledBorder: OutlineInputBorder(
+//           borderSide: const BorderSide(
+//             color: AppTheme.grey,
+//           ),
+//           borderRadius: BorderRadius.circular(10),
+//         ),
+//         // Add more decoration..
+//       ),
+//       items: tipos
+//           .map(
+//             (item) => DropdownMenuItem<TipoTareaModel>(
+//               value: item,
+//               child: Text(
+//                 item.descripcion,
+//                 style: const TextStyle(
+//                   fontSize: 14,
+//                 ),
+//               ),
+//             ),
+//           )
+//           .toList(),
+//       validator: (value) {
+//         if (value == null) {
+//           return AppLocalizations.of(context)!.translate(
+//             BlockTranslate.tareas,
+//             'seleccionaTipo',
+//           );
+//         }
+//         return null;
+//       },
+//       onChanged: (value) => vm.tipoTarea = value,
+//       buttonStyleData: const ButtonStyleData(
+//         padding: EdgeInsets.only(right: 8),
+//       ),
+//       iconStyleData: const IconStyleData(
+//         icon: Icon(
+//           Icons.arrow_drop_down,
+//         ),
+//         iconSize: 24,
+//       ),
+//       dropdownStyleData: DropdownStyleData(
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(15),
+//         ),
+//       ),
+//       menuItemStyleData: const MenuItemStyleData(
+//         padding: EdgeInsets.symmetric(horizontal: 16),
+//       ),
+//     );
+//   }
+// }

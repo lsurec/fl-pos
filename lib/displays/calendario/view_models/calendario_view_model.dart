@@ -80,6 +80,8 @@ class CalendarioViewModel extends ChangeNotifier {
   }
 
   Future<void> loadData(BuildContext context) async {
+    final vmTarea = Provider.of<TareasViewModel>(context, listen: false);
+    vmTarea.vistaDetalle = 2; //vista de detalles de tarea desde calendario = 2
     fraseDe = AppLocalizations.of(context)!.translate(
       BlockTranslate.calendario,
       'de',

@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/models/api_res_model.dart';
-import 'package:flutter_post_printer_example/models/error_model.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -38,6 +36,38 @@ class NotificationService {
       //   label: 'Aceptar',
       //   onPressed: () => Navigator.pop(context),
       // ),
+    );
+
+    //mosttar snack
+    messengerKey.currentState!.showSnackBar(snackBar);
+  }
+
+  //Mostrar snack bar
+  static showSnackbarAction(
+    BuildContext context,
+    String message,
+    String textButton,
+    Function action,
+  ) {
+    final vmTheme = Provider.of<ThemeViewModel>(
+      messengerKey.currentContext!,
+      listen: false,
+    );
+
+    final snackBar = SnackBar(
+      duration: const Duration(seconds: 10),
+      content: Text(
+        message,
+        style: StyleApp.whiteNormal,
+      ),
+      backgroundColor: vmTheme.colorPref(
+        AppTheme.idColorTema,
+      ),
+      action: SnackBarAction(
+        label: textButton,
+        textColor:  AppTheme.white,
+        onPressed: () => action(),
+      ),
     );
 
     //mosttar snack

@@ -92,6 +92,7 @@ class TareasViewModel extends ChangeNotifier {
 
   //Obtener ultimas 10 tareas
   Future<void> loadData(BuildContext context) async {
+    vistaDetalle = 1;
     await obtenerTareasTodas(context);
     await obtenerTareasCreadas(context);
     await obtenerTareasInvitaciones(context);

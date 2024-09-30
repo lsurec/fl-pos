@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -24,6 +25,10 @@ class CrearTareaViewModel extends ChangeNotifier {
   final List<PeriodicidadModel> periodicidades = [];
   //almacenar archivos seleccionados
   List<File> files = [];
+  int idTarea = -1;
+  //Acá se guardará la tarea, es temporal
+  TareaModel? tareaCreada;
+  TareaCalendarioModel? tareaCalendarioCreada;
 
   //manejar flujo del procesp
   bool _isLoading = false;
@@ -107,6 +112,13 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Tiempo estimado
     tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
     periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
+    limpiar();
+  }
+
+  loadComent(
+    BuildContext context,
+  ) async {
+    //Recarga los comentarios sin mover nada
   }
 
   //Navegar a view para buscar Id de referencia.
@@ -149,6 +161,7 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Limpiar formulario
   limpiar() {
+    idTarea = -1;
     tituloController.text = "";
     observacionController.text = "";
     tiempoController.text = "10";
@@ -252,38 +265,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Obtener respuesta correcta del api
     NuevaTareaModel creada = res.response[0];
 
-    //Si se está creando desde busqueda de tareas
+    idTarea = creada.tarea;
 
-    if (idPantalla == 1 && res.succes) {
-      //objeto de la vista de tareas
-      vmTarea.loadData(context);
-      //mostrra mensaje
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'tareaCreada',
-        ),
-      );
-    }
-
-    DateTime hoyFecha = DateTime.now();
-
-    //Si se está creando desde el calendario
-    if (idPantalla == 2 && res.succes) {
-      //objeto de la vista calendario
-      vmCalendario.obtenerTareasRango(
-        context,
-        hoyFecha.month,
-        hoyFecha.year,
-      );
-      //mostrra mensaje
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'tareaCreada',
-        ),
-      );
-    }
     //Crear modelo de Tarea para agregarla a la lista de tareas
     TareaModel resCreada = TareaModel(
       id: 0,
@@ -318,6 +301,91 @@ class CrearTareaViewModel extends ChangeNotifier {
       filtroMisResponsabilidades: false,
       filtroMisInvitaciones: false,
     );
+
+    //Tarea desde tareas
+    tareaCreada = resCreada;
+
+    TareaCalendarioModel tareaCalendarioCreada = TareaCalendarioModel(
+      rUserName: user,
+      tarea: creada.tarea,
+      descripcion: tituloController.text,
+      fechaIni: fechaInicial.toString(),
+      fechaFin: fechaFinal.toString(),
+      referencia: idReferencia!.referencia,
+      userName: user,
+      observacion1: observacionController.text,
+      nomUser: "",
+      nomCuentaCorrentista: "",
+      desTipoTarea: tipoTarea!.descripcion,
+      cuentaCorrentista: null,
+      cuentaCta: null,
+      contacto1: "",
+      direccionEmpresa: "",
+      weekNumber: 0,
+      cantidadContacto: null,
+      nombreContacto: null,
+      descripcionTarea: "",
+      texto: "",
+      backColor: "#F4FA58",
+      estado: estado!.estado,
+      desTarea: estado!.descripcion,
+      usuarioResponsable: responsable!.userName,
+      nivelPrioridad: prioridad!.nivelPrioridad,
+      nomNivelPrioridad: prioridad!.nombre,
+    );
+
+    //Tarea creada de desde calendario
+    tareaCalendarioCreada = tareaCalendarioCreada;
+
+    //Si se está creando desde busqueda de tareas
+
+    if (idPantalla == 1 && res.succes) {
+      //objeto de la vista de tareas
+      vmTarea.loadData(context);
+      //mostrra mensaje
+      NotificationService.showSnackbarAction(
+        context,
+        "Tarea creada correctamente : $idTarea",
+        "Ver",
+        vmTarea.vistaDetalle == 1
+            ? () {
+                print("Navega a detalle tarea desde tareas");
+              }
+            : () {
+                print("Navega a detalle tarea desde calendario");
+              },
+      );
+
+      limpiar();
+    }
+
+    DateTime hoyFecha = DateTime.now();
+
+    //Si se está creando desde el calendario
+    if (idPantalla == 2 && res.succes) {
+      //objeto de la vista calendario
+      vmCalendario.obtenerTareasRango(
+        context,
+        hoyFecha.month,
+        hoyFecha.year,
+      );
+
+      //mostrra mensaje
+      NotificationService.showSnackbarAction(
+        context,
+        "Tarea creada correctamente : $idTarea",
+        "Ver",
+        vmTarea.vistaDetalle == 1
+            ? () {
+                print("Navega a detalle tarea desde tareas");
+              }
+            : () {
+                print("Navega a detalle tarea desde calendario");
+              },
+      );
+
+      limpiar();
+    }
 
     //Usuario responsable de la tarea
     //Crear modelo de usuario nuevo
@@ -1005,37 +1073,36 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   guardarInvitados(
-  BuildContext context,
-) {
-  final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
+    BuildContext context,
+  ) {
+    final vmUsuarios = Provider.of<UsuariosViewModel>(context, listen: false);
 
-  // Limpiar lista de usuarios seleccionados
-  vmUsuarios.usuariosSeleccionados.clear();
-  // invitados.clear();
+    // Limpiar lista de usuarios seleccionados
+    vmUsuarios.usuariosSeleccionados.clear();
+    // invitados.clear();
 
-  // Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
-  for (var usuario in vmUsuarios.usuarios) {
-    if (usuario.select) {
-      vmUsuarios.usuariosSeleccionados.add(usuario);
-    }
-  }
-
-  if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
-    // Evitar agregar duplicados a la lista de invitados
-    for (var usuario in vmUsuarios.usuariosSeleccionados) {
-      if (!invitados.contains(usuario)) {
-        invitados.add(usuario);
+    // Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
+    for (var usuario in vmUsuarios.usuarios) {
+      if (usuario.select) {
+        vmUsuarios.usuariosSeleccionados.add(usuario);
       }
     }
+
+    if (vmUsuarios.usuariosSeleccionados.isNotEmpty) {
+      // Evitar agregar duplicados a la lista de invitados
+      for (var usuario in vmUsuarios.usuariosSeleccionados) {
+        if (!invitados.contains(usuario)) {
+          invitados.add(usuario);
+        }
+      }
+    }
+
+    // Notificar a los listeners de los cambios
+    notifyListeners();
+
+    // Regresar al formulario para crear
+    Navigator.pop(context);
   }
-
-  // Notificar a los listeners de los cambios
-  notifyListeners();
-
-  // Regresar al formulario para crear
-  Navigator.pop(context);
-}
-
 
   guardarInvitadoss(
     BuildContext context,
@@ -1183,5 +1250,75 @@ class CrearTareaViewModel extends ChangeNotifier {
     idReferencia = null;
     notifyListeners();
     print("eliminamos la refeencia");
+  }
+
+  guardarT(
+    BuildContext context,
+  ) {
+    isLoading = true;
+  }
+
+  guardar(BuildContext context) async {
+    final vmTarea = Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    );
+
+    //Validar el formulario
+    if (!isValidForm()) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'completarFormulario',
+        ),
+      );
+      return;
+    }
+
+    //sino ha seleccionado la referencia
+    if (idReferencia == null) {
+      NotificationService.showSnackbar(
+        AppLocalizations.of(context)!.translate(
+          BlockTranslate.notificacion,
+          'seleccioneIdRef',
+        ),
+      );
+      return;
+    }
+
+    //sino hay resoinsable
+    if (responsable == null) {
+      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'seleccioneRespo',
+      ));
+      return;
+    }
+
+    isLoading = true;
+
+    // Temporizador de 5 segundos
+    await Future.delayed(const Duration(seconds: 1), () {
+      // Desactivar el indicador de carga después de 5 segundos
+
+      idTarea = 100;
+
+      isLoading = false;
+    });
+
+    NotificationService.showSnackbarAction(
+      context,
+      "Tarea creada correctamente : $idTarea",
+      "Ver",
+      vmTarea.vistaDetalle == 1
+          ? () {
+              print("Navega a detalle tarea desde tareas");
+            }
+          : () {
+              print("Navega a detalle tarea desde calendario");
+            },
+    );
+
+    limpiar();
   }
 }
