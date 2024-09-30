@@ -33,10 +33,32 @@ class UsuariosViewModel extends ChangeNotifier {
   final List<UsuarioModel> usuariosSeleccionados = [];
 
   //Regresar a la pantalla anterior y limpiar
-  Future<bool> back() async {
+  Future<bool> back(
+    BuildContext context,
+  ) async {
+    final vmTarea = Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmCrear = Provider.of<CrearTareaViewModel>(
+      context,
+      listen: false,
+    );
+
     buscar.clear();
     usuarios.clear();
     buscar.clear();
+
+    if (vmTarea.vistaDetalle == 1 || vmTarea.vistaDetalle == 2) {
+      print("la lista debe limpiarse ${usuariosSeleccionados.length}");
+      vmCrear.invitados.clear();
+
+      return true;
+    }
+
+    print("la lista NO debe limpiarse ${usuariosSeleccionados.length}");
+
     return true;
   }
 
@@ -152,21 +174,45 @@ class UsuariosViewModel extends ChangeNotifier {
     isLoading = false; //Detener carga
   }
 
-  //Marcar o desmarcar check de los usuarios
+  // //Marcar o desmarcar check de los usuarios
+  // void changeChecked(BuildContext context, bool? value, int index) {
+  //   final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
+
+  //   // Invertir el valor actual
+  //   usuarios[index].select = !usuarios[index].select;
+
+  //   if (usuarios.isNotEmpty) {
+  //     // Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
+  //     for (var usuario in usuarios) {
+  //       if (usuario.select) {
+  //         vmCrear.invitados.add(usuario);
+  //       }
+  //     }
+  //   }
+  //   notifyListeners();
+  // }
+
   void changeChecked(BuildContext context, bool? value, int index) {
     final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
 
     // Invertir el valor actual
-    usuarios[index].select = !usuarios[index].select;
+    usuarios[index].select = value ?? false;
 
-    if (usuarios.isNotEmpty) {
-      // Recorrer lista de usuarios que estén seleccionados y agregarlos a la lista de usuarios seleccionados
-      for (var usuario in usuarios) {
-        if (usuario.select) {
-          vmCrear.invitados.add(usuario);
-        }
+    final usuarioSeleccionado = usuarios[index];
+
+    if (usuarioSeleccionado.select) {
+      // Verificar si el usuario ya está en la lista antes de agregarlo
+      if (!vmCrear.invitados.contains(usuarioSeleccionado)) {
+        vmCrear.invitados.add(usuarioSeleccionado);
       }
+    } else {
+      // Si el usuario es deseleccionado, eliminarlo de la lista de invitados
+      vmCrear.invitados.removeWhere(
+        (u) => u.email == usuarioSeleccionado.email,
+      );
     }
+
+    // Notificar cambios a los listeners
     notifyListeners();
   }
 }

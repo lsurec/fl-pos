@@ -570,6 +570,7 @@ class DetalleTareaViewModel extends ChangeNotifier {
     //limpiar listas de usuarios seleccionados y usuarios encontrados
     vmUsuarios.usuariosSeleccionados.clear();
     vmUsuarios.usuarios.clear();
+    notifyListeners();
 
     Navigator.pop(context); //regresar a vista anterior
 

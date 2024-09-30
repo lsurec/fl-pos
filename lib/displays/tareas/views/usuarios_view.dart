@@ -17,12 +17,14 @@ class UsuariosView extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = Provider.of<UsuariosViewModel>(context);
     final vmDetalle = Provider.of<DetalleTareaViewModel>(context);
+    final vmCalendarioDetalle = Provider.of<DetalleTareaViewModel>(context);
     final vmCrear = Provider.of<CrearTareaViewModel>(context);
+    final vmTarea = Provider.of<TareasViewModel>(context);
 
     final String titulo = ModalRoute.of(context)!.settings.arguments as String;
 
     return WillPopScope(
-      onWillPop: () => vm.back(),
+      onWillPop: () => vm.back(context),
       child: Stack(
         children: [
           Scaffold(
@@ -90,6 +92,14 @@ class UsuariosView extends StatelessWidget {
                             )} (${vmCrear.invitados.length})",
                             style: StyleApp.normalBold,
                           ),
+                          if (vm.tipoBusqueda == 4)
+                            Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'agregados',
+                              )} (${vmTarea.vistaDetalle == 1 ? vmDetalle.invitados.length : vmCalendarioDetalle.invitados.length})",
+                              style: StyleApp.normalBold,
+                            ),
                           Text(
                             "${AppLocalizations.of(context)!.translate(
                               BlockTranslate.general,
@@ -131,7 +141,7 @@ class _InvitadosEncontrados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vmCrear = Provider.of<CrearTareaViewModel>(context);
+    // final vmCrear = Provider.of<CrearTareaViewModel>(context);
     final vm = Provider.of<UsuariosViewModel>(context);
 
     return ListView.builder(
@@ -141,78 +151,134 @@ class _InvitadosEncontrados extends StatelessWidget {
       itemCount: vm.usuarios.length,
       itemBuilder: (BuildContext context, int index) {
         final UsuarioModel usuario = vm.usuarios[index];
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: GestureDetector(
-                onTap: () => vmCrear.seleccionarUsuario(
-                  context,
-                  usuario,
-                  vm.tipoBusqueda,
-                ),
-                child: ListTile(
-                  title: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 5),
-                      Text(
-                        usuario.name,
-                        style: StyleApp.normal,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          style: StyleApp.normal.copyWith(
-                            color: Theme.of(context).textTheme.bodyText1!.color,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: AppLocalizations.of(context)!.translate(
-                                BlockTranslate.cuenta,
-                                'correo',
-                              ),
-                            ),
-                            const TextSpan(text: ": "),
-                            TextSpan(
-                              text: usuario.email,
-                              style: StyleApp.normalBold.copyWith(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1!
-                                    .color,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                    ],
+
+        return CheckboxListTile(
+          activeColor: AppTheme.hexToColor(Preferences.valueColor),
+          value: usuario.select,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 5),
+              Text(usuario.name, style: StyleApp.normal),
+              RichText(
+                text: TextSpan(
+                  style: StyleApp.normal.copyWith(
+                    color: Theme.of(context).textTheme.bodyText1!.color,
                   ),
-                  leading: Column(
-                    children: [
-                      Checkbox(
-                        activeColor: AppTheme.hexToColor(
-                          Preferences.valueColor,
-                        ),
-                        value: usuario.select,
-                        onChanged: (value) => vm.changeChecked(
-                          context,
-                          value,
-                          index,
-                        ),
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.translate(
+                        BlockTranslate.cuenta,
+                        'correo',
                       ),
-                    ],
-                  ),
+                    ),
+                    const TextSpan(text: ": "),
+                    TextSpan(
+                      text: usuario.email,
+                      style: StyleApp.normalBold.copyWith(
+                        color: Theme.of(context).textTheme.bodyText1!.color,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const Divider(),
-          ],
+              const SizedBox(height: 5),
+            ],
+          ),
+          onChanged: (value) => vm.changeChecked(context, value, index),
         );
       },
     );
   }
 }
+
+// class _InvitadosEncontrados extends StatelessWidget {
+//   const _InvitadosEncontrados();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final vmCrear = Provider.of<CrearTareaViewModel>(context);
+//     final vm = Provider.of<UsuariosViewModel>(context);
+
+//     return ListView.builder(
+//       physics: const NeverScrollableScrollPhysics(),
+//       scrollDirection: Axis.vertical,
+//       shrinkWrap: true,
+//       itemCount: vm.usuarios.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         final UsuarioModel usuario = vm.usuarios[index];
+//         return Column(
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.symmetric(vertical: 5),
+//               child: GestureDetector(
+//                 onTap: () => vmCrear.seleccionarUsuario(
+//                   context,
+//                   usuario,
+//                   vm.tipoBusqueda,
+//                 ),
+//                 child: ListTile(
+//                   title: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       const SizedBox(height: 5),
+//                       Text(
+//                         usuario.name,
+//                         style: StyleApp.normal,
+//                       ),
+//                       RichText(
+//                         text: TextSpan(
+//                           style: StyleApp.normal.copyWith(
+//                             color: Theme.of(context).textTheme.bodyText1!.color,
+//                           ),
+//                           children: [
+//                             TextSpan(
+//                               text: AppLocalizations.of(context)!.translate(
+//                                 BlockTranslate.cuenta,
+//                                 'correo',
+//                               ),
+//                             ),
+//                             const TextSpan(text: ": "),
+//                             TextSpan(
+//                               text: usuario.email,
+//                               style: StyleApp.normalBold.copyWith(
+//                                 color: Theme.of(context)
+//                                     .textTheme
+//                                     .bodyText1!
+//                                     .color,
+//                               ),
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       const SizedBox(height: 5),
+//                     ],
+//                   ),
+//                   leading: Column(
+//                     children: [
+//                       Checkbox(
+//                         activeColor: AppTheme.hexToColor(
+//                           Preferences.valueColor,
+//                         ),
+//                         value: usuario.select,
+//                         onChanged: (value) => vm.changeChecked(
+//                           context,
+//                           value,
+//                           index,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             const Divider(),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
 
 class _ResponsablesEncontrados extends StatelessWidget {
   const _ResponsablesEncontrados();

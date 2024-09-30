@@ -37,6 +37,8 @@ class TareasViewModel extends ChangeNotifier {
   final TextEditingController searchController = TextEditingController();
   int? filtro = 1; //para filtro de busqueda Inicialmente por descripcion
 
+  int vistaDetalle = 0;
+
   //Lista de tareas
   final List<TareaModel> tareas = [];
 
@@ -448,6 +450,8 @@ class TareasViewModel extends ChangeNotifier {
 
   //Consumo de servicios para navegar a los detalles de la tarea
   detalleTarea(BuildContext context, TareaModel tarea) async {
+    vistaDetalle = 1; // desde tareas.
+    
     isLoading = true; //cargar pantalla
     //view model de Detalle
     final vmDetalle = Provider.of<DetalleTareaViewModel>(
@@ -522,7 +526,11 @@ class TareasViewModel extends ChangeNotifier {
     }
 
     //Navegar a detalles
-    Navigator.pushNamed(context, AppRoutes.detailsTask);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.detailsTask,
+    );
+
     isLoading = false; //detener carga
   }
 

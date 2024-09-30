@@ -345,7 +345,8 @@
         "pago": "Pago",
         "observaciones": "Observaciones",
         "noRegistrado": "No Registrado.",
-        "seleccionados": "Seleccionados"
+        "seleccionados": "Seleccionados",
+        "agregados": "Agregados"
     },
     "cuenta": {
         "nueva": "Nueva Cuenta",

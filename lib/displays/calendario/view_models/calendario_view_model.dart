@@ -1074,6 +1074,13 @@ class CalendarioViewModel extends ChangeNotifier {
       listen: false,
     );
 
+    final vmTarea = Provider.of<TareasViewModel>(
+      context,
+      listen: false,
+    );
+
+    vmTarea.vistaDetalle = 2; //Desde calendario
+
     vmDetalle.tarea = tarea; //guardar la tarea
     final ApiResModel succesResponsables = await vmDetalle.obtenerResponsable(
       context,

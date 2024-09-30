@@ -45,19 +45,19 @@ class CrearTareaView extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => vm.limpiar(),
-                    icon: const Icon(Icons.note_add_outlined),
-                    tooltip: AppLocalizations.of(context)!.translate(
-                      BlockTranslate.botones,
-                      'nuevo',
-                    ),
-                  ),
-                  IconButton(
                     onPressed: () => vm.selectFiles(),
                     icon: const Icon(Icons.attach_file_outlined),
                     tooltip: AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
                       'adjuntarArchivos',
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => vm.limpiar(),
+                    icon: const Icon(Icons.note_add_outlined),
+                    tooltip: AppLocalizations.of(context)!.translate(
+                      BlockTranslate.botones,
+                      'nuevo',
                     ),
                   ),
                 ],
