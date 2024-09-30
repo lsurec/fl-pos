@@ -18,4 +18,5 @@ class BlockTranslate {
   static String cotizacion = "cotizacion";
   static String tareas = "tareas";
   static String calendario = "calendario";
+  static String restaurante = "restaurante";
 }

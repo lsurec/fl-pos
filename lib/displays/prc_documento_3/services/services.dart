@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/displays/prc_documento_3/services/tipo_accion_service.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/services/tipo_referenci_service.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/services/fel_service.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/services/parametro_service.dart';

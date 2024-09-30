@@ -32,8 +32,8 @@ class InputWidget extends StatelessWidget {
       child: TextFormField(
         maxLines: maxLines,
         initialValue: initialValue,
-        onChanged: (value) => {
-          formValues[formProperty] = value,
+        onChanged: (value) {
+          formValues[formProperty] = value;
         },
         decoration: InputDecoration(
           //counter: const Text('Caracteres'),

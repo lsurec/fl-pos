@@ -3,6 +3,7 @@
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
@@ -67,12 +68,22 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Calendario2ViewModel()),
         ChangeNotifierProvider(
             create: (_) => DetalleTareaCalendarioViewModel()),
-
         ChangeNotifierProvider(create: (_) => ShareDocViewModel()),
         ChangeNotifierProvider(create: (_) => LangViewModel()),
         ChangeNotifierProvider(create: (_) => ThemeViewModel()),
         ChangeNotifierProvider(create: (_) => ClassificationViewModel()),
+        ChangeNotifierProvider(create: (_) => LocationsViewModel()),
+        ChangeNotifierProvider(create: (_) => TablesViewModel()),
+        ChangeNotifierProvider(create: (_) => OrderViewModel()),
+        ChangeNotifierProvider(create: (_) => PinViewModel()),
+        ChangeNotifierProvider(create: (_) => ProductsClassViewModel()),
+        ChangeNotifierProvider(create: (_) => DetailsRestaurantViewModel()),
+        ChangeNotifierProvider(create: (_) => HomeRestaurantViewModel()),
+        ChangeNotifierProvider(create: (_) => AddPersonViewModel()),
         ChangeNotifierProvider(create: (_) => FechasViewModel()),
+        ChangeNotifierProvider(create: (_) => PermisionsViewModel()),
+        ChangeNotifierProvider(create: (_) => SelectAccountViewModel()),
+        ChangeNotifierProvider(create: (_) => TransferSummaryViewModel()),
       ],
       child: const MyApp(),
     );

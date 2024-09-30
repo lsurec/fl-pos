@@ -28,7 +28,14 @@ class AppTheme {
   static const Color verde = Colors.green;
   static const Color rojo = Colors.red;
 
+  static const Color separador = Color.fromARGB(255, 227, 226, 226);
+
+  static const Color darkSeparador = Color.fromARGB(255, 48, 48, 48) ;
+
   static const Color grayAppBar = Color(0xfff5f5f5);
+
+  static const Color cardBorder = Color(0xffc2cfd9);
+  
 
   static Color hexToColor(String hexColor) {
     if (hexColor.isEmpty) {

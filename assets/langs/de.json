@@ -85,7 +85,12 @@
         "enviarComentario": "Kommentar senden.",
         "cambiarResponsable": "Verantwortliche Person aktualisieren",
         "modificar": "Ändern",
-        "compartirInforme": "Bericht teilen"
+        "compartirInforme": "Bericht teilen",
+        "empezar": "Starten",
+        "trasladar": "Übertragen",
+        "renombrar": "Umbenennen",
+        "comandar": "Befehlen",
+        "comandada": "Befehl erteilt"
     },
     "fechas": {
         "fecha": "Datum:",
@@ -221,7 +226,27 @@
         "advertencia": "Warnung",
         "productosNoDisponibles": "Ein oder mehrere Produkte sind nicht verfügbar.",
         "aplicaranCambios": "Die Änderungen werden am Dokument vorgenommen.",
-        "docEditado": "Dokument erfolgreich bearbeitet."
+        "docEditado": "Dokument erfolgreich bearbeitet.",
+        "cuentaAgregada": "Konto hinzugefügt.",
+        "noHayProductos": "Keine Produkte verfügbar.",
+        "productoModificado": "Produkt geändert.",
+        "productoAgregado": "Produkt hinzugefügt.",
+        "docEstrucNoActualizado": "Dokumentstruktur konnte nicht aktualisiert werden.",
+        "comandaEnviada": "Bestellung gesendet.",
+        "comandadasNoModificar": "Kommandierte Transaktionen können nicht geändert werden.",
+        "traEliminadas": "Transaktionen gelöscht.",
+        "traEliminada": "Transaktion gelöscht.",
+        "sinPermisos": "Dieser Benutzer hat keine Berechtigung für diese Aktion.",
+        "pinInvalido": "Ungültiger Pin.",
+        "sinTransaccionesMostrar": "Keine Transaktionen anzuzeigen.",
+        "traExisteCuenta": "Die Transaktion existiert bereits in diesem Konto.",
+        "cuentasEliminadas": "Konten gelöscht.",
+        "traTrasladadas": "Transaktionen erfolgreich übertragen.",
+        "cuentasNoTransferidasServidor": "Einige Konten konnten nicht auf den Server übertragen werden.",
+        "cuentasTransferidas": "Konten erfolgreich übertragen.",
+        "documentosSinActualizar": "Das Quell- und Zieldokument wurden nicht aktualisiert.",
+        "docDestinoNoActualizado": "Das Zieldokument wurde nicht aktualisiert.",
+        "docOrigenNoActualizado": "Das Quelldokument wurde nicht aktualisiert."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
@@ -489,5 +514,30 @@
         "horario": "Zeitplan",
         "tareas": "Aufgaben",
         "nueva": "Neu"
+    },
+    "restaurante": {
+        "accesos": "Zugänge",
+        "mesasA": "Offene Tische",
+        "ubicacion": "Standort: ",
+        "consecutivo": "Fortlaufende Nummer: ",
+        "mesa": "Tisch: ",
+        "trasladarMesa": "Tisch übertragen",
+        "ubicaciones": "Standorte/",
+        "ubicacionesT": "Standorte",
+        "mesero": "Kellner",
+        "pin": "Pin",
+        "elegirOpcion": "Wählen Sie eine Option",
+        "notasProducto": "Anmerkungen zu diesem Produkt",
+        "instrucciones": "Geben Sie die notwendigen Anweisungen ein.",
+        "trasladoMesa": "Tisch übertragen (Rechnung)",
+        "trasladoTrans": "Transaktion übertragen",
+        "seleccionarT": "Alles auswählen",
+        "estadoCuenta": "Kontostand",
+        "seleccionarCuenta": "Konto auswählen.",
+        "renombrarCuenta": "Konto umbenennen.",
+        "nuevaUbicacion": "Neuer Standort",
+        "nuevaMesa": "Neuer Tisch",
+        "cuentaExisteMesa": "Das Konto existiert bereits an diesem Tisch.",
+        "notas": "Notizen: "
     }
 }

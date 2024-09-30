@@ -56,6 +56,7 @@ dependencies:
   restart_app: ^1.2.1
   share: ^2.0.2
   shared_preferences: ^2.0.15
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

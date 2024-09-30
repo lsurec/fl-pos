@@ -1,29 +1,28 @@
 import 'dart:convert';
 
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:http/http.dart' as http;
 
-class UsuarioService {
+class TipoAccionService {
+  //url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-  //Consumo api para obtener id referencia.
-  Future<ApiResModel> getUsuario(
+  //Obtner empresas
+  Future<ApiResModel> validaTipoAccion(
+    int tipoAccion,
     String user,
     String token,
-    String filtro,
   ) async {
-    Uri url = Uri.parse("${_baseUrl}Usuarios");
-
+    Uri url = Uri.parse("${_baseUrl}Usuarios/accion/$user/$tipoAccion");
     try {
       //url completa
-      //Configuraciones del api
+
+      //configuracion del api
       final response = await http.get(
         url,
         headers: {
           "Authorization": "bearer $token",
-          "user": user,
-          "filtro": filtro,
         },
       );
 
@@ -39,26 +38,17 @@ class UsuarioService {
         );
       }
 
-      //Invitados retornados por api
-      List<UsuarioModel> usuarios = [];
-
-      //recorrer lista api Y  agregar a lista local
-      for (var item in res.data) {
-        //Tipar a map
-        final responseFinally = UsuarioModel.fromMap(item);
-        //agregar item a la lista
-        usuarios.add(responseFinally);
-      }
+      RespLogin respLogin = RespLogin.fromMap(res.data);
 
       //retornar respuesta correcta del api
       return ApiResModel(
         url: url.toString(),
         succes: true,
-        response: usuarios,
+        response: respLogin,
         storeProcedure: null,
       );
     } catch (e) {
-      //en caso de error retornar el error
+      //respuesta incorrecta
       return ApiResModel(
         url: url.toString(),
         succes: false,

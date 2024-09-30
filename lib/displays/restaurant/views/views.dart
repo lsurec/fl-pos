@@ -1,1 +1,12 @@
+export 'package:flutter_post_printer_example/displays/restaurant/views/transfer_summary_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/select_account_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/select_location_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/select_table_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/permisions_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/pin_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/tables_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/locations_view.dart';
 export 'package:flutter_post_printer_example/displays/restaurant/views/classification_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/details_restaurant_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/home_restaurant_view.dart';
+export 'package:flutter_post_printer_example/displays/restaurant/views/order_view.dart';

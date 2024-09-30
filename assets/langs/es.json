@@ -85,7 +85,12 @@
         "enviarComentario": "Enviar comentario.",
         "cambiarResponsable": "Actualizar Responsable",
         "modificar": "Modificar",
-        "compartirInforme": "Compartir informe"
+        "compartirInforme": "Compartir informe",
+        "empezar": "Empezar",
+        "trasladar": "Trasladar",
+        "renombrar": "Renombrar",
+        "comandar": "Comandar",
+        "comandada": "Comandada"
     },
     "fechas": {
         "fecha": "Fecha: ",
@@ -114,7 +119,7 @@
     },
     "notificaciones": {
         "reiniciar": "Para visualizar los cambios, primero reinicie la aplicación.",
-        "requerido": "Campo requedido.",
+        "requerido": "Campo requerido.",
         "tituloCerrar": "Cerrar sesión",
         "borraranDatos": "Se perderán los datos que no han sido guardados y deberá iniciar sesión nuevamente. ¿Estás seguro?",
         "salioMal": "Algo salió mal.",
@@ -221,7 +226,27 @@
         "advertencia": "Advertencia",
         "productosNoDisponibles": "Uno o más productos no están disponibles.",
         "aplicaranCambios": "Se aplicaran los cambios al documento.",
-        "docEditado": "Documento editado correctamente."
+        "docEditado": "Documento editado correctamente.",
+        "cuentaAgregada": "Cuenta agregada.",
+        "noHayProductos": "No hay productos disponibles.",
+        "productoModificado": "Producto modificado.",
+        "productoAgregado": "Producto agregado.",
+        "docEstrucNoActualizado": "No se pudo actualizar el documento estructura.",
+        "comandaEnviada": "Comanda enviada.",
+        "comandadasNoModificar": "Las transacciones comandadas no se pueden modificar.",
+        "traEliminadas": "Transacciones eliminadas.",
+        "traEliminada": "Transacción eliminada.",
+        "sinPermisos": "Este usuario no posee permisos para esta acción.",
+        "pinInvalido": "Pin inválido.",
+        "sinTransaccionesMostrar": "No hay transacciones para mostrar.",
+        "traExisteCuenta": "La transacción ya existe en esta cuenta.",
+        "cuentasEliminadas": "Cuentas eliminadas.",
+        "traTrasladadas": "Transacciones trasladadas correctamente.",
+        "cuentasNoTransferidasServidor": "Algunas cuentas no se pudieron transferir en el servidor.",
+        "cuentasTransferidas": "Cuentas transferidas con éxito.",
+        "documentosSinActualizar": "El documento origen y destino no se actualizó.",
+        "docDestinoNoActualizado": "El documento destino no se actualizó.",
+        "docOrigenNoActualizado": "El documento origen no se actualizó."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",
@@ -491,5 +516,30 @@
         "horario": "Horario",
         "tareas": "Tareas",
         "nueva": "Nueva"
+    },
+    "restaurante": {
+        "accesos": "Accesos",
+        "mesasA": "Mesas abiertas",
+        "ubicacion": "Ubicación: ",
+        "consecutivo": "Consecutivo: ",
+        "mesa": "Mesa: ",
+        "trasladarMesa": "Trasladar Mesa",
+        "ubicaciones": "Ubicaciones/",
+        "ubicacionesT": "Ubicaciones",
+        "mesero": "Mesero",
+        "pin": "Pin",
+        "elegirOpcion": "Elige una opción",
+        "notasProducto": "Notas para este producto",
+        "instrucciones": "Escriba las instrucciones necesarias.",
+        "trasladoMesa": "Trasladar Mesa (Cuenta)",
+        "trasladoTrans": "Trasladar Transacción",
+        "seleccionarT": "Seleccionar todo",
+        "estadoCuenta": "Estado de cuenta",
+        "seleccionarCuenta": "Seleccionar cuenta.",
+        "renombrarCuenta": "Renombrar cuenta.",
+        "nuevaUbicacion": "Nueva Ubicación",
+        "nuevaMesa": "Nueva Mesa",
+        "cuentaExisteMesa": "La cuenta ya existe en esta mesa.",
+        "notas": "Notas: "
     }
 }

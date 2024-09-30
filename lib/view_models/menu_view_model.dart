@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/tareas/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
@@ -70,6 +71,31 @@ class MenuViewModel extends ChangeNotifier {
 
     tipoCambio = 0;
 
+    //Restaurante
+    if (route.toLowerCase() == "prcrestaurante") {
+      vmHome.isLoading = true;
+
+      //cargar series
+      final vmHomeRestaurant = Provider.of<HomeRestaurantViewModel>(
+        context,
+        listen: false,
+      );
+
+      final ApiResModel resSeries = await vmHomeRestaurant.loadSeries(context);
+
+      if (!resSeries.succes) {
+        vmHome.isLoading = false;
+        NotificationService.showErrorView(context, resSeries);
+        return;
+      }
+
+      Navigator.pushNamed(context, AppRoutes.homeRestaurant);
+
+      vmHome.isLoading = false;
+
+      return;
+    }
+
     //factura o cotizacion
     if (route.toLowerCase() == "prcdocumento_3") {
       vmHome.isLoading = true;
@@ -100,7 +126,6 @@ class MenuViewModel extends ChangeNotifier {
         return;
       }
 
-      final vmHome = Provider.of<HomeViewModel>(context, listen: false);
       final vmTipos = Provider.of<TypesDocViewModel>(context, listen: false);
       final vmPend = Provider.of<PendingDocsViewModel>(context, listen: false);
 

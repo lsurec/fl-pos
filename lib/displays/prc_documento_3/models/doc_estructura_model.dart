@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 class DocEstructuraModel {
+  int? docMesa;
+  int? docUbicacion;
   String? docLatitdud;
   String? docLongitud;
   int consecutivoInterno;
@@ -35,8 +37,12 @@ class DocEstructuraModel {
   String? docRefDescripcion;
   String? docRefObservacion3;
   String? docRefObservacion;
+  String? docComanda;
 
   DocEstructuraModel({
+    required this.docComanda,
+    required this.docMesa,
+    required this.docUbicacion,
     required this.docLatitdud,
     required this.docLongitud,
     required this.consecutivoInterno,
@@ -62,15 +68,15 @@ class DocEstructuraModel {
     required this.docElementoAsignado,
     required this.docTransaccion,
     required this.docCargoAbono,
-    this.docRefTipoReferencia,
-    this.docRefFechaIni,
-    this.docRefFechaFin,
-    this.docFechaIni,
-    this.docFechaFin,
-    this.docRefObservacion2,
-    this.docRefDescripcion,
-    this.docRefObservacion3,
-    this.docRefObservacion,
+    required this.docRefTipoReferencia,
+    required this.docRefFechaIni,
+    required this.docRefFechaFin,
+    required this.docFechaIni,
+    required this.docFechaFin,
+    required this.docRefObservacion2,
+    required this.docRefDescripcion,
+    required this.docRefObservacion3,
+    required this.docRefObservacion,
   });
 
   factory DocEstructuraModel.fromJson(String str) =>
@@ -80,8 +86,11 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
-        docLatitdud: json["docLatitdud"],
-        docLongitud: json["docLongitud"] ?? "",
+        docComanda: json["Doc_Comanda"],
+        docMesa: json["Doc_Mesa"],
+        docUbicacion: json["Doc_Ubicacion"],
+        docLatitdud: json["Doc_Latitdud"] ?? 0,
+        docLongitud: json["Doc_Longitud"] ?? 0,
         consecutivoInterno: json["Consecutivo_Interno"] ?? 0,
         docTraMonto: json["Doc_Tra_Monto"].toDouble(),
         docCaMonto: json["Doc_CA_Monto"].toDouble(),
@@ -128,8 +137,11 @@ class DocEstructuraModel {
       );
 
   Map<String, dynamic> toMap() => {
-        "docLatitdud": docLatitdud,
-        "docLongitud": docLongitud,
+        "Doc_Comanda": docComanda,
+        "Doc_Mesa": docMesa,
+        "Doc_Ubicacion": docUbicacion,
+        "Doc_Latitdud": docLatitdud,
+        "Doc_Longitud": docLongitud,
         "Consecutivo_Interno": consecutivoInterno,
         "Doc_Tra_Monto": docTraMonto,
         "Doc_CA_Monto": docCaMonto,
@@ -233,6 +245,7 @@ class DocCargoAbono {
 }
 
 class DocTransaccion {
+  String? traObservacion;
   int traConsecutivoInterno;
   int? traConsecutivoInternoPadre;
   int dConsecutivoInterno;
@@ -249,6 +262,7 @@ class DocTransaccion {
   double? traMontoDias;
 
   DocTransaccion({
+    required this.traObservacion,
     required this.traConsecutivoInterno,
     required this.traConsecutivoInternoPadre,
     required this.dConsecutivoInterno,
@@ -258,11 +272,11 @@ class DocTransaccion {
     required this.traCantidad,
     required this.traTipoCambio,
     required this.traMoneda,
-    this.traTipoPrecio,
-    this.traFactorConversion,
+    required this.traTipoPrecio,
+    required this.traFactorConversion,
     required this.traTipoTransaccion,
     required this.traMonto,
-    this.traMontoDias,
+    required this.traMontoDias,
   });
 
   factory DocTransaccion.fromJson(String str) =>
@@ -271,6 +285,7 @@ class DocTransaccion {
   String toJson() => json.encode(toMap());
 
   factory DocTransaccion.fromMap(Map<String, dynamic> json) => DocTransaccion(
+        traObservacion: json["Tra_Observacion"],
         traConsecutivoInterno: json["Tra_Consecutivo_Interno"],
         traConsecutivoInternoPadre: json["Tra_Consecutivo_Interno_Padre"],
         dConsecutivoInterno: json["D_Consecutivo_Interno"] ?? 0,
@@ -288,6 +303,7 @@ class DocTransaccion {
       );
 
   Map<String, dynamic> toMap() => {
+        "Tra_Observacion": traObservacion,
         "Tra_Consecutivo_Interno": traConsecutivoInterno,
         "Tra_Consecutivo_Interno_Padre": traConsecutivoInternoPadre,
         "D_Consecutivo_Interno": dConsecutivoInterno,
@@ -302,5 +318,30 @@ class DocTransaccion {
         "Tra_Tipo_Transaccion": traTipoTransaccion,
         "Tra_Monto": traMonto,
         "Tra_Monto_Dias": traMontoDias,
+      };
+}
+
+class GuarnicionModel {
+  int productoCaracteristica;
+  int? productoCaracteristicaPadre;
+
+  GuarnicionModel({
+    required this.productoCaracteristica,
+    required this.productoCaracteristicaPadre,
+  });
+
+  factory GuarnicionModel.fromJson(String str) =>
+      GuarnicionModel.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory GuarnicionModel.fromMap(Map<String, dynamic> json) => GuarnicionModel(
+        productoCaracteristica: json["productoCaracteristica"],
+        productoCaracteristicaPadre: json["productoCaracteristicaPadre"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "productoCaracteristica": productoCaracteristica,
+        "productoCaracteristicaPadre": productoCaracteristicaPadre,
       };
 }
