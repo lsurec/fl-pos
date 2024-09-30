@@ -103,6 +103,10 @@ class DetailsViewModel extends ChangeNotifier {
 
   int navegarProduct = 1;
 
+  String addLeadingZero(int number) {
+    return number.toString().padLeft(2, '0');
+  }
+
   //Buscar con input
   Future<void> performSearch(BuildContext context) async {
     final docVM = Provider.of<DocumentViewModel>(
@@ -593,11 +597,25 @@ class DetailsViewModel extends ChangeNotifier {
         docVM.fechaFinal,
         docVM.fechaInicial,
       )) {
+        DateTime fechaIni = docVM.fechaInicial;
+        DateTime fechaFin = docVM.fechaFinal;
+
+        String startDate = addLeadingZero(fechaIni.day);
+        String startMonth = addLeadingZero(fechaIni.month);
+        String endDate = addLeadingZero(fechaFin.day);
+        String endMonth = addLeadingZero(fechaFin.month);
+
+        String dateStart = "${fechaIni.year}$startMonth$startDate "
+            "${addLeadingZero(fechaIni.hour)}:${addLeadingZero(fechaIni.minute)}:${addLeadingZero(fechaIni.second)}";
+
+        String dateEnd = "${fechaFin.year}$endMonth$endDate "
+            "${addLeadingZero(fechaFin.hour)}:${addLeadingZero(fechaFin.minute)}:${addLeadingZero(fechaFin.second)}";
+
         //formular precios por dias
         ApiResModel resFormPrecio = await productService.getFormulaPrecioU(
           token,
-          docVM.fechaInicial,
-          docVM.fechaFinal,
+          dateStart,
+          dateEnd,
           productVM.total.toString(),
         );
 
@@ -1128,7 +1146,9 @@ class DetailsViewModel extends ChangeNotifier {
 
     // Mostrar el SnackBar con la opción de deshacer
     final snackBar = SnackBar(
-      backgroundColor: vmTheme.colorPref(AppTheme.idColorTema,),
+      backgroundColor: vmTheme.colorPref(
+        AppTheme.idColorTema,
+      ),
       duration: const Duration(seconds: 5),
       content: Row(
         children: [

@@ -24,9 +24,10 @@ class SettingsView extends StatelessWidget {
 
     // Crear una instancia de NumberFormat para el formato de moneda
     final currencyFormat = NumberFormat.currency(
-      symbol: vmHome
-          .moneda, // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
-      decimalDigits: 2, // Número de decimales a mostrar
+      // Símbolo de la moneda (puedes cambiarlo según tu necesidad)
+      symbol: vmHome.moneda,
+      // Número de decimales a mostrar
+      decimalDigits: 2,
     );
 
     return Scaffold(
@@ -47,7 +48,6 @@ class SettingsView extends StatelessWidget {
               Column(
                 children: [
                   ListTile(
-                    contentPadding: EdgeInsets.zero,
                     title: Text(
                       vmLogin.user.toUpperCase(),
                       style: StyleApp.normal,
