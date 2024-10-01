@@ -179,17 +179,6 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Crear tarea
   Future<void> crearTarea(BuildContext context) async {
-    // //mostrra mensaje
-    // NotificationService.showSnackbarAction(
-    //   context,
-    //   "Tarea creada correctamente : $idTarea",
-    //   "Ver",
-    //   () {
-    //     // => vmTarea.detalleTarea(context, tareaCreada!)
-    //   },
-    // );
-
-    // return;
     //Validar el formulario
     if (!isValidForm()) {
       NotificationService.showSnackbar(
@@ -325,7 +314,7 @@ class CrearTareaViewModel extends ChangeNotifier {
       referencia: idReferencia!.referencia,
       userName: user,
       observacion1: observacionController.text,
-      nomUser: "",
+      nomUser: user,
       nomCuentaCorrentista: "",
       desTipoTarea: tipoTarea!.descripcion,
       cuentaCorrentista: null,
@@ -348,45 +337,45 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Tarea creada de desde calendario
     tareaCalendarioCreada = tareaCalendarioCreada;
 
-    //Si se está creando desde busqueda de tareas
+    // //Si se está creando desde busqueda de tareas
 
-    if (idPantalla == 1 && res.succes) {
-      //objeto de la vista de tareas
-      vmTarea.loadData(context);
-      //mostrra mensaje
-      NotificationService.showSnackbarAction(
-        context,
-        "Tarea creada correctamente : $idTarea",
-        "Ver",
-        () => vmTarea.detalleTarea(context, tareaCreada!),
-      );
-    }
+    // if (idPantalla == 1 && res.succes) {
+    //   //objeto de la vista de tareas
+    //   vmTarea.loadData(context);
+    //   //mostrra mensaje
+    //   NotificationService.showSnackbarAction(
+    //     context,
+    //     "Tarea creada correctamente : $idTarea",
+    //     "Ver",
+    //     () => vmTarea.detalleTarea(context, tareaCreada!),
+    //   );
+    // }
 
     DateTime hoyFecha = DateTime.now();
 
-    //Si se está creando desde el calendario
-    if (idPantalla == 2 && res.succes) {
-      //objeto de la vista calendario
-      vmCalendario.obtenerTareasRango(
-        context,
-        hoyFecha.month,
-        hoyFecha.year,
-      );
+    // //Si se está creando desde el calendario
+    // if (idPantalla == 2 && res.succes) {
+    //   //objeto de la vista calendario
+    //   vmCalendario.obtenerTareasRango(
+    //     context,
+    //     hoyFecha.month,
+    //     hoyFecha.year,
+    //   );
 
-      //mostrra mensaje
-      NotificationService.showSnackbarAction(
-        context,
-        "Tarea creada correctamente : $idTarea",
-        "Ver",
-        vmTarea.vistaDetalle == 1
-            ? () {
-                print("Navega a detalle tarea desde tareas");
-              }
-            : () {
-                print("Navega a detalle tarea desde calendario");
-              },
-      );
-    }
+    //   //mostrra mensaje
+    //   NotificationService.showSnackbarAction(
+    //     context,
+    //     "Tarea creada correctamente : $idTarea",
+    //     "Ver",
+    //     vmTarea.vistaDetalle == 1
+    //         ? () {
+    //             print("Navega a detalle tarea desde tareas");
+    //           }
+    //         : () {
+    //             print("Navega a detalle tarea desde calendario");
+    //           },
+    //   );
+    // }
 
     //Usuario responsable de la tarea
     //Crear modelo de usuario nuevo
@@ -516,15 +505,53 @@ class CrearTareaViewModel extends ChangeNotifier {
       isLoading = false;
     }
 
-    // //mostrra mensaje
-    // NotificationService.showSnackbar(
-    //   "Tarea creada correctamente.",
-    // );
-
-    limpiar(); //Limpiar todo el formulario
     isLoading = false; //detener carga
 
-    return;
+    //Si se está creando desde busqueda de tareas
+
+    if (idPantalla == 1 && res.succes) {
+      //objeto de la vista de tareas
+      vmTarea.loadData(context);
+      //mostrra mensaje
+      NotificationService.showSnackbarAction(
+        context,
+        "Tarea creada correctamente : $idTarea",
+        "Ver",
+        () => vmTarea.detalleTarea(
+          context,
+          tareaCreada!,
+        ),
+      );
+
+      limpiar(); //Limpiar todo el formulario
+
+      return;
+    }
+
+    //Si se está creando desde el calendario
+    if (idPantalla == 2 && res.succes) {
+      //objeto de la vista calendario
+      vmCalendario.obtenerTareasRango(
+        context,
+        hoyFecha.month,
+        hoyFecha.year,
+      );
+
+      //mostrra mensaje
+      NotificationService.showSnackbarAction(
+        context,
+        "Tarea creada correctamente : $idTarea",
+        "Ver",
+        () => vmCalendario.navegarDetalleTarea(
+          context,
+          tareaCalendarioCreada,
+        ),
+      );
+
+      limpiar(); //Limpiar todo el formulario
+
+      return;
+    }
   }
 
   //Abrir picker de fecha inicial

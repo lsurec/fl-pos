@@ -22,10 +22,7 @@ class CrearTareaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<CrearTareaViewModel>(context);
-    final vmTarea = Provider.of<TareasViewModel>(context);
     final vmTheme = Provider.of<ThemeViewModel>(context);
-
-    print(vmTarea.vistaDetalle);
 
     return Stack(
       children: [

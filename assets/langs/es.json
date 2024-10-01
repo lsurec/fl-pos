@@ -246,7 +246,8 @@
         "cuentasTransferidas": "Cuentas transferidas con éxito.",
         "documentosSinActualizar": "El documento origen y destino no se actualizó.",
         "docDestinoNoActualizado": "El documento destino no se actualizó.",
-        "docOrigenNoActualizado": "El documento origen no se actualizó."
+        "docOrigenNoActualizado": "El documento origen no se actualizó.",
+        "enlaceSinAbrir": "No se pudo abrir el enlace."
     },
     "preferencias": {
         "idiomaT": "IDIOMA DE LA APLICACIÓN",

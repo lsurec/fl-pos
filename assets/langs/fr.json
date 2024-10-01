@@ -246,7 +246,8 @@
         "cuentasTransferidas": "Comptes transférés avec succès.",
         "documentosSinActualizar": "Les documents source et destination n'ont pas été mis à jour.",
         "docDestinoNoActualizado": "Le document de destination n'a pas été mis à jour.",
-        "docOrigenNoActualizado": "Le document source n'a pas été mis à jour."
+        "docOrigenNoActualizado": "Le document source n'a pas été mis à jour.",
+        "enlaceSinAbrir": "Le lien n'a pas pu être ouvert."
     },
     "preferencias": {
         "idiomaT": "LANGUE DE L'APPLICATION",

@@ -1069,7 +1069,11 @@ class CalendarioViewModel extends ChangeNotifier {
     BuildContext context,
     TareaCalendarioModel tarea,
   ) async {
+    //viwe model de Crear tarea
+    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
     isLoading = true; //cargar pantalla
+    vmCrear.isLoading = true;
+
     //view model de Detalle
     final vmDetalle = Provider.of<DetalleTareaCalendarioViewModel>(
       context,
@@ -1091,6 +1095,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     if (!succesResponsables.succes) {
       isLoading = false;
+      vmCrear.isLoading = false;
       return;
     }
 
@@ -1101,17 +1106,17 @@ class CalendarioViewModel extends ChangeNotifier {
 
     if (!succesInvitados.succes) {
       isLoading = false;
+      vmCrear.isLoading = false;
       return;
     }
 
-    //viwe model de Crear tarea
-    final vmCrear = Provider.of<CrearTareaViewModel>(context, listen: false);
     final bool succesEstados = await vmCrear.obtenerEstados(
       context,
     ); //obtener estados de tarea
 
     if (!succesEstados) {
       isLoading = false;
+      vmCrear.isLoading = false;
       return;
     }
     final bool succesPrioridades = await vmCrear.obtenerPrioridades(
@@ -1120,6 +1125,7 @@ class CalendarioViewModel extends ChangeNotifier {
 
     if (!succesPrioridades) {
       isLoading = false;
+      vmCrear.isLoading = false;
       return;
     }
 
@@ -1146,12 +1152,18 @@ class CalendarioViewModel extends ChangeNotifier {
     //sino se realizo el consumo correctamente retornar
     if (!succesComentarios) {
       isLoading = false;
+      vmCrear.isLoading = false;
       return;
     }
 
     //Navegar a detalles
-    Navigator.pushNamed(context, AppRoutes.detailsTaskCalendar);
+    Navigator.pushNamed(
+      context,
+      AppRoutes.detailsTaskCalendar,
+    );
+
     isLoading = false; //detener carga
+    vmCrear.isLoading = false;
   }
 
   //Armar comentarios con objetos adjuntos

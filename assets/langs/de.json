@@ -246,7 +246,8 @@
         "cuentasTransferidas": "Konten erfolgreich übertragen.",
         "documentosSinActualizar": "Das Quell- und Zieldokument wurden nicht aktualisiert.",
         "docDestinoNoActualizado": "Das Zieldokument wurde nicht aktualisiert.",
-        "docOrigenNoActualizado": "Das Quelldokument wurde nicht aktualisiert."
+        "docOrigenNoActualizado": "Das Quelldokument wurde nicht aktualisiert.",
+        "enlaceSinAbrir": "Der Link konnte nicht geöffnet werden."
     },
     "preferencias": {
         "idiomaT": "ANWENDUNGSSPRACHE",
