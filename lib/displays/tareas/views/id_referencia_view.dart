@@ -123,7 +123,7 @@ class _ReferenciasEncontradas extends StatelessWidget {
             decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
-                  width: 1.5,
+                  width: 1,
                   color: AppTheme.grey,
                 ),
               ),

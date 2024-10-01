@@ -179,6 +179,17 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Crear tarea
   Future<void> crearTarea(BuildContext context) async {
+    // //mostrra mensaje
+    // NotificationService.showSnackbarAction(
+    //   context,
+    //   "Tarea creada correctamente : $idTarea",
+    //   "Ver",
+    //   () {
+    //     // => vmTarea.detalleTarea(context, tareaCreada!)
+    //   },
+    // );
+
+    // return;
     //Validar el formulario
     if (!isValidForm()) {
       NotificationService.showSnackbar(
@@ -347,16 +358,8 @@ class CrearTareaViewModel extends ChangeNotifier {
         context,
         "Tarea creada correctamente : $idTarea",
         "Ver",
-        vmTarea.vistaDetalle == 1
-            ? () {
-                print("Navega a detalle tarea desde tareas");
-              }
-            : () {
-                print("Navega a detalle tarea desde calendario");
-              },
+        () => vmTarea.detalleTarea(context, tareaCreada!),
       );
-
-      limpiar();
     }
 
     DateTime hoyFecha = DateTime.now();
@@ -383,8 +386,6 @@ class CrearTareaViewModel extends ChangeNotifier {
                 print("Navega a detalle tarea desde calendario");
               },
       );
-
-      limpiar();
     }
 
     //Usuario responsable de la tarea
@@ -520,6 +521,7 @@ class CrearTareaViewModel extends ChangeNotifier {
     //   "Tarea creada correctamente.",
     // );
 
+    limpiar(); //Limpiar todo el formulario
     isLoading = false; //detener carga
 
     return;

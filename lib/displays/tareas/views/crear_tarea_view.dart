@@ -53,7 +53,7 @@ class CrearTareaView extends StatelessWidget {
                 children: [
                   // if (vm.idTarea == -1)
                   IconButton(
-                    onPressed: () => vm.guardar(context),
+                    onPressed: () => vm.crearTarea(context),
                     icon: const Icon(Icons.save_outlined),
                     tooltip: AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
