@@ -20,6 +20,7 @@ class AppTheme {
 
   static const Color primary = Color(0xff134895);
   static const Color primaryDark = Color.fromARGB(255, 159, 197, 255);
+  static const Color enlaces = Color.fromARGB(255, 59, 135, 248);
 
   static const Color border = Color.fromARGB(255, 112, 111, 111);
 

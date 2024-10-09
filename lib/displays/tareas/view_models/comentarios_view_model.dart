@@ -70,6 +70,11 @@ class ComentariosViewModel extends ChangeNotifier {
     final vmTareaCalendario =
         Provider.of<DetalleTareaCalendarioViewModel>(context, listen: false);
 
+    //View model de comentarios
+    final vmDetalleTarea = Provider.of<TareasViewModel>(context, listen: false);
+    final vmDetalleTareaCalendario =
+        Provider.of<CalendarioViewModel>(context, listen: false);
+
     if (vistaTarea == 1) {
       //Id de la tarea
       idTarea = vmTarea.tarea!.iDTarea;
@@ -114,6 +119,7 @@ class ComentariosViewModel extends ChangeNotifier {
       for (var i = 0; i < files.length; i++) {
         File file = files[i];
         ObjetoComentarioModel archivo = ObjetoComentarioModel(
+          observacion1: Utilities.nombreArchivo(file),
           tareaComentarioObjeto: 1,
           objetoNombre: Utilities.nombreArchivo(file),
           objetoSize: "",
@@ -171,12 +177,29 @@ class ComentariosViewModel extends ChangeNotifier {
       ),
     );
 
+    //validar resppuesta de los comentarios
+    final bool succesComentarios;
+    if (vistaTarea == 1) {
+      succesComentarios = await vmDetalleTarea.armarComentario(
+        context,
+      );
+    } else {
+      succesComentarios = await vmDetalleTareaCalendario.armarComentario(
+        context,
+      );
+    }
+
+    //sino se realizo el consumo correctamente retornar
+    if (!succesComentarios) {
+      isLoading = false;
+      return;
+    }
+
     notifyListeners();
     comentarioController.text = ""; //limpiar input
     files.clear(); //limpiar lista de archivos
 
     isLoading = false; //detener carga
-
   }
 
   loadData(BuildContext context) async {

@@ -12,6 +12,7 @@ import 'package:flutter_post_printer_example/utilities/translate_block_utilities
 import 'package:flutter_post_printer_example/view_models/lang_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Utilities {
   //Nombre Dias Semana
@@ -388,5 +389,15 @@ class Utilities {
     // Comparar las fechas
     return dateWithoutSeconds1.isAtSameMomentAs(dateWithoutSeconds2) ||
         dateWithoutSeconds1.isAfter(dateWithoutSeconds2);
+  }
+
+  // Función para abrir el enlace
+  static void openLink(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      // await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'No se pudo abrir el enlace $url';
+    }
   }
 }
