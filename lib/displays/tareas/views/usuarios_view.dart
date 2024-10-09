@@ -83,15 +83,19 @@ class UsuariosView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment:
+                            vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4
+                                ? MainAxisAlignment.spaceBetween
+                                : MainAxisAlignment.end,
                         children: [
-                          Text(
-                            "${AppLocalizations.of(context)!.translate(
-                              BlockTranslate.general,
-                              'seleccionados',
-                            )} (${vmCrear.invitados.length})",
-                            style: StyleApp.normalBold,
-                          ),
+                          if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
+                            Text(
+                              "${AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'seleccionados',
+                              )} (${vmCrear.invitados.length})",
+                              style: StyleApp.normalBold,
+                            ),
                           if (vm.tipoBusqueda == 4)
                             Text(
                               "${AppLocalizations.of(context)!.translate(
