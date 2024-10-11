@@ -203,7 +203,7 @@ class OrderViewModel extends ChangeNotifier {
       consecutivo++;
     }
 
-// Combinar los dos números para formar uno de 14 dígitos
+    // Combinar los dos números para formar uno de 14 dígitos
 
     DateTime dateConsecutivo = DateTime.now();
     int randomNumber1 = Random().nextInt(900) + 100;
@@ -224,6 +224,7 @@ class OrderViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
 
     final DocEstructuraModel doc = DocEstructuraModel(
+      docConfirmarOrden: false,
       docComanda: orders[indexOrder].nombre,
       docFechaFin: null,
       docFechaIni: null,

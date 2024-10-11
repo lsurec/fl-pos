@@ -1191,6 +1191,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
     //Objeto documento estrucutra
     docGlobal = DocEstructuraModel(
+      docConfirmarOrden:
+          false, //TODO:parametrizar segun valor si es cotiacion de ALfa y Omega
       docComanda: null,
       docMesa: null,
       docUbicacion: null,

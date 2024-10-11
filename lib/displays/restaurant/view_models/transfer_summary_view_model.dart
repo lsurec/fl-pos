@@ -529,6 +529,7 @@ class TransferSummaryViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
 
     return DocEstructuraModel(
+      docConfirmarOrden: false,
       docComanda: orderVM.orders[indexOrder].nombre,
       docFechaFin: null,
       docFechaIni: null,
