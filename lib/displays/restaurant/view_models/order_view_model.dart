@@ -584,6 +584,7 @@ class OrderViewModel extends ChangeNotifier {
         await PrinterManager.instance.connect(
           type: PrinterType.network,
           model: TcpPrinterInput(
+            //TODO:Cambiar a ip de la base de datos
             // ipAddress: element.ipAdress,
             ipAddress: "192.168.0.10",
           ),
