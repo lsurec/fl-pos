@@ -529,7 +529,8 @@ class OrderViewModel extends ChangeNotifier {
                 width: 1,
               ), // Anc/ Ancho 2
               PosColumn(
-                text: tra.desProducto,
+                text:
+                    "${tra.desProducto} ${tra.observacion.isNotEmpty ? '(${tra.observacion})' : ''}",
                 width: 9,
                 styles: const PosStyles(
                   height: PosTextSize.size2,

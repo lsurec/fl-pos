@@ -20,6 +20,9 @@ class PrintDataComandaModel {
   int tipoTransaccion;
   String printerName;
   int dConsecutivoInterno;
+  String observacion;
+  int traConsecutivoInterno;
+  int? consecutivoInternoPadre;
 
   PrintDataComandaModel({
     required this.idDocumento,
@@ -41,6 +44,9 @@ class PrintDataComandaModel {
     required this.tipoTransaccion,
     required this.printerName,
     required this.dConsecutivoInterno,
+    required this.observacion,
+    required this.traConsecutivoInterno,
+    required this.consecutivoInternoPadre,
   });
 
   factory PrintDataComandaModel.fromJson(String str) =>
@@ -69,6 +75,9 @@ class PrintDataComandaModel {
         tipoTransaccion: json["tipo_Transaccion"],
         printerName: json["printerName"],
         dConsecutivoInterno: json["d_Consecutivo_Interno"],
+        observacion: json["observacion"],
+        traConsecutivoInterno: json["tra_Consecutivo_Interno"],
+        consecutivoInternoPadre: json["consecutivo_Interno_Padre"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -91,5 +100,8 @@ class PrintDataComandaModel {
         "tipo_Transaccion": tipoTransaccion,
         "printerName": printerName,
         "d_Consecutivo_Interno": dConsecutivoInterno,
+        "observacion": observacion,
+        "tra_Consecutivo_Interno": traConsecutivoInterno,
+        "consecutivo_Interno_Padre": consecutivoInternoPadre,
       };
 }
