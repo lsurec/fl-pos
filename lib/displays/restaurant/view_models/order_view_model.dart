@@ -470,7 +470,7 @@ class OrderViewModel extends ChangeNotifier {
         );
 
         bytes += generator.text(
-          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].idDocumento}",
+          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].iDDocumentoRef}",
           styles: const PosStyles(
             bold: true,
             align: PosAlign.center,
