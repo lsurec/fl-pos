@@ -51,14 +51,11 @@ class UsuariosViewModel extends ChangeNotifier {
     buscar.clear();
 
     if (vmTarea.vistaDetalle == 1 || vmTarea.vistaDetalle == 2) {
-      print("la lista debe limpiarse ${usuariosSeleccionados.length}");
+      //"la lista debe limpiarse ${usuariosSeleccionados.length}";
       vmCrear.invitados.clear();
-
       return true;
     }
-
-    print("la lista NO debe limpiarse ${usuariosSeleccionados.length}");
-
+    //"la lista NO debe limpiarse ${usuariosSeleccionados.length}";
     return true;
   }
 
