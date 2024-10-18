@@ -48,13 +48,12 @@ class CrearTareaView extends StatelessWidget {
             actions: <Widget>[
               Row(
                 children: [
-                  // if (vm.idTarea == -1)
                   IconButton(
-                    onPressed: () => vm.crearTarea(context),
-                    icon: const Icon(Icons.save_outlined),
+                    onPressed: () => vm.loadData(context),
+                    icon: const Icon(Icons.note_add_outlined),
                     tooltip: AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
-                      'guardar',
+                      'nuevo',
                     ),
                   ),
                   if (vm.idTarea == -1)
@@ -67,11 +66,17 @@ class CrearTareaView extends StatelessWidget {
                       ),
                     ),
                   IconButton(
-                    onPressed: () => vm.limpiar(),
-                    icon: const Icon(Icons.note_add_outlined),
+                    onPressed: () => vm.crearTarea(context),
+                    icon: Icon(
+                      Icons.save_outlined,
+                      color: AppTheme.hexToColor(
+                        Preferences.valueColor,
+                      ),
+                      size: 30,
+                    ),
                     tooltip: AppLocalizations.of(context)!.translate(
                       BlockTranslate.botones,
-                      'nuevo',
+                      'guardar',
                     ),
                   ),
                 ],
@@ -79,9 +84,7 @@ class CrearTareaView extends StatelessWidget {
             ],
           ),
           body: RefreshIndicator(
-            onRefresh: () => vm.idTarea == -1
-                ? vm.loadData(context)
-                : vm.loadComent(context),
+            onRefresh: () => vm.loadData(context),
             child: ListView(
               children: [
                 Padding(
@@ -133,6 +136,25 @@ class CrearTareaView extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.translate(
+                                BlockTranslate.general,
+                                'observacion',
+                              ),
+                              style: StyleApp.normalBold,
+                            ),
+                            const Padding(padding: EdgeInsets.only(left: 5)),
+                            const Text(
+                              "*",
+                              style: StyleApp.obligatory,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        const _ObservacionTarea(),
                         const SizedBox(height: 10),
                         Text(
                           AppLocalizations.of(context)!.translate(
@@ -354,25 +376,6 @@ class CrearTareaView extends StatelessWidget {
                         _PrioridadTarea(
                           prioridades: vm.prioridades,
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.translate(
-                                BlockTranslate.general,
-                                'observacion',
-                              ),
-                              style: StyleApp.normalBold,
-                            ),
-                            const Padding(padding: EdgeInsets.only(left: 5)),
-                            const Text(
-                              "*",
-                              style: StyleApp.obligatory,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        const _ObservacionTarea(),
                         const SizedBox(height: 10),
                         if (vm.files.isNotEmpty)
                           Text(
