@@ -203,7 +203,7 @@ class OrderViewModel extends ChangeNotifier {
       consecutivo++;
     }
 
-// Combinar los dos números para formar uno de 14 dígitos
+    // Combinar los dos números para formar uno de 14 dígitos
 
     DateTime dateConsecutivo = DateTime.now();
     int randomNumber1 = Random().nextInt(900) + 100;
@@ -224,6 +224,7 @@ class OrderViewModel extends ChangeNotifier {
     String serializedDateTime = myDateTime.toIso8601String();
 
     final DocEstructuraModel doc = DocEstructuraModel(
+      docConfirmarOrden: false,
       docComanda: orders[indexOrder].nombre,
       docFechaFin: null,
       docFechaIni: null,
@@ -469,7 +470,7 @@ class OrderViewModel extends ChangeNotifier {
         );
 
         bytes += generator.text(
-          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].idDocumento}",
+          "${element.detalles[0].desSerieDocumento} - ${element.detalles[0].iDDocumentoRef}",
           styles: const PosStyles(
             bold: true,
             align: PosAlign.center,
@@ -528,7 +529,8 @@ class OrderViewModel extends ChangeNotifier {
                 width: 1,
               ), // Anc/ Ancho 2
               PosColumn(
-                text: tra.desProducto,
+                text:
+                    "${tra.desProducto} ${tra.observacion.isNotEmpty ? '(${tra.observacion})' : ''}",
                 width: 9,
                 styles: const PosStyles(
                   height: PosTextSize.size2,
@@ -582,6 +584,7 @@ class OrderViewModel extends ChangeNotifier {
         await PrinterManager.instance.connect(
           type: PrinterType.network,
           model: TcpPrinterInput(
+            //TODO:Cambiar a ip de la base de datos
             // ipAddress: element.ipAdress,
             ipAddress: "192.168.0.10",
           ),

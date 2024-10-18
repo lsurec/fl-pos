@@ -57,7 +57,7 @@ dependencies:
   share: ^2.0.2
   shared_preferences: ^2.0.15
   web_socket_channel: ^2.4.0
-  url_launcher: ^6.3.0
+  url_launcher: ^6.1.14
   flutter_inappwebview: ^6.0.0
 
 dev_dependencies:

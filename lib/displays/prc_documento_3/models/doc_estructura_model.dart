@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class DocEstructuraModel {
+  bool docConfirmarOrden;
   int? docMesa;
   int? docUbicacion;
   String? docLatitdud;
@@ -40,6 +41,7 @@ class DocEstructuraModel {
   String? docComanda;
 
   DocEstructuraModel({
+    required this.docConfirmarOrden,
     required this.docComanda,
     required this.docMesa,
     required this.docUbicacion,
@@ -86,6 +88,7 @@ class DocEstructuraModel {
 
   factory DocEstructuraModel.fromMap(Map<String, dynamic> json) =>
       DocEstructuraModel(
+        docConfirmarOrden: json["Doc_Confirmar_Orden"] ?? false,
         docComanda: json["Doc_Comanda"],
         docMesa: json["Doc_Mesa"],
         docUbicacion: json["Doc_Ubicacion"],
@@ -137,6 +140,7 @@ class DocEstructuraModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "Doc_Confirmar_Orden": docConfirmarOrden,
         "Doc_Comanda": docComanda,
         "Doc_Mesa": docMesa,
         "Doc_Ubicacion": docUbicacion,
