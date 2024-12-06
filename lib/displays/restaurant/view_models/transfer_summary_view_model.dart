@@ -508,7 +508,7 @@ class TransferSummaryViewModel extends ChangeNotifier {
       }
     }
 
-// Combinar los dos números para formar uno de 14 dígitos
+    // Combinar los dos números para formar uno de 14 dígitos
 
     DateTime dateConsecutivo = DateTime.now();
     int randomNumber1 = Random().nextInt(900) + 100;
