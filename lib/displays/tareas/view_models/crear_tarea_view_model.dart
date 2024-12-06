@@ -15,6 +15,7 @@ import 'package:flutter_post_printer_example/utilities/translate_block_utilities
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class CrearTareaViewModel extends ChangeNotifier {
@@ -69,11 +70,48 @@ class CrearTareaViewModel extends ChangeNotifier {
 
   //Volver a cargar tados
   loadData(BuildContext context) async {
+    // abrir diálogo de confirmación
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'confirmar',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'perder',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "aceptar",
+            ),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              "cancelar",
+            ),
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+          ),
+        ) ??
+        false;
+
+    if (!result) return;
+
     final bool succesEstados = await obtenerEstados(
       context,
     ); //obtener estados de tarea
 
     if (!succesEstados) {
+      isLoading = false;
+      return;
+    }
+
+    final bool succesTipos = await obtenerTiposTarea(
+      context,
+    ); //obtener tipos de tarea
+
+    if (!succesTipos) {
       isLoading = false;
       return;
     }
@@ -96,15 +134,6 @@ class CrearTareaViewModel extends ChangeNotifier {
       return;
     }
 
-    final bool succesTipos = await obtenerTiposTarea(
-      context,
-    ); //obtener tipos de tarea
-
-    if (!succesTipos) {
-      isLoading = false;
-      return;
-    }
-
     //Fechas y horas
     fechaInicial = DateTime.now();
     fechaFinal = addDate10Min(fechaInicial);
@@ -112,13 +141,8 @@ class CrearTareaViewModel extends ChangeNotifier {
     //Tiempo estimado
     tiempoController.text = tiempoNum(fechaInicial, fechaFinal).toString();
     periodicidad = periodicidades[tiempoTipo(fechaInicial, fechaFinal)];
-    limpiar();
-  }
 
-  loadComent(
-    BuildContext context,
-  ) async {
-    //Recarga los comentarios sin mover nada
+    limpiarFormulario();
   }
 
   //Navegar a view para buscar Id de referencia.
@@ -160,7 +184,7 @@ class CrearTareaViewModel extends ChangeNotifier {
   }
 
   //Limpiar formulario
-  limpiar() {
+  limpiarFormulario() {
     idTarea = -1;
     tituloController.text = "";
     observacionController.text = "";
@@ -523,7 +547,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         ),
       );
 
-      limpiar(); //Limpiar todo el formulario
+      limpiarFormulario(); //Limpiar todo el formulario
 
       return;
     }
@@ -548,7 +572,7 @@ class CrearTareaViewModel extends ChangeNotifier {
         ),
       );
 
-      limpiar(); //Limpiar todo el formulario
+      limpiarFormulario(); //Limpiar todo el formulario
 
       return;
     }
@@ -1278,76 +1302,5 @@ class CrearTareaViewModel extends ChangeNotifier {
   eliminarRef() {
     idReferencia = null;
     notifyListeners();
-    print("eliminamos la refeencia");
-  }
-
-  guardarT(
-    BuildContext context,
-  ) {
-    isLoading = true;
-  }
-
-  guardar(BuildContext context) async {
-    final vmTarea = Provider.of<TareasViewModel>(
-      context,
-      listen: false,
-    );
-
-    //Validar el formulario
-    if (!isValidForm()) {
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'completarFormulario',
-        ),
-      );
-      return;
-    }
-
-    //sino ha seleccionado la referencia
-    if (idReferencia == null) {
-      NotificationService.showSnackbar(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.notificacion,
-          'seleccioneIdRef',
-        ),
-      );
-      return;
-    }
-
-    //sino hay resoinsable
-    if (responsable == null) {
-      NotificationService.showSnackbar(AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'seleccioneRespo',
-      ));
-      return;
-    }
-
-    isLoading = true;
-
-    // Temporizador de 5 segundos
-    await Future.delayed(const Duration(seconds: 1), () {
-      // Desactivar el indicador de carga después de 5 segundos
-
-      idTarea = 100;
-
-      isLoading = false;
-    });
-
-    NotificationService.showSnackbarAction(
-      context,
-      "Tarea creada correctamente : $idTarea",
-      "Ver",
-      vmTarea.vistaDetalle == 1
-          ? () {
-              print("Navega a detalle tarea desde tareas");
-            }
-          : () {
-              print("Navega a detalle tarea desde calendario");
-            },
-    );
-
-    limpiar();
   }
 }

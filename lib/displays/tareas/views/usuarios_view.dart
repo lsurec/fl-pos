@@ -116,7 +116,7 @@ class UsuariosView extends StatelessWidget {
                       const Divider(),
                       if (vm.tipoBusqueda == 2 || vm.tipoBusqueda == 4)
                         const _InvitadosEncontrados(),
-                      if (vm.tipoBusqueda == 1 || vm.tipoBusqueda == 3)
+                      if (vm.tipoBusqueda == 1 || vm.tipoBusqueda == 3 || vm.tipoBusqueda == 5)
                         const _ResponsablesEncontrados()
                     ],
                   ),
