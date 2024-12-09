@@ -235,7 +235,7 @@ class DocumentoViewModel extends ChangeNotifier {
       }
 
       // si no se ha pagado el total mostrar mensaje
-      if (paymentVM.saldo != 0) {
+      if (paymentVM.saldo > 0) {
         NotificationService.showSnackbar(
           AppLocalizations.of(context)!.translate(
             BlockTranslate.notificacion,
