@@ -62,7 +62,7 @@ class DocumentViewModel extends ChangeNotifier {
     clienteSelect = null;
     vendedorSelect = null;
     cf = false;
-    serieSelect = null;
+    // serieSelect = null;
     referenciaSelect = null;
     refObservacionParam384.text = "";
     refDescripcionParam383.text = "";

@@ -65,7 +65,10 @@ class ProductViewModel extends ChangeNotifier {
     int parsedValue = int.tryParse(controllerNum.text) ?? 0;
 
     //calcular total
-    total = parsedValue * selectedPrice!.precioU;
+    // total = parsedValue * selectedPrice!.precioU;
+
+    total =
+        double.parse((parsedValue * selectedPrice!.precioU).toStringAsFixed(2));
 
     notifyListeners();
   }
@@ -181,7 +184,9 @@ class ProductViewModel extends ChangeNotifier {
       int cantidad = convertirTextNum(controllerNum.text)!;
 
       //Calcular el total (cantidad * precio seleccionado)
-      total = cantidad * selectedPrice!.precioU;
+      // total = cantidad * selectedPrice!.precioU;
+      total =
+          double.parse((cantidad * selectedPrice!.precioU).toStringAsFixed(2));
 
       //detener carga
       isLoading = false;
@@ -217,7 +222,9 @@ class ProductViewModel extends ChangeNotifier {
     int cantidad = convertirTextNum(controllerNum.text)!;
 
     //Calcular el total (cantidad * precio seleccionado)
-    total = cantidad * selectedPrice!.precioU;
+    // total = cantidad * selectedPrice!.precioU;
+    total =
+        double.parse((cantidad * selectedPrice!.precioU).toStringAsFixed(2));
 
     double precioDias = 0;
     int cantidadDias = 0;

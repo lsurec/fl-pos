@@ -483,7 +483,10 @@ class DetailsViewModel extends ChangeNotifier {
       int cantidad = productVM.convertirTextNum(productVM.controllerNum.text)!;
 
       //Calcular el total (cantidad * precio seleccionado)
-      productVM.total = cantidad * productVM.selectedPrice!.precioU;
+      productVM.total = double.parse(
+          (cantidad * productVM.selectedPrice!.precioU).toStringAsFixed(2));
+
+      // productVM.total = cantidad * productVM.selectedPrice!.precioU;
 
       //navegar y verificar que ocurre
 
@@ -584,7 +587,10 @@ class DetailsViewModel extends ChangeNotifier {
     int cantidad = productVM.convertirTextNum(productVM.controllerNum.text)!;
 
     //Calcular el total (cantidad * precio seleccionado)
-    productVM.total = cantidad * productVM.selectedPrice!.precioU;
+    // productVM.total = cantidad * productVM.selectedPrice!.precioU;
+
+    productVM.total = double.parse(
+        (cantidad * productVM.selectedPrice!.precioU).toStringAsFixed(2));
 
     double precioDias = 0;
     int cantidadDias = 0;
