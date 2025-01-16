@@ -683,11 +683,15 @@ class PrintViewModel extends ChangeNotifier {
 
     String formattedDateCert = "";
 
-    if (encabezado.feLFechaCertificacion != null) {
-      DateTime dateTimeCert = DateTime.parse(encabezado.feLFechaCertificacion);
-      formattedDateCert =
-          "${dateTimeCert.day}/${dateTimeCert.month}/${dateTimeCert.year} ${dateTimeCert.hour}:${dateTimeCert.minute}:${dateTimeCert.second}";
-    }
+    //TODO:ERROR
+    // if (encabezado.feLFechaCertificacion != null) {
+
+    //   DateFormat format = DateFormat("d/M/yyyy H:m:s");
+
+    //   DateTime dateTimeCert = DateTime.parse(encabezado.feLFechaCertificacion);
+    //   formattedDateCert =
+    //       "${dateTimeCert.day}/${dateTimeCert.month}/${dateTimeCert.year} ${dateTimeCert.hour}:${dateTimeCert.minute}:${dateTimeCert.second}";
+    // }
 
     //TODO: Certificar
     Documento documento = Documento(
@@ -696,7 +700,8 @@ class PrintViewModel extends ChangeNotifier {
         BlockTranslate.tiket,
         'docTributario',
       ),
-      fechaCert: formattedDateCert,
+      // fechaCert: formattedDateCert,
+      fechaCert: encabezado.feLFechaCertificacion,
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
       autorizacion: encabezado.feLUuid ?? "",
@@ -2193,6 +2198,18 @@ class PrintViewModel extends ChangeNotifier {
       docPrintModel.poweredBy.website,
       styles: center,
     );
+
+    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
+      context,
+      listen: false,
+    );
+
+    bytes += generator.text(
+      "Version: ${splashVM.versionLocal}",
+      styles: center,
+    );
+
+    //TODO:VErsion
     return PrintModel(
       bytes: bytes,
       generator: generator,

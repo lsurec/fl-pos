@@ -981,6 +981,10 @@ class ConfirmDocViewModel extends ChangeNotifier {
           "No se pudo actalizar documento estructura",
         );
       }
+    } else {
+      NotificationService.showSnackbar(
+        "No se obtieron los datos FEL",
+      );
     }
 
     return ApiResModel(

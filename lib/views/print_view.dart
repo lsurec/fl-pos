@@ -225,6 +225,7 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 break;
                               case 2:
                                 //2: docummento factura
+                                // TODO:ERROR
 
                                 PrintModel print = await printVM.printDocument(
                                   context, // context,
