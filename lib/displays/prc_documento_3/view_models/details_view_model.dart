@@ -737,7 +737,7 @@ class DetailsViewModel extends ChangeNotifier {
   ) {
     //asiganr valores
     transaction.isChecked = selectAll;
-    traInternas.add(transaction); //agregar a lista
+    traInternas.insert(0, transaction); //agregar a lista
     searchController.text = "";
     calculateTotales(context); //calcular totales
   }

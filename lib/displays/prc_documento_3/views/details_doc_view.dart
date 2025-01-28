@@ -310,7 +310,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       ],
                     ),
 //Contacto: 385
-                  if (document.docRefObservacion2!.isNotEmpty)
+                  if (document.docRefObservacion2 != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -337,7 +337,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       ],
                     ),
 //Descripcion: 383
-                  if (document.docRefObservacion!.isNotEmpty)
+                  if (document.docRefObservacion != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -364,7 +364,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       ],
                     ),
 //Direccion Entrega: 386
-                  if (document.docRefObservacion3!.isNotEmpty)
+                  if (document.docRefObservacion3 != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -391,7 +391,7 @@ class _DetailsDocViewState extends State<DetailsDocView> {
                       ],
                     ),
 //Observacion: 384
-                  if (document.docRefDescripcion!.isNotEmpty)
+                  if (document.docRefDescripcion != null)
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
