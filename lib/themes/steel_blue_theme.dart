@@ -9,10 +9,32 @@ class SteelBlueTheme {
     primaryColor: primary,
     scaffoldBackgroundColor: AppTheme.backroundColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppTheme.backroundColor,
       titleTextStyle: const TextStyle(
         fontSize: 20,
         color: Colors.black,
+      ),
+      color: AppTheme.backroundColor,
+      iconTheme: const IconThemeData(
+        size: 30,
+        color: Colors.black,
+      ),
+      elevation: 0,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      floatingLabelStyle: const TextStyle(
+        color: primary,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: primary),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: primary),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      border: OutlineInputBorder(
+        //borderSide: const BorderSide(color: primary),
+        borderRadius: BorderRadius.circular(8),
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
