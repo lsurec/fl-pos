@@ -540,6 +540,15 @@ class PrintViewModel extends ChangeNotifier {
       docPrintModel.poweredBy.website,
       styles: center,
     );
+    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
+      context,
+      listen: false,
+    );
+
+    bytes += generator.text(
+      "Version: ${splashVM.versionLocal}",
+      styles: center,
+    );
     return PrintModel(
       bytes: bytes,
       generator: generator,
@@ -1273,6 +1282,15 @@ class PrintViewModel extends ChangeNotifier {
     );
     bytes += generator.text(
       docPrintModel.poweredBy.website,
+      styles: center,
+    );
+    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
+      context,
+      listen: false,
+    );
+
+    bytes += generator.text(
+      "Version: ${splashVM.versionLocal}",
       styles: center,
     );
     return PrintModel(
