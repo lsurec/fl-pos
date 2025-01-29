@@ -701,7 +701,7 @@ class PrintViewModel extends ChangeNotifier {
         'docTributario',
       ),
       // fechaCert: formattedDateCert,
-      fechaCert: encabezado.feLFechaCertificacion,
+      fechaCert: encabezado.feLFechaCertificacion ?? "",
       serie: encabezado.feLSerie ?? "",
       no: encabezado.feLNumeroDocumento ?? "",
       autorizacion: encabezado.feLUuid ?? "",
