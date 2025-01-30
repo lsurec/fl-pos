@@ -43,6 +43,7 @@ class EncabezadoModel {
   dynamic fDesTipoReferencia;
   dynamic cuentaCorrentistaRefEMail;
   dynamic cantidadDiasFechaIniFin;
+  String? observacion1;
 
   EncabezadoModel({
     required this.idDocumento,
@@ -87,6 +88,7 @@ class EncabezadoModel {
     required this.fDesTipoReferencia,
     required this.cuentaCorrentistaRefEMail,
     required this.cantidadDiasFechaIniFin,
+    required this.observacion1,
   });
 
   factory EncabezadoModel.fromJson(String str) =>
@@ -137,6 +139,7 @@ class EncabezadoModel {
         fDesTipoReferencia: json["fDes_Tipo_Referencia"],
         cuentaCorrentistaRefEMail: json["cuenta_Correntista_Ref_EMail"],
         cantidadDiasFechaIniFin: json["cantidad_Dias_Fecha_Ini_Fin"],
+        observacion1: json["observacion_1"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -182,5 +185,6 @@ class EncabezadoModel {
         "fDes_Tipo_Referencia": fDesTipoReferencia,
         "cuenta_Correntista_Ref_EMail": cuentaCorrentistaRefEMail,
         "cantidad_Dias_Fecha_Ini_Fin": cantidadDiasFechaIniFin,
+        "observacion_1": observacion1,
       };
 }

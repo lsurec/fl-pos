@@ -413,6 +413,20 @@ class ConfirmDocView extends StatelessWidget {
                     const SizedBox(height: 10),
                     if (!vm.showPrint) _Observacion(),
                     const SizedBox(height: 10),
+                    if (vm.observacion.text.isNotEmpty)
+                      Text(
+                        "Observacion", //TODO:Observacion
+                        style: StyleApp.title,
+                      ),
+                    const SizedBox(height: 5),
+
+                    if (vm.observacion.text.isNotEmpty)
+                      Text(
+                        vm.observacion.text,
+                        style: StyleApp.normal,
+                      ),
+                    const SizedBox(height: 10),
+
                     SwitchListTile(
                       activeColor: AppTheme.hexToColor(
                         Preferences.valueColor,

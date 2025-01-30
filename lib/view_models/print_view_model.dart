@@ -29,34 +29,80 @@ class PrintViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //impresion de pprueba
   Future<PrintModel> printReceiveTest(
-      BuildContext context, int paperDefault) async {
+    BuildContext context,
+    int paperDefault,
+  ) async {
     List<int> bytes = [];
+
     final generator = Generator(
-        AppData.paperSize[paperDefault], await CapabilityProfile.load());
+      AppData.paperSize[paperDefault],
+      await CapabilityProfile.load(),
+    );
+
     bytes += generator.setGlobalCodeTable('CP1252');
+
     bytes += generator.text(
-        AppLocalizations.of(context)!.translate(
-          BlockTranslate.tiket,
-          "generico",
-        ),
-        styles: PosStyles(
-            align: AppData.posAlign["center"],
-            width: AppData.posTextSize[2],
-            height: AppData.posTextSize[2]));
-    bytes += generator.text("CENTER",
-        styles: PosStyles(
-            align: AppData.posAlign["center"],
-            width: AppData.posTextSize[1],
-            height: AppData.posTextSize[1]));
-    bytes += generator.text("LEFT",
-        styles: PosStyles(align: AppData.posAlign["left"]));
-    bytes += generator.text("RIGHT",
-        styles: PosStyles(align: AppData.posAlign["right"]));
-    bytes += generator.text("normal",
-        styles: PosStyles(bold: AppData.boolText["normal"]));
-    bytes += generator.text("Bool",
-        styles: PosStyles(bold: AppData.boolText["bool"]));
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.tiket,
+        "generico",
+      ),
+      styles: PosStyles(
+        align: AppData.posAlign["center"],
+        width: AppData.posTextSize[2],
+        height: AppData.posTextSize[2],
+      ),
+    );
+
+    bytes += generator.text(
+      "CENTER",
+      styles: PosStyles(
+        align: AppData.posAlign["center"],
+        width: AppData.posTextSize[1],
+        height: AppData.posTextSize[1],
+      ),
+    );
+
+    bytes += generator.text(
+      "LEFT",
+      styles: PosStyles(
+        align: AppData.posAlign["left"],
+      ),
+    );
+
+    bytes += generator.text(
+      "RIGHT",
+      styles: PosStyles(
+        align: AppData.posAlign["right"],
+      ),
+    );
+
+    bytes += generator.text(
+      "normal",
+      styles: PosStyles(
+        bold: AppData.boolText["normal"],
+      ),
+    );
+
+    bytes += generator.text(
+      "Bool",
+      styles: PosStyles(
+        bold: AppData.boolText["bool"],
+      ),
+    );
+
+    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
+      context,
+      listen: false,
+    );
+
+    bytes += generator.text(
+      "Version: ${splashVM.versionLocal}",
+      styles: PosStyles(
+        align: AppData.posAlign["center"],
+      ),
+    );
 
     return PrintModel(
       bytes: bytes,
@@ -64,6 +110,7 @@ class PrintViewModel extends ChangeNotifier {
     );
   }
 
+  //formato TMU documento conversion
   Future printDocConversion(
     BuildContext context,
     int paperDefault,
@@ -509,6 +556,15 @@ class PrintViewModel extends ChangeNotifier {
         BlockTranslate.tiket,
         'vendedor',
       )} ${docPrintModel.vendedor}",
+      styles: center,
+    );
+    //Si la lista de vendedores no está vacia imprimir
+    bytes += generator.text(
+      "Observacion:", //TODO:Translate
+      styles: center,
+    ); //Si la lista de vendedores no está vacia imprimir
+    bytes += generator.text(
+      encabezado.observacion1 ?? "",
       styles: center,
     );
 
@@ -1267,6 +1323,17 @@ class PrintViewModel extends ChangeNotifier {
     }
     bytes += generator.emptyLines(1);
 
+    //Si la lista de vendedores no está vacia imprimir
+    bytes += generator.text(
+      "Observacion:", //TODO:Translate
+      styles: center,
+    ); //Si la lista de vendedores no está vacia imprimir
+    bytes += generator.text(
+      encabezado.observacion1 ?? "",
+      styles: center,
+    );
+    bytes += generator.emptyLines(1);
+
     bytes += generator.text(
       "--------------------",
       styles: center,
@@ -1655,7 +1722,6 @@ class PrintViewModel extends ChangeNotifier {
         "DOCUMENTO GENERICO",
         styles: centerBold,
       );
-      bytes += generator.emptyLines(1);
     }
 
     bytes += generator.emptyLines(1);
@@ -2198,6 +2264,19 @@ class PrintViewModel extends ChangeNotifier {
         styles: center,
       );
     }
+
+    bytes += generator.emptyLines(1);
+
+    bytes += generator.text(
+      "Observacion:", //TODO:Translate
+      styles: center,
+    ); //Si la lista de vendedores no está vacia imprimir
+    bytes += generator.text(
+      encabezado.observacion1 ?? "",
+      styles: center,
+    );
+
+    bytes += generator.emptyLines(1);
 
     bytes += generator.text(
       "--------------------",
