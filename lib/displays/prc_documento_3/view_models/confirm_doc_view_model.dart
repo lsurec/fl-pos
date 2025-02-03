@@ -93,6 +93,32 @@ class ConfirmDocViewModel extends ChangeNotifier {
   }
 
   Position? currentPosition;
+  bool isEnabled = false;
+  bool isPermission = false;
+
+  Future<void> checkLocationStatus() async {
+    // Verificar si los permisos están concedidos
+    LocationPermission permission = await Geolocator.checkPermission();
+    bool hasPermission = permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse;
+
+    // Verificar si la ubicación está habilitada
+    bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+
+    isPermission = hasPermission;
+    isEnabled = isLocationEnabled;
+
+    notifyListeners();
+
+    // Si no hay permisos, solicitarlos
+    if (!hasPermission) {
+      LocationPermission newPermission = await Geolocator.requestPermission();
+      isPermission = newPermission == LocationPermission.always ||
+          newPermission == LocationPermission.whileInUse;
+
+      notifyListeners();
+    }
+  }
 
   setPosition() async {
     getCurrentPosition().then((position) {
@@ -101,6 +127,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
     }).catchError((e) {
       print(e);
     });
+
+    checkLocationStatus();
   }
 
   Future<Position> getCurrentPosition() async {

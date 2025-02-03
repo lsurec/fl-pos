@@ -617,6 +617,34 @@ class ConfirmDocView extends StatelessWidget {
                 ),
               ),
             ),
+          if (!vm.isPermission || !vm.isEnabled)
+            ModalBarrier(
+              dismissible: false,
+              // color: Colors.black.withOpacity(0.3),
+              color: AppTheme.isDark()
+                  ? AppTheme.darkBackroundColor
+                  : AppTheme.backroundColor,
+            ),
+          if (!vm.isPermission || !vm.isEnabled)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.location_off, size: 80, color: Colors.red),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Se requieren permisos de ubicación y GPS activado",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () => vm.checkLocationStatus(),
+                    child: const Text("Reintentar"),
+                  ),
+                ],
+              ),
+            ),
         ],
       ),
     );
