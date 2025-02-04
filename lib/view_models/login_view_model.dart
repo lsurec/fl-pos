@@ -1,4 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:io';
+
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
@@ -7,6 +9,8 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../displays/shr_local_config/services/services.dart';
 
@@ -42,6 +46,50 @@ class LoginViewModel extends ChangeNotifier {
   //True if form is valid
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;
+  }
+
+  Future<String> getOrCreateIOSDeviceId() async {
+    const storage = FlutterSecureStorage();
+    String? deviceId = await storage.read(key: 'device_id');
+
+    if (deviceId == null) {
+      deviceId = 'ios-' +
+          DateTime.now()
+              .millisecondsSinceEpoch
+              .toString(); // Genera un ID único
+      await storage.write(key: 'device_id', value: deviceId);
+    }
+
+    return deviceId;
+  }
+
+  Future<String> getDeviceName() async {
+    var deviceInfo = DeviceInfoPlugin();
+
+    if (Platform.isAndroid) {
+      var androidInfo = await deviceInfo.androidInfo;
+      return androidInfo.model; // Nombre del modelo del dispositivo
+    } else if (Platform.isIOS) {
+      var iosInfo = await deviceInfo.iosInfo;
+      return iosInfo.name; // Nombre del dispositivo (Ejemplo: "iPhone de Juan")
+    }
+
+    return 'Unknown Device';
+  }
+
+  Future<String> getDeviceId() async {
+    if (Platform.isAndroid) {
+      return await getAndroidDeviceId();
+    } else if (Platform.isIOS) {
+      return await getOrCreateIOSDeviceId();
+    }
+    return 'unknown_device';
+  }
+
+  Future<String> getAndroidDeviceId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    var androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.id; // ANDROID_ID, único para el dispositivo
   }
 
   //disableSession
