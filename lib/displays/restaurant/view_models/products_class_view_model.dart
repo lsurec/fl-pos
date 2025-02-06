@@ -202,6 +202,14 @@ class ProductsClassViewModel extends ChangeNotifier {
     product = null;
     products.clear();
     products.addAll(res.response);
+
+    for (var element in products) {
+      if (element.objetoImagen != null || element.objetoImagen != "") {
+        element.objetoImagen =
+            "${vmLocal.selectedEmpresa!.productoImgUrl}${element.objetoImagen}";
+      }
+    }
+
     orderMenu();
 
     return res;

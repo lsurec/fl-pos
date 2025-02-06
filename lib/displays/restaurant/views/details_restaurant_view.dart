@@ -161,9 +161,11 @@ class DetailsRestaurantView extends StatelessWidget {
                   Stack(
                     children: [
                       //TODO:Corregir carga
-                      const ProductImage(
-                          url:
-                              'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg'),
+                      ProductImage(
+                          url: product.objetoImagen != null ||
+                                  product.objetoImagen != ""
+                              ? product.objetoImagen
+                              : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"),
                       Positioned(
                         top: 60,
                         left: 20,

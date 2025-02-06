@@ -22,6 +22,7 @@ class EmpresaModel {
   String monedaIsoCode;
   String empresaImg;
   String absolutePathPicture;
+  String productoImgUrl;
 
   EmpresaModel({
     required this.empresa,
@@ -45,6 +46,7 @@ class EmpresaModel {
     required this.monedaIsoCode,
     required this.empresaImg,
     required this.absolutePathPicture,
+    required this.productoImgUrl,
   });
 
   factory EmpresaModel.fromJson(String str) =>
@@ -74,6 +76,7 @@ class EmpresaModel {
         monedaIsoCode: json["moneda_ISO_Code"],
         empresaImg: json["empresa_Img"],
         absolutePathPicture: json["absolutePathPicture"],
+        productoImgUrl: json["producto_Img_Url"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -98,6 +101,7 @@ class EmpresaModel {
         "moneda_ISO_Code": monedaIsoCode,
         "empresa_Img": empresaImg,
         "absolutePathPicture": absolutePathPicture,
+        "producto_Img_Url": productoImgUrl,
       };
 
   // Sobrescribimos el método de comparación
@@ -126,7 +130,8 @@ class EmpresaModel {
           monedaSimbolo == other.monedaSimbolo &&
           monedaIsoCode == other.monedaIsoCode &&
           empresaImg == other.empresaImg &&
-          absolutePathPicture == other.absolutePathPicture;
+          absolutePathPicture == other.absolutePathPicture &&
+          productoImgUrl == other.productoImgUrl;
 
   @override
   int get hashCode =>
@@ -150,5 +155,6 @@ class EmpresaModel {
       monedaSimbolo.hashCode ^
       monedaIsoCode.hashCode ^
       empresaImg.hashCode ^
-      absolutePathPicture.hashCode;
+      absolutePathPicture.hashCode ^
+      productoImgUrl.hashCode;
 }

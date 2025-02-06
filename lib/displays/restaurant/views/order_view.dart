@@ -152,12 +152,16 @@ class OrderView extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const SizedBox(
+                                SizedBox(
                                   height: 50,
                                   width: 50,
                                   child: _ProductImage(
-                                    url:
-                                        'https://okdiario.com/img/recetas/2016/12/29/desayunos-alrededor-del-mundo-2.jpg',
+                                    url: transaction.producto.objetoImagen !=
+                                                null ||
+                                            transaction.producto.objetoImagen !=
+                                                ""
+                                        ? transaction.producto.objetoImagen
+                                        : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
                                   ),
                                 ),
                                 const SizedBox(width: 20),
