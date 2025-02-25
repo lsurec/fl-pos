@@ -3,7 +3,7 @@
 import 'package:flutter_post_printer_example/displays/calendario/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/report/view_models/view_mmodels.dart';
+import 'package:flutter_post_printer_example/displays/report/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/views/report_view.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
@@ -87,6 +87,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SelectAccountViewModel()),
         ChangeNotifierProvider(create: (_) => TransferSummaryViewModel()),
         ChangeNotifierProvider(create: (_) => ReportViewModel()),
+        ChangeNotifierProvider(create: (_) => PrintReportViewModel()),
       ],
       child: const MyApp(),
     );

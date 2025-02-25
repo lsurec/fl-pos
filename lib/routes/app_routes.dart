@@ -68,6 +68,7 @@ class AppRoutes {
   static const appearance = 'appearance';
   static const colors = 'colors';
   static const report = 'report';
+  static const printReport = 'printReport';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -130,6 +131,7 @@ class AppRoutes {
     appearance: (BuildContext context) => const AppearenceView(),
     colors: (BuildContext context) => const TemasColoresView(),
     report: (BuildContext context) => const ReportView(),
+    printReport: (BuildContext context) => const PrintReportView(),
   };
 
   //en caso de ruta incorrecta

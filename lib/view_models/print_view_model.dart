@@ -110,6 +110,122 @@ class PrintViewModel extends ChangeNotifier {
     );
   }
 
+  //reports function
+  Future printReport(
+    BuildContext context,
+    int paperDefault,
+  ) async {
+    PoweredBy poweredBy = PoweredBy(
+      nombre: "Desarrollo Moderno de Software S.A.",
+      website: "demosoft.com.gt",
+    );
+
+    //get date now?
+    DateTime now = DateTime.now();
+
+    // Format the date and time
+    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(now);
+
+    PosStyles center = const PosStyles(
+      align: PosAlign.center,
+    );
+
+    PosStyles centerBold = const PosStyles(
+      align: PosAlign.center,
+      bold: true,
+    );
+
+    List<int> bytes = [];
+
+    final generator = Generator(
+      AppData.paperSize[paperDefault],
+      await CapabilityProfile.load(),
+    );
+
+    bytes += generator.setGlobalCodeTable('CP1252');
+
+    // Encabezado
+    bytes += generator.text(
+      "REPORTE DE EXISTENCIA",
+      styles: centerBold,
+    );
+
+    // Encabezado
+    bytes += generator.text(
+      "Bodega: Bodega central",
+      styles: center,
+    );
+
+    // Encabezado
+    bytes += generator.text(
+      "Fecha: $formattedDate",
+      styles: center,
+    );
+
+    // Encabezado
+    bytes += generator.text(
+      "Usuario: User",
+      styles: center,
+    );
+
+    bytes += generator.emptyLines(1);
+    // Detalles de existencia
+
+    bytes += generator.hr(); // Línea horizontal
+
+    for (var i = 0; i < 10; i++) {
+      bytes += generator.text(
+        "ID: 445",
+      );
+      bytes += generator.text(
+        "Producto: Reprehenderit non ipsum voluptate.",
+      );
+      bytes += generator.text(
+        "Existenacia: 25.00",
+      );
+      bytes += generator.hr(); // Línea horizontal
+    }
+    // for (var item in existencia) {
+
+    // }
+
+    // Información adicional
+    bytes += generator.emptyLines(1);
+
+    bytes += generator.text(
+      "--------------------",
+      styles: center,
+    );
+
+    bytes += generator.text(
+      "Powered by",
+      styles: center,
+    );
+
+    //TODO:Globalizar
+    bytes += generator.text(
+      poweredBy.nombre,
+      styles: center,
+    );
+    bytes += generator.text(
+      poweredBy.website,
+      styles: center,
+    );
+    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
+      context,
+      listen: false,
+    );
+
+    bytes += generator.text(
+      "Version: ${splashVM.versionLocal}",
+      styles: center,
+    );
+    return PrintModel(
+      bytes: bytes,
+      generator: generator,
+    );
+  }
+
   //formato TMU documento conversion
   Future printDocConversion(
     BuildContext context,
@@ -1367,7 +1483,6 @@ class PrintViewModel extends ChangeNotifier {
   }
 
   //impresion para cotizacion: Alfa y omega
-
   Future printDocumentAlfayOmega(
     BuildContext context,
     int paperDefault,
