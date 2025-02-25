@@ -1,13 +1,11 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
-import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
-import 'package:flutter_post_printer_example/displays/restaurant/views/products_class_view.dart';
+import 'package:flutter_post_printer_example/displays/report/views/views.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
-import 'package:flutter_post_printer_example/displays/tareas/views/buscar_tareas_view.dart';
 import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +67,7 @@ class AppRoutes {
   static const terms = 'terms';
   static const appearance = 'appearance';
   static const colors = 'colors';
+  static const report = 'report';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -130,6 +129,7 @@ class AppRoutes {
     terms: (BuildContext context) => const TermsConditionsView(),
     appearance: (BuildContext context) => const AppearenceView(),
     colors: (BuildContext context) => const TemasColoresView(),
+    report: (BuildContext context) => const ReportView(),
   };
 
   //en caso de ruta incorrecta

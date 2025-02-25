@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/displays/tareas/views/buscar_tareas_view.dart';
 export 'package:flutter_post_printer_example/displays/tareas/views/usuarios_view.dart';
 export 'package:flutter_post_printer_example/displays/tareas/views/id_referencia_view.dart';
 export 'package:flutter_post_printer_example/displays/tareas/views/crear_tarea_view.dart';
