@@ -17,7 +17,7 @@ class PrintReportView extends StatelessWidget {
             bottom: 80.0, // Espaciado entre los botones
             right: 16.0,
             child: FloatingActionButton(
-              onPressed: () {},
+              onPressed: () => vm.print(context),
               child: const Icon(Icons.print),
             ),
           ),

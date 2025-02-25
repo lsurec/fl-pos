@@ -149,7 +149,7 @@ class PrintViewModel extends ChangeNotifier {
       "REPORTE DE EXISTENCIA",
       styles: centerBold,
     );
-
+    bytes += generator.emptyLines(1);
     // Encabezado
     bytes += generator.text(
       "Bodega: Bodega central",
@@ -191,11 +191,6 @@ class PrintViewModel extends ChangeNotifier {
 
     // Información adicional
     bytes += generator.emptyLines(1);
-
-    bytes += generator.text(
-      "--------------------",
-      styles: center,
-    );
 
     bytes += generator.text(
       "Powered by",

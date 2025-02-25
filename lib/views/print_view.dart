@@ -262,6 +262,14 @@ class _SettingsFromState extends State<SettingsFrom> {
 
                                 _printerEscPos(print.bytes, print.generator);
                                 break;
+                              case 5:
+                                //reporte de existencias
+                                PrintModel print = await printVM.printReport(
+                                  context,
+                                  paperDefault,
+                                );
+                                _printerEscPos(print.bytes, print.generator);
+                                break;
                               default:
                             }
                           }
