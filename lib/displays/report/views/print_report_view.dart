@@ -32,7 +32,7 @@ class PrintReportView extends StatelessWidget {
         ],
       ),
       appBar: AppBar(
-        title: Text(vm.title),
+        title: Text(vm.report!.name),
       ),
       body: Center(
         child: Text('PrintReportView'),

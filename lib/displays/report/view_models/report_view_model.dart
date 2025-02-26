@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class ReportViewModel extends ChangeNotifier {
-  final List<String> reports = [
-    "Existencias",
-    "Unidades vendidas",
-    "Facturas",
+  final List<ReportModel> reports = [
+    ReportModel(
+      id: 1,
+      name: "Existencias",
+    ),
+    ReportModel(
+      id: 2,
+      name: "Unidades vendidas",
+    ),
+    ReportModel(
+      id: 3,
+      name: "Lista Facturas, totales de crédito y contado",
+    ),
   ];
 
-  navigatePrintScreen(BuildContext context, String textSelect) {
+  navigatePrintScreen(BuildContext context, ReportModel report) {
     final PrintReportViewModel printReportVM =
         Provider.of<PrintReportViewModel>(
       context,
       listen: false,
     );
 
-    printReportVM.title = textSelect;
+    printReportVM.report = report;
 
     Navigator.pushNamed(context, AppRoutes.printReport);
   }

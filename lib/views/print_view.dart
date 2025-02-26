@@ -263,10 +263,11 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 _printerEscPos(print.bytes, print.generator);
                                 break;
                               case 5:
-                                //reporte de existencias
+                                //Otros reportes
                                 PrintModel print = await printVM.printReport(
                                   context,
                                   paperDefault,
+                                  widget.settings.report!,
                                 );
                                 _printerEscPos(print.bytes, print.generator);
                                 break;

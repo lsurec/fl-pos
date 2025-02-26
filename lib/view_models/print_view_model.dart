@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/displays/listado_Documento_Pendient
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
@@ -114,6 +115,7 @@ class PrintViewModel extends ChangeNotifier {
   Future printReport(
     BuildContext context,
     int paperDefault,
+    ReportModel report,
   ) async {
     PoweredBy poweredBy = PoweredBy(
       nombre: "Desarrollo Moderno de Software S.A.",
@@ -135,6 +137,11 @@ class PrintViewModel extends ChangeNotifier {
       bold: true,
     );
 
+    PosStyles startBold = const PosStyles(
+      align: PosAlign.left,
+      bold: true,
+    );
+
     List<int> bytes = [];
 
     final generator = Generator(
@@ -144,17 +151,13 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.setGlobalCodeTable('CP1252');
 
+    //Reporte de xistencias
     // Encabezado
     bytes += generator.text(
-      "REPORTE DE EXISTENCIA",
+      "REPORTE DE ${report.name.toUpperCase()}",
       styles: centerBold,
     );
     bytes += generator.emptyLines(1);
-    // Encabezado
-    bytes += generator.text(
-      "Bodega: Bodega central",
-      styles: center,
-    );
 
     // Encabezado
     bytes += generator.text(
@@ -168,26 +171,117 @@ class PrintViewModel extends ChangeNotifier {
       styles: center,
     );
 
-    bytes += generator.emptyLines(1);
-    // Detalles de existencia
+    switch (report.id) {
+      case 1:
+        // Encabezado
+        bytes += generator.text(
+          "Bodega: Bodega central",
+          styles: center,
+        );
 
-    bytes += generator.hr(); // Línea horizontal
+        bytes += generator.emptyLines(1);
+        // Detalles de existencia
 
-    for (var i = 0; i < 10; i++) {
-      bytes += generator.text(
-        "ID: 445",
-      );
-      bytes += generator.text(
-        "Producto: Reprehenderit non ipsum voluptate.",
-      );
-      bytes += generator.text(
-        "Existenacia: 25.00",
-      );
-      bytes += generator.hr(); // Línea horizontal
+        bytes += generator.hr(); // Línea horizontal
+
+        for (var i = 0; i < 10; i++) {
+          bytes += generator.text(
+            "ID: 445",
+          );
+          bytes += generator.text(
+            "Producto: Reprehenderit non ipsum voluptate.",
+          );
+          bytes += generator.text(
+            "Existenacia: 25.00",
+          );
+          bytes += generator.hr(); // Línea horizontal
+        }
+        // for (var item in existencia) {
+
+        // }
+        break;
+      case 2:
+        // Reporte de unidadeas vendidas
+        bytes += generator.emptyLines(1);
+        // Detalles de existencia
+
+        bytes += generator.hr(); // Línea horizontal
+        for (var i = 0; i < 10; i++) {
+          bytes += generator.text(
+            "ID: 445",
+          );
+          bytes += generator.text(
+            "Producto: Reprehenderit non ipsum voluptate.",
+          );
+          bytes += generator.row(
+            [
+              PosColumn(
+                text: "Cantidad: 10.00",
+                width: 6,
+              ),
+              PosColumn(
+                text: "Unidades: -81",
+                width: 6,
+                styles: const PosStyles(
+                  align: PosAlign.right,
+                ),
+              ),
+            ], // Ancho 2
+          );
+          bytes += generator.hr(); // Línea horizontal
+        }
+
+        bytes += generator.text(
+          "Total Unidades Vendidas: 445",
+          styles: centerBold,
+        );
+        bytes += generator.hr(); // Línea horizontal
+
+        break;
+      case 3:
+        bytes += generator.emptyLines(1);
+        // Detalles de existencia
+
+        bytes += generator.hr(); // Línea horizontal
+        for (var i = 0; i < 10; i++) {
+          bytes += generator.text(
+            "ID: 445",
+          );
+          bytes += generator.text(
+            "Monto: Q.154.00",
+          );
+          bytes += generator.hr(); // Línea horizontal
+        }
+        bytes += generator.emptyLines(1); // Línea horizontal
+        bytes += generator.text(
+          "Total Efectivo (Venta):",
+          styles: startBold,
+        );
+        bytes += generator.text(
+          "   Q.5,330.24",
+          styles: startBold,
+        );
+        bytes += generator.text(
+          "Total:",
+          styles: startBold,
+        );
+        bytes += generator.text(
+          "   Q.5,330.24",
+          styles: startBold,
+        );
+        bytes += generator.text(
+          "Cantidad Documento:",
+          styles: startBold,
+        );
+        bytes += generator.text(
+          "   44",
+          styles: startBold,
+        );
+        bytes += generator.hr(); // Línea horizontal
+
+        break;
+      default:
     }
-    // for (var item in existencia) {
-
-    // }
 
     // Información adicional
     bytes += generator.emptyLines(1);

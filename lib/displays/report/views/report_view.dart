@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -20,10 +21,11 @@ class ReportView extends StatelessWidget {
           return const Divider();
         },
         itemBuilder: (BuildContext context, int index) {
+          final ReportModel report = vm.reports[index];
           return ListTile(
-            onTap: () => vm.navigatePrintScreen(context, vm.reports[index]),
+            onTap: () => vm.navigatePrintScreen(context, report),
             title: Text(
-              vm.reports[index],
+              report.name,
             ),
             trailing: const Icon(Icons.arrow_right),
           );

@@ -1,5 +1,6 @@
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/client_model.dart';
+import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 
 class PrintDocSettingsModel {
   int opcion;
@@ -7,6 +8,7 @@ class PrintDocSettingsModel {
   int? consecutivoDoc;
   String? cuentaCorrentistaRef;
   ClientModel? client;
+  ReportModel? report;
 
   PrintDocSettingsModel({
     required this.opcion,
@@ -14,5 +16,6 @@ class PrintDocSettingsModel {
     this.destination,
     this.cuentaCorrentistaRef,
     this.client,
+    this.report,
   });
 }
