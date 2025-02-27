@@ -272,6 +272,28 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 );
                                 _printerEscPos(print.bytes, print.generator);
                                 break;
+
+                              case 6:
+
+                                //Reporte de unidades vendidas
+                                PrintModel print =
+                                    await printVM.printReporUnidadesVendidas(
+                                  context,
+                                  paperDefault,
+                                );
+                                _printerEscPos(print.bytes, print.generator);
+                                break;
+                              case 7:
+
+                                //Reporte de lista de facturas, credito y conntado
+                                PrintModel print =
+                                    await printVM.getReportFactCredContado(
+                                  context,
+                                  paperDefault,
+                                );
+                                _printerEscPos(print.bytes, print.generator);
+                                break;
+
                               default:
                                 NotificationService.showSnackbar(
                                     "El reporte no está configurado");

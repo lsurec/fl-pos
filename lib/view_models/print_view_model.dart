@@ -9,6 +9,8 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/services/s
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/existencias_tmu.dart';
+import 'package:flutter_post_printer_example/displays/report/reports/tmu/fact_t_contado_cred_tmu.dart';
+import 'package:flutter_post_printer_example/displays/report/reports/tmu/unidades_vendidas_tmu.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
@@ -108,6 +110,30 @@ class PrintViewModel extends ChangeNotifier {
   }
 
   //Reporte de existencias
+  Future<PrintModel> printReporUnidadesVendidas(
+    BuildContext context,
+    int paperDefault,
+  ) async {
+    //TODO:Buscar datos del procedimiento
+    return UnidadesVendidasTMU.getReport(
+      context,
+      paperDefault,
+    );
+  }
+
+  //Reporte de existencias
+  Future<PrintModel> getReportFactCredContado(
+    BuildContext context,
+    int paperDefault,
+  ) async {
+    //TODO:Buscar datos del procedimiento
+    return FactTContadoCredTMU.getReport(
+      context,
+      paperDefault,
+    );
+  }
+
+  //Reporte de existencias
   Future<PrintModel> printReporStokc(
     BuildContext context,
     int paperDefault,
@@ -116,206 +142,6 @@ class PrintViewModel extends ChangeNotifier {
     return ExistenciasTMU.getReport(
       context,
       paperDefault,
-    );
-  }
-
-  //reports function
-  Future printReport(
-    BuildContext context,
-    int paperDefault,
-    ReportModel report,
-  ) async {
-    PoweredBy poweredBy = PoweredBy(
-      nombre: "Desarrollo Moderno de Software S.A.",
-      website: "demosoft.com.gt",
-    );
-
-    //get date now?
-    DateTime now = DateTime.now();
-
-    // Format the date and time
-    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(now);
-
-    PosStyles center = const PosStyles(
-      align: PosAlign.center,
-    );
-
-    PosStyles centerBold = const PosStyles(
-      align: PosAlign.center,
-      bold: true,
-    );
-
-    PosStyles startBold = const PosStyles(
-      align: PosAlign.left,
-      bold: true,
-    );
-
-    List<int> bytes = [];
-
-    final generator = Generator(
-      AppData.paperSize[paperDefault],
-      await CapabilityProfile.load(),
-    );
-
-    bytes += generator.setGlobalCodeTable('CP1252');
-
-    //Reporte de xistencias
-    // Encabezado
-    bytes += generator.text(
-      "REPORTE DE ${report.name.toUpperCase()}",
-      styles: centerBold,
-    );
-    bytes += generator.emptyLines(1);
-
-    // Encabezado
-    bytes += generator.text(
-      "Fecha: $formattedDate",
-      styles: center,
-    );
-
-    // Encabezado
-    bytes += generator.text(
-      "Usuario: User",
-      styles: center,
-    );
-
-    switch (report.id) {
-      case 1:
-        // Encabezado
-        bytes += generator.text(
-          "Bodega: Bodega central",
-          styles: center,
-        );
-
-        bytes += generator.emptyLines(1);
-        // Detalles de existencia
-
-        bytes += generator.hr(); // Línea horizontal
-
-        for (var i = 0; i < 10; i++) {
-          bytes += generator.text(
-            "ID: 445",
-          );
-          bytes += generator.text(
-            "Producto: Reprehenderit non ipsum voluptate.",
-          );
-          bytes += generator.text(
-            "Existenacia: 25.00",
-          );
-          bytes += generator.hr(); // Línea horizontal
-        }
-        // for (var item in existencia) {
-
-        // }
-        break;
-      case 2:
-        // Reporte de unidadeas vendidas
-        bytes += generator.emptyLines(1);
-        // Detalles de existencia
-
-        bytes += generator.hr(); // Línea horizontal
-        for (var i = 0; i < 10; i++) {
-          bytes += generator.text(
-            "ID: 445",
-          );
-          bytes += generator.text(
-            "Producto: Reprehenderit non ipsum voluptate.",
-          );
-          bytes += generator.row(
-            [
-              PosColumn(
-                text: "Cantidad: 10.00",
-                width: 6,
-              ),
-              PosColumn(
-                text: "Unidades: -81",
-                width: 6,
-                styles: const PosStyles(
-                  align: PosAlign.right,
-                ),
-              ),
-            ], // Ancho 2
-          );
-          bytes += generator.hr(); // Línea horizontal
-        }
-
-        bytes += generator.text(
-          "Total Unidades Vendidas: 445",
-          styles: centerBold,
-        );
-        bytes += generator.hr(); // Línea horizontal
-
-        break;
-      case 3:
-        bytes += generator.emptyLines(1);
-        // Detalles de existencia
-
-        bytes += generator.hr(); // Línea horizontal
-        for (var i = 0; i < 10; i++) {
-          bytes += generator.text(
-            "ID: 445",
-          );
-          bytes += generator.text(
-            "Monto: Q.154.00",
-          );
-          bytes += generator.hr(); // Línea horizontal
-        }
-        bytes += generator.emptyLines(1); // Línea horizontal
-        bytes += generator.text(
-          "Total Efectivo (Venta):",
-          styles: startBold,
-        );
-        bytes += generator.text(
-          "   Q.5,330.24",
-          styles: startBold,
-        );
-        bytes += generator.text(
-          "Total:",
-          styles: startBold,
-        );
-        bytes += generator.text(
-          "   Q.5,330.24",
-          styles: startBold,
-        );
-        bytes += generator.text(
-          "Cantidad Documento:",
-          styles: startBold,
-        );
-        bytes += generator.text(
-          "   44",
-          styles: startBold,
-        );
-        bytes += generator.hr(); // Línea horizontal
-
-        break;
-      default:
-    }
-
-    // Información adicional
-    bytes += generator.emptyLines(1);
-
-    bytes += generator.text(
-      "Powered by",
-      styles: center,
-    );
-
-    //TODO:Globalizar
-    bytes += generator.text(
-      poweredBy.nombre,
-      styles: center,
-    );
-    bytes += generator.text(
-      poweredBy.website,
-      styles: center,
-    );
-
-    bytes += generator.text(
-      "Version: ${SplashViewModel.versionLocal}",
-      styles: center,
-    );
-    return PrintModel(
-      bytes: bytes,
-      generator: generator,
     );
   }
 

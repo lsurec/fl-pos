@@ -8,7 +8,7 @@ import 'package:flutter_post_printer_example/shared_preferences/preferences.dart
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 
 class ExistenciasTMU {
-  //reports function
+//reports function
   static Future<PrintModel> getReport(
     BuildContext context,
     int paperDefault,
