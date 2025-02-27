@@ -87,7 +87,6 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SelectAccountViewModel()),
         ChangeNotifierProvider(create: (_) => TransferSummaryViewModel()),
         ChangeNotifierProvider(create: (_) => ReportViewModel()),
-        ChangeNotifierProvider(create: (_) => PrintReportViewModel()),
       ],
       child: const MyApp(),
     );
