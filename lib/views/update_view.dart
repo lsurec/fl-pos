@@ -13,9 +13,6 @@ class UpdateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vmSplash = Provider.of<SplashViewModel>(context);
-    // final vm = Provider.of<UpdateViewModel>(context);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -49,14 +46,14 @@ class UpdateView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    vmSplash.versionLocal,
+                    SplashViewModel.versionLocal,
                     style: StyleApp.normal,
                   ),
                   const SizedBox(width: 10),
                   const Icon(Icons.arrow_forward),
                   const SizedBox(width: 10),
                   Text(
-                    vmSplash.versionRemota,
+                    SplashViewModel.versionRemota,
                     style: StyleApp.normalBold,
                   ),
                 ],

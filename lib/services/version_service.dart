@@ -10,7 +10,6 @@ class VersionService {
   // Url del servidor
   final String _baseUrl = Preferences.urlApi;
 
-  //obtener formas de pago
   Future<ApiResModel> getVersion(
     String idApp,
     String version,

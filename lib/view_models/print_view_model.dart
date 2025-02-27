@@ -93,13 +93,8 @@ class PrintViewModel extends ChangeNotifier {
       ),
     );
 
-    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
-      context,
-      listen: false,
-    );
-
     bytes += generator.text(
-      "Version: ${splashVM.versionLocal}",
+      "Version: ${SplashViewModel.versionLocal}",
       styles: PosStyles(
         align: AppData.posAlign["center"],
       ),
@@ -300,13 +295,9 @@ class PrintViewModel extends ChangeNotifier {
       poweredBy.website,
       styles: center,
     );
-    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
-      context,
-      listen: false,
-    );
 
     bytes += generator.text(
-      "Version: ${splashVM.versionLocal}",
+      "Version: ${SplashViewModel.versionLocal}",
       styles: center,
     );
     return PrintModel(
@@ -801,13 +792,9 @@ class PrintViewModel extends ChangeNotifier {
       docPrintModel.poweredBy.website,
       styles: center,
     );
-    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
-      context,
-      listen: false,
-    );
 
     bytes += generator.text(
-      "Version: ${splashVM.versionLocal}",
+      "Version: ${SplashViewModel.versionLocal}",
       styles: center,
     );
     return PrintModel(
@@ -1556,13 +1543,9 @@ class PrintViewModel extends ChangeNotifier {
       docPrintModel.poweredBy.website,
       styles: center,
     );
-    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
-      context,
-      listen: false,
-    );
 
     bytes += generator.text(
-      "Version: ${splashVM.versionLocal}",
+      "Version: ${SplashViewModel.versionLocal}",
       styles: center,
     );
     return PrintModel(
@@ -2500,13 +2483,8 @@ class PrintViewModel extends ChangeNotifier {
       styles: center,
     );
 
-    final SplashViewModel splashVM = Provider.of<SplashViewModel>(
-      context,
-      listen: false,
-    );
-
     bytes += generator.text(
-      "Version: ${splashVM.versionLocal}",
+      "Version: ${SplashViewModel.versionLocal}",
       styles: center,
     );
 

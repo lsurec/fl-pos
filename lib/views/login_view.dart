@@ -13,7 +13,6 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<LoginViewModel>(context);
-    final vmSplash = Provider.of<SplashViewModel>(context);
 
     return Stack(
       children: [
@@ -171,7 +170,7 @@ class LoginView extends StatelessWidget {
                         "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.url,
                           "version",
-                        )}: ${vmSplash.versionLocal}",
+                        )}: ${SplashViewModel.versionLocal}",
                         style: StyleApp.greyText,
                       ),
                       const SizedBox(width: 10)

@@ -13,9 +13,18 @@ import 'package:provider/provider.dart';
 
 class SplashViewModel extends ChangeNotifier {
   //version actual
-  String versionLocal = "";
-  String versionRemota = "";
+  static String versionLocal = "";
+  static String versionRemota = "";
   String idApp = "app_business";
+
+  SplashViewModel() {
+    _init();
+  }
+
+  Future<void> _init() async {
+    VersionService versionService = VersionService();
+    versionLocal = await versionService.getVersionLocal();
+  }
 
   double verStrToNum(String versionstr) {
     // Separar la cadena de versión en partes usando el carácter '.'

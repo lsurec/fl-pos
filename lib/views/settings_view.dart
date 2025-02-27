@@ -15,7 +15,6 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<SettingsViewModel>(context);
-    final vmSplash = Provider.of<SplashViewModel>(context);
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);
     final vmLocal = Provider.of<LocalSettingsViewModel>(context, listen: false);
     final vmHome = Provider.of<HomeViewModel>(context, listen: false);
@@ -178,7 +177,7 @@ class SettingsView extends StatelessWidget {
                     'versionActual',
                   ),
                 ),
-                subtitle: Text(vmSplash.versionLocal),
+                subtitle: Text(SplashViewModel.versionLocal),
               ),
               ListTile(
                 onTap: () => vmHome.logout(context),

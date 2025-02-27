@@ -13,7 +13,6 @@ class ApiView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vmSplash = Provider.of<SplashViewModel>(context);
     final vm = Provider.of<ApiViewModel>(context);
 
     return Stack(
@@ -193,7 +192,7 @@ class ApiView extends StatelessWidget {
                         "${AppLocalizations.of(context)!.translate(
                           BlockTranslate.url,
                           "version",
-                        )}: ${vmSplash.versionLocal}",
+                        )}: ${SplashViewModel.versionLocal}",
                         style: StyleApp.greyText,
                       ),
                       const SizedBox(width: 10)
