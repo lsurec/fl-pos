@@ -16,4 +16,40 @@ class ReportViewModel extends ChangeNotifier {
       name: "Lista Facturas, totales de crédito y contado",
     ),
   ];
+
+  DateTime? startDate;
+  DateTime? endDate;
+  String? selectedSerie;
+  String? selectedBodega;
+
+  final List<String> series = ['Serie A', 'Serie B', 'Serie C'];
+  final List<String> bodegas = ['Bodega 1', 'Bodega 2', 'Bodega 3'];
+
+  Future<void> selectDate(BuildContext context, bool isStartDate) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) {
+      if (isStartDate) {
+        startDate = pickedDate;
+      } else {
+        endDate = pickedDate;
+      }
+    }
+    notifyListeners();
+  }
+
+  changeSerie(String value) {
+    selectedSerie = value;
+    notifyListeners();
+  }
+
+  changeBodega(String value) {
+    selectedBodega = value;
+    notifyListeners();
+  }
 }

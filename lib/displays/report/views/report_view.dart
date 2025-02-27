@@ -5,6 +5,8 @@ import 'package:flutter_post_printer_example/displays/tareas/models/models.dart'
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ReportView extends StatelessWidget {
@@ -13,13 +15,14 @@ class ReportView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ReportViewModel vm = Provider.of<ReportViewModel>(context);
+    final MenuViewModel menuVM = Provider.of<MenuViewModel>(context);
     return Scaffold(
       body: DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
             //TODO:Nombre display
-            title: Text("Reportes"),
+            title: Text(menuVM.name),
             bottom: TabBar(
               indicatorColor: AppTheme.hexToColor(
                 Preferences.valueColor,
@@ -33,7 +36,66 @@ class ReportView extends StatelessWidget {
           body: TabBarView(
             children: [
               // Contenido de la primera pestaña
-              Text("data"),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      // Fecha de Inicio
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text("Fecha Inicio:"),
+                        subtitle: Text(
+                          vm.startDate != null
+                              ? DateFormat('dd/MM/yyyy').format(vm.startDate!)
+                              : 'Seleccionar',
+                        ),
+                        trailing: const Icon(Icons.calendar_today),
+                        onTap: () => vm.selectDate(context, true),
+                      ),
+
+                      // Fecha Fin
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text("Fecha Inicio:"),
+                        subtitle: Text(
+                          vm.endDate != null
+                              ? DateFormat('dd/MM/yyyy').format(vm.endDate!)
+                              : 'Seleccionar',
+                        ),
+                        trailing: const Icon(Icons.calendar_today),
+                        onTap: () => vm.selectDate(context, false),
+                      ),
+                      const SizedBox(height: 20),
+                      // Select Serie
+                      DropdownButtonFormField<String>(
+                        value: vm.selectedSerie,
+                        decoration: const InputDecoration(labelText: 'Serie'),
+                        items: vm.series.map((serie) {
+                          return DropdownMenuItem(
+                            value: serie,
+                            child: Text(serie),
+                          );
+                        }).toList(),
+                        onChanged: (value) => vm.changeSerie(value!),
+                      ),
+                      const SizedBox(height: 20),
+                      // Select Bodega
+                      DropdownButtonFormField<String>(
+                        value: vm.selectedBodega,
+                        decoration: const InputDecoration(labelText: 'Bodega'),
+                        items: vm.bodegas.map((bodega) {
+                          return DropdownMenuItem(
+                            value: bodega,
+                            child: Text(bodega),
+                          );
+                        }).toList(),
+                        onChanged: (value) => vm.changeBodega(value!),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               // Contenido de la segunda pestaña
               ListView.separated(
                 itemCount: vm.reports.length,
@@ -50,24 +112,24 @@ class ReportView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.share,
+                          ),
+                        ),
+                        IconButton(
                           onPressed: () {
                             Navigator.pushNamed(
                               context,
                               AppRoutes.printer,
                               arguments: PrintDocSettingsModel(
-                                opcion: report!.id,
+                                opcion: report.id,
                                 report: report,
                               ),
                             );
                           },
                           icon: Icon(
                             Icons.print,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.share,
                           ),
                         ),
                       ],
