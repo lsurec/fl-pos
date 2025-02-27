@@ -263,15 +263,18 @@ class _SettingsFromState extends State<SettingsFrom> {
                                 _printerEscPos(print.bytes, print.generator);
                                 break;
                               case 5:
-                                //Otros reportes
-                                PrintModel print = await printVM.printReport(
+
+                                //Reporte de existencias
+                                PrintModel print =
+                                    await printVM.printReporStokc(
                                   context,
                                   paperDefault,
-                                  widget.settings.report!,
                                 );
                                 _printerEscPos(print.bytes, print.generator);
                                 break;
                               default:
+                                NotificationService.showSnackbar(
+                                    "El reporte no está configurado");
                             }
                           }
                         : null,

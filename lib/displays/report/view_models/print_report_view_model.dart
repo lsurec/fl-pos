@@ -11,7 +11,7 @@ class PrintReportViewModel extends ChangeNotifier {
       context,
       AppRoutes.printer,
       arguments: PrintDocSettingsModel(
-        opcion: 5,
+        opcion: report!.id,
         report: report,
       ),
     );

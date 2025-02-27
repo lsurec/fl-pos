@@ -7,15 +7,15 @@ import 'package:provider/provider.dart';
 class ReportViewModel extends ChangeNotifier {
   final List<ReportModel> reports = [
     ReportModel(
-      id: 1,
+      id: 5,
       name: "Existencias",
     ),
     ReportModel(
-      id: 2,
+      id: 6,
       name: "Unidades vendidas",
     ),
     ReportModel(
-      id: 3,
+      id: 7,
       name: "Lista Facturas, totales de crédito y contado",
     ),
   ];

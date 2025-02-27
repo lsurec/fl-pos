@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
+import 'package:flutter_post_printer_example/displays/report/reports/tmu/existencias_tmu.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
@@ -103,6 +104,18 @@ class PrintViewModel extends ChangeNotifier {
     return PrintModel(
       bytes: bytes,
       generator: generator,
+    );
+  }
+
+  //Reporte de existencias
+  Future<PrintModel> printReporStokc(
+    BuildContext context,
+    int paperDefault,
+  ) async {
+    //TODO:Buscar datos del procedimiento
+    return ExistenciasTMU.getReport(
+      context,
+      paperDefault,
     );
   }
 
