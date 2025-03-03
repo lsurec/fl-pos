@@ -215,6 +215,14 @@ class TablesViewModel extends ChangeNotifier {
     tables.clear();
     tables.addAll(tablesRes);
 
+    for (var element in tables) {
+      if (element.objElementoAsignado != null ||
+          element.objElementoAsignado != "") {
+        element.objElementoAsignado =
+            "${vmLocal.selectedEmpresa!.productoImgUrl}${element.objElementoAsignado}";
+      }
+    }
+
     updateOrdersTable(context);
 
     return resTables;
