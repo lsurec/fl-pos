@@ -156,16 +156,22 @@ class _RowMenu extends StatelessWidget {
           ),
           description: classification[0].desClasificacion,
           // srcImage: options[0].image,
-          srcImage:
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
+          srcImage: classification[0].urlImg != null ||
+                  classification[0].urlImg != ""
+              ? classification[0].urlImg!
+              : 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
         ),
         if (classification.length == 2)
           CardImageWidget(
             onTap: () => vmClass.navigateProduct(context, classification[1]),
             description: classification[1].desClasificacion,
             // srcImage: options[1].image,
-            srcImage:
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
+
+            srcImage: classification[1].urlImg != null ||
+                    classification[1].urlImg != ""
+                ? classification[1].urlImg!
+                : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
+            // srcImage: options[1].image,
           ),
         if (classification.length == 1) Expanded(child: Container()),
       ],

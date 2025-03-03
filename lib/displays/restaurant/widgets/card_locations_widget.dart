@@ -26,12 +26,19 @@ class CardLocationsWidget extends StatelessWidget {
         onTap: () => onTap(),
         child: Row(
           children: [
-            const SizedBox(
+            SizedBox(
               width: 150,
               child: FadeInImage(
-                placeholder: AssetImage('assets/load.gif'),
+                placeholder: const AssetImage('assets/load.gif'),
                 image: NetworkImage(
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
+                  ubicacion.objElementoAsignado != null ||
+                          ubicacion.objElementoAsignado != ""
+                      ? ubicacion.objElementoAsignado
+                              .toString()
+                              .contains("null")
+                          ? "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
+                          : ubicacion.objElementoAsignado
+                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
                 ),
                 height: 150,
                 fit: BoxFit.contain,

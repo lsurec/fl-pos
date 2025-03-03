@@ -10,6 +10,7 @@ class ClassificationModel {
   String objWidth;
   String objHeight;
   int poseeNodos;
+  dynamic urlImg;
 
   ClassificationModel({
     required this.clasificacion,
@@ -21,6 +22,7 @@ class ClassificationModel {
     required this.objWidth,
     required this.objHeight,
     required this.poseeNodos,
+    required this.urlImg,
   });
 
   factory ClassificationModel.fromJson(String str) =>
@@ -39,6 +41,7 @@ class ClassificationModel {
         objWidth: json["obj_Width"],
         objHeight: json["obj_Height"],
         poseeNodos: json["posee_Nodos"],
+        urlImg: json["url_Img"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -51,5 +54,6 @@ class ClassificationModel {
         "obj_Width": objWidth,
         "obj_Height": objHeight,
         "posee_Nodos": poseeNodos,
+        "url_Img": urlImg,
       };
 }

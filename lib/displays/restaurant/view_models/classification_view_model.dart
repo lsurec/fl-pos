@@ -178,6 +178,14 @@ class ClassificationViewModel extends ChangeNotifier {
     classification = null;
     classifications.clear();
     classifications.addAll(resClassification.response);
+
+    for (var element in classifications) {
+      if (element.urlImg != null || element.urlImg != "") {
+        element.urlImg =
+            "${vmLocal.selectedEmpresa!.productoImgUrl}${element.urlImg}";
+      }
+    }
+
     orderMenu();
 
     return resClassification;

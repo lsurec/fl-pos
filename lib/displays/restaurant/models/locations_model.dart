@@ -12,6 +12,7 @@ class LocationModel {
   int ubicacionMesa;
   int objHeight;
   int objWidth;
+  dynamic objElementoAsignado;
 
   LocationModel({
     required this.id,
@@ -25,6 +26,7 @@ class LocationModel {
     required this.ubicacionMesa,
     required this.objHeight,
     required this.objWidth,
+    required this.objElementoAsignado,
   });
 
   factory LocationModel.fromJson(String str) =>
@@ -44,6 +46,7 @@ class LocationModel {
         ubicacionMesa: json["ubicacion_Mesa"],
         objHeight: json["obj_Height"],
         objWidth: json["obj_Width"],
+        objElementoAsignado: json["obj_Elemento_Asignado"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -58,5 +61,6 @@ class LocationModel {
         "ubicacion_Mesa": ubicacionMesa,
         "obj_Height": objHeight,
         "obj_Width": objWidth,
+        "obj_Elemento_Asignado": objElementoAsignado,
       };
 }

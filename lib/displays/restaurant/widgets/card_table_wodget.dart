@@ -25,16 +25,21 @@ class CardTableWidget extends StatelessWidget {
         onTap: () => onTap(),
         child: Row(
           children: [
-            const SizedBox(
+            SizedBox(
               width: 150,
-              child: FadeInImage(
-                placeholder: AssetImage('assets/load.gif'),
-                image: NetworkImage(
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
-                ),
-                height: 150,
-                fit: BoxFit.contain,
+              child: Icon(
+                Icons.table_bar_outlined,
+                size: 50,
+                color: mesa.orders!.isEmpty ? Colors.grey : Colors.green,
               ),
+              // child: FadeInImage(
+              //   placeholder: AssetImage('assets/load.gif'),
+              //   image: NetworkImage(
+              //     "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
+              //   ),
+              //   height: 150,
+              //   fit: BoxFit.contain,
+              // ),
             ),
             Expanded(
               child: Padding(
