@@ -11,6 +11,7 @@ import 'package:flutter_post_printer_example/displays/report/models/models.dart'
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/existencias_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/fact_t_contado_cred_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/unidades_vendidas_tmu.dart';
+import 'package:flutter_post_printer_example/displays/report/view_models/report_view_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
@@ -109,19 +110,20 @@ class PrintViewModel extends ChangeNotifier {
     );
   }
 
-  //Reporte de existencias
+  //Reporte de unidades vendidas
   Future<PrintModel> printReporUnidadesVendidas(
     BuildContext context,
     int paperDefault,
   ) async {
     //TODO:Buscar datos del procedimiento
+
     return UnidadesVendidasTMU.getReport(
       context,
       paperDefault,
     );
   }
 
-  //Reporte de existencias
+  //Reporte de facturas
   Future<PrintModel> getReportFactCredContado(
     BuildContext context,
     int paperDefault,
@@ -139,9 +141,50 @@ class PrintViewModel extends ChangeNotifier {
     int paperDefault,
   ) async {
     //TODO:Buscar datos del procedimiento
+
+    final ReportViewModel reportVM = Provider.of<ReportViewModel>(
+      context,
+      listen: false,
+    );
+
+    isLoading = true;
+
+    final ApiResModel resViewVentas = await reportVM.loadViewVentas(context);
+
+    isLoading = false;
+
+    if (!resViewVentas.succes) {
+      NotificationService.showErrorView(context, resViewVentas);
+    }
+
+    if (reportVM.ventas.isEmpty) {
+      //TODO:Verificacion si no hay datos
+    }
+
+    final ViewVentasModel data = reportVM.ventas.first;
+
+    final List<ProductReportStockModel> products = [];
+
+    for (var element in reportVM.ventas) {
+      products.add(
+        ProductReportStockModel(
+          id: element.producto,
+          desc: element.desProducto,
+          existencias: element.existencia,
+        ),
+      );
+    }
+
+    ReportStockModel reportStockModel = ReportStockModel(
+      bodega: data.desBodega,
+      idBodega: data.bodega,
+      products: products,
+    );
+
     return ExistenciasTMU.getReport(
       context,
       paperDefault,
+      reportStockModel,
     );
   }
 

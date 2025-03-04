@@ -51,7 +51,7 @@ class ViewVentasModel {
   double montoSinIva;
   double iva;
   int costoTotal;
-  int existencia;
+  double existencia;
   int costoInventario;
   dynamic cantFacturada;
 

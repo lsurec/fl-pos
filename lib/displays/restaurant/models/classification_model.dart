@@ -10,7 +10,7 @@ class ClassificationModel {
   String objWidth;
   String objHeight;
   int poseeNodos;
-  dynamic urlImg;
+  String? urlImg;
 
   ClassificationModel({
     required this.clasificacion,

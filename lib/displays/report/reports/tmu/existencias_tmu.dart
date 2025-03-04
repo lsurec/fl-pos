@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/utilities_tmu.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
@@ -12,6 +13,7 @@ class ExistenciasTMU {
   static Future<PrintModel> getReport(
     BuildContext context,
     int paperDefault,
+    ReportStockModel data,
   ) async {
     List<int> bytes = [];
 
@@ -42,7 +44,7 @@ class ExistenciasTMU {
     );
 
     bytes += generator.text(
-      "Bodega: Bodega central",
+      "Bodega: (${data.idBodega}) ${data.bodega}",
       styles: UtilitiesTMU.center,
     );
 
@@ -50,15 +52,15 @@ class ExistenciasTMU {
 
     bytes += generator.hr(); // Línea horizontal
 
-    for (var i = 0; i < 10; i++) {
+    for (var element in data.products) {
       bytes += generator.text(
-        "ID: 445",
+        "ID: ${element.id}",
       );
       bytes += generator.text(
-        "Producto: Reprehenderit non ipsum voluptate.",
+        "Producto: ${element.desc}",
       );
       bytes += generator.text(
-        "Existenacia: 25.00",
+        "Existenacia: ${element.existencias}",
       );
       bytes += generator.hr(); // Línea horizontal
     }
