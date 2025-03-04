@@ -13,6 +13,7 @@ class UnidadesVendidasTMU {
   static Future<PrintModel> getReport(
     BuildContext context,
     int paperDefault,
+    ReportUnidadesVendidasModel data,
   ) async {
     List<int> bytes = [];
 
@@ -43,7 +44,7 @@ class UnidadesVendidasTMU {
     );
 
     bytes += generator.text(
-      "Bodega: Bodega central",
+      "Bodega: (${data.idBodega}) ${data.bodega}",
       styles: UtilitiesTMU.center,
     );
 
@@ -51,21 +52,21 @@ class UnidadesVendidasTMU {
 
     bytes += generator.hr(); // Línea horizontal
 
-    for (var i = 0; i < 10; i++) {
+    for (var element in data.products) {
       bytes += generator.text(
-        "ID: 445",
+        "ID: ${element.id}",
       );
       bytes += generator.text(
-        "Producto: Reprehenderit non ipsum voluptate.",
+        "Producto: ${element.desc}",
       );
       bytes += generator.row(
         [
           PosColumn(
-            text: "Cantidad: 10.00",
+            text: "Cantidad: ${element.desc}",
             width: 6,
           ),
           PosColumn(
-            text: "Unidades: -81",
+            text: "Unidades: ${element.unidades}",
             width: 6,
             styles: const PosStyles(
               align: PosAlign.right,
@@ -75,10 +76,11 @@ class UnidadesVendidasTMU {
       );
       bytes += generator.hr(); // Línea horizontal
     }
+
     bytes += generator.hr(); // Línea horizontal
 
     bytes += generator.text(
-      "Total Unidades Vendidas: 445",
+      "Total Unidades Vendidas: ${data.total}",
       styles: UtilitiesTMU.centerBold,
     );
 

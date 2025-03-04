@@ -116,10 +116,54 @@ class PrintViewModel extends ChangeNotifier {
     int paperDefault,
   ) async {
     //TODO:Buscar datos del procedimiento
+    final ReportViewModel reportVM = Provider.of<ReportViewModel>(
+      context,
+      listen: false,
+    );
+
+    isLoading = true;
+
+    final ApiResModel resViewVentas = await reportVM.loadViewVentas(context);
+
+    isLoading = false;
+
+    if (!resViewVentas.succes) {
+      NotificationService.showErrorView(context, resViewVentas);
+    }
+
+    if (reportVM.ventas.isEmpty) {
+      //TODO:Verificacion si no hay datos
+    }
+
+    final ViewVentasModel data = reportVM.ventas.first;
+
+    List<ProductReportUnidadesVendidas> products = [];
+    double total = 0;
+
+    for (var element in reportVM.ventas) {
+      products.add(
+        ProductReportUnidadesVendidas(
+          id: element.producto,
+          desc: element.desProducto,
+          cantidad: element.cantidadAnt,
+          unidades: element.cantidad,
+        ),
+      );
+      total += element.cantidad;
+    }
+
+    final ReportUnidadesVendidasModel reportUnidadesVendidasModel =
+        ReportUnidadesVendidasModel(
+      bodega: data.desBodega,
+      idBodega: data.bodega,
+      products: products,
+      total: total,
+    );
 
     return UnidadesVendidasTMU.getReport(
       context,
       paperDefault,
+      reportUnidadesVendidasModel,
     );
   }
 

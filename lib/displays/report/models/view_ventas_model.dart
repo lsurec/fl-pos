@@ -44,15 +44,15 @@ class ViewVentasModel {
   bool exento;
   int estado;
   bool reversion;
-  int cantidadAnt;
-  int cantidad;
-  int cantidadPos;
-  int monto;
+  double cantidadAnt;
+  double cantidad;
+  double cantidadPos;
+  double monto;
   double montoSinIva;
   double iva;
-  int costoTotal;
+  double costoTotal;
   double existencia;
-  int costoInventario;
+  double costoInventario;
   dynamic cantFacturada;
 
   ViewVentasModel({
