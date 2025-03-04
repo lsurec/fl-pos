@@ -173,6 +173,28 @@ class PrintViewModel extends ChangeNotifier {
     int paperDefault,
   ) async {
     //TODO:Buscar datos del procedimiento
+    //TODO:Buscar datos del procedimiento
+    final ReportViewModel reportVM = Provider.of<ReportViewModel>(
+      context,
+      listen: false,
+    );
+
+    isLoading = true;
+
+    final ApiResModel resViewVentas = await reportVM.loadViewVentas(context);
+
+    isLoading = false;
+
+    if (!resViewVentas.succes) {
+      NotificationService.showErrorView(context, resViewVentas);
+    }
+
+    if (reportVM.ventas.isEmpty) {
+      //TODO:Verificacion si no hay datos
+    }
+
+    final ViewVentasModel data = reportVM.ventas.first;
+
     return FactTContadoCredTMU.getReport(
       context,
       paperDefault,
