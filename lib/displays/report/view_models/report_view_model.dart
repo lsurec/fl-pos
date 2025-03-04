@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
+import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:provider/provider.dart';
 
 class ReportViewModel extends ChangeNotifier {
   final List<ReportModel> reports = [
@@ -24,6 +28,28 @@ class ReportViewModel extends ChangeNotifier {
 
   final List<String> series = ['Serie A', 'Serie B', 'Serie C'];
   final List<String> bodegas = ['Bodega 1', 'Bodega 2', 'Bodega 3'];
+
+  final List<ViewVentasModel> ventas = [];
+
+  Future<ApiResModel> loadViewVentas(BuildContext context) async {
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String token = vmLogin.token;
+
+    ReportService reportService = ReportService();
+
+    final ApiResModel resViewVentas = await reportService.getViewVentas(token);
+
+    if (!resViewVentas.succes) return resViewVentas;
+
+    ventas.clear();
+    ventas.addAll(resViewVentas.response);
+
+    return resViewVentas;
+  }
 
   Future<void> selectDate(BuildContext context, bool isStartDate) async {
     DateTime? pickedDate = await showDatePicker(

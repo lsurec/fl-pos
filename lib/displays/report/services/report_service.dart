@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
-import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:http/http.dart' as http;
@@ -10,8 +9,7 @@ class ReportService {
   final String _baseUrl = Preferences.urlApi;
 
   //Obtner empresas
-  Future<ApiResModel> getEmpresa(
-    String user,
+  Future<ApiResModel> getViewVentas(
     String token,
   ) async {
     Uri url = Uri.parse("${_baseUrl}Report/view/ventas");
