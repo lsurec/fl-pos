@@ -207,6 +207,7 @@ class ProductsClassViewModel extends ChangeNotifier {
       if (element.objetoImagen != null || element.objetoImagen != "") {
         element.objetoImagen =
             "${vmLocal.selectedEmpresa!.productoImgUrl}${element.objetoImagen}";
+        print(element.objetoImagen);
       }
     }
 
