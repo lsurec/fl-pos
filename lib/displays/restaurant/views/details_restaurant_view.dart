@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
@@ -160,12 +162,20 @@ class DetailsRestaurantView extends StatelessWidget {
                 children: [
                   Stack(
                     children: [
-                      //TODO:Corregir carga
-                      ProductImage(
-                          url: product.objetoImagen != null ||
-                                  product.objetoImagen != ""
-                              ? product.objetoImagen
-                              : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"),
+                      FadeInImage(
+                        height: MediaQuery.of(context).size.height * 0.30,
+                        width: double.infinity,
+                        placeholder: const AssetImage("assets/load.gif"),
+                        image: NetworkImage(product.objetoImagen!),
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          // Aquí se maneja el error y se muestra una imagen alternativa
+                          return Image.asset(
+                            'assets/image_not_available.png',
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
                       Positioned(
                         top: 60,
                         left: 20,

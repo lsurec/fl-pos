@@ -131,20 +131,13 @@ class _RowMenu extends StatelessWidget {
         CardImageWidget(
           onTap: () => vm.navigateDetails(context, products[0]),
           description: products[0].desProducto,
-          srcImage: products[0].objetoImagen != null ||
-                  products[0].objetoImagen != ""
-              ? products[0].objetoImagen!
-              : 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png',
+          srcImage: products[0].objetoImagen!,
         ),
         if (products.length == 2)
           CardImageWidget(
             onTap: () => vm.navigateDetails(context, products[1]),
             description: products[1].desProducto,
-            srcImage: products[1].objetoImagen != null ||
-                    products[1].objetoImagen != ""
-                ? products[1].objetoImagen!
-                : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
-            // srcImage: options[1].image,
+            srcImage: products[1].objetoImagen!,
           ),
         if (products.length == 1) Expanded(child: Container()),
       ],

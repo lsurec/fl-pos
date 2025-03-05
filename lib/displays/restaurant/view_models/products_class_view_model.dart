@@ -204,9 +204,11 @@ class ProductsClassViewModel extends ChangeNotifier {
     products.addAll(res.response);
 
     for (var element in products) {
-      if (element.objetoImagen != null || element.objetoImagen != "") {
+      if (element.objetoImagen != null && element.objetoImagen!.isNotEmpty) {
         element.objetoImagen =
             "${vmLocal.selectedEmpresa!.productoImgUrl}${element.objetoImagen}";
+      } else {
+        element.objetoImagen = "";
       }
     }
 

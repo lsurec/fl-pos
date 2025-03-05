@@ -46,6 +46,7 @@ class PinView extends StatelessWidget {
                                 AutovalidateMode.onUserInteraction,
                             key: vm.formKey,
                             child: TextFormField(
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText:
                                     AppLocalizations.of(context)!.translate(
