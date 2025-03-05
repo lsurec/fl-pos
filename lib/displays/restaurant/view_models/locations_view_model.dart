@@ -73,10 +73,12 @@ class LocationsViewModel extends ChangeNotifier {
     locations.addAll(resLocations.response);
 
     for (var element in locations) {
-      if (element.objElementoAsignado != null ||
-          element.objElementoAsignado != "") {
-        element.objElementoAsignado =
-            "${vmLocal.selectedEmpresa!.productoImgUrl}${element.objElementoAsignado}";
+      if (element.objElementoAsignado != null &&
+          element.objElementoAsignado!.isNotEmpty) {
+        element.objElementoAsignado = Uri.encodeFull(
+            "${vmLocal.selectedEmpresa!.productoImgUrl}${element.objElementoAsignado}");
+      } else {
+        element.objElementoAsignado = "";
       }
     }
 

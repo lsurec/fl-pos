@@ -28,21 +28,24 @@ class CardLocationsWidget extends StatelessWidget {
           children: [
             SizedBox(
               width: 150,
-              child: FadeInImage(
-                placeholder: const AssetImage('assets/load.gif'),
-                image: NetworkImage(
-                  ubicacion.objElementoAsignado != null ||
-                          ubicacion.objElementoAsignado != ""
-                      ? ubicacion.objElementoAsignado
-                              .toString()
-                              .contains("null")
-                          ? "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png"
-                          : ubicacion.objElementoAsignado
-                      : "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png",
-                ),
-                height: 150,
-                fit: BoxFit.contain,
-              ),
+              height: 150,
+              child: ubicacion.objElementoAsignado!.isEmpty
+                  ? Image.asset(
+                      "assets/image_not_available.png",
+                      fit: BoxFit.cover,
+                    )
+                  : FadeInImage(
+                      placeholder: const AssetImage("assets/load.gif"),
+                      image: NetworkImage(ubicacion.objElementoAsignado!),
+                      fit: BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        // Aquí se maneja el error y se muestra una imagen alternativa
+                        return Image.asset(
+                          'assets/image_not_available.png',
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
             ),
             Expanded(
               child: Padding(

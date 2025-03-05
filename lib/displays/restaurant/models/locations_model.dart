@@ -12,7 +12,7 @@ class LocationModel {
   int ubicacionMesa;
   int objHeight;
   int objWidth;
-  dynamic objElementoAsignado;
+  String? objElementoAsignado;
 
   LocationModel({
     required this.id,
