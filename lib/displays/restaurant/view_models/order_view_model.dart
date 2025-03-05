@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -581,18 +582,34 @@ class OrderViewModel extends ChangeNotifier {
 
         bytes += generator.cut();
 
-        await PrinterManager.instance.connect(
+        await PrinterManager.instance
+            .connect(
           type: PrinterType.network,
           model: TcpPrinterInput(
             //TODO:Cambiar a ip de la base de datos
-            // ipAddress: element.ipAdress,
-            ipAddress: "192.168.0.10",
+            ipAddress: element.ipAdress,
+            // ipAddress: "192.168.0.10",
           ),
+        )
+            .timeout(
+          const Duration(seconds: 5),
+          onTimeout: () {
+            throw TimeoutException(
+                'La conexión ha superado el tiempo de espera');
+          },
         );
 
-        await instanceManager.send(
+        await instanceManager
+            .send(
           type: PrinterType.network,
           bytes: bytes,
+        )
+            .timeout(
+          const Duration(seconds: 5),
+          onTimeout: () {
+            throw TimeoutException(
+                'La conexión ha superado el tiempo de espera');
+          },
         );
       } catch (e) {
         isLoading = false;
