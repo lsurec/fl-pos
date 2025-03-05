@@ -201,21 +201,38 @@ class CardImageWidget extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              FadeInImage(
-                placeholder: const AssetImage('assets/load.gif'),
-                image: NetworkImage(
-                  srcImage,
+              if (srcImage.isEmpty)
+                Expanded(
+                  child: Image.asset(
+                    "assets/image_not_available.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                height: 150,
-                fit: BoxFit.contain,
-              ),
+              if (srcImage.isNotEmpty)
+                Expanded(
+                  child: FadeInImage(
+                    placeholder: const AssetImage("assets/load.gif"),
+                    image: NetworkImage(srcImage),
+                    fit: BoxFit.contain,
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      // Aquí se maneja el error y se muestra una imagen alternativa
+                      return Image.asset(
+                        'assets/image_not_available.png',
+                        fit: BoxFit.contain,
+                      );
+                    },
+                  ),
+                ),
               const SizedBox(height: 10),
-              Text(
-                description,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: StyleApp.title,
-                overflow: TextOverflow.ellipsis,
+              SizedBox(
+                height: 45,
+                child: Text(
+                  description,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  style: StyleApp.title,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
