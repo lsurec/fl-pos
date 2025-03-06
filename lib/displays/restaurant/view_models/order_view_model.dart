@@ -179,6 +179,7 @@ class OrderViewModel extends ChangeNotifier {
         );
       }
 
+      tra.consecutivo = consecutivo;
       transactions.add(
         DocTransaccion(
           traMontoDias: null,
@@ -326,35 +327,28 @@ class OrderViewModel extends ChangeNotifier {
       }
     }
 
-    for (var element in orders[indexOrder].transacciones) {
-      element.processed = true;
-    }
+    // for (var element in orders[indexOrder].transacciones) {
+    //   element.processed = true;
+    // }
 
     isLoading = false;
 
-    final RestaurantService restaurantService = RestaurantService();
+    // final RestaurantService restaurantService = RestaurantService();
 
-    SenOrderModel order = SenOrderModel(
-      userId: "111", //TODO:Armar user id empresa raiz, empresa, estacion
-      order: orders[indexOrder].toJson(),
-    );
+    // SenOrderModel order = SenOrderModel(
+    //   userId: "111", //TODO:Armar user id empresa raiz, empresa, estacion
+    //   order: orders[indexOrder].toJson(),
+    // );
 
-    //TODO:notificar cambios a clientes escuchamado
-    final ApiResModel resPostComanda = await restaurantService.notifyComanda(
-      order,
-      tokenUser,
-    );
+    // //TODO:notificar cambios a clientes escuchamado
+    // final ApiResModel resPostComanda = await restaurantService.notifyComanda(
+    //   order,
+    //   tokenUser,
+    // );
 
     // NotificationService.showSnackbar(resPostComanda.response);
 
     await printNetwork(context, indexOrder);
-
-    NotificationService.showSnackbar(
-      AppLocalizations.of(context)!.translate(
-        BlockTranslate.notificacion,
-        'comandaEnviada',
-      ),
-    );
   }
 
   printNetwork(
@@ -394,12 +388,28 @@ class OrderViewModel extends ChangeNotifier {
 
     final List<PrintDataComandaModel> detalles = res.response;
 
+    detalles.removeWhere((detalle) {
+      return orders[indexOrder].transacciones.any((transaccion) =>
+          transaccion.consecutivo == detalle.traConsecutivoInterno &&
+          transaccion.processed);
+    });
+
+    if (detalles.isEmpty) {
+      isLoading = false;
+
+      //TODO: Translate
+      NotificationService.showSnackbar("No hay transacciones para comandar");
+
+      return;
+    }
+
     final List<FormatoComanda> formats = [];
 
     for (var detalle in detalles) {
       if (formats.isEmpty) {
         formats.add(
           FormatoComanda(
+            traConsecutivo: detalle.traConsecutivoInterno,
             ipAdress: detalle.printerName,
             bodega: detalle.bodega,
             detalles: [detalle],
@@ -419,6 +429,7 @@ class OrderViewModel extends ChangeNotifier {
         if (indexBodega == -1) {
           formats.add(
             FormatoComanda(
+              traConsecutivo: detalle.traConsecutivoInterno,
               ipAdress: detalle.printerName,
               bodega: detalle.bodega,
               detalles: [detalle],
@@ -561,10 +572,7 @@ class OrderViewModel extends ChangeNotifier {
 
         bytes += generator.emptyLines(2);
 
-        bytes += generator.text(
-          "----------------------------",
-          styles: center,
-        );
+        bytes += generator.hr();
 
         bytes += generator.text(
           "Powered By:",
@@ -577,6 +585,11 @@ class OrderViewModel extends ChangeNotifier {
         );
         bytes += generator.text(
           "www.demosoft.com.gt",
+          styles: center,
+        );
+
+        bytes += generator.text(
+          "Version: ${SplashViewModel.versionLocal}",
           styles: center,
         );
 
@@ -611,18 +624,43 @@ class OrderViewModel extends ChangeNotifier {
                 'La conexión ha superado el tiempo de espera');
           },
         );
+
+        //marcar como comandados
+        for (var traPend in orders[indexOrder].transacciones) {
+          if (traPend.consecutivo == element.traConsecutivo) {
+            traPend.processed = true;
+          }
+        }
       } catch (e) {
         isLoading = false;
-        NotificationService.showSnackbar(
-          AppLocalizations.of(context)!.translate(
-            BlockTranslate.notificacion,
-            'noImprimio',
+
+        NotificationService.showErrorView(
+          context,
+          ApiResModel(
+            succes: false,
+            response: e.toString(),
+            url: "",
+            storeProcedure: "",
           ),
         );
+
+        // NotificationService.showSnackbar(
+        //   AppLocalizations.of(context)!.translate(
+        //     BlockTranslate.notificacion,
+        //     'noImprimio',
+        //   ),
+        // );
 
         return;
       }
     }
+
+    NotificationService.showSnackbar(
+      AppLocalizations.of(context)!.translate(
+        BlockTranslate.notificacion,
+        'comandaEnviada',
+      ),
+    );
 
     isLoading = false;
   }

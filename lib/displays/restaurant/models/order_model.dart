@@ -58,6 +58,7 @@ class OrderModel {
 }
 
 class TraRestaurantModel {
+  int consecutivo;
   int cantidad;
   UnitarioModel precio;
   BodegaProductoModel bodega;
@@ -68,6 +69,7 @@ class TraRestaurantModel {
   bool processed;
 
   TraRestaurantModel({
+    required this.consecutivo,
     required this.cantidad,
     required this.precio,
     required this.bodega,
@@ -85,6 +87,7 @@ class TraRestaurantModel {
 
   factory TraRestaurantModel.fromMap(Map<String, dynamic> json) =>
       TraRestaurantModel(
+        consecutivo: json["consecutivo"],
         cantidad: json["cantidad"],
         precio: UnitarioModel.fromMap(json["precio"]),
         bodega: BodegaProductoModel.fromMap(json["bodega"]),
@@ -97,6 +100,7 @@ class TraRestaurantModel {
       );
 
   Map<String, dynamic> toMap() => {
+        "consecutivo": consecutivo,
         "cantidad": cantidad,
         "precio": precio.toMap(),
         "bodega": bodega.toMap(),

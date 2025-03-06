@@ -216,6 +216,7 @@ class DetailsRestaurantViewModel extends ChangeNotifier {
     }
 
     TraRestaurantModel transaction = TraRestaurantModel(
+      consecutivo: 0,
       cantidad: int.tryParse(controllerNum.text) ?? 0,
       precio: selectedPrice!,
       producto: productRestaurantVM.product!,

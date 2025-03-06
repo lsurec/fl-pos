@@ -256,6 +256,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       if (formats.isEmpty) {
         formats.add(
           FormatoComanda(
+            traConsecutivo: detalle.traConsecutivoInterno,
             ipAdress: detalle.printerName,
             bodega: detalle.bodega,
             detalles: [detalle],
@@ -275,6 +276,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
         if (indexBodega == -1) {
           formats.add(
             FormatoComanda(
+              traConsecutivo: detalle.traConsecutivoInterno,
               ipAdress: detalle.printerName,
               bodega: detalle.bodega,
               detalles: [detalle],
