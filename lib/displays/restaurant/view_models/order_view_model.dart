@@ -608,7 +608,7 @@ class OrderViewModel extends ChangeNotifier {
           const Duration(seconds: 5),
           onTimeout: () {
             throw TimeoutException(
-                'La conexión ha superado el tiempo de espera');
+                'La conexión ha superado el tiempo de espera ${element.ipAdress}');
           },
         );
 
@@ -621,7 +621,7 @@ class OrderViewModel extends ChangeNotifier {
           const Duration(seconds: 5),
           onTimeout: () {
             throw TimeoutException(
-                'La conexión ha superado el tiempo de espera');
+                'La conexión ha superado el tiempo de espera ${element.ipAdress}');
           },
         );
 
