@@ -15,7 +15,6 @@ class ActualizarTareaService {
     Uri url = Uri.parse("${_baseUrl}Tareas/estado/tarea");
     try {
       //url completa
-
       // Configurar Api y consumirla
       final response = await http.post(
         url,
