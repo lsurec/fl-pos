@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/services/referencia_service.dart';
+
 export 'package:flutter_post_printer_example/services/language_service.dart';
 
 export 'package:flutter_post_printer_example/services/version_service.dart';
