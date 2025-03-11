@@ -63,7 +63,7 @@ class ReferenciaViewModel extends ChangeNotifier {
     );
 
     //si el consumo salió mal
-    if (!res.success) {
+    if (!res.status) {
       isLoading = false;
       NotificationService.showInfoErrorView(context, res);
       return;

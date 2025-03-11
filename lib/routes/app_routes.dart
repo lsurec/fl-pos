@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/restaurant/views/views.dar
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/views/views.dart';
 import 'package:flutter_post_printer_example/displays/tareas/views/views.dart';
+import 'package:flutter_post_printer_example/views/error_infor_view.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
 
@@ -70,6 +71,7 @@ class AppRoutes {
   static const colors = 'colors';
   static const report = 'report';
   static const ref = 'ref';
+  static const errorInfo = 'errorInfo';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -133,6 +135,7 @@ class AppRoutes {
     colors: (BuildContext context) => const TemasColoresView(),
     report: (BuildContext context) => const ReportView(),
     ref: (BuildContext context) => const ReferenciaView(),
+    errorInfo: (BuildContext context) => const ErrorInfoView(),
   };
 
   //en caso de ruta incorrecta

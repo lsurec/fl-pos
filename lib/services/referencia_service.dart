@@ -39,7 +39,9 @@ class ReferenciaService {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         List<IdReferenciaModel> items = (res.data as List)
-            .map((item) => IdReferenciaModel.fromMap(item))
+            .map(
+              (item) => IdReferenciaModel.fromMap(item),
+            )
             .toList();
 
         res.data = items;
@@ -50,7 +52,7 @@ class ReferenciaService {
     } catch (e) {
       //respuesta incorrecta
       return ApiResponseModel(
-        success: false,
+        status: false,
         message: "Excepcion no controlada",
         error: e.toString(),
         storeProcedure: "",

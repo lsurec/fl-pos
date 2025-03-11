@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 class ApiResponseModel {
-  bool success;
+  bool status;
   String message;
   String error;
   String storeProcedure;
-  dynamic parameters;
+  Map<String, dynamic>? parameters;
   dynamic data;
   DateTime timestamp;
   String version;
   String? url;
 
   ApiResponseModel({
-    required this.success,
+    required this.status,
     required this.message,
     required this.error,
     required this.storeProcedure,
@@ -30,7 +30,7 @@ class ApiResponseModel {
 
   factory ApiResponseModel.fromMap(Map<String, dynamic> json) =>
       ApiResponseModel(
-        success: json["success"],
+        status: json["status"],
         message: json["message"],
         error: json["error"],
         storeProcedure: json["storeProcedure"],
@@ -42,7 +42,7 @@ class ApiResponseModel {
       );
 
   Map<String, dynamic> toMap() => {
-        "success": success,
+        "status": status,
         "message": message,
         "error": error,
         "storeProcedure": storeProcedure,

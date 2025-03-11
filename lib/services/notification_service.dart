@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
@@ -432,7 +433,7 @@ class NotificationService {
       //navegar a pantalla para ver el error
       Navigator.pushNamed(
         context,
-        "error",
+        AppRoutes.errorInfo,
         arguments: data,
       );
     }

@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/widgets/texts_widgets.dart';
 import 'package:provider/provider.dart';
 
 class ErrorInfoView extends StatelessWidget {
@@ -45,71 +46,111 @@ class ErrorInfoView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${AppLocalizations.of(context)!.translate(
-                BlockTranslate.general,
-                "usuario",
-              )}: ${vmLogin.user}"),
-              const SizedBox(height: 10),
+              const Text(
+                "Mensaje:",
+                style: StyleApp.normalBold,
+              ), //TODO:Translate
+              const SizedBox(height: 2),
+
               Text(
-                "${AppLocalizations.of(context)!.translate(
+                error.message,
+                style: StyleApp.normal,
+              ),
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.general,
+                  "usuario",
+                )}: ",
+                text: vmLogin.user,
+              ),
+              const SizedBox(height: 10),
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
                   BlockTranslate.fecha,
                   "fecha",
-                )}: ${Utilities.formatearFecha(date)} ${date.hour}:${date.minute}:${date.second}",
+                )} ",
+                text:
+                    " ${Utilities.formatearFecha(date)} ${date.hour}:${date.minute}:${date.second}",
               ),
-
               const SizedBox(height: 10),
-              // const Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text("Documento:"),
-              //         Text("185185"),
-              //       ],
-              //     ),
-              //     Column(
-              //       crossAxisAlignment: CrossAxisAlignment.end,
-              //       children: [
-              //         const Text("Serie:"),
-              //         Text("FEL10"),
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              // const SizedBox(height: 20),
-              Text(
-                "${AppLocalizations.of(context)!.translate(
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
                   BlockTranslate.localConfig,
                   "empresa",
-                )}: ${vmLocal.selectedEmpresa?.empresaNombre} (${vmLocal.selectedEmpresa?.empresa})",
+                )}: ",
+                text:
+                    "${vmLocal.selectedEmpresa?.empresaNombre} (${vmLocal.selectedEmpresa?.empresa})",
               ),
               const SizedBox(height: 10),
-              Text("${AppLocalizations.of(context)!.translate(
-                BlockTranslate.localConfig,
-                "estacion",
-              )}: ${vmLocal.selectedEstacion?.descripcion} (${vmLocal.selectedEstacion?.estacionTrabajo})"),
-
+              TextsWidget(
+                title: "${AppLocalizations.of(context)!.translate(
+                  BlockTranslate.localConfig,
+                  "estacion",
+                )}: ",
+                text:
+                    "${vmLocal.selectedEstacion?.descripcion} (${vmLocal.selectedEstacion?.estacionTrabajo})",
+              ),
               const SizedBox(height: 10),
-              Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.error,
-                  "servicio",
+              const Divider(),
+              ListTile(
+                title: Text(
+                  "${AppLocalizations.of(context)!.translate(
+                    BlockTranslate.error,
+                    "servicio",
+                  )}:",
+                  style: StyleApp.normalBold,
+                ),
+                subtitle: SelectableText(
+                  error.url ??
+                      AppLocalizations.of(context)!.translate(
+                        BlockTranslate.error,
+                        "indefinido",
+                      ),
+                  style: StyleApp.normal.copyWith(
+                    color: Colors.blueAccent,
+                    decoration: TextDecoration.underline,
+                    decorationColor:
+                        Colors.blueAccent, // Color del subrayado (opcional)
+                  ),
+                ),
+                contentPadding: EdgeInsets.zero,
+                trailing: IconButton(
+                  onPressed: error.url != null
+                      ? () => Utilities.copyToClipboard(context, error.url!)
+                      : null,
+                  color: Colors.grey,
+                  icon: const Icon(
+                    Icons.copy,
+                  ),
                 ),
               ),
-              Text(
-                error.url ??
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
                     AppLocalizations.of(context)!.translate(
                       BlockTranslate.error,
-                      "indefinido",
+                      "origen",
                     ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                AppLocalizations.of(context)!.translate(
-                  BlockTranslate.error,
-                  "origen",
-                ),
+                    style: StyleApp.normalBold,
+                  ),
+                  IconButton(
+                    onPressed: error.storeProcedure.isNotEmpty
+                        ? () => vm.copyPa(
+                              context,
+                              error,
+                            )
+                        : null,
+                    icon: const Icon(
+                      Icons.copy,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
               ),
               Text(
                 error.storeProcedure.isEmpty
@@ -118,15 +159,48 @@ class ErrorInfoView extends StatelessWidget {
                         "noAplica",
                       )
                     : error.storeProcedure,
+                style: StyleApp.normal.copyWith(
+                  fontFamily: 'monospace',
+                ),
               ),
+              if (error.parameters != null)
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: error.parameters!.length,
+                  itemBuilder: (context, index) {
+                    String key = error.parameters!.keys
+                        .elementAt(index); // Obtener clave
+                    dynamic value = error.parameters![key]; // Obtener valor
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        top: 2,
+                        bottom: 2,
+                      ),
+                      child: Text(
+                        "$key = $value",
+                        style: StyleApp.normal.copyWith(
+                          fontFamily: 'monospace',
+                        ),
+                      ),
+                    );
+                  },
+                ),
               const SizedBox(height: 10),
+              const Divider(),
               Text(
                 "${AppLocalizations.of(context)!.translate(
                   BlockTranslate.general,
                   "descripcion",
                 )}:",
+                style: StyleApp.normalBold,
               ),
-              Text(error.error),
+              Text(
+                error.error,
+                style: StyleApp.normal,
+              ),
             ],
           ),
         ),
