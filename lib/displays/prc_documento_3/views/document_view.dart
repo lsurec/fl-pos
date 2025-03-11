@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/views/referencia_view.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/themes/themes.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter_post_printer_example/view_models/referencia_view_model.dart';
 import 'package:flutter_post_printer_example/view_models/theme_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class DocumentView extends StatelessWidget {
     final vmConfirm = Provider.of<ConfirmDocViewModel>(context);
     final vmConvert = Provider.of<ConvertDocViewModel>(context);
     final vmTheme = Provider.of<ThemeViewModel>(context);
+    final ReferenciaViewModel refVM = Provider.of<ReferenciaViewModel>(context);
 
     return RefreshIndicator(
       onRefresh: () => vmFactura.loadNewData(
@@ -134,7 +137,9 @@ class DocumentView extends StatelessWidget {
                     title: Row(
                       children: [
                         Text(
-                          "Buscar...",
+                          refVM.referencia == null
+                              ? "Buscar..."
+                              : refVM.referencia!.descripcion,
                           style: StyleApp.normal.copyWith(
                             color: Theme.of(context).primaryColor,
                           ),

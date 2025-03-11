@@ -12,6 +12,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/referencia_view_model.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -404,6 +405,14 @@ class DocumentoViewModel extends ChangeNotifier {
 
       return;
     }
+
+    final ReferenciaViewModel refVM = Provider.of<ReferenciaViewModel>(
+      context,
+      listen: false,
+    );
+
+    //limpiar referencia seleccionada
+    refVM.selectRef(context, null, false);
 
     //limpiar serie seleccionada
     vmDoc.serieSelect = null;

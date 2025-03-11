@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_post_printer_example/displays/tareas/models/id_referencia_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/themes/app_theme.dart';
 import 'package:flutter_post_printer_example/themes/styles.dart';
@@ -76,7 +77,36 @@ class ReferenciaView extends StatelessWidget {
                       ],
                     ),
                     const Divider(),
-                    // _ReferenciasEncontradas()
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: vm.referencias.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final IdReferenciaModel ref = vm.referencias[index];
+
+                        return CardWidget(
+                          raidus: 5,
+                          borderColor: Colors.grey,
+                          elevation: 0,
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 0,
+                            vertical: 2.5,
+                          ),
+                          child: ListTile(
+                            onTap: () => vm.selectRef(context, ref, true),
+                            title: Text(
+                              "${ref.descripcion} (${ref.referenciaId})",
+                              style: StyleApp.normal,
+                            ),
+                            trailing: Text(
+                              ref.fDesEstadoObjeto,
+                              style: StyleApp.normal,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

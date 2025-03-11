@@ -23,6 +23,13 @@ class ReferenciaViewModel extends ChangeNotifier {
 
   //Lista para almacenar id referencias encontradas
   List<IdReferenciaModel> referencias = [];
+  IdReferenciaModel? referencia;
+
+  selectRef(BuildContext context, IdReferenciaModel? value, bool back) {
+    referencia = value;
+    notifyListeners();
+    if (back) Navigator.pop(context);
+  }
 
   //Buscar Id Referencia
   Future<void> buscarIdRefencia(BuildContext context) async {
@@ -39,6 +46,8 @@ class ReferenciaViewModel extends ChangeNotifier {
       );
       return;
     }
+
+    FocusScope.of(context).unfocus();
 
     //View model de Login para obtener el usuario y token
     final vmLogin = Provider.of<LoginViewModel>(context, listen: false);

@@ -25,8 +25,7 @@ class ErrorInfoView extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        // onPressed: () => vm.shareDoc(error, context),
+        onPressed: () => vm.shareDoc(error, context),
         child: const Icon(
           Icons.share,
         ),
