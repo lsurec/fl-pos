@@ -2,6 +2,7 @@
 
 import 'package:flutter_post_printer_example/displays/calendario/views/views.dart';
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/views/views.dart';
+import 'package:flutter_post_printer_example/displays/prc_documento_3/views/referencia_view.dart';
 import 'package:flutter_post_printer_example/displays/report/views/views.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/views/views.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/views/views.dart';
@@ -68,6 +69,7 @@ class AppRoutes {
   static const appearance = 'appearance';
   static const colors = 'colors';
   static const report = 'report';
+  static const ref = 'ref';
 
   //otras rutas
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -130,6 +132,7 @@ class AppRoutes {
     appearance: (BuildContext context) => const AppearenceView(),
     colors: (BuildContext context) => const TemasColoresView(),
     report: (BuildContext context) => const ReportView(),
+    ref: (BuildContext context) => const ReferenciaView(),
   };
 
   //en caso de ruta incorrecta

@@ -4,7 +4,6 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/view_models.dart';
-import 'package:flutter_post_printer_example/displays/report/views/report_view.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
+import 'package:flutter_post_printer_example/view_models/referencia_view_model.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/views/views.dart';
 import 'package:flutter/material.dart';
@@ -87,6 +87,8 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SelectAccountViewModel()),
         ChangeNotifierProvider(create: (_) => TransferSummaryViewModel()),
         ChangeNotifierProvider(create: (_) => ReportViewModel()),
+        ChangeNotifierProvider(create: (_) => ReferenciaViewModel()),
+        ChangeNotifierProvider(create: (_) => ErrorInfoViewModel()),
       ],
       child: const MyApp(),
     );

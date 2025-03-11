@@ -37,17 +37,20 @@ class ReferenciaService {
         ),
       );
 
-      List<IdReferenciaModel> items = (res.data as List)
-          .map((item) => IdReferenciaModel.fromMap(item))
-          .toList();
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        List<IdReferenciaModel> items = (res.data as List)
+            .map((item) => IdReferenciaModel.fromMap(item))
+            .toList();
 
-      res.data = items;
+        res.data = items;
+      }
 
+      res.url = url.toString();
       return res;
     } catch (e) {
       //respuesta incorrecta
       return ApiResponseModel(
-        status: false,
+        success: false,
         message: "Excepcion no controlada",
         error: e.toString(),
         storeProcedure: "",
@@ -55,6 +58,7 @@ class ReferenciaService {
         data: [],
         timestamp: DateTime.now(),
         version: "Desconocida",
+        url: url.toString(),
       );
     }
   }

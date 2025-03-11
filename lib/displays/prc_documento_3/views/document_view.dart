@@ -126,7 +126,10 @@ class DocumentView extends StatelessWidget {
                   style: StyleApp.title,
                 ),
                 TextButton(
-                  onPressed: () => {},
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    AppRoutes.ref,
+                  ),
                   child: ListTile(
                     title: Row(
                       children: [

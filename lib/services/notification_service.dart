@@ -65,7 +65,7 @@ class NotificationService {
       ),
       action: SnackBarAction(
         label: textButton,
-        textColor:  AppTheme.white,
+        textColor: AppTheme.white,
         onPressed: () => action(),
       ),
     );
@@ -396,6 +396,46 @@ class NotificationService {
         );
       },
     );
+  }
+
+  static Future<void> showInfoErrorView(
+    BuildContext context,
+    ApiResponseModel data,
+  ) async {
+    bool result = await showDialog(
+          context: context,
+          builder: (context) => AlertWidget(
+            title: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'salioMal',
+            ),
+            description: AppLocalizations.of(context)!.translate(
+              BlockTranslate.notificacion,
+              'error',
+            ),
+            onOk: () => Navigator.of(context).pop(true),
+            onCancel: () => Navigator.of(context).pop(false),
+            textCancel: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              'informe',
+            ),
+            textOk: AppLocalizations.of(context)!.translate(
+              BlockTranslate.botones,
+              'aceptar',
+            ),
+          ),
+        ) ??
+        true;
+
+    //Si quiere verse el error
+    if (!result) {
+      //navegar a pantalla para ver el error
+      Navigator.pushNamed(
+        context,
+        "error",
+        arguments: data,
+      );
+    }
   }
 
   static Future<void> showErrorView(

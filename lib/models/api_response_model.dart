@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class ApiResponseModel {
-  bool status;
+  bool success;
   String message;
   String error;
   String storeProcedure;
@@ -9,9 +9,10 @@ class ApiResponseModel {
   dynamic data;
   DateTime timestamp;
   String version;
+  String? url;
 
   ApiResponseModel({
-    required this.status,
+    required this.success,
     required this.message,
     required this.error,
     required this.storeProcedure,
@@ -19,6 +20,7 @@ class ApiResponseModel {
     required this.data,
     required this.timestamp,
     required this.version,
+    this.url,
   });
 
   factory ApiResponseModel.fromJson(String str) =>
@@ -28,7 +30,7 @@ class ApiResponseModel {
 
   factory ApiResponseModel.fromMap(Map<String, dynamic> json) =>
       ApiResponseModel(
-        status: json["status"],
+        success: json["success"],
         message: json["message"],
         error: json["error"],
         storeProcedure: json["storeProcedure"],
@@ -36,10 +38,11 @@ class ApiResponseModel {
         data: json["data"],
         timestamp: DateTime.parse(json["timestamp"]),
         version: json["version"],
+        url: json["url"],
       );
 
   Map<String, dynamic> toMap() => {
-        "status": status,
+        "success": success,
         "message": message,
         "error": error,
         "storeProcedure": storeProcedure,
@@ -47,5 +50,6 @@ class ApiResponseModel {
         "data": data,
         "timestamp": timestamp.toIso8601String(),
         "version": version,
+        "url": url,
       };
 }
