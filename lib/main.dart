@@ -4,6 +4,7 @@ import 'package:flutter_post_printer_example/displays/calendario/view_models/vie
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/view_models.dart';
+import 'package:flutter_post_printer_example/displays/report/views/views.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/select_account_view_model.dart';
 import 'package:flutter_post_printer_example/displays/restaurant/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -132,8 +133,8 @@ class MyApp extends StatelessWidget {
               isDarkMode: AppTheme.idTema == 1 ? false : true,
             ), // Usa el tema seleccionado
       //configurar ruta inicial
-      home: const SplashView(), // Muestra el SplashScreen durante el inicio
-      // home: const ReportView(), // Muestra el SplashScreen durante el inicio
+      // home: const SplashView(), // Muestra el SplashScreen durante el inicio
+      home: const ReportView(), // Muestra el SplashScreen durante el inicio
       routes: AppRoutes.routes, //rutas
       onGenerateRoute: AppRoutes.onGenerateRoute, //en caso de ruta incorrecta
       localizationsDelegates: const [
