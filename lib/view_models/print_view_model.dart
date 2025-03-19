@@ -215,35 +215,36 @@ class PrintViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    final ApiResModel resViewVentas = await reportVM.loadViewVentas(context);
+    final ApiResponseModel resViewExistencias =
+        await reportVM.loadViewExistencias(context);
 
     isLoading = false;
 
-    if (!resViewVentas.succes) {
-      NotificationService.showErrorView(context, resViewVentas);
+    if (!resViewExistencias.status) {
+      NotificationService.showInfoErrorView(context, resViewExistencias);
     }
 
-    if (reportVM.ventas.isEmpty) {
+    if (reportVM.existencias.isEmpty) {
       //TODO:Verificacion si no hay datos
     }
 
-    final ViewVentasModel data = reportVM.ventas.first;
+    final ViewStockModel data = reportVM.existencias.first;
 
     final List<ProductReportStockModel> products = [];
 
-    for (var element in reportVM.ventas) {
+    for (var element in reportVM.existencias) {
       products.add(
         ProductReportStockModel(
-          id: element.producto,
+          id: element.productoId,
           desc: element.desProducto,
-          existencias: element.existencia,
+          existencias: element.cantidad,
         ),
       );
     }
 
     ReportStockModel reportStockModel = ReportStockModel(
-      bodega: data.desBodega,
-      idBodega: data.bodega,
+      bodega: data.nomBodega,
+      idBodega: 84, //TODO:Quitar o parametrizar
       products: products,
     );
 

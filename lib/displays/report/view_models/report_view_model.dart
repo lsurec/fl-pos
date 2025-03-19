@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
-import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +42,7 @@ class ReportViewModel extends ChangeNotifier {
   final List<String> bodegas = ['Bodega 1', 'Bodega 2', 'Bodega 3'];
 
   final List<ViewVentasModel> ventas = [];
+  final List<ViewStockModel> existencias = [];
 
   Future<ApiResModel> loadViewVentas(BuildContext context) async {
     final vmLogin = Provider.of<LoginViewModel>(
@@ -61,6 +62,41 @@ class ReportViewModel extends ChangeNotifier {
     ventas.addAll(resViewVentas.response);
 
     return resViewVentas;
+  }
+
+  Future<ApiResponseModel> loadViewExistencias(BuildContext context) async {
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final vmLocal = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    final String token = vmLogin.token;
+    final String user = vmLogin.user;
+    final int empresa = vmLocal.selectedEmpresa!.empresa;
+    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+    final int bodega = 1;
+
+    ReportService reportService = ReportService();
+
+    final ApiResponseModel res = await reportService.getRptExistencias(
+      token,
+      user,
+      empresa,
+      estacion,
+      bodega,
+    );
+
+    if (!res.status) return res;
+
+    existencias.clear();
+    existencias.addAll(res.data);
+
+    return res;
   }
 
   Future<void> selectDate(BuildContext context, bool isStartDate) async {

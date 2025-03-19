@@ -11,7 +11,7 @@ class ReportStockModel {
 }
 
 class ProductReportStockModel {
-  int id;
+  String id;
   String desc;
   double existencias;
 
