@@ -122,45 +122,53 @@ class DocumentView extends StatelessWidget {
                       },
                     ).toList(),
                   ),
-                const SizedBox(height: 20),
                 //TODO:Translate
-                const Text(
-                  "Referencia",
-                  style: StyleApp.title,
-                ),
-                TextButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    AppRoutes.ref,
-                  ),
-                  child: ListTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          refVM.referencia == null
-                              ? "Buscar..."
-                              : refVM.referencia!.descripcion,
-                          style: StyleApp.normal.copyWith(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        const Text(
-                          " * ",
-                          style: StyleApp.obligatory,
-                        ),
-                        const SizedBox(width: 30),
-                      ],
-                    ),
-                    leading: Icon(
-                      Icons.search,
-                      color: vmTheme.colorPref(
-                        AppTheme.idColorTema,
+                //TODO:Validar referencia ILGUA
+                if (vm.valueParametro(58))
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Referencia",
+                        style: StyleApp.title,
                       ),
-                    ),
-                    contentPadding: const EdgeInsets.all(0),
+                      TextButton(
+                        onPressed: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.ref,
+                        ),
+                        child: ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                refVM.referencia == null
+                                    ? "Buscar..."
+                                    : refVM.referencia!.descripcion,
+                                style: StyleApp.normal.copyWith(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ),
+                              const Text(
+                                " * ",
+                                style: StyleApp.obligatory,
+                              ),
+                              const SizedBox(width: 30),
+                            ],
+                          ),
+                          leading: Icon(
+                            Icons.search,
+                            color: vmTheme.colorPref(
+                              AppTheme.idColorTema,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.all(0),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 20),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -338,6 +346,7 @@ class DocumentView extends StatelessWidget {
                     ],
                   ),
                 //Mostrar tipos de eventos
+                //TODO:Validar referencia alfa y omega
                 if (vm.valueParametro(58))
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

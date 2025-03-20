@@ -1257,7 +1257,7 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docCargoAbono: payments,
       docRefTipoReferencia: docVM.valueParametro(58)
           ? docVM.referenciaSelect?.tipoReferencia
-          : null,
+          : null, //TODO:Si es ilgua buscar en otra parte
       docFechaIni: docVM.valueParametro(44) ? docVM.fechaInicial : null,
       docFechaFin: docVM.valueParametro(44) ? docVM.fechaFinal : null,
       docRefFechaIni: docVM.valueParametro(381) ? docVM.fechaRefIni : null,

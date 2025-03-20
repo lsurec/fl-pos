@@ -36,12 +36,12 @@ class LoginView extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  const Center(
-                    child: Image(
-                      height: 125,
-                      image: AssetImage("assets/empresa.png"),
-                    ),
-                  ),
+                  // const Center(
+                  //   child: Image(
+                  //     height: 125,
+                  //     image: AssetImage("assets/empresa.png"),
+                  //   ),
+                  // ),
                   const SizedBox(height: 20),
                   CardWidget(
                     width: double.infinity,
