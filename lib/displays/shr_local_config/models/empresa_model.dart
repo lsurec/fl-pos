@@ -20,7 +20,6 @@ class EmpresaModel {
   String monedaNombre;
   String monedaSimbolo;
   String monedaIsoCode;
-  String empresaImg;
   String absolutePathPicture;
   String productoImgUrl;
 
@@ -44,7 +43,6 @@ class EmpresaModel {
     required this.monedaNombre,
     required this.monedaSimbolo,
     required this.monedaIsoCode,
-    required this.empresaImg,
     required this.absolutePathPicture,
     required this.productoImgUrl,
   });
@@ -74,7 +72,6 @@ class EmpresaModel {
         monedaNombre: json["moneda_Nombre"],
         monedaSimbolo: json["moneda_Simbolo"],
         monedaIsoCode: json["moneda_ISO_Code"],
-        empresaImg: json["empresa_Img"],
         absolutePathPicture: json["absolutePathPicture"],
         productoImgUrl: json["producto_Img_Url"],
       );
@@ -99,7 +96,6 @@ class EmpresaModel {
         "moneda_Nombre": monedaNombre,
         "moneda_Simbolo": monedaSimbolo,
         "moneda_ISO_Code": monedaIsoCode,
-        "empresa_Img": empresaImg,
         "absolutePathPicture": absolutePathPicture,
         "producto_Img_Url": productoImgUrl,
       };
@@ -129,7 +125,6 @@ class EmpresaModel {
           monedaNombre == other.monedaNombre &&
           monedaSimbolo == other.monedaSimbolo &&
           monedaIsoCode == other.monedaIsoCode &&
-          empresaImg == other.empresaImg &&
           absolutePathPicture == other.absolutePathPicture &&
           productoImgUrl == other.productoImgUrl;
 
@@ -154,7 +149,6 @@ class EmpresaModel {
       monedaNombre.hashCode ^
       monedaSimbolo.hashCode ^
       monedaIsoCode.hashCode ^
-      empresaImg.hashCode ^
       absolutePathPicture.hashCode ^
       productoImgUrl.hashCode;
 }

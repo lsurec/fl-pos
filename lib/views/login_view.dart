@@ -1,3 +1,4 @@
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/themes/themes.dart';
@@ -13,6 +14,8 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<LoginViewModel>(context);
+    final LocalSettingsViewModel localVM =
+        Provider.of<LocalSettingsViewModel>(context);
 
     return Stack(
       children: [

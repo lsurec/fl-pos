@@ -10,7 +10,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/view_model
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/existencias_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/fact_t_contado_cred_tmu.dart';
-import 'package:flutter_post_printer_example/displays/report/reports/tmu/unidades_vendidas_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/report_view_model.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
@@ -1793,7 +1792,7 @@ class PrintViewModel extends ChangeNotifier {
       cantidadDias: encabezado.cantidadDiasFechaIniFin,
       fechas: fechas,
       refObservaciones: observacionesRef,
-      image64Empresa: empresaImg.empresaImg,
+      // image64Empresa: empresaImg.empresaImg, //TODO:ver imagen
     );
 
     List<int> bytes = [];

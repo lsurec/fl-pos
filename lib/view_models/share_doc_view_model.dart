@@ -890,7 +890,9 @@ class ShareDocViewModel extends ChangeNotifier {
 
     // URL de la imagen que quieres mostrar
     // Descarga la imagen de la URL
-    Uint8List? downloadedImage = await downloadImage(imgEmpresa.empresaImg);
+    // Uint8List? downloadedImage = await downloadImage(imgEmpresa.empresaImg);
+    Uint8List? downloadedImage =
+        await downloadImage(""); //TODO:Reemplazar iamgen
 
     // Usa la imagen descargada si existe, de lo contrario usa el logotipo por defecto
     Uint8List imageToShow = downloadedImage ?? defaultLogo;
@@ -2280,7 +2282,9 @@ class ShareDocViewModel extends ChangeNotifier {
 
     // URL de la imagen que quieres mostrar
     // Descarga la imagen de la URL
-    Uint8List? downloadedImage = await downloadImage(imgEmpresa.empresaImg);
+    // Uint8List? downloadedImage = await downloadImage(imgEmpresa.empresaImg);
+    Uint8List? downloadedImage =
+        await downloadImage(""); //TODO:reemplazar imagen
 
     // Usa la imagen descargada si existe, de lo contrario usa el logotipo por defecto
     Uint8List imageToShow = downloadedImage ?? defaultLogo;
