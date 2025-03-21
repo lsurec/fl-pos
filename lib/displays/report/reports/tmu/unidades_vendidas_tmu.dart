@@ -59,21 +59,7 @@ class UnidadesVendidasTMU {
       bytes += generator.text(
         "Producto: ${element.desc}",
       );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: "Cantidad: ${element.desc}",
-            width: 6,
-          ),
-          PosColumn(
-            text: "Unidades: ${element.unidades}",
-            width: 6,
-            styles: const PosStyles(
-              align: PosAlign.right,
-            ),
-          ),
-        ], // Ancho 2
-      );
+      bytes += generator.text("Unidades: ${element.unidades}");
       bytes += generator.hr(); // Línea horizontal
     }
 

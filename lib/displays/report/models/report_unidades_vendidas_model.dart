@@ -15,13 +15,11 @@ class ReportUnidadesVendidasModel {
 class ProductReportUnidadesVendidas {
   int id;
   String desc;
-  double cantidad;
   double unidades;
 
   ProductReportUnidadesVendidas({
     required this.id,
     required this.desc,
-    required this.cantidad,
     required this.unidades,
   });
 }

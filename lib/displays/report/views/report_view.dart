@@ -151,7 +151,7 @@ class _Filters extends StatelessWidget {
             // Fecha Fin
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text("Fecha Inicio:"),
+              title: const Text("Fecha Fin:"),
               subtitle: Text(
                 vm.endDate != null
                     ? DateFormat('dd/MM/yyyy').format(vm.endDate!)

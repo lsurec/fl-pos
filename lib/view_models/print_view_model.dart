@@ -149,7 +149,6 @@ class PrintViewModel extends ChangeNotifier {
         ProductReportUnidadesVendidas(
           id: element.producto,
           desc: element.desProducto,
-          cantidad: element.cantidadAnt,
           unidades: element.cantidad,
         ),
       );

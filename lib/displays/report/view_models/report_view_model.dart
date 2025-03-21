@@ -50,6 +50,8 @@ class ReportViewModel extends ChangeNotifier {
     startDate = currentTime;
     endDate = currentTime;
 
+    notifyListeners();
+
     ApiResponseModel resBodega = await loadBodegas(context);
 
     if (!resBodega.status) {
@@ -65,6 +67,8 @@ class ReportViewModel extends ChangeNotifier {
       bodegas.sort((a, b) => a.orden.compareTo(b.orden));
       bodega = bodegas.first;
     }
+
+    notifyListeners();
   }
 
   navigatePrint(BuildContext context, ReportModel value) {
