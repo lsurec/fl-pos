@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/displays/report/services/bodega_use
 import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
@@ -43,19 +44,91 @@ class ReportViewModel extends ChangeNotifier {
   final List<String> series = ['Serie A', 'Serie B', 'Serie C'];
   final List<BodegaUserModel> bodegas = [];
 
-  final List<ViewVentasModel> ventas = [];
-  final List<ViewStockModel> existencias = [];
-
   loadData(BuildContext context) async {
     DateTime currentTime = DateTime.now();
 
     startDate = currentTime;
     endDate = currentTime;
 
-    await loadBodegas(context);
+    ApiResponseModel resBodega = await loadBodegas(context);
+
+    if (!resBodega.status) {
+      NotificationService.showInfoErrorView(context, resBodega);
+      return;
+    }
+
+    bodega = null;
+    bodegas.clear();
+    bodegas.addAll(resBodega.data);
+
+    if (bodegas.isNotEmpty) {
+      bodegas.sort((a, b) => a.orden.compareTo(b.orden));
+      bodega = bodegas.first;
+    }
   }
 
-  Future<void> loadBodegas(BuildContext context) async {
+  navigatePrint(BuildContext context, ReportModel value) {
+    //validaciones
+    switch (value.id) {
+      case 5: //existencias
+        //si no hay bodega seleccioanda
+        if (bodega == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar("Por favor selecciona una bodega.");
+          return;
+        }
+        break;
+      case 6: //unidades vendidas
+
+        break;
+      case 7: //facturas
+
+        final menuVM = Provider.of<MenuViewModel>(
+          context,
+          listen: false,
+        );
+
+        if (menuVM.documento == null) {
+          NotificationService.showSnackbar(
+              "No hay se ha asignado tipo de documento.");
+          return;
+        }
+
+        if (bodega == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar("Por favor selecciona una bodega.");
+          return;
+        }
+
+        if (startDate == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar(
+              "Por favor selecciona una fecha inical.");
+          return;
+        }
+        if (endDate == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar(
+              "Por favor selecciona una fecha final.");
+
+          return;
+        }
+
+        break;
+      default:
+    }
+
+    Navigator.pushNamed(
+      context,
+      AppRoutes.printer,
+      arguments: PrintDocSettingsModel(
+        opcion: value.id,
+        report: value,
+      ),
+    );
+  }
+
+  Future<ApiResponseModel> loadBodegas(BuildContext context) async {
     final LoginViewModel loginVM = Provider.of<LoginViewModel>(
       context,
       listen: false,
@@ -79,27 +152,12 @@ class ReportViewModel extends ChangeNotifier {
 
     BodegaUserService bodegaUserService = BodegaUserService();
 
-    isLoading = true;
-
-    final ApiResponseModel res = await bodegaUserService.getBodega(
+    return await bodegaUserService.getBodega(
       token,
       user,
       empresa,
       estacion,
     );
-    isLoading = false;
-
-    if (!res.status) {
-      NotificationService.showInfoErrorView(context, res);
-      return;
-    }
-
-    bodega = null;
-    bodegas.clear();
-    bodegas.addAll(res.data);
-    bodegas.sort((a, b) => a.orden.compareTo(b.orden));
-    bodega = bodegas.first;
-    //
   }
 
   Future<ApiResModel> loadViewVentas(BuildContext context) async {
@@ -112,14 +170,7 @@ class ReportViewModel extends ChangeNotifier {
 
     ReportService reportService = ReportService();
 
-    final ApiResModel resViewVentas = await reportService.getViewVentas(token);
-
-    if (!resViewVentas.succes) return resViewVentas;
-
-    ventas.clear();
-    ventas.addAll(resViewVentas.response);
-
-    return resViewVentas;
+    return reportService.getViewVentas(token);
   }
 
   Future<ApiResponseModel> loadViewExistencias(BuildContext context) async {
@@ -146,35 +197,56 @@ class ReportViewModel extends ChangeNotifier {
 
     ReportService reportService = ReportService();
 
-    if (bodega == null) {
-      //TODO:Translate
-      NotificationService.showSnackbar("Por favor selecciona una bodega.");
-      return ApiResponseModel(
-        status: false,
-        message: "No hay bodega seleccionada",
-        error: "",
-        storeProcedure: "",
-        parameters: null,
-        data: null,
-        timestamp: DateTime.now(),
-        version: "Desconocido",
-      );
-    }
-
-    final ApiResponseModel res = await reportService.getRptExistencias(
+    return await reportService.getRptExistencias(
       token,
       user,
       empresa,
       estacion,
       bodega!.bodega,
     );
+  }
 
-    if (!res.status) return res;
+  Future<ApiResponseModel> loadViewFacturas(BuildContext context) async {
+    final vmLogin = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
 
-    existencias.clear();
-    existencias.addAll(res.data);
+    final vmLocal = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
 
-    return res;
+    final menuVM = Provider.of<MenuViewModel>(
+      context,
+      listen: false,
+    );
+
+    // final String token = vmLogin.token;
+    // final String user = vmLogin.user;
+    // final int empresa = vmLocal.selectedEmpresa!.empresa;
+    // final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+    // final int tipoDoc = menuVM.documento!;
+
+    final String token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcxODYzODI3OSwiZXhwIjoxNzQ5NzQyMjc5LCJpYXQiOjE3MTg2MzgyNzl9.s1ZpBmweXkrfGXi71aYbm8OfHx4xF9ne9MkuQoWR3c8";
+    final String user = "admin";
+    final int empresa = 1;
+    final int estacion = 1;
+    final int tipoDoc = 3;
+
+    ReportService reportService = ReportService();
+
+    return await reportService.getRptFacturas(
+      token,
+      user,
+      startDate!,
+      endDate!,
+      tipoDoc,
+      empresa,
+      estacion,
+      bodega!.bodega,
+    );
   }
 
   Future<void> selectDate(BuildContext context, bool isStartDate) async {

@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
+import 'package:flutter_post_printer_example/displays/report/models/report_fact_cont_cred_model.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/existencias_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/fact_t_contado_cred_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/report_view_model.dart';
@@ -110,7 +111,7 @@ class PrintViewModel extends ChangeNotifier {
   }
 
   //Reporte de unidades vendidas
-  Future<PrintModel> printReporUnidadesVendidas(
+  Future printReporUnidadesVendidas(
     BuildContext context,
     int paperDefault,
   ) async {
@@ -128,18 +129,22 @@ class PrintViewModel extends ChangeNotifier {
 
     if (!resViewVentas.succes) {
       NotificationService.showErrorView(context, resViewVentas);
+      return;
+    }
+    final List<ViewVentasModel> ventas = [];
+    ventas.addAll(resViewVentas.response);
+
+    if (ventas.isEmpty) {
+      NotificationService.showSnackbar("No hay datos para imprimir");
+      return;
     }
 
-    if (reportVM.ventas.isEmpty) {
-      //TODO:Verificacion si no hay datos
-    }
-
-    final ViewVentasModel data = reportVM.ventas.first;
+    final ViewVentasModel data = ventas.first;
 
     List<ProductReportUnidadesVendidas> products = [];
     double total = 0;
 
-    for (var element in reportVM.ventas) {
+    for (var element in ventas) {
       products.add(
         ProductReportUnidadesVendidas(
           id: element.producto,
@@ -167,7 +172,7 @@ class PrintViewModel extends ChangeNotifier {
   }
 
   //Reporte de facturas
-  Future<PrintModel> getReportFactCredContado(
+  Future getReportFactCredContado(
     BuildContext context,
     int paperDefault,
   ) async {
@@ -180,33 +185,63 @@ class PrintViewModel extends ChangeNotifier {
 
     isLoading = true;
 
-    final ApiResModel resViewVentas = await reportVM.loadViewVentas(context);
+    final ApiResponseModel res = await reportVM.loadViewFacturas(context);
 
     isLoading = false;
 
-    if (!resViewVentas.succes) {
-      NotificationService.showErrorView(context, resViewVentas);
+    if (!res.status) {
+      NotificationService.showInfoErrorView(context, res);
+      return;
     }
 
-    if (reportVM.ventas.isEmpty) {
-      //TODO:Verificacion si no hay datos
+    final List<ViewFacturaModel> facturas = [];
+
+    facturas.addAll(res.data);
+
+    if (facturas.isEmpty) {
+      NotificationService.showSnackbar("No hay datos para imprimir");
+      return;
     }
 
-    final ViewVentasModel data = reportVM.ventas.first;
+    final ViewFacturaModel data = facturas.first;
+
+    final List<DocReportModel> docs = [];
+    double totalCredito = 0;
+    double totalContado = 0;
+
+    for (var element in facturas) {
+      docs.add(
+        DocReportModel(
+          id: element.idDocumento,
+          monto: element.monto,
+        ),
+      );
+
+      //TODO:calcular totales
+      totalContado += element.monto;
+    }
+
+    ReportFactContCredModel reportStockModel = ReportFactContCredModel(
+      bodega: data.desBodega,
+      idBodega: data.bodega,
+      docs: docs,
+      totalContado: totalContado,
+      totalCredito: totalCredito,
+      totalContCred: totalContado + totalCredito,
+    );
 
     return FactTContadoCredTMU.getReport(
       context,
       paperDefault,
+      reportStockModel,
     );
   }
 
   //Reporte de existencias
-  Future<PrintModel> printReporStokc(
+  Future printReporStokc(
     BuildContext context,
     int paperDefault,
   ) async {
-    //TODO:Buscar datos del procedimiento
-
     final ReportViewModel reportVM = Provider.of<ReportViewModel>(
       context,
       listen: false,
@@ -221,17 +256,23 @@ class PrintViewModel extends ChangeNotifier {
 
     if (!resViewExistencias.status) {
       NotificationService.showInfoErrorView(context, resViewExistencias);
+      return;
     }
 
-    if (reportVM.existencias.isEmpty) {
-      //TODO:Verificacion si no hay datos
+    final List<ViewStockModel> existencias = [];
+
+    existencias.addAll(resViewExistencias.data);
+
+    if (existencias.isEmpty) {
+      NotificationService.showSnackbar("No hay datos para imprimir");
+      return;
     }
 
-    final ViewStockModel data = reportVM.existencias.first;
+    final ViewStockModel data = existencias.first;
 
     final List<ProductReportStockModel> products = [];
 
-    for (var element in reportVM.existencias) {
+    for (var element in existencias) {
       products.add(
         ProductReportStockModel(
           id: element.productoId,

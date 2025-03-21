@@ -105,16 +105,10 @@ class _Reports extends StatelessWidget {
                 ),
               ),
               IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    AppRoutes.printer,
-                    arguments: PrintDocSettingsModel(
-                      opcion: report.id,
-                      report: report,
-                    ),
-                  );
-                },
+                onPressed: () => vm.navigatePrint(
+                  context,
+                  report,
+                ),
                 icon: Icon(
                   Icons.print,
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_esc_pos_utils/flutter_esc_pos_utils.dart';
+import 'package:flutter_post_printer_example/displays/report/models/report_fact_cont_cred_model.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/utilities_tmu.dart';
 import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
@@ -12,6 +13,7 @@ class FactTContadoCredTMU {
   static Future<PrintModel> getReport(
     BuildContext context,
     int paperDefault,
+    ReportFactContCredModel data,
   ) async {
     List<int> bytes = [];
 
@@ -42,7 +44,7 @@ class FactTContadoCredTMU {
     );
 
     bytes += generator.text(
-      "Bodega: Bodega central",
+      "Bodega: (${data.idBodega}) ${data.bodega}",
       styles: UtilitiesTMU.center,
     );
 
@@ -50,12 +52,12 @@ class FactTContadoCredTMU {
 
     bytes += generator.hr(); // Línea horizontal
 
-    for (var i = 0; i < 10; i++) {
+    for (var element in data.docs) {
       bytes += generator.text(
-        "ID: 445",
+        "ID: ${element.id}",
       );
       bytes += generator.text(
-        "Monto: Q.154.00",
+        "Monto: ${element.monto.toStringAsFixed(2)}",
       );
       bytes += generator.hr(); // Línea horizontal
     }
@@ -63,11 +65,19 @@ class FactTContadoCredTMU {
     bytes += generator.hr(); // Línea horizontal
 
     bytes += generator.text(
-      "Total Efectivo (Venta):",
+      "Total Contado (Venta):",
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(
-      "   Q.5,330.24",
+      "   ${data.totalContado}",
+      styles: UtilitiesTMU.startBold,
+    );
+    bytes += generator.text(
+      "Total Credito (Venta):",
+      styles: UtilitiesTMU.startBold,
+    );
+    bytes += generator.text(
+      "   ${data.totalCredito}",
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(
@@ -75,15 +85,15 @@ class FactTContadoCredTMU {
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(
-      "   Q.5,330.24",
+      "   ${data.totalContCred}",
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(
-      "Cantidad Documento:",
+      "Cantidad Documentos:",
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(
-      "   44",
+      "   ${data.docs.length}",
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.hr(); // Línea horizontal
