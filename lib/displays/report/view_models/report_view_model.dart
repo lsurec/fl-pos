@@ -260,8 +260,16 @@ class ReportViewModel extends ChangeNotifier {
     if (pickedDate != null) {
       if (isStartDate) {
         startDate = pickedDate;
+
+        if (startDate!.isAfter(endDate!)) {
+          endDate = startDate;
+        }
       } else {
         endDate = pickedDate;
+
+        if (endDate!.isBefore(startDate!)) {
+          startDate = endDate;
+        }
       }
     }
     notifyListeners();
