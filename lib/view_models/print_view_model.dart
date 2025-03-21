@@ -243,7 +243,7 @@ class PrintViewModel extends ChangeNotifier {
 
     ReportStockModel reportStockModel = ReportStockModel(
       bodega: data.nomBodega,
-      idBodega: 84, //TODO:Quitar o parametrizar
+      idBodega: data.bodega,
       products: products,
     );
 

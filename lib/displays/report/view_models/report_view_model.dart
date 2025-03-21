@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
+import 'package:flutter_post_printer_example/displays/report/services/bodega_user_service.dart';
 import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
 import 'package:flutter_post_printer_example/displays/tareas/models/models.dart';
+import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
@@ -36,13 +38,69 @@ class ReportViewModel extends ChangeNotifier {
   DateTime? startDate;
   DateTime? endDate;
   String? selectedSerie;
-  String? selectedBodega;
+  BodegaUserModel? bodega;
 
   final List<String> series = ['Serie A', 'Serie B', 'Serie C'];
-  final List<String> bodegas = ['Bodega 1', 'Bodega 2', 'Bodega 3'];
+  final List<BodegaUserModel> bodegas = [];
 
   final List<ViewVentasModel> ventas = [];
   final List<ViewStockModel> existencias = [];
+
+  loadData(BuildContext context) async {
+    DateTime currentTime = DateTime.now();
+
+    startDate = currentTime;
+    endDate = currentTime;
+
+    await loadBodegas(context);
+  }
+
+  Future<void> loadBodegas(BuildContext context) async {
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
+
+    final LocalSettingsViewModel localVM = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    );
+
+    // final String token = loginVM.token;
+    // final String user = loginVM.user;
+    // final int empresa = localVM.selectedEmpresa!.empresa;
+    // final int estacion = localVM.selectedEstacion!.estacionTrabajo;
+
+    final String token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcxODYzODI3OSwiZXhwIjoxNzQ5NzQyMjc5LCJpYXQiOjE3MTg2MzgyNzl9.s1ZpBmweXkrfGXi71aYbm8OfHx4xF9ne9MkuQoWR3c8";
+    final String user = "admin";
+    final int empresa = 1;
+    final int estacion = 1;
+
+    BodegaUserService bodegaUserService = BodegaUserService();
+
+    isLoading = true;
+
+    final ApiResponseModel res = await bodegaUserService.getBodega(
+      token,
+      user,
+      empresa,
+      estacion,
+    );
+    isLoading = false;
+
+    if (!res.status) {
+      NotificationService.showInfoErrorView(context, res);
+      return;
+    }
+
+    bodega = null;
+    bodegas.clear();
+    bodegas.addAll(res.data);
+    bodegas.sort((a, b) => a.orden.compareTo(b.orden));
+    bodega = bodegas.first;
+    //
+  }
 
   Future<ApiResModel> loadViewVentas(BuildContext context) async {
     final vmLogin = Provider.of<LoginViewModel>(
@@ -75,20 +133,40 @@ class ReportViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    final String token = vmLogin.token;
-    final String user = vmLogin.user;
-    final int empresa = vmLocal.selectedEmpresa!.empresa;
-    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
-    final int bodega = 1;
+    // final String token = vmLogin.token;
+    // final String user = vmLogin.user;
+    // final int empresa = vmLocal.selectedEmpresa!.empresa;
+    // final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+
+    final String token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcxODYzODI3OSwiZXhwIjoxNzQ5NzQyMjc5LCJpYXQiOjE3MTg2MzgyNzl9.s1ZpBmweXkrfGXi71aYbm8OfHx4xF9ne9MkuQoWR3c8";
+    final String user = "admin";
+    final int empresa = 1;
+    final int estacion = 1;
 
     ReportService reportService = ReportService();
+
+    if (bodega == null) {
+      //TODO:Translate
+      NotificationService.showSnackbar("Por favor selecciona una bodega.");
+      return ApiResponseModel(
+        status: false,
+        message: "No hay bodega seleccionada",
+        error: "",
+        storeProcedure: "",
+        parameters: null,
+        data: null,
+        timestamp: DateTime.now(),
+        version: "Desconocido",
+      );
+    }
 
     final ApiResponseModel res = await reportService.getRptExistencias(
       token,
       user,
       empresa,
       estacion,
-      bodega,
+      bodega!.bodega,
     );
 
     if (!res.status) return res;
@@ -122,8 +200,8 @@ class ReportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeBodega(String value) {
-    selectedBodega = value;
+  changeBodega(BodegaUserModel value) {
+    bodega = value;
     notifyListeners();
   }
 }
