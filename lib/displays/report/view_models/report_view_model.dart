@@ -87,16 +87,17 @@ class ReportViewModel extends ChangeNotifier {
         break;
       case 7: //facturas
 
-        final menuVM = Provider.of<MenuViewModel>(
-          context,
-          listen: false,
-        );
+//TODO:Descomentar en produccion
+        // final menuVM = Provider.of<MenuViewModel>(
+        //   context,
+        //   listen: false,
+        // );
 
-        if (menuVM.documento == null) {
-          NotificationService.showSnackbar(
-              "No hay se ha asignado tipo de documento.");
-          return;
-        }
+        // if (menuVM.documento == null) {
+        //   NotificationService.showSnackbar(
+        //       "No hay se ha asignado tipo de documento.");
+        //   return;
+        // }
 
         if (bodega == null) {
           //TODO:Translate
@@ -105,7 +106,7 @@ class ReportViewModel extends ChangeNotifier {
         }
 
         if (startDate == null) {
-          //TODO:Translate
+          //TODO:Translates
           NotificationService.showSnackbar(
               "Por favor selecciona una fecha inical.");
           return;
