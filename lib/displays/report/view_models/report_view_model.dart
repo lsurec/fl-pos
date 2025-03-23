@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/existencias_pdf.dart';
+import 'package:flutter_post_printer_example/displays/report/reports/pdf/unidades_vendidas_pdf.dart';
 import 'package:flutter_post_printer_example/displays/report/services/bodega_user_service.dart';
 import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
@@ -115,7 +116,37 @@ class ReportViewModel extends ChangeNotifier {
         }
         break;
       case 6: //unidades vendidas
+        if (!isPrint) {
+          //TODO:Funcion llama datos
 
+          UnidadesVendidasPdf unidadesVendidasPdf = UnidadesVendidasPdf();
+
+          final List<ProductReportUnidadesVendidas> products = [];
+
+          for (var i = 0; i < 100; i++) {
+            products.add(
+              ProductReportUnidadesVendidas(
+                id: "1",
+                desc:
+                    "Exercitation quis veniam esse exercitation exercitation nisi.",
+                unidades: 100,
+              ),
+            );
+          }
+
+          ReportUnidadesVendidasModel data = ReportUnidadesVendidasModel(
+            bodega: "bodega",
+            idBodega: 12,
+            products: products,
+            total: 100,
+          );
+
+          isLoading = true;
+          await unidadesVendidasPdf.getReport(data);
+          isLoading = false;
+
+          return;
+        }
         break;
       case 7: //facturas
 

@@ -147,7 +147,7 @@ class PrintViewModel extends ChangeNotifier {
     for (var element in ventas) {
       products.add(
         ProductReportUnidadesVendidas(
-          id: element.producto,
+          id: element.productoId,
           desc: element.desProducto,
           unidades: element.cantidad,
         ),

@@ -40,12 +40,12 @@ class UnidadesVendidasTMU {
     );
 
     bytes += generator.text(
-      "Usuario: ${Preferences.userName}",
+      "Bodega: (${data.idBodega}) ${data.bodega}",
       styles: UtilitiesTMU.center,
     );
 
     bytes += generator.text(
-      "Bodega: (${data.idBodega}) ${data.bodega}",
+      "Usuario: ${Preferences.userName}",
       styles: UtilitiesTMU.center,
     );
 

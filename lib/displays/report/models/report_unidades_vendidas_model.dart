@@ -13,7 +13,7 @@ class ReportUnidadesVendidasModel {
 }
 
 class ProductReportUnidadesVendidas {
-  int id;
+  String id;
   String desc;
   double unidades;
 
