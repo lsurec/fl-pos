@@ -6,6 +6,7 @@ import 'package:flutter_post_printer_example/libraries/app_data.dart'
     as AppData;
 import 'package:flutter_post_printer_example/models/print_model.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 
 class FactTContadoCredTMU {
@@ -34,7 +35,7 @@ class FactTContadoCredTMU {
     bytes += generator.emptyLines(1);
 
     bytes += generator.text(
-      "Fecha: ${UtilitiesTMU.getDateDDMMYYYY()}",
+      "Fecha: ${Utilities.getDateDDMMYYYY()}",
       styles: UtilitiesTMU.center,
     );
 
@@ -106,12 +107,12 @@ class FactTContadoCredTMU {
     );
 
     bytes += generator.text(
-      UtilitiesTMU.author.nombre,
+      Utilities.author.nombre,
       styles: UtilitiesTMU.center,
     );
 
     bytes += generator.text(
-      UtilitiesTMU.author.website,
+      Utilities.author.website,
       styles: UtilitiesTMU.center,
     );
 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
+import 'package:flutter_post_printer_example/displays/report/reports/pdf/existencias_pdf.dart';
 import 'package:flutter_post_printer_example/displays/report/services/bodega_user_service.dart';
 import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/local_settings_view_model.dart';
@@ -71,14 +72,45 @@ class ReportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  navigatePrint(BuildContext context, ReportModel value) {
+  Future<void> getReport(
+      BuildContext context, ReportModel value, bool isPrint) async {
     //validaciones
     switch (value.id) {
       case 5: //existencias
         //si no hay bodega seleccioanda
-        if (bodega == null) {
-          //TODO:Translate
-          NotificationService.showSnackbar("Por favor selecciona una bodega.");
+        // if (bodega == null) {
+        //   //TODO:Translate
+        //   NotificationService.showSnackbar("Por favor selecciona una bodega.");
+        //   return;
+        // }
+
+        if (!isPrint) {
+          //TODO:Funcion llama datos
+          ExistenciasPdf existenciasPdf = ExistenciasPdf();
+
+          final List<ProductReportStockModel> products = [];
+
+          for (var i = 0; i < 100; i++) {
+            products.add(
+              ProductReportStockModel(
+                id: "1",
+                desc:
+                    "Exercitation quis veniam esse exercitation exercitation nisi.",
+                existencias: 100,
+              ),
+            );
+          }
+
+          ReportStockModel data = ReportStockModel(
+            bodega: "bodega",
+            idBodega: 12,
+            products: products,
+          );
+
+          isLoading = true;
+          await existenciasPdf.getReport(data);
+          isLoading = false;
+
           return;
         }
         break;
@@ -87,7 +119,7 @@ class ReportViewModel extends ChangeNotifier {
         break;
       case 7: //facturas
 
-//TODO:Descomentar en produccion
+        //TODO:Descomentar en produccion
         // final menuVM = Provider.of<MenuViewModel>(
         //   context,
         //   listen: false,

@@ -3,24 +3,6 @@ import 'package:flutter_post_printer_example/displays/report/models/models.dart'
 import 'package:intl/intl.dart';
 
 class UtilitiesTMU {
-  //Author data (DEMOSOFT)
-  static AuthorModel author = AuthorModel(
-    nombre: "Desarrollo Moderno de Software S.A.",
-    website: "demosoft.com.gt",
-  );
-
-  //get date now in format dd-MM-yyyy HH:mm:ss
-  static String getDateDDMMYYYY() {
-    //get date now
-    DateTime now = DateTime.now();
-
-    // Format the date and time
-    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(now);
-
-    //return formated date
-    return formattedDate;
-  }
-
   //style for center text
   static PosStyles center = const PosStyles(
     align: PosAlign.center,

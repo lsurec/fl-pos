@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/calendario/models/models.dart';
+import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -399,5 +400,22 @@ class Utilities {
     } else {
       throw 'No se pudo abrir el enlace $url';
     }
+  }
+
+  //Author data (DEMOSOFT)
+  static AuthorModel author = AuthorModel(
+    nombre: "Desarrollo Moderno de Software S.A.",
+    website: "demosoft.com.gt",
+  );
+
+  static String getDateDDMMYYYY() {
+    //get date now
+    DateTime now = DateTime.now();
+
+    // Format the date and time
+    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(now);
+
+    //return formated date
+    return formattedDate;
   }
 }

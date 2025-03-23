@@ -43,7 +43,7 @@ class _ReportViewState extends State<ReportView> {
                 indicatorColor: AppTheme.hexToColor(
                   Preferences.valueColor,
                 ),
-                tabs: [
+                tabs: const [
                   Tab(text: "Filtros"),
                   Tab(text: "Reportes"),
                 ],
@@ -97,17 +97,22 @@ class _Reports extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                onPressed: () {},
-                icon: Icon(
+                onPressed: () => vm.getReport(
+                  context,
+                  report,
+                  false,
+                ),
+                icon: const Icon(
                   Icons.share,
                 ),
               ),
               IconButton(
-                onPressed: () => vm.navigatePrint(
+                onPressed: () => vm.getReport(
                   context,
                   report,
+                  true,
                 ),
-                icon: Icon(
+                icon: const Icon(
                   Icons.print,
                 ),
               ),
