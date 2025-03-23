@@ -1,12 +1,9 @@
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/utilities_pdf.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
-import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
