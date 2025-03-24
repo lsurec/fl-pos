@@ -8,7 +8,6 @@ import 'package:flutter_post_printer_example/displays/prc_documento_3/models/mod
 import 'package:flutter_post_printer_example/displays/prc_documento_3/services/services.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
-import 'package:flutter_post_printer_example/displays/report/models/report_fact_cont_cred_model.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/existencias_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/tmu/fact_t_contado_cred_tmu.dart';
 import 'package:flutter_post_printer_example/displays/report/view_models/report_view_model.dart';
