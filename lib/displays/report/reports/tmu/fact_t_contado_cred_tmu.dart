@@ -40,6 +40,16 @@ class FactTContadoCredTMU {
     );
 
     bytes += generator.text(
+      "Fecha inicio: ${Utilities.formatearFecha(data.startDate)}",
+      styles: UtilitiesTMU.center,
+    );
+
+    bytes += generator.text(
+      "Fecha fin: ${Utilities.formatearFecha(data.endDate)}",
+      styles: UtilitiesTMU.center,
+    );
+
+    bytes += generator.text(
       "Usuario: ${Preferences.userName}",
       styles: UtilitiesTMU.center,
     );
@@ -74,7 +84,7 @@ class FactTContadoCredTMU {
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(
-      "Total Credito (Venta):",
+      "Total Crédito (Venta):",
       styles: UtilitiesTMU.startBold,
     );
     bytes += generator.text(

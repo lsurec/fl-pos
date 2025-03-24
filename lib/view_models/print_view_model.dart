@@ -213,7 +213,8 @@ class PrintViewModel extends ChangeNotifier {
         DocReportModel(
           id: element.idDocumento,
           monto: element.monto,
-        ),
+          tipo: "Contado",
+        ), //TODO:Paramtrizar
       );
 
       //TODO:calcular totales
@@ -227,6 +228,8 @@ class PrintViewModel extends ChangeNotifier {
       totalContado: totalContado,
       totalCredito: totalCredito,
       totalContCred: totalContado + totalCredito,
+      startDate: reportVM.startDate!,
+      endDate: reportVM.endDate!,
     );
 
     return FactTContadoCredTMU.getReport(

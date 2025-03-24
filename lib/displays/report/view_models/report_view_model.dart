@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/existencias_pdf.dart';
+import 'package:flutter_post_printer_example/displays/report/reports/pdf/fact_t_contado_cred_pdf.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/unidades_vendidas_pdf.dart';
 import 'package:flutter_post_printer_example/displays/report/services/bodega_user_service.dart';
 import 'package:flutter_post_printer_example/displays/report/services/report_service.dart';
@@ -162,22 +163,54 @@ class ReportViewModel extends ChangeNotifier {
         //   return;
         // }
 
-        if (bodega == null) {
-          //TODO:Translate
-          NotificationService.showSnackbar("Por favor selecciona una bodega.");
-          return;
-        }
+        // if (bodega == null) {
+        //   //TODO:Translate
+        //   NotificationService.showSnackbar("Por favor selecciona una bodega.");
+        //   return;
+        // }
 
-        if (startDate == null) {
-          //TODO:Translates
-          NotificationService.showSnackbar(
-              "Por favor selecciona una fecha inical.");
-          return;
-        }
-        if (endDate == null) {
-          //TODO:Translate
-          NotificationService.showSnackbar(
-              "Por favor selecciona una fecha final.");
+        // if (startDate == null) {
+        //   //TODO:Translates
+        //   NotificationService.showSnackbar(
+        //       "Por favor selecciona una fecha inical.");
+        //   return;
+        // }
+        // if (endDate == null) {
+        //   //TODO:Translate
+        //   NotificationService.showSnackbar(
+        //       "Por favor selecciona una fecha final.");
+
+        //   return;
+        // }
+
+        if (!isPrint) {
+          FactTContadoCredPdf factTContadoCredPdf = FactTContadoCredPdf();
+
+          final List<DocReportModel> docs = [];
+          for (var i = 0; i < 10; i++) {
+            docs.add(
+              DocReportModel(
+                id: i,
+                tipo: "Contado",
+                monto: 150,
+              ),
+            );
+          }
+
+          ReportFactContCredModel data = ReportFactContCredModel(
+            bodega: "bodega",
+            idBodega: 2,
+            docs: docs,
+            startDate: startDate!,
+            endDate: endDate!,
+            totalContado: 100,
+            totalCredito: 150,
+            totalContCred: 350,
+          );
+
+          isLoading = true;
+          await factTContadoCredPdf.getReport(data);
+          isLoading = false;
 
           return;
         }

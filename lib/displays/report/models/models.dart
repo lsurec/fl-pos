@@ -1,3 +1,5 @@
+export 'package:flutter_post_printer_example/displays/report/models/report_fact_cont_cred_model.dart';
+
 export 'package:flutter_post_printer_example/displays/report/models/bodega_user_model.dart';
 export 'package:flutter_post_printer_example/displays/report/models/view_stock_model.dart';
 export 'package:flutter_post_printer_example/displays/report/models/report_unidades_vendidas_model.dart';

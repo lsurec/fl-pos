@@ -155,6 +155,7 @@ class ExistenciasPdf {
             "Bodega: (${data.idBodega}) ${data.bodega}",
             "Usuario: ${Preferences.userName}",
           ],
+          [],
         ),
         // //pie de pagina
         footer: (pw.Context context) => UtilitiesPdf.buildFooter(

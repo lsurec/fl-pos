@@ -15,11 +15,16 @@ class UtilitiesPdf {
   );
 
   static pw.TextStyle text = const pw.TextStyle(fontSize: 8);
+  static pw.TextStyle textBold = pw.TextStyle(
+    fontSize: 8,
+    fontWeight: pw.FontWeight.bold,
+  );
 
   //encabezado del pdf
   static pw.Widget buildHeader(
     ByteData logoByte,
     List<String> headers,
+    List<String> headersEnd,
   ) {
     //Logos para el pdf
 
@@ -66,12 +71,26 @@ class UtilitiesPdf {
           // Item 3 (25%)
           pw.Container(
             width: PdfPageFormat.letter.width * 0.30,
-            child: pw.Text(
-              "Fecha: ${Utilities.getDateDDMMYYYY()}",
-              style: const pw.TextStyle(
-                fontSize: 9,
-              ),
-              textAlign: pw.TextAlign.center,
+            child: pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Text(
+                  "Fecha: ${Utilities.getDateDDMMYYYY()}",
+                  style: const pw.TextStyle(
+                    fontSize: 9,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+                ...headersEnd.map(
+                  (text) => pw.Text(
+                    text,
+                    style: const pw.TextStyle(
+                      fontSize: 9,
+                    ),
+                    textAlign: pw.TextAlign.center,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -137,12 +156,17 @@ class UtilitiesPdf {
           // Item 3 (25%)
           pw.Container(
             width: PdfPageFormat.letter.width * 0.30,
-            child: pw.Text(
-              "Página ${context.pageNumber} de ${context.pagesCount}",
-              style: const pw.TextStyle(
-                fontSize: 9,
-              ),
-              textAlign: pw.TextAlign.center,
+            child: pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.start,
+              children: [
+                pw.Text(
+                  "Página ${context.pageNumber} de ${context.pagesCount}",
+                  style: const pw.TextStyle(
+                    fontSize: 9,
+                  ),
+                  textAlign: pw.TextAlign.center,
+                ),
+              ],
             ),
           ),
         ],
