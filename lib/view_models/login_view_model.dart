@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
+import 'package:flutter_post_printer_example/models/url_pic_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -181,8 +183,6 @@ class LoginViewModel extends ChangeNotifier {
         );
 
         if (!resEmpresas.succes) {
-          //si hay mas de una estacion o mas de una empresa mostar configuracion local
-
           isLoading = false;
           NotificationService.showErrorView(context, resEmpresas);
           return;
@@ -196,8 +196,6 @@ class LoginViewModel extends ChangeNotifier {
         );
 
         if (!resEmpresas.succes) {
-          //si hay mas de una estacion o mas de una empresa mostar configuracion local
-
           isLoading = false;
           NotificationService.showErrorView(context, resEstaciones);
 
@@ -216,6 +214,24 @@ class LoginViewModel extends ChangeNotifier {
 
         if (localVM.empresas.length == 1) {
           localVM.selectedEmpresa = localVM.empresas.first;
+
+          final PictureService pictureService = Provider.of<PictureService>(
+            context,
+            listen: false,
+          );
+
+          final urlPic =
+              "https://ds.demosoftonline.com/host/La_Carreta/BusinessAdvantage/UploadFile/cc3xd0n1bmiykbnbpktivh0f102047.jpeg";
+
+          final String namePic = pictureService.getImageName(urlPic);
+
+          File? file = await pictureService.getSavedImage(namePic);
+
+          if (file == null) {
+            pictureService.fetchAndSaveImage(token, urlPic);
+          } else {
+            pictureService.loadSavedImage(namePic);
+          }
         }
 
         //si solo hay una estacion y una empresa mostrar home
