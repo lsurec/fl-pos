@@ -19,7 +19,7 @@ class ExistenciasPdf {
     final urlPic =
         "https://ds.demosoftonline.com/host/La_Carreta/BusinessAdvantage/UploadFile/cc3xd0n1bmiykbnbpktivh0f102047.jpeg";
 
-    ByteData logo = await pictureService.getLogo(urlPic);
+    final ByteData logo = await pictureService.getLogo(urlPic);
 
     final ByteData logoDemo = await rootBundle.load('assets/logo_demosoft.png');
 

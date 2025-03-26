@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/utilities_pdf.dart';
+import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 
 import 'package:path_provider/path_provider.dart';
@@ -15,8 +16,12 @@ class UnidadesVendidasPdf {
   Future<void> getReport(
     ReportUnidadesVendidasModel data,
   ) async {
-    final ByteData logo = await rootBundle.load('assets/empresa.png');
+    PictureService pictureService = PictureService();
 
+    final urlPic =
+        "https://ds.demosoftonline.com/host/La_Carreta/BusinessAdvantage/UploadFile/cc3xd0n1bmiykbnbpktivh0f102047.jpeg";
+
+    final ByteData logo = await pictureService.getLogo(urlPic);
     final ByteData logoDemo = await rootBundle.load('assets/logo_demosoft.png');
 
     //Docuemnto pdf nuevo
