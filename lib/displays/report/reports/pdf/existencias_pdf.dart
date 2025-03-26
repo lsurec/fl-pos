@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/utilities_pdf.dart';
+import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -13,7 +14,12 @@ class ExistenciasPdf {
   Future<void> getReport(
     ReportStockModel data,
   ) async {
-    final ByteData logo = await rootBundle.load('assets/empresa.png');
+    PictureService pictureService = PictureService();
+
+    final urlPic =
+        "https://ds.demosoftonline.com/host/La_Carreta/BusinessAdvantage/UploadFile/cc3xd0n1bmiykbnbpktivh0f102047.jpeg";
+
+    ByteData logo = await pictureService.getLogo(urlPic);
 
     final ByteData logoDemo = await rootBundle.load('assets/logo_demosoft.png');
 
@@ -168,8 +174,8 @@ class ExistenciasPdf {
     //Crear y guardar el pdf
     final directory = await getTemporaryDirectory();
     final filePath = '${directory.path}/RptExistencias.pdf';
-    final file = File(filePath);
-    await file.writeAsBytes(await pdf.save());
+    final filePdf = File(filePath);
+    await filePdf.writeAsBytes(await pdf.save());
 
     //Detener proceso de carag
     //compartir documento

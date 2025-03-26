@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/models/url_pic_model.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -56,6 +57,19 @@ class PictureService extends ChangeNotifier {
     if (await file.exists()) {
       _imageFile = file;
       notifyListeners();
+    }
+  }
+
+  Future<ByteData> getLogo(String url) async {
+    final String namePic = getImageName(url);
+
+    File? file = await getSavedImage(namePic);
+
+    if (file == null) {
+      return await rootBundle.load('assets/empresa.png');
+    } else {
+      Uint8List bytes = await file.readAsBytes();
+      return ByteData.sublistView(bytes);
     }
   }
 

@@ -34,22 +34,21 @@ class UtilitiesPdf {
     return pw.Container(
       margin: const pw.EdgeInsets.only(bottom: 10),
       child: pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           // Item 1 (50%)
           pw.Container(
-            width: PdfPageFormat.letter.width * 0.20,
             height: 65,
+            width: PdfPageFormat.letter.width * 0.20,
             child: pw.Image(
               pw.MemoryImage(logo),
+              fit: pw.BoxFit.contain,
             ),
           ),
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.15,
-          ),
+
           // Item 2 (25%)
           pw.Container(
             margin: const pw.EdgeInsets.symmetric(horizontal: 15),
-            width: PdfPageFormat.letter.width * 0.35,
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.center,
               children: [
@@ -65,12 +64,8 @@ class UtilitiesPdf {
               ],
             ),
           ),
+
           pw.Container(
-            width: PdfPageFormat.letter.width * 0.02,
-          ),
-          // Item 3 (25%)
-          pw.Container(
-            width: PdfPageFormat.letter.width * 0.30,
             child: pw.Column(
               mainAxisAlignment: pw.MainAxisAlignment.start,
               children: [
