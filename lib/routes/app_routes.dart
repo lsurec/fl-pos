@@ -69,7 +69,7 @@ class AppRoutes {
   static const terms = 'terms';
   static const appearance = 'appearance';
   static const colors = 'colors';
-  static const report = 'report';
+  static const report = 'prcPos';
   static const ref = 'ref';
   static const errorInfo = 'errorInfo';
 
