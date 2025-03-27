@@ -1,9 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, curly_braces_in_flow_control_structures
 
+import 'dart:io';
+
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -51,6 +54,22 @@ class LocalSettingsViewModel extends ChangeNotifier {
 
     final String user = loginVM.user;
     final String token = loginVM.token;
+    final PictureService pictureService = Provider.of<PictureService>(
+      context,
+      listen: false,
+    );
+
+    final urlPic = selectedEmpresa!.absolutePathPicture;
+
+    final String namePic = pictureService.getImageName(urlPic);
+
+    File? file = await pictureService.getSavedImage(namePic);
+
+    if (file == null) {
+      pictureService.fetchAndSaveImage(token, urlPic);
+    } else {
+      pictureService.loadSavedImage(namePic);
+    }
 
     //inicia de proceso
     isLoading = true;

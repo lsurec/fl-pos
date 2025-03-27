@@ -220,8 +220,7 @@ class LoginViewModel extends ChangeNotifier {
             listen: false,
           );
 
-          final urlPic =
-              "https://ds.demosoftonline.com/host/La_Carreta/BusinessAdvantage/UploadFile/cc3xd0n1bmiykbnbpktivh0f102047.jpeg";
+          final urlPic = localVM.selectedEmpresa!.absolutePathPicture;
 
           final String namePic = pictureService.getImageName(urlPic);
 

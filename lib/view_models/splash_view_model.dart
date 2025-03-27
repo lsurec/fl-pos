@@ -1,9 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
+import 'dart:io';
+
 import 'package:flutter_post_printer_example/displays/shr_local_config/services/services.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
+import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
@@ -214,6 +217,22 @@ class SplashViewModel extends ChangeNotifier {
 
     if (localVM.empresas.length == 1) {
       localVM.selectedEmpresa = localVM.empresas.first;
+      final PictureService pictureService = Provider.of<PictureService>(
+        context,
+        listen: false,
+      );
+
+      final urlPic = localVM.selectedEmpresa!.absolutePathPicture;
+
+      final String namePic = pictureService.getImageName(urlPic);
+
+      File? file = await pictureService.getSavedImage(namePic);
+
+      if (file == null) {
+        pictureService.fetchAndSaveImage(token, urlPic);
+      } else {
+        pictureService.loadSavedImage(namePic);
+      }
     }
 
     //si solo hay una estacion y una empresa mostrar home
