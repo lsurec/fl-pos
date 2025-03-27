@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/models/models.dart';
-import 'package:flutter_post_printer_example/models/url_pic_model.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
