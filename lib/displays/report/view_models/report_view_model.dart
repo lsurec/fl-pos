@@ -247,7 +247,7 @@ class ReportViewModel extends ChangeNotifier {
 
           isLoading = true;
 
-          await existenciasPdf.getReport(reportStockModel!);
+          await existenciasPdf.getReport(context, reportStockModel!);
           isLoading = false;
 
           return;
@@ -264,7 +264,8 @@ class ReportViewModel extends ChangeNotifier {
           if (!success) return;
 
           isLoading = true;
-          await unidadesVendidasPdf.getReport(reportUnidadesVendidasModel!);
+          await unidadesVendidasPdf.getReport(
+              context, reportUnidadesVendidasModel!);
           isLoading = false;
 
           return;
@@ -312,7 +313,8 @@ class ReportViewModel extends ChangeNotifier {
           if (!success) return;
 
           isLoading = true;
-          await factTContadoCredPdf.getReport(reportFactContCredModel!);
+          await factTContadoCredPdf.getReport(
+              context, reportFactContCredModel!);
           isLoading = false;
 
           return;

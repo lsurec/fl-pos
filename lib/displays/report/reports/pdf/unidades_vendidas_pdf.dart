@@ -1,26 +1,36 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
 import 'package:flutter_post_printer_example/displays/report/reports/pdf/utilities_pdf.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
+import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 class UnidadesVendidasPdf {
   Future<void> getReport(
+    BuildContext context,
     ReportUnidadesVendidasModel data,
   ) async {
     PictureService pictureService = PictureService();
 
-    final urlPic =
-        "https://ds.demosoftonline.com/host/La_Carreta/BusinessAdvantage/UploadFile/cc3xd0n1bmiykbnbpktivh0f102047.jpeg";
+    final EmpresaModel empresa = Provider.of<LocalSettingsViewModel>(
+      context,
+      listen: false,
+    ).selectedEmpresa!;
 
-    final ByteData logo = await pictureService.getLogo(urlPic);
+    final ByteData logo = await pictureService.getLogo(
+      empresa.absolutePathPicture,
+    );
+
     final ByteData logoDemo = await rootBundle.load('assets/logo_demosoft.png');
 
     //Docuemnto pdf nuevo
