@@ -47,6 +47,10 @@ class ReportViewModel extends ChangeNotifier {
   final List<String> series = ['Serie A', 'Serie B', 'Serie C'];
   final List<BodegaUserModel> bodegas = [];
 
+  ReportStockModel? reportStockModel;
+  ReportUnidadesVendidasModel? reportUnidadesVendidasModel;
+  ReportFactContCredModel? reportFactContCredModel;
+
   loadData(BuildContext context) async {
     DateTime currentTime = DateTime.now();
 
@@ -74,43 +78,176 @@ class ReportViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> prepareDataStock(BuildContext context) async {
+    isLoading = true;
+    final ApiResponseModel res = await loadViewExistencias(context);
+    isLoading = false;
+
+    if (!res.status) {
+      NotificationService.showInfoErrorView(context, res);
+      return false;
+    }
+
+    final List<ViewStockModel> existencias = [];
+
+    existencias.addAll(res.data);
+
+    if (existencias.isEmpty) {
+      NotificationService.showSnackbar("No hay datos para imprimir");
+      return false;
+    }
+
+    final ViewStockModel data = existencias.first;
+
+    final List<ProductReportStockModel> products = [];
+
+    for (var element in existencias) {
+      products.add(
+        ProductReportStockModel(
+          id: element.productoId,
+          desc: element.desProducto,
+          existencias: element.cantidad,
+        ),
+      );
+    }
+
+    reportStockModel = ReportStockModel(
+      bodega: data.nomBodega,
+      idBodega: data.bodega,
+      products: products,
+    );
+
+    return true;
+  }
+
+  Future<bool> prepareDataUnidadesVendidas(BuildContext context) async {
+    isLoading = true;
+
+    final ApiResModel res = await loadViewVentas(context);
+
+    isLoading = false;
+
+    if (!res.succes) {
+      NotificationService.showErrorView(context, res);
+      return false;
+    }
+
+    final List<ViewVentasModel> ventas = [];
+    ventas.addAll(res.response);
+
+    if (ventas.isEmpty) {
+      NotificationService.showSnackbar("No hay datos para imprimir");
+      return false;
+    }
+
+    final ViewVentasModel data = ventas.first;
+
+    List<ProductReportUnidadesVendidas> products = [];
+    double total = 0;
+
+    for (var element in ventas) {
+      products.add(
+        ProductReportUnidadesVendidas(
+          id: element.productoId,
+          desc: element.desProducto,
+          unidades: element.cantidad,
+        ),
+      );
+      total += element.cantidad;
+    }
+
+    reportUnidadesVendidasModel = ReportUnidadesVendidasModel(
+      bodega: data.desBodega,
+      idBodega: data.bodega,
+      products: products,
+      total: total,
+    );
+
+    return true;
+  }
+
+  Future<bool> prepareDataFactContCred(BuildContext context) async {
+    isLoading = true;
+
+    final ApiResponseModel res = await loadViewFacturas(context);
+
+    isLoading = false;
+
+    if (!res.status) {
+      NotificationService.showInfoErrorView(context, res);
+      return false;
+    }
+
+    final List<ViewFacturaModel> facturas = [];
+
+    facturas.addAll(res.data);
+
+    if (facturas.isEmpty) {
+      NotificationService.showSnackbar("No hay datos para imprimir");
+      return false;
+    }
+
+    final ViewFacturaModel data = facturas.first;
+
+    final List<DocReportModel> docs = [];
+    double totalCredito = 0;
+    double totalContado = 0;
+
+    for (var element in facturas) {
+      docs.add(
+        DocReportModel(
+          id: element.idDocumento,
+          monto: element.monto,
+          tipo: element.tipoCargoAbono ?? "",
+        ),
+      );
+
+      if (element.tipoCargoAbono
+          .toLowerCase()
+          .contains("cuentas por cobrar".toLowerCase())) {
+        totalCredito += element.monto;
+      } else {
+        totalContado += element.monto;
+      }
+    }
+
+    reportFactContCredModel = ReportFactContCredModel(
+      bodega: data.desBodega,
+      idBodega: data.bodega,
+      docs: docs,
+      totalContado: totalContado,
+      totalCredito: totalCredito,
+      totalContCred: totalContado + totalCredito,
+      startDate: startDate!,
+      endDate: endDate!,
+    );
+
+    return true;
+  }
+
   Future<void> getReport(
       BuildContext context, ReportModel value, bool isPrint) async {
     //validaciones
     switch (value.id) {
       case 5: //existencias
         //si no hay bodega seleccioanda
-        // if (bodega == null) {
-        //   //TODO:Translate
-        //   NotificationService.showSnackbar("Por favor selecciona una bodega.");
-        //   return;
-        // }
+        if (bodega == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar("Por favor selecciona una bodega.");
+          return;
+        }
+
+        final bool succes = await prepareDataStock(context);
+
+        if (!succes) return;
 
         if (!isPrint) {
           //TODO:Funcion llama datos
           ExistenciasPdf existenciasPdf = ExistenciasPdf();
 
-          final List<ProductReportStockModel> products = [];
-
-          for (var i = 0; i < 100; i++) {
-            products.add(
-              ProductReportStockModel(
-                id: "1",
-                desc:
-                    "Exercitation quis veniam esse exercitation exercitation nisi.",
-                existencias: 100,
-              ),
-            );
-          }
-
-          ReportStockModel data = ReportStockModel(
-            bodega: "bodega",
-            idBodega: 12,
-            products: products,
-          );
-
           isLoading = true;
-          await existenciasPdf.getReport(data);
+
+          await existenciasPdf.getReport(reportStockModel!);
           isLoading = false;
 
           return;
@@ -122,28 +259,12 @@ class ReportViewModel extends ChangeNotifier {
 
           UnidadesVendidasPdf unidadesVendidasPdf = UnidadesVendidasPdf();
 
-          final List<ProductReportUnidadesVendidas> products = [];
+          final bool success = await prepareDataUnidadesVendidas(context);
 
-          for (var i = 0; i < 100; i++) {
-            products.add(
-              ProductReportUnidadesVendidas(
-                id: "1",
-                desc:
-                    "Exercitation quis veniam esse exercitation exercitation nisi.",
-                unidades: 100,
-              ),
-            );
-          }
-
-          ReportUnidadesVendidasModel data = ReportUnidadesVendidasModel(
-            bodega: "bodega",
-            idBodega: 12,
-            products: products,
-            total: 100,
-          );
+          if (!success) return;
 
           isLoading = true;
-          await unidadesVendidasPdf.getReport(data);
+          await unidadesVendidasPdf.getReport(reportUnidadesVendidasModel!);
           isLoading = false;
 
           return;
@@ -152,64 +273,46 @@ class ReportViewModel extends ChangeNotifier {
       case 7: //facturas
 
         //TODO:Descomentar en produccion
-        // final menuVM = Provider.of<MenuViewModel>(
-        //   context,
-        //   listen: false,
-        // );
+        final menuVM = Provider.of<MenuViewModel>(
+          context,
+          listen: false,
+        );
 
-        // if (menuVM.documento == null) {
-        //   NotificationService.showSnackbar(
-        //       "No hay se ha asignado tipo de documento.");
-        //   return;
-        // }
+        if (menuVM.documento == null) {
+          NotificationService.showSnackbar(
+              "No hay se ha asignado tipo de documento.");
+          return;
+        }
 
-        // if (bodega == null) {
-        //   //TODO:Translate
-        //   NotificationService.showSnackbar("Por favor selecciona una bodega.");
-        //   return;
-        // }
+        if (bodega == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar("Por favor selecciona una bodega.");
+          return;
+        }
 
-        // if (startDate == null) {
-        //   //TODO:Translates
-        //   NotificationService.showSnackbar(
-        //       "Por favor selecciona una fecha inical.");
-        //   return;
-        // }
-        // if (endDate == null) {
-        //   //TODO:Translate
-        //   NotificationService.showSnackbar(
-        //       "Por favor selecciona una fecha final.");
+        if (startDate == null) {
+          //TODO:Translates
+          NotificationService.showSnackbar(
+              "Por favor selecciona una fecha inical.");
+          return;
+        }
+        if (endDate == null) {
+          //TODO:Translate
+          NotificationService.showSnackbar(
+              "Por favor selecciona una fecha final.");
 
-        //   return;
-        // }
+          return;
+        }
 
         if (!isPrint) {
           FactTContadoCredPdf factTContadoCredPdf = FactTContadoCredPdf();
 
-          final List<DocReportModel> docs = [];
-          for (var i = 0; i < 10; i++) {
-            docs.add(
-              DocReportModel(
-                id: i,
-                tipo: "Contado",
-                monto: 150,
-              ),
-            );
-          }
+          final bool success = await prepareDataFactContCred(context);
 
-          ReportFactContCredModel data = ReportFactContCredModel(
-            bodega: "bodega",
-            idBodega: 2,
-            docs: docs,
-            startDate: startDate!,
-            endDate: endDate!,
-            totalContado: 100,
-            totalCredito: 150,
-            totalContCred: 350,
-          );
+          if (!success) return;
 
           isLoading = true;
-          await factTContadoCredPdf.getReport(data);
+          await factTContadoCredPdf.getReport(reportFactContCredModel!);
           isLoading = false;
 
           return;

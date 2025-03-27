@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_post_printer_example/displays/report/models/models.dart';
@@ -119,37 +118,80 @@ class UnidadesVendidasPdf {
                   pw.SizedBox(height: 5),
                   //Deatlles (Prductos/transacciones)
                   ...data.products
-                      .map((product) => pw.Row(
-                            children: [
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  product.id,
-                                  textAlign: pw.TextAlign.center,
-                                  style: UtilitiesPdf.text,
-                                ),
+                      .map(
+                        (product) => pw.Row(
+                          children: [
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.10,
+                              child: pw.Text(
+                                product.id,
+                                textAlign: pw.TextAlign.center,
+                                style: UtilitiesPdf.text,
                               ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.63,
-                                child: pw.Text(
-                                  product.desc,
-                                  style: UtilitiesPdf.text,
-                                ),
+                            ),
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.63,
+                              child: pw.Text(
+                                product.desc,
+                                style: UtilitiesPdf.text,
                               ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.20,
-                                child: pw.Text(
-                                  "${product.unidades}",
-                                  textAlign: pw.TextAlign.center,
-                                  style: UtilitiesPdf.text,
-                                ),
+                            ),
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.20,
+                              child: pw.Text(
+                                "${product.unidades}",
+                                textAlign: pw.TextAlign.center,
+                                style: UtilitiesPdf.text,
                               ),
-                            ],
-                          ))
+                            ),
+                          ],
+                        ),
+                      )
                       .toList(),
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 5),
+            //Total del documento
+            pw.Container(
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(
+                  color: PdfColors.black, // Color del borde
+                  width: 1, // Ancho del borde
+                ),
+              ),
+              width: PdfPageFormat.letter.width,
+              child: pw.Row(
+                children: [
+                  pw.Container(
+                    padding: const pw.EdgeInsets.all(5),
+                    decoration: pw.BoxDecoration(
+                      color: UtilitiesPdf.backgroundCell,
+                      border: const pw.Border(
+                        right: pw.BorderSide(
+                          color: PdfColors.black, // Color del borde
+                          width: 1.0, // Ancho del borde
+                        ),
+                      ),
+                    ),
+                    width: PdfPageFormat.letter.width * 0.62,
+                    child: pw.Text(
+                      "Total Unidades Vendidas:",
+                      style: UtilitiesPdf.textBoldWhite,
+                    ),
+                  ),
+                  pw.Container(
+                    padding: const pw.EdgeInsets.all(5),
+                    width: PdfPageFormat.letter.width * 0.31,
+                    child: pw.Text(
+                      data.total.toStringAsFixed(2),
+                      style: UtilitiesPdf.textBold,
+                      textAlign: pw.TextAlign.center,
+                    ),
+                  ),
                 ],
               ),
             ),

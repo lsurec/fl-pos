@@ -54,6 +54,11 @@ class ViewFacturaModel {
   dynamic existencia;
   dynamic costoInventario;
   dynamic cantFacturada;
+  dynamic tipoPago;
+  dynamic tipoCargoAbono;
+  dynamic deposito;
+  dynamic recibos;
+  dynamic saldo;
 
   ViewFacturaModel({
     required this.documento,
@@ -109,6 +114,11 @@ class ViewFacturaModel {
     required this.existencia,
     required this.costoInventario,
     required this.cantFacturada,
+    required this.tipoPago,
+    required this.tipoCargoAbono,
+    required this.deposito,
+    required this.recibos,
+    required this.saldo,
   });
 
   factory ViewFacturaModel.fromJson(String str) =>
@@ -171,6 +181,11 @@ class ViewFacturaModel {
         existencia: json["existencia"],
         costoInventario: json["costo_inventario"],
         cantFacturada: json["Cant_Facturada"],
+        tipoPago: json["Tipo_Pago"],
+        tipoCargoAbono: json["Tipo_Cargo_Abono"],
+        deposito: json["Deposito"],
+        recibos: json["Recibos"],
+        saldo: json["Saldo"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -227,5 +242,10 @@ class ViewFacturaModel {
         "existencia": existencia,
         "costo_inventario": costoInventario,
         "Cant_Facturada": cantFacturada,
+        "Tipo_Pago": tipoPago,
+        "Tipo_Cargo_Abono": tipoCargoAbono,
+        "Deposito": deposito,
+        "Recibos": recibos,
+        "Saldo": saldo,
       };
 }

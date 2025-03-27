@@ -109,132 +109,37 @@ class PrintViewModel extends ChangeNotifier {
     );
   }
 
-  //Reporte de unidades vendidas
-  Future printReporUnidadesVendidas(
-    BuildContext context,
-    int paperDefault,
-  ) async {
-    //TODO:Buscar datos del procedimiento
-    final ReportViewModel reportVM = Provider.of<ReportViewModel>(
-      context,
-      listen: false,
-    );
-
-    isLoading = true;
-
-    final ApiResModel resViewVentas = await reportVM.loadViewVentas(context);
-
-    isLoading = false;
-
-    if (!resViewVentas.succes) {
-      NotificationService.showErrorView(context, resViewVentas);
-      return;
-    }
-    final List<ViewVentasModel> ventas = [];
-    ventas.addAll(resViewVentas.response);
-
-    if (ventas.isEmpty) {
-      NotificationService.showSnackbar("No hay datos para imprimir");
-      return;
-    }
-
-    final ViewVentasModel data = ventas.first;
-
-    List<ProductReportUnidadesVendidas> products = [];
-    double total = 0;
-
-    for (var element in ventas) {
-      products.add(
-        ProductReportUnidadesVendidas(
-          id: element.productoId,
-          desc: element.desProducto,
-          unidades: element.cantidad,
-        ),
-      );
-      total += element.cantidad;
-    }
-
-    final ReportUnidadesVendidasModel reportUnidadesVendidasModel =
-        ReportUnidadesVendidasModel(
-      bodega: data.desBodega,
-      idBodega: data.bodega,
-      products: products,
-      total: total,
-    );
-
-    return UnidadesVendidasTMU.getReport(
-      context,
-      paperDefault,
-      reportUnidadesVendidasModel,
-    );
-  }
-
   //Reporte de facturas
   Future getReportFactCredContado(
     BuildContext context,
     int paperDefault,
   ) async {
-    //TODO:Buscar datos del procedimiento
-    //TODO:Buscar datos del procedimiento
     final ReportViewModel reportVM = Provider.of<ReportViewModel>(
       context,
       listen: false,
     );
 
-    isLoading = true;
-
-    final ApiResponseModel res = await reportVM.loadViewFacturas(context);
-
-    isLoading = false;
-
-    if (!res.status) {
-      NotificationService.showInfoErrorView(context, res);
-      return;
-    }
-
-    final List<ViewFacturaModel> facturas = [];
-
-    facturas.addAll(res.data);
-
-    if (facturas.isEmpty) {
-      NotificationService.showSnackbar("No hay datos para imprimir");
-      return;
-    }
-
-    final ViewFacturaModel data = facturas.first;
-
-    final List<DocReportModel> docs = [];
-    double totalCredito = 0;
-    double totalContado = 0;
-
-    for (var element in facturas) {
-      docs.add(
-        DocReportModel(
-          id: element.idDocumento,
-          monto: element.monto,
-          tipo: "Contado",
-        ), //TODO:Paramtrizar
-      );
-
-      //TODO:calcular totales
-      totalContado += element.monto;
-    }
-
-    ReportFactContCredModel reportStockModel = ReportFactContCredModel(
-      bodega: data.desBodega,
-      idBodega: data.bodega,
-      docs: docs,
-      totalContado: totalContado,
-      totalCredito: totalCredito,
-      totalContCred: totalContado + totalCredito,
-      startDate: reportVM.startDate!,
-      endDate: reportVM.endDate!,
-    );
-
     return FactTContadoCredTMU.getReport(
       context,
       paperDefault,
-      reportStockModel,
+      reportVM.reportFactContCredModel!,
+    );
+  }
+
+  //Reporte de unidades vendidas
+  Future printReporUnidadesVendidas(
+    BuildContext context,
+    int paperDefault,
+  ) async {
+    final ReportViewModel reportVM = Provider.of<ReportViewModel>(
+      context,
+      listen: false,
+    );
+
+    return UnidadesVendidasTMU.getReport(
+      context,
+      paperDefault,
+      reportVM.reportUnidadesVendidasModel!,
     );
   }
 
@@ -248,51 +153,10 @@ class PrintViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    isLoading = true;
-
-    final ApiResponseModel resViewExistencias =
-        await reportVM.loadViewExistencias(context);
-
-    isLoading = false;
-
-    if (!resViewExistencias.status) {
-      NotificationService.showInfoErrorView(context, resViewExistencias);
-      return;
-    }
-
-    final List<ViewStockModel> existencias = [];
-
-    existencias.addAll(resViewExistencias.data);
-
-    if (existencias.isEmpty) {
-      NotificationService.showSnackbar("No hay datos para imprimir");
-      return;
-    }
-
-    final ViewStockModel data = existencias.first;
-
-    final List<ProductReportStockModel> products = [];
-
-    for (var element in existencias) {
-      products.add(
-        ProductReportStockModel(
-          id: element.productoId,
-          desc: element.desProducto,
-          existencias: element.cantidad,
-        ),
-      );
-    }
-
-    ReportStockModel reportStockModel = ReportStockModel(
-      bodega: data.nomBodega,
-      idBodega: data.bodega,
-      products: products,
-    );
-
     return ExistenciasTMU.getReport(
       context,
       paperDefault,
-      reportStockModel,
+      reportVM.reportStockModel!,
     );
   }
 
