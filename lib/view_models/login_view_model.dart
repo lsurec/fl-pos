@@ -54,10 +54,8 @@ class LoginViewModel extends ChangeNotifier {
     String? deviceId = await storage.read(key: 'device_id');
 
     if (deviceId == null) {
-      deviceId = 'ios-' +
-          DateTime.now()
-              .millisecondsSinceEpoch
-              .toString(); // Genera un ID único
+      deviceId =
+          'ios-${DateTime.now().millisecondsSinceEpoch}'; // Genera un ID único
       await storage.write(key: 'device_id', value: deviceId);
     }
 
