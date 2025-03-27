@@ -76,7 +76,6 @@ class ExistenciasPdf {
                           child: pw.Text(
                             "ID",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
                           ),
                         ),
                         pw.Container(
@@ -109,7 +108,7 @@ class ExistenciasPdf {
                           child: pw.Text(
                             "Existencia",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
+                            textAlign: pw.TextAlign.right,
                           ),
                         ),
                       ],
@@ -125,7 +124,6 @@ class ExistenciasPdf {
                                 width: PdfPageFormat.letter.width * 0.10,
                                 child: pw.Text(
                                   product.id,
-                                  textAlign: pw.TextAlign.center,
                                   style: UtilitiesPdf.text,
                                 ),
                               ),
@@ -142,7 +140,7 @@ class ExistenciasPdf {
                                 width: PdfPageFormat.letter.width * 0.20,
                                 child: pw.Text(
                                   product.existencias.toStringAsFixed(2),
-                                  textAlign: pw.TextAlign.center,
+                                  textAlign: pw.TextAlign.right,
                                   style: UtilitiesPdf.text,
                                 ),
                               ),

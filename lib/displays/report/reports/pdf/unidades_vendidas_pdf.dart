@@ -76,7 +76,6 @@ class UnidadesVendidasPdf {
                           child: pw.Text(
                             "ID",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
                           ),
                         ),
                         pw.Container(
@@ -109,7 +108,7 @@ class UnidadesVendidasPdf {
                           child: pw.Text(
                             "Unidades",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
+                            textAlign: pw.TextAlign.right,
                           ),
                         ),
                       ],
@@ -126,7 +125,6 @@ class UnidadesVendidasPdf {
                               width: PdfPageFormat.letter.width * 0.10,
                               child: pw.Text(
                                 product.id,
-                                textAlign: pw.TextAlign.center,
                                 style: UtilitiesPdf.text,
                               ),
                             ),
@@ -143,7 +141,7 @@ class UnidadesVendidasPdf {
                               width: PdfPageFormat.letter.width * 0.20,
                               child: pw.Text(
                                 "${product.unidades}",
-                                textAlign: pw.TextAlign.center,
+                                textAlign: pw.TextAlign.right,
                                 style: UtilitiesPdf.text,
                               ),
                             ),
@@ -189,7 +187,7 @@ class UnidadesVendidasPdf {
                     child: pw.Text(
                       data.total.toStringAsFixed(2),
                       style: UtilitiesPdf.textBold,
-                      textAlign: pw.TextAlign.center,
+                      textAlign: pw.TextAlign.right,
                     ),
                   ),
                 ],

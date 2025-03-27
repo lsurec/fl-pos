@@ -76,7 +76,6 @@ class FactTContadoCredPdf {
                           child: pw.Text(
                             "ID",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
                           ),
                         ),
                         pw.Container(
@@ -93,7 +92,6 @@ class FactTContadoCredPdf {
                           child: pw.Text(
                             "Tipo",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
                           ),
                         ),
                         pw.Container(
@@ -110,7 +108,7 @@ class FactTContadoCredPdf {
                           child: pw.Text(
                             "Monto",
                             style: UtilitiesPdf.textBoldWhite,
-                            textAlign: pw.TextAlign.center,
+                            textAlign: pw.TextAlign.right,
                           ),
                         ),
                       ],
@@ -127,7 +125,6 @@ class FactTContadoCredPdf {
                               width: PdfPageFormat.letter.width * 0.31,
                               child: pw.Text(
                                 "${doc.id}",
-                                textAlign: pw.TextAlign.center,
                                 style: UtilitiesPdf.text,
                               ),
                             ),
@@ -136,7 +133,6 @@ class FactTContadoCredPdf {
                               width: PdfPageFormat.letter.width * 0.31,
                               child: pw.Text(
                                 doc.tipo,
-                                style: UtilitiesPdf.text,
                                 textAlign: pw.TextAlign.center,
                               ),
                             ),
@@ -145,7 +141,7 @@ class FactTContadoCredPdf {
                               width: PdfPageFormat.letter.width * 0.31,
                               child: pw.Text(
                                 doc.monto.toStringAsFixed(2),
-                                textAlign: pw.TextAlign.center,
+                                textAlign: pw.TextAlign.right,
                                 style: UtilitiesPdf.text,
                               ),
                             ),
@@ -191,7 +187,7 @@ class FactTContadoCredPdf {
                     child: pw.Text(
                       data.totalContado.toStringAsFixed(2),
                       style: UtilitiesPdf.textBold,
-                      textAlign: pw.TextAlign.center,
+                      textAlign: pw.TextAlign.right,
                     ),
                   ),
                 ],
@@ -232,7 +228,7 @@ class FactTContadoCredPdf {
                     child: pw.Text(
                       data.totalCredito.toStringAsFixed(2),
                       style: UtilitiesPdf.textBold,
-                      textAlign: pw.TextAlign.center,
+                      textAlign: pw.TextAlign.right,
                     ),
                   ),
                 ],
@@ -273,7 +269,7 @@ class FactTContadoCredPdf {
                     child: pw.Text(
                       data.totalContCred.toStringAsFixed(2),
                       style: UtilitiesPdf.textBold,
-                      textAlign: pw.TextAlign.center,
+                      textAlign: pw.TextAlign.right,
                     ),
                   ),
                 ],
