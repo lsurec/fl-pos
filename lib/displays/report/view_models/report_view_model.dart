@@ -345,16 +345,10 @@ class ReportViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    // final String token = loginVM.token;
-    // final String user = loginVM.user;
-    // final int empresa = localVM.selectedEmpresa!.empresa;
-    // final int estacion = localVM.selectedEstacion!.estacionTrabajo;
-
-    final String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcxODYzODI3OSwiZXhwIjoxNzQ5NzQyMjc5LCJpYXQiOjE3MTg2MzgyNzl9.s1ZpBmweXkrfGXi71aYbm8OfHx4xF9ne9MkuQoWR3c8";
-    final String user = "admin";
-    final int empresa = 1;
-    final int estacion = 1;
+    final String token = loginVM.token;
+    final String user = loginVM.user;
+    final int empresa = localVM.selectedEmpresa!.empresa;
+    final int estacion = localVM.selectedEstacion!.estacionTrabajo;
 
     BodegaUserService bodegaUserService = BodegaUserService();
 
@@ -390,16 +384,10 @@ class ReportViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    // final String token = vmLogin.token;
-    // final String user = vmLogin.user;
-    // final int empresa = vmLocal.selectedEmpresa!.empresa;
-    // final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
-
-    final String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcxODYzODI3OSwiZXhwIjoxNzQ5NzQyMjc5LCJpYXQiOjE3MTg2MzgyNzl9.s1ZpBmweXkrfGXi71aYbm8OfHx4xF9ne9MkuQoWR3c8";
-    final String user = "admin";
-    final int empresa = 1;
-    final int estacion = 1;
+    final String token = vmLogin.token;
+    final String user = vmLogin.user;
+    final int empresa = vmLocal.selectedEmpresa!.empresa;
+    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
 
     ReportService reportService = ReportService();
 
@@ -428,18 +416,11 @@ class ReportViewModel extends ChangeNotifier {
       listen: false,
     );
 
-    // final String token = vmLogin.token;
-    // final String user = vmLogin.user;
-    // final int empresa = vmLocal.selectedEmpresa!.empresa;
-    // final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
-    // final int tipoDoc = menuVM.documento!;
-
-    final String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJhZG1pbiIsIm5iZiI6MTcxODYzODI3OSwiZXhwIjoxNzQ5NzQyMjc5LCJpYXQiOjE3MTg2MzgyNzl9.s1ZpBmweXkrfGXi71aYbm8OfHx4xF9ne9MkuQoWR3c8";
-    final String user = "admin";
-    final int empresa = 1;
-    final int estacion = 1;
-    final int tipoDoc = 3;
+    final String token = vmLogin.token;
+    final String user = vmLogin.user;
+    final int empresa = vmLocal.selectedEmpresa!.empresa;
+    final int estacion = vmLocal.selectedEstacion!.estacionTrabajo;
+    final int tipoDoc = menuVM.documento!;
 
     ReportService reportService = ReportService();
 
