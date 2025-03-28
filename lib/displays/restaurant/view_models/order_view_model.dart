@@ -266,6 +266,7 @@ class OrderViewModel extends ChangeNotifier {
       docElementoAsignado: 1, //TODO:Preguntar
       docTransaccion: transactions,
       docCargoAbono: [],
+      docReferencia: null,
     );
 
     // if (true) {

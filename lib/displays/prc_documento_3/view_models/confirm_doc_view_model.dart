@@ -12,6 +12,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/translate_block_utilities.dart';
+import 'package:flutter_post_printer_example/view_models/referencia_view_model.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -1067,6 +1068,11 @@ class ConfirmDocViewModel extends ChangeNotifier {
     final paymentVM = Provider.of<PaymentViewModel>(scaffoldKey.currentContext!,
         listen: false);
 
+    final ReferenciaViewModel refVM = Provider.of<ReferenciaViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
     //usuario token y cadena de conexion
     String user = loginVM.user;
     String tokenUser = loginVM.token;
@@ -1270,6 +1276,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
           docVM.valueParametro(385) ? docVM.refContactoParam385.text : null,
       docRefObservacion3:
           docVM.valueParametro(386) ? docVM.refDirecEntregaParam386.text : null,
+      docReferencia:
+          docVM.valueParametro(387) ? refVM.referencia!.referencia : null,
     );
 
     //objeto enviar documento

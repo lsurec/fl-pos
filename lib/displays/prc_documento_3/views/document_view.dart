@@ -2,7 +2,6 @@
 
 import 'package:flutter_post_printer_example/displays/listado_Documento_Pendiente_Convertir/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/displays/prc_documento_3/models/models.dart';
-import 'package:flutter_post_printer_example/displays/prc_documento_3/views/referencia_view.dart';
 import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
@@ -123,7 +122,6 @@ class DocumentView extends StatelessWidget {
                     ).toList(),
                   ),
                 //TODO:Translate
-                //TODO:Validar referencia ILGUA
                 if (vm.valueParametro(58))
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -346,8 +344,7 @@ class DocumentView extends StatelessWidget {
                     ],
                   ),
                 //Mostrar tipos de eventos
-                //TODO:Validar referencia alfa y omega
-                if (vm.valueParametro(58))
+                if (vm.valueParametro(387))
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

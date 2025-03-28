@@ -39,6 +39,7 @@ class DocEstructuraModel {
   String? docRefObservacion3;
   String? docRefObservacion;
   String? docComanda;
+  int? docReferencia;
 
   DocEstructuraModel({
     required this.docConfirmarOrden,
@@ -79,6 +80,7 @@ class DocEstructuraModel {
     required this.docRefDescripcion,
     required this.docRefObservacion3,
     required this.docRefObservacion,
+    required this.docReferencia,
   });
 
   factory DocEstructuraModel.fromJson(String str) =>
@@ -137,6 +139,7 @@ class DocEstructuraModel {
         docRefDescripcion: json["Doc_Ref_Descripcion"],
         docRefObservacion3: json["Doc_Ref_Observacion_3"],
         docRefObservacion: json["Doc_Ref_Observacion"],
+        docReferencia: json["Doc_Referencia"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -180,6 +183,7 @@ class DocEstructuraModel {
         "Doc_Ref_Descripcion": docRefDescripcion,
         "Doc_Ref_Observacion_3": docRefObservacion3,
         "Doc_Ref_Observacion": docRefObservacion,
+        "Doc_Referencia": docReferencia,
       };
 }
 
