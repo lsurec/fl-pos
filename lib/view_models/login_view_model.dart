@@ -7,6 +7,7 @@ import 'package:flutter_post_printer_example/routes/app_routes.dart';
 import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/services/services.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +48,38 @@ class LoginViewModel extends ChangeNotifier {
   //True if form is valid
   bool isValidForm() {
     return formKey.currentState?.validate() ?? false;
+  }
+
+  void showCustomDialog(BuildContext context) async {
+    String idDevice = await getDeviceId();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("ID del Dispositvo"),
+          content: SelectableText(idDevice),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Utilities.copyToClipboard(
+                  context,
+                  idDevice,
+                );
+                Navigator.of(context).pop();
+              },
+              child: const Text("Copiar"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Aceptar"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<String> getOrCreateIOSDeviceId() async {
@@ -151,7 +184,48 @@ class LoginViewModel extends ChangeNotifier {
 
       //si el usuaro es correcto
       if (respLogin.success) {
+        String idDevice = await getDeviceId();
+
         //guardar token y nombre de usuario
+        ApiResponseModel resIdDevice = await loginService.validateDeviceID(
+          idDevice,
+          user,
+          token,
+        );
+
+        if (!resIdDevice.status) {
+          isLoading = false;
+
+          NotificationService.showInfoErrorView(
+            context,
+            resIdDevice,
+          );
+          return;
+        }
+
+        final List<IdDeviceResModel> devices = resIdDevice.data;
+
+        if (devices.isEmpty) {
+          isLoading = false;
+
+          resIdDevice.message = "No hay datos para validar";
+
+          NotificationService.showInfoErrorView(
+            context,
+            resIdDevice,
+          );
+          return;
+        }
+
+        //validar dispositivo
+        if (devices.first.resultado != 1) {
+          isLoading = false;
+
+          NotificationService.showSnackbar("Dispositivo no registrado.");
+
+          return;
+        }
+
         token = respLogin.message;
         user = respLogin.user;
         conStr = respLogin.con;
