@@ -189,8 +189,8 @@ class LoginViewModel extends ChangeNotifier {
         //guardar token y nombre de usuario
         ApiResponseModel resIdDevice = await loginService.validateDeviceID(
           idDevice,
-          user,
-          token,
+          respLogin.user,
+          respLogin.message,
         );
 
         if (!resIdDevice.status) {
