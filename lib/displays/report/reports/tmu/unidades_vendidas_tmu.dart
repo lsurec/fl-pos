@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/models/print_model.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
 import 'package:flutter_post_printer_example/view_models/view_models.dart';
+import 'package:provider/provider.dart';
 
 class UnidadesVendidasTMU {
 //reports function
@@ -17,6 +18,11 @@ class UnidadesVendidasTMU {
     ReportUnidadesVendidasModel data,
   ) async {
     List<int> bytes = [];
+
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
 
     final generator = Generator(
       AppData.paperSize[paperDefault],
@@ -45,7 +51,7 @@ class UnidadesVendidasTMU {
     );
 
     bytes += generator.text(
-      "Usuario: ${Preferences.userName}",
+      "Usuario: ${loginVM.user}",
       styles: UtilitiesTMU.center,
     );
 

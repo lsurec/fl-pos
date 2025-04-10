@@ -8,6 +8,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/models/mo
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/view_models/view_models.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -26,6 +27,11 @@ class UnidadesVendidasPdf {
       context,
       listen: false,
     ).selectedEmpresa!;
+
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
 
     final ByteData logo = await pictureService.getLogo(
       empresa.absolutePathPicture,
@@ -210,7 +216,7 @@ class UnidadesVendidasPdf {
           [
             "REPORTE DE UNIDADES VENDIDAS",
             "Bodega: (${data.idBodega}) ${data.bodega}",
-            "Usuario: ${Preferences.userName}",
+            "Usuario: ${loginVM.user}",
           ],
           [],
         ),

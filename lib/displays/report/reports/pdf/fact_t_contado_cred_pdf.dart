@@ -9,6 +9,7 @@ import 'package:flutter_post_printer_example/displays/shr_local_config/view_mode
 import 'package:flutter_post_printer_example/services/picture_service.dart';
 import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
 import 'package:flutter_post_printer_example/utilities/utilities.dart';
+import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -26,6 +27,11 @@ class FactTContadoCredPdf {
       context,
       listen: false,
     ).selectedEmpresa!;
+
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
 
     final ByteData logo = await pictureService.getLogo(
       empresa.absolutePathPicture,
@@ -294,7 +300,7 @@ class FactTContadoCredPdf {
             "Fecha inicio: ${Utilities.formatearFecha(data.startDate)}",
             "Fecha fin: ${Utilities.formatearFecha(data.endDate)}",
             "Bodega: (${data.idBodega}) ${data.bodega}",
-            "Usuario: ${Preferences.userName}",
+            "Usuario: ${loginVM.user}",
           ],
           [
             "Documentos: ${data.docs.length}",

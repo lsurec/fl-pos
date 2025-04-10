@@ -7,7 +7,7 @@ import 'package:flutter_post_printer_example/displays/report/reports/pdf/utiliti
 import 'package:flutter_post_printer_example/displays/shr_local_config/models/models.dart';
 import 'package:flutter_post_printer_example/displays/shr_local_config/view_models/view_models.dart';
 import 'package:flutter_post_printer_example/services/picture_service.dart';
-import 'package:flutter_post_printer_example/shared_preferences/preferences.dart';
+import 'package:flutter_post_printer_example/view_models/login_view_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -25,6 +25,11 @@ class ExistenciasPdf {
       context,
       listen: false,
     ).selectedEmpresa!;
+
+    final LoginViewModel loginVM = Provider.of<LoginViewModel>(
+      context,
+      listen: false,
+    );
 
     final ByteData logo = await pictureService.getLogo(
       empresa.absolutePathPicture,
@@ -126,39 +131,83 @@ class ExistenciasPdf {
                   pw.SizedBox(height: 5),
                   //Deatlles (Prductos/transacciones)
                   ...data.products
-                      .map((product) => pw.Row(
-                            children: [
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.10,
-                                child: pw.Text(
-                                  product.id,
-                                  style: UtilitiesPdf.text,
-                                ),
+                      .map(
+                        (product) => pw.Row(
+                          children: [
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.10,
+                              child: pw.Text(
+                                product.id,
+                                style: UtilitiesPdf.text,
                               ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.63,
-                                child: pw.Text(
-                                  product.desc,
-                                  style: UtilitiesPdf.text,
-                                ),
+                            ),
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.63,
+                              child: pw.Text(
+                                product.desc,
+                                style: UtilitiesPdf.text,
                               ),
-                              pw.Container(
-                                padding: const pw.EdgeInsets.all(5),
-                                width: PdfPageFormat.letter.width * 0.20,
-                                child: pw.Text(
-                                  product.existencias.toStringAsFixed(2),
-                                  textAlign: pw.TextAlign.right,
-                                  style: UtilitiesPdf.text,
-                                ),
+                            ),
+                            pw.Container(
+                              padding: const pw.EdgeInsets.all(5),
+                              width: PdfPageFormat.letter.width * 0.20,
+                              child: pw.Text(
+                                product.existencias.toStringAsFixed(2),
+                                textAlign: pw.TextAlign.right,
+                                style: UtilitiesPdf.text,
                               ),
-                            ],
-                          ))
+                            ),
+                          ],
+                        ),
+                      )
                       .toList(),
                 ],
               ),
             ),
+            pw.SizedBox(height: 5),
+            //Total del documento
+            pw.Container(
+              decoration: pw.BoxDecoration(
+                border: pw.Border.all(
+                  color: PdfColors.black, // Color del borde
+                  width: 1, // Ancho del borde
+                ),
+              ),
+              width: PdfPageFormat.letter.width,
+              child: pw.Row(
+                children: [
+                  pw.Container(
+                    padding: const pw.EdgeInsets.all(5),
+                    decoration: pw.BoxDecoration(
+                      color: UtilitiesPdf.backgroundCell,
+                      border: const pw.Border(
+                        right: pw.BorderSide(
+                          color: PdfColors.black, // Color del borde
+                          width: 1.0, // Ancho del borde
+                        ),
+                      ),
+                    ),
+                    width: PdfPageFormat.letter.width * 0.62,
+                    child: pw.Text(
+                      "Total:",
+                      style: UtilitiesPdf.textBoldWhite,
+                    ),
+                  ),
+                  pw.Container(
+                    padding: const pw.EdgeInsets.all(5),
+                    width: PdfPageFormat.letter.width * 0.31,
+                    child: pw.Text(
+                      data.total.toStringAsFixed(2),
+                      style: UtilitiesPdf.textBold,
+                      textAlign: pw.TextAlign.right,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            pw.SizedBox(height: 5),
           ];
         },
         header: (_) => UtilitiesPdf.buildHeader(
@@ -166,7 +215,7 @@ class ExistenciasPdf {
           [
             "REPORTE DE EXISTENCIAS",
             "Bodega: (${data.idBodega}) ${data.bodega}",
-            "Usuario: ${Preferences.userName}",
+            "Usuario: ${loginVM.user}",
           ],
           [],
         ),

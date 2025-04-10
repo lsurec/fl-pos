@@ -16,12 +16,12 @@ class IdDeviceResModel {
 
   factory IdDeviceResModel.fromMap(Map<String, dynamic> json) =>
       IdDeviceResModel(
-        mensaje: json["Mensaje"],
-        resultado: json["Resultado"],
+        mensaje: json["mensaje"],
+        resultado: json["resultado"],
       );
 
   Map<String, dynamic> toMap() => {
-        "Mensaje": mensaje,
-        "Resultado": resultado,
+        "mensaje": mensaje,
+        "resultado": resultado,
       };
 }

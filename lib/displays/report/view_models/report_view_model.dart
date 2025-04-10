@@ -101,6 +101,8 @@ class ReportViewModel extends ChangeNotifier {
 
     final List<ProductReportStockModel> products = [];
 
+    double totalExistencias = 0;
+
     for (var element in existencias) {
       products.add(
         ProductReportStockModel(
@@ -109,12 +111,15 @@ class ReportViewModel extends ChangeNotifier {
           existencias: element.cantidad,
         ),
       );
+
+      totalExistencias += element.cantidad;
     }
 
     reportStockModel = ReportStockModel(
       bodega: data.nomBodega,
       idBodega: data.bodega,
       products: products,
+      total: totalExistencias,
     );
 
     return true;

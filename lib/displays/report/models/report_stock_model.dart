@@ -2,11 +2,13 @@ class ReportStockModel {
   String bodega;
   int idBodega;
   List<ProductReportStockModel> products;
+  double total;
 
   ReportStockModel({
     required this.bodega,
     required this.idBodega,
     required this.products,
+    required this.total,
   });
 }
 

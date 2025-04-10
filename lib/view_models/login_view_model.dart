@@ -188,6 +188,7 @@ class LoginViewModel extends ChangeNotifier {
 
         //guardar token y nombre de usuario
         ApiResponseModel resIdDevice = await loginService.validateDeviceID(
+          // "UP1A.231005.007",
           idDevice,
           respLogin.user,
           respLogin.message,
@@ -218,7 +219,7 @@ class LoginViewModel extends ChangeNotifier {
         }
 
         //validar dispositivo
-        if (devices.first.resultado != 1) {
+        if (devices.first.resultado != true) {
           isLoading = false;
 
           NotificationService.showSnackbar("Dispositivo no registrado.");
