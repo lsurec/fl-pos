@@ -26,7 +26,7 @@ class DocEstructuraModel {
   String docUserName;
   String docObservacion1;
   int docTipoPago;
-  int docElementoAsignado;
+  int? docElementoAsignado;
   List<DocTransaccion> docTransaccion;
   List<DocCargoAbono> docCargoAbono;
   int? docRefTipoReferencia;

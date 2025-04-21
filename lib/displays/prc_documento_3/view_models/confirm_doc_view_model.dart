@@ -1054,8 +1054,16 @@ class ConfirmDocViewModel extends ChangeNotifier {
   //enviar el odcumento
   Future<ApiResModel> sendDocument() async {
     //view models ecternos
-    final docVM = Provider.of<DocumentViewModel>(scaffoldKey.currentContext!,
-        listen: false);
+    final docVM = Provider.of<DocumentViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
+    final elVM = Provider.of<ElementoAsigandoViewModel>(
+      scaffoldKey.currentContext!,
+      listen: false,
+    );
+
     final menuVM =
         Provider.of<MenuViewModel>(scaffoldKey.currentContext!, listen: false);
     final localVM = Provider.of<LocalSettingsViewModel>(
@@ -1258,7 +1266,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docUserName: user,
       docObservacion1: observacion.text,
       docTipoPago: 1, //TODO: preguntar
-      docElementoAsignado: 1, //TODO:preguntar,
+      docElementoAsignado:
+          docVM.valueParametro(259) ? elVM.elemento!.elementoAsignado : null,
       docTransaccion: transactions,
       docCargoAbono: payments,
       docRefTipoReferencia: docVM.valueParametro(58)
