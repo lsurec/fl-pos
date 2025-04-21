@@ -91,6 +91,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ReferenciaViewModel()),
         ChangeNotifierProvider(create: (_) => ErrorInfoViewModel()),
         ChangeNotifierProvider(create: (_) => PictureService()),
+        ChangeNotifierProvider(create: (_) => ElementoAsigandoViewModel()),
       ],
       child: const MyApp(),
     );

@@ -71,6 +71,7 @@ class AppRoutes {
   static const colors = 'colors';
   static const report = 'prcPos';
   static const ref = 'ref';
+  static const elementoAsignado = 'elementoAsignado';
   static const errorInfo = 'errorInfo';
 
   //otras rutas
@@ -136,6 +137,7 @@ class AppRoutes {
     report: (BuildContext context) => const ReportView(),
     ref: (BuildContext context) => const ReferenciaView(),
     errorInfo: (BuildContext context) => const ErrorInfoView(),
+    elementoAsignado: (BuildContext context) => const ElementoAsignadoView(),
   };
 
   //en caso de ruta incorrecta

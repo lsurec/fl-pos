@@ -26,6 +26,8 @@ class DocumentView extends StatelessWidget {
     final vmConvert = Provider.of<ConvertDocViewModel>(context);
     final vmTheme = Provider.of<ThemeViewModel>(context);
     final ReferenciaViewModel refVM = Provider.of<ReferenciaViewModel>(context);
+    final ElementoAsigandoViewModel elVM =
+        Provider.of<ElementoAsigandoViewModel>(context);
 
     return RefreshIndicator(
       onRefresh: () => vmFactura.loadNewData(
@@ -122,50 +124,94 @@ class DocumentView extends StatelessWidget {
                     ).toList(),
                   ),
                 //TODO:Translate
-                if (vm.valueParametro(58))
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      const Text(
-                        "Referencia",
-                        style: StyleApp.title,
+                // if (vm.valueParametro(58))
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Referencia",
+                      style: StyleApp.title,
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        AppRoutes.ref,
                       ),
-                      TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                          context,
-                          AppRoutes.ref,
-                        ),
-                        child: ListTile(
-                          title: Row(
-                            children: [
-                              Text(
-                                refVM.referencia == null
-                                    ? "Buscar..."
-                                    : refVM.referencia!.descripcion,
-                                style: StyleApp.normal.copyWith(
-                                  color: Theme.of(context).primaryColor,
-                                ),
+                      child: ListTile(
+                        title: Row(
+                          children: [
+                            Text(
+                              refVM.referencia == null
+                                  ? "Buscar..."
+                                  : refVM.referencia!.descripcion,
+                              style: StyleApp.normal.copyWith(
+                                color: Theme.of(context).primaryColor,
                               ),
-                              const Text(
-                                " * ",
-                                style: StyleApp.obligatory,
-                              ),
-                              const SizedBox(width: 30),
-                            ],
-                          ),
-                          leading: Icon(
-                            Icons.search,
-                            color: vmTheme.colorPref(
-                              AppTheme.idColorTema,
                             ),
-                          ),
-                          contentPadding: const EdgeInsets.all(0),
+                            const Text(
+                              " * ",
+                              style: StyleApp.obligatory,
+                            ),
+                            const SizedBox(width: 30),
+                          ],
                         ),
+                        leading: Icon(
+                          Icons.search,
+                          color: vmTheme.colorPref(
+                            AppTheme.idColorTema,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(0),
                       ),
-                      const SizedBox(height: 20),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+                // if (vm.valueParametro(259))
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Elemento Asignado", //TODO:Translate
+                      style: StyleApp.title,
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        AppRoutes.elementoAsignado,
+                      ),
+                      child: ListTile(
+                        title: Row(
+                          children: [
+                            Text(
+                              elVM.elemento == null
+                                  ? "Buscar..."
+                                  : elVM.elemento!.descripcion,
+                              style: StyleApp.normal.copyWith(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const Text(
+                              " * ",
+                              style: StyleApp.obligatory,
+                            ),
+                            const SizedBox(width: 30),
+                          ],
+                        ),
+                        leading: Icon(
+                          Icons.search,
+                          color: vmTheme.colorPref(
+                            AppTheme.idColorTema,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.all(0),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

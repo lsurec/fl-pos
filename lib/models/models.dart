@@ -1,3 +1,4 @@
+export 'package:flutter_post_printer_example/models/elemento_asignado_model.dart';
 export 'package:flutter_post_printer_example/models/id_device_res_model.dart';
 export 'package:flutter_post_printer_example/models/api_response_model.dart';
 export 'package:flutter_post_printer_example/models/theme_model.dart';

@@ -18,3 +18,4 @@ export 'package:flutter_post_printer_example/displays/prc_documento_3/views/paym
 export 'package:flutter_post_printer_example/displays/prc_documento_3/views/product_view.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/views/select_client_view.dart';
 export 'package:flutter_post_printer_example/displays/prc_documento_3/views/select_product_view.dart';
+export 'package:flutter_post_printer_example/displays/prc_documento_3/views/elemento_asignado_view.dart';
