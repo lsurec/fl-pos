@@ -218,14 +218,14 @@ class LoginViewModel extends ChangeNotifier {
           return;
         }
 
-        //validar dispositivo
-        // if (devices.first.resultado != true) {
-        //   isLoading = false;
+        // validar dispositivo
+        if (devices.first.resultado != true) {
+          isLoading = false;
 
-        //   NotificationService.showSnackbar("Dispositivo no registrado.");
+          NotificationService.showSnackbar("Dispositivo no registrado.");
 
-        //   return;
-        // }
+          return;
+        }
 
         token = respLogin.message;
         user = respLogin.user;
