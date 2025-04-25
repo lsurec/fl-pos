@@ -617,16 +617,16 @@ class ShareDocViewModel extends ChangeNotifier {
                 ),
                 //TODO: Mostrar frase
 
-                // pw.SizedBox(height: 10),
-                // pw.Center(
-                //   child: pw.Text(
-                //     "**SUJETO A PAGOS TRIMESTRALES**",
-                //     style: pw.TextStyle(
-                //       fontSize: 9,
-                //       fontWeight: pw.FontWeight.bold,
-                //     ),
-                //   ),
-                // ),
+                pw.SizedBox(height: 10),
+                pw.Center(
+                  child: pw.Text(
+                    encabezado.formaPagoIsr ?? "",
+                    style: pw.TextStyle(
+                      fontSize: 9,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
                 pw.SizedBox(height: 5),
                 pw.Center(
                   child: pw.Text(

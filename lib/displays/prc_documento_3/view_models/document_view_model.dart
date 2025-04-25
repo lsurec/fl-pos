@@ -892,6 +892,20 @@ class DocumentViewModel extends ChangeNotifier {
   DateTime fechaFinal = DateTime.now();
   DateTime fechaRefIni = DateTime.now();
   DateTime fechaRefFin = DateTime.now();
+  DateTime dateDocument = DateTime.now();
+
+  Future<void> selectDateDoc(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (pickedDate != null) dateDocument = pickedDate;
+
+    notifyListeners();
+  }
 
   //Abrir picker de fecha inicial
   Future<void> abrirFechaInicial(BuildContext context) async {

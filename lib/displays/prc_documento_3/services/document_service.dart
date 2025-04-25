@@ -85,8 +85,6 @@ class DocumentService {
   ) async {
     Uri url = Uri.parse("${_baseUrl}Documento/encabezados");
     try {
-      //url completa
-
       //Configuracion del api
       final response = await http.get(
         url,

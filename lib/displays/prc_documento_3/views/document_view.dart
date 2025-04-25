@@ -13,6 +13,7 @@ import 'package:flutter_post_printer_example/view_models/referencia_view_model.d
 import 'package:flutter_post_printer_example/view_models/theme_view_model.dart';
 import 'package:flutter_post_printer_example/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DocumentView extends StatelessWidget {
@@ -210,6 +211,20 @@ class DocumentView extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                     ],
+                  ),
+                if (vm.valueParametro(173)) //Permitir fecha documento
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text(
+                      "Fecha Documento",
+                      style: StyleApp.title,
+                    ),
+                    subtitle: Text(
+                      DateFormat('dd/MM/yyyy').format(vm.dateDocument),
+                      style: StyleApp.normal,
+                    ),
+                    trailing: const Icon(Icons.calendar_today),
+                    onTap: () => vm.selectDateDoc(context),
                   ),
 
                 Row(

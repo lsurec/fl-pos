@@ -1258,7 +1258,9 @@ class ConfirmDocViewModel extends ChangeNotifier {
       docFelFechaCertificacion: null,
       docCuentaCorrentista: cuentaCorrentisata,
       docCuentaCta: cuentaCta,
-      docFechaDocumento: serializedDateTime,
+      docFechaDocumento: docVM.valueParametro(173)
+          ? docVM.dateDocument.toIso8601String()
+          : serializedDateTime,
       docTipoDocumento: tipoDocumento,
       docSerieDocumento: serieDocumento,
       docEmpresa: empresa,

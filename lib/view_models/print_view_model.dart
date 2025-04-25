@@ -1090,53 +1090,26 @@ class PrintViewModel extends ChangeNotifier {
 
     bytes += generator.emptyLines(1);
 
-    bytes += generator.row(
-      [
-        PosColumn(text: 'Cant.', width: 2), // Ancho 2
-        PosColumn(text: 'Descripcion', width: 4), // Ancho 6
-        PosColumn(
-          text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tiket,
-            'precioU',
-          ),
-          width: 3,
-          styles: const PosStyles(
-            align: PosAlign.right,
-          ),
-        ), // Ancho 4
-        PosColumn(
-          text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tiket,
-            'monto',
-          ),
-          width: 3,
-          styles: const PosStyles(
-            align: PosAlign.right,
-          ),
-        ), // Ancho 4
-      ],
-    );
-
-    for (var transaction in docPrintModel.items) {
+    if (paperDefault != 58) {
       bytes += generator.row(
         [
+          PosColumn(text: 'Cant.', width: 2), // Ancho 2
+          PosColumn(text: 'Descripcion', width: 4), // Ancho 6
           PosColumn(
-            text: "${transaction.cantidad}",
-            width: 2,
-          ), // Ancho 2
-          PosColumn(
-            text: transaction.descripcion,
-            width: 4,
-          ), // Ancho 6
-          PosColumn(
-            text: transaction.unitario,
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'precioU',
+            ),
             width: 3,
             styles: const PosStyles(
               align: PosAlign.right,
             ),
           ), // Ancho 4
           PosColumn(
-            text: transaction.total,
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'monto',
+            ),
             width: 3,
             styles: const PosStyles(
               align: PosAlign.right,
@@ -1144,103 +1117,164 @@ class PrintViewModel extends ChangeNotifier {
           ), // Ancho 4
         ],
       );
+      for (var transaction in docPrintModel.items) {
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: "${transaction.cantidad}",
+              width: 2,
+            ), // Ancho 2
+            PosColumn(
+              text: transaction.descripcion,
+              width: 4,
+            ), // Ancho 6
+            PosColumn(
+              text: transaction.unitario,
+              width: 3,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+            ), // Ancho 4
+            PosColumn(
+              text: transaction.total,
+              width: 3,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+            ), // Ancho 4
+          ],
+        );
+      }
+    } else {
+      for (var element in docPrintModel.items) {
+        bytes += generator.text(
+          "Cant: ${element.cantidad}",
+        );
+        bytes += generator.text(
+          "Desc: ${element.descripcion}",
+        );
+        bytes += generator.text(
+          "P/U: ${element.unitario}",
+        );
+        bytes += generator.text(
+          "Total: ${element.total}",
+          styles: const PosStyles(bold: true),
+        );
+        bytes += generator.hr(); // Línea horizontal
+      }
     }
 
     bytes += generator.emptyLines(1);
 
-    bytes += generator.row(
-      [
-        PosColumn(
-          text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tiket,
-            'subTotal',
-          ),
-          width: 6,
-          styles: const PosStyles(
-            bold: true,
-          ),
-        ),
-        PosColumn(
-          text: currencyFormat.format(docPrintModel.montos.subtotal),
-          styles: const PosStyles(
-            align: PosAlign.right,
-          ),
-          width: 6,
-        ),
-      ],
-    );
-
-    bytes += generator.row(
-      [
-        PosColumn(
-          text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tiket,
-            'cargos',
-          ),
-          width: 6,
-          styles: const PosStyles(
-            bold: true,
-          ),
-        ),
-        PosColumn(
-          text: currencyFormat.format(docPrintModel.montos.cargos),
-          styles: const PosStyles(
-            align: PosAlign.right,
-          ),
-          width: 6,
-        ),
-      ],
-    );
-
-    bytes += generator.row(
-      [
-        PosColumn(
-          text: AppLocalizations.of(context)!.translate(
-            BlockTranslate.tiket,
-            'descuentos',
-          ),
-          width: 6,
-          styles: const PosStyles(
-            bold: true,
-          ),
-        ),
-        PosColumn(
-          text: currencyFormat.format(docPrintModel.montos.descuentos),
-          styles: const PosStyles(
-            align: PosAlign.right,
-          ),
-          width: 6,
-        ),
-      ],
-    );
-
-    bytes += generator.emptyLines(1);
-
-    bytes += generator.row(
-      [
-        PosColumn(
+    if (paperDefault != 58) {
+      bytes += generator.row(
+        [
+          PosColumn(
             text: AppLocalizations.of(context)!.translate(
               BlockTranslate.tiket,
-              'totalT',
-            ),
-            styles: const PosStyles(
-              bold: true,
-              width: PosTextSize.size2,
+              'subTotal',
             ),
             width: 6,
-            containsChinese: false),
-        PosColumn(
-          text: currencyFormat.format(docPrintModel.montos.total),
-          styles: const PosStyles(
-            bold: true,
-            align: PosAlign.right,
-            width: PosTextSize.size2,
-            underline: true,
+            styles: const PosStyles(
+              bold: true,
+            ),
           ),
-          width: 6,
+          PosColumn(
+            text: currencyFormat.format(docPrintModel.montos.subtotal),
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+            width: 6,
+          ),
+        ],
+      );
+
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'cargos',
+            ),
+            width: 6,
+            styles: const PosStyles(
+              bold: true,
+            ),
+          ),
+          PosColumn(
+            text: currencyFormat.format(docPrintModel.montos.cargos),
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+            width: 6,
+          ),
+        ],
+      );
+
+      bytes += generator.row(
+        [
+          PosColumn(
+            text: AppLocalizations.of(context)!.translate(
+              BlockTranslate.tiket,
+              'descuentos',
+            ),
+            width: 6,
+            styles: const PosStyles(
+              bold: true,
+            ),
+          ),
+          PosColumn(
+            text: currencyFormat.format(docPrintModel.montos.descuentos),
+            styles: const PosStyles(
+              align: PosAlign.right,
+            ),
+            width: 6,
+          ),
+        ],
+      );
+      bytes += generator.emptyLines(1);
+
+      bytes += generator.row(
+        [
+          PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'totalT',
+              ),
+              styles: const PosStyles(
+                bold: true,
+                width: PosTextSize.size2,
+              ),
+              width: 6,
+              containsChinese: false),
+          PosColumn(
+            text: currencyFormat.format(docPrintModel.montos.total),
+            styles: const PosStyles(
+              bold: true,
+              align: PosAlign.right,
+              width: PosTextSize.size2,
+              underline: true,
+            ),
+            width: 6,
+          ),
+        ],
+      );
+    } else {
+      bytes += generator.text(
+          "Subtotal: ${currencyFormat.format(docPrintModel.montos.subtotal)}");
+      bytes += generator.text(
+          "Cargos: ${currencyFormat.format(docPrintModel.montos.cargos)}");
+      bytes += generator.text(
+          "Descuentos: ${currencyFormat.format(docPrintModel.montos.descuentos)}");
+      bytes += generator.emptyLines(1);
+      bytes += generator.text(
+        "TOTAL: ${currencyFormat.format(docPrintModel.montos.total)}",
+        styles: const PosStyles(
+          bold: true,
+          width: PosTextSize.size2,
         ),
-      ],
-    );
+      );
+    }
 
     bytes += generator.text(
       docPrintModel.montos.totalLetras,
@@ -1257,76 +1291,101 @@ class PrintViewModel extends ChangeNotifier {
       styles: center,
     );
 
-    for (var pago in docPrintModel.pagos) {
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: "",
-            width: 6,
-          ),
-          PosColumn(
-            text: pago.tipoPago,
-            styles: const PosStyles(
-              align: PosAlign.right,
+    if (paperDefault != 58) {
+      for (var pago in docPrintModel.pagos) {
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: "",
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'recibido',
+            PosColumn(
+              text: pago.tipoPago,
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-          PosColumn(
-            text: currencyFormat.format(pago.pago),
-            styles: const PosStyles(
-              align: PosAlign.right,
+          ],
+        );
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'recibido',
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'monto',
+            PosColumn(
+              text: currencyFormat.format(pago.pago),
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-          PosColumn(
-            text: currencyFormat.format(pago.monto),
-            styles: const PosStyles(
-              align: PosAlign.right,
+          ],
+        );
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'monto',
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
-      bytes += generator.row(
-        [
-          PosColumn(
-            text: AppLocalizations.of(context)!.translate(
-              BlockTranslate.tiket,
-              'cambio',
+            PosColumn(
+              text: currencyFormat.format(pago.monto),
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-          PosColumn(
-            text: currencyFormat.format(pago.cambio),
-            styles: const PosStyles(
-              align: PosAlign.right,
+          ],
+        );
+        bytes += generator.row(
+          [
+            PosColumn(
+              text: AppLocalizations.of(context)!.translate(
+                BlockTranslate.tiket,
+                'cambio',
+              ),
+              width: 6,
             ),
-            width: 6,
-          ),
-        ],
-      );
+            PosColumn(
+              text: currencyFormat.format(pago.cambio),
+              styles: const PosStyles(
+                align: PosAlign.right,
+              ),
+              width: 6,
+            ),
+          ],
+        );
+      }
+    } else {
+      for (var pago in docPrintModel.pagos) {
+        bytes += generator.hr(); // Línea horizontal
+
+        bytes += generator.text(pago.tipoPago);
+
+        bytes += generator.text("${AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          'recibido',
+        )}: ${currencyFormat.format(pago.pago)}");
+
+        bytes += generator.text("${AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          'monto',
+        )}: ${currencyFormat.format(pago.monto)}");
+
+        bytes += generator.text("${AppLocalizations.of(context)!.translate(
+          BlockTranslate.tiket,
+          'cambio',
+        )}: ${currencyFormat.format(pago.cambio)}");
+
+        bytes += generator.hr(); // Línea horizontal
+      }
     }
 
     bytes += generator.emptyLines(1);
@@ -1379,10 +1438,7 @@ class PrintViewModel extends ChangeNotifier {
     );
     bytes += generator.emptyLines(1);
 
-    bytes += generator.text(
-      "--------------------",
-      styles: center,
-    );
+    bytes += generator.hr(); // Línea horizontal
 
     bytes += generator.text(
       "Powered by",
