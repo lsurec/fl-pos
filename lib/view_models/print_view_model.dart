@@ -912,8 +912,7 @@ class PrintViewModel extends ChangeNotifier {
     final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
     List<String> mensajes = [
-      //TODO: Mostrar frase
-      // "**Sujeto a pagos trimestrales**",
+      encabezado.formaPagoIsr ?? "",
       AppLocalizations.of(context)!.translate(
         BlockTranslate.tiket,
         'sinCambios',

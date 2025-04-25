@@ -44,6 +44,7 @@ class EncabezadoModel {
   dynamic cuentaCorrentistaRefEMail;
   dynamic cantidadDiasFechaIniFin;
   String? observacion1;
+  String? formaPagoIsr;
 
   EncabezadoModel({
     required this.idDocumento,
@@ -89,6 +90,7 @@ class EncabezadoModel {
     required this.cuentaCorrentistaRefEMail,
     required this.cantidadDiasFechaIniFin,
     required this.observacion1,
+    required this.formaPagoIsr,
   });
 
   factory EncabezadoModel.fromJson(String str) =>
@@ -140,6 +142,7 @@ class EncabezadoModel {
         cuentaCorrentistaRefEMail: json["cuenta_Correntista_Ref_EMail"],
         cantidadDiasFechaIniFin: json["cantidad_Dias_Fecha_Ini_Fin"],
         observacion1: json["observacion_1"],
+        formaPagoIsr: json["forma_Pago_ISR"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -186,5 +189,6 @@ class EncabezadoModel {
         "cuenta_Correntista_Ref_EMail": cuentaCorrentistaRefEMail,
         "cantidad_Dias_Fecha_Ini_Fin": cantidadDiasFechaIniFin,
         "observacion_1": observacion1,
+        "forma_Pago_ISR": formaPagoIsr,
       };
 }
