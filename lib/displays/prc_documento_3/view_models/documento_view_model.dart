@@ -94,6 +94,7 @@ class DocumentoViewModel extends ChangeNotifier {
     if (!result) return;
 
     setValuesNewDoc(context);
+    Preferences.clearDocument();
   }
 
   Future<bool> backTabs(BuildContext context) async {
@@ -107,7 +108,7 @@ class DocumentoViewModel extends ChangeNotifier {
     if (!vmConfirm.showPrint) return true;
 
     setValuesNewDoc(context);
-
+    Preferences.clearDocument();
     if (vmPayment.paymentList.isEmpty) {
       Navigator.popUntil(
           context, ModalRoute.withName(AppRoutes.withoutPayment));

@@ -476,7 +476,7 @@ class DocumentService {
     final confirmVM = Provider.of<ConfirmDocViewModel>(context, listen: false);
 
     //No hacer nada si no hay un documento guardado
-    if (Preferences.document.isEmpty) return;
+    if (Preferences.document == "") return;
 
     //Tipar documento guardado
     final SaveDocModel saveDocument = SaveDocModel.fromMap(

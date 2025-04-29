@@ -631,6 +631,8 @@ class ConfirmDocViewModel extends ChangeNotifier {
 
       isLoading = false;
     }
+
+    Preferences.clearDocument();
   }
 
   Future<void> processDocument(
